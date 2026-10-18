@@ -2,7 +2,7 @@
  * One shared controller: keyboard and the on-screen pad both write into it, the
  * game loop and scenes read from it. Buttons are edge-triggered via `consume`.
  */
-export type Button = 'a' | 'b' | 'map' | 'start';
+export type Button = 'a' | 'b' | 'map' | 'spots' | 'start';
 export type Dir = 'up' | 'down' | 'left' | 'right';
 
 const touch = typeof window !== 'undefined' && (window.matchMedia?.('(pointer: coarse)').matches ?? false);
@@ -29,6 +29,7 @@ const KEY_BUTTONS: Record<string, Button> = {
   Space: 'a', Enter: 'a', KeyZ: 'a', KeyE: 'a',
   Escape: 'b', KeyX: 'b', Backspace: 'b',
   KeyM: 'map',
+  KeyT: 'spots',
 };
 
 export const input = {

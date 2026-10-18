@@ -1,0 +1,3 @@
+id,name,sprite,address,lat,lon,w,h,notes,status,geocoded_from,geocoded_match
+gas-station-76,76 Gas Station,gas-station-76,4001 California Ave SW,47.568236,-122.387332,5,4,Home of the wall that kept turning (art spot gas-station-wall),geocoded,4001 California Ave SW,"Food Mart, 4001, California Avenue Southwest, Alaska Junction, West Seattle, Seattle, King County, Washington, 98116, United States"
+admiral-theatre,Admiral Theatre,admiral-theatre,2343 California Ave SW,47.581969,-122.386942,4,3,"Art deco, 1942. Light blue-grey with a red wave, portholes and the red marquee",geocoded,2343 California Ave SW,"2343, California Avenue Southwest, Admiral, West Seattle, Seattle, King County, Washington, 98116, United States"

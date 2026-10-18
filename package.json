@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "map": "node scripts/build-map.mjs",
+    "map": "node scripts/places.mjs && node scripts/build-map.mjs",
+    "map:review": "MAP_URL=${MAP_URL:-http://localhost:5180/bearisland-map/} node scripts/review-map.mjs",
     "images": "node scripts/process-images.mjs",
     "places": "node scripts/places.mjs"
   },

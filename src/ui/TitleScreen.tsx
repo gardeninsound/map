@@ -34,7 +34,7 @@ export function TitleScreen({ onStart }: { onStart(): void }) {
           <span className="title-caret">▶</span> PRESS START
         </button>
         <p className="title-keys">
-          Arrows / WASD walk · Shift runs · Space looks · M map
+          Arrows / WASD walk · Shift runs · Space looks · M map · T art spots
         </p>
       </div>
     </div>

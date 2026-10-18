@@ -5,6 +5,8 @@ import { artManifest } from './artManifest';
 import { experiences } from '../experiences/registry';
 import { wallTurns } from './wallTurns';
 import { crossedMilestone } from '../experiences/WallTurns';
+import { hasLandmarkSprite } from '../game/render/landmarks';
+import landmarkRows from './landmarksData.json';
 
 const world = createWorld();
 
@@ -29,6 +31,15 @@ describe('locations', () => {
     const p = world.project(START.lat, START.lon);
     const r = world.nearestWalkable(p.x, p.y);
     expect(world.streetAt(r.x, r.y)).toMatch(/California|Alaska/);
+  });
+});
+
+describe('landmarks', () => {
+  it('every sheet row has a drawing and found a place on the map', () => {
+    for (const row of landmarkRows) {
+      expect(hasLandmarkSprite(row.sprite), row.sprite).toBe(true);
+      expect(world.landmarks.some((l) => l.id === row.id), row.id).toBe(true);
+    }
   });
 });
 

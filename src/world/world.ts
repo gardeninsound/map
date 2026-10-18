@@ -18,6 +18,8 @@ export const Tile = {
   Block: 9,
   /** a real house footprint */
   House: 10,
+  /** ground under a hand-drawn landmark */
+  Landmark: 11,
 } as const;
 export const isBuilding = (t: number) => t === Tile.Civic || t === Tile.Shop || t === Tile.Block || t === Tile.House;
 export type TileCode = (typeof Tile)[keyof typeof Tile];
@@ -37,6 +39,17 @@ export interface Storefront {
   y: number;
 }
 
+/** A hand-drawn building placed on the grid (see src/game/render/landmarks.ts). */
+export interface PlacedLandmark {
+  id: string;
+  sprite: string;
+  name: string;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+}
+
 export interface World {
   w: number;
   h: number;
@@ -47,6 +60,7 @@ export interface World {
   names: string[];
   labels: MapLabel[];
   shops: Storefront[];
+  landmarks: PlacedLandmark[];
   /** 'footprints' = houses from OSM; 'procedural' = renderer scatters them */
   houseMode: 'footprints' | 'procedural';
   /** per tile: steps to the nearest road (capped at 255) */
@@ -137,6 +151,7 @@ export function createWorld(): World {
     names,
     labels,
     shops: data.shops,
+    landmarks: data.landmarks ?? [],
     houseMode: data.houseMode as World['houseMode'],
     roadDist,
     attribution: data.attribution,

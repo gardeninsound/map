@@ -1,4 +1,5 @@
 import { Tile, isBuilding, type World } from '../../world/world';
+import { drawLandmark } from './landmarks';
 import { INK, PAL } from './palette';
 
 export const TS = 16; // pixels per tile
@@ -152,30 +153,35 @@ function sand(ctx: Ctx, ox: number, oy: number, tx: number, ty: number) {
   for (let i = 0; i < 4; i++) px(ctx, PAL.sandDark, ox + Math.floor(hash(tx, ty, i) * 15), oy + Math.floor(hash(tx, ty, i + 5) * 15));
 }
 
+const SIDEWALK = 4; // px of sidewalk on a road tile's outer edge (~3 m)
+
+/**
+ * Asphalt, with the sidewalk drawn on the road's own edge tiles: every edge that meets
+ * something other than road gets the same strip + curb, whatever is next door (grass,
+ * a house, a storefront, a park). Inner corners get a nub so staircase diagonals stay joined.
+ */
 function road(ctx: Ctx, ox: number, oy: number, tx: number, ty: number, world: World) {
   px(ctx, PAL.road, ox, oy, TS, TS);
   for (let i = 0; i < 3; i++) px(ctx, PAL.roadGrain, ox + Math.floor(hash(tx, ty, i) * 15), oy + Math.floor(hash(tx, ty, i + 3) * 15), 2, 1);
-  const open = (dx: number, dy: number) => world.tileAt(tx + dx, ty + dy) === Tile.Road;
-  if (!open(0, -1)) px(ctx, PAL.curb, ox, oy, TS, 1);
-  if (!open(0, 1)) px(ctx, PAL.curb, ox, oy + 15, TS, 1);
-  if (!open(-1, 0)) px(ctx, PAL.curb, ox, oy, 1, TS);
-  if (!open(1, 0)) px(ctx, PAL.curb, ox + 15, oy, 1, TS);
-}
-
-/** Grass with a strip of sidewalk along each edge that touches a road. */
-function sidewalk(ctx: Ctx, ox: number, oy: number, tx: number, ty: number, world: World) {
-  grass(ctx, ox, oy, tx, ty, true);
-  const road = (dx: number, dy: number) => world.tileAt(tx + dx, ty + dy) === Tile.Road;
-  const W = 6;
-  if (road(0, -1)) px(ctx, PAL.sidewalk, ox, oy, TS, W);
-  if (road(0, 1)) px(ctx, PAL.sidewalk, ox, oy + TS - W, TS, W);
-  if (road(-1, 0)) px(ctx, PAL.sidewalk, ox, oy, W, TS);
-  if (road(1, 0)) px(ctx, PAL.sidewalk, ox + TS - W, oy, W, TS);
-  // diagonal-only contact (staircase streets): a corner patch
-  if (road(-1, -1) && !road(-1, 0) && !road(0, -1)) px(ctx, PAL.sidewalk, ox, oy, W, W);
-  if (road(1, -1) && !road(1, 0) && !road(0, -1)) px(ctx, PAL.sidewalk, ox + TS - W, oy, W, W);
-  if (road(-1, 1) && !road(-1, 0) && !road(0, 1)) px(ctx, PAL.sidewalk, ox, oy + TS - W, W, W);
-  if (road(1, 1) && !road(1, 0) && !road(0, 1)) px(ctx, PAL.sidewalk, ox + TS - W, oy + TS - W, W, W);
+  const open = (dx: number, dy: number) => {
+    const t = world.tileAt(tx + dx, ty + dy);
+    return t === Tile.Road || t === Tile.Freeway;
+  };
+  const S = SIDEWALK;
+  const n = !open(0, -1), s = !open(0, 1), w = !open(-1, 0), e = !open(1, 0);
+  if (n) px(ctx, PAL.sidewalk, ox, oy, TS, S);
+  if (s) px(ctx, PAL.sidewalk, ox, oy + TS - S, TS, S);
+  if (w) px(ctx, PAL.sidewalk, ox, oy, S, TS);
+  if (e) px(ctx, PAL.sidewalk, ox + TS - S, oy, S, TS);
+  if (!n && !w && !open(-1, -1)) px(ctx, PAL.sidewalk, ox, oy, S, S);
+  if (!n && !e && !open(1, -1)) px(ctx, PAL.sidewalk, ox + TS - S, oy, S, S);
+  if (!s && !w && !open(-1, 1)) px(ctx, PAL.sidewalk, ox, oy + TS - S, S, S);
+  if (!s && !e && !open(1, 1)) px(ctx, PAL.sidewalk, ox + TS - S, oy + TS - S, S, S);
+  // curb line between sidewalk and asphalt
+  if (n) px(ctx, PAL.curb, ox + (w ? S : 0), oy + S, TS - (w ? S : 0) - (e ? S : 0), 1);
+  if (s) px(ctx, PAL.curb, ox + (w ? S : 0), oy + TS - S - 1, TS - (w ? S : 0) - (e ? S : 0), 1);
+  if (w) px(ctx, PAL.curb, ox + S, oy + (n ? S : 0), 1, TS - (n ? S : 0) - (s ? S : 0));
+  if (e) px(ctx, PAL.curb, ox + TS - S - 1, oy + (n ? S : 0), 1, TS - (n ? S : 0) - (s ? S : 0));
 }
 
 function freeway(ctx: Ctx, ox: number, oy: number, tx: number, ty: number) {
@@ -203,13 +209,14 @@ export function drawTile(ctx: Ctx, world: World, tx: number, ty: number, ox: num
       return house(ctx, ox, oy, tx, ty);
     case Tile.Plaza:
       return plaza(ctx, ox, oy, tx, ty);
+    case Tile.Landmark:
+      return px(ctx, '#c8c6d4', ox, oy, TS, TS); // the landmark drawing covers it
     case Tile.Park:
       grass(ctx, ox, oy, tx, ty, true);
       if (hash(tx, ty, 11) < 0.82) tree(ctx, ox, oy, tx, ty);
       return;
     default: {
       const d = world.roadDist[tx + ty * world.w];
-      if (d === 1) return sidewalk(ctx, ox, oy, tx, ty, world);
       const r = hash(tx, ty, 12);
       if (world.houseMode === 'procedural') {
         if (d <= 3 && r < 0.55) return house(ctx, ox, oy, tx, ty);
@@ -235,6 +242,14 @@ export class ChunkCache {
       const ctx = c.getContext('2d')!;
       for (let y = 0; y < CHUNK; y++) {
         for (let x = 0; x < CHUNK; x++) drawTile(ctx, this.world, cx * CHUNK + x, cy * CHUNK + y, x * TS, y * TS);
+      }
+      // Landmarks overlapping this chunk (they can straddle chunk edges; each draws its part).
+      for (const lm of this.world.landmarks) {
+        if (lm.x + lm.w <= cx * CHUNK || lm.x >= (cx + 1) * CHUNK || lm.y + lm.h <= cy * CHUNK || lm.y >= (cy + 1) * CHUNK) continue;
+        ctx.save();
+        ctx.translate((lm.x - cx * CHUNK) * TS, (lm.y - cy * CHUNK) * TS);
+        drawLandmark(ctx, lm.sprite, lm.w * TS, lm.h * TS);
+        ctx.restore();
       }
       this.cache.set(key, c);
     }

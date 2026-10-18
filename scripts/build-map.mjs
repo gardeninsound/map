@@ -6,19 +6,22 @@
  * plus buildings from OSM footprints (house / shop / block / civic) and commercial ground.
  * Roads keep a per-tile street-name index so the HUD can say where you are.
  *
- * Usage: node scripts/build-map.mjs [--procedural]
+ * All tunables live in scripts/map-config.mjs. Landmark drawings (content/landmarks.csv →
+ * src/content/landmarksData.json via places.mjs) get a cleared footprint beside the street.
+ *
+ * Usage: node scripts/build-map.mjs [--procedural]   (or `npm run map`, which geocodes first)
  *   --procedural  ignore house footprints and let the renderer scatter houses instead (the old look)
  */
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import sharp from 'sharp';
+import { HOUSES, MAP, ROADS } from './map-config.mjs';
 
 const ROOT = new URL('..', import.meta.url);
 const PROCEDURAL = process.argv.includes('--procedural');
 const osm = JSON.parse(readFileSync(new URL('data/osm/west-seattle.json', ROOT)));
 
-// Map extent (a little tighter than the fetch bbox, trimming industrial east side).
-const [S, W, N, E] = [47.516, -122.422, 47.597, -122.35];
-const TILE_M = 12; // ≈ one house lot per tile
+const [S, W, N, E] = MAP.bbox;
+const TILE_M = MAP.tileMeters;
 const MID = ((S + N) / 2) * (Math.PI / 180);
 const M_PER_LON = 111320 * Math.cos(MID);
 const M_PER_LAT = 110540;
@@ -34,6 +37,7 @@ const T = {
   SHOP: 8, // commercial building
   BLOCK: 9, // apartments and other big buildings
   HOUSE: 10, // a real house footprint
+  LANDMARK: 11, // ground under a hand-drawn landmark (src/game/render/landmarks.ts)
 };
 const tiles = new Uint8Array(GW * GH).fill(T.LAND);
 const road = new Uint8Array(GW * GH); // 0 = none, else 1 + names index
@@ -57,6 +61,50 @@ function strokeLine(points, radius, fn) {
           if (!inGrid(tx, ty)) continue;
           if (Math.hypot(tx + 0.5 - cx, ty + 0.5 - cy) <= radius) fn(tx, ty);
         }
+      }
+    }
+  }
+}
+
+/** Douglas–Peucker: drop points within `tol` tiles of the simplified line. */
+function simplify(points, tol) {
+  if (points.length < 3) return points;
+  const [a, b] = [points[0], points[points.length - 1]];
+  const len = Math.hypot(b[0] - a[0], b[1] - a[1]) || 1e-9;
+  let far = 0, at = 0;
+  for (let i = 1; i < points.length - 1; i++) {
+    const p = points[i];
+    const d = Math.abs((b[0] - a[0]) * (a[1] - p[1]) - (a[0] - p[0]) * (b[1] - a[1])) / len;
+    if (d > far) { far = d; at = i; }
+  }
+  if (far <= tol) return [a, b];
+  return [...simplify(points.slice(0, at + 1), tol).slice(0, -1), ...simplify(points.slice(at), tol)];
+}
+
+/**
+ * A road of constant width: walk the segment one tile at a time along its major axis and
+ * fill exactly `w` tiles across the minor axis. Unlike a round brush this never swells or
+ * pinches as the line drifts across tile boundaries. Vertices get a w×w cap so bends join.
+ */
+function bandLine(points, w, fn) {
+  const cap = ([x, y]) => {
+    const x0 = Math.floor(x - w / 2 + 0.5), y0 = Math.floor(y - w / 2 + 0.5);
+    for (let j = 0; j < w; j++) for (let k = 0; k < w; k++) if (inGrid(x0 + k, y0 + j)) fn(x0 + k, y0 + j);
+  };
+  points.forEach(cap);
+  for (let i = 1; i < points.length; i++) {
+    const [x0, y0] = points[i - 1];
+    const [x1, y1] = points[i];
+    const dx = x1 - x0, dy = y1 - y0;
+    const n = Math.max(1, Math.ceil(Math.max(Math.abs(dx), Math.abs(dy)) * 2));
+    for (let s = 0; s <= n; s++) {
+      const cx = x0 + (dx * s) / n, cy = y0 + (dy * s) / n;
+      if (Math.abs(dx) >= Math.abs(dy)) {
+        const tx = Math.floor(cx), start = Math.floor(cy - w / 2 + 0.5);
+        for (let k = 0; k < w; k++) if (inGrid(tx, start + k)) fn(tx, start + k);
+      } else {
+        const ty = Math.floor(cy), start = Math.floor(cx - w / 2 + 0.5);
+        for (let k = 0; k < w; k++) if (inGrid(start + k, ty)) fn(start + k, ty);
       }
     }
   }
@@ -164,7 +212,7 @@ const HOUSE_TAGS = new Set(['house', 'detached', 'semidetached_house', 'terrace'
 const kinds = buildings.map((b, i) => {
   const t = b.tags;
   const area = shoelace(pts(b.geometry)) * TILE_M * TILE_M;
-  if (HOUSE_TAGS.has(t.building) && area < 600 && t.building !== 'residential') return T.HOUSE;
+  if (HOUSE_TAGS.has(t.building) && area < HOUSES.maxArea && t.building !== 'residential') return T.HOUSE;
   if (['church', 'school', 'college', 'kindergarten', 'civic', 'public', 'chapel'].includes(t.building) || t.amenity) return T.CIVIC;
   if (['retail', 'commercial', 'supermarket', 'office', 'industrial', 'warehouse', 'service'].includes(t.building) || hasShop.has(i)) return T.SHOP;
   if (t.building === 'apartments') return T.BLOCK;
@@ -199,23 +247,70 @@ const shortName = (n) => n
 const names = [];
 const nameIdx = (n) => { const s = shortName(n); let i = names.indexOf(s); if (i < 0) { names.push(s); i = names.length - 1; } return i + 1; };
 
-const CLASS = [
-  { re: /^tertiary/, radius: 0.85 },
-  { re: /^secondary/, radius: 1.15 },
-  { re: /^primary/, radius: 1.3 },
-];
-for (const w of tagged((t) => /^motorway/.test(t.highway))) {
-  strokeLine(pts(w.geometry), 1.3, (x, y) => { tiles[x + y * GW] = T.FREEWAY; road[x + y * GW] = 0; });
+// One width per street: its most common class (by length) or a byName override.
+const roadClass = (h) => (/_link$/.test(h) ? 'link' : h.replace(/_link$/, ''));
+const RANK = { link: 0, tertiary: 1, secondary: 2, primary: 3 };
+const ways = tagged((t) => /^(primary|secondary|tertiary)(_link)?$/.test(t.highway)).map((w) => ({
+  w,
+  cls: roadClass(w.tags.highway),
+  name: w.tags.name ? shortName(w.tags.name) : null,
+  line: simplify(pts(w.geometry), ROADS.simplify),
+}));
+const lengthByName = new Map();
+for (const r of ways) {
+  if (!r.name || r.cls === 'link') continue;
+  const len = r.line.reduce((a, p, i) => (i ? a + Math.hypot(p[0] - r.line[i - 1][0], p[1] - r.line[i - 1][1]) : 0), 0);
+  const m = lengthByName.get(r.name) ?? {};
+  m[r.cls] = (m[r.cls] ?? 0) + len;
+  lengthByName.set(r.name, m);
 }
-for (const { re, radius } of CLASS) {
-  for (const w of tagged((t) => re.test(t.highway))) {
-    const n = w.tags.name ? nameIdx(w.tags.name) : 0;
-    strokeLine(pts(w.geometry), radius, (x, y) => {
-      const i = x + y * GW;
-      tiles[i] = T.ROAD;
-      if (n || !road[i]) road[i] = n;
-    });
+const widthOf = (r) => {
+  if (r.cls === 'link') return ROADS.byClass.link;
+  if (r.name && ROADS.byName[r.name]) return ROADS.byName[r.name];
+  const m = r.name && lengthByName.get(r.name);
+  const cls = m ? Object.entries(m).sort((a, b) => b[1] - a[1])[0][0] : r.cls;
+  return ROADS.byClass[cls];
+};
+for (const w of tagged((t) => /^motorway/.test(t.highway))) {
+  bandLine(simplify(pts(w.geometry), ROADS.simplify), 3, (x, y) => { tiles[x + y * GW] = T.FREEWAY; road[x + y * GW] = 0; });
+}
+// Narrow and minor first, so wide arterials win the street name where they cross.
+ways.sort((a, b) => widthOf(a) - widthOf(b) || RANK[a.cls] - RANK[b.cls]);
+for (const r of ways) {
+  const n = r.w.tags.name ? nameIdx(r.w.tags.name) : 0;
+  bandLine(r.line, widthOf(r), (x, y) => {
+    const i = x + y * GW;
+    tiles[i] = T.ROAD;
+    if (n || !road[i]) road[i] = n;
+  });
+}
+
+// 3a. Landmarks: find each drawing a clear w×h spot as close to its address as possible,
+// touching a street but never covering one.
+const LANDMARKS = new URL('src/content/landmarksData.json', ROOT);
+const landmarks = [];
+for (const lm of existsSync(LANDMARKS) ? JSON.parse(readFileSync(LANDMARKS)) : []) {
+  const cx = toX(lm.lon), cy = toY(lm.lat);
+  let best = null;
+  for (let dy = -8; dy <= 8; dy++) {
+    for (let dx = -8; dx <= 8; dx++) {
+      const x0 = Math.round(cx - lm.w / 2) + dx, y0 = Math.round(cy - lm.h / 2) + dy;
+      let clear = true, touches = false;
+      for (let y = y0 - 1; y <= y0 + lm.h && clear; y++) {
+        for (let x = x0 - 1; x <= x0 + lm.w; x++) {
+          const inside = x >= x0 && x < x0 + lm.w && y >= y0 && y < y0 + lm.h;
+          const t = inGrid(x, y) ? tiles[x + y * GW] : T.WATER;
+          if (inside && (t === T.ROAD || t === T.WATER || t === T.FREEWAY)) { clear = false; break; }
+          if (!inside && t === T.ROAD) touches = true;
+        }
+      }
+      const d = Math.hypot(dx, dy);
+      if (clear && touches && (!best || d < best.d)) best = { x: x0, y: y0, d };
+    }
   }
+  if (!best) { console.warn(`landmark ${lm.id}: no clear spot near its address`); continue; }
+  for (let y = best.y; y < best.y + lm.h; y++) for (let x = best.x; x < best.x + lm.w; x++) tiles[x + y * GW] = T.LANDMARK;
+  landmarks.push({ id: lm.id, sprite: lm.sprite, name: lm.name, x: best.x, y: best.y, w: lm.w, h: lm.h });
 }
 
 // 3b. Houses: one per footprint centroid; a house touching the street steps back a tile.
@@ -285,13 +380,14 @@ const out = {
   names,
   labels,
   shops,
+  landmarks,
   houseMode: PROCEDURAL ? 'procedural' : 'footprints',
 };
 writeFileSync(new URL('src/world/worldData.json', ROOT), JSON.stringify(out));
 console.log(`${PROCEDURAL ? 'procedural houses' : `${houses} footprint houses`}, grid ${GW}x${GH}, ${buildings.length} buildings, ${shops.length} shops, ${names.length} street names, ${labels.length} labels, road components ${sizes.length} (dropped ${dropped} tiles)`);
 
 // Preview PNG (1px per tile, scaled up).
-const PAL = [[60, 140, 230], [120, 200, 90], [40, 140, 70], [240, 220, 140], [250, 250, 250], [150, 150, 160], [200, 90, 70], [200, 200, 205], [120, 120, 135], [220, 190, 150], [255, 120, 160]];
+const PAL = [[60, 140, 230], [120, 200, 90], [40, 140, 70], [240, 220, 140], [250, 250, 250], [150, 150, 160], [200, 90, 70], [200, 200, 205], [120, 120, 135], [220, 190, 150], [255, 120, 160], [255, 220, 0]];
 const rgb = Buffer.alloc(GW * GH * 3);
 for (let i = 0; i < tiles.length; i++) PAL[tiles[i]].forEach((v, k) => { rgb[i * 3 + k] = v; });
 mkdirSync(new URL('screenshots/', ROOT), { recursive: true });

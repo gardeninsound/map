@@ -317,6 +317,40 @@ kbd {
   font-size: 15px; color: #fff; text-shadow: 1px 1px 0 var(--ink); pointer-events: none;
 }
 
+/* ── Spots menu ──────────────────────────────── */
+.hud-spots { background: var(--yellow) !important; }
+.spots-layer {
+  position: absolute; inset: 0; z-index: 25;
+  display: grid; place-items: start end; padding: 72px 16px 16px;
+  background: rgba(43, 35, 80, 0.45);
+}
+.spots {
+  width: min(460px, 100%); max-height: calc(100vh - 96px); overflow: auto;
+  background: var(--paper); color: var(--ink); padding: 16px 18px;
+  box-shadow: var(--frame), 10px 10px 0 12px rgba(0,0,0,0.25);
+  animation: rise 200ms steps(5) both;
+}
+.spots-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.spots-head h2 { font-family: var(--pixel); font-weight: 400; font-size: 13px; margin: 0; color: #7a40a0; }
+.spots-close { border: 0; background: none; font-size: 18px; padding: 4px 8px; }
+.spots-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.spot { display: flex; gap: 14px; align-items: stretch; padding: 10px; box-shadow: 0 0 0 3px var(--ink); background: #fff; }
+.spot-thumb { position: relative; flex: none; width: 92px; height: 92px; box-shadow: 0 0 0 3px var(--ink); overflow: hidden; }
+.spot-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.spot-key { position: absolute; left: 4px; top: 4px; margin: 0; background: var(--paper); color: var(--ink); }
+.spot-info { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.spot-name { font-family: var(--pixel); font-size: 11px; line-height: 1.5; }
+.spot-seen { margin-left: 6px; color: #2f8f45; }
+.spot-where { font-size: 16px; margin: 4px 0 auto; opacity: 0.8; }
+.spot-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+.spot-actions button {
+  font-family: var(--pixel); font-size: 9px; border: 0; padding: 8px 10px;
+  background: var(--paper); box-shadow: 0 0 0 3px var(--ink);
+}
+.spot-actions button.primary { background: var(--yellow); }
+.spot-actions button:focus-visible, .spots-close:focus-visible { outline: 3px dashed var(--pink); outline-offset: 5px; }
+.spots-foot { font-size: 15px; margin: 14px 0 0; opacity: 0.75; }
+
 @media (max-width: 640px) {
   .street-sign { font-size: 9px; padding: 8px 10px; }
   .hud-buttons button { font-size: 8px; padding: 7px 8px; }

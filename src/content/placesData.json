@@ -2,10 +2,10 @@
  {
   "id": "gas-station-wall",
   "name": "The Wall That Kept Turning",
-  "where": "California Ave SW · 2022–2025",
-  "lat": 47.5668,
-  "lon": -122.3868,
-  "approx": true,
+  "where": "76 station · California Ave SW · 2022–2025",
+  "lat": 47.568236,
+  "lon": -122.387332,
+  "approx": false,
   "set": "bus-wall",
   "experience": "wall-turns",
   "greeting": [

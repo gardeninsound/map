@@ -14,7 +14,15 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
 - `npm run images [srcDir]` — raw photos/videos → `public/art/<set>/` + `src/content/artManifest.ts`
   (default src `~/Downloads/bearisland/images-merged`; macOS `sips`/`mdls` + ffmpeg; incremental via `data/art-meta.json`)
 - `node scripts/fetch-osm.mjs` — refetch OSM → `data/osm/west-seattle.json` (rarely; Overpass is often busy, it retries)
-- `npm run map` — rasterize OSM → `src/world/worldData.json` + `screenshots/map-preview.png`
+- `npm run map` — geocode the sheets, then rasterize OSM → `src/world/worldData.json` +
+  `screenshots/map-preview.png`. **All map knobs are in `scripts/map-config.mjs`** (tile size,
+  road width per class / per street name, simplify tolerance, house size cut-off).
+- `npm run map:review <label>` — with the dev server up, screenshots fixed spots (+ every landmark)
+  into `screenshots/review/<label>/` via the dev-only `?at=lat,lon` URL. Run before and after a
+  map tweak and compare.
+- `npm run places` — also geocodes **content/landmarks.csv** (hand-drawn buildings: id, address,
+  `w`/`h` in tiles, `sprite`) → `src/content/landmarksData.json`; build-map clears a footprint
+  touching the street nearest the address and the renderer draws `src/game/render/landmarks.ts`.
 - `npm run places` — **content/places.csv** (the art-spot spreadsheet: name, address, Mike's greeting
   with ` | ` between lines, experience key) → geocodes changed addresses via Nominatim (1 req/s) →
   writes lat/lon/status back into the CSV + `src/content/placesData.json`. Typed lat/lon with no
@@ -32,6 +40,8 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
   gray storefront, apartments/other big → tan block, church/school → brick. Houses come from all
   ~30k OSM house footprints, one tile at each centroid (stepped back off the sidewalk). Bridges are
   walkable roads (Admiral Way crosses Schmitz Park on one); only motorways aren't.
+  Roads are fixed-width bands (one width per street name, from map-config) on simplified
+  polylines; sidewalks are drawn on the road's own edge tiles so they're identical everywhere.
 - `src/game/` — `Game.ts` (canvas loop, camera, actors), `movement.ts` (pure, tested: per-axis
   slide + sidestep so diagonal staircase streets don't snag), `input.ts` (keyboard + touch pad
   share one controller), `render/` (palette, ASCII-grid sprites, procedural tile art in cached chunks).

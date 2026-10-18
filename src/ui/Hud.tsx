@@ -16,6 +16,7 @@ const MINI_COLORS: Record<number, string> = {
   [Tile.Shop]: '#8e8ba3',
   [Tile.Block]: '#e0c9a6',
   [Tile.House]: '#ff9ec4',
+  [Tile.Landmark]: '#ffd166',
 };
 
 export function StreetSign({ name, storefront }: { name: string | null; storefront: string | null }) {

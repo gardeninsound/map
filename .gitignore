@@ -6,3 +6,4 @@ screenshots
 data/osm/
 # Processed art (≈200 MB) — regenerate with `npm run images`; not in git for now
 public/art/
+*.tsbuildinfo

@@ -131,6 +131,7 @@ export class Game {
 
   teleport(p: Vec) {
     this.player.pos = this.world.nearestWalkable(p.x, p.y);
+    this.player.facing = 'down';
   }
 
   private update(dt: number) {
