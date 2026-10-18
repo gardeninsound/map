@@ -3,7 +3,9 @@ import { Tile, type World } from '../world/world';
 import { input } from './input';
 import { facingFor, step, type Facing, type Vec } from './movement';
 import { INK, PAL } from './render/palette';
-import { buildArrows, buildSprites, type SpriteSet } from './render/sprites';
+import { buildArrows, buildPerson, buildSprites, noteCanvases, type SpriteSet, type Walker } from './render/sprites';
+import { BuskerMusic } from './busker';
+import { buskerVoice } from '../content/neighbors';
 import { CHUNK, ChunkCache, TS, hash } from './render/tileArt';
 import { rng, spawnNpcs, wander, type Npc } from './npcs';
 
@@ -12,6 +14,7 @@ const RUN = 15;
 const REACH = 1.9; // tiles: how close you must be to interact
 const NPC_COUNT = 120;
 const NPC_ACTIVE = 60; // only neighbors within this many tiles of you walk around
+const EARSHOT = 11; // tiles (~130 m): how far the busker's music carries
 
 export interface PlacedLocation extends ArtLocation {
   x: number;
@@ -59,6 +62,12 @@ export class Game {
   private street: string | null = null;
   private nearby: Target | null = null;
   private arrows = buildArrows();
+  /** keep the street quiet (e.g. while an art scene is open) */
+  quiet = false;
+  readonly busker: Npc;
+  private music = new BuskerMusic();
+  private notes = noteCanvases(['#ff7eb6', '#ffe066', '#2ec4b6', '#ffffff']);
+  private buskerSprite: Walker;
   /** first-visit "go this way" arrow: shown until this time (s), unless you start walking */
   private hint: { until: number; from: Vec } | null = null;
   private now = 0;
@@ -81,6 +90,23 @@ export class Game {
       return { ...l, ...this.besideRoad(r) };
     });
     this.npcs = spawnNpcs(world, NPC_COUNT);
+    // The busker plays on the sidewalk outside Easy Street, on the Junction corner.
+    const easy = world.shops.find((s) => /easy street/i.test(s.name));
+    const spot = easy ? world.nearestWalkable(easy.x, easy.y) : world.project(47.5613, -122.3868);
+    this.buskerSprite = buildPerson({ h: '#e0322b', s: '#e0ac69', c: '#ffd166', j: '#3d5a99', b: '#2b2350' });
+    this.busker = {
+      id: -1,
+      pos: { x: spot.x, y: spot.y },
+      dir: { x: 0, y: 0 },
+      facing: 'down',
+      walkT: 0,
+      timer: 0,
+      talking: false,
+      still: true,
+      voice: buskerVoice,
+      sprite: this.buskerSprite,
+    };
+    this.npcs.push(this.busker);
     this.resize();
   }
 
@@ -109,6 +135,7 @@ export class Game {
   }
 
   start() {
+    this.music.start();
     const loop = (t: number) => {
       const dt = Math.min(0.05, (t - (this.last || t)) / 1000);
       this.last = t;
@@ -122,6 +149,7 @@ export class Game {
 
   stop() {
     cancelAnimationFrame(this.raf);
+    this.music.stop();
   }
 
   /** Flash an arrow beside the player toward the nearest open art spot (first visit). */
@@ -146,6 +174,9 @@ export class Game {
 
   private update(dt: number) {
     const p = this.player;
+    // Music swells as you walk up to the busker, fades as you leave.
+    const d = Math.hypot(this.busker.pos.x - p.pos.x, this.busker.pos.y - p.pos.y);
+    this.music.level = this.quiet ? 0 : Math.max(0, 1 - d / EARSHOT) ** 1.6;
     if (this.paused) {
       p.moving = false;
       return;
@@ -286,6 +317,7 @@ export class Game {
       });
     }
     for (const npc of this.npcs) {
+      if (npc === this.busker) continue;
       const sx = Math.round(npc.pos.x * TS - cam.x);
       const sy = Math.round(npc.pos.y * TS - cam.y);
       if (sx < -16 || sy < -16 || sx > vw + 16 || sy > vh + 16) continue;
@@ -299,6 +331,7 @@ export class Game {
         },
       });
     }
+    this.drawBusker(cam, time, actors);
     const p = this.player;
     const frames = this.sprites.rabbit[p.facing];
     const frame = p.moving ? Math.floor(p.walkT * 8) % 2 : 0;
@@ -321,6 +354,55 @@ export class Game {
       const sy = Math.round(p.pos.y * TS - cam.y);
       this.drawBubble(sx, sy - 24 + Math.round(Math.sin(time * 6)), this.nearby.kind === 'npc' ? '…' : '!');
     }
+  }
+
+  /** The busker: rocks on the beat behind a little keyboard, notes floating up. */
+  private drawBusker(cam: Vec, time: number, actors: { y: number; draw: () => void }[]) {
+    const b = this.busker;
+    const sx = Math.round(b.pos.x * TS - cam.x);
+    const sy = Math.round(b.pos.y * TS - cam.y);
+    const { width: vw, height: vh } = this.canvas;
+    if (sx < -32 || sy < -48 || sx > vw + 32 || sy > vh + 32) return;
+    const ctx = this.ctx;
+    const beat = this.music.beat;
+    const phase = (time / beat) % 2; // two beats per sway
+    const rock = b.talking ? 0 : Math.round(Math.sin(phase * Math.PI));
+    const frame = Math.floor(time / beat) % 2;
+    actors.push({
+      y: b.pos.y,
+      draw: () => {
+        ctx.fillStyle = 'rgba(0,0,0,0.22)';
+        ctx.fillRect(sx - 7, sy + 1, 14, 2);
+        ctx.drawImage(this.buskerSprite[b.facing][b.talking ? 0 : frame], sx - 8 + rock, sy - 15);
+        // keyboard on its stand, in front of them
+        ctx.fillStyle = INK;
+        ctx.fillRect(sx - 8, sy - 6, 16, 5);
+        ctx.fillRect(sx - 6, sy - 1, 1, 3);
+        ctx.fillRect(sx + 5, sy - 1, 1, 3);
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(sx - 7, sy - 5, 14, 3);
+        ctx.fillStyle = INK;
+        for (let k = -6; k < 7; k += 2) if (k !== 0) ctx.fillRect(sx + k, sy - 5, 1, 2);
+        ctx.fillStyle = '#ff5d5d';
+        ctx.fillRect(sx - 7, sy - 6, 3, 1);
+        // notes drift up and fade: a new one each beat while you're in earshot
+        if (this.music.level > 0.02 && !this.quiet) {
+          const n = Math.floor(time / beat);
+          for (let k = 0; k < 4; k++) {
+            const born = (n - k) * beat;
+            const age = (time - born) / (beat * 4); // 0..1 over four beats
+            if (age < 0 || age > 1) continue;
+            const seed = hash(n - k, 3, 7);
+            const img = this.notes[Math.floor(seed * this.notes.length)];
+            const nx = sx + Math.round((seed - 0.5) * 14 + Math.sin(age * 6 + seed * 6) * 3);
+            const ny = sy - 18 - Math.round(age * 22);
+            ctx.globalAlpha = Math.min(1, (1 - age) * 1.5) * Math.min(1, this.music.level * 3);
+            ctx.drawImage(img, nx, ny);
+          }
+          ctx.globalAlpha = 1;
+        }
+      },
+    });
   }
 
   private drawHint(cam: Vec, time: number) {

@@ -25,6 +25,15 @@ export const neighborVoices: NeighborVoice[] = [
   { name: 'A grandparent', lines: ['They handed me a roller and I froze. What if I mess it up?', 'Turns out you can\'t. They just paint over it next week.'] },
 ];
 
+/** The keyboard player outside Easy Street. Song titles match src/game/busker.ts. */
+export const buskerVoice: NeighborVoice = {
+  name: 'The keyboard busker',
+  lines: [
+    'This one is called "Trust the Flux." I wrote it on the 128 bus.',
+    'Next up: "Puppies Without Pants," then "So Glad You Are Here." Requests welcome. Ducks especially.',
+  ],
+};
+
 export const NPC_PALETTES = {
   hair: ['#2b1d0e', '#6b4a2b', '#e8c170', '#c0392b', '#9a9aa8', '#ff7eb6', '#2ec4b6'],
   skin: ['#ffdbac', '#f1c27d', '#e0ac69', '#c68642', '#8d5524'],

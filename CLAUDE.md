@@ -55,6 +55,10 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
   share one controller), `render/` (palette, ASCII-grid sprites, procedural tile art in cached chunks).
 - `src/game/npcs.ts` — wandering neighbors (pure `wander`, tested), crowded toward shops; their
   lines live in `src/content/neighbors.ts`.
+- `src/game/busker.ts` — the keyboard busker outside Easy Street (Junction): three original
+  chiptune songs (note strings, tested for whole bars) scheduled ahead through the shared
+  AudioContext (`audioContext()` in ui/sfx.ts). `Game` sets `music.level` from distance
+  (`EARSHOT` tiles, eased) and `quiet` mutes it inside art scenes; mute button respected.
 - `src/content/` — **content is data**: `locations.ts` (spots, coords, Mike's greetings),
   `wallTurns.ts` (scene script), `artManifest.ts` (generated, date-ordered).
 - `src/experiences/` — one scene per spot, lazy-loaded via `registry.ts`, wrapped in

@@ -28,6 +28,17 @@ function tone(freq: number, dur: number, type: OscillatorType = 'square', vol = 
   }
 }
 
+/** The shared AudioContext (created on first use, after a user gesture); null if unavailable. */
+export function audioContext(): AudioContext | null {
+  try {
+    ctx ??= new AudioContext();
+    if (ctx.state === 'suspended') void ctx.resume();
+    return ctx;
+  } catch {
+    return null;
+  }
+}
+
 export const sfx = {
   text: () => tone(560 + Math.random() * 80, 0.03, 'square', 0.02),
   confirm: () => {

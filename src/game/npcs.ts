@@ -16,6 +16,8 @@ export interface Npc {
   timer: number;
   /** frozen while chatting */
   talking: boolean;
+  /** stays put (the busker) */
+  still?: boolean;
   voice: NeighborVoice;
   sprite: Walker;
 }
@@ -38,7 +40,7 @@ export function rng(seed: number) {
  * streets and turn at corners rather than pacing into curbs.
  */
 export function wander(npc: Npc, dt: number, walkable: (x: number, y: number) => boolean, rand: () => number) {
-  if (npc.talking) return;
+  if (npc.talking || npc.still) return;
   npc.timer -= dt;
   const blocked = (npc.dir.x || npc.dir.y) && !fits(npc.pos.x + npc.dir.x * 0.6, npc.pos.y + npc.dir.y * 0.6, walkable);
   if (npc.timer <= 0 || blocked) {

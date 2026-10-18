@@ -212,6 +212,16 @@ export function buildArrows(): HTMLCanvasElement[] {
   return out;
 }
 
+/** A musical note to float above the busker (two shapes: ♪ and ♫). */
+export const NOTE_GRIDS: Grid[] = [
+  ['..##', '..#.', '..#.', '..#.', '###.', '###.'],
+  ['.###', '.#.#', '.#.#', '.#.#', '##.#', '#####'.slice(0, 4)],
+];
+
+export function noteCanvases(colors: string[]): HTMLCanvasElement[] {
+  return colors.flatMap((c) => NOTE_GRIDS.map((g) => gridToCanvas(g, { '#': c })));
+}
+
 export const SPRITE_GRIDS = { RABBIT_DOWN, RABBIT_UP, RABBIT_RIGHT, MIKE_DOWN, EASEL, PERSON_DOWN, PERSON_UP, PERSON_RIGHT };
 
 export type Walker = Record<'up' | 'down' | 'left' | 'right', HTMLCanvasElement[]>;

@@ -87,7 +87,11 @@ export default function App() {
 
   // The world only moves when nothing is on top of it.
   useEffect(() => {
-    if (game) game.paused = !started || overlay.kind !== 'none';
+    if (game) {
+      game.paused = !started || overlay.kind !== 'none';
+      // street sounds stay on while you chat on the street, hush inside an art scene
+      game.quiet = !started || overlay.kind === 'scene';
+    }
   }, [game, started, overlay]);
 
   useEffect(
