@@ -22,6 +22,7 @@ export const SPOTS = {
   'admiral-way-bridge': [47.5773, -122.4033],
   'alki': [47.5790, -122.4100],
   'erskine-way': [47.5567, -122.3900],
+  'glenn-way': [47.5622, -122.3889],
   'admiral-junction': [47.5811, -122.3866], // California & Admiral Way
 };
 

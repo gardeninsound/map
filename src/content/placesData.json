@@ -96,14 +96,15 @@
  {
   "id": "puppy-park",
   "name": "Seven+ Stories",
-  "where": "A park that will be",
-  "lat": 47.5632,
-  "lon": -122.3835,
-  "approx": true,
+  "where": "4731 40th Ave SW · 2023–2024",
+  "lat": 47.560466,
+  "lon": -122.382939,
+  "approx": false,
   "set": "puppy-park",
+  "experience": "park-walk",
   "greeting": [
-   "\"This park will be seven+ stories of ramps and plants and puppies without pants.\"",
-   "Still hanging this one — come back soon!"
+   "Seven-plus stories are coming to this lot. Before that, it was a park.",
+   "Come walk it with me."
   ]
  },
  {

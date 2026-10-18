@@ -43,8 +43,13 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
   Roads: each street's OSM ways are chained, cut into blocks at intersections, simplified, and
   near-axis runs snapped to a tile centre (so straight streets are dead straight and any drift
   hides at a crossing); then drawn as fixed-width bands, widened on diagonals so width is
-  square to the road. Turn ramps are dropped. Sidewalks are drawn on the road's own edge
-  tiles, with 45° curb cuts at corners and in staircase notches (`bevel` in tileArt.ts).
+  square to the road. With `octilinear`, every segment is then rewritten as straight + exact-45°
+  pieces (subway-map style) so curbs come out as clean slants. Turn ramps are dropped. Sidewalks are drawn on the road's own edge
+  tiles, with half-tile 45° curb cuts at corners and in staircase notches (`bevel` in tileArt.ts)
+  that meet at tile mid-edges, so a 45° street is one continuous edge.
+- First visit: after Mike's welcome a red arrow flashes 4× toward the nearest open spot
+  (`Game.showDirectionHint`, remembered in localStorage). The HUD compass (`ui/Compass.tsx`)
+  always points at the nearest spot with a scene.
 - `src/game/` — `Game.ts` (canvas loop, camera, actors), `movement.ts` (pure, tested: per-axis
   slide + sidestep so diagonal staircase streets don't snag), `input.ts` (keyboard + touch pad
   share one controller), `render/` (palette, ASCII-grid sprites, procedural tile art in cached chunks).
@@ -60,6 +65,10 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
     You paint the next version over the current one (`CupPainter`: base + next-through-mask canvas
     → CanvasTexture). Versions are data in `src/content/cupVersions.ts`, reconstructed from the
     photos (the photos themselves aren't shown).
+  - `park/` — **three.js, first person**: the Seven+ Stories lot at 4731 40th Ave SW (`ParkScene`).
+    Arrows/WASD walk & turn, drag to look; face a sign within ~3 m and press A for the full
+    photo + Mike's line. Signs (photo crop, posts, position, facing, words) are data in
+    `src/content/puppyPark.ts`; a sign whose photo isn't deployed shows its dominant colour.
 - `src/ui/` — DialogBox (typewriter, portrait, choices), HUD, title, touch pad, sfx.
 
 ## Conventions

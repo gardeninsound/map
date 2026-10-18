@@ -114,6 +114,31 @@ function bandLine(points, w, fn) {
   }
 }
 
+/**
+ * Rewrite each segment as an axis-aligned piece plus an exact 45° piece with the same
+ * endpoints (any vector = a·axis + b·diagonal). The diagonal goes in the middle, with half
+ * the straight part either side, so the bend sits between the original vertices.
+ */
+function octilinear(points) {
+  const out = [points[0]];
+  for (let i = 1; i < points.length; i++) {
+    const [ax, ay] = points[i - 1];
+    const [bx, by] = points[i];
+    const dx = bx - ax, dy = by - ay;
+    const diag = Math.min(Math.abs(dx), Math.abs(dy));
+    const straight = Math.max(Math.abs(dx), Math.abs(dy)) - diag;
+    const xMajor = Math.abs(dx) >= Math.abs(dy);
+    const sx = Math.sign(dx), sy = Math.sign(dy);
+    const half = straight / 2;
+    if (diag > 0.25 && straight > 0.25) {
+      const p1 = xMajor ? [ax + sx * half, ay] : [ax, ay + sy * half];
+      out.push(p1, [p1[0] + sx * diag, p1[1] + sy * diag]);
+    }
+    out.push([bx, by]);
+  }
+  return out;
+}
+
 /** Join a street's separate OSM ways into continuous polylines (matching endpoints). */
 function chainLines(lines) {
   const key = ([x, y]) => `${x.toFixed(3)},${y.toFixed(3)}`;
@@ -330,12 +355,18 @@ const ways = [];
 const byStreet = new Map();
 for (const r of rawWays) {
   if (!r.name) {
-    if (polyLen(r.line) >= ROADS.minUnnamedLength) ways.push({ ...r, line: simplify(r.line, ROADS.simplify) });
+    if (polyLen(r.line) >= ROADS.minUnnamedLength) ways.push({ ...r, line: shape(r.line) });
     continue;
   }
   if (!byStreet.has(r.name)) byStreet.set(r.name, []);
   byStreet.get(r.name).push(r);
 }
+/** simplify → straighten near-axis runs → (optionally) 0/45/90° only */
+function shape(line) {
+  const straight = axisSnap(simplify(line, ROADS.simplify), ROADS.axisSnap);
+  return ROADS.octilinear ? octilinear(straight) : straight;
+}
+
 // Intersections: points shared by two or more streets (OSM ways share nodes there).
 const ptKey = ([x, y]) => `${x.toFixed(3)},${y.toFixed(3)}`;
 const streetsAt = new Map();
@@ -364,7 +395,7 @@ for (const [name, rs] of byStreet) {
     // Straighten block by block: any one-tile drift of a long street then happens at an
     // intersection, hidden under the cross street, instead of mid-block.
     for (const piece of splitAtJunctions(chain)) {
-      ways.push({ w: sample.w, cls: sample.cls, name, line: axisSnap(simplify(piece, ROADS.simplify), ROADS.axisSnap) });
+      ways.push({ w: sample.w, cls: sample.cls, name, line: shape(piece) });
     }
   }
 }

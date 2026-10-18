@@ -4,6 +4,7 @@ import { experiences } from './experiences/registry';
 import { Game, type PlacedLocation, type Target } from './game/Game';
 import { bindKeyboard, input, isTouch } from './game/input';
 import { DialogBox } from './ui/DialogBox';
+import { Compass } from './ui/Compass';
 import { Minimap, NearbyCard, StreetSign } from './ui/Hud';
 import { SceneBoundary } from './ui/SceneBoundary';
 import { SpotsMenu } from './ui/SpotsMenu';
@@ -14,9 +15,26 @@ import { createWorld } from './world/world';
 
 type Overlay =
   | { kind: 'none' }
-  | { kind: 'talk'; lines: string[]; loc?: PlacedLocation; speaker?: string; portrait?: string }
+  | { kind: 'talk'; lines: string[]; loc?: PlacedLocation; speaker?: string; portrait?: string; firstVisit?: boolean }
   | { kind: 'scene'; loc: PlacedLocation }
   | { kind: 'spots' };
+
+/** Remember (per browser) that the first-visit direction arrow has been shown. */
+const HINT_KEY = 'bearisland-direction-hint';
+const hintSeen = () => {
+  try {
+    return localStorage.getItem(HINT_KEY) === '1';
+  } catch {
+    return false;
+  }
+};
+const markHintSeen = () => {
+  try {
+    localStorage.setItem(HINT_KEY, '1');
+  } catch {
+    /* private mode: they'll just see it again next time */
+  }
+};
 
 export default function App() {
   const world = useMemo(() => createWorld(), []);
@@ -90,7 +108,7 @@ export default function App() {
 
   const start = useCallback(() => {
     setStarted(true);
-    setOverlay({ kind: 'talk', lines: welcome });
+    setOverlay({ kind: 'talk', lines: welcome, firstVisit: true });
   }, []);
 
   const closeOverlay = useCallback(() => {
@@ -124,7 +142,7 @@ export default function App() {
         <>
           <StreetSign name={street} storefront={storefront} />
           {overlay.kind === 'none' && <NearbyCard target={nearby} />}
-          {game && <Minimap game={game} open={mapOpen} />}
+          <div className="hud-right">
           <div className="hud-buttons">
             <button
               className="hud-spots"
@@ -146,6 +164,11 @@ export default function App() {
               {muted ? '♪ OFF' : '♪ ON'}
             </button>
           </div>
+          {game && overlay.kind === 'none' && (
+            <Compass game={game} onClick={() => { sfx.confirm(); setOverlay({ kind: 'spots' }); }} />
+          )}
+          {game && <Minimap game={game} open={mapOpen} />}
+          </div>
           <p className="attribution">{world.attribution}</p>
         </>
       )}
@@ -159,7 +182,13 @@ export default function App() {
             lines={overlay.lines}
             speaker={overlay.speaker}
             portrait={overlay.portrait}
-            onDone={closeOverlay}
+            onDone={() => {
+              if (overlay.firstVisit && game && !hintSeen()) {
+                markHintSeen();
+                game.showDirectionHint();
+              }
+              closeOverlay();
+            }}
             choices={
               talkLoc?.experience
                 ? [

@@ -160,6 +160,58 @@ const EASEL: Grid = [
   '................',
 ];
 
+/** Pixel arrows: one pointing north, one north-east. The other six are 90° turns of these. */
+export const ARROW_N = [
+  '.....#.....',
+  '....###....',
+  '...#####...',
+  '..#######..',
+  '.#########.',
+  '....###....',
+  '....###....',
+  '....###....',
+  '....###....',
+  '....###....',
+  '...........',
+];
+export const ARROW_NE = [
+  '...........',
+  '....######.',
+  '.....#####.',
+  '......####.',
+  '.....#####.',
+  '....###.##.',
+  '...###...#.',
+  '..###......',
+  '.###.......',
+  '.##........',
+  '...........',
+];
+
+/** Turn a square grid 90° clockwise. */
+const turn = (g: Grid): Grid => g.map((_, y) => g.map((row) => row[y]).reverse().join(''));
+
+/**
+ * The direction arrow in 8 directions (0 = N, clockwise), red with an ink outline,
+ * for drawing on the map at native pixels.
+ */
+export function buildArrows(): HTMLCanvasElement[] {
+  const out: HTMLCanvasElement[] = [];
+  for (let dir = 0; dir < 8; dir++) {
+    let g = dir % 2 === 0 ? ARROW_N : ARROW_NE;
+    for (let k = 0; k < Math.floor(dir / 2); k++) g = turn(g);
+    const c = document.createElement('canvas');
+    c.width = c.height = g.length + 2;
+    const ctx = c.getContext('2d')!;
+    for (const [ox, oy, color] of [[0, 1, INK], [2, 1, INK], [1, 0, INK], [1, 2, INK], [1, 1, '#ff5d5d']] as const) {
+      ctx.fillStyle = color;
+      g.forEach((row, y) => [...row].forEach((ch, x) => ch === '#' && ctx.fillRect(x + ox, y + oy, 1, 1)));
+    }
+    out.push(c);
+  }
+  return out;
+}
+
 export const SPRITE_GRIDS = { RABBIT_DOWN, RABBIT_UP, RABBIT_RIGHT, MIKE_DOWN, EASEL, PERSON_DOWN, PERSON_UP, PERSON_RIGHT };
 
 export type Walker = Record<'up' | 'down' | 'left' | 'right', HTMLCanvasElement[]>;

@@ -3,7 +3,7 @@ import { Tile, type World } from '../world/world';
 import { input } from './input';
 import { facingFor, step, type Facing, type Vec } from './movement';
 import { INK, PAL } from './render/palette';
-import { buildSprites, type SpriteSet } from './render/sprites';
+import { buildArrows, buildSprites, type SpriteSet } from './render/sprites';
 import { CHUNK, ChunkCache, TS, hash } from './render/tileArt';
 import { rng, spawnNpcs, wander, type Npc } from './npcs';
 
@@ -58,6 +58,10 @@ export class Game {
   private last = 0;
   private street: string | null = null;
   private nearby: Target | null = null;
+  private arrows = buildArrows();
+  /** first-visit "go this way" arrow: shown until this time (s), unless you start walking */
+  private hint: { until: number; from: Vec } | null = null;
+  private now = 0;
 
   constructor(
     private canvas: HTMLCanvasElement,
@@ -109,6 +113,7 @@ export class Game {
       const dt = Math.min(0.05, (t - (this.last || t)) / 1000);
       this.last = t;
       this.update(dt);
+      this.now = t / 1000;
       this.draw(t / 1000);
       this.raf = requestAnimationFrame(loop);
     };
@@ -117,6 +122,11 @@ export class Game {
 
   stop() {
     cancelAnimationFrame(this.raf);
+  }
+
+  /** Flash an arrow beside the player toward the nearest open art spot (first visit). */
+  showDirectionHint(seconds = 3.2) {
+    this.hint = { until: this.now + seconds, from: { ...this.player.pos } };
   }
 
   /** A neighbor's down-facing sprite as an image, for the dialog portrait. */
@@ -304,11 +314,38 @@ export class Game {
     });
     actors.sort((a, b) => a.y - b.y).forEach((a) => a.draw());
 
+    if (this.hint) this.drawHint(cam, time);
+
     if (this.nearby && !this.paused) {
       const sx = Math.round(p.pos.x * TS - cam.x);
       const sy = Math.round(p.pos.y * TS - cam.y);
       this.drawBubble(sx, sy - 24 + Math.round(Math.sin(time * 6)), this.nearby.kind === 'npc' ? '…' : '!');
     }
+  }
+
+  private drawHint(cam: Vec, time: number) {
+    const h = this.hint!;
+    const p = this.player.pos;
+    // Gone once time's up or you've set off.
+    if (time > h.until || Math.hypot(p.x - h.from.x, p.y - h.from.y) > 3) {
+      this.hint = null;
+      return;
+    }
+    let best: PlacedLocation | null = null;
+    for (const loc of this.places) {
+      if (loc.experience && (!best || Math.hypot(loc.x - p.x, loc.y - p.y) < Math.hypot(best.x - p.x, best.y - p.y))) best = loc;
+    }
+    if (!best) return;
+    // Four flashes: on for half of each 0.8 s beat.
+    if ((h.until - time) % 0.8 < 0.4) return;
+    const angle = Math.atan2(best.x - p.x, -(best.y - p.y));
+    const dir = ((Math.round(angle / (Math.PI / 4)) % 8) + 8) % 8;
+    const a = this.arrows[dir];
+    const size = a.width * 2;
+    const r = 26; // px from the rabbit
+    const sx = Math.round(p.x * TS - cam.x + Math.sin(angle) * r - size / 2);
+    const sy = Math.round(p.y * TS - cam.y - 6 - Math.cos(angle) * r - size / 2);
+    this.ctx.drawImage(a, sx, sy, size, size);
   }
 
   private drawBeacon(x: number, y: number, time: number, live: boolean) {

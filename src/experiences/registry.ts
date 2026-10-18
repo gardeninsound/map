@@ -13,4 +13,5 @@ export interface ExperienceProps {
 export const experiences: Record<string, LazyExoticComponent<ComponentType<ExperienceProps>>> = {
   'wall-turns': lazy(() => import('./WallTurns')),
   'cup-paint': lazy(() => import('./cup/CupPaint')),
+  'park-walk': lazy(() => import('./park/ParkWalk')),
 };

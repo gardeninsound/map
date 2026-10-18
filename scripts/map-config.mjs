@@ -28,6 +28,12 @@ export const ROADS = {
    * This is what lines up both halves of California at the Junction.
    */
   axisSnap: { maxAngle: 14, tolerance: 1.5 },
+  /**
+   * Subway-map style: every remaining segment becomes straight + exact-45° pieces (same
+   * endpoints). The grid can only draw 0°, 45° and 90° cleanly; anything in between turns
+   * into uneven stairs, so this trades a little geometric truth for clean slanted curbs.
+   */
+  octilinear: true,
   /** Turn ramps (*_link) clutter intersections at this scale; leave them out. */
   dropLinks: true,
   /** Unnamed stubs shorter than this (tiles) are left out too. */
