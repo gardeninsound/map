@@ -1,16 +1,37 @@
 /**
- * Script for the gas-station wall scene. Drafted from the manual's "The Gas Station
- * Mural" and "Keep It Moving" pages — Mike's to rewrite.
+ * Scripts for the photo-slideshow scenes (WallTurns.tsx), one per spot, keyed by the
+ * spot's `experience` in content/places.csv. Drafted from the manual and Mike's notes —
+ * his to rewrite.
  */
-export const wallTurns = {
+import type { ArtAsset } from './types';
+
+export interface SlideshowScript {
+  title: string;
+  /** How many photos the slideshow shows, spread evenly over the whole run. */
+  maxPhotos: number;
+  /** Hand-picked asset ids, in order — when set, these are used instead of the even spread. */
+  picks: string[];
+  stats: string[];
+  intro: string[];
+  /** Mike pipes up as you pass these points (fraction of the way through). */
+  milestones: { at: number; line: string }[];
+  flipLine: string;
+  outro: string[];
+  /** words for the controls and screen readers */
+  labels: { next: string; photo: string; strip: string };
+}
+
+/** The gas-station wall (from "The Gas Station Mural" and "Keep It Moving"). */
+export const wallTurns: SlideshowScript = {
   title: 'The Wall That Kept Turning',
+  maxPhotos: 24,
+  picks: [],
   stats: ['100+ turns', '200+ painters', '2022–2025'],
   intro: [
     'From 2022 to 2025 this wall changed more than a hundred times. Painted and repainted, again and again.',
     'More than two hundred people added something — a stroke, a letter, a color they thought was missing.',
     'Your turn. Press {A} (or →) to roll on the next coat. ← goes back. Hit FLIP to watch it all go by.',
   ],
-  /** Mike pipes up as you pass these points (fraction of the way through). */
   milestones: [
     { at: 0.1, line: 'Every week or two, a new word. The neighbors started checking on it like the weather.' },
     { at: 0.25, line: 'Some people came with a plan. Most just stumbled into it — saw someone painting, picked up a brush.' },
@@ -20,4 +41,48 @@ export const wallTurns = {
   ],
   flipLine: "That's a year and a half of Saturdays in a few seconds.",
   outro: ['Nothing is precious. Everything is a foundation.', 'The wall is still there. Go take a turn.'],
+  labels: { next: 'ROLL NEXT COAT', photo: 'The gas-station wall, one of its many versions', strip: 'Every version of the wall' },
 };
+
+/**
+ * Rush Hour (4454 California Ave SW): the boarded-up storefront in the Junction. From
+ * Mike's notes: "rush hour building in junction — changed for a year"; "rush hour had
+ * already moved out. Could have asked. But danger in that."
+ */
+export const rushHourTurns: SlideshowScript = {
+  title: 'The Rush Hour Boards',
+  maxPhotos: 24,
+  picks: [],
+  stats: ['Boarded storefront', 'The Junction', '4454 California Ave SW'],
+  intro: [
+    'Rush Hour had already moved out. The windows were boarded up — so the boards became the wall.',
+    'We could have asked. But once you ask, someone gets to say no, or steer. So we just kept it changing.',
+    'Press {A} (or →) to paint the next version. ← goes back. Hit FLIP to watch it all go by.',
+  ],
+  milestones: [
+    { at: 0.15, line: 'One word at a time, right on the corner where everyone waits for the bus.' },
+    { at: 0.4, line: 'The birds and the dogs came later. Collage on top of paint on top of plywood.' },
+    { at: 0.7, line: 'A boarded window says: nothing here. We wanted it to say: something is still going on.' },
+    { at: 1, line: 'Can do.' },
+  ],
+  flipLine: 'Every coat on those boards, in a few seconds.',
+  outro: ['A building waiting for its next life is a canvas waiting for its next coat.', 'Nothing is precious. Keep it moving.'],
+  labels: { next: 'PAINT NEXT VERSION', photo: 'The Rush Hour boards, one of their many versions', strip: 'Every version of the boards' },
+};
+
+/** experience key (places.csv) → script */
+export const slideshows: Record<string, SlideshowScript> = {
+  'wall-turns': wallTurns,
+  'rush-hour-turns': rushHourTurns,
+};
+
+/**
+ * The slideshow's photos: stills only (no videos), `max` of them spread evenly from the
+ * first photo to the last so the whole run is represented. `picks` overrides the spread.
+ */
+export function chooseTurns(assets: ArtAsset[], max: number, picks: string[] = []): ArtAsset[] {
+  if (picks.length) return picks.map((id) => assets.find((a) => a.id === id)).filter((a): a is ArtAsset => !!a);
+  const stills = assets.filter((a) => a.kind === 'image');
+  if (stills.length <= max) return stills;
+  return Array.from({ length: max }, (_, i) => stills[Math.round((i * (stills.length - 1)) / (max - 1))]);
+}

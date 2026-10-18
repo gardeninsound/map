@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { artManifest } from '../content/artManifest';
-import { wallTurns as script } from '../content/wallTurns';
+import { chooseTurns, slideshows, wallTurns } from '../content/wallTurns';
 import type { ArtAsset } from '../content/types';
 import { buttonLabel, input } from '../game/input';
 import { DialogBox } from '../ui/DialogBox';
@@ -26,7 +26,7 @@ export function crossedMilestone(prev: number, next: number, count: number, mark
   });
 }
 
-function Slide({ set, asset }: { set: string; asset: ArtAsset }) {
+function Slide({ set, asset, alt }: { set: string; asset: ArtAsset; alt: string }) {
   if (asset.kind === 'video') {
     return (
       <video
@@ -37,15 +37,16 @@ function Slide({ set, asset }: { set: string; asset: ArtAsset }) {
         muted
         loop
         playsInline
-        aria-label="Video of the wall being painted"
+        aria-label={alt}
       />
     );
   }
-  return <img className="wall-media" src={art(set, asset)} alt="The gas-station wall, one of its many versions" />;
+  return <img className="wall-media" src={art(set, asset)} alt={alt} />;
 }
 
 export default function WallTurns({ location, onExit }: ExperienceProps) {
-  const assets = artManifest[location.set] ?? [];
+  const script = slideshows[location.experience ?? ''] ?? wallTurns;
+  const assets = useMemo(() => chooseTurns(artManifest[location.set] ?? [], script.maxPhotos, script.picks), [location.set, script]);
   const [index, setIndex] = useState(0);
   const [incoming, setIncoming] = useState<number | null>(null);
   const [intro, setIntro] = useState(true);
@@ -187,14 +188,14 @@ export default function WallTurns({ location, onExit }: ExperienceProps) {
 
       <div className="wall-stage">
         <div className="wall-frame" style={{ background: current.color }}>
-          <Slide key={current.id} set={location.set} asset={current} />
+          <Slide key={current.id} set={location.set} asset={current} alt={script.labels.photo} />
           {incoming !== null && (
             <div
               className="wall-roll"
               style={{ ['--coat' as string]: assets[incoming].color, ['--roll-ms' as string]: `${flipping ? FLIP_MS : ROLL_MS}ms` }}
             >
               <div className="wall-coat">
-                <Slide set={location.set} asset={assets[incoming]} />
+                <Slide set={location.set} asset={assets[incoming]} alt={script.labels.photo} />
               </div>
               <div className="roller" aria-hidden>
                 <span className="roller-head" />
@@ -214,7 +215,7 @@ export default function WallTurns({ location, onExit }: ExperienceProps) {
       <div className="scene-controls">
         <button onClick={prev} disabled={index === 0 || busy} aria-label="Previous version">◀</button>
         <button className="primary" onClick={next} disabled={busy && !flipping}>
-          {index >= assets.length - 1 ? 'THE END' : 'ROLL NEXT COAT'} <kbd>{buttonLabel('a')}</kbd>
+          {index >= assets.length - 1 ? 'THE END' : script.labels.next} <kbd>{buttonLabel('a')}</kbd>
         </button>
         <button onClick={toggleFlip} aria-pressed={flipping}>
           {flipping ? '❚❚ STOP' : '▶▶ FLIP'}
@@ -222,7 +223,7 @@ export default function WallTurns({ location, onExit }: ExperienceProps) {
         <button onClick={() => { sfx.back(); onExit(); }}>LEAVE <kbd>{buttonLabel('b')}</kbd></button>
       </div>
 
-      <div className="filmstrip" ref={strip} role="listbox" aria-label="Every version of the wall">
+      <div className="filmstrip" ref={strip} role="listbox" aria-label={script.labels.strip}>
         {assets.map((a, i) => (
           <button
             key={a.id}

@@ -3,7 +3,7 @@ import { createWorld } from '../world/world';
 import { START, locations } from './locations';
 import { artManifest } from './artManifest';
 import { experiences } from '../experiences/registry';
-import { wallTurns } from './wallTurns';
+import { chooseTurns, slideshows, wallTurns } from './wallTurns';
 import { crossedMilestone } from '../experiences/WallTurns';
 import { hasLandmarkSprite } from '../game/render/landmarks';
 import landmarkRows from './landmarksData.json';
@@ -51,5 +51,30 @@ describe('crossedMilestone', () => {
     expect(crossedMilestone(9, 10, 94, marks)).toBe(-1);
     expect(crossedMilestone(10, 9, 94, marks)).toBe(-1);
     expect(crossedMilestone(92, 93, 94, marks)).toBe(marks.length - 1);
+  });
+});
+
+describe('chooseTurns', () => {
+  const wall = artManifest['bus-wall'];
+  it('keeps the slideshow to stills, evenly spread, first to last', () => {
+    const picked = chooseTurns(wall, wallTurns.maxPhotos);
+    const stills = wall.filter((a) => a.kind === 'image');
+    expect(picked).toHaveLength(wallTurns.maxPhotos);
+    expect(picked.every((a) => a.kind === 'image')).toBe(true);
+    expect(new Set(picked.map((a) => a.id)).size).toBe(picked.length);
+    expect(picked[0]).toBe(stills[0]);
+    expect(picked.at(-1)).toBe(stills.at(-1));
+  });
+  it('uses hand picks when given', () => {
+    expect(chooseTurns(wall, 24, [wall[3].id, wall[1].id]).map((a) => a.id)).toEqual([wall[3].id, wall[1].id]);
+  });
+});
+
+describe('slideshows', () => {
+  it('every slideshow spot has a script and enough stills', () => {
+    for (const l of locations.filter((x) => x.experience && x.experience in slideshows)) {
+      const script = slideshows[l.experience!];
+      expect(chooseTurns(artManifest[l.set], script.maxPhotos, script.picks).length, l.id).toBeGreaterThan(10);
+    }
   });
 });

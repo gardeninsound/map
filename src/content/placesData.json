@@ -17,14 +17,15 @@
  {
   "id": "rush-hour",
   "name": "Rush Hour",
-  "where": "The Junction",
-  "lat": 47.5598,
-  "lon": -122.3868,
-  "approx": true,
+  "where": "4454 California Ave SW · the Junction",
+  "lat": 47.56373,
+  "lon": -122.386654,
+  "approx": false,
   "set": "rush-hour",
+  "experience": "rush-hour-turns",
   "greeting": [
-   "The old Rush Hour storefront. Boarded up, so we kept it changing for a year.",
-   "Still hanging this one — come back soon!"
+   "This was Rush Hour. They'd already moved out, and the windows were boarded up.",
+   "So the boards became the wall. Want to see them change?"
   ]
  },
  {
