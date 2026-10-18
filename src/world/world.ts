@@ -50,6 +50,12 @@ export interface PlacedLandmark {
   h: number;
 }
 
+/** A road's centreline (tile coords) and width in tiles, for per-pixel road painting. */
+export interface RoadLine {
+  w: number;
+  p: [number, number][];
+}
+
 export interface World {
   w: number;
   h: number;
@@ -61,6 +67,7 @@ export interface World {
   labels: MapLabel[];
   shops: Storefront[];
   landmarks: PlacedLandmark[];
+  roadLines: RoadLine[];
   /** 'footprints' = houses from OSM; 'procedural' = renderer scatters them */
   houseMode: 'footprints' | 'procedural';
   /** per tile: steps to the nearest road (capped at 255) */
@@ -152,6 +159,7 @@ export function createWorld(): World {
     labels,
     shops: data.shops,
     landmarks: data.landmarks ?? [],
+    roadLines: (data.roadLines ?? []) as RoadLine[],
     houseMode: data.houseMode as World['houseMode'],
     roadDist,
     attribution: data.attribution,

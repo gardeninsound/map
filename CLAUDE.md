@@ -40,13 +40,14 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
   gray storefront, apartments/other big → tan block, church/school → brick. Houses come from all
   ~30k OSM house footprints, one tile at each centroid (stepped back off the sidewalk). Bridges are
   walkable roads (Admiral Way crosses Schmitz Park on one); only motorways aren't.
-  Roads: each street's OSM ways are chained, cut into blocks at intersections, simplified, and
-  near-axis runs snapped to a tile centre (so straight streets are dead straight and any drift
-  hides at a crossing); then drawn as fixed-width bands, widened on diagonals so width is
-  square to the road. With `octilinear`, every segment is then rewritten as straight + exact-45°
-  pieces (subway-map style) so curbs come out as clean slants. Turn ramps are dropped. Sidewalks are drawn on the road's own edge
-  tiles, with half-tile 45° curb cuts at corners and in staircase notches (`bevel` in tileArt.ts)
-  that meet at tile mid-edges, so a 45° street is one continuous edge.
+  Roads: each street's OSM ways are chained, cut into blocks at intersections, simplified,
+  near-axis runs snapped onto the grid (tile centre for odd widths, tile edge for even, and a
+  block carries its column through an intersection), then with `octilinear` rewritten as
+  straight + exact-45° pieces. Turn ramps are dropped. A tile is walkable road iff its centre
+  is within width/2 of a centreline (`strokeTiles`); the centrelines are exported as
+  `roadLines` and the renderer paints asphalt / 1 px curb / 4 px sidewalk per pixel by distance
+  (`paintRoads` in tileArt.ts; asphalt beats curb beats sidewalk across roads), then redraws
+  buildings on top. So what's drawn as road is what's walkable, with no per-tile corner rules.
 - First visit: after Mike's welcome a red arrow flashes 4× toward the nearest open spot
   (`Game.showDirectionHint`, remembered in localStorage). The HUD compass (`ui/Compass.tsx`)
   always points at the nearest spot with a scene.
