@@ -40,8 +40,11 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
   gray storefront, apartments/other big → tan block, church/school → brick. Houses come from all
   ~30k OSM house footprints, one tile at each centroid (stepped back off the sidewalk). Bridges are
   walkable roads (Admiral Way crosses Schmitz Park on one); only motorways aren't.
-  Roads are fixed-width bands (one width per street name, from map-config) on simplified
-  polylines; sidewalks are drawn on the road's own edge tiles so they're identical everywhere.
+  Roads: each street's OSM ways are chained, cut into blocks at intersections, simplified, and
+  near-axis runs snapped to a tile centre (so straight streets are dead straight and any drift
+  hides at a crossing); then drawn as fixed-width bands, widened on diagonals so width is
+  square to the road. Turn ramps are dropped. Sidewalks are drawn on the road's own edge
+  tiles, with 45° curb cuts at corners and in staircase notches (`bevel` in tileArt.ts).
 - `src/game/` — `Game.ts` (canvas loop, camera, actors), `movement.ts` (pure, tested: per-axis
   slide + sidestep so diagonal staircase streets don't snag), `input.ts` (keyboard + touch pad
   share one controller), `render/` (palette, ASCII-grid sprites, procedural tile art in cached chunks).

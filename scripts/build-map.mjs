@@ -83,8 +83,10 @@ function simplify(points, tol) {
 
 /**
  * A road of constant width: walk the segment one tile at a time along its major axis and
- * fill exactly `w` tiles across the minor axis. Unlike a round brush this never swells or
- * pinches as the line drifts across tile boundaries. Vertices get a w×w cap so bends join.
+ * fill a fixed run of tiles across the minor axis. Unlike a round brush this never swells
+ * or pinches as the line drifts across tile boundaries. The run is w / cos(angle), so a
+ * diagonal street is as wide (square to its direction) as a straight one. Vertices get a
+ * w×w cap so bends join.
  */
 function bandLine(points, w, fn) {
   const cap = ([x, y]) => {
@@ -96,18 +98,86 @@ function bandLine(points, w, fn) {
     const [x0, y0] = points[i - 1];
     const [x1, y1] = points[i];
     const dx = x1 - x0, dy = y1 - y0;
-    const n = Math.max(1, Math.ceil(Math.max(Math.abs(dx), Math.abs(dy)) * 2));
+    const major = Math.max(Math.abs(dx), Math.abs(dy));
+    const run = Math.max(w, Math.round((w * Math.hypot(dx, dy)) / (major || 1)));
+    const n = Math.max(1, Math.ceil(major * 2));
     for (let s = 0; s <= n; s++) {
       const cx = x0 + (dx * s) / n, cy = y0 + (dy * s) / n;
       if (Math.abs(dx) >= Math.abs(dy)) {
-        const tx = Math.floor(cx), start = Math.floor(cy - w / 2 + 0.5);
-        for (let k = 0; k < w; k++) if (inGrid(tx, start + k)) fn(tx, start + k);
+        const tx = Math.floor(cx), start = Math.floor(cy - run / 2 + 0.5);
+        for (let k = 0; k < run; k++) if (inGrid(tx, start + k)) fn(tx, start + k);
       } else {
-        const ty = Math.floor(cy), start = Math.floor(cx - w / 2 + 0.5);
-        for (let k = 0; k < w; k++) if (inGrid(start + k, ty)) fn(start + k, ty);
+        const ty = Math.floor(cy), start = Math.floor(cx - run / 2 + 0.5);
+        for (let k = 0; k < run; k++) if (inGrid(start + k, ty)) fn(start + k, ty);
       }
     }
   }
+}
+
+/** Join a street's separate OSM ways into continuous polylines (matching endpoints). */
+function chainLines(lines) {
+  const key = ([x, y]) => `${x.toFixed(3)},${y.toFixed(3)}`;
+  const pool = lines.map((l) => [...l]);
+  const out = [];
+  while (pool.length) {
+    let chain = pool.shift();
+    let grew = true;
+    while (grew) {
+      grew = false;
+      for (let i = 0; i < pool.length; i++) {
+        const l = pool[i];
+        const [a, b] = [key(chain[0]), key(chain[chain.length - 1])];
+        const [c, d] = [key(l[0]), key(l[l.length - 1])];
+        if (b === c) chain = chain.concat(l.slice(1));
+        else if (b === d) chain = chain.concat([...l].reverse().slice(1));
+        else if (a === d) chain = l.concat(chain.slice(1));
+        else if (a === c) chain = [...l].reverse().concat(chain.slice(1));
+        else continue;
+        pool.splice(i, 1);
+        grew = true;
+        break;
+      }
+    }
+    out.push(chain);
+  }
+  return out;
+}
+
+/**
+ * Snap nearly-axis-aligned runs of a polyline dead straight: consecutive segments within
+ * `maxAngle` of vertical share one x (of horizontal, one y) while every vertex stays
+ * within `tolerance` of it. The shared value is rounded to a tile centre, so neighbouring
+ * runs of a straight street land on exactly the same column. A vertex between a vertical
+ * and a horizontal run gets both, which makes a clean right-angle corner.
+ */
+function axisSnap(points, { maxAngle, tolerance }) {
+  const t = Math.tan((maxAngle * Math.PI) / 180);
+  const kind = (a, b) => {
+    const dx = Math.abs(b[0] - a[0]), dy = Math.abs(b[1] - a[1]);
+    return dx <= t * dy ? 1 : dy <= t * dx ? 0 : -1; // 1 = vertical → snap x (index 0)
+  };
+  const p = points.map((q) => [...q]);
+  let i = 0;
+  while (i < p.length - 1) {
+    const k = kind(p[i], p[i + 1]);
+    if (k < 0) { i++; continue; }
+    const axis = k === 1 ? 0 : 1;
+    let j = i + 1;
+    let sum = 0, len = 0;
+    const add = (a, b) => { const l = Math.hypot(b[0] - a[0], b[1] - a[1]); sum += ((a[axis] + b[axis]) / 2) * l; len += l; };
+    add(p[i], p[i + 1]);
+    while (j < p.length - 1 && kind(p[j], p[j + 1]) === k) {
+      const [s0, l0] = [sum, len];
+      add(p[j], p[j + 1]);
+      const mean = sum / len;
+      if (p.slice(i, j + 2).some((q) => Math.abs(q[axis] - mean) > tolerance)) { sum = s0; len = l0; break; }
+      j++;
+    }
+    const mean = Math.floor(sum / (len || 1)) + 0.5;
+    for (let v = i; v <= j; v++) p[v][axis] = mean;
+    i = j;
+  }
+  return p;
 }
 
 /** Even-odd scanline fill of a set of rings (outer + holes). */
@@ -250,12 +320,54 @@ const nameIdx = (n) => { const s = shortName(n); let i = names.indexOf(s); if (i
 // One width per street: its most common class (by length) or a byName override.
 const roadClass = (h) => (/_link$/.test(h) ? 'link' : h.replace(/_link$/, ''));
 const RANK = { link: 0, tertiary: 1, secondary: 2, primary: 3 };
-const ways = tagged((t) => /^(primary|secondary|tertiary)(_link)?$/.test(t.highway)).map((w) => ({
-  w,
-  cls: roadClass(w.tags.highway),
-  name: w.tags.name ? shortName(w.tags.name) : null,
-  line: simplify(pts(w.geometry), ROADS.simplify),
-}));
+const rawWays = tagged((t) => /^(primary|secondary|tertiary)(_link)?$/.test(t.highway))
+  .filter((w) => !(ROADS.dropLinks && /_link$/.test(w.tags.highway)))
+  .map((w) => ({ w, cls: roadClass(w.tags.highway), name: w.tags.name ? shortName(w.tags.name) : null, line: pts(w.geometry) }));
+const polyLen = (l) => l.reduce((a, p, i) => (i ? a + Math.hypot(p[0] - l[i - 1][0], p[1] - l[i - 1][1]) : 0), 0);
+// Each named street becomes a few continuous chains (so it can be straightened as a whole);
+// a chain takes the class of the way that contributes most of its length.
+const ways = [];
+const byStreet = new Map();
+for (const r of rawWays) {
+  if (!r.name) {
+    if (polyLen(r.line) >= ROADS.minUnnamedLength) ways.push({ ...r, line: simplify(r.line, ROADS.simplify) });
+    continue;
+  }
+  if (!byStreet.has(r.name)) byStreet.set(r.name, []);
+  byStreet.get(r.name).push(r);
+}
+// Intersections: points shared by two or more streets (OSM ways share nodes there).
+const ptKey = ([x, y]) => `${x.toFixed(3)},${y.toFixed(3)}`;
+const streetsAt = new Map();
+for (const r of rawWays) {
+  for (const q of r.line) {
+    const k = ptKey(q);
+    if (!streetsAt.has(k)) streetsAt.set(k, new Set());
+    streetsAt.get(k).add(r.name ?? `#${r.w.id}`);
+  }
+}
+const isJunction = (q) => (streetsAt.get(ptKey(q))?.size ?? 0) > 1;
+/** Cut a chain into block-length pieces at intersections (each piece keeps the junction ends). */
+const splitAtJunctions = (line) => {
+  const pieces = [];
+  let cur = [line[0]];
+  for (let i = 1; i < line.length; i++) {
+    cur.push(line[i]);
+    if (i < line.length - 1 && isJunction(line[i])) { pieces.push(cur); cur = [line[i]]; }
+  }
+  pieces.push(cur);
+  return pieces;
+};
+for (const [name, rs] of byStreet) {
+  const sample = rs.slice().sort((a, b) => polyLen(b.line) - polyLen(a.line))[0];
+  for (const chain of chainLines(rs.map((r) => r.line))) {
+    // Straighten block by block: any one-tile drift of a long street then happens at an
+    // intersection, hidden under the cross street, instead of mid-block.
+    for (const piece of splitAtJunctions(chain)) {
+      ways.push({ w: sample.w, cls: sample.cls, name, line: axisSnap(simplify(piece, ROADS.simplify), ROADS.axisSnap) });
+    }
+  }
+}
 const lengthByName = new Map();
 for (const r of ways) {
   if (!r.name || r.cls === 'link') continue;
@@ -277,7 +389,7 @@ for (const w of tagged((t) => /^motorway/.test(t.highway))) {
 // Narrow and minor first, so wide arterials win the street name where they cross.
 ways.sort((a, b) => widthOf(a) - widthOf(b) || RANK[a.cls] - RANK[b.cls]);
 for (const r of ways) {
-  const n = r.w.tags.name ? nameIdx(r.w.tags.name) : 0;
+  const n = r.name ? nameIdx(r.w.tags.name) : 0;
   bandLine(r.line, widthOf(r), (x, y) => {
     const i = x + y * GW;
     tiles[i] = T.ROAD;
@@ -348,9 +460,15 @@ for (let i = 0; i < tiles.length; i++) {
 }
 const main = sizes.indexOf(Math.max(...sizes));
 let dropped = 0;
+const droppedNames = new Map();
 for (let i = 0; i < tiles.length; i++) {
-  if (tiles[i] === T.ROAD && comp[i] !== main) { tiles[i] = T.LAND; road[i] = 0; dropped++; }
+  if (tiles[i] === T.ROAD && comp[i] !== main) {
+    if (road[i]) droppedNames.set(names[road[i] - 1], (droppedNames.get(names[road[i] - 1]) ?? 0) + 1);
+    tiles[i] = T.LAND; road[i] = 0; dropped++;
+  }
 }
+// Worth a look when it's large: a street cut off from the rest isn't walkable.
+if (dropped > 50) console.warn(`  unreachable road tiles dropped: ${[...droppedNames].map(([n, c]) => `${n} (${c})`).join(', ') || 'unnamed'}`);
 
 // 5. Labels: named parks & schools at their area-weighted centre; `size` = area in tiles.
 // Pieces sharing a name (Lincoln Park is several polygons) merge into one label.

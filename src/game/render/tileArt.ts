@@ -154,6 +154,37 @@ function sand(ctx: Ctx, ox: number, oy: number, tx: number, ty: number) {
 }
 
 const SIDEWALK = 4; // px of sidewalk on a road tile's outer edge (~3 m)
+const BEVEL = 10; // px: size of the 45° curb cut at corners
+
+type Corner = 'nw' | 'ne' | 'sw' | 'se';
+/**
+ * Paint a 45° wedge in one corner of a tile: sidewalk out to `BEVEL` (manhattan distance
+ * from the corner) with a curb line on the diagonal. On a road tile it rounds off an
+ * outside corner; on the grass tile in a staircase notch it fills the step, so diagonal
+ * streets read as smooth slanted curbs instead of stairs.
+ */
+function bevel(ctx: Ctx, ox: number, oy: number, corner: Corner, curbInside: boolean) {
+  const cx = corner === 'nw' || corner === 'sw' ? 0 : TS - 1;
+  const cy = corner === 'nw' || corner === 'ne' ? 0 : TS - 1;
+  for (let y = 0; y < TS; y++) {
+    for (let x = 0; x < TS; x++) {
+      const d = Math.abs(x - cx) + Math.abs(y - cy);
+      if (d > BEVEL) continue;
+      // road tiles: curb on the inner (asphalt) side of the wedge; notch tiles: on the corner side
+      const curb = curbInside ? d === BEVEL : d === BEVEL - SIDEWALK - 1;
+      px(ctx, curb ? PAL.curb : PAL.sidewalk, ox + x, oy + y);
+    }
+  }
+}
+
+/** Fill staircase notches: a non-road tile with road on two adjacent sides (and between them). */
+function notchFill(ctx: Ctx, world: World, tx: number, ty: number, ox: number, oy: number) {
+  const r = (dx: number, dy: number) => world.tileAt(tx + dx, ty + dy) === Tile.Road;
+  if (r(0, -1) && r(-1, 0) && r(-1, -1)) bevel(ctx, ox, oy, 'nw', false);
+  if (r(0, -1) && r(1, 0) && r(1, -1)) bevel(ctx, ox, oy, 'ne', false);
+  if (r(0, 1) && r(-1, 0) && r(-1, 1)) bevel(ctx, ox, oy, 'sw', false);
+  if (r(0, 1) && r(1, 0) && r(1, 1)) bevel(ctx, ox, oy, 'se', false);
+}
 
 /**
  * Asphalt, with the sidewalk drawn on the road's own edge tiles: every edge that meets
@@ -182,6 +213,11 @@ function road(ctx: Ctx, ox: number, oy: number, tx: number, ty: number, world: W
   if (s) px(ctx, PAL.curb, ox + (w ? S : 0), oy + TS - S - 1, TS - (w ? S : 0) - (e ? S : 0), 1);
   if (w) px(ctx, PAL.curb, ox + S, oy + (n ? S : 0), 1, TS - (n ? S : 0) - (s ? S : 0));
   if (e) px(ctx, PAL.curb, ox + TS - S - 1, oy + (n ? S : 0), 1, TS - (n ? S : 0) - (s ? S : 0));
+  // outside corners: cut at 45°
+  if (n && w) bevel(ctx, ox, oy, 'nw', true);
+  if (n && e) bevel(ctx, ox, oy, 'ne', true);
+  if (s && w) bevel(ctx, ox, oy, 'sw', true);
+  if (s && e) bevel(ctx, ox, oy, 'se', true);
 }
 
 function freeway(ctx: Ctx, ox: number, oy: number, tx: number, ty: number) {
@@ -191,6 +227,12 @@ function freeway(ctx: Ctx, ox: number, oy: number, tx: number, ty: number) {
 
 /** Paint one tile at (ox, oy) in a chunk canvas. */
 export function drawTile(ctx: Ctx, world: World, tx: number, ty: number, ox: number, oy: number) {
+  drawBase(ctx, world, tx, ty, ox, oy);
+  const t = world.tileAt(tx, ty);
+  if (t === Tile.Land || t === Tile.Park || t === Tile.Plaza) notchFill(ctx, world, tx, ty, ox, oy);
+}
+
+function drawBase(ctx: Ctx, world: World, tx: number, ty: number, ox: number, oy: number) {
   const t = world.tileAt(tx, ty);
   switch (t) {
     case Tile.Water:

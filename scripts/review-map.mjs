@@ -21,6 +21,8 @@ export const SPOTS = {
   'residential': [47.5705, -122.3925],
   'admiral-way-bridge': [47.5773, -122.4033],
   'alki': [47.5790, -122.4100],
+  'erskine-way': [47.5567, -122.3900],
+  'admiral-junction': [47.5811, -122.3866], // California & Admiral Way
 };
 
 // …plus every hand-drawn landmark, wherever the sheet puts it.
