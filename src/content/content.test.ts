@@ -1,0 +1,44 @@
+import { describe, expect, it } from 'vitest';
+import { createWorld } from '../world/world';
+import { START, locations } from './locations';
+import { artManifest } from './artManifest';
+import { experiences } from '../experiences/registry';
+import { wallTurns } from './wallTurns';
+import { crossedMilestone } from '../experiences/WallTurns';
+
+const world = createWorld();
+
+describe('locations', () => {
+  it('have unique ids', () => {
+    expect(new Set(locations.map((l) => l.id)).size).toBe(locations.length);
+  });
+
+  it.each(locations.map((l) => [l.id, l] as const))('%s has art and sits near the street network', (_, loc) => {
+    expect(artManifest[loc.set]?.length).toBeGreaterThan(0);
+    const p = world.project(loc.lat, loc.lon);
+    const r = world.nearestWalkable(p.x, p.y);
+    expect(world.isWalkable(r.x, r.y)).toBe(true);
+    expect(Math.hypot(r.x - p.x, r.y - p.y) * world.tileMeters).toBeLessThan(150);
+  });
+
+  it('point experiences at registered scenes', () => {
+    for (const l of locations) if (l.experience) expect(experiences[l.experience]).toBeDefined();
+  });
+
+  it('start in the Junction, on California Ave', () => {
+    const p = world.project(START.lat, START.lon);
+    const r = world.nearestWalkable(p.x, p.y);
+    expect(world.streetAt(r.x, r.y)).toMatch(/California|Alaska/);
+  });
+});
+
+describe('crossedMilestone', () => {
+  const marks = wallTurns.milestones;
+  it('fires once when stepping past a mark, never going backwards', () => {
+    // 94 frames: 10% → index 9
+    expect(crossedMilestone(8, 9, 94, marks)).toBe(0);
+    expect(crossedMilestone(9, 10, 94, marks)).toBe(-1);
+    expect(crossedMilestone(10, 9, 94, marks)).toBe(-1);
+    expect(crossedMilestone(92, 93, 94, marks)).toBe(marks.length - 1);
+  });
+});

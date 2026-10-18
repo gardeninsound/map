@@ -1,0 +1,148 @@
+[
+ {
+  "id": "gas-station-wall",
+  "name": "The Wall That Kept Turning",
+  "where": "California Ave SW · 2022–2025",
+  "lat": 47.5668,
+  "lon": -122.3868,
+  "approx": true,
+  "set": "bus-wall",
+  "experience": "wall-turns",
+  "greeting": [
+   "Hey, you found the wall! This one belongs to a gas station on California Ave SW.",
+   "We painted it more than a hundred times. No version was precious — each one was a foundation for the next.",
+   "Want to see it turn?"
+  ]
+ },
+ {
+  "id": "rush-hour",
+  "name": "Rush Hour",
+  "where": "The Junction",
+  "lat": 47.5598,
+  "lon": -122.3868,
+  "approx": true,
+  "set": "rush-hour",
+  "greeting": [
+   "The old Rush Hour storefront. Boarded up, so we kept it changing for a year.",
+   "Still hanging this one — come back soon!"
+  ]
+ },
+ {
+  "id": "land-use-signs",
+  "name": "Land Use Takeover",
+  "where": "West Seattle High School",
+  "lat": 47.576107,
+  "lon": -122.385041,
+  "approx": false,
+  "set": "other",
+  "greeting": [
+   "A government \"Land Use\" sign with nothing left to say. So we gave it something.",
+   "Still hanging this one — come back soon!"
+  ]
+ },
+ {
+  "id": "admiral",
+  "name": "Admiral Windows",
+  "where": "California Ave SW & SW Hill St",
+  "lat": 47.585736,
+  "lon": -122.387045,
+  "approx": false,
+  "set": "admiral",
+  "greeting": [
+   "The church sat empty. In 2025 we became its custodian.",
+   "Still hanging this one — come back soon!"
+  ]
+ },
+ {
+  "id": "power-box",
+  "name": "The Power Box",
+  "where": "Fauntleroy Way SW",
+  "lat": 47.5618,
+  "lon": -122.3812,
+  "approx": true,
+  "set": "fauntleroy-power-box",
+  "greeting": [
+   "A utility box is just a very small wall.",
+   "Still hanging this one — come back soon!"
+  ]
+ },
+ {
+  "id": "cup",
+  "name": "The Big Cup",
+  "where": "Lulu · 4451 California Ave SW",
+  "lat": 47.563796,
+  "lon": -122.386895,
+  "approx": false,
+  "set": "cup",
+  "experience": "cup-paint",
+  "greeting": [
+   "That's Lulu's giant mug, hanging over California Ave.",
+   "Every few weeks it said something new. Grab a brush — paint over it and see what it said next."
+  ]
+ },
+ {
+  "id": "nail-salon",
+  "name": "The Tailor Wall",
+  "where": "South California Ave SW",
+  "lat": 47.5365,
+  "lon": -122.3868,
+  "approx": true,
+  "set": "nail-salon",
+  "greeting": [
+   "Kids painted flowers on this one. It changed ten times.",
+   "Still hanging this one — come back soon!"
+  ]
+ },
+ {
+  "id": "puppy-park",
+  "name": "Seven+ Stories",
+  "where": "A park that will be",
+  "lat": 47.5632,
+  "lon": -122.3835,
+  "approx": true,
+  "set": "puppy-park",
+  "greeting": [
+   "\"This park will be seven+ stories of ramps and plants and puppies without pants.\"",
+   "Still hanging this one — come back soon!"
+  ]
+ },
+ {
+  "id": "swedish",
+  "name": "Small Kindnesses",
+  "where": "Swedish clinic signs",
+  "lat": 47.5612,
+  "lon": -122.3765,
+  "approx": true,
+  "set": "swedish",
+  "greeting": [
+   "\"L'eco di piccole gentilezze\" — the echo of small kindnesses.",
+   "Still hanging this one — come back soon!"
+  ]
+ },
+ {
+  "id": "posters",
+  "name": "The Poster Poles",
+  "where": "2016–2020",
+  "lat": 47.5815,
+  "lon": -122.3838,
+  "approx": true,
+  "set": "posters",
+  "greeting": [
+   "It started on telephone poles. One word, one phrase, no explanation.",
+   "Still hanging this one — come back soon!"
+  ]
+ },
+ {
+  "id": "bear",
+  "name": "The Bears",
+  "where": "Bear Island",
+  "lat": 47.5505,
+  "lon": -122.3868,
+  "approx": true,
+  "set": "bear",
+  "greeting": [
+   "Every island needs its bears.",
+   "Still hanging this one — come back soon!"
+  ]
+ }
+]

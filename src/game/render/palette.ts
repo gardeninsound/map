@@ -1,0 +1,30 @@
+/** The one bright, lo-fi palette everything on the map draws from. */
+export const INK = '#2b2350';
+
+export const PAL = {
+  grass: '#7ed957',
+  grassDark: '#62c043',
+  grassLight: '#9be86f',
+  flowers: ['#ff7eb6', '#ffe066', '#ffffff', '#a77bff'],
+  park: '#3fa34d',
+  treeDark: '#1d5e34',
+  tree: '#2f8f45',
+  treeLight: '#58c35c',
+  trunk: '#7a4b2a',
+  water: '#3a86ff',
+  waterLight: '#6aa8ff',
+  waterDeep: '#2c6fe0',
+  foam: '#e8f6ff',
+  sand: '#ffe29a',
+  sandDark: '#f2c66d',
+  road: '#6d6a8a',
+  roadGrain: '#625f80',
+  curb: '#d8d3e8',
+  sidewalk: '#ece7f5',
+  freeway: '#9592aa',
+  freewayLine: '#ffd34d',
+  window: '#9fd8ff',
+  wall: '#fff4e0',
+  door: '#8a4f2a',
+  roofs: ['#ff6f91', '#3ec1d3', '#ffb347', '#a77bff', '#ff5d5d', '#57cc99', '#ffd166'],
+};
