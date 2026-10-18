@@ -60,6 +60,10 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
   chiptune songs (note strings, tested for whole bars) scheduled ahead through the shared
   AudioContext (`audioContext()` in ui/sfx.ts). `Game` sets `music.level` from distance
   (`EARSHOT` tiles, eased) and `quiet` mutes it inside art scenes; mute button respected.
+- `src/game/crow.ts` — the snack crow (pure flight state, tested). Starts outside Les Schwab on
+  Alaska; asks for snacks (choice → reply), then flies to the next perch in
+  `src/content/crow.ts` (storefront regex + lat/lon fallback, lines per stop) and loops home,
+  remembering how often you shared. App's `talk` overlay takes `choices` and a `then` callback.
 - `src/content/` — **content is data**: `locations.ts` (spots, coords, Mike's greetings),
   `wallTurns.ts` (scene script), `artManifest.ts` (generated, date-ordered).
 - `src/experiences/` — one scene per spot, lazy-loaded via `registry.ts`, wrapped in

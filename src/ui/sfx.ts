@@ -47,6 +47,10 @@ export const sfx = {
   },
   back: () => tone(440, 0.08, 'square', 0.04, -200),
   roll: () => tone(180, 0.35, 'sawtooth', 0.025, 160),
+  caw: () => {
+    tone(620, 0.14, 'sawtooth', 0.035, -260);
+    setTimeout(() => tone(600, 0.16, 'sawtooth', 0.035, -280), 190);
+  },
   isMuted: () => muted,
   setMuted(m: boolean) {
     muted = m;

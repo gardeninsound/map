@@ -3,9 +3,12 @@ import { Tile, type World } from '../world/world';
 import { input } from './input';
 import { facingFor, step, type Facing, type Vec } from './movement';
 import { INK, PAL } from './render/palette';
-import { buildArrows, buildPerson, buildSprites, noteCanvases, type SpriteSet, type Walker } from './render/sprites';
+import { buildArrows, buildCrow, buildPerson, buildSprites, noteCanvases, type SpriteSet, type Walker } from './render/sprites';
 import { BuskerMusic } from './busker';
+import { altitude, flyTick, newCrow, takeOff, type CrowState } from './crow';
 import { buskerVoice } from '../content/neighbors';
+import { CROW_NAME, crowStops } from '../content/crow';
+import { sfx } from '../ui/sfx';
 import { CHUNK, ChunkCache, TS, hash } from './render/tileArt';
 import { rng, spawnNpcs, wander, type Npc } from './npcs';
 
@@ -68,6 +71,11 @@ export class Game {
   private music = new BuskerMusic();
   private notes = noteCanvases(['#ff7eb6', '#ffe066', '#2ec4b6', '#ffffff']);
   private buskerSprite: Walker;
+  /** the snack crow: talk to it and it flies off to its next perch */
+  readonly crow: Npc;
+  readonly crowState: CrowState;
+  private crowPerches: Vec[];
+  private crowSprites = buildCrow();
   /** first-visit "go this way" arrow: shown until this time (s), unless you start walking */
   private hint: { until: number; from: Vec } | null = null;
   private now = 0;
@@ -107,6 +115,26 @@ export class Game {
       sprite: this.buskerSprite,
     };
     this.npcs.push(this.busker);
+    // The crow starts on the sidewalk outside Les Schwab on Alaska; see content/crow.ts.
+    this.crowPerches = crowStops.map((s) => {
+      const shop = world.shops.find((x) => s.shop.test(x.name));
+      const p = shop ?? world.project(s.lat, s.lon);
+      return world.nearestWalkable(p.x, p.y);
+    });
+    this.crowState = newCrow(this.crowPerches);
+    this.crow = {
+      id: -2,
+      pos: this.crowState.pos,
+      dir: { x: 0, y: 0 },
+      facing: 'right',
+      walkT: 0,
+      timer: 0,
+      talking: false,
+      still: true,
+      voice: { name: CROW_NAME, lines: [] },
+      sprite: this.crowSprites.perch,
+    };
+    this.npcs.push(this.crow);
     this.resize();
   }
 
@@ -167,6 +195,14 @@ export class Game {
     for (const n of this.npcs) n.talking = false;
   }
 
+  /** After the snack question: caw and fly to the next perch. */
+  crowFlyAway(shared: boolean) {
+    if (shared) this.crowState.snacks++;
+    this.crow.talking = false;
+    takeOff(this.crowState, this.crowPerches);
+    sfx.caw();
+  }
+
   teleport(p: Vec) {
     this.player.pos = this.world.nearestWalkable(p.x, p.y);
     this.player.facing = 'down';
@@ -177,6 +213,10 @@ export class Game {
     // Music swells as you walk up to the busker, fades as you leave.
     const d = Math.hypot(this.busker.pos.x - p.pos.x, this.busker.pos.y - p.pos.y);
     this.music.level = this.quiet ? 0 : Math.max(0, 1 - d / EARSHOT) ** 1.6;
+    flyTick(this.crowState, dt);
+    this.crow.pos = this.crowState.pos;
+    // Perched and idle, the crow looks this way and that.
+    if (!this.crowState.flight && !this.crow.talking) this.crow.facing = Math.floor(this.now / 2.7) % 3 === 1 ? 'left' : 'right';
     if (this.paused) {
       p.moving = false;
       return;
@@ -223,6 +263,7 @@ export class Game {
       }
     }
     for (const npc of this.npcs) {
+      if (npc === this.crow && this.crowState.flight) continue;
       const d = Math.hypot(npc.pos.x - p.pos.x, npc.pos.y - p.pos.y);
       if (d < best * 0.8) {
         best = d / 0.8; // art spots win ties
@@ -317,7 +358,7 @@ export class Game {
       });
     }
     for (const npc of this.npcs) {
-      if (npc === this.busker) continue;
+      if (npc === this.busker || npc === this.crow) continue;
       const sx = Math.round(npc.pos.x * TS - cam.x);
       const sy = Math.round(npc.pos.y * TS - cam.y);
       if (sx < -16 || sy < -16 || sx > vw + 16 || sy > vh + 16) continue;
@@ -332,6 +373,7 @@ export class Game {
       });
     }
     this.drawBusker(cam, time, actors);
+    this.drawCrow(cam, time, actors);
     const p = this.player;
     const frames = this.sprites.rabbit[p.facing];
     const frame = p.moving ? Math.floor(p.walkT * 8) % 2 : 0;
@@ -400,6 +442,34 @@ export class Game {
             ctx.drawImage(img, nx, ny);
           }
           ctx.globalAlpha = 1;
+        }
+      },
+    });
+  }
+
+  /** The crow: hops now and then on its perch; in flight, flaps high over the rooftops. */
+  private drawCrow(cam: Vec, time: number, actors: { y: number; draw: () => void }[]) {
+    const c = this.crow;
+    const f = this.crowState.flight;
+    const alt = f ? Math.round(altitude(f) * 40) : 0;
+    const sx = Math.round(c.pos.x * TS - cam.x);
+    const sy = Math.round(c.pos.y * TS - cam.y);
+    const { width: vw, height: vh } = this.canvas;
+    if (sx < -32 || sy < -32 || sx > vw + 32 || sy - alt > vh + 32) return;
+    const ctx = this.ctx;
+    actors.push({
+      // airborne, it passes over everything
+      y: f ? Infinity : c.pos.y,
+      draw: () => {
+        const w = alt > 20 ? 4 : 6;
+        ctx.fillStyle = 'rgba(0,0,0,0.2)';
+        ctx.fillRect(sx - w / 2, sy + 1, w, 2);
+        if (f) {
+          const img = this.crowSprites.fly[f.to.x >= f.from.x ? 'right' : 'left'][Math.floor(time * 8) % 2];
+          ctx.drawImage(img, sx - 8, sy - 12 - alt);
+        } else {
+          const hop = !c.talking && (time * 0.6) % 2.5 < 0.12 ? 1 : 0;
+          ctx.drawImage(c.sprite[c.facing][hop], sx - 8, sy - 15);
         }
       },
     });

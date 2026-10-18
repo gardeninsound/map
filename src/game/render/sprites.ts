@@ -222,9 +222,87 @@ export function noteCanvases(colors: string[]): HTMLCanvasElement[] {
   return colors.flatMap((c) => NOTE_GRIDS.map((g) => gridToCanvas(g, { '#': c })));
 }
 
-export const SPRITE_GRIDS = { RABBIT_DOWN, RABBIT_UP, RABBIT_RIGHT, MIKE_DOWN, EASEL, PERSON_DOWN, PERSON_UP, PERSON_RIGHT };
+/** The snack crow, perched (facing right): b body, s sheen, w eye, n beak and feet. */
+const CROW_PERCH: Grid = [
+  '................',
+  '................',
+  '................',
+  '................',
+  '................',
+  '..........kkk...',
+  '.........kbbbk..',
+  '.........kbwbkk.',
+  '.........kbbbnnk',
+  '.....kkkkbbbbkk.',
+  '...kkbssbbbbbk..',
+  '.kkbbssbbbbbbk..',
+  'kbbkkbbbbbbbk...',
+  '.kk..kkbbbbk....',
+  '.......nk.nk....',
+  '......nn.nn.....',
+];
+
+/** In flight: wings up, wings down. */
+const CROW_FLY_UP: Grid = [
+  '................',
+  '................',
+  '....kkk.........',
+  '....kbbk........',
+  '.....kbbk.......',
+  '......kbbk..kkk.',
+  '.kkk...kbk.kbwbk',
+  'kbbbkkkkbbkbbbnn',
+  '.kkbbbbbbbbbbbk.',
+  '...kkbbbbbbbkk..',
+  '.....kkkkkkk....',
+  '................',
+  '................',
+  '................',
+  '................',
+  '................',
+];
+
+const CROW_FLY_DOWN: Grid = [
+  '................',
+  '................',
+  '................',
+  '................',
+  '................',
+  '............kkk.',
+  '.kkk.......kbwbk',
+  'kbbbkkkkkkkbbbnn',
+  '.kkbbbbbbbbbbbk.',
+  '...kkbbbbbbbkk..',
+  '.....kkbbbbk....',
+  '.......kbbk.....',
+  '........kbk.....',
+  '.........k......',
+  '................',
+  '................',
+];
+
+const CROW_COLORS: Record<string, string> = { k: INK, b: '#191526', s: '#5a4d99', w: '#ffffff', n: '#8a86a0' };
+
+export const SPRITE_GRIDS = {
+  RABBIT_DOWN, RABBIT_UP, RABBIT_RIGHT, MIKE_DOWN, EASEL, PERSON_DOWN, PERSON_UP, PERSON_RIGHT,
+  CROW_PERCH, CROW_FLY_UP, CROW_FLY_DOWN,
+};
 
 export type Walker = Record<'up' | 'down' | 'left' | 'right', HTMLCanvasElement[]>;
+
+export interface CrowSprites {
+  /** perched, [still, hop]; up/down reuse the side views */
+  perch: Walker;
+  fly: Record<'left' | 'right', HTMLCanvasElement[]>;
+}
+
+export function buildCrow(): CrowSprites {
+  const side = (mirror: boolean) => [gridToCanvas(CROW_PERCH, CROW_COLORS, mirror), gridToCanvas(hop(CROW_PERCH), CROW_COLORS, mirror)];
+  const right = side(false);
+  const left = side(true);
+  const wings = (mirror: boolean) => [CROW_FLY_UP, CROW_FLY_DOWN].map((g) => gridToCanvas(g, CROW_COLORS, mirror));
+  return { perch: { right, left, down: right, up: left }, fly: { right: wings(false), left: wings(true) } };
+}
 
 /** A neighbor in four directions, recolored: h hair, s skin, c shirt, j pants, b shoes. */
 export function buildPerson(colors: { h: string; s: string; c: string; j: string; b: string }): Walker {

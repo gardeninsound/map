@@ -1,5 +1,6 @@
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { START, locations, welcome } from './content/locations';
+import { CROW_NAME, crowChoices, crowGreeting, crowReply } from './content/crow';
 import { experiences } from './experiences/registry';
 import { Game, type PlacedLocation, type Target } from './game/Game';
 import { bindKeyboard, input, isTouch } from './game/input';
@@ -15,7 +16,17 @@ import { createWorld } from './world/world';
 
 type Overlay =
   | { kind: 'none' }
-  | { kind: 'talk'; lines: string[]; loc?: PlacedLocation; speaker?: string; portrait?: string; firstVisit?: boolean }
+  | {
+      kind: 'talk';
+      lines: string[];
+      loc?: PlacedLocation;
+      speaker?: string;
+      portrait?: string;
+      firstVisit?: boolean;
+      choices?: { label: string; onPick(): void }[];
+      /** runs when the last line is dismissed */
+      then?: () => void;
+    }
   | { kind: 'scene'; loc: PlacedLocation }
   | { kind: 'spots' };
 
@@ -62,7 +73,19 @@ export default function App() {
       onInteract: (t) => {
         sfx.confirm();
         if (t.kind === 'place') setOverlay({ kind: 'talk', lines: t.loc.greeting, loc: t.loc });
-        else setOverlay({ kind: 'talk', lines: t.npc.voice.lines, speaker: t.npc.voice.name, portrait: g.portraitOf(t.npc) });
+        else if (t.npc === g.crow) {
+          // Snacks? Either way it says its piece, then flies off to the next perch.
+          const { stop, lap, snacks } = g.crowState;
+          const talk = { kind: 'talk', speaker: CROW_NAME, portrait: g.portraitOf(g.crow) } as const;
+          setOverlay({
+            ...talk,
+            lines: crowGreeting(stop, lap, snacks),
+            choices: crowChoices.map((c) => ({
+              label: c.label,
+              onPick: () => setOverlay({ ...talk, lines: crowReply(stop, c.snack), then: () => g.crowFlyAway(c.snack) }),
+            })),
+          });
+        } else setOverlay({ kind: 'talk', lines: t.npc.voice.lines, speaker: t.npc.voice.name, portrait: g.portraitOf(t.npc) });
       },
     });
     g.paused = true;
@@ -192,14 +215,16 @@ export default function App() {
                 game.showDirectionHint();
               }
               closeOverlay();
+              overlay.then?.();
             }}
             choices={
-              talkLoc?.experience
+              overlay.choices ??
+              (talkLoc?.experience
                 ? [
                     { label: "Let's see it", onPick: () => setOverlay({ kind: 'scene', loc: talkLoc }) },
                     { label: 'Maybe later', onPick: closeOverlay },
                   ]
-                : undefined
+                : undefined)
             }
           />
         </div>
