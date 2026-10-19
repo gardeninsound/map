@@ -11,6 +11,7 @@ let muted = (() => {
 function tone(freq: number, dur: number, type: OscillatorType = 'square', vol = 0.04, slide = 0) {
   if (muted) return;
   try {
+    if (!ctx && !activated()) return;
     ctx ??= new AudioContext();
     const t = ctx.currentTime;
     const osc = ctx.createOscillator();
@@ -28,8 +29,12 @@ function tone(freq: number, dur: number, type: OscillatorType = 'square', vol = 
   }
 }
 
+/** Browsers refuse to start audio before the visitor has clicked or pressed a key. */
+const activated = () => (navigator as Navigator & { userActivation?: { hasBeenActive: boolean } }).userActivation?.hasBeenActive ?? true;
+
 /** The shared AudioContext (created on first use, after a user gesture); null if unavailable. */
 export function audioContext(): AudioContext | null {
+  if (!ctx && !activated()) return null;
   try {
     ctx ??= new AudioContext();
     if (ctx.state === 'suspended') void ctx.resume();

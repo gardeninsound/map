@@ -6,6 +6,13 @@ import '@fontsource/pixelify-sans/600.css';
 import './styles.css';
 import App from './App';
 
+// Loaded fine: re-arm the stale-deploy reload guard in index.html for next time.
+try {
+  sessionStorage.removeItem('bearisland-fresh-reload');
+} catch {
+  /* storage unavailable */
+}
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <App />
