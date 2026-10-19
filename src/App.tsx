@@ -1,18 +1,30 @@
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  bindKeyboard,
+  CityGame,
+  Compass,
+  createWorld,
+  input,
+  isTouch,
+  Minimap,
+  NearbyCard,
+  nearestSpot,
+  StreetSign,
+  TouchPad,
+  type Target,
+} from 'west-seattle-map';
 import { START, locations, welcome } from './content/locations';
 import { CROW_NAME, crowChoices, crowGreeting, crowReply } from './content/crow';
+import { neighborVoices } from './content/neighbors';
 import { experiences } from './experiences/registry';
-import { Game, type PlacedLocation, type Target } from './game/Game';
-import { bindKeyboard, input, isTouch } from './game/input';
-import { DialogBox } from './ui/DialogBox';
-import { Compass } from './ui/Compass';
-import { Minimap, NearbyCard, StreetSign } from './ui/Hud';
+import { ArtSpots, type PlacedLocation } from './game/plugins/artSpots';
+import { Busker } from './game/plugins/busker';
+import { Crow } from './game/plugins/crow';
+import { DialogBox } from './ui/MikeDialog';
 import { SceneBoundary } from './ui/SceneBoundary';
 import { SpotsMenu } from './ui/SpotsMenu';
 import { TitleScreen } from './ui/TitleScreen';
-import { TouchPad } from './ui/TouchPad';
-import { sfx } from './ui/sfx';
-import { createWorld } from './world/world';
+import { sounds } from './ui/sounds';
 
 type Overlay =
   | { kind: 'none' }
@@ -50,7 +62,8 @@ const markHintSeen = () => {
 export default function App() {
   const world = useMemo(() => createWorld(), []);
   const canvas = useRef<HTMLCanvasElement>(null);
-  const [game, setGame] = useState<Game | null>(null);
+  const [game, setGame] = useState<CityGame | null>(null);
+  const [spots, setSpots] = useState<ArtSpots | null>(null);
   const [started, setStarted] = useState(false);
   const [street, setStreet] = useState<string | null>(null);
   const [storefront, setStorefront] = useState<string | null>(null);
@@ -59,38 +72,50 @@ export default function App() {
   const overlayKind = useRef<Overlay['kind']>('none');
   overlayKind.current = overlay.kind;
   const [mapOpen, setMapOpen] = useState(false);
-  const [muted, setMuted] = useState(sfx.isMuted());
+  const [muted, setMuted] = useState(sounds.isMuted());
   const touch = isTouch();
 
   useEffect(() => bindKeyboard(), []);
 
   useEffect(() => {
-    const c = canvas.current!;
-    const g = new Game(c, world, locations, world.project(START.lat, START.lon), {
-      onStreet: setStreet,
-      onStorefront: setStorefront,
-      onNearby: setNearby,
-      onInteract: (t) => {
-        sfx.confirm();
-        if (t.kind === 'place') setOverlay({ kind: 'talk', lines: t.loc.greeting, loc: t.loc });
-        else if (t.npc === g.crow) {
-          // Snacks? Either way it says its piece, then flies off to the next perch.
-          const { stop, lap, snacks } = g.crowState;
-          const talk = { kind: 'talk', speaker: CROW_NAME, portrait: g.portraitOf(g.crow) } as const;
-          setOverlay({
-            ...talk,
-            lines: crowGreeting(stop, lap, snacks),
-            choices: crowChoices.map((c) => ({
-              label: c.label,
-              onPick: () => setOverlay({ ...talk, lines: crowReply(stop, c.snack), then: () => g.crowFlyAway(c.snack) }),
-            })),
-          });
-        } else setOverlay({ kind: 'talk', lines: t.npc.voice.lines, speaker: t.npc.voice.name, portrait: g.portraitOf(t.npc) });
+    const art = new ArtSpots(locations);
+    const busker = new Busker();
+    const crow = new Crow();
+    const g = new CityGame(canvas.current!, world, {
+      start: world.project(START.lat, START.lon),
+      voices: neighborVoices,
+      plugins: [art, busker, crow],
+      events: {
+        onStreet: setStreet,
+        onStorefront: setStorefront,
+        onNearby: setNearby,
+        onInteract: (t) => {
+          sounds.confirm();
+          if (t.kind === 'place') {
+            const loc = t.data as PlacedLocation;
+            art.visited.add(loc.id);
+            setOverlay({ kind: 'talk', lines: loc.greeting, loc });
+          } else if (t.npc === crow.npc) {
+            // Snacks? Either way it says its piece, then flies off to the next perch.
+            const { stop, lap, snacks } = crow.state;
+            const talk = { kind: 'talk', speaker: CROW_NAME, portrait: g.portraitOf(crow.npc) } as const;
+            setOverlay({
+              ...talk,
+              lines: crowGreeting(stop, lap, snacks),
+              choices: crowChoices.map((c) => ({
+                label: c.label,
+                onPick: () => setOverlay({ ...talk, lines: crowReply(stop, c.snack), then: () => crow.flyAway(c.snack) }),
+              })),
+            });
+          } else if (t.npc) {
+            setOverlay({ kind: 'talk', lines: t.npc.voice.lines, speaker: t.npc.voice.name, portrait: g.portraitOf(t.npc) });
+          }
+        },
       },
     });
     g.paused = true;
-    if (import.meta.env.DEV) (window as unknown as { __game: Game }).__game = g; // test hook
-    // Dev review hook: ?at=lat,lon skips the title and drops you there (see scripts/review-map.mjs).
+    if (import.meta.env.DEV) Object.assign(window, { __game: g, __busker: busker, __crow: crow, __art: art }); // test hooks
+    // Dev review hook: ?at=lat,lon skips the title and drops you there.
     const at = import.meta.env.DEV && new URLSearchParams(location.search).get('at');
     if (at) {
       const [lat, lon] = at.split(',').map(Number);
@@ -102,6 +127,7 @@ export default function App() {
     // Canvas text needs the pixel font before the first frame that draws labels.
     document.fonts.load('8px "Press Start 2P"').finally(() => g.start());
     setGame(g);
+    setSpots(art);
     return () => {
       g.stop();
       window.removeEventListener('resize', onResize);
@@ -123,10 +149,10 @@ export default function App() {
         if (b === 'map') {
           input.consume('map');
           setMapOpen((o) => !o);
-        } else if (b === 'spots' && overlayKind.current === 'none') {
+        } else if (b === 'menu' && overlayKind.current === 'none') {
           // Only from the open map; the menu closes itself on a second T.
-          input.consume('spots');
-          sfx.confirm();
+          input.consume('menu');
+          sounds.confirm();
           setOverlay({ kind: 'spots' });
         }
       }),
@@ -147,16 +173,16 @@ export default function App() {
   /** Shortcut travel: land beside the easel, optionally straight into its scene. */
   const travel = useCallback(
     (loc: PlacedLocation, open: boolean) => {
-      if (!game) return;
+      if (!game || !spots) return;
       game.teleport(loc);
-      game.visited.add(loc.id);
+      spots.visited.add(loc.id);
       input.clear();
       setMapOpen(false);
       setOverlay(open && loc.experience ? { kind: 'scene', loc } : { kind: 'none' });
     },
-    [game],
+    [game, spots],
   );
-  const openSpots = game?.places.filter((p) => p.experience) ?? [];
+  const openSpots = spots?.open ?? [];
 
   const Scene = overlay.kind === 'scene' && overlay.loc.experience ? experiences[overlay.loc.experience] : null;
   const talkLoc = overlay.kind === 'talk' ? overlay.loc : undefined;
@@ -170,31 +196,47 @@ export default function App() {
           <StreetSign name={street} storefront={storefront} />
           {overlay.kind === 'none' && <NearbyCard target={nearby} />}
           <div className="hud-right">
-          <div className="hud-buttons">
-            <button
-              className="hud-spots"
-              onClick={() => { sfx.confirm(); setOverlay({ kind: 'spots' }); }}
-              aria-pressed={overlay.kind === 'spots'}
-            >
-              ★ SPOTS {!touch && <kbd>T</kbd>}
-            </button>
-            <button onClick={() => setMapOpen((o) => !o)} aria-pressed={mapOpen}>
-              MAP {!touch && <kbd>M</kbd>}
-            </button>
-            <button
-              onClick={() => {
-                sfx.setMuted(!muted);
-                setMuted(!muted);
-              }}
-              aria-label={muted ? 'Unmute sound' : 'Mute sound'}
-            >
-              {muted ? '♪ OFF' : '♪ ON'}
-            </button>
-          </div>
-          {game && overlay.kind === 'none' && (
-            <Compass game={game} onClick={() => { sfx.confirm(); setOverlay({ kind: 'spots' }); }} />
-          )}
-          {game && <Minimap game={game} open={mapOpen} />}
+            <div className="hud-buttons">
+              <button
+                className="hud-spots"
+                onClick={() => { sounds.confirm(); setOverlay({ kind: 'spots' }); }}
+                aria-pressed={overlay.kind === 'spots'}
+              >
+                ★ SPOTS {!touch && <kbd>T</kbd>}
+              </button>
+              <button onClick={() => setMapOpen((o) => !o)} aria-pressed={mapOpen}>
+                MAP {!touch && <kbd>M</kbd>}
+              </button>
+              <button
+                onClick={() => {
+                  sounds.setMuted(!muted);
+                  setMuted(!muted);
+                }}
+                aria-label={muted ? 'Unmute sound' : 'Mute sound'}
+              >
+                {muted ? '♪ OFF' : '♪ ON'}
+              </button>
+            </div>
+            {game && spots && overlay.kind === 'none' && (
+              <Compass game={game} spots={() => spots.open} onClick={() => { sounds.confirm(); setOverlay({ kind: 'spots' }); }} />
+            )}
+            {game && spots && (
+              <Minimap
+                game={game}
+                open={mapOpen}
+                markers={() =>
+                  spots.places.map((loc) => ({
+                    x: loc.x,
+                    y: loc.y,
+                    color: spots.visited.has(loc.id) ? '#ffffff' : loc.experience ? '#ffe066' : '#ff7eb6',
+                  }))
+                }
+                legend={[
+                  { color: '#ffe066', label: 'open' },
+                  { color: '#ff7eb6', label: 'soon' },
+                ]}
+              />
+            )}
           </div>
           <p className="attribution">{world.attribution}</p>
         </>
@@ -210,9 +252,10 @@ export default function App() {
             speaker={overlay.speaker}
             portrait={overlay.portrait}
             onDone={() => {
-              if (overlay.firstVisit && game && !hintSeen()) {
+              if (overlay.firstVisit && game && spots && !hintSeen()) {
                 markHintSeen();
-                game.showDirectionHint();
+                const near = nearestSpot(spots.open, game.player.pos.x, game.player.pos.y);
+                if (near) game.showDirectionHint(near.loc);
               }
               closeOverlay();
               overlay.then?.();
@@ -230,10 +273,10 @@ export default function App() {
         </div>
       )}
 
-      {overlay.kind === 'spots' && game && (
+      {overlay.kind === 'spots' && spots && (
         <SpotsMenu
           spots={openSpots}
-          visited={game.visited}
+          visited={spots.visited}
           onOpen={(loc) => travel(loc, true)}
           onGo={(loc) => travel(loc, false)}
           onClose={closeOverlay}

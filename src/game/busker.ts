@@ -3,7 +3,7 @@
  * scheduled a beat or so ahead. The game sets `level` (0..1) from how close you are, and
  * the master gain glides toward it, so the music swells as you walk up and fades away.
  */
-import { audioContext, sfx } from '../ui/sfx';
+import { audioContext, sfx } from 'west-seattle-map';
 
 /** "NOTE:beats" tokens; R = rest. Lead lines are written to loop. */
 interface Song {

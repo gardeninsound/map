@@ -18,16 +18,32 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      # The city comes from the sibling repo west-seattle-map ("file:../west-seattle-map"),
+      # so check both out side by side. It's private: read via a read-only deploy key.
       - uses: actions/checkout@v6
+        with:
+          path: bearisland-map
+      - uses: actions/checkout@v6
+        with:
+          repository: vlandham/west-seattle-map
+          path: west-seattle-map
+          ssh-key: ${{ secrets.WSM_DEPLOY_KEY }}
       - uses: actions/setup-node@v6
         with:
           node-version: 22
           cache: npm
+          cache-dependency-path: |
+            bearisland-map/package-lock.json
+            west-seattle-map/package-lock.json
       - run: npm ci
+        working-directory: west-seattle-map
+      - run: npm ci
+        working-directory: bearisland-map
       - run: npm run build
+        working-directory: bearisland-map
       - uses: actions/upload-pages-artifact@v5
         with:
-          path: dist
+          path: bearisland-map/dist
 
   deploy:
     needs: build

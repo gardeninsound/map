@@ -3,9 +3,9 @@ import { artUrl, videoUrl } from '../content/art';
 import { artManifest } from '../content/artManifest';
 import { chooseTurns, slideshows, wallTurns } from '../content/wallTurns';
 import type { ArtAsset } from '../content/types';
-import { buttonLabel, input } from '../game/input';
-import { DialogBox } from '../ui/DialogBox';
-import { sfx } from '../ui/sfx';
+import { buttonLabel, input } from 'west-seattle-map';
+import { DialogBox } from '../ui/MikeDialog';
+import { sounds as sfx } from '../ui/sounds';
 import type { ExperienceProps } from './registry';
 
 const ROLL_MS = 750;

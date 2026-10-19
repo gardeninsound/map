@@ -4,7 +4,13 @@ Walk the streets of West Seattle as a small rabbit and find ten years of Mike's 
 propaganda art. Bright, lo-fi, SNES-flavored. Built with Vite + React + TypeScript and a
 hand-rolled Canvas 2D tile renderer.
 
+The city (map, renderer, movement, HUD) is the sibling repo
+[west-seattle-map](https://github.com/vlandham/west-seattle-map), linked as a local package —
+clone both next to each other:
+
 ```bash
+git clone git@github.com:vlandham/west-seattle-map.git ../west-seattle-map
+(cd ../west-seattle-map && npm install)
 npm install
 npm run dev      # http://localhost:5173/bearisland-map/
 npm test

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { altitude, flyTick, newCrow, takeOff } from './crow';
 import { crowGreeting, crowStops } from '../content/crow';
-import worldData from '../world/worldData.json';
+import { createWorld } from 'west-seattle-map';
 
 const perches = [{ x: 0, y: 0 }, { x: 90, y: 0 }, { x: 90, y: 40 }];
 
@@ -37,7 +37,8 @@ describe('snack crow', () => {
   });
 
   it('perches at real storefronts', () => {
-    for (const s of crowStops) expect(worldData.shops.some((shop) => s.shop.test(shop.name)), String(s.shop)).toBe(true);
+    const { shops } = createWorld();
+    for (const s of crowStops) expect(shops.some((shop) => s.shop.test(shop.name)), String(s.shop)).toBe(true);
   });
 
   it('always ends its greeting asking for snacks', () => {

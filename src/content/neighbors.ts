@@ -3,10 +3,7 @@
  * the rest are invented neighbor-voices in its spirit — swap in real ones as they're
  * collected (the manual wants to "collect stories of interpretations").
  */
-export interface NeighborVoice {
-  name: string;
-  lines: string[];
-}
+import type { NeighborVoice } from 'west-seattle-map';
 
 export const neighborVoices: NeighborVoice[] = [
   { name: 'A man on the street', lines: ['Thanks for doing that. It makes me feel like I live in a neighborhood.'] }, // (manual)
@@ -32,12 +29,4 @@ export const buskerVoice: NeighborVoice = {
     'This one is called "Trust the Flux." I wrote it on the 128 bus.',
     'Next up: "Puppies Without Pants," then "So Glad You Are Here." Requests welcome. Ducks especially.',
   ],
-};
-
-export const NPC_PALETTES = {
-  hair: ['#2b1d0e', '#6b4a2b', '#e8c170', '#c0392b', '#9a9aa8', '#ff7eb6', '#2ec4b6'],
-  skin: ['#ffdbac', '#f1c27d', '#e0ac69', '#c68642', '#8d5524'],
-  shirt: ['#ff5d5d', '#2ec4b6', '#ffd166', '#ff7eb6', '#57cc99', '#3a86ff', '#a77bff', '#ffffff'],
-  pants: ['#3d5a99', '#2b2350', '#6b6880', '#57cc99', '#a0522d'],
-  shoes: ['#2b2350', '#ffffff', '#ff5d5d'],
 };

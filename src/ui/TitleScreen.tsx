@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { input } from '../game/input';
-import { sfx } from './sfx';
+import { input } from 'west-seattle-map';
+import { sounds as sfx } from './sounds';
 
 export function TitleScreen({ onStart }: { onStart(): void }) {
   useEffect(

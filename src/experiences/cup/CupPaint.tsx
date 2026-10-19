@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import '@fontsource/big-shoulders-stencil-display/800';
 import { cupScript, cupVersions } from '../../content/cupVersions';
-import { buttonLabel, input } from '../../game/input';
-import { buildSprites } from '../../game/render/sprites';
-import { DialogBox } from '../../ui/DialogBox';
-import { sfx } from '../../ui/sfx';
+import { buttonLabel, input } from 'west-seattle-map';
+import { buildSprites } from 'west-seattle-map';
+import { DialogBox } from '../../ui/MikeDialog';
+import { sounds as sfx } from '../../ui/sounds';
 import type { ExperienceProps } from '../registry';
 import { CupScene } from './CupScene';
 import { FONT, loadRabbit } from './cupTexture';

@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { artUrl } from '../content/art';
 import { artManifest } from '../content/artManifest';
-import type { PlacedLocation } from '../game/Game';
-import { input, isTouch } from '../game/input';
-import { sfx } from './sfx';
+import type { PlacedLocation } from '../game/plugins/artSpots';
+import { input, isTouch } from 'west-seattle-map';
+import { sounds as sfx } from './sounds';
 
 interface Props {
   spots: PlacedLocation[];
@@ -27,7 +27,7 @@ const thumb = (loc: PlacedLocation) => {
 export function SpotsMenu({ spots, visited, onOpen, onGo, onClose }: Props) {
   useEffect(() => {
     const off = input.on((b) => {
-      if (b === 'b' || b === 'spots') {
+      if (b === 'b' || b === 'menu') {
         input.consume(b);
         sfx.back();
         onClose();

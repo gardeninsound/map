@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 import { artUrl } from '../../content/art';
 import { artManifest } from '../../content/artManifest';
 import { parkScript, parkSigns } from '../../content/puppyPark';
-import { buttonLabel, input, isTouch } from '../../game/input';
-import { DialogBox } from '../../ui/DialogBox';
-import { TouchPad } from '../../ui/TouchPad';
-import { sfx } from '../../ui/sfx';
+import { buttonLabel, input, isTouch } from 'west-seattle-map';
+import { DialogBox } from '../../ui/MikeDialog';
+import { TouchPad } from 'west-seattle-map';
+import { sounds as sfx } from '../../ui/sounds';
 import type { ExperienceProps } from '../registry';
 import { ParkScene } from './ParkScene';
 
@@ -54,7 +54,7 @@ export default function ParkWalk({ location, onExit }: ExperienceProps) {
     () =>
       input.on((b) => {
         const st = state.current;
-        if (st.intro) return; // the dialog handles its own A
+        if (st.intro && b !== 'b') return; // the dialog handles its own A; B always leaves
         if (b === 'a') {
           input.consume('a');
           if (st.reading !== null) setReading(null);

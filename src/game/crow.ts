@@ -2,7 +2,7 @@
  * The snack crow's travels (pure, tested). It sits at a perch until you've talked to it,
  * then flies in a straight line — crows don't take the streets — to the next one.
  */
-import type { Vec } from './movement';
+import type { Vec } from 'west-seattle-map';
 
 const SPEED = 30; // tiles / second
 const MIN_FLIGHT = 3; // seconds, so even a short hop reads as a flight
