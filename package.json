@@ -20,7 +20,7 @@
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "three": "^0.186.1",
-    "west-seattle-map": "file:../west-seattle-map"
+    "west-seattle-map": "github:vlandham/west-seattle-map#v0.1.0"
   },
   "devDependencies": {
     "@testing-library/react": "^16.3.3",

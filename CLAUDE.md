@@ -4,9 +4,12 @@ A lo-fi SNES-style overworld of West Seattle. You walk a rabbit along the real m
 easels mark where Mike's art went up. Walk up, press A, Mike pops in with dialog, and each spot
 opens its own way of exploring the work.
 
-**The city itself — map, renderer, movement, neighbors, HUD — lives in `../west-seattle-map`**,
-linked as `"west-seattle-map": "file:../west-seattle-map"` (edits there show up here live; map
-generation, landmarks and map review all happen there). This repo is the art layer on top: art
+**The city itself — map, renderer, movement, neighbors, HUD — is the package
+[west-seattle-map](https://github.com/vlandham/west-seattle-map)**, pinned to a release tag in
+package.json (`github:vlandham/west-seattle-map#v0.1.0`). The two evolve separately: city work
+happens there and reaches Bear Island only when you bump the tag here (`npm i
+github:vlandham/west-seattle-map#vX.Y.Z`, then check the app). Map generation, landmarks and map
+review all happen in that repo. This repo is the art layer on top: art
 spots, Mike, the busker and crow, and the scenes — all as `CityPlugin`s + React UI.
 
 Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearisland-manual`
@@ -31,9 +34,8 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
   west-seattle-map's `scripts/sheet.mjs` helpers.
 - `node scripts/make-portrait.mjs` — Mike's tintype → 40×40 pixel portrait
 - `node scripts/make-cup-rabbit.mjs` — traces the mug rabbit stencil from `data/source/cup-rabbit-photo.png` → `public/sprites/cup-rabbit.png`
-- Deploy: push `main` → GitHub Pages via `.github/workflows/deploy.yml`, which checks out both
-  repos side by side (west-seattle-map is private: read via the `WSM_DEPLOY_KEY` deploy key).
-  Changes in west-seattle-map only reach the site when this repo deploys.
+- Deploy: push `main` → GitHub Pages via `.github/workflows/deploy.yml`. west-seattle-map is
+  private; `npm ci` fetches it over SSH using the read-only `WSM_DEPLOY_KEY` deploy key.
 
 ## Where things live
 
