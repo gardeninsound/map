@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { artUrl } from '../content/art';
 import { artManifest } from '../content/artManifest';
 import type { PlacedLocation } from '../game/Game';
 import { input, isTouch } from '../game/input';
@@ -16,7 +17,7 @@ interface Props {
 
 const thumb = (loc: PlacedLocation) => {
   const first = artManifest[loc.set]?.find((a) => a.kind === 'image');
-  return first ? `${import.meta.env.BASE_URL}art/${loc.set}/${first.id}-t.webp` : null;
+  return first ? artUrl(loc.set, first.id, true) : null;
 };
 
 /**

@@ -4,7 +4,7 @@ screenshots
 *.local
 .DS_Store
 data/osm/
-# Processed art (≈200 MB) — regenerate with `npm run images`. Kept out of git, except the
-# 24 stills each slideshow shows (bus-wall, rush-hour), which are force-added (`git add -f`).
+# Processed art — regenerate with `npm run images`. Kept out of git, except the files the
+# scenes show, which `npm run art:publish` force-adds.
 public/art/
 *.tsbuildinfo

@@ -1,14 +1,19 @@
 /**
  * Processes the artist's raw photos/videos into web assets.
  *
- *   <src>/<Folder Name>/*.{HEIC,JPG,PNG,MOV}  →  public/art/<folder-slug>/<id>{.webp,-t.webp,.mp4}
+ *   <src>/<Folder Name>/*.{HEIC,JPG,PNG,MOV}  →  public/art/<folder-slug>/<id>{.avif,-t.avif,.mp4}
  *                                             →  src/content/artManifest.ts
  *
+ * Only these processed files are used by the site; the raw photos never leave <src>.
+ * `npm run art:publish` then puts just the files the scenes show into git.
+ *
  * - HEIC is decoded with macOS `sips` (sharp's prebuilt libvips has no HEVC decoder),
- *   then sharp auto-orients, resizes and encodes WebP. Metadata (EXIF/GPS) is dropped.
+ *   then sharp auto-orients, resizes and encodes (settings in ENCODE below — AVIF at
+ *   1200 px is ~⅓ the size of the old 1400 px WebP at the same look). EXIF/GPS dropped.
  * - Videos go through ffmpeg: H.264 MP4, ≤720p, no audio, plus a poster frame.
  * - Capture dates come from Spotlight (`mdls`), so each folder can be ordered in time.
- * - Incremental: existing outputs are reused; delete public/art/<slug> to rebuild.
+ * - Incremental: existing outputs are reused (re-encoded when ENCODE changes); files left
+ *   over from older settings are deleted. Existing MP4s are never re-encoded.
  *
  * Usage: node scripts/process-images.mjs [srcDir]   (default ~/Downloads/bearisland/images-merged)
  * macOS only (sips, mdls); needs ffmpeg on PATH.
@@ -27,8 +32,16 @@ const CACHE = join(ROOT, 'data/art-meta.json'); // per-asset metadata so reruns 
 const TMP = join(tmpdir(), 'bearisland-map-img');
 mkdirSync(TMP, { recursive: true });
 
-const FULL = 1400;
-const THUMB = 320;
+/** Encoding for every still (and video poster). Change here, rerun, everything follows. */
+export const ENCODE = {
+  format: 'avif',
+  full: { size: 1200, quality: 50, effort: 6 },
+  thumb: { size: 320, quality: 45, effort: 6 },
+};
+const EXT = ENCODE.format;
+const SETTINGS = JSON.stringify(ENCODE);
+const encode = (img, { size, quality, effort }) =>
+  img.resize(size, size, { fit: 'inside', withoutEnlargement: true })[EXT]({ quality, effort });
 const IMAGE_EXT = new Set(['.heic', '.jpg', '.jpeg', '.png']);
 const VIDEO_EXT = new Set(['.mov', '.mp4']);
 
@@ -53,9 +66,8 @@ async function processImage(src, dir, id) {
   const jpg = join(TMP, `${dir.split("/").pop()}-${id}.jpg`);
   execFileSync('sips', ['-s', 'format', 'jpeg', '-s', 'formatOptions', '92', src, '--out', jpg], { stdio: 'ignore' });
   const base = sharp(jpg).rotate();
-  const full = await base.clone().resize(FULL, FULL, { fit: 'inside', withoutEnlargement: true })
-    .webp({ quality: 78 }).toFile(join(dir, `${id}.webp`));
-  await base.clone().resize(THUMB, THUMB, { fit: 'inside' }).webp({ quality: 70 }).toFile(join(dir, `${id}-t.webp`));
+  const full = await encode(base.clone(), ENCODE.full).toFile(join(dir, `${id}.${EXT}`));
+  await encode(base.clone(), ENCODE.thumb).toFile(join(dir, `${id}-t.${EXT}`));
   const { dominant } = await sharp(jpg).stats();
   rmSync(jpg);
   return { kind: 'image', w: full.width, h: full.height, color: hex(dominant) };
@@ -63,15 +75,15 @@ async function processImage(src, dir, id) {
 
 async function processVideo(src, dir, id) {
   const mp4 = join(dir, `${id}.mp4`);
-  execFileSync('ffmpeg', ['-loglevel', 'error', '-y', '-i', src, '-an',
+  if (!existsSync(mp4)) execFileSync('ffmpeg', ['-loglevel', 'error', '-y', '-i', src, '-an',
     '-vf', "scale='if(gt(iw,ih),-2,720)':'if(gt(iw,ih),720,-2)',format=yuv420p",
     '-c:v', 'libx264', '-preset', 'slow', '-crf', '28', '-movflags', '+faststart', mp4]);
   const poster = join(TMP, `${dir.split("/").pop()}-${id}.png`);
   execFileSync('ffmpeg', ['-loglevel', 'error', '-y', '-ss', '0.5', '-i', mp4, '-frames:v', '1', poster]);
   // Clips shorter than the seek point produce nothing — fall back to the first frame.
   if (!existsSync(poster)) execFileSync('ffmpeg', ['-loglevel', 'error', '-y', '-i', mp4, '-frames:v', '1', poster]);
-  const full = await sharp(poster).webp({ quality: 75 }).toFile(join(dir, `${id}.webp`));
-  await sharp(poster).resize(THUMB, THUMB, { fit: 'inside' }).webp({ quality: 70 }).toFile(join(dir, `${id}-t.webp`));
+  const full = await encode(sharp(poster), ENCODE.full).toFile(join(dir, `${id}.${EXT}`));
+  await encode(sharp(poster), ENCODE.thumb).toFile(join(dir, `${id}-t.${EXT}`));
   const { dominant } = await sharp(poster).stats();
   rmSync(poster);
   return { kind: 'video', w: full.width, h: full.height, color: hex(dominant) };
@@ -98,11 +110,12 @@ for (const folder of readdirSync(SRC, { withFileTypes: true })) {
 let done = 0;
 async function run(job) {
   const key = `${job.set}/${job.id}`;
-  const outFile = join(job.dir, `${job.id}.${job.isVideo ? 'mp4' : 'webp'}`);
-  if (!meta[key] || !existsSync(outFile)) {
+  const outFiles = [`${job.id}.${EXT}`, `${job.id}-t.${EXT}`, ...(job.isVideo ? [`${job.id}.mp4`] : [])];
+  const current = meta[key]?.settings === SETTINGS && outFiles.every((f) => existsSync(join(job.dir, f)));
+  if (!current) {
     try {
       const info = await (job.isVideo ? processVideo : processImage)(job.src, job.dir, job.id);
-      meta[key] = { ...info, date: captureDate(job.src), source: basename(job.src) };
+      meta[key] = { ...info, date: captureDate(job.src), source: basename(job.src), settings: SETTINGS };
     } catch (e) {
       console.warn(`skip ${key}: ${e.message.split('\n')[0]}`);
     }
@@ -117,6 +130,17 @@ await Promise.all(Array.from({ length: 6 }, async () => {
 }));
 writeFileSync(CACHE, JSON.stringify(meta, null, 1));
 
+// Delete outputs from older settings (e.g. .webp after the switch to AVIF).
+const keep = new Set(jobs.flatMap((j) => [`${j.set}/${j.id}.${EXT}`, `${j.set}/${j.id}-t.${EXT}`, `${j.set}/${j.id}.mp4`]));
+let removed = 0;
+for (const set of readdirSync(OUT, { withFileTypes: true })) {
+  if (!set.isDirectory()) continue;
+  for (const f of readdirSync(join(OUT, set.name))) {
+    if (!keep.has(`${set.name}/${f}`)) { rmSync(join(OUT, set.name, f)); removed++; }
+  }
+}
+if (removed) console.log(`removed ${removed} stale files`);
+
 // Manifest: sets → assets ordered by capture date.
 const sets = {};
 for (const job of jobs) {
@@ -129,5 +153,7 @@ for (const list of Object.values(sets)) list.sort((a, b) => a.date.localeCompare
 writeFileSync(MANIFEST,
   `// AUTO-GENERATED by scripts/process-images.mjs — do not edit by hand.\n` +
   `import type { ArtAsset } from './types';\n\n` +
+  `/** file extension of every still / poster / thumbnail */\n` +
+  `export const artFormat = '${EXT}';\n\n` +
   `export const artManifest: Record<string, ArtAsset[]> = ${JSON.stringify(sets, null, 1)};\n`);
 console.log(`done: ${Object.entries(sets).map(([k, v]) => `${k}=${v.length}`).join(' ')}`);

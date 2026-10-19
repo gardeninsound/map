@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { artUrl, videoUrl } from '../content/art';
 import { artManifest } from '../content/artManifest';
 import { chooseTurns, slideshows, wallTurns } from '../content/wallTurns';
 import type { ArtAsset } from '../content/types';
@@ -9,9 +10,8 @@ import type { ExperienceProps } from './registry';
 
 const ROLL_MS = 750;
 const FLIP_MS = 260;
-const art = (set: string, a: ArtAsset, thumb = false) =>
-  `${import.meta.env.BASE_URL}art/${set}/${a.id}${thumb ? '-t' : ''}.webp`;
-const video = (set: string, a: ArtAsset) => `${import.meta.env.BASE_URL}art/${set}/${a.id}.mp4`;
+const art = (set: string, a: ArtAsset, thumb = false) => artUrl(set, a.id, thumb);
+const video = (set: string, a: ArtAsset) => videoUrl(set, a.id);
 const monthYear = (d: string) =>
   new Date(`${d}T12:00:00`).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }).toUpperCase();
 

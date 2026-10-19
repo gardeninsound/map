@@ -11,8 +11,14 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
 
 - `npm run dev` → http://localhost:5173/bearisland-map/ (note the base path)
 - `npm test` · `npm run build` (tsc + vite) — both must be green before committing
-- `npm run images [srcDir]` — raw photos/videos → `public/art/<set>/` + `src/content/artManifest.ts`
-  (default src `~/Downloads/bearisland/images-merged`; macOS `sips`/`mdls` + ffmpeg; incremental via `data/art-meta.json`)
+- `npm run images [srcDir]` — raw photos/videos → `public/art/<set>/` (AVIF stills 1200 px +
+  320 px thumbs, MP4 video; settings in `ENCODE` at the top of the script) + `artManifest.ts`.
+  Default src `~/Downloads/bearisland/images-merged`; macOS `sips`/`mdls` + ffmpeg; incremental
+  via `data/art-meta.json`; deletes outputs from older settings. Raw photos never enter the repo.
+- `npm run art:publish [-- --dry-run]` — stages in git exactly the processed files the scenes show
+  (slideshow picks, park signs, SPOTS thumbnails — computed with the app's own code) and untracks
+  the rest. `public/art/` is gitignored; these are force-added. Code builds art URLs via
+  `src/content/art.ts` (`artUrl`), never by hand.
 - `node scripts/fetch-osm.mjs` — refetch OSM → `data/osm/west-seattle.json` (rarely; Overpass is often busy, it retries)
 - `npm run map` — geocode the sheets, then rasterize OSM → `src/world/worldData.json` +
   `screenshots/map-preview.png`. **All map knobs are in `scripts/map-config.mjs`** (tile size,

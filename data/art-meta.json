@@ -5,2542 +5,2860 @@
   "h": 576,
   "color": "#582828",
   "date": "2024-03-06",
-  "source": "EMPK1123.JPG"
+  "source": "EMPK1123.JPG",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-0479": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#585858",
   "date": "2024-01-10",
-  "source": "IMG_0479.HEIC"
+  "source": "IMG_0479.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-0680": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#585858",
   "date": "2024-01-19",
-  "source": "IMG_0680.HEIC"
+  "source": "IMG_0680.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4110": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#585858",
   "date": "2023-11-05",
-  "source": "IMG_4110.HEIC"
+  "source": "IMG_4110.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4120": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#185848",
   "date": "2023-11-05",
-  "source": "IMG_4120.HEIC"
+  "source": "IMG_4120.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4129": {
   "kind": "video",
-  "w": 720,
-  "h": 1280,
+  "w": 675,
+  "h": 1200,
   "color": "#f8f8f8",
   "date": "2023-12-30",
-  "source": "IMG_4129.MOV"
+  "source": "IMG_4129.MOV",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4124": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#485858",
   "date": "2023-11-07",
-  "source": "IMG_4124.HEIC"
+  "source": "IMG_4124.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4133": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#b8c8d8",
   "date": "2023-11-08",
-  "source": "IMG_4133.HEIC"
+  "source": "IMG_4133.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4134": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#c8d8e8",
   "date": "2023-11-08",
-  "source": "IMG_4134.HEIC"
+  "source": "IMG_4134.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4137": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#e8e8d8",
   "date": "2023-11-09",
-  "source": "IMG_4137.HEIC"
+  "source": "IMG_4137.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4143": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#685848",
   "date": "2023-11-11",
-  "source": "IMG_4143.HEIC"
+  "source": "IMG_4143.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4156": {
   "kind": "video",
-  "w": 720,
-  "h": 1280,
+  "w": 675,
+  "h": 1200,
   "color": "#f8f8f8",
   "date": "2024-01-28",
-  "source": "IMG_4156.MOV"
+  "source": "IMG_4156.MOV",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4149": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#7888a8",
   "date": "2023-11-13",
-  "source": "IMG_4149.HEIC"
+  "source": "IMG_4149.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4197": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#e8e8e8",
   "date": "2023-11-22",
-  "source": "IMG_4197.HEIC"
+  "source": "IMG_4197.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4175": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#e8e8e8",
   "date": "2023-11-19",
-  "source": "IMG_4175.HEIC"
+  "source": "IMG_4175.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4326": {
   "kind": "video",
-  "w": 1280,
-  "h": 720,
+  "w": 1200,
+  "h": 675,
   "color": "#282818",
   "date": "2024-03-06",
-  "source": "IMG_4326.MOV"
+  "source": "IMG_4326.MOV",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4166": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#687878",
   "date": "2023-11-17",
-  "source": "IMG_4166.HEIC"
+  "source": "IMG_4166.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4250": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#888878",
   "date": "2023-11-30",
-  "source": "IMG_4250 - Copy.HEIC"
+  "source": "IMG_4250 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4282": {
   "kind": "image",
-  "w": 1400,
-  "h": 486,
+  "w": 1200,
+  "h": 417,
   "color": "#d8d8d8",
   "date": "2023-12-08",
-  "source": "IMG_4282.HEIC"
+  "source": "IMG_4282.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4403": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#686888",
   "date": "2024-01-11",
-  "source": "IMG_4403.HEIC"
+  "source": "IMG_4403.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4450": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#383838",
   "date": "2024-01-24",
-  "source": "IMG_4450.HEIC"
+  "source": "IMG_4450.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4446": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#c8c8b8",
   "date": "2024-01-23",
-  "source": "IMG_4446.HEIC"
+  "source": "IMG_4446.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4457": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#e8e8e8",
   "date": "2024-01-26",
-  "source": "IMG_4457.HEIC"
+  "source": "IMG_4457.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4478": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#888888",
   "date": "2024-02-04",
-  "source": "IMG_4478.HEIC"
+  "source": "IMG_4478.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4501": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#78a8e8",
   "date": "2024-02-14",
-  "source": "IMG_4501 - Copy.HEIC"
+  "source": "IMG_4501 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4479": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#888888",
   "date": "2024-02-04",
-  "source": "IMG_4479.HEIC"
+  "source": "IMG_4479.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4502": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#6898c8",
   "date": "2024-02-14",
-  "source": "IMG_4502.HEIC"
+  "source": "IMG_4502.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4510": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#c8c8d8",
   "date": "2024-02-14",
-  "source": "IMG_4510.HEIC"
+  "source": "IMG_4510.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4531": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#687888",
   "date": "2024-02-22",
-  "source": "IMG_4531 - Copy - Copy.HEIC"
+  "source": "IMG_4531 - Copy - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4563": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#485868",
   "date": "2024-03-02",
-  "source": "IMG_4563.HEIC"
+  "source": "IMG_4563.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4532": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#586878",
   "date": "2024-02-22",
-  "source": "IMG_4532.HEIC"
+  "source": "IMG_4532.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4594": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#888888",
   "date": "2024-03-09",
-  "source": "IMG_4594.HEIC"
+  "source": "IMG_4594.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4593": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#787878",
   "date": "2024-03-09",
-  "source": "IMG_4593.HEIC"
+  "source": "IMG_4593.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4612": {
   "kind": "video",
-  "w": 1280,
-  "h": 720,
+  "w": 1200,
+  "h": 675,
   "color": "#e888c8",
   "date": "2024-03-23",
-  "source": "IMG_4612.MOV"
+  "source": "IMG_4612.MOV",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4659": {
   "kind": "video",
-  "w": 1280,
-  "h": 720,
+  "w": 1200,
+  "h": 675,
   "color": "#4878a8",
   "date": "2024-03-27",
-  "source": "IMG_4659.MOV"
+  "source": "IMG_4659.MOV",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4697": {
   "kind": "video",
-  "w": 720,
-  "h": 1280,
+  "w": 675,
+  "h": 1200,
   "color": "#485868",
   "date": "2024-03-27",
-  "source": "IMG_4697.MOV"
+  "source": "IMG_4697.MOV",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4664": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#d8e8b8",
   "date": "2024-03-22",
-  "source": "IMG_4664.HEIC"
+  "source": "IMG_4664.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4700": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#384858",
   "date": "2024-03-26",
-  "source": "IMG_4700.HEIC"
+  "source": "IMG_4700.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4765": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#080808",
   "date": "2024-04-06",
-  "source": "IMG_4765 - Copy.HEIC"
+  "source": "IMG_4765 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4785": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#586878",
   "date": "2024-04-13",
-  "source": "IMG_4785 - Copy.HEIC"
+  "source": "IMG_4785 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4791": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#080808",
   "date": "2024-04-14",
-  "source": "IMG_4791 - Copy.HEIC"
+  "source": "IMG_4791 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4793": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#687888",
   "date": "2024-04-14",
-  "source": "IMG_4793 - Copy - Copy.HEIC"
+  "source": "IMG_4793 - Copy - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4805": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#787878",
   "date": "2024-04-16",
-  "source": "IMG_4805.HEIC"
+  "source": "IMG_4805.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4806": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#d888a8",
   "date": "2024-04-16",
-  "source": "IMG_4806.HEIC"
+  "source": "IMG_4806.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4850": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#a89888",
   "date": "2024-04-21",
-  "source": "IMG_4850 - Copy - Copy - Copy - Copy.HEIC"
+  "source": "IMG_4850 - Copy - Copy - Copy - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4870": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#d8c898",
   "date": "2024-04-23",
-  "source": "IMG_4870.HEIC"
+  "source": "IMG_4870.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4869": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#484858",
   "date": "2024-04-23",
-  "source": "IMG_4869 - Copy - Copy - Copy.HEIC"
+  "source": "IMG_4869 - Copy - Copy - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4887": {
   "kind": "video",
-  "w": 1280,
-  "h": 720,
+  "w": 1200,
+  "h": 675,
   "color": "#b89868",
   "date": "2024-11-10",
-  "source": "IMG_4887.MOV"
+  "source": "IMG_4887.MOV",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4900": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#687878",
   "date": "2024-04-26",
-  "source": "IMG_4900 - Copy - Copy.HEIC"
+  "source": "IMG_4900 - Copy - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4920": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#989888",
   "date": "2024-04-30",
-  "source": "IMG_4920.HEIC"
+  "source": "IMG_4920.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4942": {
   "kind": "video",
-  "w": 1280,
-  "h": 720,
+  "w": 1200,
+  "h": 675,
   "color": "#081848",
   "date": "2024-09-26",
-  "source": "IMG_4942.MOV"
+  "source": "IMG_4942.MOV",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4889": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#888888",
   "date": "2024-04-25",
-  "source": "IMG_4889.HEIC"
+  "source": "IMG_4889.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4928": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#888888",
   "date": "2024-05-02",
-  "source": "IMG_4928.HEIC"
+  "source": "IMG_4928.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4921": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#989898",
   "date": "2024-04-30",
-  "source": "IMG_4921.HEIC"
+  "source": "IMG_4921.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4955": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#586878",
   "date": "2024-05-11",
-  "source": "IMG_4955 - Copy - Copy.HEIC"
+  "source": "IMG_4955 - Copy - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4944": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#989888",
   "date": "2024-05-03",
-  "source": "IMG_4944 - Copy.HEIC"
+  "source": "IMG_4944 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4957": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#b8b8b8",
   "date": "2024-05-12",
-  "source": "IMG_4957 - Copy - Copy.HEIC"
+  "source": "IMG_4957 - Copy - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4961": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#88d8e8",
   "date": "2024-05-15",
-  "source": "IMG_4961.HEIC"
+  "source": "IMG_4961.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4962": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#a8d8b8",
   "date": "2024-05-15",
-  "source": "IMG_4962 - Copy.HEIC"
+  "source": "IMG_4962 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4963": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#687858",
   "date": "2024-05-15",
-  "source": "IMG_4963 - Copy.HEIC"
+  "source": "IMG_4963 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4964": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#e89898",
   "date": "2024-05-15",
-  "source": "IMG_4964 - Copy.HEIC"
+  "source": "IMG_4964 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4995": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#787878",
   "date": "2024-05-28",
-  "source": "IMG_4995.HEIC"
+  "source": "IMG_4995.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4996": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#485868",
   "date": "2024-05-28",
-  "source": "IMG_4996.HEIC"
+  "source": "IMG_4996.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-5206": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#888888",
   "date": "2024-07-14",
-  "source": "IMG_5206 - Copy.HEIC"
+  "source": "IMG_5206 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-5208": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#a88898",
   "date": "2024-07-14",
-  "source": "IMG_5208 - Copy - Copy - Copy - Copy.HEIC"
+  "source": "IMG_5208 - Copy - Copy - Copy - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-5226": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#b84838",
   "date": "2024-07-20",
-  "source": "IMG_5226 - Copy - Copy - Copy.HEIC"
+  "source": "IMG_5226 - Copy - Copy - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-5211": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#383848",
   "date": "2024-07-16",
-  "source": "IMG_5211 - Copy - Copy (2) - Copy - Copy - Copy.HEIC"
+  "source": "IMG_5211 - Copy - Copy (2) - Copy - Copy - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-5243": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#384858",
   "date": "2024-07-26",
-  "source": "IMG_5243.HEIC"
+  "source": "IMG_5243.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-5252": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#888888",
   "date": "2024-07-30",
-  "source": "IMG_5252 - Copy - Copy.HEIC"
+  "source": "IMG_5252 - Copy - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-5263": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#080808",
   "date": "2024-08-03",
-  "source": "IMG_5263.HEIC"
+  "source": "IMG_5263.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-5264": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#080808",
   "date": "2024-08-03",
-  "source": "IMG_5264 - Copy - Copy.HEIC"
+  "source": "IMG_5264 - Copy - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-5272": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#78a8a8",
   "date": "2024-08-04",
-  "source": "IMG_5272.HEIC"
+  "source": "IMG_5272.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-5273": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#484848",
   "date": "2024-08-04",
-  "source": "IMG_5273 - Copy - Copy.HEIC"
+  "source": "IMG_5273 - Copy - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-5352": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#e8a8b8",
   "date": "2024-08-19",
-  "source": "IMG_5352 - Copy - Copy.HEIC"
+  "source": "IMG_5352 - Copy - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-5356": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#585858",
   "date": "2024-08-21",
-  "source": "IMG_5356.HEIC"
+  "source": "IMG_5356.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-5364": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#383838",
   "date": "2024-08-23",
-  "source": "IMG_5364 - Copy.HEIC"
+  "source": "IMG_5364 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-5378": {
   "kind": "video",
-  "w": 1280,
-  "h": 720,
+  "w": 1200,
+  "h": 675,
   "color": "#d85858",
   "date": "2024-09-26",
-  "source": "IMG_5378 - Copy (2).MOV"
+  "source": "IMG_5378 - Copy (2).MOV",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-5380": {
   "kind": "video",
-  "w": 1280,
-  "h": 720,
+  "w": 1200,
+  "h": 675,
   "color": "#a8a8a8",
   "date": "2024-11-10",
-  "source": "IMG_5380.MOV"
+  "source": "IMG_5380.MOV",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-5381": {
   "kind": "video",
-  "w": 1280,
-  "h": 720,
+  "w": 1200,
+  "h": 675,
   "color": "#181818",
   "date": "2024-09-26",
-  "source": "IMG_5381 - Copy.MOV"
+  "source": "IMG_5381 - Copy.MOV",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-5449": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#484848",
   "date": "2024-09-11",
-  "source": "IMG_5449.HEIC"
+  "source": "IMG_5449.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-5385": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#585858",
   "date": "2024-08-27",
-  "source": "IMG_5385 - Copy.HEIC"
+  "source": "IMG_5385 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-5516": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#8898b8",
   "date": "2024-10-03",
-  "source": "IMG_5516.HEIC"
+  "source": "IMG_5516.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-5535": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#383848",
   "date": "2024-10-13",
-  "source": "IMG_5535.HEIC"
+  "source": "IMG_5535.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-5560": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#686868",
   "date": "2024-10-17",
-  "source": "IMG_5560 - Copy (2).HEIC"
+  "source": "IMG_5560 - Copy (2).HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-5577": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#282828",
   "date": "2024-10-24",
-  "source": "IMG_5577.HEIC"
+  "source": "IMG_5577.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-5666": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#282828",
   "date": "2024-10-31",
-  "source": "IMG_5666 - Copy - Copy.HEIC"
+  "source": "IMG_5666 - Copy - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-5683": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#98a8a8",
   "date": "2024-11-05",
-  "source": "IMG_5683.HEIC"
+  "source": "IMG_5683.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-5725": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#282828",
   "date": "2024-11-15",
-  "source": "IMG_5725 - Copy.HEIC"
+  "source": "IMG_5725 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-5727": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#98c8f8",
   "date": "2024-11-15",
-  "source": "IMG_5727 - Copy.HEIC"
+  "source": "IMG_5727 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-5775": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#282828",
   "date": "2024-11-20",
-  "source": "IMG_5775.HEIC"
+  "source": "IMG_5775.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-5797": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#887868",
   "date": "2024-11-27",
-  "source": "IMG_5797.HEIC"
+  "source": "IMG_5797.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-6485": {
   "kind": "video",
-  "w": 1280,
-  "h": 720,
+  "w": 1200,
+  "h": 675,
   "color": "#f8f8f8",
   "date": "2025-05-01",
-  "source": "IMG_6485 - Copy.MOV"
+  "source": "IMG_6485 - Copy.MOV",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/img-3364": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#d8d8c8",
   "date": "2023-12-14",
-  "source": "IMG_3364.JPEG"
+  "source": "IMG_3364.JPEG",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-6758": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#f8a878",
   "date": "2025-03-31",
-  "source": "IMG_6758.HEIC"
+  "source": "IMG_6758.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/img-3985": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#d8d858",
   "date": "2023-10-03",
-  "source": "IMG_3985.HEIC"
+  "source": "IMG_3985.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/img-4067": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#c89898",
   "date": "2023-10-24",
-  "source": "IMG_4067.HEIC"
+  "source": "IMG_4067.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/img-4073": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#a88868",
   "date": "2023-10-26",
-  "source": "IMG_4073.HEIC"
+  "source": "IMG_4073.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/img-4131": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#c8a8c8",
   "date": "2023-11-08",
-  "source": "IMG_4131.HEIC"
+  "source": "IMG_4131.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/img-4144": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#e8b8c8",
   "date": "2023-11-11",
-  "source": "IMG_4144.HEIC"
+  "source": "IMG_4144.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/img-4181": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#080808",
   "date": "2023-11-20",
-  "source": "IMG_4181.HEIC"
+  "source": "IMG_4181.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/img-4223": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#78b8e8",
   "date": "2023-11-28",
-  "source": "IMG_4223 - Copy.HEIC"
+  "source": "IMG_4223 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/img-4448": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#c8c898",
   "date": "2024-01-24",
-  "source": "IMG_4448.HEIC"
+  "source": "IMG_4448.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/img-4510": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#c8c8d8",
   "date": "2024-02-14",
-  "source": "IMG_4510.HEIC"
+  "source": "IMG_4510.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/img-4515": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#c8c8e8",
   "date": "2024-02-15",
-  "source": "IMG_4515.HEIC"
+  "source": "IMG_4515.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/img-4561": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#d8d8f8",
   "date": "2024-03-02",
-  "source": "IMG_4561.HEIC"
+  "source": "IMG_4561.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/img-4601": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#080808",
   "date": "2024-03-11",
-  "source": "IMG_4601 - Copy - Copy.HEIC"
+  "source": "IMG_4601 - Copy - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/img-4678": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#88d8d8",
   "date": "2024-03-24",
-  "source": "IMG_4678 - Copy - Copy - Copy.HEIC"
+  "source": "IMG_4678 - Copy - Copy - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/img-4716": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#080808",
   "date": "2024-03-31",
-  "source": "IMG_4716 - Copy.HEIC"
+  "source": "IMG_4716 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/img-4745": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#485878",
   "date": "2024-04-02",
-  "source": "IMG_4745 - Copy.HEIC"
+  "source": "IMG_4745 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/img-4755": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#485878",
   "date": "2024-04-05",
-  "source": "IMG_4755.HEIC"
+  "source": "IMG_4755.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/img-4803": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#485868",
   "date": "2024-04-15",
-  "source": "IMG_4803 - Copy - Copy.HEIC"
+  "source": "IMG_4803 - Copy - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/img-4861": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#d888b8",
   "date": "2024-04-22",
-  "source": "IMG_4861.HEIC"
+  "source": "IMG_4861.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/img-4899": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#e898b8",
   "date": "2024-04-26",
-  "source": "IMG_4899 - Copy.HEIC"
+  "source": "IMG_4899 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/img-4919": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#e898b8",
   "date": "2024-04-28",
-  "source": "IMG_4919 - Copy.HEIC"
+  "source": "IMG_4919 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/img-4993": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#282838",
   "date": "2024-05-28",
-  "source": "IMG_4993 - Copy.HEIC"
+  "source": "IMG_4993 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/img-4990": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#080808",
   "date": "2024-05-23",
-  "source": "IMG_4990.HEIC"
+  "source": "IMG_4990.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/img-5161": {
   "kind": "video",
-  "w": 720,
-  "h": 1280,
+  "w": 675,
+  "h": 1200,
   "color": "#f898b8",
   "date": "2024-09-17",
-  "source": "IMG_5161.MOV"
+  "source": "IMG_5161.MOV",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/img-5185": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#88c8d8",
   "date": "2024-07-10",
-  "source": "IMG_5185 - Copy - Copy - Copy - Copy - Copy - Copy - Copy.HEIC"
+  "source": "IMG_5185 - Copy - Copy - Copy - Copy - Copy - Copy - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/img-5186": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#78a898",
   "date": "2024-07-10",
-  "source": "IMG_5186.HEIC"
+  "source": "IMG_5186.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/img-5334": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#88a888",
   "date": "2024-08-18",
-  "source": "IMG_5334.HEIC"
+  "source": "IMG_5334.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/img-5221": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#78a888",
   "date": "2024-07-19",
-  "source": "IMG_5221 - Copy (3).HEIC"
+  "source": "IMG_5221 - Copy (3).HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/img-5392": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#88a888",
   "date": "2024-08-27",
-  "source": "IMG_5392.HEIC"
+  "source": "IMG_5392.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/img-5578": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#584858",
   "date": "2024-10-24",
-  "source": "IMG_5578 - Copy - Copy.HEIC"
+  "source": "IMG_5578 - Copy - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/img-5461": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#080808",
   "date": "2024-09-12",
-  "source": "IMG_5461.HEIC"
+  "source": "IMG_5461.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/img-5707": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#e89878",
   "date": "2024-11-12",
-  "source": "IMG_5707 - Copy.HEIC"
+  "source": "IMG_5707 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/img-5709": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#b86858",
   "date": "2024-11-12",
-  "source": "IMG_5709.HEIC"
+  "source": "IMG_5709.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/img-5919": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#d83848",
   "date": "2025-01-08",
-  "source": "IMG_5919 - Copy.HEIC"
+  "source": "IMG_5919 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/img-6029": {
   "kind": "video",
-  "w": 720,
-  "h": 1280,
+  "w": 675,
+  "h": 1200,
   "color": "#e82848",
   "date": "2025-01-16",
-  "source": "IMG_6029.MOV"
+  "source": "IMG_6029.MOV",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/img-6025": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#382818",
   "date": "2025-01-16",
-  "source": "IMG_6025.HEIC"
+  "source": "IMG_6025.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/img-6030": {
   "kind": "video",
-  "w": 720,
-  "h": 1280,
+  "w": 675,
+  "h": 1200,
   "color": "#b8a898",
   "date": "2025-01-16",
-  "source": "IMG_6030.MOV"
+  "source": "IMG_6030.MOV",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/img-e4177": {
   "kind": "image",
-  "w": 1051,
-  "h": 1400,
+  "w": 901,
+  "h": 1200,
   "color": "#484848",
   "date": "2023-11-19",
-  "source": "IMG_E4177.JPG"
+  "source": "IMG_E4177.JPG",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/img-8807": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#d87898",
   "date": "2026-05-01",
-  "source": "IMG_8807.HEIC"
+  "source": "IMG_8807.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/kbqm0888": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#e898b8",
   "date": "2024-04-26",
-  "source": "KBQM0888.HEIC"
+  "source": "KBQM0888.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "fauntleroy-power-box/oeey7123": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#383848",
   "date": "2024-05-28",
-  "source": "OEEY7123 - Copy.HEIC"
+  "source": "OEEY7123 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "nail-salon/ijnf1015": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#080808",
   "date": "2023-04-15",
-  "source": "IJNF1015.HEIC"
+  "source": "IJNF1015.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "nail-salon/img-3018": {
   "kind": "image",
-  "w": 647,
-  "h": 1400,
+  "w": 554,
+  "h": 1200,
   "color": "#383828",
   "date": "2023-01-26",
-  "source": "IMG_3018.PNG"
+  "source": "IMG_3018.PNG",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "nail-salon/img-2966": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#a8b848",
   "date": "2023-01-11",
-  "source": "IMG_2966.HEIC"
+  "source": "IMG_2966.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "nail-salon/img-3181": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#387848",
   "date": "2023-03-06",
-  "source": "IMG_3181.HEIC"
+  "source": "IMG_3181.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "nail-salon/img-3227": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#d8d8d8",
   "date": "2023-03-18",
-  "source": "IMG_3227.HEIC"
+  "source": "IMG_3227.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "nail-salon/img-3287": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#b8c8e8",
   "date": "2023-03-30",
-  "source": "IMG_3287.HEIC"
+  "source": "IMG_3287.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "nail-salon/img-8755": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#080808",
   "date": "2026-04-17",
-  "source": "IMG_8755.HEIC"
+  "source": "IMG_8755.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "nail-salon/img-8756": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#181818",
   "date": "2026-04-17",
-  "source": "IMG_8756.HEIC"
+  "source": "IMG_8756.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "other/img-3235": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#080808",
   "date": "2023-03-18",
-  "source": "IMG_3235.HEIC"
+  "source": "IMG_3235.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "other/img-3238": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#387838",
   "date": "2023-03-18",
-  "source": "IMG_3238.HEIC"
+  "source": "IMG_3238.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "other/img-3263": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#884848",
   "date": "2023-03-26",
-  "source": "IMG_3263.HEIC"
+  "source": "IMG_3263.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "other/img-3267": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#481818",
   "date": "2023-03-26",
-  "source": "IMG_3267.HEIC"
+  "source": "IMG_3267.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "other/img-3301": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#788858",
   "date": "2023-03-30",
-  "source": "IMG_3301.HEIC"
+  "source": "IMG_3301.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "other/img-3328": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#d8e8f8",
   "date": "2023-04-07",
-  "source": "IMG_3328.HEIC"
+  "source": "IMG_3328.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "other/img-3701": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#d8e8e8",
   "date": "2023-07-16",
-  "source": "IMG_3701.HEIC"
+  "source": "IMG_3701.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "other/img-3693": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#c8d8e8",
   "date": "2023-07-15",
-  "source": "IMG_3693.HEIC"
+  "source": "IMG_3693.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "other/img-3941": {
   "kind": "video",
-  "w": 1280,
-  "h": 720,
+  "w": 1200,
+  "h": 675,
   "color": "#b8c8e8",
   "date": "2023-12-29",
-  "source": "IMG_3941.MOV"
+  "source": "IMG_3941.MOV",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "other/img-4573": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#f8f8f8",
   "date": "2024-03-06",
-  "source": "IMG_4573.HEIC"
+  "source": "IMG_4573.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "other/img-4538": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#082828",
   "date": "2024-02-23",
-  "source": "IMG_4538.HEIC"
+  "source": "IMG_4538.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "other/img-4600": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#c8d8e8",
   "date": "2024-03-11",
-  "source": "IMG_4600.HEIC"
+  "source": "IMG_4600.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "other/img-4641": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#5888c8",
   "date": "2024-03-19",
-  "source": "IMG_4641.HEIC"
+  "source": "IMG_4641.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "other/img-4709": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#c8c8c8",
   "date": "2024-03-29",
-  "source": "IMG_4709 - Copy (2) - Copy.HEIC"
+  "source": "IMG_4709 - Copy (2) - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "other/img-4718": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#688878",
   "date": "2024-04-01",
-  "source": "IMG_4718.HEIC"
+  "source": "IMG_4718.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "other/img-4743": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#6898d8",
   "date": "2024-04-02",
-  "source": "IMG_4743.HEIC"
+  "source": "IMG_4743.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "other/img-4744": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#485878",
   "date": "2024-04-02",
-  "source": "IMG_4744 - Copy.HEIC"
+  "source": "IMG_4744 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "other/img-4750": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#a8b8b8",
   "date": "2024-04-02",
-  "source": "IMG_4750 - Copy.HEIC"
+  "source": "IMG_4750 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "other/img-4851": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#b8b8b8",
   "date": "2024-04-21",
-  "source": "IMG_4851 - Copy - Copy - Copy - Copy.HEIC"
+  "source": "IMG_4851 - Copy - Copy - Copy - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "other/img-5029": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#c8c8c8",
   "date": "2024-06-05",
-  "source": "IMG_5029 - Copy.HEIC"
+  "source": "IMG_5029 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "other/img-5030": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#384868",
   "date": "2024-06-05",
-  "source": "IMG_5030 - Copy.HEIC"
+  "source": "IMG_5030 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "other/img-5031": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#c8c8c8",
   "date": "2024-06-05",
-  "source": "IMG_5031.HEIC"
+  "source": "IMG_5031.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "other/img-5536": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#e8d8a8",
   "date": "2024-10-13",
-  "source": "IMG_5536 - Copy.HEIC"
+  "source": "IMG_5536 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "other/img-5539": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#e8e8f8",
   "date": "2024-10-14",
-  "source": "IMG_5539 - Copy.HEIC"
+  "source": "IMG_5539 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "other/img-5540": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#d8d8e8",
   "date": "2024-10-14",
-  "source": "IMG_5540.HEIC"
+  "source": "IMG_5540.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "other/img-5693": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#484858",
   "date": "2024-11-07",
-  "source": "IMG_5693 - Copy.HEIC"
+  "source": "IMG_5693 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "other/img-5541": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#383838",
   "date": "2024-10-14",
-  "source": "IMG_5541.HEIC"
+  "source": "IMG_5541.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "other/img-5764": {
   "kind": "video",
-  "w": 1280,
-  "h": 720,
+  "w": 1200,
+  "h": 675,
   "color": "#f8f8f8",
   "date": "2024-11-29",
-  "source": "IMG_5764 - Copy.MOV"
+  "source": "IMG_5764 - Copy.MOV",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "other/img-5694": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#181818",
   "date": "2024-11-07",
-  "source": "IMG_5694.HEIC"
+  "source": "IMG_5694.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "other/img-8756": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#181818",
   "date": "2026-04-17",
-  "source": "IMG_8756.HEIC"
+  "source": "IMG_8756.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "other/img-8755": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#080808",
   "date": "2026-04-17",
-  "source": "IMG_8755.HEIC"
+  "source": "IMG_8755.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "other/tlne1505": {
   "kind": "image",
-  "w": 1104,
-  "h": 1400,
+  "w": 947,
+  "h": 1200,
   "color": "#181818",
   "date": "2024-06-21",
-  "source": "TLNE1505.JPEG"
+  "source": "TLNE1505.JPEG",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "other/img-8802": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#8898a8",
   "date": "2026-05-01",
-  "source": "IMG_8802.HEIC"
+  "source": "IMG_8802.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4255": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#383838",
   "date": "2023-12-02",
-  "source": "IMG_4255 - Copy.HEIC"
+  "source": "IMG_4255 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4256": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#a89888",
   "date": "2023-12-03",
-  "source": "IMG_4256.HEIC"
+  "source": "IMG_4256.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4260": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#484838",
   "date": "2023-12-03",
-  "source": "IMG_4260 - Copy.HEIC"
+  "source": "IMG_4260 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4264": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#a86868",
   "date": "2023-12-03",
-  "source": "IMG_4264.HEIC"
+  "source": "IMG_4264.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4270": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#784848",
   "date": "2023-12-04",
-  "source": "IMG_4270 - Copy.HEIC"
+  "source": "IMG_4270 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4402": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#88a878",
   "date": "2024-01-11",
-  "source": "IMG_4402.HEIC"
+  "source": "IMG_4402.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4403": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#686888",
   "date": "2024-01-11",
-  "source": "IMG_4403.HEIC"
+  "source": "IMG_4403.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4450": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#383838",
   "date": "2024-01-24",
-  "source": "IMG_4450.HEIC"
+  "source": "IMG_4450.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4488": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#88a8c8",
   "date": "2024-02-10",
-  "source": "IMG_4488.HEIC"
+  "source": "IMG_4488.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4559": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#e8c888",
   "date": "2024-03-01",
-  "source": "IMG_4559 - Copy (2).HEIC"
+  "source": "IMG_4559 - Copy (2).HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4616": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#b878b8",
   "date": "2024-03-16",
-  "source": "IMG_4616.HEIC"
+  "source": "IMG_4616.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4618": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#c878b8",
   "date": "2024-03-16",
-  "source": "IMG_4618 - Copy - Copy.HEIC"
+  "source": "IMG_4618 - Copy - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4617": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#484858",
   "date": "2024-03-16",
-  "source": "IMG_4617.HEIC"
+  "source": "IMG_4617.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4630": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#c87898",
   "date": "2024-03-18",
-  "source": "IMG_4630.HEIC"
+  "source": "IMG_4630.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4626": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#d888c8",
   "date": "2024-03-18",
-  "source": "IMG_4626.HEIC"
+  "source": "IMG_4626.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4684": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#588888",
   "date": "2024-03-24",
-  "source": "IMG_4684.HEIC"
+  "source": "IMG_4684.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4681": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#787878",
   "date": "2024-03-24",
-  "source": "IMG_4681.HEIC"
+  "source": "IMG_4681.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4682": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#689888",
   "date": "2024-03-24",
-  "source": "IMG_4682.HEIC"
+  "source": "IMG_4682.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4689": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#789888",
   "date": "2024-03-25",
-  "source": "IMG_4689.HEIC"
+  "source": "IMG_4689.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4687": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#486868",
   "date": "2024-03-24",
-  "source": "IMG_4687.HEIC"
+  "source": "IMG_4687.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4691-1": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#688868",
   "date": "2024-03-25",
-  "source": "IMG_4691(1).HEIC"
+  "source": "IMG_4691(1).HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4690": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#e88878",
   "date": "2024-03-25",
-  "source": "IMG_4690 - Copy - Copy.HEIC"
+  "source": "IMG_4690 - Copy - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4691": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#688868",
   "date": "2024-03-25",
-  "source": "IMG_4691.HEIC"
+  "source": "IMG_4691.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4721": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#588878",
   "date": "2024-04-01",
-  "source": "IMG_4721 - Copy.HEIC"
+  "source": "IMG_4721 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4720": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#b86868",
   "date": "2024-04-01",
-  "source": "IMG_4720.HEIC"
+  "source": "IMG_4720.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4722": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#688878",
   "date": "2024-04-01",
-  "source": "IMG_4722.HEIC"
+  "source": "IMG_4722.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4725": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#b86868",
   "date": "2024-04-01",
-  "source": "IMG_4725.HEIC"
+  "source": "IMG_4725.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4727": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#283858",
   "date": "2024-04-01",
-  "source": "IMG_4727.HEIC"
+  "source": "IMG_4727.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4726": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#c87878",
   "date": "2024-04-01",
-  "source": "IMG_4726 - Copy.HEIC"
+  "source": "IMG_4726 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4728": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#283858",
   "date": "2024-04-01",
-  "source": "IMG_4728 - Copy.HEIC"
+  "source": "IMG_4728 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4817": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#485868",
   "date": "2024-04-19",
-  "source": "IMG_4817.HEIC"
+  "source": "IMG_4817.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4815": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#485868",
   "date": "2024-04-17",
-  "source": "IMG_4815 - Copy.HEIC"
+  "source": "IMG_4815 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4825": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#282828",
   "date": "2024-04-19",
-  "source": "IMG_4825.HEIC"
+  "source": "IMG_4825.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4828": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#686858",
   "date": "2024-04-19",
-  "source": "IMG_4828.HEIC"
+  "source": "IMG_4828.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4835": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#282828",
   "date": "2024-04-19",
-  "source": "IMG_4835 - Copy.HEIC"
+  "source": "IMG_4835 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4865": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#585858",
   "date": "2024-04-22",
-  "source": "IMG_4865 - Copy - Copy - Copy.HEIC"
+  "source": "IMG_4865 - Copy - Copy - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4914": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#e89898",
   "date": "2024-04-28",
-  "source": "IMG_4914 - Copy.HEIC"
+  "source": "IMG_4914 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4915": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#f8a8a8",
   "date": "2024-04-28",
-  "source": "IMG_4915 - Copy.HEIC"
+  "source": "IMG_4915 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4934": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#e8a8a8",
   "date": "2024-05-03",
-  "source": "IMG_4934.HEIC"
+  "source": "IMG_4934.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4916": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#e8a8a8",
   "date": "2024-04-28",
-  "source": "IMG_4916.HEIC"
+  "source": "IMG_4916.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4937": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#f8a8a8",
   "date": "2024-05-03",
-  "source": "IMG_4937 - Copy - Copy.HEIC"
+  "source": "IMG_4937 - Copy - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4962": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#a8d8b8",
   "date": "2024-05-15",
-  "source": "IMG_4962 - Copy.HEIC"
+  "source": "IMG_4962 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4964": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#e89898",
   "date": "2024-05-15",
-  "source": "IMG_4964 - Copy.HEIC"
+  "source": "IMG_4964 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-4963": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#687858",
   "date": "2024-05-15",
-  "source": "IMG_4963 - Copy.HEIC"
+  "source": "IMG_4963 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5005": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#d89898",
   "date": "2024-05-29",
-  "source": "IMG_5005 - Copy.HEIC"
+  "source": "IMG_5005 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5012": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#e8a8a8",
   "date": "2024-05-30",
-  "source": "IMG_5012.HEIC"
+  "source": "IMG_5012.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5203": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#586878",
   "date": "2024-07-14",
-  "source": "IMG_5203 - Copy - Copy - Copy - Copy - Copy - Copy - Copy.HEIC"
+  "source": "IMG_5203 - Copy - Copy - Copy - Copy - Copy - Copy - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5229": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#c87878",
   "date": "2024-07-20",
-  "source": "IMG_5229 - Copy - Copy.HEIC"
+  "source": "IMG_5229 - Copy - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5213": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#383838",
   "date": "2024-07-16",
-  "source": "IMG_5213 - Copy - Copy.HEIC"
+  "source": "IMG_5213 - Copy - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5244": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#983828",
   "date": "2024-07-26",
-  "source": "IMG_5244 - Copy - Copy.HEIC"
+  "source": "IMG_5244 - Copy - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5246": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#b87878",
   "date": "2024-07-26",
-  "source": "IMG_5246 - Copy.HEIC"
+  "source": "IMG_5246 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5267": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#78a8a8",
   "date": "2024-08-04",
-  "source": "IMG_5267 - Copy - Copy.HEIC"
+  "source": "IMG_5267 - Copy - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5288": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#c8c8e8",
   "date": "2024-08-07",
-  "source": "IMG_5288.HEIC"
+  "source": "IMG_5288.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5276": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#789888",
   "date": "2024-08-04",
-  "source": "IMG_5276 - Copy - Copy.HEIC"
+  "source": "IMG_5276 - Copy - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5289": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#689888",
   "date": "2024-08-07",
-  "source": "IMG_5289.HEIC"
+  "source": "IMG_5289.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5361": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#887868",
   "date": "2024-08-23",
-  "source": "IMG_5361.HEIC"
+  "source": "IMG_5361.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5365": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#282828",
   "date": "2024-08-23",
-  "source": "IMG_5365 - Copy.HEIC"
+  "source": "IMG_5365 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5367": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#282828",
   "date": "2024-08-23",
-  "source": "IMG_5367 - Copy.HEIC"
+  "source": "IMG_5367 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5399": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#585868",
   "date": "2024-08-30",
-  "source": "IMG_5399.HEIC"
+  "source": "IMG_5399.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5402": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#b8d8f8",
   "date": "2024-08-30",
-  "source": "IMG_5402 - Copy (2).HEIC"
+  "source": "IMG_5402 - Copy (2).HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5406": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#486858",
   "date": "2024-08-30",
-  "source": "IMG_5406.HEIC"
+  "source": "IMG_5406.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5505": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#585858",
   "date": "2024-10-02",
-  "source": "IMG_5505.HEIC"
+  "source": "IMG_5505.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5510": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#483828",
   "date": "2024-10-02",
-  "source": "IMG_5510.HEIC"
+  "source": "IMG_5510.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5519": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#f8f8f8",
   "date": "2024-10-03",
-  "source": "IMG_5519.HEIC"
+  "source": "IMG_5519.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5522": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#a8a8b8",
   "date": "2024-10-09",
-  "source": "IMG_5522.HEIC"
+  "source": "IMG_5522.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5523": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#8898a8",
   "date": "2024-10-09",
-  "source": "IMG_5523.HEIC"
+  "source": "IMG_5523.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5547": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#b8a8a8",
   "date": "2024-10-16",
-  "source": "IMG_5547 - Copy.HEIC"
+  "source": "IMG_5547 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5554": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#a8c8b8",
   "date": "2024-10-16",
-  "source": "IMG_5554.HEIC"
+  "source": "IMG_5554.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5570": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#080808",
   "date": "2024-10-23",
-  "source": "IMG_5570.HEIC"
+  "source": "IMG_5570.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5599": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#e89868",
   "date": "2024-10-26",
-  "source": "IMG_5599 - Copy.HEIC"
+  "source": "IMG_5599 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5604": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#480808",
   "date": "2024-10-26",
-  "source": "IMG_5604 - Copy.HEIC"
+  "source": "IMG_5604 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5672": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#181818",
   "date": "2024-11-05",
-  "source": "IMG_5672.HEIC"
+  "source": "IMG_5672.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5676": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#787878",
   "date": "2024-11-05",
-  "source": "IMG_5676.HEIC"
+  "source": "IMG_5676.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5680": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#888898",
   "date": "2024-11-05",
-  "source": "IMG_5680.HEIC"
+  "source": "IMG_5680.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5724": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#181818",
   "date": "2024-11-15",
-  "source": "IMG_5724.HEIC"
+  "source": "IMG_5724.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5747": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#181818",
   "date": "2024-11-17",
-  "source": "IMG_5747.HEIC"
+  "source": "IMG_5747.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5748": {
   "kind": "video",
-  "w": 1280,
-  "h": 720,
+  "w": 1200,
+  "h": 675,
   "color": "#282828",
   "date": "2024-11-18",
-  "source": "IMG_5748.MOV"
+  "source": "IMG_5748.MOV",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5749": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#e8e8f8",
   "date": "2024-11-17",
-  "source": "IMG_5749 - Copy.HEIC"
+  "source": "IMG_5749 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5901": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#e8e8b8",
   "date": "2025-01-06",
-  "source": "IMG_5901 - Copy.HEIC"
+  "source": "IMG_5901 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5898": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#383838",
   "date": "2025-01-05",
-  "source": "IMG_5898 - Copy.HEIC"
+  "source": "IMG_5898 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5902": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#d8d898",
   "date": "2025-01-06",
-  "source": "IMG_5902 - Copy.HEIC"
+  "source": "IMG_5902 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5907": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#d8e8b8",
   "date": "2025-01-07",
-  "source": "IMG_5907 - Copy (2).HEIC"
+  "source": "IMG_5907 - Copy (2).HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5908": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#d8d8a8",
   "date": "2025-01-07",
-  "source": "IMG_5908 - Copy.HEIC"
+  "source": "IMG_5908 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-5949": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#b82828",
   "date": "2025-01-09",
-  "source": "IMG_5949 - Copy.HEIC"
+  "source": "IMG_5949 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-8755": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#080808",
   "date": "2026-04-17",
-  "source": "IMG_8755.HEIC"
+  "source": "IMG_8755.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "rush-hour/img-8756": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#181818",
   "date": "2026-04-17",
-  "source": "IMG_8756.HEIC"
+  "source": "IMG_8756.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "admiral/img-3525": {
   "kind": "image",
-  "w": 1400,
-  "h": 1051,
+  "w": 1200,
+  "h": 901,
   "color": "#484858",
   "date": "2023-06-06",
-  "source": "IMG_3525.JPG"
+  "source": "IMG_3525.JPG",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "admiral/img-3445": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#a8a8a8",
   "date": "2023-05-04",
-  "source": "IMG_3445.HEIC"
+  "source": "IMG_3445.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "admiral/img-3621": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#383838",
   "date": "2023-06-27",
-  "source": "IMG_3621.HEIC"
+  "source": "IMG_3621.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "admiral/img-3623": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#181818",
   "date": "2023-06-27",
-  "source": "IMG_3623.HEIC"
+  "source": "IMG_3623.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "admiral/img-3627": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#282828",
   "date": "2023-06-27",
-  "source": "IMG_3627.HEIC"
+  "source": "IMG_3627.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "admiral/img-3668": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#c8c8c8",
   "date": "2023-07-11",
-  "source": "IMG_3668.HEIC"
+  "source": "IMG_3668.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "admiral/img-3794": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#686868",
   "date": "2023-08-10",
-  "source": "IMG_3794.HEIC"
+  "source": "IMG_3794.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "admiral/img-3795": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#a8a8a8",
   "date": "2023-08-10",
-  "source": "IMG_3795.HEIC"
+  "source": "IMG_3795.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "admiral/img-3798": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#d8b8d8",
   "date": "2023-08-10",
-  "source": "IMG_3798.HEIC"
+  "source": "IMG_3798.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "admiral/img-3970": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#e8c8e8",
   "date": "2023-09-29",
-  "source": "IMG_3970.HEIC"
+  "source": "IMG_3970.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "admiral/img-3971": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#a8a8b8",
   "date": "2023-09-29",
-  "source": "IMG_3971.HEIC"
+  "source": "IMG_3971.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "admiral/img-3972": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#888888",
   "date": "2023-09-29",
-  "source": "IMG_3972.HEIC"
+  "source": "IMG_3972.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bear/img-5324": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#c8c8c8",
   "date": "2024-08-16",
-  "source": "IMG_5324 - Copy - Copy.HEIC"
+  "source": "IMG_5324 - Copy - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bear/img-5328": {
   "kind": "video",
-  "w": 1280,
-  "h": 720,
+  "w": 1200,
+  "h": 675,
   "color": "#182838",
   "date": "2024-11-22",
-  "source": "IMG_5328 - Copy.MOV"
+  "source": "IMG_5328 - Copy.MOV",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bear/img-5332": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#f8f8f8",
   "date": "2024-08-17",
-  "source": "IMG_5332.HEIC"
+  "source": "IMG_5332.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "cup/img-3243": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#385888",
   "date": "2023-03-18",
-  "source": "IMG_3243.HEIC"
+  "source": "IMG_3243.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "cup/img-3312": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#080808",
   "date": "2023-04-02",
-  "source": "IMG_3312.HEIC"
+  "source": "IMG_3312.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "cup/img-3341": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#080808",
   "date": "2023-04-14",
-  "source": "IMG_3341.HEIC"
+  "source": "IMG_3341.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "cup/img-3340": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#080808",
   "date": "2023-04-14",
-  "source": "IMG_3340.HEIC"
+  "source": "IMG_3340.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "cup/img-3399": {
   "kind": "video",
-  "w": 720,
-  "h": 1280,
+  "w": 675,
+  "h": 1200,
   "color": "#1848a8",
   "date": "2023-12-29",
-  "source": "IMG_3399.MOV"
+  "source": "IMG_3399.MOV",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "cup/img-3388": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#c8d8e8",
   "date": "2023-04-23",
-  "source": "IMG_3388.HEIC"
+  "source": "IMG_3388.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "cup/img-3403": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#5888c8",
   "date": "2023-04-26",
-  "source": "IMG_3403.HEIC"
+  "source": "IMG_3403.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "cup/img-3402": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#5878b8",
   "date": "2023-04-26",
-  "source": "IMG_3402.HEIC"
+  "source": "IMG_3402.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "cup/rcys6962": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#c8d8e8",
   "date": "2023-04-06",
-  "source": "RCYS6962.HEIC"
+  "source": "RCYS6962.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "cup/img-4181": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#080808",
   "date": "2023-11-20",
-  "source": "IMG_4181.HEIC"
+  "source": "IMG_4181.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "lyrics/img-5389": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#b8b8d8",
   "date": "2024-08-27",
-  "source": "IMG_5389 - Copy - Copy.HEIC"
+  "source": "IMG_5389 - Copy - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "lyrics/img-4155": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#a8b8c8",
   "date": "2023-11-15",
-  "source": "IMG_4155.HEIC"
+  "source": "IMG_4155.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "lyrics/img-4256": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#a89888",
   "date": "2023-12-03",
-  "source": "IMG_4256.HEIC"
+  "source": "IMG_4256.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "lyrics/img-8755": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#080808",
   "date": "2026-04-17",
-  "source": "IMG_8755.HEIC"
+  "source": "IMG_8755.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "lyrics/img-8756": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#181818",
   "date": "2026-04-17",
-  "source": "IMG_8756.HEIC"
+  "source": "IMG_8756.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "posters/img-4151": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#a898b8",
   "date": "2023-11-13",
-  "source": "IMG_4151.HEIC"
+  "source": "IMG_4151.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "posters/img-4229": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#d8d8d8",
   "date": "2023-11-29",
-  "source": "IMG_4229 - Copy.HEIC"
+  "source": "IMG_4229 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "posters/img-4312": {
   "kind": "video",
-  "w": 1280,
-  "h": 720,
+  "w": 1200,
+  "h": 675,
   "color": "#789848",
   "date": "2024-03-06",
-  "source": "IMG_4312.MOV"
+  "source": "IMG_4312.MOV",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "posters/img-4705": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#385898",
   "date": "2024-03-26",
-  "source": "IMG_4705 - Copy - Copy.HEIC"
+  "source": "IMG_4705 - Copy - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "posters/img-5422": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#282828",
   "date": "2024-09-03",
-  "source": "IMG_5422 - Copy - Copy.HEIC"
+  "source": "IMG_5422 - Copy - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "posters/img-4779": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#d87878",
   "date": "2024-04-08",
-  "source": "IMG_4779 - Copy.HEIC"
+  "source": "IMG_4779 - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "posters/img-8159": {
   "kind": "image",
-  "w": 944,
-  "h": 1400,
+  "w": 810,
+  "h": 1200,
   "color": "#c8c8c8",
   "date": "2023-11-28",
-  "source": "IMG_8159.HEIC"
+  "source": "IMG_8159.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "puppy-park/img-3524": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#c8d8d8",
   "date": "2023-06-05",
-  "source": "IMG_3524.HEIC"
+  "source": "IMG_3524.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "puppy-park/img-3718": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#c8a8b8",
   "date": "2023-07-18",
-  "source": "IMG_3718.HEIC"
+  "source": "IMG_3718.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "puppy-park/img-3554": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#080808",
   "date": "2023-06-12",
-  "source": "IMG_3554.HEIC"
+  "source": "IMG_3554.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "puppy-park/img-3903": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#988898",
   "date": "2023-09-16",
-  "source": "IMG_3903.HEIC"
+  "source": "IMG_3903.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "puppy-park/img-4872": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#a88888",
   "date": "2024-04-23",
-  "source": "IMG_4872 - Copy (2).HEIC"
+  "source": "IMG_4872 - Copy (2).HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "puppy-park/img-5003": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#088868",
   "date": "2024-05-29",
-  "source": "IMG_5003.HEIC"
+  "source": "IMG_5003.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "puppy-park/img-5020": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#78b8b8",
   "date": "2024-05-31",
-  "source": "IMG_5020.HEIC"
+  "source": "IMG_5020.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "puppy-park/img-5188": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#689888",
   "date": "2024-07-10",
-  "source": "IMG_5188 - Copy - Copy - Copy - Copy - Copy.HEIC"
+  "source": "IMG_5188 - Copy - Copy - Copy - Copy - Copy.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "swedish/img-3274": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#c8c8b8",
   "date": "2023-03-28",
-  "source": "IMG_3274.HEIC"
+  "source": "IMG_3274.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "swedish/img-3620": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#78c8d8",
   "date": "2023-06-27",
-  "source": "IMG_3620.HEIC"
+  "source": "IMG_3620.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "swedish/img-3713": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#88c8c8",
   "date": "2023-07-18",
-  "source": "IMG_3713.HEIC"
+  "source": "IMG_3713.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "swedish/img-3904": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#182808",
   "date": "2023-09-16",
-  "source": "IMG_3904.HEIC"
+  "source": "IMG_3904.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "swedish/img-4208": {
   "kind": "video",
-  "w": 720,
-  "h": 1280,
+  "w": 675,
+  "h": 1200,
   "color": "#083888",
   "date": "2024-01-13",
-  "source": "IMG_4208.MOV"
+  "source": "IMG_4208.MOV",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "swedish/img-4066": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#88a8b8",
   "date": "2023-10-24",
-  "source": "IMG_4066.HEIC"
+  "source": "IMG_4066.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "swedish/img-4075": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#080808",
   "date": "2023-10-27",
-  "source": "IMG_4075.HEIC"
+  "source": "IMG_4075.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "swedish/img-4150": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#083898",
   "date": "2023-11-13",
-  "source": "IMG_4150.HEIC"
+  "source": "IMG_4150.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "swedish/img-8755": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#080808",
   "date": "2026-04-17",
-  "source": "IMG_8755.HEIC"
+  "source": "IMG_8755.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "swedish/img-8756": {
   "kind": "image",
-  "w": 1050,
-  "h": 1400,
+  "w": 900,
+  "h": 1200,
   "color": "#181818",
   "date": "2026-04-17",
-  "source": "IMG_8756.HEIC"
+  "source": "IMG_8756.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "other/img-3227": {
   "kind": "image",
-  "w": 1400,
-  "h": 1050,
+  "w": 1200,
+  "h": 900,
   "color": "#d8d8d8",
   "date": "2023-03-18",
-  "source": "IMG_3227.HEIC"
+  "source": "IMG_3227.HEIC",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  },
  "bus-wall/img-4699": {
   "kind": "video",
-  "w": 720,
-  "h": 1280,
+  "w": 675,
+  "h": 1200,
   "color": "#f8f8f8",
   "date": "2024-03-27",
-  "source": "IMG_4699.MOV"
+  "source": "IMG_4699.MOV",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  }
 }

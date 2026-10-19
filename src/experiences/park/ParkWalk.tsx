@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { artUrl } from '../../content/art';
 import { artManifest } from '../../content/artManifest';
 import { parkScript, parkSigns } from '../../content/puppyPark';
 import { buttonLabel, input, isTouch } from '../../game/input';
@@ -22,7 +23,7 @@ export default function ParkWalk({ location, onExit }: ExperienceProps) {
   const [reading, setReading] = useState<number | null>(null);
   const [intro, setIntro] = useState(true);
   const assets = Object.fromEntries((artManifest[location.set] ?? []).map((a) => [a.id, a]));
-  const art = (id: string) => `${import.meta.env.BASE_URL}art/${location.set}/${id}.webp`;
+  const art = (id: string) => artUrl(location.set, id);
 
   useEffect(() => {
     const s = new ParkScene(host.current!, { onNear: setNear }, parkSigns, assets, art);
