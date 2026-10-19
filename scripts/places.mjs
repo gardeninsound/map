@@ -1,12 +1,11 @@
 /**
  * content/places.csv (the art spots) → src/content/placesData.json (locations.ts).
- * Geocoding + CSV handling come from west-seattle-map's shared sheet helpers; see there
- * for the column conventions. Landmarks (drawn buildings) live in west-seattle-map.
+ * Geocoding + CSV handling: scripts/sheet.mjs (see there for the column conventions).
  *
  * Usage: npm run places
  */
 import { writeFileSync } from 'node:fs';
-import { processSheet } from 'west-seattle-map/scripts/sheet.mjs';
+import { processSheet } from './sheet.mjs';
 
 const rows = await processSheet(new URL('../content/places.csv', import.meta.url));
 const out = rows.map((r) => ({

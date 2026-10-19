@@ -1,8 +1,8 @@
 /**
  * Bear Island's own sprites: Mike, the easels that mark art spots, and the snack crow.
- * Same ASCII-grid format as west-seattle-map's sprites.
+ * Same ASCII-grid format as the city's sprites (src/city/render/sprites.ts).
  */
-import { gridToCanvas, hop, INK, type Grid, type Walker } from 'west-seattle-map';
+import { gridToCanvas, hop, INK, type Grid, type Walker } from '../city';
 
 const MIKE_COLORS: Record<string, string> = {
   k: INK,

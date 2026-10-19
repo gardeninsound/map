@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { input } from 'west-seattle-map';
+import { input } from '../city';
 import { sounds as sfx } from './sounds';
 
 export function TitleScreen({ onStart }: { onStart(): void }) {

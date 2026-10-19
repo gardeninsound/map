@@ -3,7 +3,7 @@
  * the rest are invented neighbor-voices in its spirit — swap in real ones as they're
  * collected (the manual wants to "collect stories of interpretations").
  */
-import type { NeighborVoice } from 'west-seattle-map';
+import type { NeighborVoice } from '../city';
 
 export const neighborVoices: NeighborVoice[] = [
   { name: 'A man on the street', lines: ['Thanks for doing that. It makes me feel like I live in a neighborhood.'] }, // (manual)

@@ -1,4 +1,4 @@
-import { INK, type CityGame, type CityPlugin, type DrawContext, type Target } from 'west-seattle-map';
+import { INK, type CityGame, type CityPlugin, type DrawContext, type Target } from '../../city';
 import type { ArtLocation } from '../../content/locations';
 import { buildMike, easel } from '../sprites';
 

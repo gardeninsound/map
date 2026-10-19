@@ -1,5 +1,5 @@
-/** Bear Island's extra sounds, on top of west-seattle-map's `sfx` (which also handles mute). */
-import { sfx, tone } from 'west-seattle-map';
+/** Bear Island's extra sounds, on top of the city's `sfx` (which also handles mute). */
+import { sfx, tone } from '../city';
 
 export const sounds = {
   ...sfx,

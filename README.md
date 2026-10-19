@@ -4,9 +4,9 @@ Walk the streets of West Seattle as a small rabbit and find ten years of Mike's 
 propaganda art. Bright, lo-fi, SNES-flavored. Built with Vite + React + TypeScript and a
 hand-rolled Canvas 2D tile renderer.
 
-The city (map, renderer, movement, HUD) is the package
-[west-seattle-map](https://github.com/vlandham/west-seattle-map), pinned to a release tag in
-`package.json` (it's private, so `npm install` needs GitHub access).
+The city (map, renderer, movement, HUD) lives in `src/city/` — Bear Island's own copy, from
+[west-seattle-map](https://github.com/vlandham/west-seattle-map) v0.1.0, which is now a
+separate project.
 
 ```bash
 npm install

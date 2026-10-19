@@ -19,8 +19,7 @@
     "@fontsource/press-start-2p": "^5.3.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
-    "three": "^0.186.1",
-    "west-seattle-map": "github:vlandham/west-seattle-map#v0.1.0"
+    "three": "^0.186.1"
   },
   "devDependencies": {
     "@testing-library/react": "^16.3.3",

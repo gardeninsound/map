@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import '@fontsource/press-start-2p/400.css';
 import '@fontsource/pixelify-sans/400.css';
 import '@fontsource/pixelify-sans/600.css';
-import 'west-seattle-map/ui.css';
+import './city/ui/ui.css';
 import './styles.css';
 import App from './App';
 

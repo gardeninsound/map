@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { altitude, flyTick, newCrow, takeOff } from './crow';
 import { crowGreeting, crowStops } from '../content/crow';
-import { createWorld } from 'west-seattle-map';
+import { createWorld } from '../city';
 
 const perches = [{ x: 0, y: 0 }, { x: 90, y: 0 }, { x: 90, y: 40 }];
 

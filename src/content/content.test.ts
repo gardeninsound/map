@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createWorld } from 'west-seattle-map';
+import { createWorld } from '../city';
 import { START, locations } from './locations';
 import { artManifest } from './artManifest';
 import { experiences } from '../experiences/registry';

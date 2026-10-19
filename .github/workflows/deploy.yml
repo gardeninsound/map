@@ -19,11 +19,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      # west-seattle-map is a private GitHub dependency pinned to a release tag
-      # (package.json); npm fetches it over SSH with a read-only deploy key.
-      - uses: webfactory/ssh-agent@v0.9.1
-        with:
-          ssh-private-key: ${{ secrets.WSM_DEPLOY_KEY }}
       - uses: actions/setup-node@v6
         with:
           node-version: 22

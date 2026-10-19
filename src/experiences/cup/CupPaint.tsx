@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import '@fontsource/big-shoulders-stencil-display/800';
 import { cupScript, cupVersions } from '../../content/cupVersions';
-import { buttonLabel, input } from 'west-seattle-map';
-import { buildSprites } from 'west-seattle-map';
+import { buttonLabel, input } from '../../city';
+import { buildSprites } from '../../city';
 import { DialogBox } from '../../ui/MikeDialog';
 import { sounds as sfx } from '../../ui/sounds';
 import type { ExperienceProps } from '../registry';

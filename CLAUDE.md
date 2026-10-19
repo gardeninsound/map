@@ -4,13 +4,14 @@ A lo-fi SNES-style overworld of West Seattle. You walk a rabbit along the real m
 easels mark where Mike's art went up. Walk up, press A, Mike pops in with dialog, and each spot
 opens its own way of exploring the work.
 
-**The city itself — map, renderer, movement, neighbors, HUD — is the package
-[west-seattle-map](https://github.com/vlandham/west-seattle-map)**, pinned to a release tag in
-package.json (`github:vlandham/west-seattle-map#v0.1.0`). The two evolve separately: city work
-happens there and reaches Bear Island only when you bump the tag here (`npm i
-github:vlandham/west-seattle-map#vX.Y.Z`, then check the app). Map generation, landmarks and map
-review all happen in that repo. This repo is the art layer on top: art
-spots, Mike, the busker and crow, and the scenes — all as `CityPlugin`s + React UI.
+**The city itself — map, renderer, movement, neighbors, HUD — lives in `src/city/`**: Bear
+Island's own copy, taken from [west-seattle-map](https://github.com/vlandham/west-seattle-map)
+v0.1.0 and now maintained here independently. The two projects are disconnected on purpose:
+west-seattle-map is its own site and goes its own way; nothing flows between them
+automatically. To bring a city improvement over, port it by hand. The map data
+(`src/city/world/worldData.json`, landmarks included) is a frozen snapshot — the generator
+lives in west-seattle-map. This repo is the art layer: art spots, Mike, the busker and crow,
+and the scenes — all as `CityPlugin`s + React UI.
 
 Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearisland-manual`
 (the written manual — source for Mike's lines and the story behind each spot).
@@ -30,12 +31,11 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
 - `npm run places` — **content/places.csv** (the art-spot spreadsheet: name, address, Mike's greeting
   with ` | ` between lines, experience key) → geocodes changed addresses via Nominatim (1 req/s) →
   writes lat/lon/status back into the CSV + `src/content/placesData.json`. Typed lat/lon with no
-  address also works. Status: `geocoded` / `manual` / `approx` (still a guess). Uses
-  west-seattle-map's `scripts/sheet.mjs` helpers.
+  address also works. Status: `geocoded` / `manual` / `approx` (still a guess). CSV +
+  geocoding helpers: `scripts/sheet.mjs`.
 - `node scripts/make-portrait.mjs` — Mike's tintype → 40×40 pixel portrait
 - `node scripts/make-cup-rabbit.mjs` — traces the mug rabbit stencil from `data/source/cup-rabbit-photo.png` → `public/sprites/cup-rabbit.png`
-- Deploy: push `main` → GitHub Pages via `.github/workflows/deploy.yml`. west-seattle-map is
-  private; `npm ci` fetches it over SSH using the read-only `WSM_DEPLOY_KEY` deploy key.
+- Deploy: push `main` → GitHub Pages via `.github/workflows/deploy.yml`.
 
 ## Where things live
 
@@ -47,7 +47,7 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
   spot (remembered in localStorage). The city's `Compass` points at `ArtSpots.open`.
 - `src/game/busker.ts` — the keyboard busker outside Easy Street (Junction): three original
   chiptune songs (note strings, tested for whole bars) scheduled ahead through the shared
-  AudioContext (west-seattle-map's `audioContext()`). The busker plugin sets `music.level` from
+  AudioContext (the city's `audioContext()`). The busker plugin sets `music.level` from
   distance (`EARSHOT` tiles, eased); `game.quiet` mutes it inside art scenes; mute respected.
 - `src/game/crow.ts` — the snack crow (pure flight state, tested). Starts outside Les Schwab on
   Alaska; asks for snacks (choice → reply), then flies to the next perch in
@@ -67,8 +67,12 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
     Arrows/WASD walk & turn, drag to look; face a sign within ~3 m and press A for the full
     photo + Mike's line. Signs (photo crop, posts, position, facing, words) are data in
     `src/content/puppyPark.ts`; a sign whose photo isn't deployed shows its dominant colour.
+- `src/city/` — the city (see above): `world/` (tile grid + map data), `engine/` (`CityGame`,
+  movement, neighbors, input), `render/` (palette, sprites, per-pixel roads, tile art,
+  landmarks), `ui/` (HUD, dialog box, touch pad, sounds, `ui.css`). Import it via
+  `src/city/index.ts`. Its unit tests run with the rest.
 - `src/ui/` — `MikeDialog` (the city's DialogBox with Mike as default speaker/portrait), title,
-  spots menu, scene boundary, `sounds` (city `sfx` + roll + caw). Styles: `west-seattle-map/ui.css`
+  spots menu, scene boundary, `sounds` (city `sfx` + roll + caw). Styles: `src/city/ui/ui.css`
   first, then `src/styles.css` (title, scenes, spots).
 
 ## Conventions
@@ -89,6 +93,6 @@ Gotcha: fontsource packages with an `exports` map append `.css` themselves — i
 ## Verifying
 
 Unit tests cover content invariants (every spot has art and sits by a walkable street), the
-slideshows, busker songs, crow flight, sprites. City tests live in west-seattle-map. For visuals, drive real Chrome: `playwright-core` from `~/code/games/arcade/node_modules`
+slideshows, busker songs, crow flight, sprites, and the city's own tests in `src/city/`. For visuals, drive real Chrome: `playwright-core` from `~/code/games/arcade/node_modules`
 with `channel: 'chrome'`; save shots under `screenshots/` (gitignored). In dev, `window.__game` is
 the live `CityGame`, plus `__art`, `__busker`, `__crow` (the plugins) for scripted checks.

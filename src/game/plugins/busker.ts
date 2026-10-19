@@ -1,4 +1,4 @@
-import { buildPerson, hash, INK, noteCanvases, type CityGame, type CityPlugin, type DrawContext, type Npc, type Walker } from 'west-seattle-map';
+import { buildPerson, hash, INK, noteCanvases, type CityGame, type CityPlugin, type DrawContext, type Npc, type Walker } from '../../city';
 import { buskerVoice } from '../../content/neighbors';
 import { BuskerMusic } from '../busker';
 

@@ -1,4 +1,4 @@
-import type { CityGame, CityPlugin, DrawContext, Npc, Vec } from 'west-seattle-map';
+import type { CityGame, CityPlugin, DrawContext, Npc, Vec } from '../../city';
 import { CROW_NAME, crowStops } from '../../content/crow';
 import { sounds } from '../../ui/sounds';
 import { altitude, flyTick, newCrow, takeOff, type CrowState } from '../crow';

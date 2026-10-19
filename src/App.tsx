@@ -12,7 +12,7 @@ import {
   StreetSign,
   TouchPad,
   type Target,
-} from 'west-seattle-map';
+} from './city';
 import { START, locations, welcome } from './content/locations';
 import { CROW_NAME, crowChoices, crowGreeting, crowReply } from './content/crow';
 import { neighborVoices } from './content/neighbors';

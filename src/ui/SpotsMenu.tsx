@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { artUrl } from '../content/art';
 import { artManifest } from '../content/artManifest';
 import type { PlacedLocation } from '../game/plugins/artSpots';
-import { input, isTouch } from 'west-seattle-map';
+import { input, isTouch } from '../city';
 import { sounds as sfx } from './sounds';
 
 interface Props {
