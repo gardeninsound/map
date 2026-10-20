@@ -151,7 +151,8 @@ kbd {
 }
 @keyframes blink { 50% { opacity: 0; } }
 .dialog-choices { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 12px; }
-.dialog-choices button:first-child { background: var(--yellow); }
+/* the highlighted choice follows the selection (arrow keys or hover), not just the first */
+.dialog-choices button.is-selected { background: var(--yellow); outline: 3px dashed var(--pink); outline-offset: 6px; }
 .dialog-choices button:focus-visible, .scene-controls button:focus-visible, .hud-buttons button:focus-visible {
   outline: 3px dashed var(--pink); outline-offset: 6px;
 }
