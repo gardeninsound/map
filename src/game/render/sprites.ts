@@ -3,6 +3,7 @@
  * Each sprite is 16×16; `sprites.test.ts` checks the grids stay rectangular.
  */
 import { INK } from './palette';
+import { LEMON, LEMON_RIPE, LEMON_UNRIPE } from './lemon';
 
 export type Grid = string[];
 
@@ -141,24 +142,6 @@ const PERSON_RIGHT: Grid = [
   '....kbbk.kbbk...',
 ];
 
-const EASEL: Grid = [
-  '................',
-  '...kkkkkkkkkk...',
-  '...kppppttttk...',
-  '...kppyyttttk...',
-  '...kyyyyooook...',
-  '...ktttyooook...',
-  '...kttppppyyk...',
-  '...kppppppyyk...',
-  '...kkkkkkkkkk...',
-  '....kf....fk....',
-  '....kf....fk....',
-  '...kf......fk...',
-  '...kf......fk...',
-  '..kf........fk..',
-  '..kk........kk..',
-  '................',
-];
 
 /** Pixel arrows: one pointing north, one north-east. The other six are 90° turns of these. */
 export const ARROW_N = [
@@ -284,7 +267,7 @@ const CROW_FLY_DOWN: Grid = [
 const CROW_COLORS: Record<string, string> = { k: INK, b: '#191526', s: '#5a4d99', w: '#ffffff', n: '#8a86a0' };
 
 export const SPRITE_GRIDS = {
-  RABBIT_DOWN, RABBIT_UP, RABBIT_RIGHT, MIKE_DOWN, EASEL, PERSON_DOWN, PERSON_UP, PERSON_RIGHT,
+  RABBIT_DOWN, RABBIT_UP, RABBIT_RIGHT, MIKE_DOWN, PERSON_DOWN, PERSON_UP, PERSON_RIGHT,
   CROW_PERCH, CROW_FLY_UP, CROW_FLY_DOWN,
 };
 
@@ -338,7 +321,8 @@ const hop = (g: Grid): Grid => [...g.slice(1), '.'.repeat(g[0].length)];
 export interface SpriteSet {
   rabbit: Record<'up' | 'down' | 'left' | 'right', HTMLCanvasElement[]>;
   mike: HTMLCanvasElement[];
-  easel: (colors: Partial<Record<'p' | 't' | 'y' | 'o', string>>) => HTMLCanvasElement;
+  /** the art-spot marker: ripe for open spots, still green for coming soon */
+  lemon: { ripe: HTMLCanvasElement; unripe: HTMLCanvasElement };
 }
 
 export function buildSprites(): SpriteSet {
@@ -346,7 +330,6 @@ export function buildSprites(): SpriteSet {
     gridToCanvas(g, colors, mirror),
     gridToCanvas(hop(g), colors, mirror),
   ];
-  const easelCache = new Map<string, HTMLCanvasElement>();
   return {
     rabbit: {
       down: pair(RABBIT_DOWN, RABBIT_COLORS),
@@ -355,16 +338,6 @@ export function buildSprites(): SpriteSet {
       left: pair(RABBIT_RIGHT, RABBIT_COLORS, true),
     },
     mike: pair(MIKE_DOWN, MIKE_COLORS),
-    easel(colors) {
-      const key = JSON.stringify(colors);
-      let c = easelCache.get(key);
-      if (!c) {
-        c = gridToCanvas(EASEL, {
-          k: INK, f: '#a0522d', p: '#ff7eb6', t: '#2ec4b6', y: '#ffe066', o: '#ff8c42', ...colors,
-        });
-        easelCache.set(key, c);
-      }
-      return c;
-    },
+    lemon: { ripe: gridToCanvas(LEMON, LEMON_RIPE), unripe: gridToCanvas(LEMON, LEMON_UNRIPE) },
   };
 }

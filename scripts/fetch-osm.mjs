@@ -4,11 +4,12 @@
  *
  * Usage: node scripts/fetch-osm.mjs
  */
-import { writeFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync } from 'node:fs';
 
 // south, west, north, east
 export const BBOX = [47.515, -122.425, 47.598, -122.345];
 const TARGET = new URL('../data/osm/west-seattle.json', import.meta.url);
+mkdirSync(new URL('.', TARGET), { recursive: true }); // data/osm/ is gitignored, so a fresh clone lacks it
 const ENDPOINTS = [
   'https://overpass-api.de/api/interpreter',
   'https://overpass.kumi.systems/api/interpreter',
@@ -17,7 +18,7 @@ const ENDPOINTS = [
 
 const b = BBOX.join(',');
 const query = `[out:json][timeout:180];(
-way["highway"~"^(motorway|trunk|primary|secondary|tertiary)(_link)?$"](${b});
+way["highway"~"^((motorway|trunk|primary|secondary|tertiary)(_link)?|residential|unclassified|living_street)$"](${b});
 way["natural"="coastline"](${b});
 way["natural"="water"](${b});relation["natural"="water"](${b});
 way["leisure"~"^(park|golf_course|nature_reserve)$"](${b});relation["leisure"="park"](${b});
@@ -25,6 +26,7 @@ way["natural"~"^(wood|beach)$"](${b});
 way["amenity"~"^(school|place_of_worship|library|community_centre)$"](${b});
 way["landuse"~"^(commercial|retail|industrial)$"](${b});
 way["building"]["building"!~"^(garage|garages|shed|carport|hut|roof)$"](${b});
+relation["building"]["type"="multipolygon"](${b});
 node["shop"]["name"](${b});
 node["amenity"~"^(cafe|restaurant|bar|pub|fast_food|ice_cream|cinema|theatre|library|bank|pharmacy|fuel)$"]["name"](${b});
 );out geom;`;

@@ -43,6 +43,20 @@ describe('landmarks', () => {
   });
 });
 
+describe('detailed parks', () => {
+  it('Hiawatha has its fields and walkable footpaths joined to the streets', () => {
+    expect(world.parkFeatures.some((f) => f.s.includes('tennis'))).toBe(true);
+    expect(world.parkFeatures.some((f) => f.k === 'track')).toBe(true);
+    const paths = world.roadLines.filter((l) => l.k === 1);
+    expect(paths.length).toBeGreaterThan(10);
+    // every path's midpoint is walkable, i.e. it survived the "largest connected network" cut
+    for (const l of paths) {
+      const [x, y] = l.p[Math.floor(l.p.length / 2)];
+      expect(world.isWalkable(x, y)).toBe(true);
+    }
+  });
+});
+
 describe('crossedMilestone', () => {
   const marks = wallTurns.milestones;
   it('fires once when stepping past a mark, never going backwards', () => {

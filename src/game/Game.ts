@@ -1,5 +1,5 @@
 import type { ArtLocation } from '../content/locations';
-import { Tile, type World } from '../world/world';
+import { Tile, isBuilding, isWalkableTile, type World } from '../world/world';
 import { input } from './input';
 import { facingFor, step, type Facing, type Vec } from './movement';
 import { INK, PAL } from './render/palette';
@@ -10,6 +10,7 @@ import { buskerVoice } from '../content/neighbors';
 import { CROW_NAME, crowStops } from '../content/crow';
 import { sfx } from '../ui/sfx';
 import { CHUNK, ChunkCache, TS, hash } from './render/tileArt';
+import { LEMON_BASE } from './render/lemon';
 import { rng, spawnNpcs, wander, type Npc } from './npcs';
 
 const WALK = 8; // tiles / second (a tile is 12 m — game time, not real time)
@@ -29,9 +30,9 @@ export type Target = { kind: 'place'; loc: PlacedLocation } | { kind: 'npc'; npc
 
 /** Map text: neighborhoods loudest, parks (≥ ~2 hectares) in green, big schools small. */
 const LABEL_STYLE = {
-  hood: { font: '8px "Press Start 2P"', fill: '#ffe066', stroke: INK, minSize: 0 },
-  park: { font: '8px "Press Start 2P"', fill: '#d9ffb8', stroke: '#1d5e34', minSize: 150 },
-  school: { font: '6px "Press Start 2P"', fill: '#ffffff', stroke: INK, minSize: 60 },
+  hood: { font: '8px "Press Start 2P"', fill: '#e6b23a', stroke: INK, minSize: 0 },
+  park: { font: '8px "Press Start 2P"', fill: '#e5f0dc', stroke: '#173f2b', minSize: 150 },
+  school: { font: '6px "Press Start 2P"', fill: '#f3e6cc', stroke: INK, minSize: 60 },
 } as const;
 
 const targetKey = (t: Target | null) => (!t ? '' : t.kind === 'place' ? `p:${t.loc.id}` : `n:${t.npc.id}`);
@@ -91,7 +92,7 @@ export class Game {
     this.sprites = buildSprites();
     this.chunks = new ChunkCache(world);
     this.player = { pos: world.nearestWalkable(start.x, start.y), facing: 'up', walkT: 0, moving: false };
-    // Easels stand on the sidewalk beside the nearest walkable spot.
+    // Each spot's lemon sits on the sidewalk beside the nearest walkable spot.
     this.places = locations.map((l) => {
       const p = world.project(l.lat, l.lon);
       const r = world.nearestWalkable(p.x, p.y);
@@ -138,14 +139,17 @@ export class Game {
     this.resize();
   }
 
-  /** Find a non-road tile next to a road tile, so the marker doesn't block the street. */
+  /**
+   * Find open ground next to the street for a marker: not the street itself (so it doesn't
+   * block it), and not water, a building, a parking lot or a landmark drawing.
+   */
   private besideRoad(r: Vec): Vec {
     const tx = Math.floor(r.x);
     const ty = Math.floor(r.y);
+    const open = (t: number) => !isWalkableTile(t) && !isBuilding(t) && t !== Tile.Water && t !== Tile.Landmark;
     for (let d = 1; d < 5; d++) {
       for (const [dx, dy] of [[d, 0], [-d, 0], [0, d], [0, -d]]) {
-        const t = this.world.tileAt(tx + dx, ty + dy);
-        if (t !== Tile.Road && t !== Tile.Water) return { x: tx + dx + 0.5, y: ty + dy + 0.5 };
+        if (open(this.world.tileAt(tx + dx, ty + dy))) return { x: tx + dx + 0.5, y: ty + dy + 0.5 };
       }
     }
     return r;
@@ -345,15 +349,15 @@ export class Game {
       actors.push({
         y: loc.y,
         draw: () => {
-          ctx.globalAlpha = live ? 1 : 0.8;
-          ctx.drawImage(this.sprites.easel(loc.colors), sx - 8, sy - 14);
-          ctx.globalAlpha = 1;
+          // A lemon marks the spot: ripe where there's art to see, still green if coming soon.
+          const lemon = live ? this.sprites.lemon.ripe : this.sprites.lemon.unripe;
+          ctx.drawImage(lemon, sx - 9, sy - LEMON_BASE - 1);
           if (live) {
             // Mike waits beside the live spots.
             const frame = Math.floor(time * 2) % 2;
-            ctx.drawImage(this.sprites.mike[frame], sx + 6, sy - 14);
+            ctx.drawImage(this.sprites.mike[frame], sx + 11, sy - 14);
           }
-          if (!this.visited.has(loc.id)) this.drawBeacon(sx, sy - 20, time, live);
+          if (!this.visited.has(loc.id)) this.drawBeacon(sx + 1, sy - LEMON_BASE - 7, time, live);
         },
       });
     }

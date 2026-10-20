@@ -108,6 +108,8 @@ write(
 
 // Landmarks: `w`/`h` are the drawing's size in tiles; `sprite` picks the art in
 // src/game/render/landmarks.ts. build-map.mjs finds them a spot beside the street.
+// `street` (E or W, optional): the side its frontage faces; the renderer then pulls the
+// drawing flush with that street's real sidewalk edge.
 write(
   'src/content/landmarksData.json',
   (await processSheet('content/landmarks.csv')).map((r) => ({
@@ -118,5 +120,6 @@ write(
     lon: +r.lon,
     w: +r.w || 3,
     h: +r.h || 3,
+    ...(r.street ? { street: r.street } : {}),
   })),
 );

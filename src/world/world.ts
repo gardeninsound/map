@@ -20,8 +20,16 @@ export const Tile = {
   House: 10,
   /** ground under a hand-drawn landmark */
   Landmark: 11,
+  /** open lawn in a detailed park: scattered trees, painted pitches and courts */
+  Lawn: 12,
+  /** a surface parking lot in a detailed place: walkable, painted with stalls */
+  Parking: 13,
+  /** ground under a building painted from its exact outline (detailed places) */
+  Drawn: 14,
 } as const;
-export const isBuilding = (t: number) => t === Tile.Civic || t === Tile.Shop || t === Tile.Block || t === Tile.House;
+export const isBuilding = (t: number) => t === Tile.Civic || t === Tile.Shop || t === Tile.Block || t === Tile.House || t === Tile.Drawn;
+/** streets, park paths and parking lots: where you (and the neighbours) can walk */
+export const isWalkableTile = (t: number) => t === Tile.Road || t === Tile.Parking;
 export type TileCode = (typeof Tile)[keyof typeof Tile];
 
 export interface MapLabel {
@@ -48,12 +56,36 @@ export interface PlacedLandmark {
   y: number;
   w: number;
   h: number;
+  /** the side its frontage faces; it's drawn flush with that street's sidewalk */
+  street?: 'E' | 'W';
 }
 
 /** A road's centreline (tile coords) and width in tiles, for per-pixel road painting. */
 export interface RoadLine {
   w: number;
+  /** 1 = a park footpath: concrete only, no kerb or asphalt */
+  k?: 1;
   p: [number, number][];
+}
+
+/** A building in a detailed place, painted from its exact outline (tile coords). */
+export interface DrawnBuilding {
+  k: 'civic' | 'block' | 'shop';
+  levels: number;
+  /** the first `n` rings are outer, the rest are courtyards */
+  rings: [number, number][][];
+  n: number;
+}
+
+/** A pitch, track, playground, pool or bleachers in a detailed park (tile coords). */
+export interface ParkFeature {
+  /** OSM leisure=* */
+  k: 'pitch' | 'track' | 'playground' | 'swimming_pool' | 'bleachers';
+  /** OSM sport=* (pitches and tracks) */
+  s: string;
+  /** the first `n` rings are outer, the rest are holes */
+  rings: [number, number][][];
+  n: number;
 }
 
 export interface World {
@@ -62,7 +94,7 @@ export interface World {
   tileMeters: number;
   tiles: Uint8Array;
   /** per tile: 0 = no street, else 1 + index into `names` */
-  roads: Uint8Array;
+  roads: Uint16Array;
   names: string[];
   labels: MapLabel[];
   shops: Storefront[];
@@ -70,6 +102,15 @@ export interface World {
   roadLines: RoadLine[];
   /** 'footprints' = houses from OSM; 'procedural' = renderer scatters them */
   houseMode: 'footprints' | 'procedural';
+  /**
+   * Real house footprints, six numbers each (world pixels, 16 per tile): centre x, centre y,
+   * width, depth (along the house's own axes), angle in degrees, 1 = garage/shed.
+   */
+  houses: number[];
+  parkFeatures: ParkFeature[];
+  drawnBuildings: DrawnBuilding[];
+  parkingLots: { rings: [number, number][][]; n: number }[];
+  parkingAisles: [number, number][][];
   /** per tile: steps to the nearest road (capped at 255) */
   roadDist: Uint8Array;
   attribution: string;
@@ -132,13 +173,14 @@ const HOODS: [string, number, number][] = [
 export function createWorld(): World {
   const { w, h, names, projection: proj } = data;
   const tiles = decode(data.tiles);
-  const roads = decode(data.roads);
+  const raw = decode(data.roads); // little-endian uint16 per tile (hundreds of street names)
+  const roads = new Uint16Array(raw.buffer, raw.byteOffset, raw.byteLength / 2);
   const roadDist = distanceField(w, h, (i) => tiles[i] === Tile.Road);
 
   const inside = (x: number, y: number) => x >= 0 && y >= 0 && x < w && y < h;
   const tileAt = (x: number, y: number): TileCode =>
     inside(x, y) ? (tiles[x + y * w] as TileCode) : Tile.Water;
-  const isWalkable = (x: number, y: number) => tileAt(Math.floor(x), Math.floor(y)) === Tile.Road;
+  const isWalkable = (x: number, y: number) => isWalkableTile(tileAt(Math.floor(x), Math.floor(y)));
   const project = (lat: number, lon: number) => ({
     x: ((lon - proj.west) * proj.mPerLon) / data.tileMeters,
     y: ((proj.north - lat) * proj.mPerLat) / data.tileMeters,
@@ -158,9 +200,14 @@ export function createWorld(): World {
     names,
     labels,
     shops: data.shops,
-    landmarks: data.landmarks ?? [],
+    landmarks: (data.landmarks ?? []) as PlacedLandmark[],
     roadLines: (data.roadLines ?? []) as RoadLine[],
     houseMode: data.houseMode as World['houseMode'],
+    houses: ((data as { houses?: number[] }).houses ?? []) as number[],
+    parkFeatures: ((data as { parkFeatures?: unknown }).parkFeatures ?? []) as ParkFeature[],
+    drawnBuildings: ((data as { drawnBuildings?: unknown }).drawnBuildings ?? []) as DrawnBuilding[],
+    parkingLots: ((data as { parkingLots?: unknown }).parkingLots ?? []) as World['parkingLots'],
+    parkingAisles: ((data as { parkingAisles?: unknown }).parkingAisles ?? []) as [number, number][][],
     roadDist,
     attribution: data.attribution,
     tileAt,
@@ -193,7 +240,7 @@ export function createWorld(): World {
         for (let dy = -r; dy <= r; dy++) {
           for (let dx = -r; dx <= r; dx++) {
             if (Math.max(Math.abs(dx), Math.abs(dy)) !== r) continue;
-            if (tileAt(cx + dx, cy + dy) !== Tile.Road) continue;
+            if (!isWalkableTile(tileAt(cx + dx, cy + dy))) continue;
             const d = Math.hypot(cx + dx + 0.5 - x, cy + dy + 0.5 - y);
             if (d < bestD) {
               bestD = d;

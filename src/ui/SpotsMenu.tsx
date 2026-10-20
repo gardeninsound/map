@@ -9,7 +9,7 @@ interface Props {
   visited: Set<string>;
   /** jump there and open its scene */
   onOpen(loc: PlacedLocation): void;
-  /** just drop me beside the easel */
+  /** just drop me beside the lemon */
   onGo(loc: PlacedLocation): void;
   onClose(): void;
 }
@@ -93,7 +93,7 @@ export function SpotsMenu({ spots, visited, onOpen, onGo, onClose }: Props) {
             );
           })}
         </ul>
-        <p className="spots-foot">More spots open as Mike finishes them — the pink easels on the map are coming soon.</p>
+        <p className="spots-foot">More spots open as Mike finishes them — the green lemons on the map are coming soon.</p>
       </div>
     </div>
   );

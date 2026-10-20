@@ -1,7 +1,7 @@
 # Bear Island (map) — Development Guide
 
 A lo-fi SNES-style overworld of West Seattle. You walk a rabbit along the real main streets
-(generated from OpenStreetMap); easels mark where Mike's art went up. Walk up, press A, Mike
+(generated from OpenStreetMap); lemons mark where Mike's art went up (ripe = open, green = coming soon). Walk up, press A, Mike
 pops in with dialog, and each spot opens its own way of exploring the work.
 
 Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearisland-manual`
@@ -14,6 +14,7 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
 - `npm run images [srcDir]` — raw photos/videos → `public/art/<set>/` + `src/content/artManifest.ts`
   (default src `~/Downloads/bearisland/images-merged`; macOS `sips`/`mdls` + ffmpeg; incremental via `data/art-meta.json`)
 - `node scripts/fetch-osm.mjs` — refetch OSM → `data/osm/west-seattle.json` (rarely; Overpass is often busy, it retries)
+- `node scripts/fetch-detail.mjs` — refetch the detail inside `DETAILED.places` (paths, parking lots + aisles, pitches, track, playgrounds, pool) → `data/osm/detail.json`
 - `npm run map` — geocode the sheets, then rasterize OSM → `src/world/worldData.json` +
   `screenshots/map-preview.png`. **All map knobs are in `scripts/map-config.mjs`** (tile size,
   road width per class / per street name, simplify tolerance, house size cut-off).
@@ -29,6 +30,7 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
   address also works. Status: `geocoded` / `manual` / `approx` (still a guess).
 - `npm run map -- --procedural` — the old look (invented houses) for comparison
 - `node scripts/make-portrait.mjs` — Mike's tintype → 40×40 pixel portrait
+- `node scripts/make-lemon.mjs` — traces the art-spot lemon (and its shadow) from `data/source/lemon-photo.png` → `src/game/render/lemon.ts` (ASCII grid)
 - `node scripts/make-cup-rabbit.mjs` — traces the mug rabbit stencil from `data/source/cup-rabbit-photo.png` → `public/sprites/cup-rabbit.png`
 - Deploy: push `main` → GitHub Pages via `.github/workflows/deploy.yml` (Pages source = GitHub Actions)
 
@@ -37,17 +39,22 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
 - `src/world/` — tile grid (12 m/tile) + street names + named storefronts (`world.ts` decodes
   `worldData.json`; tile codes must match `scripts/build-map.mjs`). Only the largest connected road
   network is walkable. Buildings come from OSM footprints: small → house, shop/commercial-zone →
-  gray storefront, apartments/other big → tan block, church/school → brick. Houses come from all
-  ~30k OSM house footprints, one tile at each centroid (stepped back off the sidewalk). Bridges are
-  walkable roads (Admiral Way crosses Schmitz Park on one); only motorways aren't.
-  Roads: each street's OSM ways are chained, cut into blocks at intersections, simplified,
-  near-axis runs snapped onto the grid (tile centre for odd widths, tile edge for even, and a
-  block carries its column through an intersection), then with `octilinear` rewritten as
-  straight + exact-45° pieces. Turn ramps are dropped. A tile is walkable road iff its centre
-  is within width/2 of a centreline (`strokeTiles`); the centrelines are exported as
-  `roadLines` and the renderer paints asphalt / 1 px curb / 4 px sidewalk per pixel by distance
-  (`paintRoads` in tileArt.ts; asphalt beats curb beats sidewalk across roads), then redraws
-  buildings on top. So what's drawn as road is what's walkable, with no per-tile corner rules.
+  gray storefront, apartments/other big → tan block, church/school → brick. Houses are all ~32k
+  OSM house footprints at true scale (`houses` in worldData: centre, size, angle per house, painted
+  per pixel by `paintHouses` in tileArt.ts with a 3 px 3/4-view wall); a front-row house that
+  would overlap a sidewalk is nudged back (`HOUSES` in map-config). Bridges are walkable roads
+  (Admiral Way crosses Schmitz Park on one); only motorways aren't.
+  Roads: every public street in OSM (arterials, residential, unclassified, living streets, turn
+  ramps — no alleys/service roads) on its real centreline (Douglas–Peucker at ~1 m only) and at
+  its real width in metres: lanes × 3.3 m + parking + sidewalks when `lanes` is tagged, else a
+  class default (`ROADS` in map-config), then × `widthScale` (2: room for characters; houses
+  the street reaches are nudged back, then shrunk — `HOUSES.maxPush`/`minScale`). A tile is walkable iff its centre is within
+  max(width, `minWalkable` 1.5 tiles)/2 of a centreline (`strokeTiles`) — the floor keeps
+  slanted 12 m streets 4-connected. Centrelines are exported as `roadLines`; the renderer paints
+  asphalt / 1 px curb / 3 px sidewalk per pixel by distance (`paintRoads`), over building tiles.
+  Detailed places (`DETAILED` in map-config, matched by OSM name: Hiawatha Playfield, West Seattle High School) are open lawn (Tile.Lawn) with their OSM footpaths walkable (roadLines `k: 1`, concrete only); surface parking lots are walkable (Tile.Parking, `isWalkableTile`) and striped along their OSM aisles with parked cars; pitches/track/playgrounds/pool/bleachers (`parkFeatures`) and buildings (`drawnBuildings`, exact outlines with courtyards, Tile.Drawn underneath) are painted per pixel by `src/game/render/detailArt.ts`. Building multipolygon relations are fetched map-wide (the high school is one).
+  Street names are a uint16 index per tile (~300 names). Landmarks with a `street` side (E/W in
+  landmarks.csv) are pulled flush with that street's measured sidewalk edge at render time.
 - First visit: after Mike's welcome a red arrow flashes 4× toward the nearest open spot
   (`Game.showDirectionHint`, remembered in localStorage). The HUD compass (`ui/Compass.tsx`)
   always points at the nearest spot with a scene.

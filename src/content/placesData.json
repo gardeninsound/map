@@ -146,5 +146,32 @@
    "Every island needs its bears.",
    "Still hanging this one — come back soon!"
   ]
+ },
+ {
+  "id": "undersea-aviary",
+  "name": "Undersea Aviary",
+  "where": "3837 45th Ave SW · Michael Henderson's backyard",
+  "lat": 47.569383,
+  "lon": -122.389654,
+  "approx": false,
+  "set": "other",
+  "greeting": [
+   "Look over the fence. That's the Undersea Aviary.",
+   "Rebar, mortar, tile and a lot of mirror. A giant squid is climbing over the top.",
+   "The story goes the sea creatures down here wanted to see the birds."
+  ]
+ },
+ {
+  "id": "seven-eleven",
+  "name": "7-Eleven",
+  "where": "California & Charlestown",
+  "lat": 47.569589,
+  "lon": -122.387146,
+  "approx": false,
+  "set": "other",
+  "greeting": [
+   "The 7-Eleven at California and Charlestown.",
+   "Slurpees, scratch tickets, and for a while the cheapest gas in West Seattle."
+  ]
  }
 ]

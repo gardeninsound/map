@@ -1,30 +1,34 @@
-/** The one bright, lo-fi palette everything on the map draws from. */
-export const INK = '#2b2350';
+/**
+ * The one palette everything on the map draws from: mid-century rooms — vermilion, salmon
+ * and blush, mustard and ochre, seafoam and bottle-green carpet, walnut and cream, all
+ * outlined in a warm near-black.
+ */
+export const INK = '#2a1a12';
 
 export const PAL = {
-  grass: '#7ed957',
-  grassDark: '#62c043',
-  grassLight: '#9be86f',
-  flowers: ['#ff7eb6', '#ffe066', '#ffffff', '#a77bff'],
-  park: '#3fa34d',
-  treeDark: '#1d5e34',
-  tree: '#2f8f45',
-  treeLight: '#58c35c',
-  trunk: '#7a4b2a',
-  water: '#3a86ff',
-  waterLight: '#6aa8ff',
-  waterDeep: '#2c6fe0',
-  foam: '#e8f6ff',
-  sand: '#ffe29a',
-  sandDark: '#f2c66d',
-  road: '#6d6a8a',
-  roadGrain: '#625f80',
-  curb: '#d8d3e8',
-  sidewalk: '#ece7f5',
-  freeway: '#9592aa',
-  freewayLine: '#ffd34d',
-  window: '#9fd8ff',
-  wall: '#fff4e0',
-  door: '#8a4f2a',
-  roofs: ['#ff6f91', '#3ec1d3', '#ffb347', '#a77bff', '#ff5d5d', '#57cc99', '#ffd166'],
+  grass: '#5e9a72',
+  grassDark: '#4b8460',
+  grassLight: '#79b48a',
+  flowers: ['#e8a59a', '#e6b23a', '#f3e6cc', '#b8322a'],
+  park: '#2f6b48',
+  treeDark: '#173f2b',
+  tree: '#25593c',
+  treeLight: '#4f8f63',
+  trunk: '#6b3f1d',
+  water: '#4f9a94',
+  waterLight: '#7fc0b0',
+  waterDeep: '#3d827d',
+  foam: '#e5f0dc',
+  sand: '#e8c98a',
+  sandDark: '#d4a85a',
+  road: '#6b5a55',
+  roadGrain: '#5f4f4b',
+  curb: '#e5cdb2',
+  sidewalk: '#efe0c8',
+  freeway: '#8a7a70',
+  freewayLine: '#e6b23a',
+  window: '#a9d8cc',
+  wall: '#f3e6cc',
+  door: '#6b3f1d',
+  roofs: ['#b8322a', '#d98c78', '#e0a93a', '#5fa8a0', '#e8a59a', '#2f6b48', '#c8892c'],
 };
