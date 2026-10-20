@@ -98,6 +98,35 @@ const CROW_FLY_DOWN: Grid = [
 
 const CROW_COLORS: Record<string, string> = { k: INK, b: '#191526', s: '#5a4d99', w: '#ffffff', n: '#8a86a0' };
 
+/** The chicken, facing right: w feathers, g shade, r comb + wattle, y beak, o feet. */
+const CHICKEN: Grid = [
+  '................',
+  '..........rr....',
+  '.........rrrr...',
+  '.........kwwk...',
+  '........kwwkwk..',
+  '........kwwwwyy.',
+  '........kwwwwk..',
+  '..k.....krwwk...',
+  '.kwk...kwwwwk...',
+  '.kwwkkkwwwwwwk..',
+  '.kwwwwwwgwwwwk..',
+  '..kwwwggggwwwk..',
+  '...kwwwwwwwwk...',
+  '....kkkkkkkk....',
+  '......o..o......',
+  '.....oo.oo......',
+];
+const CHICKEN_COLORS: Record<string, string> = { k: INK, w: '#f6f4ef', g: '#d8d0c0', r: '#e4202c', y: '#e0a93a', o: '#e07a2a' };
+
+/** Pecking: the head (comb to wattle, right of the body) dips two pixels to the ground. */
+const peck = (g: Grid): Grid => {
+  const out = g.map((row) => row.split(''));
+  for (let y = 0; y < 8; y++) for (let x = 8; x < 16; x++) out[y][x] = '.';
+  for (let y = 0; y < 8; y++) for (let x = 8; x < 16; x++) if (g[y][x] !== '.') out[y + 2][x] = g[y][x];
+  return out.map((r) => r.join(''));
+};
+
 
 export type { Walker };
 
@@ -116,7 +145,15 @@ export function buildCrow(): CrowSprites {
 }
 
 
-export const BEAR_GRIDS = { MIKE_DOWN, CROW_PERCH, CROW_FLY_UP, CROW_FLY_DOWN };
+export const BEAR_GRIDS = { MIKE_DOWN, CROW_PERCH, CROW_FLY_UP, CROW_FLY_DOWN, CHICKEN, CHICKEN_PECK: peck(CHICKEN) };
+
+/** The chicken: [standing, pecking] facing each way; up/down reuse the side views. */
+export function buildChicken(): Walker {
+  const frames = (mirror: boolean) => [CHICKEN, peck(CHICKEN)].map((g) => gridToCanvas(g, CHICKEN_COLORS, mirror));
+  const right = frames(false);
+  const left = frames(true);
+  return { right, left, down: right, up: left };
+}
 
 /** Mike, standing by his art: two bob frames. */
 export function buildMike(): HTMLCanvasElement[] {

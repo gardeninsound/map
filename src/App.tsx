@@ -1,4 +1,4 @@
-import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   bindKeyboard,
   CityGame,
@@ -15,11 +15,14 @@ import {
 } from './city';
 import { START, locations, welcome } from './content/locations';
 import { CROW_NAME, crowChoices, crowGreeting, crowReply } from './content/crow';
+import { CHICKEN_NAME, chickenAfter, chickenInvite, chickenQuestions } from './content/chicken';
 import { neighborVoices } from './content/neighbors';
 import { experiences } from './experiences/registry';
 import { ArtSpots, type PlacedLocation } from './game/plugins/artSpots';
 import { Busker } from './game/plugins/busker';
 import { Crow } from './game/plugins/crow';
+import { Chicken } from './game/plugins/chicken';
+import type { MiniGameResult } from './experiences/minigames/ConeCatch';
 import { DialogBox } from './ui/MikeDialog';
 import { SceneBoundary } from './ui/SceneBoundary';
 import { SpotsMenu } from './ui/SpotsMenu';
@@ -40,7 +43,11 @@ type Overlay =
       then?: () => void;
     }
   | { kind: 'scene'; loc: PlacedLocation }
+  /** a character's mini game; `then` gets the result when you come back to the map */
+  | { kind: 'minigame'; then(result: MiniGameResult): void }
   | { kind: 'spots' };
+
+const ConeCatch = lazy(() => import('./experiences/minigames/ConeCatch'));
 
 /** Remember (per browser) that the first-visit direction arrow has been shown. */
 const HINT_KEY = 'bearisland-direction-hint';
@@ -81,10 +88,11 @@ export default function App() {
     const art = new ArtSpots(locations);
     const busker = new Busker();
     const crow = new Crow();
+    const chicken = new Chicken();
     const g = new CityGame(canvas.current!, world, {
       start: world.project(START.lat, START.lon),
       voices: neighborVoices,
-      plugins: [art, busker, crow],
+      plugins: [art, busker, crow, chicken],
       events: {
         onStreet: setStreet,
         onStorefront: setStorefront,
@@ -107,6 +115,29 @@ export default function App() {
                 onPick: () => setOverlay({ ...talk, lines: crowReply(stop, c.snack), then: () => crow.flyAway(c.snack) }),
               })),
             });
+          } else if (t.npc === chicken.npc) {
+            // Two questions (two answers each, with her reply), then the mini-game invitation.
+            sounds.cluck();
+            const talk = { kind: 'talk', speaker: CHICKEN_NAME, portrait: g.portraitOf(chicken.npc) } as const;
+            const ask = (i: number) => {
+              const q = chickenQuestions[i];
+              if (!q) return invite();
+              setOverlay({
+                ...talk,
+                lines: q.lines,
+                choices: q.answers.map((a) => ({ label: a.label, onPick: () => setOverlay({ ...talk, lines: a.reply, then: () => ask(i + 1) }) })),
+              });
+            };
+            const invite = () =>
+              setOverlay({
+                ...talk,
+                lines: chickenInvite.lines,
+                choices: [
+                  { label: chickenInvite.yes, onPick: () => setOverlay({ kind: 'minigame', then: (r) => setOverlay({ ...talk, lines: chickenAfter(r.score, r.best) }) }) },
+                  { label: chickenInvite.no, onPick: () => setOverlay({ ...talk, lines: chickenInvite.bye }) },
+                ],
+              });
+            ask(0);
           } else if (t.npc) {
             setOverlay({ kind: 'talk', lines: t.npc.voice.lines, speaker: t.npc.voice.name, portrait: g.portraitOf(t.npc) });
           }
@@ -114,7 +145,7 @@ export default function App() {
       },
     });
     g.paused = true;
-    if (import.meta.env.DEV) Object.assign(window, { __game: g, __busker: busker, __crow: crow, __art: art }); // test hooks
+    if (import.meta.env.DEV) Object.assign(window, { __game: g, __busker: busker, __crow: crow, __chicken: chicken, __art: art }); // test hooks
     // Dev review hook: ?at=lat,lon skips the title and drops you there.
     const at = import.meta.env.DEV && new URLSearchParams(location.search).get('at');
     if (at) {
@@ -139,7 +170,7 @@ export default function App() {
     if (game) {
       game.paused = !started || overlay.kind !== 'none';
       // street sounds stay on while you chat on the street, hush inside an art scene
-      game.quiet = !started || overlay.kind === 'scene';
+      game.quiet = !started || overlay.kind === 'scene' || overlay.kind === 'minigame';
     }
   }, [game, started, overlay]);
 
@@ -191,7 +222,7 @@ export default function App() {
     <main className="app">
       <canvas ref={canvas} className="world" aria-label="A pixel map of West Seattle. Walk with the arrow keys." />
 
-      {started && overlay.kind !== 'scene' && (
+      {started && overlay.kind !== 'scene' && overlay.kind !== 'minigame' && (
         <>
           <StreetSign name={street} storefront={storefront} />
           {overlay.kind === 'none' && <NearbyCard target={nearby} />}
@@ -242,7 +273,7 @@ export default function App() {
         </>
       )}
 
-      {started && touch && overlay.kind !== 'scene' && <TouchPad />}
+      {started && touch && overlay.kind !== 'scene' && overlay.kind !== 'minigame' && <TouchPad />}
 
       {overlay.kind === 'talk' && (
         <div className="talk-layer">
@@ -287,6 +318,19 @@ export default function App() {
         <SceneBoundary onError={closeOverlay}>
           <Suspense fallback={<div className="scene scene-loading">Loading…</div>}>
             <Scene location={overlay.loc} onExit={closeOverlay} />
+          </Suspense>
+        </SceneBoundary>
+      )}
+
+      {overlay.kind === 'minigame' && (
+        <SceneBoundary onError={closeOverlay}>
+          <Suspense fallback={<div className="scene scene-loading">Loading…</div>}>
+            <ConeCatch
+              onExit={(result) => {
+                closeOverlay();
+                overlay.then(result);
+              }}
+            />
           </Suspense>
         </SceneBoundary>
       )}

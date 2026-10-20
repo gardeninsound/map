@@ -64,6 +64,14 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
   Alaska; asks for snacks (choice → reply), then flies to the next perch in
   `src/content/crow.ts` (storefront regex + lat/lon fallback, lines per stop) and loops home,
   remembering how often you shared. App's `talk` overlay takes `choices` and a `then` callback.
+- `src/game/plugins/chicken.ts` — the chicken on California outside Greentree Animal Hospital: two questions with two answers
+  each and her reply to each, then "Want to play my mini game?" (all lines in `src/content/chicken.ts`).
+  Yes opens **Cone Catch** (catch falling ice cream cones; missed ones burst into flames on the grass —
+  running into a burning fire or taking a rock costs one of three lives, {A} jumps the fires; lives sit in
+  a 24 px Art Nouveau bar over the 160×120 field;
+  `src/experiences/minigames/ConeCatch.tsx`, rules pure + tested in
+  `src/game/coneCatch.ts`; best score in localStorage) via the App's `minigame` overlay, whose `then`
+  gets `{ score, best }` back for her closing line. A new character mini game: same overlay, its own component.
 - `src/content/` — **content is data**: `locations.ts` (spots, coords, Mike's greetings),
   `wallTurns.ts` (scene script), `artManifest.ts` (generated, date-ordered).
 - `src/experiences/` — one scene per spot, lazy-loaded via `registry.ts`, wrapped in

@@ -227,3 +227,8 @@
   .scene-controls button { font-size: 9px; padding: 9px 10px; }
   .scene-controls kbd { display: none; }
 }
+
+/* Cone Catch (the chicken's mini game): the native canvas, integer-scaled and centred */
+.minigame-scene { align-items: center; justify-content: center; background: #2a1a12; touch-action: none; user-select: none; }
+.minigame-canvas { image-rendering: pixelated; display: block; }
+.minigame-back { margin-top: 10px; font-family: var(--pixel); font-size: 11px; padding: 10px 12px; color: #2a1a12; background: #f3e6cc; border: 2px solid #2a1a12; box-shadow: 2px 2px 0 #2a1a12; cursor: pointer; }
