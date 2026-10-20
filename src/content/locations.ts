@@ -20,7 +20,7 @@ export interface ArtLocation {
   set: string;
   /** key into the experience registry; absent = "coming soon" */
   experience?: string;
-  /** canvas colors for the easel marker */
+  /** colours for the spot's thumbnail in the Spots menu */
   colors: { p: string; t: string; y: string; o: string };
   /** what Mike says when you walk up and press the action button */
   greeting: string[];
@@ -48,6 +48,6 @@ export const locations: ArtLocation[] = places.map((p) => ({ ...p, colors: COLOR
 /** First thing Mike says when you arrive on the map. */
 export const welcome = [
   "Welcome to Bear Island! I'm Mike. For ten years I've been putting things up around West Seattle.",
-  'Walk the streets. When you see an easel, step up and press {A} — that is where the art lives. Say hi to the neighbors, too.',
+  'Walk the streets. When you see a lemon, step up and press {A} — that is where the art lives. Say hi to the neighbors, too.',
   'Start with the gas station wall, just north of here up California Ave.',
 ];

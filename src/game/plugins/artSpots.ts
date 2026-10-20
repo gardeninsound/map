@@ -1,21 +1,23 @@
 import { INK, type CityGame, type CityPlugin, type DrawContext, type Target } from '../../city';
 import type { ArtLocation } from '../../content/locations';
-import { buildMike, easel } from '../sprites';
+import { LEMON_BASE } from '../lemon';
+import { buildLemons, buildMike } from '../sprites';
 
 export interface PlacedLocation extends ArtLocation {
-  /** tile coords of the easel, beside the street */
+  /** tile coords of the lemon, beside the street */
   x: number;
   y: number;
 }
 
 /**
- * The art spots: an easel for each, Mike waiting beside the ones with a scene, and a
- * bobbing beacon until you've been. Walk up and press A — the app opens the spot.
+ * The art spots: a lemon marks each (ripe where there's a scene, still green if coming
+ * soon), Mike waits beside the open ones, and a beacon bobs until you've been. Walk up and press A — the app opens the spot.
  */
 export class ArtSpots implements CityPlugin {
   places: PlacedLocation[] = [];
   readonly visited = new Set<string>();
   private mike = buildMike();
+  private lemons = buildLemons();
 
   constructor(private locations: ArtLocation[]) {}
 
@@ -48,11 +50,9 @@ export class ArtSpots implements CityPlugin {
       d.push({
         y: loc.y,
         draw: () => {
-          ctx.globalAlpha = live ? 1 : 0.8;
-          ctx.drawImage(easel(loc.colors), s.x - 8, s.y - 14);
-          ctx.globalAlpha = 1;
-          if (live) ctx.drawImage(this.mike[Math.floor(time * 2) % 2], s.x + 6, s.y - 14);
-          if (!this.visited.has(loc.id)) beacon(ctx, s.x, s.y - 20, time, live);
+          ctx.drawImage(live ? this.lemons.ripe : this.lemons.unripe, s.x - 9, s.y - LEMON_BASE - 1);
+          if (live) ctx.drawImage(this.mike[Math.floor(time * 2) % 2], s.x + 11, s.y - 14);
+          if (!this.visited.has(loc.id)) beacon(ctx, s.x + 1, s.y - LEMON_BASE - 7, time, live);
         },
       });
     }

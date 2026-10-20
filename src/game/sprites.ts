@@ -1,8 +1,10 @@
 /**
- * Bear Island's own sprites: Mike, the easels that mark art spots, and the snack crow.
+ * Bear Island's own sprites: Mike, the lemons that mark art spots (src/game/lemon.ts), and
+ * the snack crow.
  * Same ASCII-grid format as the city's sprites (src/city/render/sprites.ts).
  */
 import { gridToCanvas, hop, INK, type Grid, type Walker } from '../city';
+import { LEMON, LEMON_RIPE, LEMON_UNRIPE } from './lemon';
 
 const MIKE_COLORS: Record<string, string> = {
   k: INK,
@@ -33,24 +35,6 @@ const MIKE_DOWN: Grid = [
 ];
 
 
-const EASEL: Grid = [
-  '................',
-  '...kkkkkkkkkk...',
-  '...kppppttttk...',
-  '...kppyyttttk...',
-  '...kyyyyooook...',
-  '...ktttyooook...',
-  '...kttppppyyk...',
-  '...kppppppyyk...',
-  '...kkkkkkkkkk...',
-  '....kf....fk....',
-  '....kf....fk....',
-  '...kf......fk...',
-  '...kf......fk...',
-  '..kf........fk..',
-  '..kk........kk..',
-  '................',
-];
 
 
 /** The snack crow, perched (facing right): b body, s sheen, w eye, n beak and feet. */
@@ -132,21 +116,14 @@ export function buildCrow(): CrowSprites {
 }
 
 
-export const BEAR_GRIDS = { MIKE_DOWN, EASEL, CROW_PERCH, CROW_FLY_UP, CROW_FLY_DOWN };
+export const BEAR_GRIDS = { MIKE_DOWN, CROW_PERCH, CROW_FLY_UP, CROW_FLY_DOWN };
 
 /** Mike, standing by his art: two bob frames. */
 export function buildMike(): HTMLCanvasElement[] {
   return [gridToCanvas(MIKE_DOWN, MIKE_COLORS), gridToCanvas(hop(MIKE_DOWN), MIKE_COLORS)];
 }
 
-const easelCache = new Map<string, HTMLCanvasElement>();
-/** An art spot's easel, its canvas painted in the spot's colors. */
-export function easel(colors: Partial<Record<'p' | 't' | 'y' | 'o', string>>): HTMLCanvasElement {
-  const key = JSON.stringify(colors);
-  let c = easelCache.get(key);
-  if (!c) {
-    c = gridToCanvas(EASEL, { k: INK, f: '#a0522d', p: '#ff7eb6', t: '#2ec4b6', y: '#ffe066', o: '#ff8c42', ...colors });
-    easelCache.set(key, c);
-  }
-  return c;
+/** The art-spot marker, a lemon with its shadow: ripe for open spots, still green for coming soon. */
+export function buildLemons(): { ripe: HTMLCanvasElement; unripe: HTMLCanvasElement } {
+  return { ripe: gridToCanvas(LEMON, LEMON_RIPE), unripe: gridToCanvas(LEMON, LEMON_UNRIPE) };
 }

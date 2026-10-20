@@ -170,7 +170,7 @@ export default function App() {
     setOverlay({ kind: 'none' });
   }, [game]);
 
-  /** Shortcut travel: land beside the easel, optionally straight into its scene. */
+  /** Shortcut travel: land beside the lemon, optionally straight into its scene. */
   const travel = useCallback(
     (loc: PlacedLocation, open: boolean) => {
       if (!game || !spots) return;

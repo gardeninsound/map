@@ -1,7 +1,7 @@
 # Bear Island (map) — Development Guide
 
 A lo-fi SNES-style overworld of West Seattle. You walk a rabbit along the real main streets;
-easels mark where Mike's art went up. Walk up, press A, Mike pops in with dialog, and each spot
+lemons mark where Mike's art went up (ripe = open, green = coming soon). Walk up, press A, Mike pops in with dialog, and each spot
 opens its own way of exploring the work.
 
 **The city itself — map, renderer, movement, neighbors, HUD — lives in `src/city/`**: Bear
@@ -9,9 +9,10 @@ Island's own copy, taken from [west-seattle-map](https://github.com/vlandham/wes
 v0.1.0 and now maintained here independently. The two projects are disconnected on purpose:
 west-seattle-map is its own site and goes its own way; nothing flows between them
 automatically. To bring a city improvement over, port it by hand. The map data
-(`src/city/world/worldData.json`, landmarks included) is a frozen snapshot — the generator
-lives in west-seattle-map. This repo is the art layer: art spots, Mike, the busker and crow,
-and the scenes — all as `CityPlugin`s + React UI.
+(`src/city/world/worldData.json`) is generated here by `scripts/city/` (the OSM pipeline,
+brought back from before the split; settings in `scripts/city/map-config.mjs`). On top of the
+city sits the art layer: art spots, Mike, the busker and crow, and the scenes — all as
+`CityPlugin`s + React UI.
 
 Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearisland-manual`
 (the written manual — source for Mike's lines and the story behind each spot).
@@ -33,16 +34,26 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
   writes lat/lon/status back into the CSV + `src/content/placesData.json`. Typed lat/lon with no
   address also works. Status: `geocoded` / `manual` / `approx` (still a guess). CSV +
   geocoding helpers: `scripts/sheet.mjs`.
+- `npm run map:fetch` — refetch OpenStreetMap → `data/osm/` (gitignored; Overpass is often busy, it
+  retries): `scripts/city/fetch-osm.mjs` (streets, buildings incl. multipolygons, parks, water…) and
+  `fetch-detail.mjs` (paths, parking lots, pitches inside `DETAILED.places`).
+- `npm run map` — `content/landmarks.csv` → `src/city/world/landmarksData.json` (geocoded,
+  `scripts/city/landmarks.mjs`), then rasterize OSM → `src/city/world/worldData.json` +
+  `screenshots/map-preview.png` (`scripts/city/build-map.mjs`). All knobs in
+  `scripts/city/map-config.mjs`: street widths (true width from lanes, × `widthScale` 2), house
+  push/shrink, detailed places.
+- `node scripts/make-lemon.mjs` — traces the art-spot lemon + shadow from `data/source/lemon-photo.png`
+  → `src/game/lemon.ts` (ASCII grid, ripe + unripe palettes)
 - `node scripts/make-portrait.mjs` — Mike's tintype → 40×40 pixel portrait
 - `node scripts/make-cup-rabbit.mjs` — traces the mug rabbit stencil from `data/source/cup-rabbit-photo.png` → `public/sprites/cup-rabbit.png`
 - Deploy: push `main` → GitHub Pages via `.github/workflows/deploy.yml`.
 
 ## Where things live
 
-- `src/game/plugins/` — the app's `CityPlugin`s: `artSpots.ts` (easels, Mike beside live spots,
+- `src/game/plugins/` — the app's `CityPlugin`s: `artSpots.ts` (lemons, Mike beside live spots,
   "unvisited" beacons; targets of kind `place` carrying the `PlacedLocation`), `busker.ts`,
   `crow.ts`. App.tsx wires them into `CityGame` and handles `onInteract`.
-- `src/game/sprites.ts` — Mike, the easel, the crow (same grid format as the city's sprites).
+- `src/game/sprites.ts` — Mike, the lemons (`src/game/lemon.ts`), the crow (same grid format as the city's sprites).
 - First visit: after Mike's welcome the city's hint arrow flashes 4× toward the nearest open
   spot (remembered in localStorage). The city's `Compass` points at `ArtSpots.open`.
 - `src/game/busker.ts` — the keyboard busker outside Easy Street (Junction): three original
@@ -70,7 +81,18 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
 - `src/city/` — the city (see above): `world/` (tile grid + map data), `engine/` (`CityGame`,
   movement, neighbors, input), `render/` (palette, sprites, per-pixel roads, tile art,
   landmarks), `ui/` (HUD, dialog box, touch pad, sounds, `ui.css`). Import it via
-  `src/city/index.ts`. Its unit tests run with the rest.
+  `src/city/index.ts`. Its unit tests run with the rest. What the map draws:
+  - every public street (no alleys) on its real centreline, at its real width × 2; walkable
+    band ≥ 1.5 tiles; ~300 street names (uint16 per tile)
+  - ~27k houses at their true OSM size/angle (`paintHouses`), nudged back or shrunk where a
+    street reaches them; other buildings as tiles
+  - landmarks (`render/landmarks.ts`): 76 station, Admiral Theatre, Easy Street, the Undersea
+    Aviary, the 7-Eleven, and the Junction block faces (`render/storefronts.ts`, data in
+    `world/storefronts.ts`, shop fronts in `render/facades.ts`); a landmark with a `street`
+    side is pulled flush with that street's sidewalk at render time
+  - detailed places (Hiawatha Playfield, West Seattle High School): lawn, walkable footpaths
+    and parking lots (Tile.Parking), pitches/track/courts/pool, buildings from exact
+    outlines (`render/detailArt.ts`)
 - `src/ui/` — `MikeDialog` (the city's DialogBox with Mike as default speaker/portrait), title,
   spots menu, scene boundary, `sounds` (city `sfx` + roll + caw). Styles: `src/city/ui/ui.css`
   first, then `src/styles.css` (title, scenes, spots).

@@ -11,7 +11,9 @@
     "test:watch": "vitest",
     "images": "node scripts/process-images.mjs",
     "places": "node scripts/places.mjs",
-    "art:publish": "node scripts/publish-art.mjs"
+    "art:publish": "node scripts/publish-art.mjs",
+    "map": "node scripts/city/landmarks.mjs && node scripts/city/build-map.mjs",
+    "map:fetch": "node scripts/city/fetch-osm.mjs && node scripts/city/fetch-detail.mjs"
   },
   "dependencies": {
     "@fontsource/big-shoulders-stencil-display": "^5.3.0",

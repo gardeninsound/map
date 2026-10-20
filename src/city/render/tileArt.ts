@@ -1,6 +1,10 @@
 import { Tile, isBuilding, type World } from '../world/world';
 import { drawLandmark } from './landmarks';
 import { INK, PAL } from './palette';
+import {
+  paintBuildings, paintParking, paintParkFeatures, prepareBuilding, prepareFeature, prepareLot,
+  type PreparedBuilding, type PreparedFeature, type PreparedLot,
+} from './detailArt';
 
 export const TS = 16; // pixels per tile
 export const CHUNK = 32; // tiles per chunk side
@@ -70,11 +74,11 @@ function house(ctx: Ctx, ox: number, oy: number, tx: number, ty: number) {
 }
 
 const BUILDING_LOOK = {
-  [Tile.Shop]: { roof: '#8e8ba3', roofLight: '#a9a6bd', wall: '#d6d3e3', trim: '#6f6c85' },
-  [Tile.Block]: { roof: '#e0c9a6', roofLight: '#ecdcc0', wall: '#f6e7cc', trim: '#b89b72' },
-  [Tile.Civic]: { roof: '#c8503d', roofLight: '#dc6a55', wall: '#e3664f', trim: '#9c3a2c' },
+  [Tile.Shop]: { roof: '#8f8076', roofLight: '#a8998a', wall: '#dccbb4', trim: '#6e6058' },
+  [Tile.Block]: { roof: '#d9b98a', roofLight: '#e8cfa6', wall: '#f3e6cc', trim: '#a8814e' },
+  [Tile.Civic]: { roof: '#a8362a', roofLight: '#c25040', wall: '#b8322a', trim: '#7a2318' },
 } as const;
-const AWNINGS = ['#ff5d5d', '#2ec4b6', '#ffd166', '#ff7eb6', '#57cc99', '#3a86ff', '#a77bff'];
+const AWNINGS = ['#b8322a', '#5fa8a0', '#e0a93a', '#e8a59a', '#2f6b48', '#d98c78', '#c8892c'];
 
 /**
  * A tile of a big building, drawn top-down with SNES-style 3/4 cheats: flat roof with
@@ -103,20 +107,20 @@ function building(ctx: Ctx, world: World, t: 6 | 8 | 9, ox: number, oy: number, 
     // south facade
     px(ctx, look.wall, ox, oy + 8, TS, 8);
     if (t === Tile.Shop) {
-      for (let i = 0; i < TS; i += 4) px(ctx, i % 8 ? '#ffffff' : awning, ox + i, oy + 8, 4, 3);
+      for (let i = 0; i < TS; i += 4) px(ctx, i % 8 ? '#f3e6cc' : awning, ox + i, oy + 8, 4, 3);
       px(ctx, PAL.window, ox + 2, oy + 12, 12, 3);
       if (hash(tx, ty, 32) < 0.4) px(ctx, PAL.door, ox + 7, oy + 11, 3, 5);
     } else {
       px(ctx, PAL.window, ox + 2, oy + 10, 3, 3);
       px(ctx, PAL.window, ox + 11, oy + 10, 3, 3);
-      if (t === Tile.Civic) px(ctx, '#ffffff', ox + 7, oy + 10, 2, 6);
+      if (t === Tile.Civic) px(ctx, '#f3e6cc', ox + 7, oy + 10, 2, 6);
     }
     px(ctx, INK, ox, oy + 15, TS, 1);
   }
   if (t === Tile.Shop) {
     // awnings on side walls facing the street
     for (const [dx, x] of [[-1, 0], [1, TS - 3]] as const) {
-      if (!same(dx, 0) && street(dx, 0)) for (let j = 0; j < TS; j += 4) px(ctx, j % 8 ? '#ffffff' : awning, ox + x, oy + j, 3, 4);
+      if (!same(dx, 0) && street(dx, 0)) for (let j = 0; j < TS; j += 4) px(ctx, j % 8 ? '#f3e6cc' : awning, ox + x, oy + j, 3, 4);
     }
   }
   if (!same(0, -1)) px(ctx, INK, ox, oy, TS, 1);
@@ -124,10 +128,10 @@ function building(ctx: Ctx, world: World, t: 6 | 8 | 9, ox: number, oy: number, 
   if (!same(1, 0)) px(ctx, INK, ox + TS - 1, oy, 1, TS);
 }
 
-const CARS = ['#ff5d5d', '#3a86ff', '#ffffff', '#ffd166', '#2b2350', '#57cc99'];
+const CARS = ['#b8322a', '#5fa8a0', '#f3e6cc', '#e0a93a', '#2a1a12', '#d98c78'];
 function plaza(ctx: Ctx, ox: number, oy: number, tx: number, ty: number) {
-  px(ctx, '#c8c6d4', ox, oy, TS, TS);
-  px(ctx, '#ffffff', ox, oy + 1, 1, 6);
+  px(ctx, '#cbbba8', ox, oy, TS, TS);
+  px(ctx, '#f3e6cc', ox, oy + 1, 1, 6);
   const h = hash(tx, ty, 40);
   if (h < 0.3) {
     const c = CARS[Math.floor(hash(tx, ty, 41) * CARS.length)];
@@ -176,14 +180,24 @@ export function drawTile(ctx: Ctx, world: World, tx: number, ty: number, ox: num
     case Tile.Block:
       return building(ctx, world, t, ox, oy, tx, ty);
     case Tile.House:
-      return house(ctx, ox, oy, tx, ty);
+      // lawn under a real footprint; the house itself is painted per pixel (paintHouses)
+      return grass(ctx, ox, oy, tx, ty, false);
     case Tile.Plaza:
       return plaza(ctx, ox, oy, tx, ty);
     case Tile.Landmark:
-      return px(ctx, '#c8c6d4', ox, oy, TS, TS); // the landmark drawing covers it
+      return px(ctx, '#cbbba8', ox, oy, TS, TS); // the landmark drawing covers it
     case Tile.Park:
       grass(ctx, ox, oy, tx, ty, true);
       if (hash(tx, ty, 11) < 0.82) tree(ctx, ox, oy, tx, ty);
+      return;
+    case Tile.Parking:
+    case Tile.Drawn:
+      // the lot or building is painted per pixel over this (paintParking / paintBuildings)
+      return grass(ctx, ox, oy, tx, ty, false);
+    case Tile.Lawn:
+      // a detailed park: open lawn, a tree here and there (fields are painted over it)
+      grass(ctx, ox, oy, tx, ty, true);
+      if (hash(tx, ty, 11) < 0.14) tree(ctx, ox, oy, tx, ty);
       return;
     default: {
       const d = world.roadDist[tx + ty * world.w];
@@ -198,9 +212,8 @@ export function drawTile(ctx: Ctx, world: World, tx: number, ty: number, ox: num
   }
 }
 
-const SIDEWALK = 4; // px (~3 m)
+const SIDEWALK = 6; // px: ROADS.sidewalk (~2.3 m) × ROADS.widthScale, like the rest of the street
 const CURB = 1; // px
-const BUILDINGS = new Set<number>([Tile.Shop, Tile.Block, Tile.Civic, Tile.House]);
 
 /** A road segment in world pixels: R = half the full width, A = half the asphalt. */
 interface Seg {
@@ -257,14 +270,174 @@ function paintRoads(ctx: Ctx, segs: Seg[], ox: number, oy: number, size: number)
   ctx.putImageData(img, 0, 0);
 }
 
+const WALL = 3; // px of wall showing under a house's roof (the SNES 3/4 cheat)
+
+/** A real house footprint in world pixels (see World.houses). */
+interface HouseRect {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  cos: number;
+  sin: number;
+  shed: boolean;
+  seed: number;
+  /** world-pixel bounds of everything drawn, shadow included */
+  x0: number;
+  y0: number;
+  x1: number;
+  y1: number;
+}
+
+const rgbOf = (hex: string) => [1, 3, 5].map((k) => parseInt(hex.slice(k, k + 2), 16));
+const mix = (c: number[], to: number[], k: number) => c.map((v, i) => Math.round(v + (to[i] - v) * k));
+const WHITE = [255, 255, 255];
+const BLACK = [0, 0, 0];
+const ROOFS = PAL.roofs.map(rgbOf);
+const SHED_ROOF = rgbOf('#a8998a');
+const HOUSE_INK = rgbOf(INK);
+const HOUSE_WALL = rgbOf(PAL.wall);
+const SHED_WALL = rgbOf('#dccbb4');
+const HOUSE_WINDOW = rgbOf(PAL.window);
+const HOUSE_DOOR = rgbOf(PAL.door);
+
+/**
+ * Paint real house footprints into a chunk at true scale, per pixel: the footprint is the
+ * ground plan; the roof is that shape lifted WALL px, with walls showing below it. Gable
+ * roofs ridge along the long side (light and shaded halves); walls get windows and a door.
+ */
+function paintHouses(ctx: Ctx, houses: HouseRect[], ox: number, oy: number, size: number) {
+  if (!houses.length) return;
+  const img = ctx.getImageData(0, 0, size, size);
+  const d = img.data;
+  const put = (x: number, y: number, c: number[]) => {
+    if (x < 0 || y < 0 || x >= size || y >= size) return;
+    const i = (x + y * size) * 4;
+    d[i] = c[0];
+    d[i + 1] = c[1];
+    d[i + 2] = c[2];
+  };
+  const darken = (x: number, y: number) => {
+    if (x < 0 || y < 0 || x >= size || y >= size) return;
+    const i = (x + y * size) * 4;
+    for (let k = 0; k < 3; k++) d[i + k] = Math.round(d[i + k] * 0.78);
+  };
+  for (const h of houses) {
+    // ground-plan mask over the drawn bounds
+    const mw = h.x1 - h.x0 + 1;
+    const mh = h.y1 - h.y0 + 1;
+    const plan = new Uint8Array(mw * mh);
+    for (let y = 0; y < mh; y++) {
+      for (let x = 0; x < mw; x++) {
+        const dx = h.x0 + x + 0.5 - h.x;
+        const dy = h.y0 + y + 0.5 - h.y;
+        const u = dx * h.cos + dy * h.sin;
+        const v = -dx * h.sin + dy * h.cos;
+        if (Math.abs(u) < h.w / 2 && Math.abs(v) < h.h / 2) plan[x + y * mw] = 1;
+      }
+    }
+    const at = (x: number, y: number) => x >= 0 && y >= 0 && x < mw && y < mh && plan[x + y * mw] === 1;
+    const roof = (x: number, y: number) => at(x, y + WALL);
+    const body = (x: number, y: number) => {
+      for (let k = 0; k <= WALL; k++) if (at(x, y + k)) return true;
+      return false;
+    };
+    const base = h.shed ? SHED_ROOF : ROOFS[Math.floor(h.seed * ROOFS.length)];
+    const shade = mix(base, BLACK, 0.22);
+    const ridge = mix(base, WHITE, 0.35);
+    const wall = h.shed ? SHED_WALL : HOUSE_WALL;
+    const along = h.w >= h.h; // ridge runs along the long side
+    const doorX = Math.round(h.x) - h.x0;
+    for (let y = 0; y < mh; y++) {
+      for (let x = 0; x < mw; x++) {
+        const sx = h.x0 + x - ox;
+        const sy = h.y0 + y - oy;
+        if (sx < -1 || sy < -1 || sx > size || sy > size) continue;
+        if (roof(x, y)) {
+          if (!roof(x - 1, y) || !roof(x + 1, y) || !roof(x, y - 1) || !roof(x, y + 1)) put(sx, sy, HOUSE_INK);
+          else {
+            // which side of the ridge (in the roof's own axes)
+            const dx = h.x0 + x + 0.5 - h.x;
+            const dy = h.y0 + y + WALL + 0.5 - h.y;
+            const side = along ? -dx * h.sin + dy * h.cos : dx * h.cos + dy * h.sin;
+            put(sx, sy, Math.abs(side) < 0.75 ? ridge : side < 0 ? base : shade);
+          }
+        } else if (body(x, y)) {
+          const edge = !body(x - 1, y) || !body(x + 1, y) || !body(x, y + 1);
+          if (edge) put(sx, sy, HOUSE_INK);
+          else if (!h.shed && (x === doorX || x === doorX - 1)) put(sx, sy, HOUSE_DOOR);
+          else if (!h.shed && (x + Math.floor(h.seed * 4)) % 4 < 2 && Math.abs(x - doorX) > 2) put(sx, sy, HOUSE_WINDOW);
+          else put(sx, sy, wall);
+        } else if (body(x - 2, y - 1)) {
+          darken(sx, sy); // soft shadow to the south-east
+        }
+      }
+    }
+  }
+  ctx.putImageData(img, 0, 0);
+}
+
 /** Lazily rendered CHUNK×CHUNK tile canvases. */
 export class ChunkCache {
   private cache = new Map<number, HTMLCanvasElement>();
   private segs = new Map<number, Seg[]>();
+  private houses = new Map<number, HouseRect[]>();
+  private parks = new Map<number, PreparedFeature[]>();
+  private lots = new Map<number, PreparedLot[]>();
+  private drawn = new Map<number, PreparedBuilding[]>();
 
   constructor(private world: World) {
-    // Bucket road segments by the chunks they touch.
+    // Bucket house footprints by the chunks their drawing touches.
     const span = CHUNK * TS;
+    const hs = world.houses;
+    for (let i = 0; i < hs.length; i += 6) {
+      const [x, y, w, h, deg, shed] = hs.slice(i, i + 6);
+      const a = (deg * Math.PI) / 180;
+      const cos = Math.cos(a);
+      const sin = Math.sin(a);
+      const ex = (w * Math.abs(cos) + h * Math.abs(sin)) / 2;
+      const ey = (w * Math.abs(sin) + h * Math.abs(cos)) / 2;
+      const r: HouseRect = {
+        x, y, w, h, cos, sin,
+        shed: shed === 1,
+        seed: hash(x, y, 9),
+        x0: Math.floor(x - ex) - 1,
+        y0: Math.floor(y - ey) - WALL - 1,
+        x1: Math.ceil(x + ex) + 2,
+        y1: Math.ceil(y + ey) + 1,
+      };
+      for (let cy = Math.floor(r.y0 / span); cy <= Math.floor(r.y1 / span); cy++) {
+        for (let cx = Math.floor(r.x0 / span); cx <= Math.floor(r.x1 / span); cx++) {
+          const key = cx * 10000 + cy;
+          if (!this.houses.has(key)) this.houses.set(key, []);
+          this.houses.get(key)!.push(r);
+        }
+      }
+    }
+    // Parking lots and exact-outline buildings in detailed places, likewise.
+    const bucket = <T extends { x0: number; y0: number; x1: number; y1: number }>(map: Map<number, T[]>, item: T) => {
+      for (let cy = Math.floor(item.y0 / span); cy <= Math.floor(item.y1 / span); cy++) {
+        for (let cx = Math.floor(item.x0 / span); cx <= Math.floor(item.x1 / span); cx++) {
+          const key = cx * 10000 + cy;
+          if (!map.has(key)) map.set(key, []);
+          map.get(key)!.push(item);
+        }
+      }
+    };
+    for (const lot of world.parkingLots) bucket(this.lots, prepareLot(lot.rings, world.parkingAisles, TS));
+    for (const b of world.drawnBuildings) bucket(this.drawn, prepareBuilding(b, TS));
+    // Bucket park features (pitches, courts, the track…) the same way.
+    for (const f of world.parkFeatures) {
+      const p = prepareFeature(f, TS);
+      for (let cy = Math.floor(p.y0 / span); cy <= Math.floor(p.y1 / span); cy++) {
+        for (let cx = Math.floor(p.x0 / span); cx <= Math.floor(p.x1 / span); cx++) {
+          const key = cx * 10000 + cy;
+          if (!this.parks.has(key)) this.parks.set(key, []);
+          this.parks.get(key)!.push(p);
+        }
+      }
+    }
+    // Bucket road segments by the chunks they touch.
     for (const line of world.roadLines) {
       const r = (line.w * TS) / 2;
       for (let i = 1; i < line.p.length; i++) {
@@ -274,7 +447,8 @@ export class ChunkCache {
           bx: line.p[i][0] * TS,
           by: line.p[i][1] * TS,
           r,
-          a: r - SIDEWALK,
+          // a park path is all concrete: no asphalt, no kerb
+          a: line.k ? -1 : r - SIDEWALK,
         };
         for (let cy = Math.floor((Math.min(g.ay, g.by) - r) / span); cy <= Math.floor((Math.max(g.ay, g.by) + r) / span); cy++) {
           for (let cx = Math.floor((Math.min(g.ax, g.bx) - r) / span); cx <= Math.floor((Math.max(g.ax, g.bx) + r) / span); cx++) {
@@ -285,6 +459,50 @@ export class ChunkCache {
         }
       }
     }
+  }
+
+  private gaps = new Map<string, number>();
+
+  /**
+   * Pixels between a street-facing landmark's box edge and the outer edge of the drawn
+   * sidewalk it faces (negative: the sidewalk reaches into the box). Measured row by row
+   * against the real road geometry; the median ignores cross streets at the corners.
+   */
+  private streetGap(lm: World['landmarks'][number]): number {
+    if (!lm.street) return 0;
+    let gap = this.gaps.get(lm.id);
+    if (gap !== undefined) return gap;
+    const dir = lm.street === 'E' ? 1 : -1;
+    const edge = (lm.street === 'E' ? lm.x + lm.w : lm.x) * TS;
+    const near = this.world.roadLines.filter((l) =>
+      l.p.some(([x, y]) => Math.abs(x - (lm.x + lm.w / 2)) < lm.w + 6 && y > lm.y - 6 && y < lm.y + lm.h + 6),
+    );
+    const onRoad = (px: number, py: number) =>
+      near.some((l) => {
+        const r = (l.w * TS) / 2;
+        for (let i = 1; i < l.p.length; i++) {
+          const ax = l.p[i - 1][0] * TS, ay = l.p[i - 1][1] * TS;
+          const dx = l.p[i][0] * TS - ax, dy = l.p[i][1] * TS - ay;
+          const t = Math.max(0, Math.min(1, ((px - ax) * dx + (py - ay) * dy) / (dx * dx + dy * dy || 1e-9)));
+          if (Math.hypot(px - (ax + t * dx), py - (ay + t * dy)) < r) return true;
+        }
+        return false;
+      });
+    const rows: number[] = [];
+    for (let py = lm.y * TS + 2; py < (lm.y + lm.h) * TS - 2; py += 4) {
+      for (let k = -TS; k <= TS; k++) {
+        // first pixel (going from the building toward the street) that's road
+        const px = edge + dir * k + (dir > 0 ? 0.5 : -0.5);
+        if (onRoad(px, py + 0.5)) {
+          rows.push(k);
+          break;
+        }
+      }
+    }
+    rows.sort((a, b) => a - b);
+    gap = rows.length ? rows[rows.length >> 1] : 0;
+    this.gaps.set(lm.id, gap);
+    return gap;
   }
 
   get(cx: number, cy: number): HTMLCanvasElement {
@@ -298,21 +516,33 @@ export class ChunkCache {
       for (let y = 0; y < CHUNK; y++) {
         for (let x = 0; x < CHUNK; x++) drawTile(ctx, this.world, cx * CHUNK + x, cy * CHUNK + y, x * TS, y * TS);
       }
-      // 2. roads, per pixel
+      // 1b. park features: fields, courts, the track, playgrounds, the pool
+      paintParkFeatures(ctx, this.parks.get(key) ?? [], cx * CHUNK * TS, cy * CHUNK * TS, CHUNK * TS, (x, y) => hash(x, y, 13));
+      // 1c. parking lots: asphalt, stalls along the aisles, parked cars
+      paintParking(ctx, this.lots.get(key) ?? [], cx * CHUNK * TS, cy * CHUNK * TS, CHUNK * TS, (x, y) => hash(x, y, 14));
+      // 2. roads, per pixel, at their true width: where a building's tile pokes past the
+      // street's real edge, the sidewalk wins
       paintRoads(ctx, this.segs.get(key) ?? [], cx * CHUNK * TS, cy * CHUNK * TS, CHUNK * TS);
-      // 3. buildings on top, so a sidewalk never paints over a storefront
-      for (let y = 0; y < CHUNK; y++) {
-        for (let x = 0; x < CHUNK; x++) {
-          const tx = cx * CHUNK + x, ty = cy * CHUNK + y;
-          if (BUILDINGS.has(this.world.tileAt(tx, ty))) drawTile(ctx, this.world, tx, ty, x * TS, y * TS);
-        }
-      }
+      // 3. houses at their real footprints, then big buildings drawn from their exact outlines
+      paintHouses(ctx, this.houses.get(key) ?? [], cx * CHUNK * TS, cy * CHUNK * TS, CHUNK * TS);
+      paintBuildings(ctx, this.drawn.get(key) ?? [], cx * CHUNK * TS, cy * CHUNK * TS, CHUNK * TS, (x, y) => hash(x, y, 15));
       // Landmarks overlapping this chunk (they can straddle chunk edges; each draws its part).
+      // A landmark facing a street is pulled flush with its real sidewalk (it may reach up to
+      // a tile past its box, hence the margin): a block face stretches or trims to meet it,
+      // any other drawing slides over.
       for (const lm of this.world.landmarks) {
-        if (lm.x + lm.w <= cx * CHUNK || lm.x >= (cx + 1) * CHUNK || lm.y + lm.h <= cy * CHUNK || lm.y >= (cy + 1) * CHUNK) continue;
+        if (lm.x + lm.w + 1 <= cx * CHUNK || lm.x - 1 >= (cx + 1) * CHUNK || lm.y + lm.h <= cy * CHUNK || lm.y >= (cy + 1) * CHUNK) continue;
+        const s = this.streetGap(lm);
+        const toward = lm.street === 'E' ? 1 : lm.street === 'W' ? -1 : 0;
         ctx.save();
         ctx.translate((lm.x - cx * CHUNK) * TS, (lm.y - cy * CHUNK) * TS);
-        drawLandmark(ctx, lm.sprite, lm.w * TS, lm.h * TS);
+        if (lm.sprite === 'storefronts') {
+          if (toward < 0) ctx.translate(-s, 0);
+          drawLandmark(ctx, lm.sprite, lm.w * TS + s, lm.h * TS, lm.id);
+        } else {
+          ctx.translate(toward * s, 0);
+          drawLandmark(ctx, lm.sprite, lm.w * TS, lm.h * TS, lm.id);
+        }
         ctx.restore();
       }
       this.cache.set(key, c);

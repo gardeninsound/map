@@ -16,5 +16,75 @@
   "lon": -122.386942,
   "w": 4,
   "h": 3
+ },
+ {
+  "id": "easy-street-records",
+  "name": "Easy Street Records",
+  "sprite": "easy-street-records",
+  "lat": 47.561447,
+  "lon": -122.387258,
+  "w": 3,
+  "h": 3,
+  "street": "E"
+ },
+ {
+  "id": "junction-w-north",
+  "name": "Junction shops: west side, Oregon to the Hamm Building",
+  "sprite": "storefronts",
+  "lat": 47.562207,
+  "lon": -122.387418,
+  "w": 5,
+  "h": 11,
+  "street": "E"
+ },
+ {
+  "id": "junction-e-north",
+  "name": "Junction shops: east side, Oregon to Alaska",
+  "sprite": "storefronts",
+  "lat": 47.56199,
+  "lon": -122.38614,
+  "w": 5,
+  "h": 13,
+  "street": "W"
+ },
+ {
+  "id": "junction-w-south",
+  "name": "Junction shops: west side, Alaska to Edmunds",
+  "sprite": "storefronts",
+  "lat": 47.560199,
+  "lon": -122.387578,
+  "w": 5,
+  "h": 14,
+  "street": "E"
+ },
+ {
+  "id": "junction-e-south",
+  "name": "Junction shops: east side, Alaska to Edmunds",
+  "sprite": "storefronts",
+  "lat": 47.560145,
+  "lon": -122.38614,
+  "w": 5,
+  "h": 13,
+  "street": "W"
+ },
+ {
+  "id": "undersea-aviary",
+  "name": "Undersea Aviary",
+  "sprite": "undersea-aviary",
+  "lat": 47.569155,
+  "lon": -122.389894,
+  "w": 4,
+  "h": 3,
+  "street": "E"
+ },
+ {
+  "id": "seven-eleven",
+  "name": "7-Eleven",
+  "sprite": "seven-eleven",
+  "lat": 47.569915,
+  "lon": -122.387498,
+  "w": 4,
+  "h": 3,
+  "street": "E"
  }
 ]

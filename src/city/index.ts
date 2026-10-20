@@ -10,8 +10,8 @@
  * The app adds its own things (art spots, characters, sounds…) as `CityPlugin`s and renders
  * the React HUD pieces from ./ui. Styles: ./ui/ui.css; fonts: "Press Start 2P", "Pixelify Sans".
  */
-export { createWorld, distanceField, isBuilding, Tile } from './world/world';
-export type { MapLabel, PlacedLandmark, RoadLine, Storefront, TileCode, World } from './world/world';
+export { createWorld, distanceField, isBuilding, isWalkableTile, Tile } from './world/world';
+export type { DrawnBuilding, MapLabel, ParkFeature, PlacedLandmark, RoadLine, Storefront, TileCode, World } from './world/world';
 
 export { CityGame, zoomFor } from './engine/CityGame';
 export type { CityGameEvents, CityGameOptions, CityPlugin, DrawContext, DrawItem, Target } from './engine/CityGame';

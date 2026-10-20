@@ -1,4 +1,4 @@
-import { Tile, type World } from '../world/world';
+import { Tile, isBuilding, isWalkableTile, type World } from '../world/world';
 import { input } from './input';
 import { facingFor, step, type Facing, type Vec } from './movement';
 import { INK, PAL } from '../render/palette';
@@ -87,9 +87,9 @@ export interface CityGameOptions {
 
 /** Map text: neighborhoods loudest, parks (≥ ~2 hectares) in green, big schools small. */
 const LABEL_STYLE = {
-  hood: { font: '8px "Press Start 2P"', fill: '#ffe066', stroke: INK, minSize: 0 },
-  park: { font: '8px "Press Start 2P"', fill: '#d9ffb8', stroke: '#1d5e34', minSize: 150 },
-  school: { font: '6px "Press Start 2P"', fill: '#ffffff', stroke: INK, minSize: 60 },
+  hood: { font: '8px "Press Start 2P"', fill: '#e6b23a', stroke: INK, minSize: 0 },
+  park: { font: '8px "Press Start 2P"', fill: '#e5f0dc', stroke: '#173f2b', minSize: 150 },
+  school: { font: '6px "Press Start 2P"', fill: '#f3e6cc', stroke: INK, minSize: 60 },
 } as const;
 
 /** Integer zoom that keeps ~16 tiles across the short side of the screen. */
@@ -143,15 +143,18 @@ export class CityGame {
     this.resize();
   }
 
-  /** A non-road tile next to the nearest street — where a sign or easel can stand. */
+  /**
+   * Open ground next to the nearest street, where a sign or marker can stand: not the street
+   * itself (so it doesn't block it), and not water, a building, a parking lot or a landmark.
+   */
   besideRoad(p: Vec): Vec {
     const r = this.world.nearestWalkable(p.x, p.y);
     const tx = Math.floor(r.x);
     const ty = Math.floor(r.y);
+    const open = (t: number) => !isWalkableTile(t) && !isBuilding(t) && t !== Tile.Water && t !== Tile.Landmark;
     for (let d = 1; d < 5; d++) {
       for (const [dx, dy] of [[d, 0], [-d, 0], [0, d], [0, -d]]) {
-        const t = this.world.tileAt(tx + dx, ty + dy);
-        if (t !== Tile.Road && t !== Tile.Water) return { x: tx + dx + 0.5, y: ty + dy + 0.5 };
+        if (open(this.world.tileAt(tx + dx, ty + dy))) return { x: tx + dx + 0.5, y: ty + dy + 0.5 };
       }
     }
     return r;

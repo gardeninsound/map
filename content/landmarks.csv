@@ -1,0 +1,10 @@
+id,name,sprite,address,lat,lon,w,h,notes,status,geocoded_from,geocoded_match,street
+gas-station-76,76 Gas Station,gas-station-76,4001 California Ave SW,47.568236,-122.387332,5,4,Home of the wall that kept turning (art spot gas-station-wall),geocoded,4001 California Ave SW,"Food Mart, 4001, California Avenue Southwest, Alaska Junction, West Seattle, Seattle, King County, Washington, 98116, United States",
+admiral-theatre,Admiral Theatre,admiral-theatre,2343 California Ave SW,47.581969,-122.386942,4,3,"Art deco, 1942. Light blue-grey with a red wave, portholes and the red marquee",geocoded,2343 California Ave SW,"2343, California Avenue Southwest, Admiral, West Seattle, Seattle, King County, Washington, 98116, United States",
+easy-street-records,Easy Street Records,easy-street-records,,47.561447,-122.387258,3,3,"4559 California Ave SW, NW corner of California & Alaska: the 1926 Crescent-Hamm Building (buff brick, blue storefront, neon, corner sign)",manual,,,E
+junction-w-north,"Junction shops: west side, Oregon to the Hamm Building",storefronts,,47.562207,-122.387418,5,11,Each business is data in src/content/storefronts.ts,manual,,,E
+junction-e-north,"Junction shops: east side, Oregon to Alaska",storefronts,,47.561990,-122.386140,5,13,Each business is data in src/content/storefronts.ts,manual,,,W
+junction-w-south,"Junction shops: west side, Alaska to Edmunds",storefronts,,47.560199,-122.387578,5,14,Each business is data in src/content/storefronts.ts,manual,,,E
+junction-e-south,"Junction shops: east side, Alaska to Edmunds",storefronts,,47.560145,-122.386140,5,13,Each business is data in src/content/storefronts.ts,manual,,,W
+undersea-aviary,Undersea Aviary,undersea-aviary,,47.569155,-122.389894,4,3,"3837 45th Ave SW: Michael Henderson's backyard sculpture garden (rebar, mortar, tile and mirror mosaic; geocoded 47.56912,-122.38973)",manual,,,E
+seven-eleven,7-Eleven,seven-eleven,,47.569915,-122.387498,4,3,"3801 California Ave SW, SW corner of California & Charlestown: store + fuel canopy (chain look; no photo)",manual,,,E
