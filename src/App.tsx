@@ -24,6 +24,8 @@ import { ArtSpots, type PlacedLocation } from './game/plugins/artSpots';
 import { Busker } from './game/plugins/busker';
 import { Crow } from './game/plugins/crow';
 import { Chicken } from './game/plugins/chicken';
+import { BigCup } from './game/plugins/bigCup';
+import { ArcadeDoor } from './game/plugins/arcadeDoor';
 import type { MiniGameResult } from './experiences/minigames/ConeCatch';
 import { DialogBox } from './ui/MikeDialog';
 import { SceneBoundary } from './ui/SceneBoundary';
@@ -47,9 +49,15 @@ type Overlay =
   | { kind: 'scene'; loc: PlacedLocation }
   /** a character's mini game; `then` gets the result when you come back to the map */
   | { kind: 'minigame'; then(result: MiniGameResult): void }
+  /** inside the Duck Arcade */
+  | { kind: 'arcade' }
   | { kind: 'spots' };
 
 const ConeCatch = lazy(() => import('./experiences/minigames/ConeCatch'));
+const DuckArcade = lazy(() => import('./experiences/arcade/DuckArcade'));
+
+/** Overlays that take the whole screen: the map's HUD and touch pad hide under them. */
+const FULL_SCREEN: Overlay['kind'][] = ['scene', 'minigame', 'arcade'];
 
 const LANDMARK_COLOR = '#5fa8a0';
 
@@ -116,14 +124,16 @@ export default function App() {
     const g = new CityGame(canvas.current!, world, {
       start: world.project(START.lat, START.lon),
       voices: neighborVoices,
-      plugins: [art, busker, crow, chicken],
+      plugins: [art, new BigCup(art), new ArcadeDoor(), busker, crow, chicken],
       events: {
         onStreet: setStreet,
         onStorefront: setStorefront,
         onNearby: setNearby,
         onInteract: (t) => {
           sounds.confirm();
-          if (t.kind === 'place') {
+          if (t.kind === 'arcade') {
+            setOverlay({ kind: 'arcade' });
+          } else if (t.kind === 'place') {
             const loc = t.data as PlacedLocation;
             art.visited.add(loc.id);
             setOverlay({ kind: 'talk', lines: loc.greeting, loc });
@@ -194,7 +204,7 @@ export default function App() {
     if (game) {
       game.paused = !started || overlay.kind !== 'none';
       // street sounds stay on while you chat on the street, hush inside an art scene
-      game.quiet = !started || overlay.kind === 'scene' || overlay.kind === 'minigame';
+      game.quiet = !started || FULL_SCREEN.includes(overlay.kind);
     }
   }, [game, started, overlay]);
 
@@ -247,7 +257,7 @@ export default function App() {
     <main className="app">
       <canvas ref={canvas} className="world" aria-label="A pixel map of West Seattle. Walk with the arrow keys." />
 
-      {started && overlay.kind !== 'scene' && overlay.kind !== 'minigame' && (
+      {started && !FULL_SCREEN.includes(overlay.kind) && (
         <>
           <StreetSign name={street} storefront={storefront} />
           {overlay.kind === 'none' && <NearbyCard target={nearby} />}
@@ -307,7 +317,7 @@ export default function App() {
         </>
       )}
 
-      {started && touch && overlay.kind !== 'scene' && overlay.kind !== 'minigame' && <TouchPad />}
+      {started && touch && !FULL_SCREEN.includes(overlay.kind) && <TouchPad />}
 
       {overlay.kind === 'talk' && (
         <div className="talk-layer">
@@ -365,6 +375,14 @@ export default function App() {
                 overlay.then(result);
               }}
             />
+          </Suspense>
+        </SceneBoundary>
+      )}
+
+      {overlay.kind === 'arcade' && (
+        <SceneBoundary onError={closeOverlay}>
+          <Suspense fallback={<div className="scene scene-loading">Loading…</div>}>
+            <DuckArcade onExit={closeOverlay} />
           </Suspense>
         </SceneBoundary>
       )}

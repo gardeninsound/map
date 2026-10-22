@@ -26,7 +26,7 @@ export interface Tenant {
    * a hand-drawn front (src/city/render/facades.ts) in place of the sign: the shop is drawn
    * face-on across the whole block face. Give it weight enough for ~24–30 px of frontage.
    */
-  facade?: 'husky-deli' | 'poggie-tavern' | 'pegasus-books' | 'bakery-nouveau' | 'antique-mall';
+  facade?: 'duck-arcade' | 'husky-deli' | 'poggie-tavern' | 'pegasus-books' | 'bakery-nouveau' | 'antique-mall';
 }
 
 export interface Building {
@@ -222,9 +222,9 @@ export const FACES: Record<string, BlockFace> = {
     side: 'E',
     buildings: [
       {
-        note: 'Junction 47: brick below, grey above, lime-green balconies (photo)',
-        roof: 'modern', wall: '#7a4a3e', stories: 3, balconies: true,
-        tenants: [{ name: 'Junction 47 Apartments', sign: 'JUNCTION 47', bg: '#2b2b33', fg: '#ffffff', weight: 3 }],
+        note: 'Duck Arcade (made up: duck-themed mini games), in place of Junction 47',
+        roof: 'modern', wall: '#2e8f8a', stories: 3,
+        tenants: [{ name: 'Duck Arcade', sign: 'DUCK ARCADE', bg: '#2a1f3a', fg: '#ffd23f', weight: 3, facade: 'duck-arcade' }],
       },
       {
         note: "Talarico's, PIZZA LOUNGE sign (photo)",

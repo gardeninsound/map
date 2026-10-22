@@ -26,13 +26,13 @@ export function TitleScreen({ onStart }: { onStart(): void }) {
         <FlyingRabbits />
       </div>
       <div className="title-card">
-        <p className="title-kicker">West Seattle · 2016–2026</p>
+        <p className="title-kicker">Galarpagos West Seattle</p>
         <h1 className="title-logo">
           GARDEN
           <br />
           IN SOUND
         </h1>
-        <p className="title-sub">Ten years of public propaganda, one block at a time.</p>
+        <p className="title-sub">Social infrastructure is our best ballast. Ta-Da!</p>
         <button className="title-start" autoFocus onClick={() => { sfx.confirm(); onStart(); }}>
           <span className="title-caret">▶</span> PRESS START
         </button>

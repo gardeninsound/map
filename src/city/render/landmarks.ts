@@ -641,7 +641,543 @@ function sevenEleven(ctx: Ctx, w: number, h: number) {
   for (let x = w - 8; x < w - 3; x += 2) px(ctx, '#e4202c', x, 40, 1, 2); // the price, in LEDs
 }
 
+/** A bench of potted plants: a slatted top on legs, terracotta pots with leaves and a bloom. */
+function plantBench(ctx: Ctx, x: number, y: number, w: number, seed: number) {
+  const blooms = ['#ff7eb6', '#ffd166', '#9b6ad1', '#e4202c', '#f6f4ef', '#f47b20'];
+  px(ctx, 'rgba(0,0,0,0.2)', x + 1, y + 6, w, 2);
+  px(ctx, INK, x, y + 4, w, 1);
+  px(ctx, '#7a5a3a', x, y + 5, w, 1);
+  px(ctx, '#5a3f28', x + 1, y + 6, 1, 2);
+  px(ctx, '#5a3f28', x + w - 2, y + 6, 1, 2);
+  for (let i = 0, px0 = x; px0 + 3 <= x + w; i++, px0 += 4) {
+    px(ctx, '#2f6b3a', px0, y, 3, 2);
+    px(ctx, '#4f9a4f', px0 + 1, y, 1, 1);
+    px(ctx, blooms[(i * 5 + seed) % blooms.length], px0 + ((i + seed) % 3), y - 1, 1, 1);
+    px(ctx, '#b5562f', px0, y + 2, 3, 2);
+  }
+}
+
+/** A young tree in a tub: round canopy over a short trunk. */
+function tubTree(ctx: Ctx, x: number, y: number, leaf: string, light: string) {
+  px(ctx, 'rgba(0,0,0,0.2)', x - 3, y + 11, 9, 2);
+  px(ctx, INK, x - 3, y - 1, 8, 8);
+  px(ctx, leaf, x - 2, y, 6, 6);
+  px(ctx, light, x - 1, y + 1, 2, 2);
+  px(ctx, '#5a3f28', x, y + 7, 2, 2);
+  px(ctx, INK, x - 2, y + 9, 6, 3);
+  px(ctx, '#8a6a4a', x - 1, y + 9, 4, 2);
+}
+
+/**
+ * West Seattle Nursery, 5275 California Ave SW (since 1990): the original shop, an old
+ * fast-food building (Herfy's, then Arby's) with a brown mansard roof under the big green
+ * sign, and beside it the glass retail greenhouse that went up in 2016; out front, benches
+ * of potted flowers, trees in tubs and a chalkboard. No photo traced — drawn from the
+ * West Seattle Blog / Westside Seattle write-ups of the place.
+ */
+function westSeattleNursery(ctx: Ctx, w: number, h: number) {
+  const cream = '#f3e6b8', green = '#2f6b3a', glass = '#bfe3d6', mullion = '#f3f0ea';
+  // the yard: packed gravel with flecks
+  px(ctx, '#c9b994', 0, 0, w, h);
+  for (let i = 0; i < 60; i++) px(ctx, i % 2 ? '#b3a27c' : '#ddd0ad', (i * 37) % w, (i * 23) % h, 1, 1);
+  px(ctx, 'rgba(0,0,0,0.2)', 2, 38, 50, 3);
+  px(ctx, 'rgba(0,0,0,0.2)', 53, 38, w - 54, 3);
+  // the shop: mansard roof, then the sign board across it
+  px(ctx, INK, 1, 8, 50, 30);
+  px(ctx, '#6b4a36', 2, 9, 48, 16);
+  for (let y = 11; y < 25; y += 2) px(ctx, '#5a3c2a', 2, y, 48, 1);
+  px(ctx, '#8a6248', 2, 9, 48, 1);
+  px(ctx, INK, 3, 10, 46, 14);
+  px(ctx, green, 4, 11, 44, 12);
+  pixelText(ctx, 'WEST SEATTLE', 2 + Math.round((48 - textWidth('WEST SEATTLE')) / 2), 12, cream);
+  pixelText(ctx, 'NURSERY', 2 + Math.round((48 - textWidth('NURSERY')) / 2), 18, cream);
+  // stucco front under a striped awning: windows full of plants, the door in the middle
+  px(ctx, '#efe6d2', 2, 25, 48, 12);
+  for (let x = 2; x < 50; x += 4) px(ctx, x % 8 === 2 ? green : cream, x, 25, 4, 3);
+  px(ctx, INK, 2, 28, 48, 1);
+  for (const wx of [4, 34]) {
+    paneWindow(ctx, wx, 30, 12, 6, 3, 1, '#f3f0ea', '#3b4a6b');
+    px(ctx, '#4f9a4f', wx + 1, 34, 10, 1);
+    px(ctx, '#ff7eb6', wx + 3, 33, 1, 1);
+    px(ctx, '#ffd166', wx + 8, 33, 1, 1);
+  }
+  px(ctx, INK, 21, 29, 10, 8);
+  px(ctx, '#a9d8cc', 22, 30, 8, 7);
+  px(ctx, INK, 26, 30, 1, 7);
+  // the greenhouse: glass gable on glass walls, white mullions, plants and baskets inside
+  const gx0 = 53, gx1 = w - 2, mid = (gx0 + gx1) / 2;
+  for (let y = 4; y <= 15; y++) {
+    const half = Math.round(((y - 4) / 11) * ((gx1 - gx0) / 2));
+    px(ctx, INK, Math.round(mid - half) - 1, y, half * 2 + 2, 1);
+    if (half > 0) px(ctx, y % 4 === 0 ? mullion : glass, Math.round(mid - half), y, half * 2, 1);
+  }
+  px(ctx, INK, gx0 - 1, 15, gx1 - gx0 + 2, 23);
+  px(ctx, glass, gx0, 16, gx1 - gx0, 21);
+  px(ctx, '#d8efe6', gx0, 16, gx1 - gx0, 2);
+  for (const [bx, c] of [[gx0 + 4, '#ff7eb6'], [gx0 + 12, '#9b6ad1'], [gx0 + 20, '#ffd166']] as const) {
+    px(ctx, '#4f9a4f', bx, 19, 3, 2);
+    px(ctx, c, bx + 1, 19, 1, 1);
+  }
+  px(ctx, '#2f6b3a', gx0, 29, gx1 - gx0, 8);
+  for (let x = gx0; x < gx1; x += 3) px(ctx, '#76c85a', x + (x % 2), 28 + (x % 3 === 0 ? 0 : 1), 2, 2);
+  for (let x = gx0 + 5; x < gx1; x += 6) px(ctx, mullion, x, 16, 1, 21);
+  px(ctx, mullion, gx0, 26, gx1 - gx0, 1);
+  px(ctx, mullion, Math.round(mid) - 3, 30, 6, 7);
+  px(ctx, '#a9d8cc', Math.round(mid) - 2, 31, 4, 6);
+  // the yard out front: benches of flowers, trees in tubs, the chalkboard by the door
+  plantBench(ctx, 3, 44, 20, 0);
+  plantBench(ctx, 29, 44, 20, 2);
+  plantBench(ctx, 55, 44, 22, 4);
+  plantBench(ctx, 3, 54, 20, 1);
+  plantBench(ctx, 55, 54, 22, 3);
+  tubTree(ctx, 34, 51, '#3b7d47', '#5fa86a');
+  tubTree(ctx, 44, 51, '#7a9a3a', '#a8c45a');
+  px(ctx, INK, 25, 38, 5, 6);
+  px(ctx, '#2a3a2e', 26, 39, 3, 4);
+  px(ctx, cream, 26, 40, 3, 1);
+  px(ctx, '#ff7eb6', 27, 42, 1, 1);
+}
+
+/** A US flag on a pole, the pole's foot at (x, y). */
+function flagpole(ctx: Ctx, x: number, y: number, height: number) {
+  px(ctx, INK, x - 1, y - height, 3, height);
+  px(ctx, '#d8d3cc', x, y - height + 1, 1, height - 1);
+  px(ctx, '#e8c25a', x, y - height - 1, 1, 1);
+  const fy = y - height + 1;
+  px(ctx, INK, x + 1, fy - 1, 10, 8);
+  for (let j = 0; j < 6; j++) px(ctx, j % 2 ? '#f6f4ef' : '#c8382f', x + 2, fy + j, 8, 1);
+  px(ctx, '#2b3f7a', x + 2, fy, 4, 3);
+  px(ctx, '#f6f4ef', x + 3, fy + 1, 1, 1);
+}
+
+/** A rolled-down apparatus door: a frame, then panels with a band of windows. */
+function bayDoor(ctx: Ctx, x: number, y: number, w: number, h: number, frame: string) {
+  px(ctx, INK, x - 1, y - 1, w + 2, h + 1);
+  px(ctx, frame, x, y, w, h);
+  px(ctx, '#f3f0ea', x + 2, y + 2, w - 4, h - 2);
+  for (let j = y + 4; j < y + h; j += 3) px(ctx, '#d8d3cc', x + 2, j, w - 4, 1);
+  px(ctx, '#3b4a6b', x + 3, y + 6, w - 6, 2);
+  for (let i = x + 3; i < x + w - 3; i += 4) px(ctx, '#d8d3cc', i, y + 6, 1, 2);
+}
+
+/**
+ * A Seattle fire station: the station number over two big apparatus bays, the office door
+ * at the side and the concrete apron the engines roll out onto. The landmark id carries the
+ * number (fire-station-29 → STATION 29). Station 32 in the Junction (rebuilt 2017) is the
+ * modern one — charcoal panels and glass; the others are brick neighborhood stations.
+ */
+function fireStation(ctx: Ctx, w: number, h: number, id: string) {
+  const n = id.match(/\d+/)?.[0] ?? '';
+  const modern = n === '32';
+  const wall = modern ? '#5d6470' : '#a8442e';
+  const seam = modern ? '#4c525d' : '#8a3624';
+  const red = '#c8382f';
+  // the apron
+  px(ctx, '#b8b2a8', 0, 0, w, h);
+  px(ctx, '#cfc9be', 0, h - 9, w, 9);
+  // the building
+  px(ctx, 'rgba(0,0,0,0.2)', 2, h - 9, w - 3, 2);
+  px(ctx, INK, 1, 3, w - 2, h - 11);
+  px(ctx, wall, 2, 6, w - 4, h - 15);
+  for (let y = 8; y < h - 9; y += modern ? 6 : 2) px(ctx, seam, 2, y, w - 4, 1);
+  if (modern) for (let x = 10; x < w - 2; x += 12) px(ctx, seam, x, 6, 1, h - 15);
+  px(ctx, modern ? red : '#d8d3cc', 2, 4, w - 4, 2);
+  // the sign band with the number
+  const label = `STATION ${n}`;
+  px(ctx, INK, 3, 8, w - 6, 9);
+  px(ctx, modern ? '#f3f0ea' : '#f3e6b8', 4, 9, w - 8, 7);
+  pixelText(ctx, label, Math.round((w - textWidth(label)) / 2), 10, red);
+  // two apparatus bays, then the office door and a window
+  const bay = Math.floor((w - 20) / 2) - 2;
+  bayDoor(ctx, 4, 20, bay, h - 29, red);
+  bayDoor(ctx, 8 + bay, 20, bay, h - 29, red);
+  const ox = 12 + bay * 2;
+  if (modern) {
+    px(ctx, INK, ox, 19, w - ox - 3, h - 28);
+    px(ctx, '#a9d8cc', ox + 1, 20, w - ox - 5, h - 30);
+    px(ctx, '#d8efe6', ox + 1, 20, 1, h - 30);
+  } else {
+    paneWindow(ctx, ox, 20, w - ox - 4, 6, 2, 1);
+    px(ctx, INK, ox + 1, 28, 6, h - 37);
+    px(ctx, red, ox + 2, 29, 4, h - 38);
+  }
+  // red lights over the bays, drive lines on the apron
+  for (const lx of [4 + bay / 2, 8 + bay * 1.5]) {
+    px(ctx, '#e4202c', Math.round(lx) - 1, 18, 2, 1);
+    px(ctx, '#f6f4ef', Math.round(lx) - 4, h - 7, 1, 6);
+    px(ctx, '#f6f4ef', Math.round(lx) + 3, h - 7, 1, 6);
+  }
+  if (!modern) flagpole(ctx, w - 4, h - 2, 18);
+}
+
+/**
+ * The West Seattle post office, 4412 California Ave SW in the Junction: a low brick box with
+ * a white cornice and the lettering over glass doors, the flag out front and a blue
+ * collection box by the curb (the real one was stolen years back — here it's returned).
+ */
+function postOffice(ctx: Ctx, w: number, h: number) {
+  const brick = '#b9744c', mortar = '#9c5e3c', trim = '#f3f0ea';
+  px(ctx, '#c8c2b8', 0, 0, w, h);
+  px(ctx, 'rgba(0,0,0,0.2)', 2, h - 8, w - 3, 2);
+  // flat roof, cornice, then brick
+  px(ctx, INK, 1, 2, w - 2, h - 9);
+  px(ctx, '#8f8a84', 2, 3, w - 4, 4);
+  px(ctx, trim, 2, 7, w - 4, 2);
+  px(ctx, brick, 2, 9, w - 4, h - 18);
+  for (let y = 11; y < h - 9; y += 2) px(ctx, mortar, 2, y, w - 4, 1);
+  // the lettering band
+  px(ctx, trim, 4, 11, w - 8, 7);
+  pixelText(ctx, 'POST OFFICE', Math.round((w - textWidth('POST OFFICE')) / 2), 12, '#2b3f7a');
+  // windows either side of the glass doors, under a white lintel
+  paneWindow(ctx, 5, 21, 12, 10, 3, 2, trim);
+  paneWindow(ctx, w - 17, 21, 12, 10, 3, 2, trim);
+  const dx = Math.round(w / 2) - 6;
+  px(ctx, trim, dx - 1, 19, 14, 2);
+  px(ctx, INK, dx, 21, 12, h - 30);
+  px(ctx, '#a9d8cc', dx + 1, 22, 10, h - 31);
+  px(ctx, INK, dx + 6, 22, 1, h - 31);
+  // steps, the flag, the blue collection box
+  px(ctx, '#d8d3cc', dx - 2, h - 9, 16, 1);
+  px(ctx, '#bdb7ad', dx - 3, h - 8, 18, 1);
+  flagpole(ctx, 3, h - 2, 22);
+  px(ctx, INK, w - 10, h - 9, 7, 8);
+  px(ctx, '#2b4f9a', w - 9, h - 8, 5, 5);
+  px(ctx, '#3f6bc0', w - 9, h - 8, 5, 1);
+  px(ctx, '#f6f4ef', w - 8, h - 6, 3, 1);
+  px(ctx, INK, w - 9, h - 3, 1, 2);
+  px(ctx, INK, w - 5, h - 3, 1, 2);
+}
+
+/**
+ * The West Seattle & Fauntleroy YMCA, 3622 SW Snoqualmie St (by 36th & Oregon): a long
+ * two-tone block — pale panels and warm wood — with a band of gym windows, the pool hall's
+ * blue glass, the red Y by the entry, and a plaza with trees and bike racks out front.
+ */
+function ymca(ctx: Ctx, w: number, h: number) {
+  const panel = '#d6d3cc', wood = '#b07a4a', woodDark = '#8f5f38', red = '#e4202c';
+  lawn(ctx, w, h);
+  px(ctx, '#c8c2b8', 0, h - 14, w, 14);
+  px(ctx, 'rgba(0,0,0,0.2)', 2, h - 14, w - 3, 2);
+  // the gym block (taller, left) and the pool hall (right)
+  px(ctx, INK, 1, 3, 46, h - 16);
+  px(ctx, panel, 2, 4, 44, h - 18);
+  px(ctx, '#ebe8e2', 2, 4, 44, 2);
+  px(ctx, INK, 47, 13, w - 48, h - 26);
+  px(ctx, wood, 48, 14, w - 50, h - 28);
+  for (let x = 50; x < w - 2; x += 3) px(ctx, woodDark, x, 14, 1, h - 28);
+  // gym windows: a long clerestory band; pool: blue glass with glints of light
+  paneWindow(ctx, 4, 7, 40, 6, 6, 1);
+  px(ctx, INK, 50, 20, w - 54, h - 37);
+  px(ctx, '#5fb8d8', 51, 21, w - 56, h - 39);
+  for (let i = 0; i < 6; i++) px(ctx, '#a9e2f0', 52 + ((i * 7) % (w - 60)), 23 + (i % 3) * 3, 3, 1);
+  pixelText(ctx, 'YMCA', 4 + Math.round((40 - textWidth('YMCA')) / 2), 16, '#2b3f7a');
+  // the entry: glass doors under a canopy, the red Y beside them
+  px(ctx, INK, 14, 26, 22, h - 40);
+  px(ctx, '#a9d8cc', 15, 27, 20, h - 42);
+  for (const x of [20, 25, 30]) px(ctx, INK, x, 27, 1, h - 42);
+  px(ctx, INK, 11, 23, 28, 3);
+  px(ctx, woodDark, 12, 24, 26, 1);
+  px(ctx, INK, 2, 25, 10, 11);
+  px(ctx, red, 3, 26, 8, 9);
+  px(ctx, '#ffffff', 4, 27, 2, 3);
+  px(ctx, '#ffffff', 8, 27, 2, 3);
+  px(ctx, '#ffffff', 5, 29, 4, 2);
+  px(ctx, '#ffffff', 6, 31, 2, 3);
+  // plaza: trees in tubs, bike racks
+  tubTree(ctx, 6, h - 12, '#3b7d47', '#5fa86a');
+  tubTree(ctx, w - 8, h - 12, '#3b7d47', '#5fa86a');
+  for (let x = 44; x < 60; x += 4) {
+    px(ctx, INK, x, h - 7, 3, 4);
+    px(ctx, '#d8d3cc', x + 1, h - 6, 1, 2);
+  }
+}
+
+/**
+ * The West Seattle Branch of the Seattle Public Library, 2306 42nd Ave SW at College St —
+ * a Carnegie library (Somervell & Coté, 1910; Seattle's first permanent branch building, a
+ * city landmark): brick with cream stone trim under a low hipped roof, a central entry with
+ * a big arched window, the name in the frieze, wide steps with the 2015 handrails, lamps,
+ * and lawn and trees around it.
+ */
+function westSeattleLibrary(ctx: Ctx, w: number, h: number) {
+  const brick = '#9a5240', mortar = '#84443a', stone = '#efe2bf', stoneShade = '#d6c79e';
+  const roof = '#5f6b6a', roofLight = '#7a8786';
+  lawn(ctx, w, h);
+  px(ctx, 'rgba(0,0,0,0.2)', 3, h - 8, w - 5, 3);
+  // low hipped roof over the whole block
+  hipRoof(ctx, 3, w - 3, 3, 12, 0.9, roof, roofLight);
+  // stone cornice and frieze with the name
+  px(ctx, INK, 2, 12, w - 4, 1);
+  px(ctx, stone, 2, 13, w - 4, 7);
+  px(ctx, stoneShade, 2, 19, w - 4, 1);
+  const name = 'PUBLIC LIBRARY';
+  pixelText(ctx, name, Math.round((w - textWidth(name)) / 2), 14, '#5a3a2a');
+  // brick walls with tall windows, stone sills
+  px(ctx, INK, 2, 20, w - 4, h - 28);
+  px(ctx, brick, 3, 20, w - 6, h - 29);
+  for (let y = 22; y < h - 9; y += 2) px(ctx, mortar, 3, y, w - 6, 1);
+  for (const wx of [6, 14, w - 20, w - 12]) {
+    paneWindow(ctx, wx, 23, 6, 11, 2, 3, stone, '#3b4a6b');
+    px(ctx, stone, wx - 1, 34, 8, 1);
+  }
+  // the entry pavilion: stone pilasters, an arched window over the doors
+  const ex = Math.round(w / 2) - 9;
+  px(ctx, INK, ex - 1, 19, 20, h - 26);
+  px(ctx, stone, ex, 20, 18, h - 28);
+  px(ctx, stoneShade, ex, 20, 2, h - 28);
+  px(ctx, stoneShade, ex + 16, 20, 2, h - 28);
+  // arched window
+  px(ctx, '#3b4a6b', ex + 5, 23, 8, 6);
+  px(ctx, '#3b4a6b', ex + 6, 22, 6, 1);
+  px(ctx, stone, ex + 9, 22, 1, 7);
+  px(ctx, '#6f86b8', ex + 6, 23, 1, 2);
+  // doors
+  px(ctx, INK, ex + 4, 30, 10, h - 38);
+  px(ctx, '#5a3a2a', ex + 5, 31, 8, h - 39);
+  px(ctx, '#e8c25a', ex + 8, 35, 1, 2);
+  px(ctx, '#e8c25a', ex + 10, 35, 1, 2);
+  // wide steps with handrails, lamps either side
+  for (let i = 0; i < 3; i++) px(ctx, i % 2 ? '#c8c2b8' : '#d8d3cc', ex - 2 - i * 2, h - 8 + i * 2, 22 + i * 4, 2);
+  px(ctx, INK, ex + 2, h - 9, 1, 7);
+  px(ctx, INK, ex + 15, h - 9, 1, 7);
+  for (const lx of [ex - 4, ex + 21]) {
+    px(ctx, INK, lx, h - 16, 3, 10);
+    px(ctx, '#fff3b0', lx, h - 17, 3, 3);
+    px(ctx, INK, lx - 1, h - 18, 5, 1);
+  }
+  // shrubs along the foundation
+  for (const sx of [4, w - 18]) {
+    px(ctx, INK, sx, h - 11, 14, 4);
+    px(ctx, '#2f6b48', sx + 1, h - 10, 12, 3);
+    for (let i = sx + 2; i < sx + 13; i += 3) px(ctx, '#4f8f63', i, h - 10, 1, 1);
+  }
+}
+
+/** A row of shopping carts, nested, `n` deep, from (x, y). */
+function carts(ctx: Ctx, x: number, y: number, n: number) {
+  for (let i = 0; i < n; i++) {
+    const cx = x + i * 3;
+    px(ctx, INK, cx, y, 5, 4);
+    px(ctx, '#c9c4bd', cx + 1, y + 1, 3, 2);
+    px(ctx, INK, cx + 1, y + 4, 1, 1);
+    px(ctx, INK, cx + 4, y + 4, 1, 1);
+  }
+}
+
+/** A flat-roofed shop box: ink outline, roof band, wall, the sign board centred over the front. */
+function shopBox(ctx: Ctx, w: number, h: number, wall: string, roof: string, sign: { text: string; bg: string; fg: string }, top = 4, front = 9) {
+  px(ctx, 'rgba(0,0,0,0.2)', 2, h - front, w - 3, 2);
+  px(ctx, INK, 1, top, w - 2, h - front - top + 1);
+  px(ctx, roof, 2, top + 1, w - 4, 3);
+  px(ctx, wall, 2, top + 4, w - 4, h - front - top - 4);
+  const sw = textWidth(sign.text) + 6;
+  const sx = Math.round((w - sw) / 2);
+  px(ctx, INK, sx - 1, top + 5, sw + 2, 9);
+  px(ctx, sign.bg, sx, top + 6, sw, 7);
+  pixelText(ctx, sign.text, sx + 3, top + 7, sign.fg);
+}
+
+/** Caffe Ladro, 7011 California Ave SW (Morgan Junction): a red-trimmed café front, tables out on the sidewalk. */
+function caffeLadro(ctx: Ctx, w: number, h: number) {
+  const red = '#b5322b';
+  px(ctx, '#c8c2b8', 0, 0, w, h);
+  shopBox(ctx, w, h, '#3a2a26', '#5a4038', { text: 'CAFFE LADRO', bg: '#f3e6cc', fg: red });
+  // red awning, big windows with the warm inside, the door
+  for (let x = 2; x < w - 2; x += 4) px(ctx, x % 8 === 2 ? red : '#f3e6cc', x, 19, 4, 3);
+  px(ctx, INK, 2, 22, w - 4, 1);
+  for (const wx of [4, w - 22]) {
+    px(ctx, INK, wx, 24, 18, 12);
+    px(ctx, '#e8b36a', wx + 1, 25, 16, 10);
+    px(ctx, '#7a4a2a', wx + 2, 31, 14, 1); // the counter
+    px(ctx, '#fff3b0', wx + 3, 26, 2, 2); // a lamp
+  }
+  px(ctx, INK, Math.round(w / 2) - 4, 24, 8, 15);
+  px(ctx, '#a9d8cc', Math.round(w / 2) - 3, 25, 6, 14);
+  // two café tables with chairs
+  for (const tx of [8, w - 14]) {
+    px(ctx, INK, tx, h - 6, 7, 2);
+    px(ctx, '#d8d3cc', tx + 1, h - 6, 5, 1);
+    px(ctx, INK, tx + 3, h - 4, 1, 3);
+    px(ctx, red, tx - 2, h - 5, 2, 3);
+    px(ctx, red, tx + 7, h - 5, 2, 3);
+  }
+}
+
+/** Box Bar, 5401 California Ave SW: a small dark cocktail bar under a neon box. */
+function boxBar(ctx: Ctx, w: number, h: number) {
+  const neon = '#ff7eb6';
+  px(ctx, '#c8c2b8', 0, 0, w, h);
+  shopBox(ctx, w, h, '#2a2830', '#1c1b22', { text: 'BOX BAR', bg: '#1c1b22', fg: neon });
+  // the neon box beside the sign
+  px(ctx, '#7fd9c4', 5, 11, 7, 1);
+  px(ctx, '#7fd9c4', 5, 17, 7, 1);
+  px(ctx, '#7fd9c4', 5, 11, 1, 7);
+  px(ctx, '#7fd9c4', 11, 11, 1, 7);
+  px(ctx, '#7fd9c4', 7, 9, 7, 1);
+  px(ctx, '#7fd9c4', 13, 9, 1, 7);
+  // low amber windows, a black door with a brass handle
+  for (const wx of [4, w - 20]) {
+    px(ctx, INK, wx, 24, 16, 9);
+    px(ctx, '#c97a2a', wx + 1, 25, 14, 7);
+    for (let i = wx + 2; i < wx + 15; i += 4) px(ctx, '#ffd166', i, 26, 2, 1);
+  }
+  px(ctx, INK, Math.round(w / 2) - 4, 23, 8, 16);
+  px(ctx, '#2a1a12', Math.round(w / 2) - 3, 24, 6, 15);
+  px(ctx, '#e8c25a', Math.round(w / 2) + 1, 31, 1, 2);
+  px(ctx, neon, Math.round(w / 2) - 3, 21, 6, 1);
+}
+
+/**
+ * Trader Joe's, 4545 Fauntleroy Way SW: the old Huling Brothers Buick showroom, kept and
+ * converted (opened April 2012) — tall showroom glass, the red name over it, flower buckets
+ * and carts out front.
+ */
+function traderJoes(ctx: Ctx, w: number, h: number) {
+  const red = '#c8102e';
+  px(ctx, '#bdb7ad', 0, 0, w, h);
+  shopBox(ctx, w, h, '#efe6d2', '#a8998a', { text: "TRADER JOE'S", bg: '#f6f4ef', fg: red }, 3, 12);
+  // showroom glass in a long band
+  px(ctx, INK, 3, 21, w - 6, 16);
+  px(ctx, '#7fb3c8', 4, 22, w - 8, 14);
+  for (let x = 4; x < w - 4; x += 8) px(ctx, '#efe6d2', x, 22, 1, 14);
+  px(ctx, '#a9d8e8', 5, 23, 3, 4);
+  // shelves inside
+  for (let x = 10; x < w - 8; x += 8) px(ctx, ['#e4202c', '#ffd23f', '#4f9a4f', '#f47b20'][(x >> 3) % 4], x, 31, 5, 4);
+  // doors
+  px(ctx, INK, Math.round(w / 2) - 6, 26, 12, 12);
+  px(ctx, '#d8efe6', Math.round(w / 2) - 5, 27, 10, 11);
+  px(ctx, INK, Math.round(w / 2), 27, 1, 11);
+  // flower buckets and carts
+  for (let x = 4; x < 26; x += 4) {
+    px(ctx, '#3a6fd8', x, h - 9, 3, 3);
+    px(ctx, ['#ff7eb6', '#ffd23f', '#e4202c', '#f6f4ef', '#9b6ad1'][(x >> 2) % 5], x, h - 11, 3, 2);
+    px(ctx, '#4f9a4f', x + 1, h - 10, 1, 1);
+  }
+  carts(ctx, w - 26, h - 9, 6);
+}
+
+/** The Shell station across Fauntleroy from Trader Joe's: the yellow-and-red canopy, pumps, the pecten. */
+function shellStation(ctx: Ctx, w: number, h: number) {
+  const yellow = '#ffd23f', red = '#dd1d21';
+  px(ctx, '#7d726c', 0, 0, w, h);
+  // the kiosk at the back
+  px(ctx, INK, 3, 2, 22, 14);
+  px(ctx, '#efe6d2', 4, 3, 20, 12);
+  px(ctx, red, 4, 3, 20, 2);
+  px(ctx, '#a9d8cc', 6, 7, 12, 6);
+  px(ctx, '#2a1a12', 19, 7, 4, 8);
+  // pumps under the canopy, a car filling up
+  for (const ix of [10, 34]) {
+    px(ctx, '#cbbba8', ix, 30, 12, 6);
+    px(ctx, INK, ix + 4, 26, 4, 8);
+    px(ctx, yellow, ix + 5, 27, 2, 5);
+    px(ctx, red, ix + 5, 27, 2, 1);
+  }
+  px(ctx, INK, 24, 36, 14, 6);
+  px(ctx, '#3a6fd8', 25, 37, 12, 4);
+  px(ctx, '#a9d8ff', 31, 37, 3, 3);
+  // the canopy: red fascia with a yellow band
+  px(ctx, '#9a948e', 14, 18, 2, 12);
+  px(ctx, '#9a948e', w - 16, 18, 2, 12);
+  px(ctx, INK, 6, 14, w - 12, 8);
+  px(ctx, red, 7, 15, w - 14, 3);
+  px(ctx, yellow, 7, 18, w - 14, 3);
+  // the pecten on a pole by the street
+  const px0 = w - 11;
+  px(ctx, '#9a948e', px0 + 3, 30, 2, h - 30);
+  px(ctx, INK, px0 - 1, 22, 10, 9);
+  px(ctx, yellow, px0, 23, 8, 7);
+  px(ctx, red, px0, 29, 8, 1);
+  for (let i = 0; i < 4; i++) px(ctx, red, px0 + 1 + i * 2, 24, 1, 5);
+  px(ctx, red, px0 + 1, 23, 6, 1);
+}
+
+/** Safeway (Admiral, 2622 California; the Junction, 4754 42nd): brown block, the red S, carts by the doors. */
+function safeway(ctx: Ctx, w: number, h: number) {
+  const red = '#e4202c';
+  px(ctx, '#7d726c', 0, 0, w, h);
+  for (let x = 4; x < w; x += 8) px(ctx, '#f3e6cc', x, h - 7, 1, 5);
+  shopBox(ctx, w, h, '#a87a56', '#8a6a52', { text: 'SAFEWAY', bg: '#f6f4ef', fg: red }, 3, 12);
+  // the S logo left of the sign
+  const lx = Math.round(w / 2) - textWidth('SAFEWAY') / 2 - 14;
+  px(ctx, INK, lx, 8, 10, 10);
+  px(ctx, red, lx + 1, 9, 8, 8);
+  pixelText(ctx, 'S', lx + 3, 10, '#ffffff');
+  // entry vestibule with glass, windows
+  px(ctx, INK, 4, 22, w - 8, 1);
+  for (const wx of [6, w - 22]) {
+    px(ctx, INK, wx, 24, 16, 10);
+    px(ctx, '#7fb3c8', wx + 1, 25, 14, 8);
+  }
+  px(ctx, INK, Math.round(w / 2) - 8, 23, 16, 14);
+  px(ctx, '#d8efe6', Math.round(w / 2) - 7, 24, 14, 13);
+  px(ctx, INK, Math.round(w / 2), 24, 1, 13);
+  px(ctx, red, Math.round(w / 2) - 8, 22, 16, 1);
+  carts(ctx, 4, h - 10, 5);
+}
+
+/** PCC Community Market, 2749 California Ave SW (Admiral): wood and glass, green sign, produce out front. */
+function pccMarket(ctx: Ctx, w: number, h: number) {
+  const green = '#2f7a3a';
+  px(ctx, '#c8c2b8', 0, 0, w, h);
+  shopBox(ctx, w, h, '#b07a4a', '#5d6470', { text: 'PCC', bg: green, fg: '#f6f4ef' }, 3, 12);
+  for (let x = 4; x < w - 2; x += 3) px(ctx, '#8f5f38', x, 17, 1, h - 30);
+  pixelText(ctx, 'COMMUNITY MARKET', Math.round((w - textWidth('COMMUNITY MARKET')) / 2), 18, '#f6f4ef');
+  // a long glass front
+  px(ctx, INK, 3, 24, w - 6, 13);
+  px(ctx, '#a9d8cc', 4, 25, w - 8, 11);
+  for (let x = 4; x < w - 4; x += 10) px(ctx, '#5d6470', x, 25, 1, 11);
+  px(ctx, INK, Math.round(w / 2) - 5, 26, 10, 11);
+  px(ctx, '#d8efe6', Math.round(w / 2) - 4, 27, 8, 10);
+  // produce stands out front
+  for (const sx of [4, w - 24]) {
+    px(ctx, INK, sx, h - 10, 20, 6);
+    px(ctx, '#7a5a3a', sx + 1, h - 6, 18, 2);
+    for (let i = 0; i < 6; i++) px(ctx, ['#e4202c', '#f47b20', '#ffd23f', '#4f9a4f', '#9b6ad1', '#76c85a'][i], sx + 1 + i * 3, h - 9, 3, 3);
+  }
+}
+
+/** School of Rock, 4701 41st Ave SW: black front, red-and-yellow name, a guitar in the window. */
+function schoolOfRock(ctx: Ctx, w: number, h: number) {
+  const red = '#e4202c', yellow = '#ffd23f';
+  px(ctx, '#c8c2b8', 0, 0, w, h);
+  shopBox(ctx, w, h, '#1c1b22', '#3a3540', { text: 'SCHOOL OF ROCK', bg: red, fg: yellow });
+  // windows: a guitar in one, an amp in the other
+  for (const wx of [4, w - 22]) {
+    px(ctx, INK, wx, 22, 18, 13);
+    px(ctx, '#3b4a6b', wx + 1, 23, 16, 11);
+  }
+  // guitar
+  px(ctx, red, 8, 28, 6, 5);
+  px(ctx, red, 9, 27, 4, 1);
+  px(ctx, INK, 10, 30, 2, 1);
+  px(ctx, '#8a5a34', 13, 24, 1, 5);
+  px(ctx, '#8a5a34', 14, 23, 2, 2);
+  // amp
+  px(ctx, INK, w - 18, 26, 10, 8);
+  px(ctx, '#3a3540', w - 17, 27, 8, 6);
+  px(ctx, '#9a948e', w - 15, 28, 4, 4);
+  px(ctx, yellow, w - 17, 27, 2, 1);
+  // door with a lightning bolt
+  px(ctx, INK, Math.round(w / 2) - 4, 22, 8, 17);
+  px(ctx, '#2a1a12', Math.round(w / 2) - 3, 23, 6, 16);
+  px(ctx, yellow, Math.round(w / 2), 26, 1, 3);
+  px(ctx, yellow, Math.round(w / 2) - 1, 28, 1, 3);
+}
+
 const SPRITES: Record<string, (ctx: Ctx, w: number, h: number, id: string) => void> = {
+  'caffe-ladro': caffeLadro,
+  'box-bar': boxBar,
+  'trader-joes': traderJoes,
+  'shell-station': shellStation,
+  safeway,
+  'pcc-market': pccMarket,
+  'school-of-rock': schoolOfRock,
+  'west-seattle-library': westSeattleLibrary,
+  'fire-station': fireStation,
+  'post-office': postOffice,
+  ymca,
+  'west-seattle-nursery': westSeattleNursery,
   'seven-eleven': sevenEleven,
   'satterlee-house': satterleeHouse,
   'hainsworth-house': hainsworthHouse,

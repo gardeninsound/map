@@ -72,6 +72,11 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
   `src/experiences/minigames/ConeCatch.tsx`, rules pure + tested in
   `src/game/coneCatch.ts`; best score in localStorage) via the App's `minigame` overlay, whose `then`
   gets `{ score, best }` back for her closing line. A new character mini game: same overlay, its own component.
+- **Duck Arcade** (in Junction 47's storefront slot, `render/facades.ts`): `src/game/plugins/arcadeDoor.ts`
+  puts the door target on its California side; App opens `src/experiences/arcade/DuckArcade.tsx`, a
+  three.js first-person room (`ArcadeScene.ts`) with a cabinet per game. The shell: cabinets are data
+  in `src/content/duckArcade.ts` (`ready` ones launch), `arcade/games.ts` maps id → lazy component
+  taking `{ onExit(result) }` (same as Cone Catch). New duck game: component + one line there + `ready: true`.
 - `src/content/` — **content is data**: `locations.ts` (spots, coords, Mike's greetings),
   `wallTurns.ts` (scene script), `artManifest.ts` (generated, date-ordered).
 - `src/experiences/` — one scene per spot, lazy-loaded via `registry.ts`, wrapped in

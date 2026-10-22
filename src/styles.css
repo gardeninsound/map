@@ -273,3 +273,33 @@
   .fern-left { left: -200px; }
   .fern-right { right: -200px; }
 }
+
+/* Duck Arcade interior (experiences/arcade): games button, cabinet notes, the games list, a game over the room. */
+.arcade-scene { background: #120e1f; }
+.arcade-buttons { display: flex; gap: 8px; pointer-events: auto; }
+.arcade-buttons button { font-size: 10px; padding: 9px 11px; }
+.arcade-note {
+  position: absolute; left: 50%; bottom: 170px; transform: translateX(-50%); z-index: 2; margin: 0;
+  max-width: min(560px, calc(100% - 32px)); background: var(--paper); color: var(--ink);
+  font-family: var(--pixel); font-size: 10px; line-height: 1.6; padding: 10px 14px; box-shadow: var(--frame);
+}
+.arcade-menu {
+  position: absolute; inset: 0; z-index: 3; display: grid; place-content: center; gap: 12px;
+  padding: 16px; background: rgba(18, 14, 31, 0.82);
+}
+.arcade-menu h3 { margin: 0; text-align: center; font-family: var(--pixel); font-weight: 400; font-size: 14px; color: var(--yellow); }
+.arcade-menu ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; width: min(560px, calc(100vw - 32px)); }
+.arcade-menu button {
+  width: 100%; display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; text-align: left;
+  background: var(--paper); color: var(--ink); padding: 10px 12px; border-left: 8px solid;
+}
+.arcade-menu button.on { background: var(--yellow); }
+.arcade-menu-title { font-family: var(--pixel); font-size: 11px; }
+.arcade-menu-blurb { grid-column: 1; font-family: inherit; font-size: 15px; line-height: 1.3; }
+.arcade-menu-tag { grid-column: 2; grid-row: 1 / span 2; align-self: center; font-family: var(--pixel); font-size: 10px; }
+.arcade-menu-hint { margin: 0; text-align: center; font-family: var(--pixel); font-size: 9px; color: var(--paper); }
+.arcade-game { position: absolute; inset: 0; z-index: 4; }
+/* Duck Scroller (arcade/DuckScroller.tsx): the kit's 960×480 canvas + its pad, fitted to the screen */
+.duck-scroller-scene { align-items: center; justify-content: center; background: #f3f5f9; color: #34465a; font-family: var(--pixel); font-size: 10px; padding: 16px; }
+.duck-scroller-slot { width: min(100%, (100vh - 140px) * 2, 1440px); }
+.duck-scroller-note { margin: 10px 0 0; }

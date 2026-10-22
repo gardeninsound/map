@@ -57,10 +57,10 @@
  {
   "id": "power-box",
   "name": "The Power Box",
-  "where": "Fauntleroy Way SW",
-  "lat": 47.5618,
-  "lon": -122.3812,
-  "approx": true,
+  "where": "Fauntleroy Way SW · by LA Fitness",
+  "lat": 47.561458,
+  "lon": -122.381811,
+  "approx": false,
   "set": "fauntleroy-power-box",
   "greeting": [
    "A utility box is just a very small wall.",
@@ -124,10 +124,10 @@
  {
   "id": "posters",
   "name": "The Poster Poles",
-  "where": "2016–2020",
-  "lat": 47.5815,
-  "lon": -122.3838,
-  "approx": true,
+  "where": "2016–2020 · 42nd & College",
+  "lat": 47.582844,
+  "lon": -122.385325,
+  "approx": false,
   "set": "posters",
   "greeting": [
    "It started on telephone poles. One word, one phrase, no explanation.",
@@ -172,6 +172,19 @@
   "greeting": [
    "The 7-Eleven at California and Charlestown.",
    "Slurpees, scratch tickets, and for a while the cheapest gas in West Seattle."
+  ]
+ },
+ {
+  "id": "prom",
+  "name": "PROM",
+  "where": "The Fine Baking Co. · 6969 California Ave SW",
+  "lat": 47.540892,
+  "lon": -122.387447,
+  "approx": false,
+  "set": "other",
+  "greeting": [
+   "This one is called PROM.",
+   "Still hanging this one — come back soon!"
   ]
  }
 ]
