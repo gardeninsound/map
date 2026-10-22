@@ -8,3 +8,6 @@ junction-w-south,"Junction shops: west side, Alaska to Edmunds",storefronts,,47.
 junction-e-south,"Junction shops: east side, Alaska to Edmunds",storefronts,,47.560145,-122.386140,5,13,Each business is data in src/content/storefronts.ts,manual,,,W
 undersea-aviary,Undersea Aviary,undersea-aviary,,47.569155,-122.389894,4,3,"3837 45th Ave SW: Michael Henderson's backyard sculpture garden (rebar, mortar, tile and mirror mosaic; geocoded 47.56912,-122.38973)",manual,,,E
 seven-eleven,7-Eleven,seven-eleven,,47.569915,-122.387498,4,3,"3801 California Ave SW, SW corner of California & Charlestown: store + fuel canopy (chain look; no photo)",manual,,,E
+satterlee-house,Satterlee House,satterlee-house,,47.558082,-122.401155,3,3,"4866 Beach Dr SW: the Painted Lady, a ca. 1906 Seattle Box (Classic Box), city landmark 1981; pale shingles, hipped roofs, full-width porch",manual,,,W
+hainsworth-house,Hainsworth House,hainsworth-house,,47.580011,-122.378473,3,3,"2657 37th Ave SW: 1907 Tudor Revival by Graham & Myers, city landmark 1980; stucco and half-timber, steep gables",manual,,,E
+alki-homestead,Alki Homestead (Fir Lodge),alki-homestead,,47.578491,-122.411058,3,3,"2717 61st Ave SW: Fir Lodge, a 1904 log house, later the Alki Homestead restaurant; city landmark; logs, river-rock chimney",manual,,,E

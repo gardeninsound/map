@@ -185,7 +185,9 @@ export function drawTile(ctx: Ctx, world: World, tx: number, ty: number, ox: num
     case Tile.Plaza:
       return plaza(ctx, ox, oy, tx, ty);
     case Tile.Landmark:
-      return px(ctx, '#cbbba8', ox, oy, TS, TS); // the landmark drawing covers it
+      // the drawing covers its box; where a street-facing one slides flush to its sidewalk,
+      // the strip it uncovers is lawn
+      return grass(ctx, ox, oy, tx, ty, false);
     case Tile.Park:
       grass(ctx, ox, oy, tx, ty, true);
       if (hash(tx, ty, 11) < 0.82) tree(ctx, ox, oy, tx, ty);

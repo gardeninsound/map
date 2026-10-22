@@ -11,6 +11,8 @@ import {
   nearestSpot,
   StreetSign,
   TouchPad,
+  type MapPlace,
+  type PlacedLandmark,
   type Target,
 } from './city';
 import { START, locations, welcome } from './content/locations';
@@ -48,6 +50,28 @@ type Overlay =
   | { kind: 'spots' };
 
 const ConeCatch = lazy(() => import('./experiences/minigames/ConeCatch'));
+
+const LANDMARK_COLOR = '#5fa8a0';
+
+/**
+ * The landmarks, as named places for the map: the Junction's four block faces become one
+ * "The Junction shops", other names lose their parenthetical. Most-visited first, so those
+ * keep their name tags when the map gets crowded.
+ */
+function mapLandmarks(landmarks: PlacedLandmark[]): MapPlace[] {
+  const centre = (l: PlacedLandmark) => ({ x: l.x + l.w / 2, y: l.y + l.h / 2 });
+  const shops = landmarks.filter((l) => l.sprite === 'storefronts');
+  const out: MapPlace[] = [];
+  if (shops.length) {
+    const cs = shops.map(centre);
+    out.push({ name: 'The Junction shops', x: cs.reduce((a, c) => a + c.x, 0) / cs.length, y: cs.reduce((a, c) => a + c.y, 0) / cs.length, color: LANDMARK_COLOR });
+  }
+  for (const l of landmarks) {
+    if (l.sprite === 'storefronts') continue;
+    out.push({ name: l.name.replace(/\s*\(.*\)\s*$/, ''), ...centre(l), color: LANDMARK_COLOR });
+  }
+  return out;
+}
 
 /** Remember (per browser) that the first-visit direction arrow has been shown. */
 const HINT_KEY = 'bearisland-direction-hint';
@@ -214,6 +238,7 @@ export default function App() {
     [game, spots],
   );
   const openSpots = spots?.open ?? [];
+  const landmarkPlaces = useMemo(() => (game ? mapLandmarks(game.world.landmarks) : []), [game]);
 
   const Scene = overlay.kind === 'scene' && overlay.loc.experience ? experiences[overlay.loc.experience] : null;
   const talkLoc = overlay.kind === 'talk' ? overlay.loc : undefined;
@@ -262,9 +287,18 @@ export default function App() {
                     color: spots.visited.has(loc.id) ? '#ffffff' : loc.experience ? '#ffe066' : '#ff7eb6',
                   }))
                 }
+                places={landmarkPlaces}
+                onPick={(p) => {
+                  // jump to the nearest street there, and get back to walking
+                  sounds.confirm();
+                  game.teleport(p);
+                  input.clear();
+                  setMapOpen(false);
+                }}
                 legend={[
                   { color: '#ffe066', label: 'open' },
                   { color: '#ff7eb6', label: 'soon' },
+                  { color: LANDMARK_COLOR, label: 'landmark' },
                 ]}
               />
             )}

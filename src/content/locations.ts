@@ -46,8 +46,15 @@ export const START = { lat: 47.5612, lon: -122.3868 }; // California & Alaska �
 export const locations: ArtLocation[] = places.map((p) => ({ ...p, colors: COLORS[p.id] ?? DEFAULT_COLORS }));
 
 /** First thing Mike says when you arrive on the map. */
-export const welcome = [
-  "Welcome to Bear Island! I'm Mike. For ten years I've been putting things up around West Seattle.",
+/**
+ * Mike's opening line, one box: dismiss it and you're off. (For now — the longer welcome
+ * is kept below to bring back.)
+ */
+export const welcome = ['Go check it out, sunshine!'];
+
+/** the earlier, longer welcome */
+export const welcomeLong = [
+  "Welcome to Garden in Sound! I'm Mike. For ten years I've been putting things up around West Seattle.",
   'Walk the streets. When you see a lemon, step up and press {A} — that is where the art lives. Say hi to the neighbors, too.',
   'Start with the gas station wall, just north of here up California Ave.',
 ];

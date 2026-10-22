@@ -50,7 +50,7 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
 
 ## Where things live
 
-- `src/game/plugins/` — the app's `CityPlugin`s: `artSpots.ts` (lemons, Mike beside live spots,
+- `src/game/plugins/` — the app's `CityPlugin`s: `artSpots.ts` (spinning lemons with a beating heart above, from `src/game/lemonSpin.ts`;
   "unvisited" beacons; targets of kind `place` carrying the `PlacedLocation`), `busker.ts`,
   `crow.ts`. App.tsx wires them into `CityGame` and handles `onInteract`.
 - `src/game/sprites.ts` — Mike, the lemons (`src/game/lemon.ts`), the crow (same grid format as the city's sprites).

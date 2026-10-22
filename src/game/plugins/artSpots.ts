@@ -1,7 +1,7 @@
-import { INK, type CityGame, type CityPlugin, type DrawContext, type Target } from '../../city';
+import { hash, type CityGame, type CityPlugin, type DrawContext, type Target } from '../../city';
 import type { ArtLocation } from '../../content/locations';
-import { LEMON_BASE } from '../lemon';
-import { buildLemons, buildMike } from '../sprites';
+import { SPIN_BASE, SPIN_FRAMES } from '../lemonSpin';
+import { buildHearts, buildLemons } from '../sprites';
 
 export interface PlacedLocation extends ArtLocation {
   /** tile coords of the lemon, beside the street */
@@ -10,14 +10,16 @@ export interface PlacedLocation extends ArtLocation {
 }
 
 /**
- * The art spots: a lemon marks each (ripe where there's a scene, still green if coming
- * soon), Mike waits beside the open ones, and a beacon bobs until you've been. Walk up and press A — the app opens the spot.
+ * The art spots: a spinning lemon marks each (ripe where there's a scene, still green if
+ * coming soon) with a little heart bobbing above it, beating now and then; it sparkles until
+ * you've been. Honors prefers-reduced-motion (a still lemon, a still heart). Walk up and press A — the app opens the spot.
  */
 export class ArtSpots implements CityPlugin {
   places: PlacedLocation[] = [];
   readonly visited = new Set<string>();
-  private mike = buildMike();
   private lemons = buildLemons();
+  private hearts = buildHearts();
+  private still = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
 
   constructor(private locations: ArtLocation[]) {}
 
@@ -50,28 +52,25 @@ export class ArtSpots implements CityPlugin {
       d.push({
         y: loc.y,
         draw: () => {
-          ctx.drawImage(live ? this.lemons.ripe : this.lemons.unripe, s.x - 9, s.y - LEMON_BASE - 1);
-          if (live) ctx.drawImage(this.mike[Math.floor(time * 2) % 2], s.x + 11, s.y - 14);
-          if (!this.visited.has(loc.id)) beacon(ctx, s.x + 1, s.y - LEMON_BASE - 7, time, live);
+          // each lemon turns at its own phase, about one turn every 1.6 s
+          const phase = hash(Math.floor(loc.x), Math.floor(loc.y), 21);
+          const frame = this.still ? 0 : Math.floor(time * 10 + phase * SPIN_FRAMES) % SPIN_FRAMES;
+          ctx.drawImage((live ? this.lemons.ripe : this.lemons.unripe)[frame], s.x - 12, s.y - SPIN_BASE - 1);
+          // the heart: bobbing, with a quick double beat every couple of seconds
+          const beatT = (time + phase * 2) % 1.8;
+          const beat = !this.still && (beatT < 0.09 || (beatT > 0.2 && beatT < 0.29)) ? 1 : 0;
+          const bob = this.still ? 0 : Math.round(Math.sin(time * 3 + phase * 6) * 1.5);
+          const hy = s.y - SPIN_BASE - 11 + bob;
+          ctx.drawImage((live ? this.hearts.open : this.hearts.soon)[beat], s.x - (beat ? 5 : 4), hy - beat);
+          // a twinkle beside the heart until you've been
+          if (!this.visited.has(loc.id) && Math.floor(time * 3) % 2 === 0) {
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(s.x + 7, hy - 2, 1, 3);
+            ctx.fillRect(s.x + 6, hy - 1, 3, 1);
+          }
         },
       });
     }
   }
 }
 
-function beacon(ctx: CanvasRenderingContext2D, x: number, y: number, time: number, live: boolean) {
-  const bob = Math.round(Math.sin(time * 4) * 2);
-  ctx.fillStyle = INK;
-  ctx.fillRect(x - 4, y + bob - 1, 9, 6);
-  ctx.fillStyle = live ? '#ffe066' : '#ffffff';
-  // ▼
-  ctx.fillRect(x - 3, y + bob, 7, 1);
-  ctx.fillRect(x - 2, y + bob + 1, 5, 1);
-  ctx.fillRect(x - 1, y + bob + 2, 3, 1);
-  ctx.fillRect(x, y + bob + 3, 1, 1);
-  if (live && Math.floor(time * 3) % 2 === 0) {
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(x + 6, y + bob - 3, 1, 3);
-    ctx.fillRect(x + 5, y + bob - 2, 3, 1);
-  }
-}

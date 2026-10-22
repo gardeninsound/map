@@ -344,6 +344,234 @@ function underseaAviary(ctx: Ctx, w: number, h: number) {
   }
 }
 
+/** A window: `frame`-coloured sash with `cols`×`rows` panes of dark glass, a glint top-left. */
+function paneWindow(ctx: Ctx, x: number, y: number, w: number, h: number, cols: number, rows: number, frame = '#f3f0ea', glass = '#3b4a6b') {
+  px(ctx, frame, x, y, w, h);
+  const pw = (w - 1) / cols, ph = (h - 1) / rows;
+  for (let j = 0; j < rows; j++) {
+    for (let i = 0; i < cols; i++) {
+      const gx = x + 1 + Math.round(i * pw), gy = y + 1 + Math.round(j * ph);
+      const gw = Math.max(1, Math.round((i + 1) * pw) - Math.round(i * pw) - 1);
+      const gh = Math.max(1, Math.round((j + 1) * ph) - Math.round(j * ph) - 1);
+      px(ctx, glass, gx, gy, gw, gh);
+    }
+  }
+  px(ctx, '#6f86b8', x + 1, y + 1, 1, 1);
+}
+
+/** A house lot's lawn behind the drawing, so its corners read as yard, not paving. */
+function lawn(ctx: Ctx, w: number, h: number) {
+  px(ctx, '#5e9a72', 0, 0, w, h);
+  for (let i = 0; i < 40; i++) px(ctx, i % 2 ? '#4b8460' : '#79b48a', (i * 29) % w, (i * 17) % h, 1, 2);
+}
+
+/** A hipped roof seen from the front: a trapezoid from a ridge down to the eaves, ink-edged. */
+function hipRoof(ctx: Ctx, x0: number, x1: number, top: number, eave: number, slope: number, color: string, light: string) {
+  for (let y = top; y <= eave; y++) {
+    const inset = Math.round((eave - y) * slope);
+    px(ctx, y < top + 3 ? light : color, x0 + inset, y, x1 - x0 - inset * 2, 1);
+    px(ctx, INK, x0 + inset - 1, y, 1, 1);
+    px(ctx, INK, x1 - inset, y, 1, 1);
+  }
+  const ridge = Math.round((eave - top) * slope);
+  px(ctx, INK, x0 + ridge, top - 1, x1 - x0 - ridge * 2, 1);
+}
+
+/**
+ * The Satterlee House, 4866 Beach Dr SW — "the Painted Lady", a ca. 1906 Seattle Box and
+ * city landmark: pale blue-grey shingles, hipped roofs with a front dormer of diamond-pane
+ * windows, white trim, a balcony over the full-width porch, rose-pink brackets, a brick
+ * chimney, hedges in front (Historic Seattle photo).
+ */
+function satterleeHouse(ctx: Ctx, w: number, h: number) {
+  const shingle = '#a9bccb', line = '#93a8b8', trim = '#f3f0ea', roof = '#6f7380', roofLight = '#8a8f9a';
+  const rose = '#c87a86', porch = '#7d8ea0';
+  const base = h - 3;
+  lawn(ctx, w, h);
+  px(ctx, 'rgba(0,0,0,0.2)', 2, base, w - 2, 3);
+  // brick chimney behind the roof
+  px(ctx, INK, 33, 0, 5, 7);
+  px(ctx, '#a8442e', 34, 1, 3, 6);
+  // the main hipped roof, then the hipped dormer on its front
+  hipRoof(ctx, 3, w - 3, 3, 16, 0.85, roof, roofLight);
+  hipRoof(ctx, 16, w - 16, 8, 10, 1, roofLight, '#9aa0aa');
+  px(ctx, shingle, 17, 11, w - 34, 5);
+  for (const dx of [18, 25]) {
+    paneWindow(ctx, dx, 11, 6, 5, 1, 1, trim, '#3b4a6b');
+    // diamond lattice in the glass
+    for (let j = 0; j < 3; j++) for (let i = 0; i < 4; i++) if ((i + j) % 2 === 0) px(ctx, trim, dx + 1 + i, 12 + j);
+  }
+  // eaves and fascia
+  px(ctx, INK, 1, 16, w - 2, 1);
+  px(ctx, trim, 1, 17, w - 2, 1);
+  // upper storey: shingles; a bay window, the balcony door and balustrade, a window
+  px(ctx, shingle, 3, 18, w - 6, 10);
+  for (let y = 19; y < 28; y += 2) px(ctx, line, 3, y, w - 6, 1);
+  paneWindow(ctx, 6, 19, 9, 7, 1, 2, trim);
+  for (let i = 0; i < 7; i++) if (i % 2 === 0) px(ctx, trim, 7 + i, 20);
+  paneWindow(ctx, 21, 19, 6, 8, 1, 2, trim, '#a9d8cc');
+  px(ctx, trim, 18, 23, 12, 1); // balustrade rail
+  for (let x = 18; x < 30; x += 2) px(ctx, trim, x, 24, 1, 3);
+  px(ctx, trim, 18, 27, 12, 1);
+  paneWindow(ctx, 33, 19, 8, 7, 2, 1, trim);
+  // the porch roof
+  px(ctx, INK, 1, 28, w - 2, 1);
+  px(ctx, roof, 1, 29, w - 2, 2);
+  px(ctx, trim, 1, 31, w - 2, 1);
+  // under the porch: shaded shingles, windows, the front door
+  px(ctx, porch, 3, 32, w - 6, 10);
+  paneWindow(ctx, 6, 34, 7, 6, 2, 2, trim);
+  paneWindow(ctx, 35, 34, 7, 6, 2, 2, trim);
+  px(ctx, trim, 21, 33, 6, 9);
+  px(ctx, '#a9d8cc', 22, 34, 4, 4);
+  px(ctx, '#5a6070', 22, 38, 4, 3);
+  // porch columns with rose brackets
+  for (const cx of [3, 15, 31, 43]) {
+    px(ctx, trim, cx, 32, 2, 10);
+    px(ctx, rose, cx - 1, 32, 1, 2);
+    px(ctx, rose, cx + 2, 32, 1, 2);
+  }
+  // porch floor and steps
+  px(ctx, '#d8d3cc', 1, 42, w - 2, 1);
+  px(ctx, '#c8c2b8', 19, 43, 10, 1);
+  px(ctx, '#9a948e', 18, 44, 12, 1);
+  px(ctx, INK, 1, base, w - 2, 1);
+  // hedges either side of the steps
+  for (const [hx, hw] of [[0, 15], [33, 15]] as const) {
+    px(ctx, '#2f6b48', hx, 40, hw, 5);
+    px(ctx, INK, hx, 39, hw, 1);
+    for (let i = hx + 1; i < hx + hw; i += 3) px(ctx, '#4f8f63', i, 41 + (i % 2), 1, 1);
+  }
+}
+
+/**
+ * The Hainsworth House, 2657 37th Ave SW — Tudor Revival, 1907, by Graham & Myers, a city
+ * landmark: cream stucco crossed with dark half-timbering, two steep front gables with dark
+ * bargeboards, banks of multi-pane windows, a slate roof, roses on the wall, and the
+ * wrought-iron fence along the front (Commons photos, 2657 37th Ave SW).
+ */
+function hainsworthHouse(ctx: Ctx, w: number, h: number) {
+  const stucco = '#efe2bf', timber = '#3a2a22', slate = '#5a5f6a', slateLight = '#727884', frame = '#f3f0ea';
+  const base = h - 3;
+  lawn(ctx, w, h);
+  px(ctx, 'rgba(0,0,0,0.2)', 2, base, w - 2, 3);
+  // slate roof behind the gables
+  hipRoof(ctx, 2, w - 2, 7, 20, 0.6, slate, slateLight);
+  // a steep gable: stucco face, half-timbering, dark bargeboards, a window near the peak
+  const gable = (cx: number, top: number, bottom: number, half: number) => {
+    for (let y = top; y <= bottom; y++) {
+      const hw = Math.round(((y - top) / (bottom - top)) * half);
+      px(ctx, stucco, cx - hw, y, hw * 2 + 1, 1);
+      px(ctx, timber, cx - hw - 2, y, 2, 1);
+      px(ctx, timber, cx + hw + 1, y, 2, 1);
+      px(ctx, INK, cx - hw - 3, y, 1, 1);
+      px(ctx, INK, cx + hw + 3, y, 1, 1);
+    }
+    px(ctx, INK, cx - 1, top - 1, 3, 1);
+    // timbers: verticals, and the collar beam
+    for (let dx = -half + 3; dx < half - 2; dx += 4) {
+      const yTop = top + Math.ceil((Math.abs(dx) / half) * (bottom - top)) + 1;
+      if (yTop < bottom) px(ctx, timber, cx + dx, yTop, 1, bottom - yTop + 1);
+    }
+    px(ctx, timber, cx - Math.round(half * 0.55), top + Math.round((bottom - top) * 0.55), Math.round(half * 1.1) + 1, 1);
+    paneWindow(ctx, cx - 2, top + Math.round((bottom - top) * 0.25), 5, 4, 1, 1, frame);
+  };
+  gable(17, 1, 21, 13);
+  gable(37, 8, 21, 8);
+  // the jettied upper floor: a timber-framed band with the big bay window
+  px(ctx, INK, 1, 22, w - 2, 1);
+  px(ctx, stucco, 2, 23, w - 4, 7);
+  for (let x = 2; x < w - 2; x += 5) px(ctx, timber, x, 23, 1, 7);
+  px(ctx, timber, 2, 29, w - 4, 1);
+  paneWindow(ctx, 7, 23, 20, 6, 5, 2, frame);
+  paneWindow(ctx, 32, 23, 10, 6, 3, 2, frame);
+  // the overhang's shadow and brackets
+  px(ctx, INK, 1, 30, w - 2, 1);
+  for (const bx of [4, 14, 24, 34, 43]) px(ctx, timber, bx, 31, 2, 2);
+  // ground floor: stucco between studs and braces, windows, the arched door
+  px(ctx, stucco, 3, 31, w - 6, 13);
+  for (let x = 3; x < w - 3; x += 4) px(ctx, timber, x, 33, 1, 11);
+  px(ctx, timber, 3, 37, w - 6, 1);
+  paneWindow(ctx, 6, 33, 9, 7, 3, 2, frame);
+  paneWindow(ctx, 33, 33, 10, 7, 3, 2, frame);
+  px(ctx, timber, 21, 33, 7, 11);
+  px(ctx, timber, 22, 32, 5, 1);
+  px(ctx, '#5a3a2a', 22, 34, 5, 10);
+  px(ctx, '#e0a93a', 25, 39, 1, 1); // the door handle
+  // roses climbing the wall by the door
+  for (let i = 0; i < 14; i++) {
+    const rx = 15 + ((i * 5) % 6), ry = 30 + ((i * 7) % 11);
+    px(ctx, i % 3 ? '#4f8f63' : '#e8a59a', rx, ry, 1, 1);
+  }
+  px(ctx, INK, 1, base, w - 2, 1);
+  // the wrought-iron fence: a rail of pointed arches along the front
+  const iron = '#22302b';
+  px(ctx, iron, 0, 39, w, 1);
+  for (let x = 0; x < w; x += 6) {
+    px(ctx, iron, x, 40, 1, 5);
+    px(ctx, iron, x + 1, 39, 1, 1);
+    px(ctx, iron, x + 2, 38, 2, 1);
+    px(ctx, iron, x + 4, 39, 1, 1);
+    px(ctx, iron, x + 3, 40, 1, 5);
+  }
+}
+
+/**
+ * The Alki Homestead — Fir Lodge, a 1904 log house at 2717 61st Ave SW, later a restaurant,
+ * a city landmark: walls of dark horizontal logs with notched log ends at the corners, a
+ * broad low hipped roof with a wide shed dormer, a river-rock chimney and porch pillar, big
+ * white-framed French windows (Commons photos, Alki Homestead 2017).
+ */
+function alkiHomestead(ctx: Ctx, w: number, h: number) {
+  const log = '#4a3428', logLight = '#6b4e3a', logDark = '#36261e', frame = '#f3f0ea';
+  const stones = ['#9a958c', '#b8b3aa', '#7a766e', '#a8a39a'];
+  const base = h - 3;
+  lawn(ctx, w, h);
+  px(ctx, 'rgba(0,0,0,0.2)', 2, base, w - 2, 3);
+  const rocks = (x: number, y: number, rw: number, rh: number) => {
+    px(ctx, INK, x - 1, y, rw + 2, rh);
+    for (let j = 0; j < rh; j += 2) {
+      for (let i = 0; i < rw; i += 2) px(ctx, stones[(i * 3 + j * 5 + (j % 4 ? 1 : 0)) % 4], x + i + ((j / 2) % 2), y + j, 2, 2);
+    }
+  };
+  // the river-rock chimney rising past the eaves
+  rocks(8, 2, 5, 20);
+  // broad low hipped roof with deep eaves, and the wide shed dormer
+  hipRoof(ctx, 0, w, 5, 20, 1.15, '#6f6c75', '#88858e');
+  rocks(8, 2, 5, 8); // the chimney top shows above the roof
+  px(ctx, INK, 13, 9, 23, 1);
+  px(ctx, '#88858e', 13, 10, 23, 2);
+  px(ctx, log, 14, 12, 21, 6);
+  for (const dx of [15, 20, 25, 30]) paneWindow(ctx, dx, 13, 4, 4, 1, 1, frame, '#2a2a33');
+  px(ctx, '#b8b3aa', 38, 13, 3, 2); // a skylight
+  // eaves, then the log walls (each log: lit top, body, dark bottom)
+  px(ctx, INK, 0, 20, w, 1);
+  px(ctx, logDark, 1, 21, w - 2, 1);
+  for (let y = 22; y < base; y += 3) {
+    px(ctx, logLight, 2, y, w - 4, 1);
+    px(ctx, log, 2, y + 1, w - 4, 1);
+    px(ctx, logDark, 2, y + 2, w - 4, 1);
+  }
+  // notched log ends at both corners
+  for (let y = 22; y < base - 1; y += 3) {
+    for (const ex of [0, w - 3]) {
+      px(ctx, logLight, ex, y, 3, 2);
+      px(ctx, logDark, ex + 1, y, 1, 1);
+    }
+  }
+  // the stone chimney down the left wall
+  rocks(8, 21, 5, base - 21);
+  // the porch: a shaded recess with a stone pillar, French doors, steps
+  px(ctx, '#2a2a33', 18, 25, 13, 14);
+  rocks(18, 25, 3, 18);
+  paneWindow(ctx, 23, 27, 7, 10, 2, 3, frame);
+  px(ctx, '#9a948e', 20, 41, 12, 2);
+  px(ctx, '#b8b3aa', 21, 39, 10, 2);
+  // the big French windows on the right
+  paneWindow(ctx, 34, 25, 10, 11, 4, 2, frame);
+  px(ctx, INK, 1, base, w - 2, 1);
+}
+
 /** The 7-Eleven stripes: orange, red, green. */
 const STRIPES = ['#f47b20', '#e4202c', '#008061'];
 
@@ -415,6 +643,9 @@ function sevenEleven(ctx: Ctx, w: number, h: number) {
 
 const SPRITES: Record<string, (ctx: Ctx, w: number, h: number, id: string) => void> = {
   'seven-eleven': sevenEleven,
+  'satterlee-house': satterleeHouse,
+  'hainsworth-house': hainsworthHouse,
+  'alki-homestead': alkiHomestead,
   'undersea-aviary': underseaAviary,
   'admiral-theatre': admiralTheatre,
   'easy-street-records': easyStreetRecords,

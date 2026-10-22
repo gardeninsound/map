@@ -32,8 +32,8 @@
   "id": "land-use-signs",
   "name": "Land Use Takeover",
   "where": "West Seattle High School",
-  "lat": 47.576107,
-  "lon": -122.385041,
+  "lat": 47.576645,
+  "lon": -122.38646,
   "approx": false,
   "set": "other",
   "greeting": [
