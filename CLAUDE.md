@@ -42,6 +42,9 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
   `screenshots/map-preview.png` (`scripts/city/build-map.mjs`). All knobs in
   `scripts/city/map-config.mjs`: street widths (true width from lanes, × `widthScale` 2), house
   push/shrink, detailed places.
+- `npm run audit [-- N]` — with `npm run dev` up (set `MAP_URL` if Vite isn't on 5173): renders
+  every chunk at `?audit` and counts road-drawing glitches (slivers walled in by road, loose road
+  fragments; detailed places skipped), writes `screenshots/audit/audit.json` + shots of the N biggest.
 - `node scripts/make-lemon.mjs` — traces the art-spot lemon + shadow from `data/source/lemon-photo.png`
   → `src/game/lemon.ts` (ASCII grid, ripe + unripe palettes)
 - `node scripts/make-portrait.mjs` — Mike's tintype → 40×40 pixel portrait
@@ -95,7 +98,7 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
   - ~27k houses at their true OSM size/angle (`paintHouses`), nudged back or shrunk where a
     street reaches them; other buildings as tiles
   - landmarks (`render/landmarks.ts`): 76 station, Admiral Theatre, Easy Street, the Undersea
-    Aviary, the 7-Eleven, and the Junction block faces (`render/storefronts.ts`, data in
+    Aviary, the 7-Eleven, Admiral Safeway, Shadowland, West Seattle Library, and the Junction block faces (`render/storefronts.ts`, data in
     `world/storefronts.ts`, shop fronts in `render/facades.ts`); a landmark with a `street`
     side is pulled flush with that street's sidewalk at render time
   - detailed places (Hiawatha Playfield, West Seattle High School): lawn, walkable footpaths
@@ -125,4 +128,5 @@ Gotcha: fontsource packages with an `exports` map append `.css` themselves — i
 Unit tests cover content invariants (every spot has art and sits by a walkable street), the
 slideshows, busker songs, crow flight, sprites, and the city's own tests in `src/city/`. For visuals, drive real Chrome: `playwright-core` from `~/code/games/arcade/node_modules`
 with `channel: 'chrome'`; save shots under `screenshots/` (gitignored). In dev, `window.__game` is
-the live `CityGame`, plus `__art`, `__busker`, `__crow` (the plugins) for scripted checks.
+the live `CityGame`, plus `__art`, `__busker`, `__crow` (the plugins) for scripted checks;
+`?at=lat,lon` or `?atTile=x,y` skips the title and drops you there.

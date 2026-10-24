@@ -413,8 +413,147 @@ function sevenEleven(ctx: Ctx, w: number, h: number) {
   for (let x = w - 8; x < w - 3; x += 2) px(ctx, '#e4202c', x, 40, 1, 2); // the price, in LEDs
 }
 
+/** Pixel text stacked vertically (one letter per row), 6 px per letter. */
+function pixelTextDown(ctx: Ctx, text: string, x: number, y: number, color: string) {
+  [...text].forEach((ch, i) => pixelText(ctx, ch, x, y + i * 6, color));
+}
+
+function disc(ctx: Ctx, cx: number, cy: number, r: number, color: string) {
+  for (let y = -r; y <= r; y++) {
+    const half = Math.floor(Math.sqrt(r * r - y * y));
+    px(ctx, color, cx - half, cy + y, half * 2 + 1, 1);
+  }
+}
+
+/**
+ * Admiral Safeway (2622 California Ave SW): a tan brick tower carrying the white sign box
+ * with the coral S logo, next to a long dark glass curtain wall.
+ */
+function safeway(ctx: Ctx, w: number, h: number) {
+  const brick = '#c9a77a';
+  const glass = '#33415e';
+  const mullion = '#8b93a3';
+  px(ctx, 'rgba(0,0,0,0.2)', 3, h - 3, w - 3, 3);
+  // flat roof band
+  px(ctx, '#a7a3ad', 0, 0, w, 7);
+  px(ctx, '#bdb9c3', 0, 0, w, 2);
+  px(ctx, INK, 0, 6, w, 1);
+  // glass curtain wall, two storeys of mullioned panes
+  const gx = 32;
+  px(ctx, mullion, gx, 7, w - gx, h - 10);
+  for (let y = 9; y < h - 6; y += 9) {
+    for (let x = gx + 2; x < w - 2; x += 7) {
+      px(ctx, glass, x, y, 6, 7);
+      px(ctx, '#55648a', x, y, 2, 2);
+    }
+  }
+  px(ctx, '#6f7685', gx, h - 6, w - gx, 3); // street-level sill
+  // brick tower with the sign
+  px(ctx, INK, 1, 1, 31, h - 3);
+  px(ctx, brick, 2, 2, 29, h - 5);
+  for (let y = 6; y < h - 4; y += 3) px(ctx, '#b8956a', 2, y, 29, 1);
+  // sign box (raised, with a shadow)
+  px(ctx, 'rgba(0,0,0,0.25)', 4, 5, 28, 25);
+  px(ctx, INK, 2, 3, 29, 26);
+  px(ctx, '#ffffff', 3, 4, 27, 24);
+  // the S logo: a coral disc split by a white swoosh
+  const cx = 16, cy = 12;
+  disc(ctx, cx, cy, 6, '#ef6f61');
+  for (const [x, y, len] of [[1, -6, 2], [-1, -5, 3], [-2, -4, 3], [-3, -3, 3], [-3, -2, 3], [-2, -1, 4], [0, 0, 3], [1, 1, 3], [1, 2, 3], [0, 3, 3], [-1, 4, 3], [-3, 5, 3], [-4, 6, 2]] as const) {
+    px(ctx, '#ffffff', cx + x, cy + y, len, 1);
+  }
+  pixelText(ctx, 'SAFEWAY', 3, 21, '#2f2f3d');
+  px(ctx, INK, 0, h - 3, w, 1);
+}
+
+/**
+ * Shadowland (4458 California Ave SW): the retro neon sign — a mint bar reading SHADOW, a
+ * dark V-shaped pylon with a round disc, and LAND stacked down a white column.
+ */
+function shadowland(ctx: Ctx, w: number, h: number) {
+  px(ctx, 'rgba(0,0,0,0.2)', 2, h - 3, w - 2, 3);
+  // white two-storey facade with dark windows
+  px(ctx, '#f1efe9', 0, 10, w, h - 13);
+  px(ctx, '#2f3646', 3, 22, 10, h - 28);
+  px(ctx, '#3c4458', 4, 23, 3, h - 30);
+  px(ctx, '#7c8a7f', 0, h - 7, w, 3); // the old awning band
+  for (let x = 2; x < w; x += 6) px(ctx, '#9ad1c3', x, h - 6, 3, 1);
+  // the sign: mint top bar…
+  px(ctx, INK, 0, 2, w, 10);
+  px(ctx, '#bfe6dc', 1, 3, w - 2, 8);
+  px(ctx, '#e8f7f3', 1, 3, w - 2, 1);
+  pixelText(ctx, 'SHADOW', Math.max(1, Math.round((w - 23) / 2)), 5, '#f9fbfa');
+  pixelText(ctx, 'SHADOW', Math.max(1, Math.round((w - 23) / 2)) + 1, 6, '#5b8f84');
+  // …the V pylon with its disc…
+  for (let y = 0; y < 26; y++) {
+    const half = Math.max(1, Math.round(7 - y * 0.27));
+    px(ctx, '#5a5e66', 12 - half, 12 + y, half * 2, 1);
+    px(ctx, '#7a7f88', 12 - half, 12 + y, 1, 1);
+  }
+  disc(ctx, 12, 17, 3, '#c9cdd3');
+  px(ctx, '#eef0f2', 11, 15, 2, 1);
+  // …and LAND down the white column on the right
+  px(ctx, INK, w - 9, 11, 9, 28);
+  px(ctx, '#ffffff', w - 8, 12, 7, 26);
+  pixelTextDown(ctx, 'LAND', w - 6, 13, '#3a8f7c');
+  px(ctx, INK, 0, h - 3, w, 1);
+}
+
+/**
+ * West Seattle Library (1910 Carnegie, 2306 42nd Ave SW): red brick under a cream stone
+ * cornice with dentils, tall cream-framed windows, a stone portal reading PUBLIC LIBRARY,
+ * globe lamps and front steps.
+ */
+function library(ctx: Ctx, w: number, h: number) {
+  const brick = '#9c3f2e';
+  const brickDark = '#7f3123';
+  const stone = '#e8dcc0';
+  px(ctx, 'rgba(0,0,0,0.2)', 3, h - 3, w - 3, 3);
+  // roof
+  px(ctx, '#8a8592', 0, 0, w, 6);
+  px(ctx, '#a29daa', 0, 0, w, 2);
+  // cornice: stone band with dentils, brick frieze above
+  px(ctx, brick, 0, 6, w, 5);
+  for (let x = 1; x < w; x += 6) px(ctx, brickDark, x, 7, 3, 1);
+  px(ctx, stone, 0, 11, w, 3);
+  for (let x = 0; x < w; x += 2) px(ctx, '#c9bb9b', x, 13, 1, 1);
+  // brick wall with coursing
+  px(ctx, brick, 0, 14, w, h - 20);
+  for (let y = 16; y < h - 6; y += 2) px(ctx, brickDark, 0, y, w, 1);
+  // tall windows either side of the portal
+  const mid = Math.round(w / 2);
+  for (const x of [4, 12, 20, w - 25, w - 17, w - 9]) {
+    if (Math.abs(x + 2 - mid) < 17) continue; // keep clear of the portal
+    px(ctx, stone, x - 1, 16, 7, 1); // lintel
+    px(ctx, '#2f3a4e', x, 17, 5, h - 27);
+    px(ctx, '#56648a', x, 17, 1, h - 27);
+    px(ctx, '#c9bb9b', x + 2, 17, 1, h - 27); // mullion
+    px(ctx, stone, x - 1, h - 10, 7, 1); // sill
+  }
+  // stone portal with PUBLIC LIBRARY above the door
+  px(ctx, stone, mid - 13, 12, 26, h - 18);
+  px(ctx, '#c9bb9b', mid - 13, 12, 1, h - 18);
+  px(ctx, '#c9bb9b', mid + 12, 12, 1, h - 18);
+  pixelText(ctx, 'PUBLIC', mid - 11, 15, '#6e5d45'); // 23 px
+  px(ctx, '#5a3a22', mid - 3, 22, 6, h - 28); // the door
+  px(ctx, '#7a5233', mid - 2, 23, 4, h - 30);
+  // globe lamps on posts by the steps
+  for (const x of [mid - 16, mid + 15]) {
+    px(ctx, '#2b3a2f', x, h - 14, 1, 9);
+    disc(ctx, x, h - 15, 2, '#fbf6e6');
+  }
+  // base course and steps
+  px(ctx, '#cfc6b4', 0, h - 6, w, 3);
+  px(ctx, '#bdb3a0', mid - 6, h - 6, 12, 1);
+  px(ctx, '#d9d1c1', mid - 5, h - 5, 10, 1);
+  px(ctx, INK, 0, h - 3, w, 1);
+}
+
 const SPRITES: Record<string, (ctx: Ctx, w: number, h: number, id: string) => void> = {
   'seven-eleven': sevenEleven,
+  'west-seattle-library': library,
+  safeway,
+  shadowland,
   'undersea-aviary': underseaAviary,
   'admiral-theatre': admiralTheatre,
   'easy-street-records': easyStreetRecords,

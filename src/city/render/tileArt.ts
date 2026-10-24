@@ -255,6 +255,7 @@ function paintRoads(ctx: Ctx, segs: Seg[], ox: number, oy: number, size: number)
       }
     }
   }
+  closeHoles(cls, size);
   const rgb = (hex: string) => [1, 3, 5].map((k) => parseInt(hex.slice(k, k + 2), 16));
   const COLORS = [null, rgb(PAL.sidewalk), rgb(PAL.curb), rgb(PAL.road)];
   const GRAIN = rgb(PAL.roadGrain);
@@ -268,6 +269,48 @@ function paintRoads(ctx: Ctx, segs: Seg[], ox: number, oy: number, size: number)
     img.data[i * 4 + 2] = col[2];
   }
   ctx.putImageData(img, 0, 0);
+}
+
+const HOLE = 40; // px: biggest grass hole to fill
+const SCRAP = 200; // px: biggest sidewalk/curb-only island to fill (always an overlap scrap)
+
+/**
+ * Fill tiny holes in the asphalt (classes as in paintRoads: 3 = asphalt): where two roads'
+ * bands run side by side and just miss each other, the gap shows as a 1-px grass line or a
+ * sidewalk-coloured scrap. Any small region walled in entirely by asphalt (and not touching
+ * the chunk edge) becomes asphalt — up to HOLE px if it includes ground, SCRAP px if it's
+ * only sidewalk / curb.
+ */
+function closeHoles(cls: Uint8Array, size: number) {
+  const seen = new Uint8Array(cls.length);
+  const stack: number[] = [];
+  const region: number[] = [];
+  for (let start = 0; start < cls.length; start++) {
+    if (seen[start] || cls[start] === 3) continue;
+    // only bother around roads
+    if (!(start % size > 0 && cls[start - 1] === 3) && !(start >= size && cls[start - size] === 3)) continue;
+    stack.length = 0;
+    region.length = 0;
+    stack.push(start);
+    seen[start] = 1;
+    let open = false;
+    let ground = false;
+    while (stack.length) {
+      const i = stack.pop()!;
+      region.push(i);
+      if (cls[i] === 0) ground = true;
+      const x = i % size, y = (i / size) | 0;
+      if (x === 0 || y === 0 || x === size - 1 || y === size - 1 || region.length > (ground ? HOLE : SCRAP)) open = true;
+      // keep flooding even once it's open: a region left half-seen would wall off its rest,
+      // which then looks enclosed and gets paved in pieces
+      for (const j of [x > 0 ? i - 1 : -1, x < size - 1 ? i + 1 : -1, y > 0 ? i - size : -1, y < size - 1 ? i + size : -1]) {
+        if (j < 0 || cls[j] === 3 || seen[j]) continue;
+        seen[j] = 1;
+        stack.push(j);
+      }
+    }
+    if (!open) for (const i of region) cls[i] = 3;
+  }
 }
 
 const WALL = 3; // px of wall showing under a house's roof (the SNES 3/4 cheat)

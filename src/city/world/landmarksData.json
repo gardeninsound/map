@@ -86,5 +86,35 @@
   "w": 4,
   "h": 3,
   "street": "E"
+ },
+ {
+  "id": "safeway-admiral",
+  "name": "Safeway (Admiral)",
+  "sprite": "safeway",
+  "lat": 47.579985,
+  "lon": -122.386027,
+  "w": 6,
+  "h": 4,
+  "street": "W"
+ },
+ {
+  "id": "shadowland",
+  "name": "Shadowland",
+  "sprite": "shadowland",
+  "lat": 47.562987,
+  "lon": -122.386586,
+  "w": 2,
+  "h": 3,
+  "street": "W"
+ },
+ {
+  "id": "west-seattle-library",
+  "name": "West Seattle Library",
+  "sprite": "west-seattle-library",
+  "lat": 47.582731,
+  "lon": -122.384704,
+  "w": 5,
+  "h": 3,
+  "street": "W"
  }
 ]

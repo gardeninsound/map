@@ -146,12 +146,20 @@ export default function App() {
     });
     g.paused = true;
     if (import.meta.env.DEV) Object.assign(window, { __game: g, __busker: busker, __crow: crow, __chicken: chicken, __art: art }); // test hooks
-    // Dev review hook: ?at=lat,lon skips the title and drops you there.
-    const at = import.meta.env.DEV && new URLSearchParams(location.search).get('at');
-    if (at) {
-      const [lat, lon] = at.split(',').map(Number);
-      g.teleport(world.project(lat, lon));
+    // Dev review hooks: ?at=lat,lon (or ?atTile=x,y) skips the title and drops you there;
+    // ?audit scans the whole map for road-drawing glitches (scripts/city/road-audit.mjs).
+    const q = new URLSearchParams(location.search);
+    const at = import.meta.env.DEV && q.get('at');
+    const atTile = import.meta.env.DEV && q.get('atTile');
+    if (at || atTile) {
+      const [a, b] = (at || atTile || '').split(',').map(Number);
+      g.teleport(at ? world.project(a, b) : { x: a, y: b });
       setStarted(true);
+    }
+    if (import.meta.env.DEV && q.has('audit')) {
+      void import('./city/render/audit').then(({ auditRoads }) => {
+        (window as unknown as { __audit: unknown }).__audit = auditRoads(world);
+      });
     }
     const onResize = () => g.resize();
     window.addEventListener('resize', onResize);
