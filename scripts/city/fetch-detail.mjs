@@ -1,7 +1,7 @@
 /**
  * Downloads the detail inside each place listed in DETAILED.places (scripts/city/map-config.mjs):
  * footpaths and steps, parking lots and their aisles, pitches, tracks, playgrounds, pools,
- * bleachers → data/osm/detail.json, which build-map.mjs reads alongside west-seattle.json.
+ * bleachers, open ground (meadows, grass) →data/osm/detail.json, which build-map.mjs reads alongside west-seattle.json.
  *
  * Usage: node scripts/city/fetch-detail.mjs   (Overpass is often busy; it retries)
  */
@@ -22,6 +22,8 @@ const parts = DETAILED.places.map(({ bbox }) => {
 way["leisure"~"^(pitch|track|playground|swimming_pool|bleachers)$"](${b});
 relation["leisure"~"^(pitch|track)$"](${b});
 way["amenity"="parking"](${b});
+way["natural"~"^(grassland|heath)$"](${b});
+way["landuse"~"^(grass|meadow|recreation_ground|village_green)$"](${b});
 way["service"="parking_aisle"](${b});`;
 });
 const query = `[out:json][timeout:120];(${parts.join('\n')});out geom;`;

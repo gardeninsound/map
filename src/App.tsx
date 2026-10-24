@@ -19,12 +19,14 @@ import { START, locations, welcome } from './content/locations';
 import { CROW_NAME, crowChoices, crowGreeting, crowReply } from './content/crow';
 import { CHICKEN_NAME, chickenAfter, chickenInvite, chickenQuestions } from './content/chicken';
 import { neighborVoices } from './content/neighbors';
+import { recentChanges, type RecentAt } from './content/recent';
 import { experiences } from './experiences/registry';
 import { ArtSpots, type PlacedLocation } from './game/plugins/artSpots';
 import { Busker } from './game/plugins/busker';
 import { Crow } from './game/plugins/crow';
 import { Chicken } from './game/plugins/chicken';
 import { BigCup } from './game/plugins/bigCup';
+import { Seal } from './game/plugins/seal';
 import { ArcadeDoor } from './game/plugins/arcadeDoor';
 import type { MiniGameResult } from './experiences/minigames/ConeCatch';
 import { DialogBox } from './ui/MikeDialog';
@@ -113,6 +115,10 @@ export default function App() {
   const [mapOpen, setMapOpen] = useState(false);
   const [muted, setMuted] = useState(sounds.isMuted());
   const touch = isTouch();
+  const arcadeDoor = useRef(new ArcadeDoor());
+  // RECENT: which change the next press jumps to, and the caption shown on landing
+  const recentNext = useRef(0);
+  const [recentNote, setRecentNote] = useState<string | null>(null);
 
   useEffect(() => bindKeyboard(), []);
 
@@ -124,7 +130,7 @@ export default function App() {
     const g = new CityGame(canvas.current!, world, {
       start: world.project(START.lat, START.lon),
       voices: neighborVoices,
-      plugins: [art, new BigCup(art), new ArcadeDoor(), busker, crow, chicken],
+      plugins: [art, new BigCup(art), new Seal(), arcadeDoor.current, busker, crow, chicken],
       events: {
         onStreet: setStreet,
         onStorefront: setStorefront,
@@ -247,6 +253,37 @@ export default function App() {
     },
     [game, spots],
   );
+  /** RECENT: jump to the newest change, then each one before it on the next presses, wrapping round. */
+  const goRecent = useCallback(() => {
+    if (!game || !spots) return;
+    const where = (at: RecentAt): { x: number; y: number } | null => {
+      if ('landmark' in at) {
+        const l = game.world.landmarks.find((m) => m.id === at.landmark);
+        return l ? { x: l.x + l.w / 2, y: l.y + l.h + 0.5 } : null; // just in front of it
+      }
+      if ('spot' in at) return spots.places.find((p) => p.id === at.spot) ?? null;
+      if ('arcade' in at) return arcadeDoor.current.door;
+      return game.world.project(at.lat, at.lon);
+    };
+    const n = recentChanges.length;
+    for (let tries = 0; tries < n; tries++) {
+      const i = recentNext.current % n;
+      recentNext.current = i + 1;
+      const p = where(recentChanges[i].at);
+      if (!p) continue; // gone from the map: skip it
+      sounds.confirm();
+      game.teleport(p);
+      input.clear();
+      setMapOpen(false);
+      setRecentNote(`NEW ${i + 1}/${n} · ${recentChanges[i].title}`);
+      return;
+    }
+  }, [game, spots]);
+  useEffect(() => {
+    if (!recentNote) return;
+    const t = setTimeout(() => setRecentNote(null), 3500);
+    return () => clearTimeout(t);
+  }, [recentNote]);
   const openSpots = spots?.open ?? [];
   const landmarkPlaces = useMemo(() => (game ? mapLandmarks(game.world.landmarks) : []), [game]);
 
@@ -269,6 +306,9 @@ export default function App() {
                 aria-pressed={overlay.kind === 'spots'}
               >
                 ★ SPOTS {!touch && <kbd>T</kbd>}
+              </button>
+              <button className="hud-recent" onClick={goRecent} aria-label="Go to the next most recent change on the map">
+                RECENT
               </button>
               <button onClick={() => setMapOpen((o) => !o)} aria-pressed={mapOpen}>
                 MAP {!touch && <kbd>M</kbd>}
@@ -313,6 +353,9 @@ export default function App() {
               />
             )}
           </div>
+          {recentNote && overlay.kind === 'none' && (
+            <p className="recent-note" role="status">{recentNote}</p>
+          )}
           <p className="attribution">{world.attribution}</p>
         </>
       )}

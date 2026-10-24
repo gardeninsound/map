@@ -243,6 +243,44 @@
   "h": 3
  },
  {
+  "id": "becu-fauntleroy",
+  "name": "BECU",
+  "sprite": "becu",
+  "lat": 47.560665,
+  "lon": -122.381726,
+  "w": 4,
+  "h": 3
+ },
+ {
+  "id": "colman-pool",
+  "name": "Colman Pool",
+  "sprite": "colman-pool",
+  "lat": 47.53046,
+  "lon": -122.40106,
+  "w": 5,
+  "h": 4
+ },
+ {
+  "id": "circa",
+  "name": "Circa",
+  "sprite": "circa",
+  "lat": 47.580928,
+  "lon": -122.386782,
+  "w": 4,
+  "h": 3,
+  "street": "E"
+ },
+ {
+  "id": "admiral-bird",
+  "name": "Admiral Bird",
+  "sprite": "admiral-bird",
+  "lat": 47.581056,
+  "lon": -122.38635,
+  "w": 4,
+  "h": 3,
+  "street": "W"
+ },
+ {
   "id": "safeway-admiral",
   "name": "Safeway (Admiral)",
   "sprite": "safeway",
@@ -281,5 +319,14 @@
   "w": 4,
   "h": 3,
   "street": "E"
+ },
+ {
+  "id": "uptown-espresso",
+  "name": "Uptown Espresso",
+  "sprite": "uptown-espresso",
+  "lat": 47.559172,
+  "lon": -122.387565,
+  "w": 5,
+  "h": 3
  }
 ]

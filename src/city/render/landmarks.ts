@@ -1165,7 +1165,192 @@ function schoolOfRock(ctx: Ctx, w: number, h: number) {
   px(ctx, yellow, Math.round(w / 2) - 1, 28, 1, 3);
 }
 
+/** BECU on Fauntleroy Way SW, by Alaska: a white credit-union branch, the navy band and name, glass front, an ATM. */
+function becu(ctx: Ctx, w: number, h: number) {
+  const navy = '#0a3a82';
+  px(ctx, '#bdb7ad', 0, 0, w, h);
+  shopBox(ctx, w, h, '#f3f0ea', navy, { text: 'BECU', bg: navy, fg: '#ffffff' }, 4, 10);
+  // a thin sky-blue stripe under the roof band
+  px(ctx, '#3fb0ff', 2, 8, w - 4, 1);
+  // glass front either side of the doors
+  for (const wx of [4, w - 22]) {
+    px(ctx, INK, wx, 22, 18, 14);
+    px(ctx, '#7fb3c8', wx + 1, 23, 16, 12);
+    px(ctx, '#f3f0ea', wx + 9, 23, 1, 12);
+    px(ctx, '#a9d8e8', wx + 2, 24, 3, 4);
+  }
+  // doors
+  px(ctx, INK, Math.round(w / 2) - 5, 24, 10, 14);
+  px(ctx, '#d8efe6', Math.round(w / 2) - 4, 25, 8, 13);
+  px(ctx, INK, Math.round(w / 2), 25, 1, 13);
+  // the ATM out front, screen lit
+  px(ctx, INK, w - 9, h - 10, 6, 8);
+  px(ctx, '#d8d3cc', w - 8, h - 9, 4, 6);
+  px(ctx, '#3fb0ff', w - 7, h - 8, 2, 2);
+  px(ctx, navy, w - 8, h - 5, 4, 1);
+  // parking stripes
+  for (let x = 4; x < 26; x += 7) px(ctx, '#f3f0ea', x, h - 7, 1, 6);
+}
+
+/**
+ * Colman Pool, Lincoln Park: the heated saltwater pool out on Point Williams, right on the
+ * beach — blue water in lanes, the white deck and its seawall edge, the low bathhouse, the
+ * spiral tube slide.
+ */
+function colmanPool(ctx: Ctx, w: number, h: number) {
+  const deck = '#ece6da', blue = '#2f8fd8', light = '#7fd0ff', rope = ['#e4202c', '#f3f0ea'];
+  // the deck, its concrete seawall edge along the bottom
+  px(ctx, 'rgba(0,0,0,0.2)', 2, h - 2, w - 2, 2);
+  px(ctx, INK, 0, 0, w, h - 1);
+  px(ctx, deck, 1, 1, w - 2, h - 3);
+  px(ctx, '#a8a29a', 1, h - 6, w - 2, 4);
+  for (let x = 6; x < w - 2; x += 8) px(ctx, '#8a857c', x, h - 6, 1, 4);
+  // the bathhouse along the top: green roof, doors
+  px(ctx, INK, 3, 2, w - 22, 12);
+  px(ctx, '#3f7f5f', 4, 3, w - 24, 4);
+  px(ctx, '#f3f0ea', 4, 7, w - 24, 6);
+  pixelText(ctx, 'COLMAN POOL', 8, 8, '#2a5a7a');
+  for (const dx of [5, w - 25]) px(ctx, '#2a1a12', dx, 9, 2, 4);
+  // the pool, lane ropes, the shine
+  const top = 17, bot = h - 10;
+  px(ctx, INK, 4, top - 1, w - 8, bot - top + 2);
+  px(ctx, blue, 5, top, w - 10, bot - top);
+  for (let y = top + 4; y < bot - 1; y += 5) for (let x = 6; x < w - 6; x += 2) px(ctx, rope[(x >> 1) % 2], x, y, 1, 1);
+  for (const [sx, sy] of [[9, top + 2], [30, top + 7], [52, top + 12]]) px(ctx, light, sx, sy, 4, 1);
+  // the spiral slide: a yellow tube corkscrewing down from its tower into the shallow end
+  px(ctx, INK, w - 17, 1, 13, 14);
+  px(ctx, '#c9c4bd', w - 16, 2, 11, 12);
+  px(ctx, INK, w - 12, 0, 3, 3);
+  const tube = '#ffd23f', tubeDark = '#e5a91a';
+  for (let i = 0; i < 4; i++) {
+    const y = 3 + i * 3;
+    px(ctx, i % 2 ? tubeDark : tube, w - 15, y, 9, 2);
+    px(ctx, INK, w - 15 + (i % 2 ? 0 : 8), y + 1, 1, 2);
+  }
+  px(ctx, tube, w - 11, 15, 3, top - 14);
+  // a swimmer, a kickboard, the ladder
+  px(ctx, '#e8a59a', 20, top + 8, 2, 2);
+  px(ctx, '#ff7eb6', 36, top + 3, 4, 2);
+  px(ctx, '#c9c4bd', 6, bot - 5, 1, 4);
+  px(ctx, '#c9c4bd', 8, bot - 5, 1, 4);
+}
+
+/** Circa, 2605 California Ave SW (Admiral): the neighbourhood bistro — green awning, warm windows, tables out front. */
+function circa(ctx: Ctx, w: number, h: number) {
+  const green = '#2f5a3f', cream = '#f3e6cc';
+  px(ctx, '#c8c2b8', 0, 0, w, h);
+  shopBox(ctx, w, h, '#6b3a2a', '#4a2a20', { text: 'CIRCA', bg: cream, fg: green });
+  // green-and-cream awning
+  for (let x = 2; x < w - 2; x += 4) px(ctx, x % 8 === 2 ? green : cream, x, 19, 4, 3);
+  px(ctx, INK, 2, 22, w - 4, 1);
+  // two warm windows, a lamp and a diner in each, the door between
+  for (const wx of [4, w - 22]) {
+    px(ctx, INK, wx, 24, 18, 12);
+    px(ctx, '#e8b36a', wx + 1, 25, 16, 10);
+    px(ctx, '#fff3b0', wx + 3, 26, 2, 2);
+    px(ctx, '#7a4a2a', wx + 2, 32, 14, 1);
+    px(ctx, '#2a1a12', wx + 10, 28, 3, 4);
+  }
+  px(ctx, INK, Math.round(w / 2) - 4, 24, 8, 15);
+  px(ctx, green, Math.round(w / 2) - 3, 25, 6, 14);
+  px(ctx, '#e8c25a', Math.round(w / 2) + 1, 31, 1, 2);
+  // sidewalk tables
+  for (const tx of [6, w - 12]) {
+    px(ctx, INK, tx, h - 6, 7, 2);
+    px(ctx, cream, tx + 1, h - 6, 5, 1);
+    px(ctx, INK, tx + 3, h - 4, 1, 3);
+    px(ctx, green, tx - 2, h - 5, 2, 3);
+    px(ctx, green, tx + 7, h - 5, 2, 3);
+  }
+}
+
+/** Admiral Bird, 2600 California Ave SW at Admiral Way: the coffee-and-flower shop (2014) — a bird on the sign, buckets of flowers out front. */
+function admiralBird(ctx: Ctx, w: number, h: number) {
+  const teal = '#2e8f8a', rose = '#ff7eb6';
+  px(ctx, '#c8c2b8', 0, 0, w, h);
+  shopBox(ctx, w, h, '#f6efd8', teal, { text: 'ADMIRAL BIRD', bg: '#ffffff', fg: teal });
+  // a little bird perched on the sign's corner
+  const bx = w - 9, by = 7;
+  px(ctx, INK, bx, by, 5, 4);
+  px(ctx, '#3a6fd8', bx + 1, by + 1, 3, 2);
+  px(ctx, '#ffd23f', bx + 5, by + 2, 1, 1);
+  px(ctx, INK, bx + 1, by + 4, 1, 1);
+  // big café windows: a coffee cup in one, flowers in the other
+  for (const wx of [4, w - 22]) {
+    px(ctx, INK, wx, 22, 18, 14);
+    px(ctx, '#a9d8cc', wx + 1, 23, 16, 12);
+    px(ctx, '#d8efe6', wx + 2, 24, 3, 4);
+  }
+  px(ctx, '#f3f0ea', 9, 28, 6, 5);
+  px(ctx, '#7a4a2a', 10, 28, 4, 1);
+  px(ctx, '#f3f0ea', 15, 29, 1, 2);
+  for (let i = 0; i < 4; i++) px(ctx, [rose, '#ffd23f', '#e4202c', '#9b6ad1'][i], w - 19 + i * 3, 27, 2, 2);
+  px(ctx, '#4f9a4f', w - 19, 29, 11, 4);
+  // the door
+  px(ctx, INK, Math.round(w / 2) - 4, 24, 8, 15);
+  px(ctx, teal, Math.round(w / 2) - 3, 25, 6, 14);
+  px(ctx, '#d8efe6', Math.round(w / 2) - 2, 26, 4, 5);
+  // flower buckets along the sidewalk
+  for (let x = 4; x < w - 4; x += 5) {
+    if (x > Math.round(w / 2) - 7 && x < Math.round(w / 2) + 4) continue;
+    px(ctx, '#3a6fd8', x, h - 6, 4, 4);
+    px(ctx, [rose, '#ffd23f', '#f6f4ef', '#e4202c', '#9b6ad1'][(x / 5) % 5 | 0], x, h - 9, 4, 3);
+    px(ctx, '#4f9a4f', x + 1, h - 7, 2, 1);
+  }
+}
+
+/**
+ * Uptown Espresso, 4301 SW Edmunds St at California (the Junction), home of the velvet foam:
+ * an espresso-brown front, cream sign, red awning, a latte with a foam heart in the window,
+ * tables out on the corner.
+ */
+function uptownEspresso(ctx: Ctx, w: number, h: number) {
+  const red = '#a3202a', cream = '#f3e6cc', foam = '#f6f4ef';
+  px(ctx, '#c8c2b8', 0, 0, w, h);
+  shopBox(ctx, w, h, '#3a241c', '#24160f', { text: 'UPTOWN ESPRESSO', bg: cream, fg: red });
+  // red-and-cream awning
+  for (let x = 2; x < w - 2; x += 4) px(ctx, x % 8 === 2 ? red : cream, x, 19, 4, 3);
+  px(ctx, INK, 2, 22, w - 4, 1);
+  // two warm windows, a lamp and the counter in each
+  for (const wx of [4, w - 30]) {
+    px(ctx, INK, wx, 24, 26, 12);
+    px(ctx, '#e8b36a', wx + 1, 25, 24, 10);
+    px(ctx, '#fff3b0', wx + 3, 26, 2, 2);
+    px(ctx, '#7a4a2a', wx + 2, 32, 22, 1);
+  }
+  // a big latte in the left window, a foam heart on top
+  px(ctx, INK, 12, 26, 9, 6);
+  px(ctx, foam, 13, 26, 7, 5);
+  px(ctx, '#b07a4a', 14, 27, 5, 2);
+  px(ctx, foam, 15, 27, 1, 1);
+  px(ctx, foam, 17, 27, 1, 1);
+  px(ctx, foam, 16, 28, 1, 1);
+  px(ctx, foam, 20, 27, 2, 1);
+  px(ctx, foam, 21, 28, 1, 2);
+  // the pastry case in the right one
+  for (let i = 0; i < 4; i++) px(ctx, ['#e8c25a', '#c97a3a', '#ff7eb6', '#e8c25a'][i], w - 26 + i * 5, 30, 3, 2);
+  // the door
+  const d = Math.round(w / 2);
+  px(ctx, INK, d - 4, 24, 8, 15);
+  px(ctx, red, d - 3, 25, 6, 14);
+  px(ctx, '#d8efe6', d - 2, 26, 4, 5);
+  px(ctx, '#e8c25a', d + 1, 32, 1, 2);
+  // sidewalk tables
+  for (const tx of [6, w - 13]) {
+    px(ctx, INK, tx, h - 6, 7, 2);
+    px(ctx, cream, tx + 1, h - 6, 5, 1);
+    px(ctx, INK, tx + 3, h - 4, 1, 3);
+    px(ctx, red, tx - 2, h - 5, 2, 3);
+    px(ctx, red, tx + 7, h - 5, 2, 3);
+  }
+}
+
 const SPRITES: Record<string, (ctx: Ctx, w: number, h: number, id: string) => void> = {
+  becu,
+  circa,
+  'admiral-bird': admiralBird,
+  'uptown-espresso': uptownEspresso,
+  'colman-pool': colmanPool,
   'caffe-ladro': caffeLadro,
   'box-bar': boxBar,
   'trader-joes': traderJoes,
