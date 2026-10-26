@@ -16,6 +16,8 @@ export interface ArtLocation {
   lat: number;
   lon: number;
   approx?: boolean;
+  /** status `pinned`: the lemon stands exactly at lat/lon (even on a sidewalk) instead of beside the nearest street */
+  pinned?: boolean;
   /** folder under public/art (see artManifest) */
   set: string;
   /** key into the experience registry; absent = "coming soon" */
@@ -39,6 +41,7 @@ const COLORS: Record<string, ArtLocation['colors']> = {
   swedish: { p: '#9be3de', t: '#2c6fe0', y: '#ffffff', o: '#e3664f' },
   posters: { p: '#ff5d5d', t: '#9be3de', y: '#ffc8dd', o: '#ffffff' },
   bear: { p: '#6a4c93', t: '#2b2350', y: '#ffffff', o: '#9be3de' },
+  snuggle: { p: '#ff4fb0', t: '#3fa34d', y: '#ffffff', o: '#2b2350' },
 };
 
 export const START = { lat: 47.5612, lon: -122.3868 }; // California & Alaska — the Junction

@@ -5,6 +5,7 @@ import { artManifest } from './artManifest';
 import { experiences } from '../experiences/registry';
 import { chooseTurns, slideshows, wallTurns } from './wallTurns';
 import { crossedMilestone } from '../experiences/WallTurns';
+import { videoScripts } from './videos';
 
 const world = createWorld();
 
@@ -73,6 +74,15 @@ describe('chooseTurns', () => {
   });
   it('uses hand picks when given', () => {
     expect(chooseTurns(wall, 24, [wall[3].id, wall[1].id]).map((a) => a.id)).toEqual([wall[3].id, wall[1].id]);
+  });
+});
+
+describe('video spots', () => {
+  it('each has words and a video to play', () => {
+    for (const l of locations.filter((l) => l.experience === 'video')) {
+      expect(videoScripts[l.id]?.outro.length).toBeGreaterThan(0);
+      expect(artManifest[l.set].some((a) => a.kind === 'video')).toBe(true);
+    }
   });
 });
 

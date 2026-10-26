@@ -24,7 +24,10 @@ export class ArtSpots implements CityPlugin {
   constructor(private locations: ArtLocation[]) {}
 
   attach(game: CityGame) {
-    this.places = this.locations.map((l) => ({ ...l, ...game.besideRoad(game.world.project(l.lat, l.lon)) }));
+    this.places = this.locations.map((l) => {
+      const p = game.world.project(l.lat, l.lon);
+      return { ...l, ...(l.pinned ? p : game.besideRoad(p)) };
+    });
   }
 
   /** spots you can step into */

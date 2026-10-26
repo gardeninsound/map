@@ -15,6 +15,7 @@ const out = rows.map((r) => ({
   lat: +r.lat,
   lon: +r.lon,
   approx: r.status === 'approx',
+  ...(r.status === 'pinned' ? { pinned: true } : {}),
   set: r.set,
   ...(r.experience ? { experience: r.experience } : {}),
   greeting: r.greeting.split('|').map((s) => s.trim()).filter(Boolean),

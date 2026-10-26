@@ -3,9 +3,10 @@
   "id": "gas-station-wall",
   "name": "The Wall That Kept Turning",
   "where": "76 station · California Ave SW · 2022–2025",
-  "lat": 47.568236,
-  "lon": -122.387332,
+  "lat": 47.568189,
+  "lon": -122.386923,
   "approx": false,
+  "pinned": true,
   "set": "bus-wall",
   "experience": "wall-turns",
   "greeting": [
@@ -185,6 +186,21 @@
   "greeting": [
    "This one is called PROM.",
    "Still hanging this one — come back soon!"
+  ]
+ },
+ {
+  "id": "snuggle",
+  "name": "A Good Snuggle",
+  "where": "Schmitz Preserve Park · 2023",
+  "lat": 47.577307,
+  "lon": -122.40263,
+  "approx": false,
+  "set": "snuggle",
+  "experience": "video",
+  "greeting": [
+   "This is Schmitz Park — old-growth forest, right in the middle of West Seattle.",
+   "We cut a stencil, painted it pink, and wrapped it around one of the trees.",
+   "Want to watch it go up?"
   ]
  }
 ]

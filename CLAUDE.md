@@ -33,7 +33,8 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
   with ` | ` between lines, experience key) → geocodes changed addresses via Nominatim (1 req/s) →
   writes lat/lon/status back into the CSV + `src/content/placesData.json`. Typed lat/lon with no
   address also works. Status: `geocoded` / `manual` / `approx` (still a guess). CSV +
-  geocoding helpers: `scripts/sheet.mjs`.
+  geocoding helpers: `scripts/sheet.mjs`. `pinned`: the lemon stands exactly at the typed lat/lon
+  (e.g. on a sidewalk) instead of being moved beside the nearest street.
 - `npm run map:fetch` — refetch OpenStreetMap → `data/osm/` (gitignored; Overpass is often busy, it
   retries): `scripts/city/fetch-osm.mjs` (streets, buildings incl. multipolygons, parks, water…) and
   `fetch-detail.mjs` (paths, parking lots, pitches inside `DETAILED.places`).
