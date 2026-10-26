@@ -1,10 +1,12 @@
 /**
- * Bear Island's own sprites: Mike, the lemons that mark art spots (src/game/lemon.ts), and
+ * Bear Island's own sprites: Mike, the spinning lemons and their hearts that mark art spots
+ * (src/game/lemonSpin.ts, colours from src/game/lemon.ts), and
  * the snack crow.
  * Same ASCII-grid format as the city's sprites (src/city/render/sprites.ts).
  */
 import { gridToCanvas, hop, INK, type Grid, type Walker } from '../city';
-import { LEMON, LEMON_RIPE, LEMON_UNRIPE } from './lemon';
+import { LEMON_RIPE, LEMON_UNRIPE } from './lemon';
+import { HEART, HEART_BEAT, lemonSpin } from './lemonSpin';
 
 const MIKE_COLORS: Record<string, string> = {
   k: INK,
@@ -161,6 +163,16 @@ export function buildMike(): HTMLCanvasElement[] {
 }
 
 /** The art-spot marker, a lemon with its shadow: ripe for open spots, still green for coming soon. */
-export function buildLemons(): { ripe: HTMLCanvasElement; unripe: HTMLCanvasElement } {
-  return { ripe: gridToCanvas(LEMON, LEMON_RIPE), unripe: gridToCanvas(LEMON, LEMON_UNRIPE) };
+export function buildLemons(): { ripe: HTMLCanvasElement[]; unripe: HTMLCanvasElement[] } {
+  const frames = lemonSpin();
+  return { ripe: frames.map((g) => gridToCanvas(g, LEMON_RIPE)), unripe: frames.map((g) => gridToCanvas(g, LEMON_UNRIPE)) };
+}
+
+/** The little heart over each lemon, [resting, mid-beat]: red over open spots, pale for coming soon. */
+export function buildHearts(): { open: HTMLCanvasElement[]; soon: HTMLCanvasElement[] } {
+  const colors = (r: string, h: string) => ({ k: INK, r, h });
+  return {
+    open: [HEART, HEART_BEAT].map((g) => gridToCanvas(g, colors('#e4202c', '#ffd0c8'))),
+    soon: [HEART, HEART_BEAT].map((g) => gridToCanvas(g, colors('#e8a59a', '#ffffff'))),
+  };
 }

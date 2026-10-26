@@ -10,7 +10,7 @@
  * The app adds its own things (art spots, characters, sounds…) as `CityPlugin`s and renders
  * the React HUD pieces from ./ui. Styles: ./ui/ui.css; fonts: "Press Start 2P", "Pixelify Sans".
  */
-export { createWorld, distanceField, isBuilding, isWalkableTile, Tile } from './world/world';
+export { createWorld, distanceField, isBuilding, isWalkableTile, markerSpot, Tile } from './world/world';
 export type { DrawnBuilding, MapLabel, ParkFeature, PlacedLandmark, RoadLine, Storefront, TileCode, World } from './world/world';
 
 export { CityGame, zoomFor } from './engine/CityGame';
@@ -30,7 +30,7 @@ export { drawLandmark, hasLandmarkSprite, pixelText } from './render/landmarks';
 
 export { DialogBox } from './ui/DialogBox';
 export { Minimap, NearbyCard, StreetSign } from './ui/Hud';
-export type { MapMarker, MinimapLegend } from './ui/Hud';
+export type { MapMarker, MapPlace, MinimapLegend } from './ui/Hud';
 export { Compass, nearestSpot, octant } from './ui/Compass';
 export type { CompassSpot } from './ui/Compass';
 export { TouchPad } from './ui/TouchPad';

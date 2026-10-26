@@ -2860,5 +2860,14 @@
   "date": "2024-03-27",
   "source": "IMG_4699.MOV",
   "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
+ },
+ "snuggle/snuggle": {
+  "kind": "video",
+  "w": 1200,
+  "h": 675,
+  "color": "#f838a8",
+  "date": "2023-01-29",
+  "source": "Snuggle.mp4",
+  "settings": "{\"format\":\"avif\",\"full\":{\"size\":1200,\"quality\":50,\"effort\":6},\"thumb\":{\"size\":320,\"quality\":45,\"effort\":6}}"
  }
 }
