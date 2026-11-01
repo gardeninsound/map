@@ -75,6 +75,13 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
   `src/experiences/minigames/ConeCatch.tsx`, rules pure + tested in
   `src/game/coneCatch.ts`; best score in localStorage) via the App's `minigame` overlay, whose `then`
   gets `{ score, best }` back for her closing line. A new character mini game: same overlay, its own component.
+- `src/game/plugins/visitors.ts` — **other people, live**: everyone on the site shares one room
+  on the arcade's relay (`src/net/relay.ts`, a Cloudflare Worker in github.com/vlandham/arcade
+  `packages/relay`; its ALLOWED_ORIGINS must include this site's origin). Each rabbit gets a
+  scarf from its id and fades while its player is in a scene. The minimap shows them, and so does
+  "N OTHER RABBITS HERE". Your rabbit is sent only when it changes, at most 5×/s, because the free
+  relay is metered by messages sent (wire format and easing are pure and tested:
+  `src/game/visitors.ts`). `?solo` walks alone; dev-only `?island=<name>` uses a private room.
 - `src/content/` — **content is data**: `locations.ts` (spots, coords, Mike's greetings),
   `wallTurns.ts` (scene script), `artManifest.ts` (generated, date-ordered).
 - `src/experiences/` — one scene per spot, lazy-loaded via `registry.ts`, wrapped in

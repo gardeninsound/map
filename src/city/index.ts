@@ -23,7 +23,7 @@ export { bindKeyboard, buttonLabel, input, isTouch, withButtons } from './engine
 export type { Button, Dir } from './engine/input';
 
 export { INK, PAL } from './render/palette';
-export { ARROW_N, ARROW_NE, buildArrows, buildPerson, buildSprites, buildWalker, gridToCanvas, hop, noteCanvases } from './render/sprites';
+export { ARROW_N, ARROW_NE, buildArrows, buildPerson, buildRabbit, buildSprites, buildWalker, gridToCanvas, hop, noteCanvases } from './render/sprites';
 export type { Grid, SpriteSet, Walker } from './render/sprites';
 export { CHUNK, TS, hash } from './render/tileArt';
 export { drawLandmark, hasLandmarkSprite, pixelText } from './render/landmarks';
