@@ -173,7 +173,7 @@ export class Visitors implements CityPlugin {
   /** Other rabbits for the minimap, in their scarf colors. */
   markers(): MapMarker[] {
     if (this._hidden) return [];
-    return [...this.visitors.values()].map((v) => ({ x: v.shown.x, y: v.shown.y, color: scarfFor(v.id) }));
+    return [...this.visitors.values()].map((v) => ({ x: v.shown.x, y: v.shown.y, color: scarfFor(v.id), above: true }));
   }
 
   /** Everyone else, for the HUD's list: name, scarf, the street they're on. */

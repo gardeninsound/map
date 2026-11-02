@@ -445,6 +445,7 @@ export default function App() {
                   { color: '#ffe066', label: 'open' },
                   { color: '#ff7eb6', label: 'soon' },
                   { color: LANDMARK_COLOR, label: 'landmark' },
+                  ...(visitors && others > 0 && !visitors.hidden ? [{ color: '#9b5de5', label: 'other rabbits' }] : []),
                 ]}
               />
             )}
