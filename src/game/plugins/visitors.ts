@@ -2,6 +2,7 @@ import { buildRabbit, gridToCanvas, INK, tone, type CityGame, type CityPlugin, t
 import type { MapMarker } from '../../city';
 import { EMOTES } from '../../content/emotes';
 import { joinRelay, type RelayRoom } from '../../net/relay';
+import { drawTiny, TINY_H, tinyWidth } from '../tinyFont';
 import {
   decode,
   decodeEmote,
@@ -26,8 +27,8 @@ const ROOM = 'island';
 const HIDE_KEY = 'bearisland-hide-rabbits';
 /** Name tags show on rabbits within this many tiles of yours. */
 const NAME_RANGE = 3.5;
-/** small type, so rabbits side by side can all be heard */
-const BUBBLE_FONT = '6px "Press Start 2P"';
+/** name tag text: light on the dark tag, unlike the map's coloured place labels */
+const TAG_TEXT = '#f3e6cc';
 
 const HEART: Grid = ['.##.##.', '#######', '#######', '.#####.', '..###..', '...#...'];
 const NOTE: Grid = ['...##', '...#.#', '...#..', '...#..', '.###..', '####..', '.##...'];
@@ -176,10 +177,10 @@ export class Visitors implements CityPlugin {
     return [...this.visitors.values()].map((v) => ({ x: v.shown.x, y: v.shown.y, color: scarfFor(v.id), above: true }));
   }
 
-  /** Where to land to visit a rabbit: just below it, so the two of you don't stack. */
+  /** Where to land to visit a rabbit: a tile to its right, side by side (its name tag sits under its feet). */
   where(id: string): { x: number; y: number } | null {
     const v = this.visitors.get(id);
-    return v ? { x: v.target.pos.x, y: v.target.pos.y + 1 } : null;
+    return v ? { x: v.target.pos.x + 1, y: v.target.pos.y } : null;
   }
 
   /** Everyone else, for the HUD's list: name, scarf, the street they're on. */
@@ -227,6 +228,8 @@ export class Visitors implements CityPlugin {
       const s = d.toScreen(game.player.pos);
       talking.push({ x: s.x, y: s.y - 18, emote: mine.emote, left: mine.until - this.clock });
     }
+    /** name tags of the rabbits near yours, drawn on top so buildings never hide them */
+    const tags: { x: number; y: number; id: string; away: boolean }[] = [];
     const me = game.player.pos;
     for (const v of this._hidden ? [] : this.visitors.values()) {
       const s = d.toScreen(v.shown);
@@ -236,6 +239,7 @@ export class Visitors implements CityPlugin {
       const said = this.said.get(v.id);
       const near = Math.hypot(v.shown.x - me.x, v.shown.y - me.y) < NAME_RANGE;
       if (said) talking.push({ x: s.x, y: s.y - 18, emote: said.emote, left: said.until - this.clock });
+      if (near) tags.push({ x: s.x, y: s.y, id: v.id, away: v.target.away });
       d.push({
         y: v.shown.y,
         draw: () => {
@@ -246,32 +250,32 @@ export class Visitors implements CityPlugin {
           ctx.fillRect(s.x - 5, s.y + 1, 10, 2);
           ctx.drawImage(frames[frame]!, s.x - 8, s.y - 14);
           ctx.restore();
-          if (!said && near) this.nameTag(ctx, s.x, s.y - 19, rabbitName(v.id), scarfFor(v.id));
         },
       });
     }
-    if (!talking.length) return;
-    // Bubbles go over everything, lifted apart where rabbits stand together.
+    if (!talking.length && !tags.length) return;
+    // Name tags and bubbles go over everything; bubbles are lifted apart where rabbits stand together.
     d.push({
       y: Infinity,
       draw: () => {
-        ctx.save();
-        ctx.font = BUBBLE_FONT;
-        const sizes = talking.map((t) => this.bubbleSize(ctx, t.emote));
+        for (const t of tags) this.nameTag(ctx, t.x, t.y, rabbitName(t.id), scarfFor(t.id), t.away);
+        if (!talking.length) return;
+        const sizes = talking.map((t) => this.bubbleSize(t.emote));
         // the city's own '!' bubble over your rabbit (something to talk to) stays put
         const p = d.toScreen(game.player.pos);
         const fixed = game.nearbyTarget ? [{ x: p.x + 0.5, y: p.y - 16, w: 15, h: 15 }] : [];
         const bottoms = stackBubbles(talking.map((t, i) => ({ x: t.x, y: t.y - 3, ...sizes[i]! })), 2, fixed);
-        ctx.restore();
-        talking.forEach((t, i) => this.bubble(ctx, t.x, t.y, bottoms[i]!, sizes[i]!, t.emote, t.left));
+        // highest first, so a lifted bubble's stalk passes behind the ones below it, never over their words
+        const order = talking.map((_, i) => i).sort((a, b) => bottoms[a]! - bottoms[b]!);
+        for (const i of order) this.bubble(ctx, talking[i]!.x, talking[i]!.y, bottoms[i]!, sizes[i]!, talking[i]!.emote, talking[i]!.left);
       },
     });
   }
 
-  private bubbleSize(ctx: CanvasRenderingContext2D, i: number) {
+  private bubbleSize(i: number) {
     const e = EMOTES[i]!;
     const icon = e.icon && this.icons[e.icon];
-    return icon ? { w: icon.width + 6, h: 11 } : { w: Math.ceil(ctx.measureText(e.text).width) + 6, h: 10 };
+    return icon ? { w: icon.width + 6, h: 11 } : { w: tinyWidth(e.text) + 6, h: TINY_H + 4 };
   }
 
   /**
@@ -296,29 +300,28 @@ export class Visitors implements CityPlugin {
     ctx.fillRect(l, top, w, h);
     ctx.fillRect(cx - 1, top + h, 2, Math.max(1, tail - (top + h) - 2));
     if (icon) ctx.drawImage(icon, l + 3, top + Math.floor((h - icon.height) / 2));
-    else {
-      ctx.font = BUBBLE_FONT;
-      ctx.fillStyle = INK;
-      ctx.textAlign = 'left';
-      ctx.textBaseline = 'top';
-      ctx.fillText(e.text, l + 3, top + 2);
-    }
+    else drawTiny(ctx, e.text, l + 3, top + 2, INK);
     ctx.restore();
   }
 
-  /** A rabbit's name, small, over its head, outlined in its scarf colour. */
-  private nameTag(ctx: CanvasRenderingContext2D, x: number, y: number, name: string, color: string) {
+  /**
+   * A rabbit's name on a small dark tag under its feet, with a swatch of its scarf: a
+   * player tag, not a place on the map (those are big coloured letters, no box).
+   */
+  private nameTag(ctx: CanvasRenderingContext2D, x: number, feet: number, name: string, color: string, away: boolean) {
+    const tw = tinyWidth(name);
+    const w = 2 + 2 + 2 + tw + 2; // pad, swatch, gap, text, pad
+    const h = TINY_H + 4;
+    const l = Math.round(x - w / 2);
+    const top = Math.round(feet + 4);
     ctx.save();
-    ctx.font = '6px "Press Start 2P"';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'bottom';
-    ctx.lineJoin = 'round';
-    ctx.lineWidth = 3;
-    ctx.strokeStyle = INK;
-    const text = name.toUpperCase();
-    ctx.strokeText(text, Math.round(x), Math.round(y));
+    if (away) ctx.globalAlpha = 0.6;
+    ctx.fillStyle = INK;
+    ctx.fillRect(l + 1, top, w - 2, h); // corners nipped off
+    ctx.fillRect(l, top + 1, w, h - 2);
     ctx.fillStyle = color;
-    ctx.fillText(text, Math.round(x), Math.round(y));
+    ctx.fillRect(l + 2, top + 2, 2, TINY_H);
+    drawTiny(ctx, name, l + 6, top + 2, TAG_TEXT);
     ctx.restore();
   }
 }
