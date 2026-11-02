@@ -33,7 +33,8 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
   with ` | ` between lines, experience key) → geocodes changed addresses via Nominatim (1 req/s) →
   writes lat/lon/status back into the CSV + `src/content/placesData.json`. Typed lat/lon with no
   address also works. Status: `geocoded` / `manual` / `approx` (still a guess). CSV +
-  geocoding helpers: `scripts/sheet.mjs`.
+  geocoding helpers: `scripts/sheet.mjs`. `pinned`: the lemon stands exactly at the typed lat/lon
+  (e.g. on a sidewalk) instead of being moved beside the nearest street.
 - `npm run map:fetch` — refetch OpenStreetMap → `data/osm/` (gitignored; Overpass is often busy, it
   retries): `scripts/city/fetch-osm.mjs` (streets, buildings incl. multipolygons, parks, water…) and
   `fetch-detail.mjs` (paths, parking lots, pitches inside `DETAILED.places`).
@@ -53,7 +54,7 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
 
 ## Where things live
 
-- `src/game/plugins/` — the app's `CityPlugin`s: `artSpots.ts` (lemons, Mike beside live spots,
+- `src/game/plugins/` — the app's `CityPlugin`s: `artSpots.ts` (spinning lemons with a beating heart above, from `src/game/lemonSpin.ts`;
   "unvisited" beacons; targets of kind `place` carrying the `PlacedLocation`), `busker.ts`,
   `crow.ts`. App.tsx wires them into `CityGame` and handles `onInteract`.
 - `src/game/sprites.ts` — Mike, the lemons (`src/game/lemon.ts`), the crow (same grid format as the city's sprites).
@@ -82,6 +83,11 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
   "N OTHER RABBITS HERE". Your rabbit is sent only when it changes, at most 5×/s, because the free
   relay is metered by messages sent (wire format and easing are pure and tested:
   `src/game/visitors.ts`). `?solo` walks alone; dev-only `?island=<name>` uses a private room.
+- **Duck Arcade** (in Junction 47's storefront slot, `render/facades.ts`): `src/game/plugins/arcadeDoor.ts`
+  puts the door target on its California side; App opens `src/experiences/arcade/DuckArcade.tsx`, a
+  three.js first-person room (`ArcadeScene.ts`) with a cabinet per game. The shell: cabinets are data
+  in `src/content/duckArcade.ts` (`ready` ones launch), `arcade/games.ts` maps id → lazy component
+  taking `{ onExit(result) }` (same as Cone Catch). New duck game: component + one line there + `ready: true`.
 - `src/content/` — **content is data**: `locations.ts` (spots, coords, Mike's greetings),
   `wallTurns.ts` (scene script), `artManifest.ts` (generated, date-ordered).
 - `src/experiences/` — one scene per spot, lazy-loaded via `registry.ts`, wrapped in

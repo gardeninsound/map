@@ -1,4 +1,4 @@
-import { Tile, isBuilding, isWalkableTile, type World } from '../world/world';
+import { Tile, markerSpot, type World } from '../world/world';
 import { input } from './input';
 import { facingFor, step, type Facing, type Vec } from './movement';
 import { INK, PAL } from '../render/palette';
@@ -143,21 +143,9 @@ export class CityGame {
     this.resize();
   }
 
-  /**
-   * Open ground next to the nearest street, where a sign or marker can stand: not the street
-   * itself (so it doesn't block it), and not water, a building, a parking lot or a landmark.
-   */
+  /** Where a sign or marker can stand beside the nearest street, always within reach (see markerSpot). */
   besideRoad(p: Vec): Vec {
-    const r = this.world.nearestWalkable(p.x, p.y);
-    const tx = Math.floor(r.x);
-    const ty = Math.floor(r.y);
-    const open = (t: number) => !isWalkableTile(t) && !isBuilding(t) && t !== Tile.Water && t !== Tile.Landmark;
-    for (let d = 1; d < 5; d++) {
-      for (const [dx, dy] of [[d, 0], [-d, 0], [0, d], [0, -d]]) {
-        if (open(this.world.tileAt(tx + dx, ty + dy))) return { x: tx + dx + 0.5, y: ty + dy + 0.5 };
-      }
-    }
-    return r;
+    return markerSpot(this.world, p);
   }
 
   resize() {

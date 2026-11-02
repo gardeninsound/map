@@ -115,6 +115,16 @@ kbd {
   display: block; image-rendering: pixelated;
   height: min(60vh, 520px); width: auto;
 }
+/* named places (landmarks): a diamond on the spot and a small name tag beside it */
+.minimap-map { position: relative; }
+.minimap canvas.pickable { cursor: crosshair; }
+.minimap-place { position: absolute; width: 0; height: 0; pointer-events: none; }
+.minimap-place i { position: absolute; left: -4px; top: -4px; width: 7px; height: 7px; transform: rotate(45deg); outline: 2px solid var(--ink); pointer-events: auto; cursor: pointer; }
+.minimap-place b {
+  position: absolute; left: 7px; top: -6px; white-space: nowrap;
+  font-family: var(--pixel); font-weight: 400; font-size: 8px; line-height: 1;
+  background: var(--paper); color: var(--ink); padding: 1px 2px; box-shadow: 0 0 0 1px var(--ink);
+}
 .minimap-legend { display: flex; gap: 10px; justify-content: center; margin-top: 6px; font-size: 13px; }
 .minimap-legend i { display: inline-block; width: 9px; height: 9px; margin-right: 3px; outline: 2px solid var(--ink); }
 

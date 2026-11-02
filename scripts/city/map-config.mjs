@@ -50,12 +50,16 @@ export const ROADS = {
  * scattered trees instead of woods, the footpaths inside made walkable, surface parking
  * lots walkable and striped, every pitch, diamond, court, track, playground and pool painted
  * from its OSM shape, and buildings painted from their exact outlines. `bbox` (south, west,
- * north, east) is what fetch-detail.mjs downloads.
+ * north, east) is what fetch-detail.mjs downloads. `woods: true`: a forest park — it stays
+ * woods, and only its open ground (grassland, grass, meadow, fields, playgrounds) is lawn.
  */
 export const DETAILED = {
   places: [
     { name: 'Hiawatha Playfield', bbox: [47.5768, -122.3872, 47.5797, -122.3829] },
     { name: 'West Seattle High School', bbox: [47.5754, -122.3874, 47.5776, -122.3829] },
+    // mostly forest: `woods` keeps it wooded, with only the OSM meadows, fields and play
+    // areas opened up as lawn, and every trail (#1 the beach promenade … #13) walkable
+    { name: 'Lincoln Park', bbox: [47.5230, -122.4030, 47.5375, -122.3915], woods: true },
   ],
   /** metres, before ROADS.widthScale: a footpath */
   pathWidth: 3,

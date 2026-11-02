@@ -88,14 +88,246 @@
   "street": "E"
  },
  {
+  "id": "satterlee-house",
+  "name": "Satterlee House",
+  "sprite": "satterlee-house",
+  "lat": 47.558082,
+  "lon": -122.401155,
+  "w": 3,
+  "h": 3,
+  "street": "W"
+ },
+ {
+  "id": "hainsworth-house",
+  "name": "Hainsworth House",
+  "sprite": "hainsworth-house",
+  "lat": 47.580011,
+  "lon": -122.378473,
+  "w": 3,
+  "h": 3,
+  "street": "E"
+ },
+ {
+  "id": "alki-homestead",
+  "name": "Alki Homestead (Fir Lodge)",
+  "sprite": "alki-homestead",
+  "lat": 47.578491,
+  "lon": -122.411058,
+  "w": 3,
+  "h": 3,
+  "street": "E"
+ },
+ {
+  "id": "west-seattle-nursery",
+  "name": "West Seattle Nursery",
+  "sprite": "west-seattle-nursery",
+  "lat": 47.554189,
+  "lon": -122.387384,
+  "w": 5,
+  "h": 4,
+  "street": "E"
+ },
+ {
+  "id": "post-office",
+  "name": "West Seattle Post Office",
+  "sprite": "post-office",
+  "lat": 47.564263,
+  "lon": -122.386469,
+  "w": 4,
+  "h": 3,
+  "street": "W"
+ },
+ {
+  "id": "fire-station-29",
+  "name": "Fire Station 29",
+  "sprite": "fire-station",
+  "lat": 47.584383,
+  "lon": -122.38873,
+  "w": 4,
+  "h": 3,
+  "street": "E"
+ },
+ {
+  "id": "fire-station-32",
+  "name": "Fire Station 32",
+  "sprite": "fire-station",
+  "lat": 47.560748,
+  "lon": -122.3797,
+  "w": 4,
+  "h": 3
+ },
+ {
+  "id": "fire-station-36",
+  "name": "Fire Station 36",
+  "sprite": "fire-station",
+  "lat": 47.571063,
+  "lon": -122.361698,
+  "w": 4,
+  "h": 3,
+  "street": "W"
+ },
+ {
+  "id": "fire-station-37",
+  "name": "Fire Station 37",
+  "sprite": "fire-station",
+  "lat": 47.533506,
+  "lon": -122.37621,
+  "w": 4,
+  "h": 3,
+  "street": "W"
+ },
+ {
+  "id": "fire-station-11",
+  "name": "Fire Station 11",
+  "sprite": "fire-station",
+  "lat": 47.533953,
+  "lon": -122.354735,
+  "w": 4,
+  "h": 3
+ },
+ {
+  "id": "ymca",
+  "name": "West Seattle & Fauntleroy YMCA",
+  "sprite": "ymca",
+  "lat": 47.562118,
+  "lon": -122.377849,
+  "w": 5,
+  "h": 4
+ },
+ {
+  "id": "west-seattle-library",
+  "name": "West Seattle Library",
+  "sprite": "west-seattle-library",
+  "lat": 47.582731,
+  "lon": -122.384704,
+  "w": 4,
+  "h": 3,
+  "street": "W"
+ },
+ {
+  "id": "caffe-ladro",
+  "name": "Caffe Ladro",
+  "sprite": "caffe-ladro",
+  "lat": 47.540325,
+  "lon": -122.387569,
+  "w": 4,
+  "h": 3,
+  "street": "E"
+ },
+ {
+  "id": "box-bar",
+  "name": "Box Bar",
+  "sprite": "box-bar",
+  "lat": 47.553779,
+  "lon": -122.38727,
+  "w": 4,
+  "h": 3,
+  "street": "E"
+ },
+ {
+  "id": "trader-joes",
+  "name": "Trader Joe's",
+  "sprite": "trader-joes",
+  "lat": 47.561887,
+  "lon": -122.381043,
+  "w": 4,
+  "h": 3
+ },
+ {
+  "id": "shell-station",
+  "name": "Shell",
+  "sprite": "shell-station",
+  "lat": 47.561343,
+  "lon": -122.38101,
+  "w": 4,
+  "h": 3
+ },
+ {
+  "id": "becu-fauntleroy",
+  "name": "BECU",
+  "sprite": "becu",
+  "lat": 47.560665,
+  "lon": -122.381726,
+  "w": 4,
+  "h": 3
+ },
+ {
+  "id": "colman-pool",
+  "name": "Colman Pool",
+  "sprite": "colman-pool",
+  "lat": 47.53046,
+  "lon": -122.40106,
+  "w": 5,
+  "h": 4
+ },
+ {
+  "id": "circa",
+  "name": "Circa",
+  "sprite": "circa",
+  "lat": 47.580928,
+  "lon": -122.386782,
+  "w": 4,
+  "h": 3,
+  "street": "E"
+ },
+ {
+  "id": "admiral-bird",
+  "name": "Admiral Bird",
+  "sprite": "admiral-bird",
+  "lat": 47.581056,
+  "lon": -122.38635,
+  "w": 4,
+  "h": 3,
+  "street": "W"
+ },
+ {
   "id": "safeway-admiral",
   "name": "Safeway (Admiral)",
   "sprite": "safeway",
   "lat": 47.579985,
   "lon": -122.386027,
-  "w": 6,
+  "w": 5,
   "h": 4,
   "street": "W"
+ },
+ {
+  "id": "safeway-junction",
+  "name": "Safeway (Junction)",
+  "sprite": "safeway",
+  "lat": 47.559644,
+  "lon": -122.384944,
+  "w": 5,
+  "h": 4,
+  "street": "W"
+ },
+ {
+  "id": "pcc-admiral",
+  "name": "PCC Community Market",
+  "sprite": "pcc-market",
+  "lat": 47.577457,
+  "lon": -122.387086,
+  "w": 5,
+  "h": 4,
+  "street": "E"
+ },
+ {
+  "id": "school-of-rock",
+  "name": "School of Rock",
+  "sprite": "school-of-rock",
+  "lat": 47.560799,
+  "lon": -122.384357,
+  "w": 4,
+  "h": 3,
+  "street": "E"
+ },
+ {
+  "id": "uptown-espresso",
+  "name": "Uptown Espresso",
+  "sprite": "uptown-espresso",
+  "lat": 47.559172,
+  "lon": -122.387565,
+  "w": 5,
+  "h": 3
  },
  {
   "id": "shadowland",
@@ -104,16 +336,6 @@
   "lat": 47.562987,
   "lon": -122.386586,
   "w": 2,
-  "h": 3,
-  "street": "W"
- },
- {
-  "id": "west-seattle-library",
-  "name": "West Seattle Library",
-  "sprite": "west-seattle-library",
-  "lat": 47.582731,
-  "lon": -122.384704,
-  "w": 5,
   "h": 3,
   "street": "W"
  }

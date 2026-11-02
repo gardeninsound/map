@@ -2572,5 +2572,15 @@ export const artManifest: Record<string, ArtAsset[]> = {
    "date": "2026-04-17",
    "color": "#181818"
   }
+ ],
+ "snuggle": [
+  {
+   "id": "snuggle",
+   "kind": "video",
+   "w": 1200,
+   "h": 675,
+   "date": "2023-01-29",
+   "color": "#f838a8"
+  }
  ]
 };

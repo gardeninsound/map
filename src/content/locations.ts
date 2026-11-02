@@ -16,6 +16,8 @@ export interface ArtLocation {
   lat: number;
   lon: number;
   approx?: boolean;
+  /** status `pinned`: the lemon stands exactly at lat/lon (even on a sidewalk) instead of beside the nearest street */
+  pinned?: boolean;
   /** folder under public/art (see artManifest) */
   set: string;
   /** key into the experience registry; absent = "coming soon" */
@@ -39,6 +41,7 @@ const COLORS: Record<string, ArtLocation['colors']> = {
   swedish: { p: '#9be3de', t: '#2c6fe0', y: '#ffffff', o: '#e3664f' },
   posters: { p: '#ff5d5d', t: '#9be3de', y: '#ffc8dd', o: '#ffffff' },
   bear: { p: '#6a4c93', t: '#2b2350', y: '#ffffff', o: '#9be3de' },
+  snuggle: { p: '#ff4fb0', t: '#3fa34d', y: '#ffffff', o: '#2b2350' },
 };
 
 export const START = { lat: 47.5612, lon: -122.3868 }; // California & Alaska — the Junction
@@ -46,8 +49,15 @@ export const START = { lat: 47.5612, lon: -122.3868 }; // California & Alaska �
 export const locations: ArtLocation[] = places.map((p) => ({ ...p, colors: COLORS[p.id] ?? DEFAULT_COLORS }));
 
 /** First thing Mike says when you arrive on the map. */
-export const welcome = [
-  "Welcome to Bear Island! I'm Mike. For ten years I've been putting things up around West Seattle.",
+/**
+ * Mike's opening line, one box: dismiss it and you're off. (For now — the longer welcome
+ * is kept below to bring back.)
+ */
+export const welcome = ['Go check it out, sunshine!'];
+
+/** the earlier, longer welcome */
+export const welcomeLong = [
+  "Welcome to Garden in Sound! I'm Mike. For ten years I've been putting things up around West Seattle.",
   'Walk the streets. When you see a lemon, step up and press {A} — that is where the art lives. Say hi to the neighbors, too.',
   'Start with the gas station wall, just north of here up California Ave.',
 ];

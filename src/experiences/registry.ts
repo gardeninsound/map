@@ -16,4 +16,6 @@ export const experiences: Record<string, LazyExoticComponent<ComponentType<Exper
   'rush-hour-turns': lazy(() => import('./WallTurns')),
   'cup-paint': lazy(() => import('./cup/CupPaint')),
   'park-walk': lazy(() => import('./park/ParkWalk')),
+  // plays the first video in the spot's set; words in content/videos.ts
+  video: lazy(() => import('./VideoScene')),
 };

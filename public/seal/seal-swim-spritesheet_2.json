@@ -1,0 +1,8 @@
+{
+ "frameWidth": 191,
+ "frameHeight": 125,
+ "frames": 125,
+ "columns": 12,
+ "frameDurationMs": 40,
+ "loop": true
+}

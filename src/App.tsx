@@ -11,17 +11,23 @@ import {
   nearestSpot,
   StreetSign,
   TouchPad,
+  type MapPlace,
+  type PlacedLandmark,
   type Target,
 } from './city';
 import { START, locations, welcome } from './content/locations';
 import { CROW_NAME, crowChoices, crowGreeting, crowReply } from './content/crow';
 import { CHICKEN_NAME, chickenAfter, chickenInvite, chickenQuestions } from './content/chicken';
 import { neighborVoices } from './content/neighbors';
+import { recentChanges, type RecentAt } from './content/recent';
 import { experiences } from './experiences/registry';
 import { ArtSpots, type PlacedLocation } from './game/plugins/artSpots';
 import { Busker } from './game/plugins/busker';
 import { Crow } from './game/plugins/crow';
 import { Chicken } from './game/plugins/chicken';
+import { BigCup } from './game/plugins/bigCup';
+import { Seal } from './game/plugins/seal';
+import { ArcadeDoor } from './game/plugins/arcadeDoor';
 import { Visitors } from './game/plugins/visitors';
 import type { MiniGameResult } from './experiences/minigames/ConeCatch';
 import { DialogBox } from './ui/MikeDialog';
@@ -46,9 +52,37 @@ type Overlay =
   | { kind: 'scene'; loc: PlacedLocation }
   /** a character's mini game; `then` gets the result when you come back to the map */
   | { kind: 'minigame'; then(result: MiniGameResult): void }
+  /** inside the Duck Arcade */
+  | { kind: 'arcade' }
   | { kind: 'spots' };
 
 const ConeCatch = lazy(() => import('./experiences/minigames/ConeCatch'));
+const DuckArcade = lazy(() => import('./experiences/arcade/DuckArcade'));
+
+/** Overlays that take the whole screen: the map's HUD and touch pad hide under them. */
+const FULL_SCREEN: Overlay['kind'][] = ['scene', 'minigame', 'arcade'];
+
+const LANDMARK_COLOR = '#5fa8a0';
+
+/**
+ * The landmarks, as named places for the map: the Junction's four block faces become one
+ * "The Junction shops", other names lose their parenthetical. Most-visited first, so those
+ * keep their name tags when the map gets crowded.
+ */
+function mapLandmarks(landmarks: PlacedLandmark[]): MapPlace[] {
+  const centre = (l: PlacedLandmark) => ({ x: l.x + l.w / 2, y: l.y + l.h / 2 });
+  const shops = landmarks.filter((l) => l.sprite === 'storefronts');
+  const out: MapPlace[] = [];
+  if (shops.length) {
+    const cs = shops.map(centre);
+    out.push({ name: 'The Junction shops', x: cs.reduce((a, c) => a + c.x, 0) / cs.length, y: cs.reduce((a, c) => a + c.y, 0) / cs.length, color: LANDMARK_COLOR });
+  }
+  for (const l of landmarks) {
+    if (l.sprite === 'storefronts') continue;
+    out.push({ name: l.name.replace(/\s*\(.*\)\s*$/, ''), ...centre(l), color: LANDMARK_COLOR });
+  }
+  return out;
+}
 
 /** Remember (per browser) that the first-visit direction arrow has been shown. */
 const HINT_KEY = 'bearisland-direction-hint';
@@ -84,6 +118,10 @@ export default function App() {
   const [mapOpen, setMapOpen] = useState(false);
   const [muted, setMuted] = useState(sounds.isMuted());
   const touch = isTouch();
+  const arcadeDoor = useRef(new ArcadeDoor());
+  // RECENT: which change the next press jumps to, and the caption shown on landing
+  const recentNext = useRef(0);
+  const [recentNote, setRecentNote] = useState<string | null>(null);
 
   useEffect(() => bindKeyboard(), []);
 
@@ -101,14 +139,16 @@ export default function App() {
     const g = new CityGame(canvas.current!, world, {
       start: world.project(START.lat, START.lon),
       voices: neighborVoices,
-      plugins: [art, busker, crow, chicken, ...(live ? [live] : [])],
+      plugins: [art, new BigCup(art), new Seal(), arcadeDoor.current, busker, crow, chicken, ...(live ? [live] : [])],
       events: {
         onStreet: setStreet,
         onStorefront: setStorefront,
         onNearby: setNearby,
         onInteract: (t) => {
           sounds.confirm();
-          if (t.kind === 'place') {
+          if (t.kind === 'arcade') {
+            setOverlay({ kind: 'arcade' });
+          } else if (t.kind === 'place') {
             const loc = t.data as PlacedLocation;
             art.visited.add(loc.id);
             setOverlay({ kind: 'talk', lines: loc.greeting, loc });
@@ -193,7 +233,7 @@ export default function App() {
     if (game) {
       game.paused = !started || overlay.kind !== 'none';
       // street sounds stay on while you chat on the street, hush inside an art scene
-      game.quiet = !started || overlay.kind === 'scene' || overlay.kind === 'minigame';
+      game.quiet = !started || FULL_SCREEN.includes(overlay.kind);
     }
   }, [game, started, overlay]);
 
@@ -236,7 +276,39 @@ export default function App() {
     },
     [game, spots],
   );
+  /** RECENT: jump to the newest change, then each one before it on the next presses, wrapping round. */
+  const goRecent = useCallback(() => {
+    if (!game || !spots) return;
+    const where = (at: RecentAt): { x: number; y: number } | null => {
+      if ('landmark' in at) {
+        const l = game.world.landmarks.find((m) => m.id === at.landmark);
+        return l ? { x: l.x + l.w / 2, y: l.y + l.h + 0.5 } : null; // just in front of it
+      }
+      if ('spot' in at) return spots.places.find((p) => p.id === at.spot) ?? null;
+      if ('arcade' in at) return arcadeDoor.current.door;
+      return game.world.project(at.lat, at.lon);
+    };
+    const n = recentChanges.length;
+    for (let tries = 0; tries < n; tries++) {
+      const i = recentNext.current % n;
+      recentNext.current = i + 1;
+      const p = where(recentChanges[i].at);
+      if (!p) continue; // gone from the map: skip it
+      sounds.confirm();
+      game.teleport(p);
+      input.clear();
+      setMapOpen(false);
+      setRecentNote(`NEW ${i + 1}/${n} · ${recentChanges[i].title}`);
+      return;
+    }
+  }, [game, spots]);
+  useEffect(() => {
+    if (!recentNote) return;
+    const t = setTimeout(() => setRecentNote(null), 3500);
+    return () => clearTimeout(t);
+  }, [recentNote]);
   const openSpots = spots?.open ?? [];
+  const landmarkPlaces = useMemo(() => (game ? mapLandmarks(game.world.landmarks) : []), [game]);
 
   const Scene = overlay.kind === 'scene' && overlay.loc.experience ? experiences[overlay.loc.experience] : null;
   const talkLoc = overlay.kind === 'talk' ? overlay.loc : undefined;
@@ -245,7 +317,7 @@ export default function App() {
     <main className="app">
       <canvas ref={canvas} className="world" aria-label="A pixel map of West Seattle. Walk with the arrow keys." />
 
-      {started && overlay.kind !== 'scene' && overlay.kind !== 'minigame' && (
+      {started && !FULL_SCREEN.includes(overlay.kind) && (
         <>
           <StreetSign name={street} storefront={storefront} />
           {overlay.kind === 'none' && <NearbyCard target={nearby} />}
@@ -257,6 +329,9 @@ export default function App() {
                 aria-pressed={overlay.kind === 'spots'}
               >
                 ★ SPOTS {!touch && <kbd>T</kbd>}
+              </button>
+              <button className="hud-recent" onClick={goRecent} aria-label="Go to the next most recent change on the map">
+                RECENT
               </button>
               <button onClick={() => setMapOpen((o) => !o)} aria-pressed={mapOpen}>
                 MAP {!touch && <kbd>M</kbd>}
@@ -291,18 +366,30 @@ export default function App() {
                   })),
                   ...(visitors?.markers() ?? []),
                 ]}
+                places={landmarkPlaces}
+                onPick={(p) => {
+                  // jump to the nearest street there, and get back to walking
+                  sounds.confirm();
+                  game.teleport(p);
+                  input.clear();
+                  setMapOpen(false);
+                }}
                 legend={[
                   { color: '#ffe066', label: 'open' },
                   { color: '#ff7eb6', label: 'soon' },
+                  { color: LANDMARK_COLOR, label: 'landmark' },
                 ]}
               />
             )}
           </div>
+          {recentNote && overlay.kind === 'none' && (
+            <p className="recent-note" role="status">{recentNote}</p>
+          )}
           <p className="attribution">{world.attribution}</p>
         </>
       )}
 
-      {started && touch && overlay.kind !== 'scene' && overlay.kind !== 'minigame' && <TouchPad />}
+      {started && touch && !FULL_SCREEN.includes(overlay.kind) && <TouchPad />}
 
       {overlay.kind === 'talk' && (
         <div className="talk-layer">
@@ -360,6 +447,14 @@ export default function App() {
                 overlay.then(result);
               }}
             />
+          </Suspense>
+        </SceneBoundary>
+      )}
+
+      {overlay.kind === 'arcade' && (
+        <SceneBoundary onError={closeOverlay}>
+          <Suspense fallback={<div className="scene scene-loading">Loading…</div>}>
+            <DuckArcade onExit={closeOverlay} />
           </Suspense>
         </SceneBoundary>
       )}

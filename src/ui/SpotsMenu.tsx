@@ -16,7 +16,9 @@ interface Props {
 }
 
 const thumb = (loc: PlacedLocation) => {
-  const first = artManifest[loc.set]?.find((a) => a.kind === 'image');
+  // a still if there is one, else a video's poster
+  const assets = artManifest[loc.set] ?? [];
+  const first = assets.find((a) => a.kind === 'image') ?? assets[0];
   return first ? artUrl(loc.set, first.id, true) : null;
 };
 

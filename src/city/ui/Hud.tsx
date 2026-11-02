@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import type { CityGame, Target } from '../engine/CityGame';
 import { buttonLabel } from '../engine/input';
 import { Tile } from '../world/world';
@@ -53,26 +53,57 @@ export interface MapMarker {
   color: string;
 }
 
+/** Where a name tag can sit around its diamond, in the order they're tried. */
+const beside = (dy: number) => [
+  { left: '7px', right: 'auto', top: `${dy - 6}px`, transform: 'none' },
+  { left: 'auto', right: '7px', top: `${dy - 6}px`, transform: 'none' },
+];
+const TAG_SPOTS = [
+  ...beside(0),
+  { left: '0', right: 'auto', top: '-22px', transform: 'translateX(-50%)' },
+  { left: '0', right: 'auto', top: '9px', transform: 'translateX(-50%)' },
+  ...[-11, 11, -22, 22].flatMap(beside),
+];
+
+/** A named place shown on the map: a diamond with a name tag (e.g. a landmark). */
+export interface MapPlace {
+  x: number;
+  y: number;
+  name: string;
+  color: string;
+}
+
 export interface MinimapLegend {
   color: string;
   label: string;
 }
 
 /**
- * Whole-peninsula map, 1px per tile, with a live player dot and whatever markers the app
- * supplies (read every frame, so they can change).
+ * Whole-peninsula map, 1px per tile, with a live player dot, whatever markers the app
+ * supplies (read every frame, so they can change), and named places (diamonds with name
+ * tags, earliest first: each tag tries right, left, above and below its diamond, then beside
+ * it nudged a line or two up or down, taking the first spot that stays on the map and clear
+ * of every diamond and the tags already placed; if none is free, only the diamond shows —
+ * hover it for the name). Clicking a diamond picks that place. With `onPick`, clicking
+ * or tapping the map hands back that spot in tile coordinates (e.g. to jump there).
  */
 export function Minimap({
   game,
   open,
   markers = () => [],
+  places = [],
   legend = [],
+  onPick,
 }: {
   game: CityGame;
   open: boolean;
   markers?: () => MapMarker[];
+  places?: MapPlace[];
   legend?: MinimapLegend[];
+  /** the map was clicked at this spot (tile coords) */
+  onPick?: (p: { x: number; y: number }) => void;
 }) {
+  const tags = useRef<(HTMLElement | null)[]>([]);
   const base = useRef<HTMLCanvasElement | null>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
   const getMarkers = useRef(markers);
@@ -121,10 +152,65 @@ export function Minimap({
     return () => cancelAnimationFrame(raf);
   }, [game, open]);
 
+  // place the name tags: on the map, and clear of each other
+  useLayoutEffect(() => {
+    if (!open) return;
+    const map = canvas.current?.getBoundingClientRect();
+    if (!map) return;
+    // every diamond is in the way from the start, so no tag covers another place's diamond
+    const kept: DOMRect[] = tags.current.flatMap((el) => {
+      const d = el?.previousElementSibling?.getBoundingClientRect();
+      return d ? [d] : [];
+    });
+    const fits = (r: DOMRect) =>
+      r.left >= map.left && r.right <= map.right && r.top >= map.top && r.bottom <= map.bottom &&
+      !kept.some((k) => r.left < k.right + 2 && r.right + 2 > k.left && r.top < k.bottom + 1 && r.bottom + 1 > k.top);
+    for (const el of tags.current) {
+      if (!el) continue;
+      el.style.display = '';
+      const spot = TAG_SPOTS.find((c) => {
+        Object.assign(el.style, c);
+        return fits(el.getBoundingClientRect());
+      });
+      if (spot) kept.push(el.getBoundingClientRect());
+      else el.style.display = 'none';
+    }
+  }, [open, places]);
+
   if (!open) return null;
+  const { w, h } = game.world;
   return (
     <div className="minimap" aria-label="Map of West Seattle">
-      <canvas ref={canvas} width={game.world.w} height={game.world.h} />
+      <div className="minimap-map">
+        <canvas
+          ref={canvas}
+          width={w}
+          height={h}
+          className={onPick ? 'pickable' : undefined}
+          title={onPick ? 'Click to go there' : undefined}
+          onClick={(e) => {
+            if (!onPick) return;
+            const r = e.currentTarget.getBoundingClientRect();
+            onPick({ x: ((e.clientX - r.left) / r.width) * w, y: ((e.clientY - r.top) / r.height) * h });
+          }}
+        />
+        {places.map((p, i) => (
+          <span key={p.name} className="minimap-place" style={{ left: `${(p.x / w) * 100}%`, top: `${(p.y / h) * 100}%` }}>
+            <i
+              style={{ background: p.color }}
+              title={p.name}
+              onClick={() => onPick?.({ x: p.x, y: p.y })}
+            />
+            <b
+              ref={(el) => {
+                tags.current[i] = el;
+              }}
+            >
+              {p.name}
+            </b>
+          </span>
+        ))}
+      </div>
       <div className="minimap-legend">
         {legend.map((l) => (
           <span key={l.label}>

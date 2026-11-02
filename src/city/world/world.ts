@@ -130,6 +130,33 @@ function decode(b64: string): Uint8Array {
   return out;
 }
 
+/**
+ * Where a marker (a sign, a lemon) stands beside the nearest street: never on the street
+ * itself (it would block it) and always within reach of it. In order of preference: open
+ * ground at the kerb; open ground a tile further in (still reachable from the sidewalk); a
+ * house's corner at the kerb, rather than wandering deep into the block; and as a last resort
+ * anything at the kerb that isn't water. Buildings, parking lots and landmark drawings
+ * otherwise stay clear.
+ */
+export function markerSpot(world: World, p: { x: number; y: number }): { x: number; y: number } {
+  const r = world.nearestWalkable(p.x, p.y);
+  const tx = Math.floor(r.x);
+  const ty = Math.floor(r.y);
+  const open = (t: number) => !isWalkableTile(t) && !isBuilding(t) && t !== Tile.Water && t !== Tile.Landmark;
+  const passes: [number, (t: number) => boolean][] = [
+    [1, open],
+    [2, open],
+    [1, (t) => t === Tile.House],
+    [1, (t) => !isWalkableTile(t) && t !== Tile.Water],
+  ];
+  for (const [d, ok] of passes) {
+    for (const [dx, dy] of [[d, 0], [-d, 0], [0, d], [0, -d]]) {
+      if (ok(world.tileAt(tx + dx, ty + dy))) return { x: tx + dx + 0.5, y: ty + dy + 0.5 };
+    }
+  }
+  return r;
+}
+
 /** Breadth-first distance from every tile to the nearest road tile. */
 export function distanceField(w: number, h: number, isSource: (i: number) => boolean): Uint8Array {
   const dist = new Uint8Array(w * h).fill(255);

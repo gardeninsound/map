@@ -241,7 +241,102 @@ const antiqueMall: Facade = (ctx, x, y, w, h) => {
   px(ctx, INK, x, y + h - 1, w, 1);
 };
 
+/** A rubber duck facing right, `s` px per pixel, its top-left at (x, y): 8×7 cells. */
+function rubberDuck(ctx: Ctx, x: number, y: number, s = 1) {
+  const DUCK = [
+    '...kkk..',
+    '..kyyyk.',
+    '..kyekoo',
+    'k.kyyyk.',
+    'kykyyyyk',
+    'kyyyyyyk',
+    '.kkkkkk.',
+  ];
+  const colors: Record<string, string> = { k: INK, y: '#ffd23f', e: INK, o: '#f47b20' };
+  DUCK.forEach((row, j) => [...row].forEach((ch, i) => colors[ch] && px(ctx, colors[ch], x + i * s, y + j * s, s, s)));
+  px(ctx, '#fff3b0', x + 3 * s, y + 4 * s, s, s);
+}
+
+/**
+ * Duck Arcade — Bear Island's own, in place of Junction 47 at the corner of the block: a
+ * pond-teal box with a giant rubber duck on the roof, the DUCK ARCADE marquee in chasing
+ * bulbs, cabinets glowing through the glass, and a little duck pond by the doors. Home of
+ * the duck-themed mini games.
+ */
+const duckArcade: Facade = (ctx, x0, y0, w, h) => {
+  ctx.save();
+  ctx.translate(x0, y0);
+  drawDuckArcade(ctx, w, h);
+  ctx.restore();
+};
+
+function drawDuckArcade(ctx: Ctx, w: number, h: number) {
+  const teal = '#2e8f8a', tealDark = '#226f6b', tealLight = '#5fc0b4';
+  const gold = '#ffd23f', pink = '#ff7eb6';
+  // plaza
+  px(ctx, '#c8c2b8', 0, 0, w, h);
+  for (let x = 0; x < w; x += 8) px(ctx, '#bdb7ad', x, h - 14, 1, 14);
+  px(ctx, 'rgba(0,0,0,0.2)', 2, h - 14, w - 3, 2);
+  // the building
+  px(ctx, INK, 1, 10, w - 2, h - 23);
+  px(ctx, teal, 2, 11, w - 4, h - 25);
+  for (let x = 6; x < w - 2; x += 8) px(ctx, tealDark, x, 11, 1, h - 25);
+  px(ctx, tealLight, 2, 11, w - 4, 1);
+  // the giant duck on the roof
+  rubberDuck(ctx, Math.round(w / 2) - 12, 0, 3);
+  // marquee: a dark board ringed with bulbs, gold letters
+  const label = 'DUCK ARCADE';
+  const mw = textWidth(label) + 10;
+  const mx = Math.round((w - mw) / 2);
+  px(ctx, INK, mx - 1, 21, mw + 2, 11);
+  px(ctx, '#2a1f3a', mx, 22, mw, 9);
+  for (let i = 0; i < mw; i += 2) {
+    px(ctx, i % 4 ? pink : gold, mx + i, 22, 1, 1);
+    px(ctx, i % 4 ? gold : pink, mx + i, 30, 1, 1);
+  }
+  pixelText(ctx, label, mx + 5, 24, gold);
+  // windows full of glowing cabinets along the front
+  const glow = ['#ff7eb6', '#7fd9c4', '#ffd23f', '#9b6ad1'];
+  for (const [wx, ww] of [[14, 30], [w - 32, 28]] as const) {
+    px(ctx, INK, wx, 34, ww, 13);
+    px(ctx, '#1d2b3a', wx + 1, 35, ww - 2, 11);
+    for (let i = 0, cx = wx + 2; cx + 4 <= wx + ww - 1; i++, cx += 5) {
+      px(ctx, '#3a3150', cx, 37, 4, 9);
+      px(ctx, glow[i % glow.length], cx + 1, 38, 2, 3);
+      px(ctx, '#e4202c', cx + 1, 42, 1, 1);
+    }
+  }
+  // the entrance, on the California side (the street runs down the left edge of this face):
+  // glass doors in the end wall under a bulb-lit canopy, a welcome mat out to the sidewalk
+  const ey = 30;
+  const eh = h - 13 - ey;
+  px(ctx, INK, 0, ey, 11, eh);
+  px(ctx, '#a9d8cc', 3, ey + 1, 7, eh - 2);
+  px(ctx, '#d8efe6', 3, ey + 1, 1, eh - 2);
+  px(ctx, INK, 3, ey + Math.floor(eh / 2), 7, 1);
+  px(ctx, gold, 8, ey + Math.floor(eh / 2) - 3, 1, 2);
+  px(ctx, gold, 8, ey + Math.floor(eh / 2) + 2, 1, 2);
+  for (let y = ey - 2; y < ey + eh + 2; y++) px(ctx, Math.floor(y / 2) % 2 ? pink : gold, 0, y, 2, 1);
+  px(ctx, INK, 2, ey - 2, 1, eh + 4);
+  // a little duck over the door
+  rubberDuck(ctx, 3, ey - 9);
+  // the duck pond and a chalkboard of today's games out front, a pink bench by the doors
+  const py = h - 12;
+  px(ctx, INK, w - 30, py, 24, 9);
+  px(ctx, '#5fb8d8', w - 29, py + 1, 22, 7);
+  px(ctx, '#a9e2f0', w - 27, py + 3, 4, 1);
+  px(ctx, '#a9e2f0', w - 16, py + 5, 5, 1);
+  rubberDuck(ctx, w - 26, py - 1);
+  rubberDuck(ctx, w - 17, py + 1);
+  px(ctx, INK, 30, py - 1, 9, 9);
+  px(ctx, '#2a3a2e', 31, py, 7, 6);
+  for (let j = 0; j < 3; j++) px(ctx, j === 1 ? gold : '#f3e6b8', 32, py + 1 + j * 2, 5, 1);
+  px(ctx, INK, 14, py + 3, 9, 4);
+  px(ctx, pink, 15, py + 4, 7, 1);
+}
+
 export const FACADES: Record<string, Facade> = {
+  'duck-arcade': duckArcade,
   'husky-deli': huskyDeli,
   'poggie-tavern': poggieTavern,
   'pegasus-books': pegasusBooks,

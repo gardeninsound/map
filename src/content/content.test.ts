@@ -1,10 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { createWorld } from '../city';
+import { createWorld, markerSpot } from '../city';
 import { START, locations } from './locations';
 import { artManifest } from './artManifest';
 import { experiences } from '../experiences/registry';
 import { chooseTurns, slideshows, wallTurns } from './wallTurns';
 import { crossedMilestone } from '../experiences/WallTurns';
+import { videoScripts } from './videos';
 
 const world = createWorld();
 
@@ -23,6 +24,23 @@ describe('locations', () => {
 
   it('point experiences at registered scenes', () => {
     for (const l of locations) if (l.experience) expect(experiences[l.experience]).toBeDefined();
+  });
+
+  it.each(locations.map((l) => [l.id, l] as const))('%s: its lemon can be reached from the street', (_, loc) => {
+    // the lemon stands beside the street; somewhere walkable must be within the 1.9-tile reach
+    const m = markerSpot(world, world.project(loc.lat, loc.lon));
+    expect(world.isWalkable(m.x, m.y)).toBe(false); // not blocking the street
+    let closest = Infinity;
+    for (let dy = -3; dy <= 3; dy++) {
+      for (let dx = -3; dx <= 3; dx++) {
+        const tx = Math.floor(m.x) + dx, ty = Math.floor(m.y) + dy;
+        if (!world.isWalkable(tx + 0.5, ty + 0.5)) continue;
+        // nearest point of that walkable tile to the lemon
+        const px = Math.max(tx, Math.min(tx + 1, m.x)), py = Math.max(ty, Math.min(ty + 1, m.y));
+        closest = Math.min(closest, Math.hypot(px - m.x, py - m.y));
+      }
+    }
+    expect(closest).toBeLessThan(1.6);
   });
 
   it('start in the Junction, on California Ave', () => {
@@ -56,6 +74,15 @@ describe('chooseTurns', () => {
   });
   it('uses hand picks when given', () => {
     expect(chooseTurns(wall, 24, [wall[3].id, wall[1].id]).map((a) => a.id)).toEqual([wall[3].id, wall[1].id]);
+  });
+});
+
+describe('video spots', () => {
+  it('each has words and a video to play', () => {
+    for (const l of locations.filter((l) => l.experience === 'video')) {
+      expect(videoScripts[l.id]?.outro.length).toBeGreaterThan(0);
+      expect(artManifest[l.set].some((a) => a.kind === 'video')).toBe(true);
+    }
   });
 });
 

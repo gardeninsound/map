@@ -13,11 +13,12 @@
  */
 import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync, statSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { artFormat, artManifest } from '../src/content/artManifest.ts';
 import { parkSigns } from '../src/content/puppyPark.ts';
 import { chooseTurns, slideshows } from '../src/content/wallTurns.ts';
 
-const ROOT = new URL('..', import.meta.url).pathname;
+const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const DRY = process.argv.includes('--dry-run');
 const places = JSON.parse(readFileSync(new URL('../src/content/placesData.json', import.meta.url)));
 const file = (set, id, thumb = false) => `public/art/${set}/${id}${thumb ? '-t' : ''}.${artFormat}`;
@@ -26,8 +27,8 @@ const need = new Set();
 for (const p of places) {
   if (!p.experience) continue;
   const assets = artManifest[p.set] ?? [];
-  const first = assets.find((a) => a.kind === 'image');
-  if (first) need.add(file(p.set, first.id, true)); // SPOTS menu thumbnail
+  const first = assets.find((a) => a.kind === 'image') ?? assets[0];
+  if (first) need.add(file(p.set, first.id, true)); // SPOTS menu thumbnail (a still, else a video poster)
   const script = slideshows[p.experience];
   if (script) {
     for (const a of chooseTurns(assets, script.maxPhotos, script.picks)) {
@@ -36,6 +37,10 @@ for (const p of places) {
     }
   }
   if (p.experience === 'park-walk') for (const s of parkSigns) need.add(file(p.set, s.asset));
+  if (p.experience === 'video') {
+    const v = assets.find((a) => a.kind === 'video');
+    if (v) need.add(file(p.set, v.id)).add(`public/art/${p.set}/${v.id}.mp4`); // poster + video
+  }
 }
 
 const missing = [...need].filter((f) => !existsSync(ROOT + f));

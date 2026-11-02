@@ -193,10 +193,11 @@ for (const el of tagged((t) => t.natural === 'beach')) fillRings(areaRings(el), 
 // woods, with walkable footpaths, real parking lots, pitches and courts, and buildings
 // painted from their exact outlines. The detail comes from data/osm/detail.json
 // (scripts/city/fetch-detail.mjs).
-const detailedPlaces = tagged((t) => t.name && (t.leisure === 'park' || t.amenity === 'school') && DETAILED.places.some((d) => d.name === t.name)).map(areaRings);
-for (const rings of detailedPlaces) {
-  fillRings(rings, (x, y) => { const i = x + y * GW; if (tiles[i] === T.PARK || tiles[i] === T.LAND) tiles[i] = T.LAWN; });
-}
+const detailedEls = tagged((t) => t.name && (t.leisure === 'park' || t.amenity === 'school') && DETAILED.places.some((d) => d.name === t.name));
+const detailedPlaces = detailedEls.map(areaRings);
+const isWooded = (el) => DETAILED.places.some((d) => d.name === el.tags.name && d.woods);
+const toLawn = (x, y) => { const i = x + y * GW; if (tiles[i] === T.PARK || tiles[i] === T.LAND) tiles[i] = T.LAWN; };
+detailedEls.forEach((el, k) => { if (!isWooded(el)) fillRings(detailedPlaces[k], toLawn); });
 /** even-odd point-in-polygon over a set of rings (tile coords) */
 const insideRings = (rings, x, y) => {
   let inside = false;
@@ -214,6 +215,15 @@ const onCampus = (x, y) => schoolCampuses.some((rings) => insideRings(rings, x, 
 const DETAIL_DATA = new URL('data/osm/detail.json', ROOT);
 const detailEls = existsSync(DETAIL_DATA) ? JSON.parse(readFileSync(DETAIL_DATA)).elements : [];
 if (detailedPlaces.length && !detailEls.length) console.warn('  no data/osm/detail.json: run node scripts/city/fetch-detail.mjs for paths, lots and pitches');
+// A wooded place stays woods; only its open ground — meadows, grass, fields, play areas — is lawn.
+const woodedPlaces = detailedEls.filter(isWooded).map(areaRings);
+const inWooded = (x, y) => woodedPlaces.some((rings) => insideRings(rings, x, y));
+const OPEN_GROUND = (t) => /^(grassland|heath)$/.test(t.natural ?? '') || /^(grass|meadow|recreation_ground|village_green)$/.test(t.landuse ?? '') || /^(pitch|playground)$/.test(t.leisure ?? '');
+for (const el of detailEls.filter((e) => e.tags && OPEN_GROUND(e.tags) && (e.type === 'way' ? e.geometry : e.members))) {
+  const rings = areaRings(el);
+  const r0 = rings[0], cx = r0.reduce((a, p) => a + p[0], 0) / r0.length, cy = r0.reduce((a, p) => a + p[1], 0) / r0.length;
+  if (inWooded(cx, cy)) fillRings(rings, toLawn);
+}
 const round2 = (r) => r.map(([x, y]) => [+x.toFixed(2), +y.toFixed(2)]);
 const centroid = (r) => [r.reduce((a, p) => a + p[0], 0) / r.length, r.reduce((a, p) => a + p[1], 0) / r.length];
 for (const el of tagged((t) => ['commercial', 'retail', 'industrial'].includes(t.landuse))) {
