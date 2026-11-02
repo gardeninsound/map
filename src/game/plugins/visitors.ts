@@ -1,4 +1,4 @@
-import { buildRabbit, gridToCanvas, INK, tone, type CityGame, type CityPlugin, type DrawContext, type Grid, type Walker } from '../../city';
+import { buildRabbit, gridToCanvas, INK, tone, type CityGame, type CityPlugin, type DrawContext, type Grid, type Target, type Walker } from '../../city';
 import type { MapMarker } from '../../city';
 import { EMOTES } from '../../content/emotes';
 import { joinRelay, type RelayRoom } from '../../net/relay';
@@ -181,6 +181,31 @@ export class Visitors implements CityPlugin {
   where(id: string): { x: number; y: number } | null {
     const v = this.visitors.get(id);
     return v ? { x: v.target.pos.x + 1, y: v.target.pos.y } : null;
+  }
+
+  /**
+   * A rabbit close by is something to talk to: the city puts its '…' bubble over you and
+   * {A} opens the SAY picker (App). Rabbits inside a scene aren't really here, so not them;
+   * they lose ties to neighbors and lemons (who have more to say).
+   */
+  targets(game: CityGame): Target[] {
+    if (this._hidden) return [];
+    const me = game.player.pos;
+    const out: Target[] = [];
+    for (const v of this.visitors.values()) {
+      if (v.target.away || Math.abs(v.shown.x - me.x) > 4 || Math.abs(v.shown.y - me.y) > 4) continue;
+      out.push({
+        key: `rabbit:${v.id}`,
+        kind: 'rabbit',
+        x: v.shown.x,
+        y: v.shown.y,
+        label: { name: rabbitName(v.id), verb: 'say something' },
+        bubble: '…',
+        weight: 0.7,
+        data: v.id,
+      });
+    }
+    return out;
   }
 
   /** Everyone else, for the HUD's list: name, scarf, the street they're on. */

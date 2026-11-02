@@ -4,6 +4,7 @@ import {
   CityGame,
   Compass,
   createWorld,
+  facingFor,
   input,
   isTouch,
   Minimap,
@@ -152,6 +153,10 @@ export default function App() {
           sounds.confirm();
           if (t.kind === 'arcade') {
             setOverlay({ kind: 'arcade' });
+          } else if (t.kind === 'rabbit' && live) {
+            // Another player close by: face them and open (or close) the SAY picker.
+            g.player.facing = facingFor({ x: t.x - g.player.pos.x, y: t.y - g.player.pos.y }, g.player.facing);
+            setSayOpen((o) => !o);
           } else if (t.kind === 'place') {
             const loc = t.data as PlacedLocation;
             art.visited.add(loc.id);
@@ -252,6 +257,8 @@ export default function App() {
           input.consume('menu');
           sounds.confirm();
           setOverlay({ kind: 'spots' });
+        } else if (b === 'b' && overlayKind.current === 'none') {
+          setSayOpen(false); // {B} puts the SAY picker away
         }
       }),
     [],
