@@ -195,7 +195,8 @@ export function Minimap({
           }}
         />
         {places.map((p, i) => (
-          <span key={p.name} className="minimap-place" style={{ left: `${(p.x / w) * 100}%`, top: `${(p.y / h) * 100}%` }}>
+          // name + spot: two landmarks can share a short name (both Safeways show as "Safeway")
+          <span key={`${p.name}@${p.x},${p.y}`} className="minimap-place" style={{ left: `${(p.x / w) * 100}%`, top: `${(p.y / h) * 100}%` }}>
             <i
               style={{ background: p.color }}
               title={p.name}
