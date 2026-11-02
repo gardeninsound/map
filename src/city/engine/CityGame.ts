@@ -25,6 +25,8 @@ export interface Target {
   label: { name: string; where?: string; verb: string };
   /** speech-bubble glyph over the player when close ('!' by default) */
   bubble?: string;
+  /** that bubble's background (white by default), e.g. to tell other players from neighbors */
+  bubbleColor?: string;
   /** < 1 makes it lose ties to closer-ranked targets (neighbors use 0.8) */
   weight?: number;
   /** for kind 'npc': the neighbor, who stops and turns to face you */
@@ -378,7 +380,7 @@ export class CityGame {
 
     if (this.nearby && !this.paused) {
       const s = toScreen(p.pos);
-      this.drawBubble(s.x, s.y - 24 + Math.round(Math.sin(time * 6)), this.nearby.bubble ?? '!');
+      this.drawBubble(s.x, s.y - 24 + Math.round(Math.sin(time * 6)), this.nearby.bubble ?? '!', this.nearby.bubbleColor);
     }
   }
 
@@ -402,12 +404,12 @@ export class CityGame {
     this.ctx.drawImage(a, sx, sy, size, size);
   }
 
-  private drawBubble(x: number, y: number, text: string) {
+  private drawBubble(x: number, y: number, text: string, bg = '#ffffff') {
     const ctx = this.ctx;
     ctx.fillStyle = INK;
     ctx.fillRect(x - 6, y - 6, 13, 11);
     ctx.fillRect(x - 1, y + 5, 3, 2);
-    ctx.fillStyle = '#ffffff';
+    ctx.fillStyle = bg;
     ctx.fillRect(x - 5, y - 5, 11, 9);
     ctx.fillStyle = INK;
     ctx.font = '8px "Press Start 2P"';

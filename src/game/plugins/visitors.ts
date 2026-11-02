@@ -27,6 +27,10 @@ const ROOM = 'island';
 const HIDE_KEY = 'bearisland-hide-rabbits';
 /** Name tags show on rabbits within this many tiles of yours. */
 const NAME_RANGE = 3.5;
+/** After you emote, nearby rabbits drop their '…' (and {A}) for this long (s); keys 1–9 still work. */
+const TALK_QUIET = 6;
+/** The '…' over you for another player is lavender (the minimap's other-rabbits purple, lightened); neighbors' stays white. */
+const PLAYER_BUBBLE = '#d4c2f7';
 /** name tag text: light on the dark tag, unlike the map's coloured place labels */
 const TAG_TEXT = '#f3e6cc';
 
@@ -66,6 +70,8 @@ export class Visitors implements CityPlugin {
   private said = new Map<string, { emote: number; until: number }>();
   private shown = new Map<string, RateLimit>();
   private sending = sendLimit();
+  /** no '…' targets until this clock time (set when you emote) */
+  private quietUntil = 0;
   private icons = { heart: gridToCanvas(HEART, { '#': '#e84a5f' }), note: gridToCanvas(NOTE, { '#': INK }) };
   private _hidden = (() => {
     try {
@@ -153,6 +159,7 @@ export class Visitors implements CityPlugin {
   emote(i: number): boolean {
     if (decodeEmote(i) === null || !this.sending.take(this.clock)) return false;
     this.said.set(this.room?.selfId ?? '', { emote: i, until: this.clock + EMOTE_TIME });
+    this.quietUntil = this.clock + TALK_QUIET;
     this.room?.send('e', i);
     return true;
   }
@@ -189,7 +196,8 @@ export class Visitors implements CityPlugin {
    * they lose ties to neighbors and lemons (who have more to say).
    */
   targets(game: CityGame): Target[] {
-    if (this._hidden) return [];
+    // Just said something: let it be heard before offering to talk again.
+    if (this._hidden || this.clock < this.quietUntil) return [];
     const me = game.player.pos;
     const out: Target[] = [];
     for (const v of this.visitors.values()) {
@@ -201,6 +209,7 @@ export class Visitors implements CityPlugin {
         y: v.shown.y,
         label: { name: rabbitName(v.id), verb: 'say something' },
         bubble: '…',
+        bubbleColor: PLAYER_BUBBLE,
         weight: 0.7,
         data: v.id,
       });

@@ -88,7 +88,8 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
   bubble text — so it never reads as a map place label) and in the list behind the "N OTHER RABBITS" button, where clicking a rabbit hops you beside it (`Visitors.where`), and which also has the remembered
   "hide other rabbits" toggle. They talk only in **emotes** from the fixed list in
   `src/content/emotes.ts` (SAY button, keys 1–9, or walk up to a rabbit — it's a `rabbit` target with
-  the '…' bubble — and {A} opens the picker, {B} closes it; append only, the wire sends the index), rate-limited
+  a lavender '…' bubble (`Target.bubbleColor`) — and {A} opens the picker, {B} closes it; after you
+  emote, rabbits stop being targets for `TALK_QUIET` s; append only, the wire sends the index), rate-limited
   when sent and when shown (`RateLimit`), bubbles stacked clear of each other (`stackBubbles`). No free
   text, and rabbits pass through each other on purpose.
 - **Duck Arcade** (in Junction 47's storefront slot, `render/facades.ts`): `src/game/plugins/arcadeDoor.ts`
