@@ -176,6 +176,12 @@ export class Visitors implements CityPlugin {
     return [...this.visitors.values()].map((v) => ({ x: v.shown.x, y: v.shown.y, color: scarfFor(v.id), above: true }));
   }
 
+  /** Where to land to visit a rabbit: just below it, so the two of you don't stack. */
+  where(id: string): { x: number; y: number } | null {
+    const v = this.visitors.get(id);
+    return v ? { x: v.target.pos.x, y: v.target.pos.y + 1 } : null;
+  }
+
   /** Everyone else, for the HUD's list: name, scarf, the street they're on. */
   list(): RabbitInfo[] {
     const w = this.game?.world;

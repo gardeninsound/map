@@ -405,11 +405,25 @@ export default function App() {
                 <ul>
                   {visitors.list().map((r) => (
                     <li key={r.id}>
-                      <i style={{ background: r.color }} aria-hidden="true" />
-                      <span>
-                        {r.name.toUpperCase()}
-                        <small>{r.away ? 'looking at something' : (r.street ?? 'off the street')}</small>
-                      </span>
+                      <button
+                        className="rabbit-go"
+                        aria-label={`Go to ${r.name}`}
+                        onClick={() => {
+                          const p = visitors.where(r.id);
+                          if (!game || !p) return;
+                          sounds.confirm();
+                          game.teleport(p);
+                          input.clear();
+                          setMapOpen(false);
+                          setRabbitsOpen(false);
+                        }}
+                      >
+                        <i style={{ background: r.color }} aria-hidden="true" />
+                        <span>
+                          {r.name.toUpperCase()}
+                          <small>{r.away ? 'looking at something' : (r.street ?? 'off the street')}</small>
+                        </span>
+                      </button>
                     </li>
                   ))}
                 </ul>
