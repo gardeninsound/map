@@ -28,6 +28,7 @@ import { Chicken } from './game/plugins/chicken';
 import { BigCup } from './game/plugins/bigCup';
 import { Seal } from './game/plugins/seal';
 import { ArcadeDoor } from './game/plugins/arcadeDoor';
+import { Visitors } from './game/plugins/visitors';
 import type { MiniGameResult } from './experiences/minigames/ConeCatch';
 import { DialogBox } from './ui/MikeDialog';
 import { SceneBoundary } from './ui/SceneBoundary';
@@ -105,6 +106,8 @@ export default function App() {
   const canvas = useRef<HTMLCanvasElement>(null);
   const [game, setGame] = useState<CityGame | null>(null);
   const [spots, setSpots] = useState<ArtSpots | null>(null);
+  const [visitors, setVisitors] = useState<Visitors | null>(null);
+  const [others, setOthers] = useState(0);
   const [started, setStarted] = useState(false);
   const [street, setStreet] = useState<string | null>(null);
   const [storefront, setStorefront] = useState<string | null>(null);
@@ -127,10 +130,16 @@ export default function App() {
     const busker = new Busker();
     const crow = new Crow();
     const chicken = new Chicken();
+    // Everyone else on the island, live. `?solo` walks alone; `?relay=` points at another
+    // relay; in dev, `?island=<name>` uses a private room so tests don't walk onto the real one.
+    const params = new URLSearchParams(location.search);
+    const island = (import.meta.env.DEV && params.get('island')) || undefined;
+    const live = params.has('solo') ? null : new Visitors(params.get('relay') ?? undefined, island);
+    if (live) live.onCount = setOthers;
     const g = new CityGame(canvas.current!, world, {
       start: world.project(START.lat, START.lon),
       voices: neighborVoices,
-      plugins: [art, new BigCup(art), new Seal(), arcadeDoor.current, busker, crow, chicken],
+      plugins: [art, new BigCup(art), new Seal(), arcadeDoor.current, busker, crow, chicken, ...(live ? [live] : [])],
       events: {
         onStreet: setStreet,
         onStorefront: setStorefront,
@@ -185,7 +194,7 @@ export default function App() {
       },
     });
     g.paused = true;
-    if (import.meta.env.DEV) Object.assign(window, { __game: g, __busker: busker, __crow: crow, __chicken: chicken, __art: art }); // test hooks
+    if (import.meta.env.DEV) Object.assign(window, { __game: g, __busker: busker, __crow: crow, __chicken: chicken, __art: art, __visitors: live }); // test hooks
     // Dev review hooks: ?at=lat,lon (or ?atTile=x,y) skips the title and drops you there;
     // ?audit scans the whole map for road-drawing glitches (scripts/city/road-audit.mjs).
     const q = new URLSearchParams(location.search);
@@ -207,11 +216,17 @@ export default function App() {
     document.fonts.load('8px "Press Start 2P"').finally(() => g.start());
     setGame(g);
     setSpots(art);
+    setVisitors(live);
     return () => {
       g.stop();
       window.removeEventListener('resize', onResize);
     };
   }, [world]);
+
+  // Show up on everyone else's map once past the title screen.
+  useEffect(() => {
+    if (started) visitors?.join();
+  }, [started, visitors]);
 
   // The world only moves when nothing is on top of it.
   useEffect(() => {
@@ -331,6 +346,11 @@ export default function App() {
                 {muted ? '♪ OFF' : '♪ ON'}
               </button>
             </div>
+            {others > 0 && (
+              <p className="hud-visitors" aria-live="polite">
+                {others === 1 ? '1 OTHER RABBIT HERE' : `${others} OTHER RABBITS HERE`}
+              </p>
+            )}
             {game && spots && overlay.kind === 'none' && (
               <Compass game={game} spots={() => spots.open} onClick={() => { sounds.confirm(); setOverlay({ kind: 'spots' }); }} />
             )}
@@ -338,13 +358,14 @@ export default function App() {
               <Minimap
                 game={game}
                 open={mapOpen}
-                markers={() =>
-                  spots.places.map((loc) => ({
+                markers={() => [
+                  ...spots.places.map((loc) => ({
                     x: loc.x,
                     y: loc.y,
                     color: spots.visited.has(loc.id) ? '#ffffff' : loc.experience ? '#ffe066' : '#ff7eb6',
-                  }))
-                }
+                  })),
+                  ...(visitors?.markers() ?? []),
+                ]}
                 places={landmarkPlaces}
                 onPick={(p) => {
                   // jump to the nearest street there, and get back to walking

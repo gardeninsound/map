@@ -241,6 +241,13 @@
 .minigame-canvas { image-rendering: pixelated; display: block; }
 .minigame-back { margin-top: 10px; font-family: var(--pixel); font-size: 11px; padding: 10px 12px; color: #2a1a12; background: #f3e6cc; border: 2px solid #2a1a12; box-shadow: 2px 2px 0 #2a1a12; cursor: pointer; }
 
+/* how many other people are walking the island right now (game/plugins/visitors.ts) */
+.hud-visitors {
+  margin: 0;
+  font-family: var(--pixel); font-size: 10px;
+  background: var(--paper); color: var(--ink); padding: 7px 10px;
+  box-shadow: 0 0 0 3px var(--ink), 4px 4px 0 3px rgba(0,0,0,0.25);
+}
 /* Flying rabbits crossing the title sky (FlyingRabbits.tsx). The span travels, the i flaps. */
 .flyer {
   position: absolute; left: 0;
