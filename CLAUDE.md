@@ -83,6 +83,12 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
   "N OTHER RABBITS HERE". Your rabbit is sent only when it changes, at most 5×/s, because the free
   relay is metered by messages sent (wire format and easing are pure and tested:
   `src/game/visitors.ts`). `?solo` walks alone; dev-only `?island=<name>` uses a private room.
+  Each rabbit has a name from its id (scarf colour + West Seattle place, never sent), shown when
+  you're close and in the list behind the "N OTHER RABBITS" button, which also has the remembered
+  "hide other rabbits" toggle. They talk only in **emotes** from the fixed list in
+  `src/content/emotes.ts` (SAY button or keys 1–9; append only, the wire sends the index), rate-limited
+  when sent and when shown (`RateLimit`), bubbles stacked clear of each other (`stackBubbles`). No free
+  text, and rabbits pass through each other on purpose.
 - **Duck Arcade** (in Junction 47's storefront slot, `render/facades.ts`): `src/game/plugins/arcadeDoor.ts`
   puts the door target on its California side; App opens `src/experiences/arcade/DuckArcade.tsx`, a
   three.js first-person room (`ArcadeScene.ts`) with a cabinet per game. The shell: cabinets are data

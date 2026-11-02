@@ -122,6 +122,10 @@ export class CityGame {
   private street: string | null = null;
   private storefront: string | null = null;
   private nearby: Target | null = null;
+  /** the target whose '!' bubble is up (plugins keep their own bubbles clear of it) */
+  get nearbyTarget(): Target | null {
+    return this.paused ? null : this.nearby;
+  }
   private arrows = buildArrows();
   private hint: { until: number; from: Vec; to: Vec } | null = null;
   private events: CityGameEvents;
