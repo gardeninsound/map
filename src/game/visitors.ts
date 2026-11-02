@@ -1,4 +1,5 @@
 import type { Facing, Vec } from '../city';
+import { EMOTES, PLACE_NAMES, SCARF_NAMES } from '../content/emotes';
 
 /**
  * Other people on the island, as rabbits: what goes over the wire, when to send it, and
@@ -82,7 +83,97 @@ export function easeVisitor(v: Visitor, dt: number): void {
 export const SCARVES = ['#ff9f1c', '#e84a5f', '#9b5de5', '#f15bb5', '#fee440', '#3a86ff', '#80ed99'];
 
 export function scarfFor(id: string): string {
-  let h = 0;
+  return SCARVES[hash(id) % SCARVES.length]!;
+}
+
+function hash(id: string, seed = 0): number {
+  let h = seed;
   for (const c of id) h = (h * 31 + c.charCodeAt(0)) >>> 0;
-  return SCARVES[h % SCARVES.length]!;
+  return h;
+}
+
+/** Your own rabbit's scarf (the city's rabbit), for your own name. */
+export const MY_SCARF = '#2ec4b6';
+
+/**
+ * A rabbit's name: scarf colour + a West Seattle place, both from the id ("Pink Alki").
+ * Everyone derives the same name from the same id, so names are never sent.
+ */
+export function rabbitName(id: string, scarf = scarfFor(id)): string {
+  const place = PLACE_NAMES[hash(id, 7) % PLACE_NAMES.length]!;
+  return `${SCARF_NAMES[scarf] ?? 'Gray'} ${place}`;
+}
+
+/** An emote off the network: its index in EMOTES, or null if it isn't one. */
+export function decodeEmote(d: unknown): number | null {
+  return Number.isInteger(d) && (d as number) >= 0 && (d as number) < EMOTES.length ? (d as number) : null;
+}
+
+/** How long an emote bubble stays up, seconds. */
+export const EMOTE_TIME = 2.5;
+
+/**
+ * A token bucket: `burst` at once, then one more every `every` seconds. Used to cap the
+ * emotes you send (the relay is metered) and the ones shown from each other rabbit (a
+ * modified client could send them as fast as it likes). Time is passed in, so it's pure.
+ */
+export class RateLimit {
+  private tokens: number;
+  private at = -Infinity;
+  constructor(
+    readonly burst: number,
+    readonly every: number,
+  ) {
+    this.tokens = burst;
+  }
+  /** take one if there is one; `now` in seconds */
+  take(now: number): boolean {
+    if (this.at !== -Infinity) this.tokens = Math.min(this.burst, this.tokens + (now - this.at) / this.every);
+    this.at = now;
+    if (this.tokens < 1) return false;
+    this.tokens -= 1;
+    return true;
+  }
+}
+
+/** Yours: three in a row, then one every 2 s. */
+export const sendLimit = () => new RateLimit(3, 2);
+/** Theirs, as shown to you: a little looser than what an honest client sends. */
+export const showLimit = () => new RateLimit(4, 1.5);
+
+/** A speech bubble on screen: centred on x, its bottom at y. */
+export interface BubbleBox {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+}
+
+/**
+ * Lift bubbles that would overlap one already placed (rabbits standing together), lowest
+ * first, so everyone can be read; `fixed` ones (the city's own '!' bubble) never move.
+ * Returns each bubble's bottom y, in input order.
+ */
+export function stackBubbles(boxes: BubbleBox[], gap = 2, fixed: BubbleBox[] = []): number[] {
+  const order = boxes.map((_, i) => i).sort((a, b) => boxes[b]!.y - boxes[a]!.y);
+  const placed = fixed.map((b) => ({ l: b.x - b.w / 2, r: b.x + b.w / 2, top: b.y - b.h, bottom: b.y }));
+  const out: number[] = new Array(boxes.length);
+  for (const i of order) {
+    const b = boxes[i]!;
+    const l = b.x - b.w / 2 - gap;
+    const r = b.x + b.w / 2 + gap;
+    let bottom = b.y;
+    for (let moved = true; moved; ) {
+      moved = false;
+      for (const p of placed) {
+        if (l < p.r && r > p.l && bottom > p.top - gap && bottom - b.h < p.bottom + gap) {
+          bottom = p.top - gap;
+          moved = true;
+        }
+      }
+    }
+    placed.push({ l, r, top: bottom - b.h, bottom });
+    out[i] = bottom;
+  }
+  return out;
 }
