@@ -135,6 +135,15 @@ auto-merge for feature PRs; for shared PRs (6), say so and leave the merge to th
   emote, rabbits stop being targets for `TALK_QUIET` s; append only, the wire sends the index), rate-limited
   when sent and when shown (`RateLimit`), bubbles stacked clear of each other (`stackBubbles`). No free
   text, and rabbits pass through each other on purpose.
+- **Idea box** (✿ IDEA in the HUD): "What would you love to add in the Garden in Sound?" —
+  `src/ui/IdeaBox.tsx` (words in `src/content/ideas.ts`) posts to the `wish/` Worker
+  (wish.gardeninsound.website, gardeninsound Cloudflare account), which checks origin + a
+  Cloudflare Turnstile token + 3 ideas/min per address, then files a GitHub issue labelled
+  `suggestion` on the public repo (mentions defused; formatting pure + tested in
+  `wish/src/issue.ts`, run by the root `npm test`; `cd wish && npm test` runs the Worker against a
+  fake GitHub). Secrets: `TURNSTILE_SECRET`, `GITHUB_TOKEN` (fine-grained, this repo, Issues
+  only). `?wish=http://127.0.0.1:8791` points the site at `npm run dev` in wish/ (Turnstile's
+  test key is used for a local Worker).
 - **Duck Arcade** (in Junction 47's storefront slot, `render/facades.ts`): `src/game/plugins/arcadeDoor.ts`
   puts the door target on its California side; App opens `src/experiences/arcade/DuckArcade.tsx`, a
   three.js first-person room (`ArcadeScene.ts`) with a cabinet per game. The shell: cabinets are data

@@ -37,6 +37,7 @@ import type { MiniGameResult } from './experiences/minigames/ConeCatch';
 import { DialogBox } from './ui/MikeDialog';
 import { SceneBoundary } from './ui/SceneBoundary';
 import { SpotsMenu } from './ui/SpotsMenu';
+import { IdeaBox } from './ui/IdeaBox';
 import { TitleScreen } from './ui/TitleScreen';
 import { sounds } from './ui/sounds';
 
@@ -60,7 +61,9 @@ type Overlay =
   | { kind: 'arcade' }
   /** riding Luna Park's Great Figure Eight */
   | { kind: 'ride' }
-  | { kind: 'spots' };
+  | { kind: 'spots' }
+  /** the idea box: "What would you love to add?" → a GitHub issue */
+  | { kind: 'idea' };
 
 const ConeCatch = lazy(() => import('./experiences/minigames/ConeCatch'));
 const DuckArcade = lazy(() => import('./experiences/arcade/DuckArcade'));
@@ -410,6 +413,14 @@ export default function App() {
                 </button>
               )}
               <button
+                className="hud-idea"
+                onClick={() => { sounds.confirm(); setOverlay({ kind: 'idea' }); }}
+                aria-pressed={overlay.kind === 'idea'}
+                aria-label="Suggest something to add to the Garden in Sound"
+              >
+                {touch ? '✿' : '✿ IDEA'}
+              </button>
+              <button
                 onClick={() => {
                   sounds.setMuted(!muted);
                   setMuted(!muted);
@@ -554,6 +565,8 @@ export default function App() {
           onClose={closeOverlay}
         />
       )}
+
+      {overlay.kind === 'idea' && <IdeaBox street={street} onClose={closeOverlay} />}
 
       {Scene && overlay.kind === 'scene' && (
         <SceneBoundary onError={closeOverlay}>
