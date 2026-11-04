@@ -20,9 +20,20 @@
           } catch (e) {}
           location.replace(location.pathname + '?fresh=' + Date.now() + location.hash);
         }
+        // Only our own build files count. Anything else that fails to load (Cloudflare's
+        // analytics beacon, which ad blockers block, or a script an extension adds) is not
+        // a stale deploy, and reloading for it would loop.
+        function ours(url) {
+          try {
+            var u = new URL(url, location.href);
+            return u.origin === location.origin && u.pathname.indexOf('/assets/') !== -1;
+          } catch (e) {
+            return false;
+          }
+        }
         window.addEventListener('error', function (e) {
           var t = e.target;
-          if (t && (t.tagName === 'SCRIPT' || t.tagName === 'LINK')) fresh();
+          if (t && (t.tagName === 'SCRIPT' || t.tagName === 'LINK') && ours(t.src || t.href)) fresh();
         }, true);
         // a lazily loaded scene whose chunk vanished in a deploy
         window.addEventListener('vite:preloadError', fresh);
