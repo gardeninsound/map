@@ -10,7 +10,7 @@ separate project.
 
 ```bash
 npm install
-npm run dev      # http://localhost:5173/bearisland-map/
+npm run dev      # http://localhost:5173/
 npm test
 npm run build
 ```

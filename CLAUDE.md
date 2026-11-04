@@ -19,7 +19,7 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
 
 ## Commands
 
-- `npm run dev` → http://localhost:5173/bearisland-map/ (note the base path)
+- `npm run dev` → http://localhost:5173/
 - `npm test` · `npm run build` (tsc + vite) — both must be green before committing
 - `npm run images [srcDir]` — raw photos/videos → `public/art/<set>/` (AVIF stills 1200 px +
   320 px thumbs, MP4 video; settings in `ENCODE` at the top of the script) + `artManifest.ts`.
@@ -50,7 +50,10 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
   → `src/game/lemon.ts` (ASCII grid, ripe + unripe palettes)
 - `node scripts/make-portrait.mjs` — Mike's tintype → 40×40 pixel portrait
 - `node scripts/make-cup-rabbit.mjs` — traces the mug rabbit stencil from `data/source/cup-rabbit-photo.png` → `public/sprites/cup-rabbit.png`
-- Deploy: push `main` → GitHub Pages via `.github/workflows/deploy.yml`.
+- Deploy: push `main` → GitHub Pages via `.github/workflows/deploy.yml`. Repo: github.com/gardeninsound/map,
+  live at https://gardeninsound.website (custom domain from `public/CNAME`, served at the root, `base: '/'`).
+  To move it to gardeninsound.website/map/ later: `base: '/map/'`, drop `public/CNAME`, and give the
+  domain to an org `gardeninsound.github.io` repo (every asset URL already uses `BASE_URL`).
 
 ## Where things live
 

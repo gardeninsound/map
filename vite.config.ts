@@ -3,8 +3,9 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  // GitHub repo name → served at <user>.github.io/bearisland-map/
-  base: '/bearisland-map/',
+  // Served at the root of gardeninsound.website (public/CNAME). To move it under /map/ later,
+  // set base: '/map/' — every asset URL goes through import.meta.env.BASE_URL.
+  base: '/',
   plugins: [react()],
   test: { environment: 'jsdom', globals: true },
 });
