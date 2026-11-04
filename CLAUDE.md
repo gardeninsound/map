@@ -107,9 +107,12 @@ auto-merge for feature PRs; for shared PRs (6), say so and leave the merge to th
 - `src/game/sprites.ts` — Mike, the lemons (`src/game/lemon.ts`), the crow (same grid format as the city's sprites).
 - First visit: after Mike's welcome the city's hint arrow flashes 4× toward the nearest open
   spot (remembered in localStorage). The city's `Compass` points at `ArtSpots.open`.
-- `src/game/busker.ts` — the keyboard busker outside Easy Street (Junction): three original
-  chiptune songs (note strings, tested for whole bars) scheduled ahead through the shared
-  AudioContext (the city's `audioContext()`). The busker plugin sets `music.level` from
+- `src/game/busker.ts` — the keyboard busker outside Easy Street (Junction): five original
+  chiptune songs — bouncy ones, a calm slow one ("Fog on the Sound") and a low funky groove
+  ("Junction Strut") — as note strings with per-song tone/loudness/bass groove/hats (tested for
+  whole bars), scheduled ahead through the shared AudioContext (the city's `audioContext()`).
+  The playlist runs on the **wall clock** (`whereNow`), so every rabbit hears the same song and bar
+  "now"; drift (a sleeping tab) snaps back to it. `__busker.song` in dev. The busker plugin sets `music.level` from
   distance (`EARSHOT` tiles, eased); `game.quiet` mutes it inside art scenes; mute respected.
 - `src/game/crow.ts` — the snack crow (pure flight state, tested). Starts outside Les Schwab on
   Alaska; asks for snacks (choice → reply), then flies to the next perch in

@@ -98,4 +98,8 @@ export class Busker implements CityPlugin {
   get level() {
     return this.music.level;
   }
+  /** the song playing now — the same for everyone (for tests / dev tools) */
+  get song() {
+    return this.music.songName;
+  }
 }
