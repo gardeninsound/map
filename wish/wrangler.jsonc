@@ -13,8 +13,13 @@
   "vars": {
     // Pages allowed to send ideas (exact origins; `*` is a wildcard).
     "ALLOWED_ORIGINS": "https://gardeninsound.website,https://www.gardeninsound.website,http://localhost:*,http://127.0.0.1:*",
-    "GITHUB_REPO": "gardeninsound/map"
-    // Secrets (wrangler secret put): TURNSTILE_SECRET, GITHUB_TOKEN (fine-grained, this repo,
-    // Issues: read and write — nothing else).
+    "GITHUB_REPO": "gardeninsound/map",
+    // The "Garden in Sound" GitHub App (github.com/apps/garden-in-sound, owned by the org,
+    // Issues: write only) and its installation on the org. Ideas are filed as garden-in-sound[bot].
+    "GITHUB_APP_ID": "5618995",
+    "GITHUB_INSTALLATION_ID": "178720338"
+    // Secrets (wrangler secret put): TURNSTILE_SECRET, GITHUB_APP_KEY (the app's private key,
+    // PKCS#8 PEM — convert GitHub's download with
+    // `openssl pkcs8 -topk8 -nocrypt -in key.pem`).
   }
 }

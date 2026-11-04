@@ -5,15 +5,20 @@
  *         →  200 {"ok": true, "issue": 12}  |  4xx/5xx {"ok": false, "error": "..."}
  *
  * Checks the page's origin, the Turnstile token (a person filled this in) and a per-address
- * rate limit, then files the idea as a GitHub issue labelled `suggestion`. The Worker's
- * GitHub token can only create issues on that one repo. Nothing here runs the text.
+ * rate limit, then files the idea as a GitHub issue labelled `suggestion`, signed in as the
+ * Garden in Sound GitHub App (so the author is `garden-in-sound[bot]`; the app can only touch
+ * issues). Nothing here runs the text.
  */
+import { installationToken } from './githubApp';
 import { check, issueFor } from './issue';
 
 interface Env {
   ALLOWED_ORIGINS: string;
   GITHUB_REPO: string;
-  GITHUB_TOKEN: string;
+  GITHUB_APP_ID: string;
+  GITHUB_INSTALLATION_ID: string;
+  /** the app's private key, PKCS#8 PEM (secret) */
+  GITHUB_APP_KEY: string;
   TURNSTILE_SECRET: string;
   /** tests point this at a local fake */
   GITHUB_API?: string;
@@ -68,10 +73,17 @@ export default {
     if (!human.success) return reply(403, { ok: false, error: "We couldn't check you're a person. Try again." });
 
     const api = env.GITHUB_API ?? 'https://api.github.com';
+    let token: string;
+    try {
+      token = await installationToken({ api, appId: env.GITHUB_APP_ID, installationId: env.GITHUB_INSTALLATION_ID, key: env.GITHUB_APP_KEY });
+    } catch (e) {
+      console.log('github app', (e as Error).message);
+      return reply(502, { ok: false, error: 'The idea box is stuck right now. Try again later.' });
+    }
     const res = await fetch(`${api}/repos/${env.GITHUB_REPO}/issues`, {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${env.GITHUB_TOKEN}`,
+        Authorization: `Bearer ${token}`,
         Accept: 'application/vnd.github+json',
         'User-Agent': 'garden-wish',
         'Content-Type': 'application/json',
