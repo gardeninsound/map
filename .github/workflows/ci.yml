@@ -1,0 +1,55 @@
+name: Check
+
+# Every pull request into main must pass this before it merges (main deploys on push).
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0 # the size guard diffs against main
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+
+      # A file over 2 MB added or changed in this PR fails, unless .github/large-files.txt lists it.
+      - name: Size guard
+        if: github.event_name == 'pull_request'
+        run: |
+          fail=0
+          while IFS= read -r f; do
+            [ -f "$f" ] || continue
+            size=$(stat -c %s "$f")
+            if [ "$size" -gt 2000000 ] && ! grep -qxF "$f" .github/large-files.txt; then
+              echo "::error file=$f::$f is $((size / 1000)) kB (limit 2000 kB). Compress it, keep it out of the repo, or list it in .github/large-files.txt."
+              fail=1
+            fi
+          done < <(git diff --name-only --diff-filter=AM "origin/${{ github.base_ref }}...HEAD")
+          exit $fail
+
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+
+      # Boot the built site in Chromium: the arcade and every cabinet, no errors or 404s.
+      - run: npx playwright install --with-deps chromium
+      - run: npm run smoke
+      - if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-failure
+          path: screenshots/smoke/
+          if-no-files-found: ignore
