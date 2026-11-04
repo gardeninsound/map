@@ -1,6 +1,10 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "bearisland-relay",
+  // The gardeninsound Cloudflare account (holds gardeninsound.website). Pinned so a deploy
+  // can never land in someone's personal account by mistake.
+  "account_id": "7de05f51e1fe91fd717fe174fcfba85d",
+  "routes": [{ "pattern": "relay.gardeninsound.website", "custom_domain": true }],
   "main": "src/index.ts",
   "compatibility_date": "2026-10-01",
   // Not wrangler's default 8787, which other local tools tend to grab.

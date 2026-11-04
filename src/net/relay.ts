@@ -1,6 +1,6 @@
 /**
- * A client for the arcade's relay (github.com/vlandham/arcade, packages/relay): a
- * Cloudflare Worker that keeps one WebSocket per player and forwards messages to everyone
+ * A client for the island's relay (`relay/` in this repo, copied from the arcade's
+ * packages/relay): a Cloudflare Worker that keeps one WebSocket per player and forwards messages to everyone
  * else in the same room. Ported from the arcade's `@arcade/net` relay backend, without
  * host election, which the island doesn't need. Wire protocol (same as the Worker):
  *
@@ -13,7 +13,7 @@
  * have left, and they rejoin when the socket comes back.
  */
 
-export const RELAY_URL = 'wss://arcade-relay.landham.workers.dev';
+export const RELAY_URL = 'wss://relay.gardeninsound.website';
 
 export type Json = null | string | number | boolean | Json[] | { [key: string]: Json };
 
