@@ -143,6 +143,12 @@ auto-merge for feature PRs; for shared PRs (6), say so and leave the merge to th
   emote, rabbits stop being targets for `TALK_QUIET` s; append only, the wire sends the index), rate-limited
   when sent and when shown (`RateLimit`), bubbles stacked clear of each other (`stackBubbles`). No free
   text, and rabbits pass through each other on purpose.
+  **Presence** (`presence()` in `src/game/visitors.ts`, pure + tested): a hidden tab fades your rabbit at
+  once and leaves the room after 2 min; 10 min without input (keys, mouse, taps) fades, 30 min leaves;
+  showing the tab or any input rejoins as the same rabbit (`RelayRoom.pause/resume` keep the id).
+  Dev: `?presence=N` shortens those to N / 2N / 4N s. The relay sweeps sockets silent > 90 s (no
+  message, no ping) every 30 s via a Durable Object alarm, and the client replaces a socket that hears
+  no pong for ~a minute.
 - **Idea box** (✿ IDEA in the HUD): "What would you love to add in the Garden in Sound?" —
   `src/ui/IdeaBox.tsx` (words in `src/content/ideas.ts`; an optional name, credited in the issue; a real
   form whose Tab order wraps inside the box) posts to the `wish/` Worker

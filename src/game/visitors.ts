@@ -33,6 +33,28 @@ export function decode(d: unknown): RabbitState | null {
   return { pos: { x, y }, facing: FACINGS[f as number] ?? 'down', moving: m === 1, away: a === 1 };
 }
 
+/**
+ * Presence: are you here, away (your rabbit fades for everyone), or gone (you leave the
+ * room, so your rabbit disappears and the count drops)? From how long the tab has been
+ * hidden (null = visible) and how long since your last key, click or tap. Seconds.
+ * Coming back (showing the tab, any input) rejoins as the same rabbit.
+ */
+export const PRESENCE = {
+  /** a hidden tab leaves the room after this long */
+  hiddenGone: 120,
+  /** a visible tab with no input fades after this long… */
+  idleAway: 600,
+  /** …and leaves the room after this long */
+  idleGone: 1800,
+};
+export type Presence = 'here' | 'away' | 'gone';
+
+export function presence(hiddenFor: number | null, idleFor: number, t = PRESENCE): Presence {
+  if (hiddenFor !== null) return hiddenFor >= t.hiddenGone ? 'gone' : 'away';
+  if (idleFor >= t.idleGone) return 'gone';
+  return idleFor >= t.idleAway ? 'away' : 'here';
+}
+
 /** At most this often while moving: the relay's free tier is metered by messages sent. */
 export const SEND_INTERVAL = 0.2;
 

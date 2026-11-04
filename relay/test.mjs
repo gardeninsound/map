@@ -4,6 +4,12 @@
 import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
+// never hang a CI run or a terminal
+setTimeout(() => {
+  console.error('relay test timed out');
+  process.exit(1);
+}, 120_000).unref();
+
 const PORT = 8799;
 const BASE = `ws://127.0.0.1:${PORT}`;
 const here = fileURLToPath(new URL('.', import.meta.url));
@@ -13,9 +19,10 @@ function assert(condition, message) {
 }
 
 /** Starts wrangler directly (not via npm, which wouldn't pass the kill on to it). */
-function startWrangler() {
+function startWrangler(port = PORT, vars = {}) {
   const bin = fileURLToPath(new URL('./node_modules/.bin/wrangler', import.meta.url));
-  const child = spawn(bin, ['dev', '--port', String(PORT), '--ip', '127.0.0.1', '--show-interactive-dev-session=false'], {
+  const extra = Object.entries(vars).flatMap(([k, v]) => ['--var', `${k}:${v}`]);
+  const child = spawn(bin, ['dev', '--port', String(port), '--ip', '127.0.0.1', '--show-interactive-dev-session=false', ...extra], {
     cwd: here,
     env: { ...process.env, WRANGLER_SEND_METRICS: 'false' },
     stdio: ['ignore', 'pipe', 'pipe'],
@@ -41,9 +48,9 @@ function startWrangler() {
 // outside ALLOWED_ORIGINS (wrangler.jsonc), so the test sends one too.
 const ORIGIN = 'http://localhost:5173';
 
-function client(room, id, { app = 'test', origin = ORIGIN } = {}) {
+function client(room, id, { app = 'test', origin = ORIGIN, base = BASE } = {}) {
   const headers = origin ? { Origin: origin } : {};
-  const ws = new WebSocket(`${BASE}/room/${app}/${room}?id=${id}`, { headers });
+  const ws = new WebSocket(`${base}/room/${app}/${room}?id=${id}`, { headers });
   const got = [];
   const waiters = [];
   ws.onmessage = (e) => {
@@ -156,10 +163,44 @@ async function run() {
   for (const s of [a, b, other]) s.ws.close();
 }
 
-const wrangler = await startWrangler();
+/**
+ * The sweep, on its own relay with short timings: a socket that goes silent without
+ * closing (a laptop that slept) is dropped and everyone hears it leave; one that keeps
+ * pinging stays.
+ */
+async function sweep() {
+  const base = `ws://127.0.0.1:${PORT + 1}`;
+  const alive = client('SWEEP', 'aaaa1', { base });
+  const silent = client('SWEEP', 'bbbb2', { base });
+  const watcher = client('SWEEP', 'cccc3', { base });
+  await Promise.all([alive.opened, silent.opened, watcher.opened]);
+  const keepAlive = setInterval(() => {
+    alive.ws.send('ping');
+    watcher.ws.send('ping');
+  }, 500);
+  try {
+    const left = await watcher.next((m) => m.k === 'leave', 'the silent one to be swept', 8000);
+    assert(left.id === 'bbbb2', `expected bbbb2 swept, got ${left.id}`);
+    // (whether the dropped client hears its close depends on the runtime; it may be dead anyway)
+    silent.send('hi', 1);
+    await sleep(1500);
+    assert(!watcher.got.some((m) => m.k === 'msg' && m.from === 'bbbb2'), 'a swept socket is not heard any more');
+    assert(alive.ws.readyState === WebSocket.OPEN, 'a pinging socket stays');
+    assert(!watcher.got.some((m) => m.k === 'leave' && m.id === 'aaaa1'), 'nobody saw the live one leave');
+  } finally {
+    clearInterval(keepAlive);
+    for (const s of [alive, silent, watcher]) s.ws.close();
+  }
+  console.log(' silent sockets are swept (everyone hears them leave); pinging ones stay ✓');
+}
+
 let failed = false;
+let wrangler = await startWrangler();
 try {
   await run();
+  wrangler.kill();
+  wrangler = await startWrangler(PORT + 1, { STALE_MS: 2000, SWEEP_MS: 1000 });
+  await sweep();
   console.log('Relay OK');
 } catch (err) {
   failed = true;
