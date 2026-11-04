@@ -74,8 +74,13 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
    runs the size guard, tests, build and smoke test; `main` requires it to pass.
 6. **Feature PRs auto-merge**: `gh pr merge --auto --squash --delete-branch` — GitHub merges (= deploys)
    the moment Check is green and never if it fails; fix on the branch and it goes in. **Shared PRs wait
-   for the other person's OK** instead: anything touching `src/city/`, `App.tsx`, `relay/`, `.github/`,
-   CLAUDE.md, `package.json` dependencies or the map data pipeline (`scripts/city/`).
+   for an OK** instead: anything touching `src/city/`, `App.tsx`, `relay/`, `wish/`, `.github/`,
+   CLAUDE.md, `package.json` dependencies or the map data pipeline (`scripts/city/`). Who says OK:
+   - **Technical changes → Vince** (tech lead): the Workers, CI and GitHub/Cloudflare setup, dependencies,
+     the city engine and map pipeline, CLAUDE.md's dev notes. If Vince opened or asked for it, his say-so
+     is the OK; Mike doesn't need to sign off.
+   - **The art and the words → Mike**: what a scene shows, Mike's lines and other copy in `src/content/`,
+     which spots and art appear. Vince's PRs that change these wait for Mike.
 7. **Never push to `main` directly**, and never force-push a branch someone else is working on.
 
 What the Check catches, so keep it that way:
