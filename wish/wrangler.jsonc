@@ -1,0 +1,20 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "garden-wish",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-01",
+  // The gardeninsound Cloudflare account (holds gardeninsound.website). Pinned so a deploy
+  // can never land in someone's personal account by mistake.
+  "account_id": "7de05f51e1fe91fd717fe174fcfba85d",
+  "routes": [{ "pattern": "wish.gardeninsound.website", "custom_domain": true }],
+  "dev": { "port": 8791 },
+  // At most 3 ideas a minute from one address (Turnstile already stops bots).
+  "ratelimits": [{ "name": "LIMIT", "namespace_id": "1001", "simple": { "limit": 3, "period": 60 } }],
+  "vars": {
+    // Pages allowed to send ideas (exact origins; `*` is a wildcard).
+    "ALLOWED_ORIGINS": "https://gardeninsound.website,https://www.gardeninsound.website,http://localhost:*,http://127.0.0.1:*",
+    "GITHUB_REPO": "gardeninsound/map"
+    // Secrets (wrangler secret put): TURNSTILE_SECRET, GITHUB_TOKEN (fine-grained, this repo,
+    // Issues: read and write — nothing else).
+  }
+}
