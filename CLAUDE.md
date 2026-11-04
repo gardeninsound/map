@@ -136,7 +136,8 @@ auto-merge for feature PRs; for shared PRs (6), say so and leave the merge to th
   when sent and when shown (`RateLimit`), bubbles stacked clear of each other (`stackBubbles`). No free
   text, and rabbits pass through each other on purpose.
 - **Idea box** (✿ IDEA in the HUD): "What would you love to add in the Garden in Sound?" —
-  `src/ui/IdeaBox.tsx` (words in `src/content/ideas.ts`) posts to the `wish/` Worker
+  `src/ui/IdeaBox.tsx` (words in `src/content/ideas.ts`; an optional name, credited in the issue; a real
+  form whose Tab order wraps inside the box) posts to the `wish/` Worker
   (wish.gardeninsound.website, gardeninsound Cloudflare account), which checks origin + a
   Cloudflare Turnstile token + 3 ideas/min per address, then files a GitHub issue labelled
   `suggestion` on the public repo (mentions defused; formatting pure + tested in

@@ -212,10 +212,11 @@
   background: var(--paper); color: var(--ink); padding: 16px 18px;
   box-shadow: var(--frame), 10px 10px 0 12px rgba(0,0,0,0.25);
   animation: rise 200ms steps(5) both;
-  display: flex; flex-direction: column; gap: 10px;
+  display: flex; flex-direction: column; gap: 10px; position: relative;
 }
-.idea-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
-.idea-head h2 { font-family: var(--pixel); font-weight: 400; font-size: 12px; line-height: 1.7; margin: 0; color: #7a40a0; text-wrap: balance; }
+.idea-close { position: absolute; top: 10px; right: 10px; }
+.idea-close:focus-visible { outline: 3px dashed var(--pink); outline-offset: 2px; }
+.idea h2 { padding-right: 36px; font-family: var(--pixel); font-weight: 400; font-size: 12px; line-height: 1.7; margin: 0; color: #7a40a0; text-wrap: balance; }
 .idea-hint { margin: 0; font-size: 17px; }
 .idea textarea {
   width: 100%; min-height: 128px; resize: vertical;
@@ -226,6 +227,15 @@
 .idea textarea::placeholder { color: #8a7fa8; }
 .idea-meta { display: flex; justify-content: space-between; gap: 12px; font-size: 14px; opacity: 0.8; }
 .idea-count { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.idea-name { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+.idea-name label { font-family: var(--pixel); font-size: 10px; line-height: 1.5; }
+.idea-name input {
+  width: 100%; font-family: var(--body); font-size: 18px; color: var(--ink);
+  background: #fff; border: 0; padding: 8px 12px; box-shadow: 0 0 0 3px var(--ink); margin: 3px 0;
+}
+.idea-name input:focus-visible { outline: 3px dashed var(--pink); outline-offset: 5px; }
+.idea-name input::placeholder { color: #8a7fa8; }
+.idea-name-hint { font-size: 14px; opacity: 0.8; }
 .idea-captcha { min-height: 65px; }
 .idea-error { margin: 0; font-size: 15px; color: #a3261c; }
 .idea-actions { display: flex; gap: 10px; flex-wrap: wrap; }

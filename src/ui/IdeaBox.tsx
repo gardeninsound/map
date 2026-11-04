@@ -4,6 +4,10 @@ import {
   IDEA_HINT,
   IDEA_MAX,
   IDEA_MIN,
+  IDEA_NAME_HINT,
+  IDEA_NAME_LABEL,
+  IDEA_NAME_MAX,
+  IDEA_NAME_PLACEHOLDER,
   IDEA_PLACEHOLDER,
   IDEA_PROMPT,
   IDEA_PUBLIC,
@@ -58,15 +62,19 @@ type Status =
 
 /**
  * "What would you love to add in the Garden in Sound?" A text box over the map; the idea
- * goes to the `wish/` Worker, which files it as a GitHub issue. Esc / {B} closes;
- * Cmd/Ctrl+Enter sends.
+ * goes to the `wish/` Worker, which files it as a GitHub issue, credited to the optional
+ * name. A real form: Tab runs idea → name → captcha → SEND → CANCEL → ✕ and wraps round
+ * (never onto the map behind); Enter in the name field sends, Cmd/Ctrl+Enter sends from
+ * anywhere; Esc / {B} closes.
  */
 export function IdeaBox({ street, onClose }: { street: string | null; onClose(): void }) {
   const [text, setText] = useState('');
+  const [name, setName] = useState('');
   const [token, setToken] = useState<string | null>(null);
   const [captchaFailed, setCaptchaFailed] = useState(false);
   const [status, setStatus] = useState<Status>({ s: 'writing' });
   const area = useRef<HTMLTextAreaElement>(null);
+  const dialog = useRef<HTMLFormElement>(null);
   const captcha = useRef<HTMLDivElement>(null);
   const widget = useRef<string | null>(null);
   const { url, sitekey } = useRef(endpoint()).current;
@@ -127,7 +135,7 @@ export function IdeaBox({ street, onClose }: { street: string | null; onClose():
       const res = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text: trimmed, token, street }),
+        body: JSON.stringify({ text: trimmed, name: name.trim() || undefined, token, street }),
       });
       const data = (await res.json().catch(() => null)) as { ok?: boolean; error?: string } | null;
       if (!res.ok || !data?.ok) throw new Error(data?.error || 'The idea box is stuck right now. Try again later.');
@@ -149,15 +157,42 @@ export function IdeaBox({ street, onClose }: { street: string | null; onClose():
     onClose();
   };
 
+  /** Tab wraps inside the box: from the last control back to the first, and the other way. */
+  const trapTab = (e: React.KeyboardEvent) => {
+    if (e.key !== 'Tab' || !dialog.current) return;
+    const items = [...dialog.current.querySelectorAll<HTMLElement>('textarea, input, button, iframe')].filter(
+      (el) => !(el as HTMLButtonElement).disabled && el.offsetParent !== null,
+    );
+    if (!items.length) return;
+    const first = items[0];
+    const last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  };
+
+  const thanks = name.trim() ? `Thank you, ${name.trim()}!` : IDEA_THANKS[0];
+
   return (
     <div className="idea-layer" onClick={close}>
-      <div
+      <form
+        ref={dialog}
         className="idea"
         role="dialog"
         aria-modal="true"
         aria-labelledby="idea-title"
+        noValidate
         onClick={(e) => e.stopPropagation()}
+        onSubmit={(e) => {
+          e.preventDefault();
+          send();
+        }}
         onKeyDown={(e) => {
+          trapTab(e);
           if (e.key === 'Escape') {
             e.preventDefault();
             close();
@@ -167,19 +202,14 @@ export function IdeaBox({ street, onClose }: { street: string | null; onClose():
           }
         }}
       >
-        <div className="idea-head">
-          <h2 id="idea-title">{IDEA_PROMPT}</h2>
-          <button className="spots-close" onClick={close} aria-label="Close">
-            ✕
-          </button>
-        </div>
+        <h2 id="idea-title">{IDEA_PROMPT}</h2>
 
         {status.s === 'sent' ? (
           <div className="idea-thanks" role="status">
-            <p className="idea-thanks-big">✿ {IDEA_THANKS[0]}</p>
+            <p className="idea-thanks-big">✿ {thanks}</p>
             <p>{IDEA_THANKS[1]}</p>
             <div className="idea-actions">
-              <button className="primary" onClick={onClose} autoFocus>
+              <button type="button" className="primary" onClick={onClose} autoFocus>
                 BACK TO THE MAP
               </button>
             </div>
@@ -207,6 +237,22 @@ export function IdeaBox({ street, onClose }: { street: string | null; onClose():
                 {text.length}/{IDEA_MAX}
               </span>
             </div>
+            <div className="idea-name">
+              <label htmlFor="idea-name">{IDEA_NAME_LABEL}</label>
+              <input
+                id="idea-name"
+                type="text"
+                value={name}
+                maxLength={IDEA_NAME_MAX}
+                placeholder={IDEA_NAME_PLACEHOLDER}
+                autoComplete="nickname"
+                enterKeyHint="send"
+                aria-describedby="idea-name-hint"
+                disabled={status.s === 'sending'}
+                onChange={(e) => setName(e.target.value)}
+              />
+              <span id="idea-name-hint" className="idea-name-hint">{IDEA_NAME_HINT}</span>
+            </div>
             <div className="idea-captcha" ref={captcha} />
             {captchaFailed && (
               <p className="idea-error" role="alert">
@@ -220,16 +266,20 @@ export function IdeaBox({ street, onClose }: { street: string | null; onClose():
               </p>
             )}
             <div className="idea-actions">
-              <button className="primary" onClick={send} disabled={!canSend}>
+              <button type="submit" className="primary" disabled={!canSend}>
                 {status.s === 'sending' ? 'PLANTING…' : 'SEND IDEA'}
               </button>
-              <button onClick={close} disabled={status.s === 'sending'}>
+              <button type="button" onClick={close} disabled={status.s === 'sending'}>
                 CANCEL
               </button>
             </div>
           </>
         )}
-      </div>
+        {/* last in the tab order; drawn in the top corner */}
+        <button type="button" className="spots-close idea-close" onClick={close} aria-label="Close">
+          ✕
+        </button>
+      </form>
     </div>
   );
 }
