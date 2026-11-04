@@ -106,13 +106,14 @@ try {
   assert(issues.length === 0, 'nothing reached GitHub yet');
   console.log(' no Turnstile token, no issue ✓');
 
-  r = await send({ text: 'A koi pond, ask @vlandham', token: DUMMY_TOKEN, street: 'California Ave SW' });
+  r = await send({ text: 'A koi pond, ask @vlandham', token: DUMMY_TOKEN, street: 'California Ave SW', name: 'Sam from Delridge' });
   assert(r.status === 200 && r.data.ok && r.data.issue === 1 && r.cors === ORIGIN, `good idea → ${r.status} ${JSON.stringify(r.data)}`);
   const [issue] = issues;
   assert(issue.url === '/repos/gardeninsound/map/issues', `issue url ${issue.url}`);
   assert(issue.body.labels[0] === 'suggestion', 'labelled suggestion');
   assert(issue.body.body.includes('@​vlandham') && !/@vlandham/.test(issue.body.body), 'mention defused');
   assert(issue.body.body.includes('California Ave SW'), 'street included');
+  assert(issue.body.body.includes('by **Sam from Delridge**'), 'name credited');
   console.log(' a good idea becomes a labelled issue, mentions defused ✓');
   console.log(' filed as the GitHub App: signed JWT → installation token → issue ✓');
 

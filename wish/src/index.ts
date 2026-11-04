@@ -1,7 +1,7 @@
 /**
  * The map's idea box: "What would you love to add in the Garden in Sound?"
  *
- *   POST /   {"text": "...", "token": "<Turnstile token>", "street"?: "California Ave SW"}
+ *   POST /   {"text": "...", "token": "<Turnstile token>", "name"?: "Sam", "street"?: "California Ave SW"}
  *         →  200 {"ok": true, "issue": 12}  |  4xx/5xx {"ok": false, "error": "..."}
  *
  * Checks the page's origin, the Turnstile token (a person filled this in) and a per-address
@@ -88,7 +88,7 @@ export default {
         'User-Agent': 'garden-wish',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(issueFor(idea.text, idea.street)),
+      body: JSON.stringify(issueFor(idea.text, idea.street, idea.name)),
     });
     if (!res.ok) {
       console.log('github', res.status, await res.text().catch(() => ''));
