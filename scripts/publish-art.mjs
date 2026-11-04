@@ -1,47 +1,21 @@
 /**
  * Puts exactly the processed art the scenes show into git — nothing more.
  *
- * public/art/ is gitignored (≈all of it is unused online). This works out the files the
- * deployed site actually requests, using the same code the app runs, and syncs git:
- *   - slideshow spots: the stills `chooseTurns` picks (full + thumbnail)
- *   - Seven+ Stories: each sign's photo
- *   - SPOTS menu: the first still's thumbnail for every spot with a scene
+ * public/art/ is gitignored (≈all of it is unused online). `neededArt()` works out the files
+ * the deployed site actually requests, using the same code the app runs; this syncs git to it.
  * Missing ones are `git add -f`-ed; tracked art no longer needed is untracked (the files
  * stay on disk). Run after `npm run images` or after changing picks / maxPhotos.
  *
  * Usage: npm run art:publish [-- --dry-run]
  */
 import { execFileSync } from 'node:child_process';
-import { existsSync, readFileSync, statSync } from 'node:fs';
+import { existsSync, statSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { artFormat, artManifest } from '../src/content/artManifest.ts';
-import { parkSigns } from '../src/content/puppyPark.ts';
-import { chooseTurns, slideshows } from '../src/content/wallTurns.ts';
+import { neededArt } from './neededArt.mjs';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const DRY = process.argv.includes('--dry-run');
-const places = JSON.parse(readFileSync(new URL('../src/content/placesData.json', import.meta.url)));
-const file = (set, id, thumb = false) => `public/art/${set}/${id}${thumb ? '-t' : ''}.${artFormat}`;
-
-const need = new Set();
-for (const p of places) {
-  if (!p.experience) continue;
-  const assets = artManifest[p.set] ?? [];
-  const first = assets.find((a) => a.kind === 'image') ?? assets[0];
-  if (first) need.add(file(p.set, first.id, true)); // SPOTS menu thumbnail (a still, else a video poster)
-  const script = slideshows[p.experience];
-  if (script) {
-    for (const a of chooseTurns(assets, script.maxPhotos, script.picks)) {
-      need.add(file(p.set, a.id));
-      need.add(file(p.set, a.id, true));
-    }
-  }
-  if (p.experience === 'park-walk') for (const s of parkSigns) need.add(file(p.set, s.asset));
-  if (p.experience === 'video') {
-    const v = assets.find((a) => a.kind === 'video');
-    if (v) need.add(file(p.set, v.id)).add(`public/art/${p.set}/${v.id}.mp4`); // poster + video
-  }
-}
+const need = neededArt();
 
 const missing = [...need].filter((f) => !existsSync(ROOT + f));
 if (missing.length) {
