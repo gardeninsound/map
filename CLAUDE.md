@@ -20,7 +20,7 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
 ## Commands
 
 - `npm run dev` → http://localhost:5173/
-- `npm test` · `npm run build` (tsc + vite) — both must be green before committing
+- `npm test` · `npm run build` (tsc + vite) — both must be green before committing (and in CI on every PR, see Git workflow)
 - `npm run images [srcDir]` — raw photos/videos → `public/art/<set>/` (AVIF stills 1200 px +
   320 px thumbs, MP4 video; settings in `ENCODE` at the top of the script) + `artManifest.ts`.
   Default src `~/Downloads/bearisland/images-merged`; macOS `sips`/`mdls` + ffmpeg; incremental
@@ -50,10 +50,29 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
   → `src/game/lemon.ts` (ASCII grid, ripe + unripe palettes)
 - `node scripts/make-portrait.mjs` — Mike's tintype → 40×40 pixel portrait
 - `node scripts/make-cup-rabbit.mjs` — traces the mug rabbit stencil from `data/source/cup-rabbit-photo.png` → `public/sprites/cup-rabbit.png`
-- Deploy: push `main` → GitHub Pages via `.github/workflows/deploy.yml`. Repo: github.com/gardeninsound/map,
+- Deploy: merge to `main` → GitHub Pages via `.github/workflows/deploy.yml`. Repo: github.com/gardeninsound/map,
   live at https://gardeninsound.website (custom domain from `public/CNAME`, served at the root, `base: '/'`).
   To move it to gardeninsound.website/map/ later: `base: '/map/'`, drop `public/CNAME`, and give the
   domain to an org `gardeninsound.github.io` repo (every asset URL already uses `BASE_URL`).
+
+## Git workflow (everyone, Claude included)
+
+`main` is always deployable: every merge to it goes live. Work reaches it only through a pull request.
+
+1. **One short branch per feature, cut from fresh `main`**: `git fetch origin && git switch -c <feature> origin/main`.
+   Name it for the feature (`duck-moon`, `arcade-posters`), never a catch-all. Unrelated work → its own branch.
+2. **Merge within a day or two.** Bigger than that → split it, or merge the parts hidden behind a switch
+   (`ready: false` cabinets, a location with no `experience`, a dev-only `?flag`) and turn it on last.
+3. **Bring in `main` at the start of each session** (`git pull origin main`) and before opening the PR;
+   resolve conflicts on the branch, keeping both sides' features.
+4. **Small commits**, each with `npm test` + `npm run build` green.
+5. **Open a PR into `main`** (`gh pr create --fill`); the **Check** workflow (`.github/workflows/ci.yml`)
+   runs tests + build. Merge when it's green (`gh pr merge --squash --delete-branch`), then delete the
+   branch locally too.
+6. **Never push to `main` directly**, and never force-push a branch someone else is working on.
+
+Claude: start new work by branching as in 1 (even if the session opened on another branch); don't commit,
+push or merge unless asked. "Push" means push the branch and open/update its PR; merge only when asked.
 
 ## Where things live
 
