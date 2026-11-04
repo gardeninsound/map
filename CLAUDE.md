@@ -80,8 +80,9 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
   `src/game/coneCatch.ts`; best score in localStorage) via the App's `minigame` overlay, whose `then`
   gets `{ score, best }` back for her closing line. A new character mini game: same overlay, its own component.
 - `src/game/plugins/visitors.ts` — **other people, live**: everyone on the site shares one room
-  on the arcade's relay (`src/net/relay.ts`, a Cloudflare Worker in github.com/vlandham/arcade
-  `packages/relay`; its ALLOWED_ORIGINS must include this site's origin). Each rabbit gets a
+  on the island's relay (`src/net/relay.ts` client; the Worker is `relay/`, its own npm project
+  deployed to the gardeninsound Cloudflare account — see `relay/README.md`; its ALLOWED_ORIGINS
+  must include this site's origin; `?relay=ws://127.0.0.1:8790` points the site at `npm run dev`). Each rabbit gets a
   scarf from its id and fades while its player is in a scene. The minimap shows them, and so does
   "N OTHER RABBITS HERE". Your rabbit is sent only when it changes, at most 5×/s, because the free
   relay is metered by messages sent (wire format and easing are pure and tested:

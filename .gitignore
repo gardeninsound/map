@@ -8,3 +8,4 @@ data/osm/
 # scenes show, which `npm run art:publish` force-adds.
 public/art/
 *.tsbuildinfo
+.wrangler/

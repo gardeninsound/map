@@ -1,0 +1,19 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "bearisland-relay",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-01",
+  // Not wrangler's default 8787, which other local tools tend to grab.
+  "dev": { "port": 8790 },
+  "durable_objects": {
+    "bindings": [{ "name": "ROOMS", "class_name": "Room" }]
+  },
+  // Free accounts can only create SQLite-backed Durable Objects. The relay
+  // stores nothing; this just picks the storage backend.
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["Room"] }],
+  "vars": {
+    // Comma-separated page origins allowed to connect; `*` is a wildcard.
+    "ALLOWED_ORIGINS": "https://gardeninsound.website,https://www.gardeninsound.website,http://localhost:*,http://127.0.0.1:*",
+    "MAX_PEERS": "64"
+  }
+}
