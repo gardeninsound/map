@@ -9,7 +9,7 @@ import { mkdirSync, rmSync, writeFileSync } from 'node:fs';
 import { homedir } from 'node:os';
 
 const { chromium } = await import(`${homedir()}/code/games/arcade/node_modules/playwright-core/index.mjs`);
-const BASE = process.env.MAP_URL ?? 'http://localhost:5173/bearisland-map/';
+const BASE = process.env.MAP_URL ?? 'http://localhost:5173/';
 const N = Number(process.argv[2] ?? 12);
 const OUT = new URL('../../screenshots/audit/', import.meta.url).pathname;
 rmSync(OUT, { recursive: true, force: true });

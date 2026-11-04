@@ -19,7 +19,7 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
 
 ## Commands
 
-- `npm run dev` → http://localhost:5173/bearisland-map/ (note the base path)
+- `npm run dev` → http://localhost:5173/
 - `npm test` · `npm run build` (tsc + vite) — both must be green before committing
 - `npm run images [srcDir]` — raw photos/videos → `public/art/<set>/` (AVIF stills 1200 px +
   320 px thumbs, MP4 video; settings in `ENCODE` at the top of the script) + `artManifest.ts`.
@@ -50,7 +50,10 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
   → `src/game/lemon.ts` (ASCII grid, ripe + unripe palettes)
 - `node scripts/make-portrait.mjs` — Mike's tintype → 40×40 pixel portrait
 - `node scripts/make-cup-rabbit.mjs` — traces the mug rabbit stencil from `data/source/cup-rabbit-photo.png` → `public/sprites/cup-rabbit.png`
-- Deploy: push `main` → GitHub Pages via `.github/workflows/deploy.yml`.
+- Deploy: push `main` → GitHub Pages via `.github/workflows/deploy.yml`. Repo: github.com/gardeninsound/map,
+  live at https://gardeninsound.website (custom domain from `public/CNAME`, served at the root, `base: '/'`).
+  To move it to gardeninsound.website/map/ later: `base: '/map/'`, drop `public/CNAME`, and give the
+  domain to an org `gardeninsound.github.io` repo (every asset URL already uses `BASE_URL`).
 
 ## Where things live
 
@@ -76,6 +79,22 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
   `src/experiences/minigames/ConeCatch.tsx`, rules pure + tested in
   `src/game/coneCatch.ts`; best score in localStorage) via the App's `minigame` overlay, whose `then`
   gets `{ score, best }` back for her closing line. A new character mini game: same overlay, its own component.
+- `src/game/plugins/visitors.ts` — **other people, live**: everyone on the site shares one room
+  on the arcade's relay (`src/net/relay.ts`, a Cloudflare Worker in github.com/vlandham/arcade
+  `packages/relay`; its ALLOWED_ORIGINS must include this site's origin). Each rabbit gets a
+  scarf from its id and fades while its player is in a scene. The minimap shows them, and so does
+  "N OTHER RABBITS HERE". Your rabbit is sent only when it changes, at most 5×/s, because the free
+  relay is metered by messages sent (wire format and easing are pure and tested:
+  `src/game/visitors.ts`). `?solo` walks alone; dev-only `?island=<name>` uses a private room.
+  Each rabbit has a name from its id (scarf colour + West Seattle place, never sent), shown when
+  you're close on a dark tag under its feet (a 3×5 pixel font, `src/game/tinyFont.ts`, also used for
+  bubble text — so it never reads as a map place label) and in the list behind the "N OTHER RABBITS" button, where clicking a rabbit hops you beside it (`Visitors.where`), and which also has the remembered
+  "hide other rabbits" toggle. They talk only in **emotes** from the fixed list in
+  `src/content/emotes.ts` (SAY button, keys 1–9, or walk up to a rabbit — it's a `rabbit` target with
+  a lavender '…' bubble (`Target.bubbleColor`) — and {A} opens the picker, {B} closes it; after you
+  emote, rabbits stop being targets for `TALK_QUIET` s; append only, the wire sends the index), rate-limited
+  when sent and when shown (`RateLimit`), bubbles stacked clear of each other (`stackBubbles`). No free
+  text, and rabbits pass through each other on purpose.
 - **Duck Arcade** (in Junction 47's storefront slot, `render/facades.ts`): `src/game/plugins/arcadeDoor.ts`
   puts the door target on its California side; App opens `src/experiences/arcade/DuckArcade.tsx`, a
   three.js first-person room (`ArcadeScene.ts`) with a cabinet per game. The shell: cabinets are data
@@ -83,6 +102,9 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
   taking `{ onExit(result) }` (same as Cone Catch). New duck game: component + one line there + `ready: true`.
   Duck Scroller and Rabbit Zapper are plain-script kits in `public/` (`duck-scroller.js`, `rabbit-zapper.js`
   + their asset folders) that a thin wrapper component loads and mounts; the kits handle their own keys.
+  Duck on the Moon is a port into the app (`DuckMoonScene.ts` + `DuckOnTheMoon.tsx`, words in
+  `src/content/duckOnTheMoon.ts`, MP3s in `public/duck-on-the-moon/`). While a game is open,
+  `sfx.gameSound(true)` keeps its sound on even if the map is muted. Wall posters: `POSTERS` in `ArcadeScene.ts`.
 - **Luna Park** (1907–1913) on its pilings off Duwamish Head: `src/game/plugins/lunaPark.ts` turns the pier's
   water tiles walkable at attach (street name "Luna Park"), paints the boardwalk under everyone and draws the
   animated rides depth-sorted (gate, Great Figure Eight, Shoot-the-Chutes, Looff carousel, Giant Whirl,

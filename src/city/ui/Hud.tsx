@@ -51,6 +51,8 @@ export interface MapMarker {
   x: number;
   y: number;
   color: string;
+  /** a moving thing (another player): drawn outlined, above the place diamonds */
+  above?: boolean;
 }
 
 /** Where a name tag can sit around its diamond, in the order they're tried. */
@@ -106,6 +108,8 @@ export function Minimap({
   const tags = useRef<(HTMLElement | null)[]>([]);
   const base = useRef<HTMLCanvasElement | null>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
+  /** over the diamonds: `above` markers, then you, so you're never covered */
+  const top = useRef<HTMLCanvasElement>(null);
   const getMarkers = useRef(markers);
   getMarkers.current = markers;
 
@@ -134,16 +138,41 @@ export function Minimap({
       if (c && base.current) {
         const ctx = c.getContext('2d')!;
         ctx.drawImage(base.current, 0, 0);
-        for (const m of getMarkers.current()) {
+        const markers = getMarkers.current();
+        for (const m of markers) {
+          if (m.above) continue;
           ctx.fillStyle = m.color;
           ctx.fillRect(Math.floor(m.x) - 2, Math.floor(m.y) - 2, 5, 5);
         }
-        const { x, y } = game.player.pos;
-        if (Math.floor(t / 300) % 2 === 0) {
-          ctx.fillStyle = '#2b2350';
-          ctx.fillRect(Math.floor(x) - 3, Math.floor(y) - 3, 7, 7);
-          ctx.fillStyle = '#ff5d5d';
-          ctx.fillRect(Math.floor(x) - 2, Math.floor(y) - 2, 5, 5);
+        const tc = top.current?.getContext('2d');
+        if (tc) {
+          // drawn at screen resolution, so these stay a readable size however small the map is
+          const dpr = window.devicePixelRatio || 1;
+          const cw = Math.round(tc.canvas.clientWidth * dpr);
+          const ch = Math.round(tc.canvas.clientHeight * dpr);
+          if (tc.canvas.width !== cw || tc.canvas.height !== ch) Object.assign(tc.canvas, { width: cw, height: ch });
+          tc.setTransform(1, 0, 0, 1, 0, 0);
+          tc.clearRect(0, 0, cw, ch);
+          const sx = cw / game.world.w;
+          const sy = ch / game.world.h;
+          const dot = (x: number, y: number, r: number, fill: string, ring = false) => {
+            const px = Math.round(x * sx);
+            const py = Math.round(y * sy);
+            const o = Math.round(2 * dpr);
+            if (ring) {
+              // a paper ring, so a green scarf still shows on a green park
+              const q = o + Math.round(dpr);
+              tc.fillStyle = '#fff7e6';
+              tc.fillRect(px - r - q, py - r - q, 2 * (r + q), 2 * (r + q));
+            }
+            tc.fillStyle = '#2b2350';
+            tc.fillRect(px - r - o, py - r - o, 2 * (r + o), 2 * (r + o));
+            tc.fillStyle = fill;
+            tc.fillRect(px - r, py - r, 2 * r, 2 * r);
+          };
+          for (const m of markers) if (m.above) dot(m.x, m.y, Math.round(3 * dpr), m.color, true);
+          // you: always shown, on top of everything, flashing between red and white
+          dot(game.player.pos.x, game.player.pos.y, Math.round(4 * dpr), Math.floor(t / 300) % 2 === 0 ? '#ff5d5d' : '#ffffff');
         }
       }
       raf = requestAnimationFrame(draw);
@@ -194,8 +223,10 @@ export function Minimap({
             onPick({ x: ((e.clientX - r.left) / r.width) * w, y: ((e.clientY - r.top) / r.height) * h });
           }}
         />
+        <canvas ref={top} className="minimap-top" aria-hidden="true" />
         {places.map((p, i) => (
-          <span key={p.name} className="minimap-place" style={{ left: `${(p.x / w) * 100}%`, top: `${(p.y / h) * 100}%` }}>
+          // name + spot: two landmarks can share a short name (both Safeways show as "Safeway")
+          <span key={`${p.name}@${p.x},${p.y}`} className="minimap-place" style={{ left: `${(p.x / w) * 100}%`, top: `${(p.y / h) * 100}%` }}>
             <i
               style={{ background: p.color }}
               title={p.name}

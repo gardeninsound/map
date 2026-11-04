@@ -222,6 +222,12 @@ export function buildWalker(grids: { down: Grid; up: Grid; right: Grid }, colors
   return { down: pair(grids.down), up: pair(grids.up), right: pair(grids.right), left: pair(grids.right, true) };
 }
 
+/** The rabbit, optionally in a different scarf (the default is teal). */
+export function buildRabbit(scarf?: string): Walker {
+  const colors = scarf ? { ...RABBIT_COLORS, t: scarf } : RABBIT_COLORS;
+  return buildWalker({ down: RABBIT_DOWN, up: RABBIT_UP, right: RABBIT_RIGHT }, colors);
+}
+
 export function buildSprites(): SpriteSet {
-  return { rabbit: buildWalker({ down: RABBIT_DOWN, up: RABBIT_UP, right: RABBIT_RIGHT }, RABBIT_COLORS) };
+  return { rabbit: buildRabbit() };
 }
