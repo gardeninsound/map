@@ -147,8 +147,8 @@ auto-merge for feature PRs; for shared PRs (6), say so and leave the merge to th
   Cloudflare Turnstile token + 3 ideas/min per address, then files a GitHub issue labelled
   `suggestion` on the public repo (mentions defused; formatting pure + tested in
   `wish/src/issue.ts`, run by the root `npm test`; `cd wish && npm test` runs the Worker against a
-  fake GitHub). Issues are filed by the org's **Garden in Sound GitHub App**
-  (github.com/apps/garden-in-sound, Issues: write only) so they show as `garden-in-sound[bot]`:
+  fake GitHub). Issues are filed by the org's **Garden in Sound Wishes GitHub App**
+  (github.com/apps/garden-in-sound-wishes, Issues: write only) so they show as `garden-in-sound-wishes[bot]`:
   `wish/src/githubApp.ts` signs a JWT with the app key and caches an installation token. App and
   installation ids are vars in `wish/wrangler.jsonc`; secrets: `TURNSTILE_SECRET`, `GITHUB_APP_KEY`
   (PKCS#8 PEM). `?wish=http://127.0.0.1:8791` points the site at `npm run dev` in wish/ (Turnstile's
