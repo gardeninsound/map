@@ -112,6 +112,12 @@ export default function DuckArcade({ onExit }: { onExit(): void }) {
   const nearGame = near !== null ? arcadeGames[near] : null;
   const Game = playing ? arcadeComponents[playing.id] : null;
 
+  // a cabinet's game always starts with its sound on, even if the map is muted
+  useEffect(() => {
+    sfx.gameSound(!!Game);
+    return () => sfx.gameSound(false);
+  }, [Game]);
+
   return (
     <div className="scene park-scene arcade-scene">
       <div ref={host} className="park-stage" aria-label="Inside the Duck Arcade: rows of arcade cabinets around a giant rubber duck." />

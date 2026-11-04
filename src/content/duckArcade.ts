@@ -14,6 +14,8 @@ export interface ArcadeGame {
   /** cabinet body, screen glow and marquee trim */
   colors: { body: string; screen: string; trim: string };
   ready: boolean;
+  /** picture on the cabinet's front panel, a path under public/ (about 5:4, pixel-sized) */
+  front?: string;
   /** what's said back on the floor, for a game without a score to read out (see `arcadeAfter`) */
   after?: (score: number, best: number) => string;
 }
@@ -37,6 +39,27 @@ export const arcadeGames: ArcadeGame[] = [
     ready: true,
     after: (found, times) =>
       found ? `DUCK SCROLLER: the pineapple, found${times > 1 ? ` (${times} times now)` : ''}. Lucky duck.` : 'DUCK SCROLLER: the pineapple is still out there.',
+  },
+  {
+    id: 'rabbit-zapper',
+    title: 'RABBIT ZAPPER',
+    blurb: 'Monsters in the rain. The rabbit zaps them with its eyes. Then the boss.',
+    colors: { body: '#1b2e39', screen: '#ff3d4f', trim: '#eeaaac' },
+    ready: true,
+    front: 'rabbit-zapper/cabinet-front.png',
+    after: (won, wins) =>
+      won ? `RABBIT ZAPPER: the boss melted${wins > 1 ? ` (${wins} times now)` : ''}. Picnic time.` : 'RABBIT ZAPPER: the boss is still out there.',
+  },
+  {
+    id: 'duck-on-the-moon',
+    title: 'DUCK ON THE MOON',
+    blurb: 'Pip the duck has found three sounds on the moon. Listen to them together.',
+    colors: { body: '#25243b', screen: '#e8c77a', trim: '#f5db9c' },
+    ready: true,
+    after: (heard) =>
+      heard === 3
+        ? 'DUCK ON THE MOON: all three sounds glowing in the observatory.'
+        : `DUCK ON THE MOON: ${heard} of 3 sounds heard. Pip is still listening.`,
   },
   {
     id: 'bread-toss',

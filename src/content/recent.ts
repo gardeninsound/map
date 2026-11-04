@@ -17,6 +17,10 @@ export interface RecentChange {
 }
 
 export const recentChanges: RecentChange[] = [
+  { title: 'Duck Arcade: Duck on the Moon', date: '2026-10-28', at: { arcade: true } },
+  { title: 'Luna Park, 1907–1913', date: '2026-10-27', at: { lat: 47.59557, lon: -122.38624 } },
+  { title: 'Duck Arcade: Rabbit Zapper', date: '2026-10-27', at: { arcade: true } },
+  { title: 'A Good Snuggle, Schmitz Park', date: '2026-10-26', at: { spot: 'snuggle' } },
   { title: 'A seal in Colman Pool', date: '2026-10-24', at: { landmark: 'colman-pool' } },
   { title: 'Uptown Espresso', date: '2026-10-24', at: { landmark: 'uptown-espresso' } },
   { title: 'Admiral Bird', date: '2026-10-23', at: { landmark: 'admiral-bird' } },

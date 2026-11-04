@@ -24,6 +24,26 @@ const SLOTS: [number, number, number][] = [
   [6.3, -0.2, -Math.PI / 2],
 ];
 
+/**
+ * Pop-art posters on the open wall (public/arcade/posters/, cut from two four-up sheets):
+ * file, pixel size, then x, z, facing yaw. On the front wall, two pairs flank the doors; each
+ * side wall has one near the front and one in the back corner, clear of the cabinets.
+ */
+const POSTERS: [string, number, number, number, number, number][] = [
+  ['poster-blue', 413, 557, -7 + 0.03, 2.3, Math.PI / 2],
+  ['poster-pink', 412, 557, 7 - 0.03, 2.3, -Math.PI / 2],
+  ['poster-yellow', 413, 541, -3, 4.5 - 0.03, Math.PI],
+  ['poster-green', 412, 541, 3, 4.5 - 0.03, Math.PI],
+  // the second sheet
+  ['poster-bolt', 410, 549, -7 + 0.03, -5.2, Math.PI / 2],
+  ['poster-stock', 410, 549, 7 - 0.03, -5.2, -Math.PI / 2],
+  ['poster-shag', 410, 549, -5.5, 4.5 - 0.03, Math.PI],
+  ['poster-guitar', 410, 549, 5.5, 4.5 - 0.03, Math.PI],
+];
+/** poster width, metres; each hangs centred between the wainscot and the neon stripe */
+const POSTER_W = 0.85;
+const POSTER_Y = 1.92;
+
 const FONT = '"Press Start 2P", monospace';
 
 const lambert = (color: string, extra: THREE.MeshLambertMaterialParameters = {}) =>
@@ -214,6 +234,23 @@ export class ArcadeScene {
     wall(D, minX, cz, Math.PI / 2);
     wall(D, maxX, cz, -Math.PI / 2);
 
+    // The posters, each in a thin black frame
+    const frameMat = lambert('#1c1b22');
+    for (const [file, pw, ph, x, z, rotY] of POSTERS) {
+      const ph3 = (POSTER_W * ph) / pw;
+      const frame = new THREE.Mesh(new THREE.BoxGeometry(POSTER_W + 0.08, ph3 + 0.08, 0.02), frameMat);
+      frame.position.set(x, POSTER_Y, z);
+      frame.rotation.y = rotY;
+      const tex = new THREE.TextureLoader().load(`${import.meta.env.BASE_URL}arcade/posters/${file}.webp`);
+      tex.colorSpace = THREE.SRGBColorSpace;
+      // unlit, so the room's coloured lights don't muddy the pop colours; a touch dimmed so they don't glow
+      const pic = new THREE.Mesh(new THREE.PlaneGeometry(POSTER_W, ph3), new THREE.MeshBasicMaterial({ map: tex, color: '#e2e2e2' }));
+      pic.position.set(x, POSTER_Y, z);
+      pic.rotation.y = rotY;
+      pic.translateZ(0.012);
+      s.add(frame, pic);
+    }
+
     // The neon name over the back row.
     const sign = canvasTexture(128, 24, (g) => {
       g.clearRect(0, 0, 128, 24);
@@ -288,11 +325,24 @@ export class ArcadeScene {
       stripe.rotation.x = -0.4;
       g.add(stripe);
     }
-    const coin = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.4, 0.02), dark);
-    coin.position.set(0, 0.45, 0.43);
+    // front art (a picture from the game, framed in the trim colour) pushes the coin door down
+    if (game.front) {
+      // kept below the control panel's overhang, which hides the top from standing height
+      const frame = new THREE.Mesh(new THREE.BoxGeometry(0.82, 0.67, 0.01), trim);
+      frame.position.set(0, 0.55, 0.43);
+      const art = new THREE.TextureLoader().load(`${import.meta.env.BASE_URL}${game.front}`);
+      art.colorSpace = THREE.SRGBColorSpace;
+      art.magFilter = art.minFilter = THREE.NearestFilter;
+      const pic = new THREE.Mesh(new THREE.PlaneGeometry(0.76, 0.61), new THREE.MeshLambertMaterial({ map: art }));
+      pic.position.set(0, 0.55, 0.437);
+      g.add(frame, pic);
+    }
+    const [coinY, coinH] = game.front ? [0.12, 0.16] : [0.45, 0.4];
+    const coin = new THREE.Mesh(new THREE.BoxGeometry(0.34, coinH, 0.02), dark);
+    coin.position.set(0, coinY, 0.43);
     g.add(coin);
     const slot = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.1, 0.02), glow('#e4202c'));
-    slot.position.set(0, 0.52, 0.445);
+    slot.position.set(0, coinY + coinH / 2 - 0.08, 0.445);
     g.add(slot);
 
     // control panel with a joystick and two buttons

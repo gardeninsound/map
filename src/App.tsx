@@ -28,6 +28,8 @@ import { Chicken } from './game/plugins/chicken';
 import { BigCup } from './game/plugins/bigCup';
 import { Seal } from './game/plugins/seal';
 import { ArcadeDoor } from './game/plugins/arcadeDoor';
+import { LunaPark, lunaSignPortrait } from './game/plugins/lunaPark';
+import { lunaRideInvite, type LunaSign } from './content/lunaPark';
 import type { MiniGameResult } from './experiences/minigames/ConeCatch';
 import { DialogBox } from './ui/MikeDialog';
 import { SceneBoundary } from './ui/SceneBoundary';
@@ -53,13 +55,19 @@ type Overlay =
   | { kind: 'minigame'; then(result: MiniGameResult): void }
   /** inside the Duck Arcade */
   | { kind: 'arcade' }
+  /** riding Luna Park's Great Figure Eight */
+  | { kind: 'ride' }
   | { kind: 'spots' };
 
 const ConeCatch = lazy(() => import('./experiences/minigames/ConeCatch'));
 const DuckArcade = lazy(() => import('./experiences/arcade/DuckArcade'));
+const FigureEight = lazy(() => import('./experiences/luna/FigureEight'));
 
 /** Overlays that take the whole screen: the map's HUD and touch pad hide under them. */
-const FULL_SCREEN: Overlay['kind'][] = ['scene', 'minigame', 'arcade'];
+const FULL_SCREEN: Overlay['kind'][] = ['scene', 'minigame', 'arcade', 'ride'];
+
+/** the sign picture in Luna Park's dialog boxes, drawn on first use */
+let signPortrait: string | undefined;
 
 const LANDMARK_COLOR = '#5fa8a0';
 
@@ -127,10 +135,11 @@ export default function App() {
     const busker = new Busker();
     const crow = new Crow();
     const chicken = new Chicken();
+    const luna = new LunaPark();
     const g = new CityGame(canvas.current!, world, {
       start: world.project(START.lat, START.lon),
       voices: neighborVoices,
-      plugins: [art, new BigCup(art), new Seal(), arcadeDoor.current, busker, crow, chicken],
+      plugins: [art, new BigCup(art), new Seal(), arcadeDoor.current, luna, busker, crow, chicken],
       events: {
         onStreet: setStreet,
         onStorefront: setStorefront,
@@ -139,6 +148,27 @@ export default function App() {
           sounds.confirm();
           if (t.kind === 'arcade') {
             setOverlay({ kind: 'arcade' });
+          } else if (t.kind === 'luna') {
+            // a sign at Luna Park; the Figure Eight's offers a ride, Pat answers a sum
+            const sign = t.data as LunaSign;
+            const talk = { kind: 'talk', speaker: sign.name, portrait: (signPortrait ??= lunaSignPortrait()) } as const;
+            const { ask } = sign;
+            setOverlay({
+              ...talk,
+              lines: sign.lines,
+              choices:
+                sign.id === 'figure8'
+                  ? [
+                      { label: lunaRideInvite.yes, onPick: () => setOverlay({ kind: 'ride' }) },
+                      { label: lunaRideInvite.no, onPick: () => setOverlay({ kind: 'none' }) },
+                    ]
+                  : ask
+                    ? [
+                        { label: ask.label, onPick: () => setOverlay({ ...talk, lines: ask.reply }) },
+                        { label: ask.done, onPick: () => setOverlay({ kind: 'none' }) },
+                      ]
+                    : undefined,
+            });
           } else if (t.kind === 'place') {
             const loc = t.data as PlacedLocation;
             art.visited.add(loc.id);
@@ -185,7 +215,7 @@ export default function App() {
       },
     });
     g.paused = true;
-    if (import.meta.env.DEV) Object.assign(window, { __game: g, __busker: busker, __crow: crow, __chicken: chicken, __art: art }); // test hooks
+    if (import.meta.env.DEV) Object.assign(window, { __game: g, __busker: busker, __crow: crow, __chicken: chicken, __art: art, __luna: luna }); // test hooks
     // Dev review hooks: ?at=lat,lon (or ?atTile=x,y) skips the title and drops you there;
     // ?audit scans the whole map for road-drawing glitches (scripts/city/road-audit.mjs).
     const q = new URLSearchParams(location.search);
@@ -221,6 +251,12 @@ export default function App() {
       game.quiet = !started || FULL_SCREEN.includes(overlay.kind);
     }
   }, [game, started, overlay]);
+
+  // mini games (Cone Catch) start with their sound on, even if the map is muted
+  useEffect(() => {
+    sounds.gameSound(overlay.kind === 'minigame');
+    return () => sounds.gameSound(false);
+  }, [overlay.kind]);
 
   useEffect(
     () =>
@@ -434,6 +470,14 @@ export default function App() {
         <SceneBoundary onError={closeOverlay}>
           <Suspense fallback={<div className="scene scene-loading">Loading…</div>}>
             <DuckArcade onExit={closeOverlay} />
+          </Suspense>
+        </SceneBoundary>
+      )}
+
+      {overlay.kind === 'ride' && (
+        <SceneBoundary onError={closeOverlay}>
+          <Suspense fallback={<div className="scene scene-loading">Loading…</div>}>
+            <FigureEight onExit={closeOverlay} />
           </Suspense>
         </SceneBoundary>
       )}

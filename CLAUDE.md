@@ -81,6 +81,17 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
   three.js first-person room (`ArcadeScene.ts`) with a cabinet per game. The shell: cabinets are data
   in `src/content/duckArcade.ts` (`ready` ones launch), `arcade/games.ts` maps id → lazy component
   taking `{ onExit(result) }` (same as Cone Catch). New duck game: component + one line there + `ready: true`.
+  Duck Scroller and Rabbit Zapper are plain-script kits in `public/` (`duck-scroller.js`, `rabbit-zapper.js`
+  + their asset folders) that a thin wrapper component loads and mounts; the kits handle their own keys.
+- **Luna Park** (1907–1913) on its pilings off Duwamish Head: `src/game/plugins/lunaPark.ts` turns the pier's
+  water tiles walkable at attach (street name "Luna Park"), paints the boardwalk under everyone and draws the
+  animated rides depth-sorted (gate, Great Figure Eight, Shoot-the-Chutes, Looff carousel, Giant Whirl,
+  Natatorium, two booths, Pat the Educated Horse's hall after a photo — Pat taps out a sum if you ask). Uncle
+  Hiram's Studebaker wagon, pulled by Betsy the Pig, drives back and forth along Alki Ave out front (`lunaWagon.route`,
+  tested to stay on the street). Layout (tiles from the Head's tip) and sign text, with sources, in
+  `src/content/lunaPark.ts`; signs (and the wagon) are targets of kind `luna`, `ask` adds a question. The Figure Eight's sign offers a ride: App's
+  `ride` overlay → `src/experiences/luna/FigureEight.tsx` (three.js, first person at dusk; reduced motion
+  watches from the boardwalk). Tested in `src/game/lunaPark.test.ts` (reachable from Alki Ave, signs walkable).
 - `src/content/` — **content is data**: `locations.ts` (spots, coords, Mike's greetings),
   `wallTurns.ts` (scene script), `artManifest.ts` (generated, date-ordered).
 - `src/experiences/` — one scene per spot, lazy-loaded via `registry.ts`, wrapped in

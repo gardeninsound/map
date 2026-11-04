@@ -311,3 +311,46 @@
 .duck-scroller-scene { align-items: center; justify-content: center; background: #f3f5f9; color: #34465a; font-family: var(--pixel); font-size: 10px; padding: 16px; }
 .duck-scroller-slot { width: min(100%, (100vh - 140px) * 2, 1440px); }
 .duck-scroller-note { margin: 10px 0 0; }
+.rabbit-zapper-scene { align-items: center; justify-content: center; gap: 10px; background: #1b2e39; color: #e8f0f1; font-family: var(--pixel); font-size: 10px; padding: 16px; }
+.rabbit-zapper-scene .duck-scroller-note { margin: 0; color: #a9bcc2; }
+.rabbit-zapper-stage { display: block; width: min(100%, (100vh - 200px) * 2, 1200px); aspect-ratio: 2 / 1; background: #9fb2b6; border-radius: 6px; cursor: crosshair; touch-action: manipulation; }
+.rabbit-zapper-stage:focus { outline: none; }
+.rabbit-zapper-pad { display: flex; gap: 12px; width: min(100%, (100vh - 200px) * 2, 1200px); }
+.rabbit-zapper-pad button { flex: 1; min-height: 48px; font-family: var(--pixel); font-size: 11px; color: #e8f0f1; background: #2a4452; border: 2px solid #3f5f70; border-radius: 8px; cursor: pointer; touch-action: manipulation; }
+.rabbit-zapper-pad button:active { background: #36576a; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Duck on the Moon (arcade): keeps its own paper-cut look, not the pixel one */
+.duck-moon-scene { background: #25243b; color: #f5eedb; font-family: Georgia, 'Times New Roman', serif; overflow: hidden; }
+.duck-moon-world { position: absolute; inset: 0; }
+.duck-moon-canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+.duck-moon-grain { position: absolute; inset: 0; pointer-events: none; opacity: 0.12; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E"); }
+.duck-moon-head { position: absolute; top: 26px; left: 32px; right: 32px; display: flex; justify-content: space-between; align-items: start; gap: 12px; pointer-events: none; }
+.duck-moon-eyebrow { font: 700 10px system-ui, sans-serif; letter-spacing: 0.22em; text-transform: uppercase; color: #e6c78f; }
+.duck-moon-head h1 { font: 600 29px Georgia, serif; margin: 5px 0; }
+.duck-moon-tag { font: 11px system-ui, sans-serif; opacity: 0.75; }
+.duck-moon-counter { border: 1px solid #c1b29c77; border-radius: 30px; padding: 10px 16px; background: #222236b8; font: 12px system-ui, sans-serif; white-space: nowrap; }
+.duck-moon-hint { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; text-align: center; text-shadow: 0 2px 8px #17182c; font: 12px system-ui, sans-serif; opacity: 0; transition: opacity 0.2s; }
+.duck-moon-hint.show { opacity: 1; }
+.duck-moon-note { position: absolute; left: 32px; bottom: 74px; max-width: 270px; margin: 0; font: 12px/1.6 system-ui, sans-serif; color: #e6dece; pointer-events: none; }
+.duck-moon-card { position: absolute; right: 32px; bottom: 28px; width: min(390px, calc(100vw - 40px)); background: #f4ead4; color: #302d35; padding: 23px 25px 20px; box-shadow: 5px 7px 0 #a78b74; border-radius: 3px; transform: rotate(-1deg); }
+.duck-moon-card::before { content: ''; position: absolute; background: #d0b391a8; width: 86px; height: 20px; top: -10px; left: 40%; transform: rotate(3deg); }
+.duck-moon-speaker { font: 700 10px system-ui, sans-serif; text-transform: uppercase; letter-spacing: 0.18em; color: #a06f55; }
+.duck-moon-card p { font: italic 600 19px/1.4 Georgia, serif; margin: 10px 0 18px; }
+.duck-moon-card button, .duck-moon-paper button { border: 0; background: #565d54; color: #fff5df; padding: 10px 14px; border-radius: 3px; cursor: pointer; font: 600 11px system-ui, sans-serif; letter-spacing: 0.03em; }
+.duck-moon-card button:hover, .duck-moon-paper button:hover { background: #74806b; }
+.duck-moon-intro { position: absolute; inset: 0; background: #191a2abd; display: grid; place-items: center; padding: 20px; z-index: 3; }
+.duck-moon-paper { width: min(520px, 100%); padding: 38px; background: #f1e7d1; color: #34313a; box-shadow: 8px 9px 0 #a88b73; transform: rotate(-1deg); }
+.duck-moon-paper .duck-moon-eyebrow { color: #a06f55; }
+.duck-moon-paper h2 { font: 600 44px/1.05 Georgia, serif; margin: 12px 0; }
+.duck-moon-paper p { line-height: 1.65; font: 14px/1.65 system-ui, sans-serif; }
+.duck-moon-paper button { font-size: 12px; padding: 13px 20px; margin-top: 10px; }
+.duck-moon-back { position: absolute; left: 32px; bottom: 26px; margin: 0; z-index: 4; }
+@media (max-width: 700px) {
+  .duck-moon-head { top: 18px; left: 18px; right: 18px; }
+  .duck-moon-head h1 { font-size: 23px; }
+  .duck-moon-note { display: none; }
+  .duck-moon-card { right: 18px; bottom: 70px; width: calc(100% - 36px); }
+  .duck-moon-back { left: 18px; bottom: 18px; }
+  .duck-moon-paper h2 { font-size: 36px; }
+}

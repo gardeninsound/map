@@ -10,8 +10,11 @@ let muted = (() => {
   }
 })();
 
+/** a mini game is open: it plays its sound even if the map is muted (see `sfx.gameSound`) */
+let gameOpen = false;
+
 export function tone(freq: number, dur: number, type: OscillatorType = 'square', vol = 0.04, slide = 0) {
-  if (muted) return;
+  if (muted && !gameOpen) return;
   try {
     if (!ctx && !activated()) return;
     ctx ??= new AudioContext();
@@ -53,7 +56,12 @@ export const sfx = {
     setTimeout(() => tone(990, 0.09), 60);
   },
   back: () => tone(440, 0.08, 'square', 0.04, -200),
-  isMuted: () => muted,
+  isMuted: () => muted && !gameOpen,
+  /** Mini games start with sound on: while one is open, `isMuted` is false whatever the map's
+   * mute says (the game's own sound toggle still works). Not saved. */
+  gameSound(open: boolean) {
+    gameOpen = open;
+  },
   setMuted(m: boolean) {
     muted = m;
     try {

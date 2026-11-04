@@ -14,4 +14,6 @@ export interface ArcadeGameProps {
 export const arcadeComponents: Record<string, LazyExoticComponent<ComponentType<ArcadeGameProps>>> = {
   'cone-catch': lazy(() => import('../minigames/ConeCatch')),
   'duck-scroller': lazy(() => import('./DuckScroller')),
+  'rabbit-zapper': lazy(() => import('./RabbitZapper')),
+  'duck-on-the-moon': lazy(() => import('./DuckOnTheMoon')),
 };
