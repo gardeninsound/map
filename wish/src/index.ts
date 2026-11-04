@@ -6,7 +6,7 @@
  *
  * Checks the page's origin, the Turnstile token (a person filled this in) and a per-address
  * rate limit, then files the idea as a GitHub issue labelled `suggestion`, signed in as the
- * Garden in Sound GitHub App (so the author is `garden-in-sound[bot]`; the app can only touch
+ * Garden in Sound Wishes GitHub App (so the author is `garden-in-sound-wishes[bot]`; the app can only touch
  * issues). Nothing here runs the text.
  */
 import { installationToken } from './githubApp';

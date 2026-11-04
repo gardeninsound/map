@@ -1,6 +1,6 @@
 /**
- * Signing in to GitHub as the Garden in Sound GitHub App (owned by the gardeninsound org),
- * so ideas are filed by `garden-in-sound[bot]` instead of a person.
+ * Signing in to GitHub as the Garden in Sound Wishes GitHub App (owned by the gardeninsound org),
+ * so ideas are filed by `garden-in-sound-wishes[bot]` instead of a person.
  *
  * The app's private key (PKCS#8 PEM, a Worker secret) signs a short JWT; GitHub trades that
  * for an installation token (Issues: write on the map repo, valid an hour), which is cached
