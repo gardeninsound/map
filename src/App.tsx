@@ -151,7 +151,10 @@ export default function App() {
     // relay; in dev, `?island=<name>` uses a private room so tests don't walk onto the real one.
     const params = new URLSearchParams(location.search);
     const island = (import.meta.env.DEV && params.get('island')) || undefined;
-    const live = params.has('solo') ? null : new Visitors(params.get('relay') ?? undefined, island);
+    // dev: `?presence=N` → a hidden tab leaves after N s, idle fades after 2N and leaves after 4N
+    const fast = import.meta.env.DEV ? Number(params.get('presence')) : 0;
+    const timings = fast > 0 ? { hiddenGone: fast, idleAway: 2 * fast, idleGone: 4 * fast } : undefined;
+    const live = params.has('solo') ? null : new Visitors(params.get('relay') ?? undefined, island, timings);
     if (live) live.onChange = () => setRabbitTick((n) => n + 1);
     const g = new CityGame(canvas.current!, world, {
       start: world.project(START.lat, START.lon),
