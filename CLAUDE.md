@@ -20,7 +20,10 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
 ## Commands
 
 - `npm run dev` → http://localhost:5173/
-- `npm test` · `npm run build` (tsc + vite) — both must be green before committing
+- `npm test` · `npm run build` (tsc + vite) — both must be green before committing (and in CI on every PR, see Git workflow)
+- `npm run smoke` (after `npm run build`) — the built site in a real browser via Playwright: title, RECENT to
+  the Duck Arcade, opens + closes every playable cabinet; fails on any page error, console error or 404
+  (`scripts/smoke.mjs`; failure shot in `screenshots/smoke/`). Uses your Chrome locally, Chromium in CI.
 - `npm run images [srcDir]` — raw photos/videos → `public/art/<set>/` (AVIF stills 1200 px +
   320 px thumbs, MP4 video; settings in `ENCODE` at the top of the script) + `artManifest.ts`.
   Default src `~/Downloads/bearisland/images-merged`; macOS `sips`/`mdls` + ffmpeg; incremental
@@ -50,10 +53,46 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
   → `src/game/lemon.ts` (ASCII grid, ripe + unripe palettes)
 - `node scripts/make-portrait.mjs` — Mike's tintype → 40×40 pixel portrait
 - `node scripts/make-cup-rabbit.mjs` — traces the mug rabbit stencil from `data/source/cup-rabbit-photo.png` → `public/sprites/cup-rabbit.png`
-- Deploy: push `main` → GitHub Pages via `.github/workflows/deploy.yml`. Repo: github.com/gardeninsound/map,
+- Deploy: merge to `main` → GitHub Pages via `.github/workflows/deploy.yml`. Repo: github.com/gardeninsound/map,
   live at https://gardeninsound.website (custom domain from `public/CNAME`, served at the root, `base: '/'`).
   To move it to gardeninsound.website/map/ later: `base: '/map/'`, drop `public/CNAME`, and give the
   domain to an org `gardeninsound.github.io` repo (every asset URL already uses `BASE_URL`).
+
+## Git workflow (everyone, Claude included)
+
+`main` is always deployable: every merge to it goes live. Work reaches it only through a pull request.
+
+1. **One short branch per feature, cut from fresh `main`**: `git fetch origin && git switch -c <feature> origin/main`.
+   Name it for the feature (`duck-moon`, `arcade-posters`), never a catch-all. Unrelated work → its own branch.
+2. **Merge within a day or two.** Bigger than that → split it, or merge the parts hidden behind a switch
+   (`ready: false` cabinets, a location with no `experience`, a dev-only `?flag`) and turn it on last.
+3. **Bring in `main` at the start of each session** (`git pull origin main`) and before opening the PR;
+   resolve conflicts on the branch, keeping both sides' features.
+4. **Small commits**, each with `npm test` + `npm run build` green (and `npm run smoke` for anything
+   you can see or hear).
+5. **Open a PR into `main`** (`gh pr create --fill`). The **Check** workflow (`.github/workflows/ci.yml`)
+   runs the size guard, tests, build and smoke test; `main` requires it to pass.
+6. **Feature PRs auto-merge**: `gh pr merge --auto --squash --delete-branch` — GitHub merges (= deploys)
+   the moment Check is green and never if it fails; fix on the branch and it goes in. **Shared PRs wait
+   for the other person's OK** instead: anything touching `src/city/`, `App.tsx`, `relay/`, `.github/`,
+   CLAUDE.md, `package.json` dependencies or the map data pipeline (`scripts/city/`).
+7. **Never push to `main` directly**, and never force-push a branch someone else is working on.
+
+What the Check catches, so keep it that way:
+- **Files the content points at must be in git** (`src/content/published.test.ts`): the deploy builds
+  from a fresh checkout. Art → `npm run art:publish`; anything else → `git add`. A new kind of
+  asset (a new cabinet's files, new posters) → add its paths to that test.
+- **No file over 2 MB** added or changed unless listed in `.github/large-files.txt`. Compress first
+  (WebP/AVIF images, MP3 audio, MP4 video); never commit raw WAVs or HTML with embedded media.
+  Same for chat: give Claude a big file's *path* — attaching a multi-MB file to a message
+  overflows the context and the session fails with "prompt is too long".
+- **New logic gets a unit test** (pure rules/state, as for Cone Catch, the crow, Luna Park).
+  A new arcade game is covered by the smoke test automatically once it's `ready`.
+
+Claude: start new work by branching as in 1 (even if the session opened on another branch). Commit when a
+piece is done and green. When asked to push/ship: push the branch, open (or update) its PR, and turn on
+auto-merge for feature PRs; for shared PRs (6), say so and leave the merge to the people.
+`gh` on Windows: if `gh` isn't on PATH in a fresh install, use `"C:\Program Files\GitHub CLI\gh.exe"`.
 
 ## Where things live
 

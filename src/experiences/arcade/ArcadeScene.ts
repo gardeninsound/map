@@ -29,7 +29,7 @@ const SLOTS: [number, number, number][] = [
  * file, pixel size, then x, z, facing yaw. On the front wall, two pairs flank the doors; each
  * side wall has one near the front and one in the back corner, clear of the cabinets.
  */
-const POSTERS: [string, number, number, number, number, number][] = [
+export const POSTERS: [string, number, number, number, number, number][] = [
   ['poster-blue', 413, 557, -7 + 0.03, 2.3, Math.PI / 2],
   ['poster-pink', 412, 557, 7 - 0.03, 2.3, -Math.PI / 2],
   ['poster-yellow', 413, 541, -3, 4.5 - 0.03, Math.PI],
