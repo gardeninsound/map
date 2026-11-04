@@ -3,6 +3,7 @@
 // Run with `npm test` in wish/.
 import { spawn } from 'node:child_process';
 import { createServer } from 'node:http';
+import { createVerify, generateKeyPairSync } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { mkdtempSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -20,21 +21,43 @@ const DUMMY_TOKEN = 'XXXX.DUMMY.TOKEN.XXXX';
 const STATE = mkdtempSync(join(tmpdir(), 'garden-wish-test-'));
 const assert = (c, m) => { if (!c) throw new Error(m); };
 
+// A throwaway key for a pretend GitHub App; the fake GitHub only accepts JWTs it signed.
+const APP_ID = '777';
+const INSTALLATION = '4242';
+const { privateKey, publicKey } = generateKeyPairSync('rsa', { modulusLength: 2048 });
+const APP_KEY = privateKey.export({ type: 'pkcs8', format: 'pem' }).toString();
+
 const issues = [];
+let tokenRequests = 0;
 const github = createServer((req, res) => {
   let data = '';
   req.on('data', (c) => (data += c));
   req.on('end', () => {
-    issues.push({ url: req.url, auth: req.headers.authorization, body: JSON.parse(data || '{}') });
-    res.writeHead(201, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ number: issues.length }));
+    const auth = req.headers.authorization ?? '';
+    const send = (status, body) => { res.writeHead(status, { 'Content-Type': 'application/json' }); res.end(JSON.stringify(body)); };
+    if (req.url === `/app/installations/${INSTALLATION}/access_tokens`) {
+      tokenRequests++;
+      const [h, p, sig] = auth.replace(/^Bearer /, '').split('.');
+      const claims = p ? JSON.parse(Buffer.from(p, 'base64url').toString()) : {};
+      const signed = sig && createVerify('RSA-SHA256').update(`${h}.${p}`).verify(publicKey, sig, 'base64url');
+      const now = Date.now() / 1000;
+      if (!signed || claims.iss !== APP_ID || !(claims.exp > now && claims.iat <= now)) return send(401, { message: 'Bad JWT' });
+      return send(201, { token: 'ghs_installation', expires_at: new Date(Date.now() + 3600_000).toISOString() });
+    }
+    if (auth !== 'Bearer ghs_installation') return send(401, { message: 'Bad credentials' });
+    issues.push({ url: req.url, body: JSON.parse(data || '{}') });
+    send(201, { number: issues.length });
   });
 });
 await new Promise((r) => github.listen(GH_PORT, '127.0.0.1', r));
 
 function startWrangler() {
   const bin = fileURLToPath(new URL('./node_modules/.bin/wrangler', import.meta.url));
-  const vars = { GITHUB_API: `http://127.0.0.1:${GH_PORT}`, GITHUB_TOKEN: 'test-token', TURNSTILE_SECRET: PASS_SECRET };
+  const vars = {
+    GITHUB_API: `http://127.0.0.1:${GH_PORT}`, TURNSTILE_SECRET: PASS_SECRET,
+    GITHUB_APP_ID: APP_ID, GITHUB_INSTALLATION_ID: INSTALLATION,
+    GITHUB_APP_KEY: APP_KEY.replace(/\n/g, '\\n'), // one line on the command line
+  };
   const child = spawn(bin, ['dev', '--port', String(PORT), '--ip', '127.0.0.1', '--show-interactive-dev-session=false', '--persist-to', STATE,
     ...Object.entries(vars).flatMap(([k, v]) => ['--var', `${k}:${v}`])], {
     cwd: here, env: { ...process.env, WRANGLER_SEND_METRICS: 'false' }, stdio: ['ignore', 'pipe', 'pipe'],
@@ -87,17 +110,18 @@ try {
   assert(r.status === 200 && r.data.ok && r.data.issue === 1 && r.cors === ORIGIN, `good idea → ${r.status} ${JSON.stringify(r.data)}`);
   const [issue] = issues;
   assert(issue.url === '/repos/gardeninsound/map/issues', `issue url ${issue.url}`);
-  assert(issue.auth === 'Bearer test-token', 'uses the Worker token');
   assert(issue.body.labels[0] === 'suggestion', 'labelled suggestion');
   assert(issue.body.body.includes('@​vlandham') && !/@vlandham/.test(issue.body.body), 'mention defused');
   assert(issue.body.body.includes('California Ave SW'), 'street included');
   console.log(' a good idea becomes a labelled issue, mentions defused ✓');
+  console.log(' filed as the GitHub App: signed JWT → installation token → issue ✓');
 
   // 3 well-formed ideas a minute per address: the token-less one and the good one count
   r = await send({ text: 'Another idea here', token: DUMMY_TOKEN });
   assert(r.status === 200, `third idea → ${r.status}`);
   r = await send({ text: 'And one more idea', token: DUMMY_TOKEN });
   assert(r.status === 429 && issues.length === 2, `rate limit → ${r.status}, ${issues.length} issues`);
+  assert(tokenRequests === 1, `installation token reused across ideas (asked ${tokenRequests}×)`);
   console.log(' more than 3 a minute from one address gets a 429 ✓');
 
   console.log('Idea box OK');
