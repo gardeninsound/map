@@ -76,11 +76,11 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
    the moment Check is green and never if it fails; fix on the branch and it goes in. **Shared PRs wait
    for an OK** instead: anything touching `src/city/`, `App.tsx`, `relay/`, `wish/`, `.github/`,
    CLAUDE.md, `package.json` dependencies or the map data pipeline (`scripts/city/`). Who says OK:
-   - **Technical changes → Vince** (tech lead): the Workers, CI and GitHub/Cloudflare setup, dependencies,
-     the city engine and map pipeline, CLAUDE.md's dev notes. If Vince opened or asked for it, his say-so
+   - **Technical changes → Jim** (tech lead): the Workers, CI and GitHub/Cloudflare setup, dependencies,
+     the city engine and map pipeline, CLAUDE.md's dev notes. If Jim opened or asked for it, Jim's say-so
      is the OK; Mike doesn't need to sign off.
    - **The art and the words → Mike**: what a scene shows, Mike's lines and other copy in `src/content/`,
-     which spots and art appear. Vince's PRs that change these wait for Mike.
+     which spots and art appear. Jim's PRs that change these wait for Mike.
 7. **Never push to `main` directly**, and never force-push a branch someone else is working on.
 
 What the Check catches, so keep it that way:
