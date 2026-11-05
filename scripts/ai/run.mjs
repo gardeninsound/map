@@ -5,6 +5,7 @@
  *   node scripts/ai/run.mjs spec 12                 plan issue #12 (or "needs a person")
  *   node scripts/ai/run.mjs spec --idea "more birds"   plan an idea typed here
  *   node scripts/ai/run.mjs build 12                Aider makes the planned change, then the checks run
+ *   node scripts/ai/run.mjs build --idea            the same, for the last spec --idea
  *   node scripts/ai/run.mjs models                  the models your keys can use (for --model)
  *
  * Options: --provider gemini|workers  (default: the first with a key, in that order)
@@ -71,7 +72,7 @@ function die(msg) {
   console.error(`\n✗ ${msg}`);
   process.exit(1);
 }
-if (command !== 'models' && (!['spec', 'build'].includes(command) || (!issueArg && typeof typedIdea !== 'string'))) {
+if (command !== 'models' && (!['spec', 'build'].includes(command) || (!issueArg && typeof typedIdea !== 'string' && !(command === 'build' && typedIdea)))) {
   die('usage: node scripts/ai/run.mjs spec|build <issue number>   (or: spec --idea "…", or: models)');
 }
 const key = typedIdea ? 'idea' : String(Number(issueArg));
@@ -97,7 +98,8 @@ const recipes = readdirSync(join(HERE, 'recipes'))
   .filter((f) => f.endsWith('.md'))
   .map((f) => parseRecipe(readFileSync(join(HERE, 'recipes', f), 'utf8')));
 
-function idea() {
+function idea(saved) {
+  if (saved) return saved; // build --idea: the idea that spec --idea sorted
   if (typedIdea) return quoteIdea(String(typedIdea));
   let body;
   try {
@@ -194,10 +196,10 @@ async function spec() {
       const checked = checkSpec(raw, recipes);
       if (checked.ok) {
         const file = join(OUT, `${key}.spec.json`);
-        writeFileSync(file, JSON.stringify({ ...checked.spec, provider: p.name, model: p.model }, null, 2) + '\n');
+        writeFileSync(file, JSON.stringify({ ...checked.spec, provider: p.name, model: p.model, idea: user }, null, 2) + '\n');
         console.log(`\n${JSON.stringify(checked.spec, null, 2)}\n\n✓ saved ${file}`);
         if (checked.spec.recipe === NEEDS_PERSON) console.log('  → needs a person; nothing to build.');
-        else if (key !== 'idea') console.log(`  → next: node scripts/ai/run.mjs build ${key}`);
+        else console.log(`  → next: node scripts/ai/run.mjs build ${key === 'idea' ? '--idea' : key}`);
         return;
       }
       console.log(`  the answer didn't fit: ${checked.problems.join('; ')}`);
@@ -210,12 +212,11 @@ async function spec() {
 // ---- build: plan → change ----
 
 function build() {
-  if (key === 'idea') die('build needs an issue number (run spec on the issue first)');
   let s;
   try {
     s = JSON.parse(readFileSync(join(OUT, `${key}.spec.json`), 'utf8'));
   } catch {
-    die(`no plan for #${key} yet: run  node scripts/ai/run.mjs spec ${key}`);
+    die(key === 'idea' ? 'no plan yet: run  node scripts/ai/run.mjs spec --idea "…"  first' : `no plan for #${key} yet: run  node scripts/ai/run.mjs spec ${key}`);
   }
   if (s.recipe === NEEDS_PERSON) die(`#${key} needs a person: ${s.why}`);
   const recipe = recipes.find((r) => r.name === s.recipe);
@@ -239,7 +240,7 @@ function build() {
   const message = read('scripts/ai/build-prompt.md')
     .replace('{{SPEC}}', plan)
     .replace('{{RECIPE}}', recipe.body)
-    .replace('{{IDEA}}', idea());
+    .replace('{{IDEA}}', idea(key === 'idea' ? s.idea : undefined));
   const messageFile = join(OUT, `${key}.build.md`);
   writeFileSync(messageFile, message);
 

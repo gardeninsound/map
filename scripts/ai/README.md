@@ -44,6 +44,7 @@ Free models are weaker coders, so they never get an open-ended task:
 node scripts/ai/run.mjs spec 12                     # plan issue #12, or say it needs a person
 node scripts/ai/run.mjs spec --idea "more birds"    # try any idea without an issue
 node scripts/ai/run.mjs build 12                    # Aider makes the planned change; the checks run
+node scripts/ai/run.mjs build --idea                # the same for the last spec --idea (no issue needed)
 git diff                                            # look; npm run dev to see it
 git checkout -- src/content/crow.ts                 # or throw it away
 node scripts/ai/run.mjs models                      # which models your keys can use
