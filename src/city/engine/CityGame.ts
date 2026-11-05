@@ -159,6 +159,18 @@ export class CityGame {
     return markerSpot(this.world, p);
   }
 
+  /** How many screen (CSS) px one map pixel is. */
+  get scale() {
+    return this.zoom;
+  }
+
+  /** Where a tile point is on screen, in CSS px from the viewport's top-left (for HTML laid over the map). */
+  screenPoint(p: Vec): Vec {
+    const cam = this.camera();
+    const r = this.canvas.getBoundingClientRect();
+    return { x: r.left + (p.x * TS - cam.x) * this.zoom, y: r.top + (p.y * TS - cam.y) * this.zoom };
+  }
+
   resize() {
     const w = window.innerWidth;
     const h = window.innerHeight;

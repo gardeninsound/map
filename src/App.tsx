@@ -20,12 +20,12 @@ import { START, locations, welcome } from './content/locations';
 import { CROW_NAME, crowChoices, crowGreeting, crowReply } from './content/crow';
 import { CHICKEN_NAME, chickenAfter, chickenInvite, chickenQuestions } from './content/chicken';
 import { neighborVoices } from './content/neighbors';
-import { recentChanges, type RecentAt } from './content/recent';
 import { experiences } from './experiences/registry';
 import { ArtSpots, type PlacedLocation } from './game/plugins/artSpots';
 import { Busker } from './game/plugins/busker';
 import { Crow } from './game/plugins/crow';
 import { Chicken } from './game/plugins/chicken';
+import { Ham } from './game/plugins/ham';
 import { Pegasus } from './game/plugins/pegasus';
 import { BigCup } from './game/plugins/bigCup';
 import { Seal } from './game/plugins/seal';
@@ -40,6 +40,8 @@ import { DialogBox } from './ui/MikeDialog';
 import { SceneBoundary } from './ui/SceneBoundary';
 import { SpotsMenu } from './ui/SpotsMenu';
 import { IdeaBox } from './ui/IdeaBox';
+import { Pelican } from './ui/Pelican';
+import { PELICAN_AFTER } from './game/pelican';
 import { TitleScreen } from './ui/TitleScreen';
 import { sounds } from './ui/sounds';
 
@@ -82,7 +84,8 @@ const LANDMARK_COLOR = '#5fa8a0';
 /**
  * The landmarks, as named places for the map: the Junction's four block faces become one
  * "The Junction shops", other names lose their parenthetical. Most-visited first, so those
- * keep their name tags when the map gets crowded.
+ * keep their name tags when the map gets crowded. A landmark with no name is a secret: drawn,
+ * never listed.
  */
 function mapLandmarks(landmarks: PlacedLandmark[]): MapPlace[] {
   const centre = (l: PlacedLandmark) => ({ x: l.x + l.w / 2, y: l.y + l.h / 2 });
@@ -93,7 +96,7 @@ function mapLandmarks(landmarks: PlacedLandmark[]): MapPlace[] {
     out.push({ name: 'The Junction shops', x: cs.reduce((a, c) => a + c.x, 0) / cs.length, y: cs.reduce((a, c) => a + c.y, 0) / cs.length, color: LANDMARK_COLOR });
   }
   for (const l of landmarks) {
-    if (l.sprite === 'storefronts') continue;
+    if (l.sprite === 'storefronts' || !l.name) continue; // a nameless landmark is a hidden one
     out.push({ name: l.name.replace(/\s*\(.*\)\s*$/, ''), ...centre(l), color: LANDMARK_COLOR });
   }
   return out;
@@ -127,6 +130,10 @@ export default function App() {
   const [rabbitsOpen, setRabbitsOpen] = useState(false);
   const [sayOpen, setSayOpen] = useState(false);
   const [started, setStarted] = useState(false);
+  /** the pelican's visit, once a session, PELICAN_AFTER s after you join (ui/Pelican.tsx) */
+  const [pelican, setPelican] = useState(false);
+  const [pelicanDue, setPelicanDue] = useState(false);
+  const pelicanCame = useRef(false);
   const [street, setStreet] = useState<string | null>(null);
   const [storefront, setStorefront] = useState<string | null>(null);
   const [nearby, setNearby] = useState<Target | null>(null);
@@ -137,9 +144,6 @@ export default function App() {
   const [muted, setMuted] = useState(sounds.isMuted());
   const touch = isTouch();
   const arcadeDoor = useRef(new ArcadeDoor());
-  // RECENT: which change the next press jumps to, and the caption shown on landing
-  const recentNext = useRef(0);
-  const [recentNote, setRecentNote] = useState<string | null>(null);
 
   useEffect(() => bindKeyboard(), []);
 
@@ -150,6 +154,7 @@ export default function App() {
     const chicken = new Chicken();
     const pegasus = new Pegasus();
     const dinos = new Dinos();
+    const ham = new Ham();
     const luna = new LunaPark();
     // Everyone else on the island, live. `?solo` walks alone; `?relay=` points at another
     // relay; in dev, `?island=<name>` uses a private room so tests don't walk onto the real one.
@@ -163,7 +168,7 @@ export default function App() {
     const g = new CityGame(canvas.current!, world, {
       start: world.project(START.lat, START.lon),
       voices: neighborVoices,
-      plugins: [art, new BigCup(art), dinos, new Seal(), arcadeDoor.current, luna, busker, crow, chicken, pegasus, ...(live ? [live] : [])],
+      plugins: [art, new BigCup(art), dinos, new Seal(), arcadeDoor.current, luna, busker, crow, chicken, pegasus, ham, ...(live ? [live] : [])],
       events: {
         onStreet: setStreet,
         onStorefront: setStorefront,
@@ -243,13 +248,19 @@ export default function App() {
       },
     });
     g.paused = true;
-    if (import.meta.env.DEV) Object.assign(window, { __game: g, __busker: busker, __crow: crow, __chicken: chicken, __pegasus: pegasus, __dinos: dinos, __art: art, __luna: luna, __visitors: live }); // test hooks
-    // Dev review hooks: ?at=lat,lon (or ?atTile=x,y) skips the title and drops you there;
+    if (import.meta.env.DEV) Object.assign(window, { __game: g, __busker: busker, __crow: crow, __chicken: chicken, __pegasus: pegasus, __ham: ham, __dinos: dinos, __art: art, __luna: luna, __visitors: live }); // test hooks
+    // Review hooks: ?at=lat,lon (or ?atTile=x,y, or ?at=arcade) skips the title and drops you there;
     // ?audit scans the whole map for road-drawing glitches (scripts/city/road-audit.mjs).
     const q = new URLSearchParams(location.search);
-    const at = import.meta.env.DEV && q.get('at');
-    const atTile = import.meta.env.DEV && q.get('atTile');
-    if (at || atTile) {
+    // (These two also work on the live site: a link that starts you somewhere, and how the
+    // smoke test walks straight into the Duck Arcade with ?at=arcade.)
+    const at = q.get('at');
+    const atTile = q.get('atTile');
+    if (at === 'arcade') {
+      const door = arcadeDoor.current.door;
+      if (door) g.teleport(door);
+      setStarted(true);
+    } else if (at || atTile) {
       const [a, b] = (at || atTile || '').split(',').map(Number);
       g.teleport(at ? world.project(a, b) : { x: a, y: b });
       setStarted(true);
@@ -276,6 +287,21 @@ export default function App() {
   useEffect(() => {
     if (started) visitors?.join();
   }, [started, visitors]);
+
+  // The pelican comes PELICAN_AFTER s after you join, as soon as nothing's open (Mike's
+  // welcome, a scene…); opening anything while it's here (the idea box it points at) ends its visit.
+  useEffect(() => {
+    if (!started) return;
+    const t = setTimeout(() => setPelicanDue(true), PELICAN_AFTER * 1000);
+    return () => clearTimeout(t);
+  }, [started]);
+  useEffect(() => {
+    if (overlay.kind !== 'none') setPelican(false);
+    else if (pelicanDue && !pelicanCame.current) {
+      pelicanCame.current = true;
+      setPelican(true);
+    }
+  }, [overlay.kind, pelicanDue]);
 
   // The world only moves when nothing is on top of it.
   useEffect(() => {
@@ -354,37 +380,6 @@ export default function App() {
     },
     [game, spots],
   );
-  /** RECENT: jump to the newest change, then each one before it on the next presses, wrapping round. */
-  const goRecent = useCallback(() => {
-    if (!game || !spots) return;
-    const where = (at: RecentAt): { x: number; y: number } | null => {
-      if ('landmark' in at) {
-        const l = game.world.landmarks.find((m) => m.id === at.landmark);
-        return l ? { x: l.x + l.w / 2, y: l.y + l.h + 0.5 } : null; // just in front of it
-      }
-      if ('spot' in at) return spots.places.find((p) => p.id === at.spot) ?? null;
-      if ('arcade' in at) return arcadeDoor.current.door;
-      return game.world.project(at.lat, at.lon);
-    };
-    const n = recentChanges.length;
-    for (let tries = 0; tries < n; tries++) {
-      const i = recentNext.current % n;
-      recentNext.current = i + 1;
-      const p = where(recentChanges[i].at);
-      if (!p) continue; // gone from the map: skip it
-      sounds.confirm();
-      game.teleport(p);
-      input.clear();
-      setMapOpen(false);
-      setRecentNote(`NEW ${i + 1}/${n} · ${recentChanges[i].title}`);
-      return;
-    }
-  }, [game, spots]);
-  useEffect(() => {
-    if (!recentNote) return;
-    const t = setTimeout(() => setRecentNote(null), 3500);
-    return () => clearTimeout(t);
-  }, [recentNote]);
   const openSpots = spots?.open ?? [];
   const landmarkPlaces = useMemo(() => (game ? mapLandmarks(game.world.landmarks) : []), [game]);
 
@@ -407,9 +402,6 @@ export default function App() {
                 aria-pressed={overlay.kind === 'spots'}
               >
                 ★ SPOTS {!touch && <kbd>T</kbd>}
-              </button>
-              <button className="hud-recent" onClick={goRecent} aria-label="Go to the next most recent change on the map">
-                RECENT
               </button>
               <button onClick={() => setMapOpen((o) => !o)} aria-pressed={mapOpen}>
                 MAP {!touch && <kbd>M</kbd>}
@@ -525,9 +517,6 @@ export default function App() {
               />
             )}
           </div>
-          {recentNote && overlay.kind === 'none' && (
-            <p className="recent-note" role="status">{recentNote}</p>
-          )}
           <p className="attribution">{world.attribution}</p>
         </>
       )}
@@ -611,6 +600,8 @@ export default function App() {
           </Suspense>
         </SceneBoundary>
       )}
+
+      {pelican && game && overlay.kind === 'none' && <Pelican game={game} onDone={() => setPelican(false)} />}
 
       {!started && <TitleScreen onStart={start} />}
     </main>

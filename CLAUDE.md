@@ -21,7 +21,7 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
 
 - `npm run dev` → http://localhost:5173/
 - `npm test` · `npm run build` (tsc + vite) — both must be green before committing (and in CI on every PR, see Git workflow)
-- `npm run smoke` (after `npm run build`) — the built site in a real browser via Playwright: title, RECENT to
+- `npm run smoke` (after `npm run build`) — the built site in a real browser via Playwright: title, `?at=arcade` to
   the Duck Arcade, opens + closes every playable cabinet; fails on any page error, console error or 404
   (`scripts/smoke.mjs`; failure shot in `screenshots/smoke/`). Uses your Chrome locally, Chromium in CI.
 - `npm run images [srcDir]` — raw photos/videos → `public/art/<set>/` (AVIF stills 1200 px +
@@ -129,6 +129,13 @@ auto-merge (every PR, see 6); if it touches the other person's area, add them as
   `src/experiences/minigames/ConeCatch.tsx`, rules pure + tested in
   `src/game/coneCatch.ts`; best score in localStorage) via the App's `minigame` overlay, whose `then`
   gets `{ score, best }` back for her closing line. A new character mini game: same overlay, its own component.
+- **The hidden house + Ham** (1918 45th Ave SW, Admiral): a nameless landmark (`craftsman-45th` in
+  `content/landmarks.csv`, drawn in `render/landmarks.ts`) — no name, so it's never on the map's place
+  list. The alley behind it is walkable via `ALLEYS` in `scripts/city/map-config.mjs` (listed alleys →
+  concrete lanes, named "Alley"). Ham the cat (`src/game/plugins/ham.ts`, a Scottish Fold) wanders the
+  street and alley within `HAM.leash` tiles of home, sits to look at a rabbit nearby, and says one set
+  of lines per visit through the plain neighbor talk (words in `src/content/ham.ts`; movement pure +
+  tested in `src/game/ham.ts`). `__ham` in dev.
 - `src/game/plugins/pegasus.ts` — the pegasus in Pegasus Books (Junction, west side): come within `NOTICE`
   tiles and it walks out of the door (clipped at the shop front), says hello in a tiny-font bubble
   (`src/content/pegasus.ts`, one line per visit) with a whinny, then flies off north-east; home again once
@@ -170,6 +177,11 @@ auto-merge (every PR, see 6); if it touches the other person's area, add them as
   installation ids are vars in `wish/wrangler.jsonc`; secrets: `TURNSTILE_SECRET`, `GITHUB_APP_KEY`
   (PKCS#8 PEM). `?wish=http://127.0.0.1:8791` points the site at `npm run dev` in wish/ (Turnstile's
   test key is used for a local Worker).
+- **The pelican** (`src/ui/Pelican.tsx`): once a session, 10 s after you join (`PELICAN_AFTER`; it waits if a dialog or scene is open), it flies in over the map and lands
+  beside your rabbit ("Anything you want to add, pumpkin?"), flies up onto the ✿ IDEA button ("Dream it out!"),
+  then off the screen. It's HTML laid over map and HUD (no clicks taken), placed with `CityGame.screenPoint()` and
+  drawn at `CityGame.scale`; flight + timing pure and tested in `src/game/pelican.ts`, words in
+  `src/content/pelican.ts`, 24-wide sprite in `sprites.ts`. Opening anything ends its visit.
 - `src/game/plugins/dinos.ts` — **toy dinosaurs** (from Mike's GIF) plodding west along the east–west streets
   ("SW … St"): `DINO_COUNT` are always near you; each walks west until its street ends or it's `FAR` behind,
   then turns up on another east–west street nearby, out of sight. Going by you (within `HEAR` tiles) it plays
@@ -257,4 +269,4 @@ Unit tests cover content invariants (every spot has art and sits by a walkable s
 slideshows, busker songs, crow flight, sprites, and the city's own tests in `src/city/`. For visuals, drive real Chrome: `playwright-core` from `~/code/games/arcade/node_modules`
 with `channel: 'chrome'`; save shots under `screenshots/` (gitignored). In dev, `window.__game` is
 the live `CityGame`, plus `__art`, `__busker`, `__crow` (the plugins) for scripted checks;
-`?at=lat,lon` or `?atTile=x,y` skips the title and drops you there.
+`?at=lat,lon`, `?atTile=x,y` or `?at=arcade` (beside the Duck Arcade door) skips the title and drops you there — on the live site too.

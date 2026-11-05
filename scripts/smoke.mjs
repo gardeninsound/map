@@ -68,22 +68,19 @@ try {
   // ?solo: walk alone, never join the live island from a test
   await page.goto(`${base}?solo`);
   await page.locator('.title-start').click();
-  await page.locator('.hud-recent').waitFor();
+  await page.locator('.hud-spots').waitFor();
   await settle();
   await dismiss('.dialog'); // Mike's welcome
   assertClean();
 
-  check('RECENT → the Duck Arcade door');
-  let atArcade = false;
-  for (let i = 0; i < 40 && !atArcade; i++) {
-    await page.locator('.hud-recent').click();
-    await page.waitForTimeout(150);
-    atArcade = /· Duck Arcade/.test((await page.locator('.recent-note').textContent().catch(() => '')) ?? '');
-  }
-  if (!atArcade) throw new Error('no RECENT entry lands at the Duck Arcade');
+  check('?at=arcade → the Duck Arcade door');
+  await page.goto(`${base}?solo&at=arcade`);
+  await page.locator('.hud-spots').waitFor();
+  await settle();
+  assertClean();
 
   check('walk in');
-  // Space on a focused RECENT button would just press it again
+  // Space on a focused button would just press it again
   await page.evaluate(() => (document.activeElement instanceof HTMLElement ? document.activeElement.blur() : undefined));
   await page.waitForTimeout(300);
   await page.keyboard.press('Space');
