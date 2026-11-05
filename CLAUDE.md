@@ -186,6 +186,12 @@ auto-merge (every PR, see 6); if it touches the other person's area, add them as
   then off the screen. It's HTML laid over map and HUD (no clicks taken), placed with `CityGame.screenPoint()` and
   drawn at `CityGame.scale`; flight + timing pure and tested in `src/game/pelican.ts`, words in
   `src/content/pelican.ts`, 24-wide sprite in `sprites.ts`. Opening anything ends its visit.
+- `src/game/plugins/dinos.ts` — **toy dinosaurs** (from Mike's GIF) plodding west along the east–west streets
+  ("SW … St"): `DINO_COUNT` are always near you; each walks west until its street ends or it's `FAR` behind,
+  then turns up on another east–west street nearby, out of sight. Going by you (within `HEAR` tiles) it plays
+  Mike's recording once a pass (`public/sounds/dinosaur.mp3`; not two at once; quiet in scenes and when muted). Pure + tested: `src/game/dinos.ts`. Sprite:
+  `node scripts/make-dino.mjs <dino.gif>` keys out the green backdrop, keeps a soft shadow, inks an outline →
+  `public/sprites/dino-walk.png` + `src/game/dinoSheet.ts` (the GIF isn't kept: 5.8 MB).
 - **Duck Arcade** (in Junction 47's storefront slot, `render/facades.ts`): `src/game/plugins/arcadeDoor.ts`
   puts the door target on its California side; App opens `src/experiences/arcade/DuckArcade.tsx`, a
   three.js first-person room (`ArcadeScene.ts`) with a cabinet per game. The shell: cabinets are data
