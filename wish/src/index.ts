@@ -10,7 +10,7 @@
  * issues). Nothing here runs the text.
  */
 import { installationToken } from './githubApp';
-import { check, issueFor } from './issue';
+import { check, issueFor, previewOf } from './issue';
 
 interface Env {
   ALLOWED_ORIGINS: string;
@@ -88,7 +88,7 @@ export default {
         'User-Agent': 'garden-wish',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(issueFor(idea.text, idea.street, idea.name)),
+      body: JSON.stringify(issueFor(idea.text, idea.street, idea.name, previewOf(origin))),
     });
     if (!res.ok) {
       console.log('github', res.status, await res.text().catch(() => ''));
