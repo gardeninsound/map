@@ -26,7 +26,7 @@ export function TitleScreen({ onStart }: { onStart(): void }) {
         <FlyingRabbits />
       </div>
       <div className="title-card">
-        <p className="title-kicker">Galarpagos West Seattle</p>
+        <p className="title-kicker">Galapagos West Seattle</p>
         <h1 className="title-logo">
           GARDEN
           <br />
