@@ -17,7 +17,7 @@
   "migrations": [{ "tag": "v1", "new_sqlite_classes": ["Room"] }],
   "vars": {
     // Comma-separated page origins allowed to connect; `*` is a wildcard.
-    "ALLOWED_ORIGINS": "https://gardeninsound.website,https://www.gardeninsound.website,http://localhost:*,http://127.0.0.1:*",
+    "ALLOWED_ORIGINS": "https://gardeninsound.website,https://www.gardeninsound.website,https://*-garden-preview.gardeninsound.workers.dev,http://localhost:*,http://127.0.0.1:*",
     "MAX_PEERS": "64"
   }
 }

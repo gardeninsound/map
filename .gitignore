@@ -9,3 +9,5 @@ data/osm/
 public/art/
 *.tsbuildinfo
 .wrangler/
+# private working docs (the hosting doc's source etc.) — never committed; the repo is public
+docs/private/

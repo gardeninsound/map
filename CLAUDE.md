@@ -57,6 +57,9 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
   live at https://gardeninsound.website (custom domain from `public/CNAME`, served at the root, `base: '/'`).
   To move it to gardeninsound.website/map/ later: `base: '/map/'`, drop `public/CNAME`, and give the
   domain to an org `gardeninsound.github.io` repo (every asset URL already uses `BASE_URL`).
+- PR previews: every same-repo PR gets `https://pr-<N>-garden-preview.gardeninsound.workers.dev`, commented on the PR
+  (`.github/workflows/preview.yml` → `preview/`, a files-only Worker; `wrangler versions upload --preview-alias pr-<N>`;
+  secret `CLOUDFLARE_API_TOKEN`). Previews use the real relay and idea box (issues titled `[preview pr-<N>]`).
 
 ## Git workflow (everyone, Claude included)
 
@@ -72,10 +75,14 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
    you can see or hear).
 5. **Open a PR into `main`** (`gh pr create --fill`). The **Check** workflow (`.github/workflows/ci.yml`)
    runs the size guard, tests, build and smoke test; `main` requires it to pass.
-6. **Feature PRs auto-merge**: `gh pr merge --auto --squash --delete-branch` — GitHub merges (= deploys)
-   the moment Check is green and never if it fails; fix on the branch and it goes in. **Shared PRs wait
-   for the other person's OK** instead: anything touching `src/city/`, `App.tsx`, `relay/`, `.github/`,
-   CLAUDE.md, `package.json` dependencies or the map data pipeline (`scripts/city/`).
+6. **Every PR auto-merges**: `gh pr merge --auto --squash --delete-branch` — GitHub merges (= deploys)
+   the moment Check is green and never if it fails; fix on the branch and it goes in. Nobody waits for
+   an OK. When a PR touches the other person's area, add them as a reviewer so they hear about it — a
+   heads-up, not a gate: they comment or follow up with a fix after it's live.
+   - **Jim's area** (tech lead, `vlandham`): `src/city/`, `App.tsx`, `relay/`, `wish/`, `.github/`,
+     `package.json` dependencies, the map data pipeline (`scripts/city/`), CLAUDE.md's dev notes.
+   - **Mike's area** (`exit320-stack`): the art and the words — what a scene shows, Mike's lines and
+     other copy in `src/content/`, which spots and art appear.
 7. **Never push to `main` directly**, and never force-push a branch someone else is working on.
 
 What the Check catches, so keep it that way:
@@ -91,7 +98,7 @@ What the Check catches, so keep it that way:
 
 Claude: start new work by branching as in 1 (even if the session opened on another branch). Commit when a
 piece is done and green. When asked to push/ship: push the branch, open (or update) its PR, and turn on
-auto-merge for feature PRs; for shared PRs (6), say so and leave the merge to the people.
+auto-merge (every PR, see 6); if it touches the other person's area, add them as reviewer (`--reviewer`).
 `gh` on Windows: if `gh` isn't on PATH in a fresh install, use `"C:\Program Files\GitHub CLI\gh.exe"`.
 
 ## Where things live
@@ -102,9 +109,12 @@ auto-merge for feature PRs; for shared PRs (6), say so and leave the merge to th
 - `src/game/sprites.ts` — Mike, the lemons (`src/game/lemon.ts`), the crow (same grid format as the city's sprites).
 - First visit: after Mike's welcome the city's hint arrow flashes 4× toward the nearest open
   spot (remembered in localStorage). The city's `Compass` points at `ArtSpots.open`.
-- `src/game/busker.ts` — the keyboard busker outside Easy Street (Junction): three original
-  chiptune songs (note strings, tested for whole bars) scheduled ahead through the shared
-  AudioContext (the city's `audioContext()`). The busker plugin sets `music.level` from
+- `src/game/busker.ts` — the keyboard busker outside Easy Street (Junction): five original
+  chiptune songs — bouncy ones, a calm slow one ("Fog on the Sound") and a low funky groove
+  ("Junction Strut") — as note strings with per-song tone/loudness/bass groove/hats (tested for
+  whole bars), scheduled ahead through the shared AudioContext (the city's `audioContext()`).
+  The playlist runs on the **wall clock** (`whereNow`), so every rabbit hears the same song and bar
+  "now"; drift (a sleeping tab) snaps back to it. `__busker.song` in dev. The busker plugin sets `music.level` from
   distance (`EARSHOT` tiles, eased); `game.quiet` mutes it inside art scenes; mute respected.
 - `src/game/crow.ts` — the snack crow (pure flight state, tested). Starts outside Les Schwab on
   Alaska; asks for snacks (choice → reply), then flies to the next perch in
@@ -140,6 +150,25 @@ auto-merge for feature PRs; for shared PRs (6), say so and leave the merge to th
   emote, rabbits stop being targets for `TALK_QUIET` s; append only, the wire sends the index), rate-limited
   when sent and when shown (`RateLimit`), bubbles stacked clear of each other (`stackBubbles`). No free
   text, and rabbits pass through each other on purpose.
+  **Presence** (`presence()` in `src/game/visitors.ts`, pure + tested): a hidden tab fades your rabbit at
+  once and leaves the room after 2 min; 10 min without input (keys, mouse, taps) fades, 30 min leaves;
+  showing the tab or any input rejoins as the same rabbit (`RelayRoom.pause/resume` keep the id).
+  Dev: `?presence=N` shortens those to N / 2N / 4N s. The relay sweeps sockets silent > 90 s (no
+  message, no ping) every 30 s via a Durable Object alarm, and the client replaces a socket that hears
+  no pong for ~a minute.
+- **Idea box** (✿ IDEA in the HUD): "What would you love to add in the Garden in Sound?" —
+  `src/ui/IdeaBox.tsx` (words in `src/content/ideas.ts`; an optional name, credited in the issue; a real
+  form whose Tab order wraps inside the box) posts to the `wish/` Worker
+  (wish.gardeninsound.website, gardeninsound Cloudflare account), which checks origin + a
+  Cloudflare Turnstile token + 3 ideas/min per address, then files a GitHub issue labelled
+  `suggestion` on the public repo (mentions defused; formatting pure + tested in
+  `wish/src/issue.ts`, run by the root `npm test`; `cd wish && npm test` runs the Worker against a
+  fake GitHub). Issues are filed by the org's **Garden in Sound Wishes GitHub App**
+  (github.com/apps/garden-in-sound-wishes, Issues: write only) so they show as `garden-in-sound-wishes[bot]`:
+  `wish/src/githubApp.ts` signs a JWT with the app key and caches an installation token. App and
+  installation ids are vars in `wish/wrangler.jsonc`; secrets: `TURNSTILE_SECRET`, `GITHUB_APP_KEY`
+  (PKCS#8 PEM). `?wish=http://127.0.0.1:8791` points the site at `npm run dev` in wish/ (Turnstile's
+  test key is used for a local Worker).
 - **Duck Arcade** (in Junction 47's storefront slot, `render/facades.ts`): `src/game/plugins/arcadeDoor.ts`
   puts the door target on its California side; App opens `src/experiences/arcade/DuckArcade.tsx`, a
   three.js first-person room (`ArcadeScene.ts`) with a cabinet per game. The shell: cabinets are data

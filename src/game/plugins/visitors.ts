@@ -11,12 +11,15 @@ import {
   encode,
   MY_SCARF,
   newVisitor,
+  presence,
+  PRESENCE,
   rabbitName,
   scarfFor,
   sendLimit,
   shouldSend,
   showLimit,
   stackBubbles,
+  type Presence,
   type RabbitWire,
   type RateLimit,
   type Visitor,
@@ -55,6 +58,11 @@ export interface RabbitInfo {
  * Rabbits pass through each other on purpose (nobody can block a doorway), they say
  * things only from the fixed list in content/emotes.ts, rate-limited both ways, and
  * `hidden` takes everyone else off your screen while you stay on theirs.
+ *
+ * Presence (visitors.ts `presence`): switch tabs and your rabbit fades for everyone; stay
+ * away two minutes and it leaves the room (the count drops). Ten minutes without a key,
+ * mouse move, click or tap fades it too, thirty leaves. Coming back rejoins as the same rabbit. The
+ * relay also drops connections that go silent (a laptop that slept), see relay/.
  */
 export class Visitors implements CityPlugin {
   readonly visitors = new Map<string, Visitor>();
@@ -73,6 +81,11 @@ export class Visitors implements CityPlugin {
   /** no '…' targets until this clock time (set when you emote) */
   private quietUntil = 0;
   private icons = { heart: gridToCanvas(HEART, { '#': '#e84a5f' }), note: gridToCanvas(NOTE, { '#': INK }) };
+  private state: Presence = 'here';
+  private hiddenAt: number | null = null;
+  private lastInput = performance.now();
+  private presenceTimer = 0;
+  private unlisten: (() => void) | null = null;
   private _hidden = (() => {
     try {
       return localStorage.getItem(HIDE_KEY) === '1';
@@ -84,7 +97,14 @@ export class Visitors implements CityPlugin {
   constructor(
     private readonly relayUrl?: string,
     private readonly roomId = ROOM,
+    /** presence timings in seconds (dev can shorten them to test) */
+    private readonly timings = PRESENCE,
   ) {}
+
+  /** here, away (faded) or gone (out of the room) — for the HUD and tests */
+  get presence(): Presence {
+    return this.state;
+  }
 
   attach(game: CityGame) {
     this.game = game;
@@ -122,6 +142,7 @@ export class Visitors implements CityPlugin {
       this.shown.delete(id);
       if (this.visitors.delete(id)) this.onChange?.();
     };
+    this.watchPresence();
     room.onMessage = (type, data, from) => {
       if (type === 'e') return this.heard(from, decodeEmote(data));
       if (type !== 'r') return;
@@ -141,6 +162,8 @@ export class Visitors implements CityPlugin {
   }
 
   leave() {
+    this.unlisten?.();
+    this.unlisten = null;
     this.room?.leave();
     this.room = null;
     this.visitors.clear();
@@ -150,6 +173,62 @@ export class Visitors implements CityPlugin {
 
   stop() {
     this.leave();
+  }
+
+  /** Tab visibility and input feed `presence`, checked every second (timers keep running in hidden tabs). */
+  private watchPresence() {
+    const now = () => performance.now();
+    const onVisible = () => {
+      if (document.visibilityState === 'hidden') this.hiddenAt ??= now();
+      else {
+        this.hiddenAt = null;
+        this.lastInput = now();
+      }
+      this.checkPresence();
+    };
+    const onInput = () => {
+      this.lastInput = now();
+      if (this.state !== 'here') this.checkPresence();
+    };
+    const inputs = ['keydown', 'pointerdown', 'pointermove', 'touchstart', 'wheel'] as const;
+    document.addEventListener('visibilitychange', onVisible);
+    for (const e of inputs) window.addEventListener(e, onInput, { capture: true, passive: true });
+    this.presenceTimer = window.setInterval(() => this.checkPresence(), 1000);
+    if (document.visibilityState === 'hidden') this.hiddenAt = now();
+    this.unlisten = () => {
+      document.removeEventListener('visibilitychange', onVisible);
+      for (const e of inputs) window.removeEventListener(e, onInput, { capture: true });
+      clearInterval(this.presenceTimer);
+    };
+  }
+
+  private checkPresence() {
+    const room = this.room;
+    if (!room) return;
+    const t = performance.now();
+    const next = presence(this.hiddenAt === null ? null : (t - this.hiddenAt) / 1000, (t - this.lastInput) / 1000, this.timings);
+    if (next === this.state) return;
+    const was = this.state;
+    this.state = next;
+    if (next === 'gone') {
+      room.pause(); // everyone else sees us leave; we stop seeing them
+      this.visitors.clear();
+      this.said.clear();
+      this.shown.clear();
+    } else {
+      if (was === 'gone') {
+        this.last = null; // say where we are again once back in
+        room.resume();
+      }
+      // here ↔ away goes out now: the game loop (and update()) doesn't run in a hidden tab
+      const me = this.mine();
+      if (me) {
+        room.send('r', me);
+        this.last = me;
+        this.sinceSend = 0;
+      }
+    }
+    this.onChange?.();
   }
 
   /**
@@ -229,7 +308,7 @@ export class Visitors implements CityPlugin {
     const g = this.game;
     if (!g) return null;
     const p = g.player;
-    return encode({ pos: p.pos, facing: p.facing, moving: p.moving && !g.paused, away: g.paused });
+    return encode({ pos: p.pos, facing: p.facing, moving: p.moving && !g.paused && this.state === 'here', away: g.paused || this.state !== 'here' });
   }
 
   update(dt: number) {

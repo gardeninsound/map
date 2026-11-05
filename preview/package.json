@@ -1,0 +1,11 @@
+{
+  "name": "garden-preview",
+  "private": true,
+  "description": "Uploads the built site as a preview of a pull request (see README.md)",
+  "scripts": {
+    "upload": "wrangler versions upload"
+  },
+  "devDependencies": {
+    "wrangler": "^4.156.0"
+  }
+}

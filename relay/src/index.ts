@@ -14,6 +14,11 @@ import { DurableObject } from 'cloudflare:workers';
  *
  * Sockets use the hibernation API, so a quiet room costs nothing, and
  * "ping" is answered by the runtime itself without waking the object.
+ *
+ * Dead sockets are swept: while anyone is connected, an alarm every SWEEP_MS
+ * closes sockets that have sent nothing (not even a "ping") for STALE_MS, and
+ * tells everyone they left. That catches a laptop that slept or a phone whose
+ * browser was killed, which never send a close. Live pages ping every 25 s.
  */
 
 export interface Env {
@@ -22,6 +27,10 @@ export interface Env {
   ALLOWED_ORIGINS?: string;
   /** Most players in one room (default 64). */
   MAX_PEERS?: string;
+  /** a socket silent this long (ms) is dropped (default 90 s) */
+  STALE_MS?: string;
+  /** how often to look (ms, default 30 s) */
+  SWEEP_MS?: string;
 }
 
 /** Bigger messages are dropped: games send small state, not files. */
@@ -29,6 +38,7 @@ const MAX_MESSAGE = 16 * 1024;
 /** Close codes the client understands (4000–4999 are free for apps). */
 const CLOSE_REPLACED = 4000;
 const CLOSE_FULL = 4001;
+const CLOSE_STALE = 4002;
 
 const NAME = /^[A-Za-z0-9_-]{1,64}$/;
 const PEER_ID = /^[A-Za-z0-9]{4,32}$/;
@@ -83,6 +93,9 @@ export class Room extends DurableObject<Env> {
       this.broadcast({ k: 'leave', id }, server);
     }
 
+    server.serializeAttachment({ seen: Date.now() });
+    await this.sweepLater();
+
     const others = this.peerIds().filter((p) => p !== id);
     const max = Number(this.env.MAX_PEERS) || 64;
     if (others.length >= max) {
@@ -95,7 +108,8 @@ export class Room extends DurableObject<Env> {
   }
 
   async webSocketMessage(ws: WebSocket, message: string | ArrayBuffer): Promise<void> {
-    if (typeof message !== 'string' || message.length > MAX_MESSAGE) return;
+    // a socket the sweep already dropped (its owner may not have noticed yet) is ignored
+    if (ws.readyState !== WebSocket.OPEN || typeof message !== 'string' || message.length > MAX_MESSAGE) return;
     let msg: { t?: unknown; d?: unknown; to?: unknown };
     try {
       msg = JSON.parse(message);
@@ -103,6 +117,7 @@ export class Room extends DurableObject<Env> {
       return;
     }
     if (typeof msg !== 'object' || msg === null || typeof msg.t !== 'string') return;
+    ws.serializeAttachment({ seen: Date.now() });
     const out = JSON.stringify({ k: 'msg', from: this.idOf(ws), t: msg.t, d: msg.d ?? null });
     const targets = typeof msg.to === 'string' ? this.ctx.getWebSockets(msg.to) : this.ctx.getWebSockets();
     for (const s of targets) if (s !== ws) this.sendRaw(s, out);
@@ -115,6 +130,30 @@ export class Room extends DurableObject<Env> {
 
   async webSocketError(ws: WebSocket): Promise<void> {
     this.dropped(ws);
+  }
+
+  /** Start the sweep if it isn't running. */
+  private async sweepLater(): Promise<void> {
+    if ((await this.ctx.storage.getAlarm()) === null) {
+      await this.ctx.storage.setAlarm(Date.now() + (Number(this.env.SWEEP_MS) || 30_000));
+    }
+  }
+
+  /** The sweep: drop sockets that have gone silent, and keep sweeping while anyone's here. */
+  async alarm(): Promise<void> {
+    const now = Date.now();
+    const stale = Number(this.env.STALE_MS) || 90_000;
+    let open = 0;
+    for (const ws of this.ctx.getWebSockets()) {
+      if (ws.readyState !== WebSocket.OPEN) continue;
+      const msg = (ws.deserializeAttachment() as { seen?: number } | null)?.seen ?? 0;
+      const ping = this.ctx.getWebSocketAutoResponseTimestamp(ws)?.getTime() ?? 0;
+      if (now - Math.max(msg, ping) > stale) {
+        this.close(ws, CLOSE_STALE, 'silent too long');
+        this.dropped(ws);
+      } else open++;
+    }
+    if (open > 0) await this.ctx.storage.setAlarm(now + (Number(this.env.SWEEP_MS) || 30_000));
   }
 
   /** A socket is gone: tell the others, unless the same peer is still connected on a newer one. */
