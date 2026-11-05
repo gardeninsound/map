@@ -3,6 +3,11 @@ import { sfx, tone } from '../city';
 
 export const sounds = {
   ...sfx,
+  /** Ham the cat: a little rising-then-falling mew */
+  mew: () => {
+    tone(560, 0.1, 'triangle', 0.04, 300);
+    setTimeout(() => tone(820, 0.2, 'triangle', 0.035, -420), 90);
+  },
   /** the paint roller in the slideshows */
   roll: () => tone(180, 0.35, 'sawtooth', 0.025, 160),
   /** the snack crow */

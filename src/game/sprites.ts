@@ -317,3 +317,57 @@ export function buildPelican(): PelicanSprites {
     fly: { right: [c(G.flyUp, false), c(G.flyDown, false)], left: [c(G.flyUp, true), c(G.flyDown, true)] },
   };
 }
+/**
+ * Ham the cat, a Scottish Fold (16 wide, feet on the bottom row): orange tabby, ears folded
+ * flat into a round head, big amber eyes, dark collar with a white tag. Walking side-on
+ * (facing right, tail up) in two strides, and sitting square to you (also the portrait).
+ */
+const HAM_COLORS: Record<string, string> = { k: INK, o: '#c27c3e', d: '#8f5428', l: '#e3ad6c', e: '#f0b81c', p: '#1a1a1a', n: '#d98a80', c: '#2c2c30', t: '#f2f2f2' };
+const HAM_HEAD: Grid = [
+  '..kk............',
+  '.kook...........',
+  '.kok......kkkk..',
+  '.kok.....kdoddk.',
+  '..kok...kooooook',
+  '..kokkkkkoepoepk',
+  '..kooddodokolnok',
+  '..koooooookoook.',
+  '..koodoodoocctk.',
+  '..kollllllllkk..',
+];
+const HAM_STRIDES: Grid[] = [
+  ['...kok.kok.kok..', '...kok..kokkok..', '...kk...kk.kk...'],
+  ['..kok..kok..kok.', '.kok....kok.kok.', '.kk......kk..kk.'],
+];
+const HAM_SIT: Grid = [
+  '................',
+  '....kkkkkkkk....',
+  '...kddoddoddk...',
+  '..kooooooooook..',
+  '..koeepooeepok..',
+  '..koeeppoeepok..',
+  '..koooolnooook..',
+  '...kooolloook...',
+  '....kccctcck....',
+  '...kooolloook...',
+  '..koooollooook..',
+  '..koodollodook..',
+  '..koooollooookd.',
+  '..kllookkoollkdk',
+  '...kkkk..kkkkkk.',
+];
+/** a paw up to the face, licking */
+const HAM_GROOM: Grid = HAM_SIT.map((row, y) => (y === 7 ? '...koollllook...' : y === 8 ? '....kcclllck....' : y === 9 ? '...koolllook....' : row));
+
+export interface HamSprites {
+  walk: { left: HTMLCanvasElement[]; right: HTMLCanvasElement[] };
+  sit: HTMLCanvasElement;
+  groom: HTMLCanvasElement;
+}
+
+export function buildHam(): HamSprites {
+  const walk = (mirror: boolean) => HAM_STRIDES.map((legs) => gridToCanvas([...HAM_HEAD, ...legs], HAM_COLORS, mirror));
+  return { walk: { right: walk(false), left: walk(true) }, sit: gridToCanvas(HAM_SIT, HAM_COLORS), groom: gridToCanvas(HAM_GROOM, HAM_COLORS) };
+}
+
+export const hamGrids = { head: HAM_HEAD, strides: HAM_STRIDES, sit: HAM_SIT, groom: HAM_GROOM, colors: HAM_COLORS };
