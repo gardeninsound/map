@@ -260,6 +260,12 @@ function build() {
   writeFileSync(messageFile, message);
 
   // the model that wrote the plan answered just now, so build with it (unless told otherwise)
+  // Aider only "sees" the recipe's files. Otherwise a file name it spots in the code (a comment
+  // saying "see src/game/busker.ts") makes it offer to add that file, and with --yes-always it
+  // asks the model again instead of saving the edit, so nothing gets written.
+  const ignoreFile = join(OUT, 'aiderignore');
+  writeFileSync(ignoreFile, ['# written by scripts/ai/run.mjs: hide everything but the recipe\'s files', '*', ...[...recipe.edit, ...recipe.read].map((f) => `!${f}`)].join('\n') + '\n');
+
   const p = (!providerName && !modelName && providers().find((x) => x.name === s.provider && x.model === s.model)) || providers()[0];
   const model = p.aider(p.model, p);
   const test = `npx vitest run ${recipe.test.join(' ')}`;
@@ -270,6 +276,7 @@ function build() {
     ...recipe.read.flatMap((f) => ['--read', f]),
     '--test-cmd', test,
     '--auto-test',
+    '--aiderignore', ignoreFile,
     '--map-tokens', '0', // it's handed the files; no need to map the repo
     '--no-auto-commits',
     '--no-gitignore',
