@@ -26,6 +26,7 @@ import { ArtSpots, type PlacedLocation } from './game/plugins/artSpots';
 import { Busker } from './game/plugins/busker';
 import { Crow } from './game/plugins/crow';
 import { Chicken } from './game/plugins/chicken';
+import { Ham } from './game/plugins/ham';
 import { Pegasus } from './game/plugins/pegasus';
 import { BigCup } from './game/plugins/bigCup';
 import { Seal } from './game/plugins/seal';
@@ -81,7 +82,8 @@ const LANDMARK_COLOR = '#5fa8a0';
 /**
  * The landmarks, as named places for the map: the Junction's four block faces become one
  * "The Junction shops", other names lose their parenthetical. Most-visited first, so those
- * keep their name tags when the map gets crowded.
+ * keep their name tags when the map gets crowded. A landmark with no name is a secret: drawn,
+ * never listed.
  */
 function mapLandmarks(landmarks: PlacedLandmark[]): MapPlace[] {
   const centre = (l: PlacedLandmark) => ({ x: l.x + l.w / 2, y: l.y + l.h / 2 });
@@ -92,7 +94,7 @@ function mapLandmarks(landmarks: PlacedLandmark[]): MapPlace[] {
     out.push({ name: 'The Junction shops', x: cs.reduce((a, c) => a + c.x, 0) / cs.length, y: cs.reduce((a, c) => a + c.y, 0) / cs.length, color: LANDMARK_COLOR });
   }
   for (const l of landmarks) {
-    if (l.sprite === 'storefronts') continue;
+    if (l.sprite === 'storefronts' || !l.name) continue; // a nameless landmark is a hidden one
     out.push({ name: l.name.replace(/\s*\(.*\)\s*$/, ''), ...centre(l), color: LANDMARK_COLOR });
   }
   return out;
@@ -148,6 +150,7 @@ export default function App() {
     const crow = new Crow();
     const chicken = new Chicken();
     const pegasus = new Pegasus();
+    const ham = new Ham();
     const luna = new LunaPark();
     // Everyone else on the island, live. `?solo` walks alone; `?relay=` points at another
     // relay; in dev, `?island=<name>` uses a private room so tests don't walk onto the real one.
@@ -161,7 +164,7 @@ export default function App() {
     const g = new CityGame(canvas.current!, world, {
       start: world.project(START.lat, START.lon),
       voices: neighborVoices,
-      plugins: [art, new BigCup(art), new Seal(), arcadeDoor.current, luna, busker, crow, chicken, pegasus, ...(live ? [live] : [])],
+      plugins: [art, new BigCup(art), new Seal(), arcadeDoor.current, luna, busker, crow, chicken, pegasus, ham, ...(live ? [live] : [])],
       events: {
         onStreet: setStreet,
         onStorefront: setStorefront,
@@ -241,7 +244,7 @@ export default function App() {
       },
     });
     g.paused = true;
-    if (import.meta.env.DEV) Object.assign(window, { __game: g, __busker: busker, __crow: crow, __chicken: chicken, __pegasus: pegasus, __art: art, __luna: luna, __visitors: live }); // test hooks
+    if (import.meta.env.DEV) Object.assign(window, { __game: g, __busker: busker, __crow: crow, __chicken: chicken, __pegasus: pegasus, __ham: ham, __art: art, __luna: luna, __visitors: live }); // test hooks
     // Dev review hooks: ?at=lat,lon (or ?atTile=x,y) skips the title and drops you there;
     // ?audit scans the whole map for road-drawing glitches (scripts/city/road-audit.mjs).
     const q = new URLSearchParams(location.search);

@@ -15,7 +15,7 @@
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
-import { DETAILED, HOUSES, MAP, ROADS } from './map-config.mjs';
+import { ALLEYS, DETAILED, HOUSES, MAP, ROADS } from './map-config.mjs';
 
 const ROOT = new URL('../..', import.meta.url);
 const PROCEDURAL = process.argv.includes('--procedural');
@@ -376,6 +376,12 @@ for (const w of parkPaths) {
   if (line.filter(([x, y]) => inDetailed(x, y)).length * 2 < line.length) continue; // a street's sidewalk, not a path through the place
   const metres = DETAILED.pathWidth * ROADS.widthScale;
   ways.push({ w, cls: 'path', path: true, name: null, metres, wT: metres / TILE_M, line: simplify(line, ROADS.simplify) });
+}
+// Alleys listed in map-config.mjs: walkable concrete lanes, drawn like a park path.
+for (const a of ALLEYS.lanes) {
+  const metres = ALLEYS.width * ROADS.widthScale;
+  const line = a.points.map(([lat, lon]) => [toX(lon), toY(lat)]);
+  ways.push({ w: { tags: a.name ? { name: a.name } : {} }, cls: 'path', path: true, name: a.name ?? null, metres, wT: metres / TILE_M, line });
 }
 RANK.path = -1;
 for (const w of tagged((t) => /^motorway/.test(t.highway))) {
