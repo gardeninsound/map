@@ -24,7 +24,8 @@ leave · M for the map. On touch screens a D-pad and A button appear.
 
 **Art:** raw photos stay out of the repo. Put the folders in
 `~/Downloads/bearisland/images-merged/`, run `npm run images` to build web-sized AVIFs in
-`public/art/`, then `npm run art:publish` to stage just the files the site shows.
+`public/art/`, then `npm run art:publish` to stage just the files the site shows. Details,
+encoding settings and how to pick a scene's photos: [`docs/art-pipeline.md`](docs/art-pipeline.md).
 
 **Hosting:** GitHub Pages behind Cloudflare, plus two small Cloudflare Workers: `relay/` for the
 other rabbits and `wish/` for the idea box. See [`docs/hosting.md`](docs/hosting.md) for what runs

@@ -25,7 +25,18 @@ export interface SlideshowScript {
 export const wallTurns: SlideshowScript = {
   title: 'The Wall That Kept Turning',
   maxPhotos: 24,
-  picks: [],
+  // Hand-picked so every photo is this wall (the Bus Wall folder also holds shots of the
+  // Rush Hour boards and other walls: img-4403, 4446, 4450, 4510, empk1123, 4962–4964,
+  // 5208, 5226, 5272, 5273 — never pick those) and the run covers the whole timeline:
+  // Nov '23 ×5, Jan–Feb ×3, Mar–May ×7, Jul–Aug ×4, Sep–Nov ×4, Mar '25 ×1.
+  picks: [
+    'img-4110', 'img-4133', 'img-4149', 'img-4197', 'img-4250', // Nov 2023
+    'img-0680', 'img-4501', 'img-4531', // Jan–Feb 2024
+    'img-4593', 'img-4700', 'img-4793', 'img-4850', 'img-4928', 'img-4961', 'img-4995', // Mar–May
+    'img-5211', 'img-5243', 'img-5263', 'img-5356', // Jul–Aug
+    'img-5449', 'img-5516', 'img-5577', 'img-5683', // Sep–Nov
+    'img-6758', // Mar 2025
+  ],
   stats: ['100+ turns', '200+ painters', '2022–2025'],
   intro: [
     'From 2022 to 2025 this wall changed more than a hundred times. Painted and repainted, again and again.',
