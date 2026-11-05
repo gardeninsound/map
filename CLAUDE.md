@@ -170,6 +170,11 @@ auto-merge (every PR, see 6); if it touches the other person's area, add them as
   installation ids are vars in `wish/wrangler.jsonc`; secrets: `TURNSTILE_SECRET`, `GITHUB_APP_KEY`
   (PKCS#8 PEM). `?wish=http://127.0.0.1:8791` points the site at `npm run dev` in wish/ (Turnstile's
   test key is used for a local Worker).
+- `src/game/plugins/dinos.ts` — **toy dinosaurs** (from Mike's GIF) plodding west along the east–west streets
+  ("SW … St"): `DINO_COUNT` are always near you; each walks west until its street ends or it's `FAR` behind,
+  then turns up on another east–west street nearby, out of sight. Pure + tested: `src/game/dinos.ts`. Sprite:
+  `node scripts/make-dino.mjs <dino.gif>` keys out the green backdrop, keeps a soft shadow, inks an outline →
+  `public/sprites/dino-walk.png` + `src/game/dinoSheet.ts` (the GIF isn't kept: 5.8 MB).
 - **Duck Arcade** (in Junction 47's storefront slot, `render/facades.ts`): `src/game/plugins/arcadeDoor.ts`
   puts the door target on its California side; App opens `src/experiences/arcade/DuckArcade.tsx`, a
   three.js first-person room (`ArcadeScene.ts`) with a cabinet per game. The shell: cabinets are data

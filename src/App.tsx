@@ -30,6 +30,7 @@ import { Pegasus } from './game/plugins/pegasus';
 import { BigCup } from './game/plugins/bigCup';
 import { Seal } from './game/plugins/seal';
 import { ArcadeDoor } from './game/plugins/arcadeDoor';
+import { Dinos } from './game/plugins/dinos';
 import { LunaPark, lunaSignPortrait } from './game/plugins/lunaPark';
 import { lunaRideInvite, type LunaSign } from './content/lunaPark';
 import { Visitors } from './game/plugins/visitors';
@@ -148,6 +149,7 @@ export default function App() {
     const crow = new Crow();
     const chicken = new Chicken();
     const pegasus = new Pegasus();
+    const dinos = new Dinos();
     const luna = new LunaPark();
     // Everyone else on the island, live. `?solo` walks alone; `?relay=` points at another
     // relay; in dev, `?island=<name>` uses a private room so tests don't walk onto the real one.
@@ -161,7 +163,7 @@ export default function App() {
     const g = new CityGame(canvas.current!, world, {
       start: world.project(START.lat, START.lon),
       voices: neighborVoices,
-      plugins: [art, new BigCup(art), new Seal(), arcadeDoor.current, luna, busker, crow, chicken, pegasus, ...(live ? [live] : [])],
+      plugins: [art, new BigCup(art), dinos, new Seal(), arcadeDoor.current, luna, busker, crow, chicken, pegasus, ...(live ? [live] : [])],
       events: {
         onStreet: setStreet,
         onStorefront: setStorefront,
@@ -241,7 +243,7 @@ export default function App() {
       },
     });
     g.paused = true;
-    if (import.meta.env.DEV) Object.assign(window, { __game: g, __busker: busker, __crow: crow, __chicken: chicken, __pegasus: pegasus, __art: art, __luna: luna, __visitors: live }); // test hooks
+    if (import.meta.env.DEV) Object.assign(window, { __game: g, __busker: busker, __crow: crow, __chicken: chicken, __pegasus: pegasus, __dinos: dinos, __art: art, __luna: luna, __visitors: live }); // test hooks
     // Dev review hooks: ?at=lat,lon (or ?atTile=x,y) skips the title and drops you there;
     // ?audit scans the whole map for road-drawing glitches (scripts/city/road-audit.mjs).
     const q = new URLSearchParams(location.search);
