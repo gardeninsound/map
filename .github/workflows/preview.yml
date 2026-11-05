@@ -11,6 +11,7 @@ on:
 permissions:
   contents: read
   pull-requests: write # the comment with the link
+  deployments: write # the "View deployment" button
 
 concurrency:
   group: preview-${{ github.event.pull_request.number }}
@@ -22,6 +23,11 @@ jobs:
     # and its code shouldn't run with it anyway.
     if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
+    # A "deployment": the PR shows a "View deployment" button with the link (in its timeline and
+    # in the merge box), so it's easy to find even when the comment is buried.
+    environment:
+      name: preview
+      url: https://pr-${{ github.event.pull_request.number }}-garden-preview.gardeninsound.workers.dev
     env:
       URL: https://pr-${{ github.event.pull_request.number }}-garden-preview.gardeninsound.workers.dev
     steps:

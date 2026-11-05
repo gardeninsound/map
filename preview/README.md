@@ -6,7 +6,8 @@ live:
 **`https://pr-<number>-garden-preview.gardeninsound.workers.dev`**
 
 The [Preview workflow](../.github/workflows/preview.yml) builds the PR and uploads it, then
-comments the link on the PR. Each push updates the same link. The live site isn't involved:
+comments the link on the PR. The PR also gets a **View deployment** button with the same
+link. Each push updates the same link. The live site isn't involved:
 it still deploys from `main` to GitHub Pages.
 
 ## How it works
@@ -27,7 +28,8 @@ it still deploys from `main` to GitHub Pages.
 ## Setup (done once)
 
 - The GitHub Actions secret `CLOUDFLARE_API_TOKEN`: a Cloudflare API token with only
-  **Account → Workers Scripts → Edit** on the project's account.
+  **Account → Workers Scripts → Edit** on the project's account. Best as an *account* API
+  token (Manage Account → Account API Tokens), which belongs to the account, not a person.
 - `garden-preview` was created by one `npx wrangler deploy` here.
 
 ## By hand

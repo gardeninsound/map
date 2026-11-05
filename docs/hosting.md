@@ -119,7 +119,7 @@ third is a GitHub Actions secret.
 | Secret | What it is | To replace it |
 |---|---|---|
 | `TURNSTILE_SECRET` | the server half of the captcha | rotate it on the Turnstile widget in Cloudflare, then run `npx wrangler secret put TURNSTILE_SECRET` in `wish/` |
-| `CLOUDFLARE_API_TOKEN` (GitHub Actions secret) | lets the Preview workflow upload previews: Cloudflare API token with only **Workers Scripts: Edit** on the project's account | create a new token in Cloudflare (My Profile → API Tokens), run `gh secret set CLOUDFLARE_API_TOKEN`, then delete the old token |
+| `CLOUDFLARE_API_TOKEN` (GitHub Actions secret) | lets the Preview workflow upload previews: Cloudflare API token with only **Workers Scripts: Edit** on the project's account | create a new token in Cloudflare (preferably an account token: Manage Account → Account API Tokens), run `gh secret set CLOUDFLARE_API_TOKEN`, then delete the old token |
 | `GITHUB_APP_KEY` | the GitHub App's private key, in PKCS#8 format | on the app's settings page, choose **Generate a private key**. Convert it with `openssl pkcs8 -topk8 -nocrypt -in key.pem`, run `npx wrangler secret put GITHUB_APP_KEY`, then delete the old key on GitHub |
 
 These are public by design and live in code: the Turnstile site key (`src/content/ideas.ts`), the
@@ -132,7 +132,7 @@ app and installation ids (`wish/wrangler.jsonc`), and the Cloudflare account id 
 |---|---|
 | Deploy the site | Merge a PR into `main`. |
 | Deploy a Worker | From `main`, run `cd relay && npx wrangler deploy` (or the same in `wish/`). You need a wrangler login (`npx wrangler login`) as a member of the project's Cloudflare account. |
-| See a PR before it merges | Open the **Preview** link in the PR's comments. |
+| See a PR before it merges | Click **View deployment** on the PR (or the **Preview** link in its comments). |
 | Let another site use the relay or the idea box | Add its origin to `ALLOWED_ORIGINS` in that Worker's `wrangler.jsonc`, then open a PR, merge it, and deploy. |
 | Change DNS | Cloudflare → `gardeninsound.website` → DNS. Keep the records pointing to GitHub proxied, and keep SSL/TLS on **Full** (see the gotchas below). |
 | A replaced art file still shows the old version | Cloudflare → Caching → Configuration → **Purge Everything**. Code never needs this: every build gets new file names. |
