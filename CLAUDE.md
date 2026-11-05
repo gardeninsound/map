@@ -57,6 +57,9 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
   live at https://gardeninsound.website (custom domain from `public/CNAME`, served at the root, `base: '/'`).
   To move it to gardeninsound.website/map/ later: `base: '/map/'`, drop `public/CNAME`, and give the
   domain to an org `gardeninsound.github.io` repo (every asset URL already uses `BASE_URL`).
+- PR previews: every same-repo PR gets `https://pr-<N>-garden-preview.gardeninsound.workers.dev`, commented on the PR
+  (`.github/workflows/preview.yml` → `preview/`, a files-only Worker; `wrangler versions upload --preview-alias pr-<N>`;
+  secret `CLOUDFLARE_API_TOKEN`). Previews use the real relay and idea box (issues titled `[preview pr-<N>]`).
 
 ## Git workflow (everyone, Claude included)
 
@@ -72,15 +75,14 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
    you can see or hear).
 5. **Open a PR into `main`** (`gh pr create --fill`). The **Check** workflow (`.github/workflows/ci.yml`)
    runs the size guard, tests, build and smoke test; `main` requires it to pass.
-6. **Feature PRs auto-merge**: `gh pr merge --auto --squash --delete-branch` — GitHub merges (= deploys)
-   the moment Check is green and never if it fails; fix on the branch and it goes in. **Shared PRs wait
-   for an OK** instead: anything touching `src/city/`, `App.tsx`, `relay/`, `wish/`, `.github/`,
-   CLAUDE.md, `package.json` dependencies or the map data pipeline (`scripts/city/`). Who says OK:
-   - **Technical changes → Jim** (tech lead): the Workers, CI and GitHub/Cloudflare setup, dependencies,
-     the city engine and map pipeline, CLAUDE.md's dev notes. If Jim opened or asked for it, Jim's say-so
-     is the OK; Mike doesn't need to sign off.
-   - **The art and the words → Mike**: what a scene shows, Mike's lines and other copy in `src/content/`,
-     which spots and art appear. Jim's PRs that change these wait for Mike.
+6. **Every PR auto-merges**: `gh pr merge --auto --squash --delete-branch` — GitHub merges (= deploys)
+   the moment Check is green and never if it fails; fix on the branch and it goes in. Nobody waits for
+   an OK. When a PR touches the other person's area, add them as a reviewer so they hear about it — a
+   heads-up, not a gate: they comment or follow up with a fix after it's live.
+   - **Jim's area** (tech lead, `vlandham`): `src/city/`, `App.tsx`, `relay/`, `wish/`, `.github/`,
+     `package.json` dependencies, the map data pipeline (`scripts/city/`), CLAUDE.md's dev notes.
+   - **Mike's area** (`exit320-stack`): the art and the words — what a scene shows, Mike's lines and
+     other copy in `src/content/`, which spots and art appear.
 7. **Never push to `main` directly**, and never force-push a branch someone else is working on.
 
 What the Check catches, so keep it that way:
@@ -96,7 +98,7 @@ What the Check catches, so keep it that way:
 
 Claude: start new work by branching as in 1 (even if the session opened on another branch). Commit when a
 piece is done and green. When asked to push/ship: push the branch, open (or update) its PR, and turn on
-auto-merge for feature PRs; for shared PRs (6), say so and leave the merge to the people.
+auto-merge (every PR, see 6); if it touches the other person's area, add them as reviewer (`--reviewer`).
 `gh` on Windows: if `gh` isn't on PATH in a fresh install, use `"C:\Program Files\GitHub CLI\gh.exe"`.
 
 ## Where things live

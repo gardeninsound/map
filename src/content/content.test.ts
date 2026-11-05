@@ -72,6 +72,13 @@ describe('chooseTurns', () => {
     expect(picked[0]).toBe(stills[0]);
     expect(picked.at(-1)).toBe(stills.at(-1));
   });
+  it("the wall's hand picks all exist, are stills, and run in time order", () => {
+    const picked = chooseTurns(wall, wallTurns.maxPhotos, wallTurns.picks);
+    expect(picked.map((a) => a.id)).toEqual(wallTurns.picks);
+    expect(picked.every((a) => a.kind === 'image')).toBe(true);
+    const dates = picked.map((a) => a.date ?? '');
+    expect(dates).toEqual([...dates].sort());
+  });
   it('uses hand picks when given', () => {
     expect(chooseTurns(wall, 24, [wall[3].id, wall[1].id]).map((a) => a.id)).toEqual([wall[3].id, wall[1].id]);
   });
