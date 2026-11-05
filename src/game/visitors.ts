@@ -13,24 +13,29 @@ export interface RabbitState {
   moving: boolean;
   /** inside an art scene or a conversation: shown faded */
   away: boolean;
+  /** on a bicycle (holding Shift) */
+  riding?: boolean;
 }
 
-/** On the wire: [x, y, facing, moving, away], positions to 1/20 tile. */
-export type RabbitWire = [number, number, number, 0 | 1, 0 | 1];
+/**
+ * On the wire: [x, y, facing, moving, away, riding], positions to 1/20 tile. `riding` came
+ * later: older clients send five (read as walking) and ignore the sixth.
+ */
+export type RabbitWire = [number, number, number, 0 | 1, 0 | 1, 0 | 1];
 
 const FACINGS: Facing[] = ['up', 'down', 'left', 'right'];
 
 export function encode(s: RabbitState): RabbitWire {
   const r = (v: number) => Math.round(v * 20) / 20;
-  return [r(s.pos.x), r(s.pos.y), FACINGS.indexOf(s.facing), s.moving ? 1 : 0, s.away ? 1 : 0];
+  return [r(s.pos.x), r(s.pos.y), FACINGS.indexOf(s.facing), s.moving ? 1 : 0, s.away ? 1 : 0, s.riding ? 1 : 0];
 }
 
 /** null for anything malformed: it came from the network. */
 export function decode(d: unknown): RabbitState | null {
   if (!Array.isArray(d) || d.length < 5) return null;
-  const [x, y, f, m, a] = d;
+  const [x, y, f, m, a, b] = d;
   if (typeof x !== 'number' || typeof y !== 'number' || !Number.isFinite(x) || !Number.isFinite(y)) return null;
-  return { pos: { x, y }, facing: FACINGS[f as number] ?? 'down', moving: m === 1, away: a === 1 };
+  return { pos: { x, y }, facing: FACINGS[f as number] ?? 'down', moving: m === 1, away: a === 1, riding: b === 1 };
 }
 
 /**
@@ -68,7 +73,7 @@ export function shouldSend(last: RabbitWire | null, now: RabbitWire, sinceLast: 
   if (now.every((v, i) => v === last[i])) return false;
   // A change in state (stopped, turned, went away) goes out at once so nobody is left
   // watching a rabbit moonwalk; position updates wait for the interval.
-  const stateChanged = now[2] !== last[2] || now[3] !== last[3] || now[4] !== last[4];
+  const stateChanged = now[2] !== last[2] || now[3] !== last[3] || now[4] !== last[4] || now[5] !== last[5];
   return stateChanged || sinceLast >= SEND_INTERVAL;
 }
 

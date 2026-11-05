@@ -198,7 +198,9 @@ auto-merge for feature PRs; for shared PRs (6), say so and leave the merge to th
 - `src/city/` — the city (see above): `world/` (tile grid + map data), `engine/` (`CityGame`,
   movement, neighbors, input), `render/` (palette, sprites, per-pixel roads, tile art,
   landmarks), `ui/` (HUD, dialog box, touch pad, sounds, `ui.css`). Import it via
-  `src/city/index.ts`. Its unit tests run with the rest. What the map draws:
+  `src/city/index.ts`. Its unit tests run with the rest. Holding Shift puts the rabbit on a
+  bicycle at RUN speed (`buildBikeRabbit` in `render/sprites.ts`, `player.riding`; other rabbits
+  see it through a sixth field on the visitors wire). What the map draws:
   - every public street (no alleys) on its real centreline, at its real width × 2; walkable
     band ≥ 1.5 tiles; ~300 street names (uint16 per tile)
   - ~27k houses at their true OSM size/angle (`paintHouses`), nudged back or shrunk where a
