@@ -46,12 +46,14 @@ node scripts/ai/run.mjs spec --idea "more birds"    # try any idea without an is
 node scripts/ai/run.mjs build 12                    # Aider makes the planned change; the checks run
 git diff                                            # look; npm run dev to see it
 git checkout -- src/content/crow.ts                 # or throw it away
+node scripts/ai/run.mjs models                      # which models your keys can use
 ```
 
 Options: `--provider gemini|workers`, `--model <name>`, `--architect` (Aider plans, then
 edits; often better for weak models), and `--dry-run` (prints the prompts or the Aider
 command and calls nothing). `spec` moves on to the next provider when one is out of free
-quota. Working files (plans, prompts, the shop list) go in `.ai/`, which is gitignored.
+quota, or still busy after a few tries (free tiers get turned away first when a
+model is in demand). Working files (plans, prompts, the shop list) go in `.ai/`, which is gitignored.
 
 The default model names (`gemini-3.8-flash`, `@cf/qwen/qwen2.5-coder-32b-instruct`) change
 over time. When one is retired, the runner says so (often with the replacement's name); pass

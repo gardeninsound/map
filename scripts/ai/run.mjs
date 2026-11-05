@@ -5,6 +5,7 @@
  *   node scripts/ai/run.mjs spec 12                 plan issue #12 (or "needs a person")
  *   node scripts/ai/run.mjs spec --idea "more birds"   plan an idea typed here
  *   node scripts/ai/run.mjs build 12                Aider makes the planned change, then the checks run
+ *   node scripts/ai/run.mjs models                  the models your keys can use (for --model)
  *
  * Options: --provider gemini|workers  (default: the first with a key, in that order)
  *          --model <name>             (default per provider, below)
@@ -70,11 +71,11 @@ function die(msg) {
   console.error(`\n✗ ${msg}`);
   process.exit(1);
 }
-if (!['spec', 'build'].includes(command) || (!issueArg && typeof typedIdea !== 'string')) {
-  die('usage: node scripts/ai/run.mjs spec|build <issue number>   (or: spec --idea "…")');
+if (command !== 'models' && (!['spec', 'build'].includes(command) || (!issueArg && typeof typedIdea !== 'string'))) {
+  die('usage: node scripts/ai/run.mjs spec|build <issue number>   (or: spec --idea "…", or: models)');
 }
 const key = typedIdea ? 'idea' : String(Number(issueArg));
-if (key === 'NaN') die(`"${issueArg}" isn't an issue number`);
+if (command !== 'models' && key === 'NaN') die(`"${issueArg}" isn't an issue number`);
 
 /** Providers to try, best first: one named with --provider, else every one with a key. */
 function providers() {
@@ -120,7 +121,22 @@ function writeShops() {
 }
 
 /** One chat call to an OpenAI-compatible endpoint. Throws { quota: true } on a rate limit. */
+const BUSY = [500, 502, 503, 504];
+const WAITS = [3, 10, 30]; // seconds between tries when a free server is busy
+
 async function chat(p, system, user) {
+  for (let i = 0; ; i++) {
+    try {
+      return await chatOnce(p, system, user);
+    } catch (e) {
+      if (!e.busy || i >= WAITS.length) throw e;
+      console.log(`  ${p.name} is busy (HTTP ${e.status}); trying again in ${WAITS[i]} s`);
+      await new Promise((r) => setTimeout(r, WAITS[i] * 1000));
+    }
+  }
+}
+
+async function chatOnce(p, system, user) {
   const res = await fetch(`${p.api}/chat/completions`, {
     method: 'POST',
     headers: { Authorization: `Bearer ${p.key()}`, 'Content-Type': 'application/json' },
@@ -142,6 +158,9 @@ async function chat(p, system, user) {
     // models get retired; the error usually names the replacement
     const hint = /use (?:models\/)?([\w.@/-]+)/i.exec(text)?.[1];
     throw Object.assign(new Error(`${p.name}: model "${p.model}" isn't available${hint ? ` (it suggests ${hint})` : ''}. Try --model <name>`), { skip: true });
+  }
+  if (BUSY.includes(res.status)) {
+    throw Object.assign(new Error(`${p.name}: still busy after ${WAITS.length + 1} tries`), { busy: true, skip: true, status: res.status });
   }
   if (!res.ok) throw new Error(`${p.name}: HTTP ${res.status} ${text.slice(0, 300)}`);
   const data = JSON.parse(text);
@@ -272,5 +291,20 @@ function build() {
 }
 
 mkdirSync(OUT, { recursive: true });
-if (command === 'spec') await spec();
+/** The models each provider's key can use (names to pass to --model). */
+async function models() {
+  for (const p of providers()) {
+    if (!p.key()) continue;
+    const res = await fetch(`${p.api}/models`, { headers: { Authorization: `Bearer ${p.key()}` } });
+    if (!res.ok) {
+      console.log(`${p.name}: HTTP ${res.status} (${(await res.text()).slice(0, 200)})`);
+      continue;
+    }
+    const ids = ((await res.json()).data ?? []).map((m) => String(m.id).replace(/^models\//, '')).sort();
+    console.log(`${p.name} (default ${p.model}):\n${ids.map((id) => `  ${id}`).join('\n')}`);
+  }
+}
+
+if (command === 'models') await models();
+else if (command === 'spec') await spec();
 else build();
