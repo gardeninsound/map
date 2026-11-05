@@ -34,7 +34,7 @@ const CF_ACCOUNT = process.env.CLOUDFLARE_ACCOUNT_ID || '7de05f51e1fe91fd717fe17
 const PROVIDERS = {
   gemini: {
     key: () => process.env.GEMINI_API_KEY,
-    model: 'gemini-2.5-flash',
+    model: 'gemini-3.8-flash',
     api: 'https://generativelanguage.googleapis.com/v1beta/openai',
     aider: (model) => ({ args: ['--model', `gemini/${model}`], env: {} }),
   },
@@ -138,6 +138,11 @@ async function chat(p, system, user) {
   if (res.status === 429 || /quota|rate.?limit|exhausted|neurons/i.test(res.ok ? '' : text)) {
     throw Object.assign(new Error(`${p.name}: out of free quota for now`), { quota: true });
   }
+  if (res.status === 404 && /model/i.test(text)) {
+    // models get retired; the error usually names the replacement
+    const hint = /use (?:models\/)?([\w.@/-]+)/i.exec(text)?.[1];
+    throw Object.assign(new Error(`${p.name}: model "${p.model}" isn't available${hint ? ` (it suggests ${hint})` : ''}. Try --model <name>`), { skip: true });
+  }
   if (!res.ok) throw new Error(`${p.name}: HTTP ${res.status} ${text.slice(0, 300)}`);
   const data = JSON.parse(text);
   return data.choices?.[0]?.message?.content ?? '';
@@ -161,7 +166,7 @@ async function spec() {
         console.log(`… asking ${p.name} (${p.model})${attempt > 1 ? ', again' : ''}`);
         raw = await chat(p, system, ask);
       } catch (e) {
-        if (e.quota) {
+        if (e.quota || e.skip) {
           console.log(`  ${e.message}; trying the next provider`);
           break;
         }
@@ -246,7 +251,7 @@ function build() {
   }
 
   const run = spawnSync('aider', args, { cwd: ROOT, stdio: 'inherit', env: { ...process.env, ...model.env } });
-  if (run.error) die(`couldn't start aider (${run.error.message}). Install it: python3 -m pip install aider-install && aider-install`);
+  if (run.error) die(`couldn't start aider (${run.error.message}). Install it: uv tool install --python 3.12 aider-chat`);
 
   // the checks that don't trust the model
   console.log('\n--- checking the change ---');

@@ -28,7 +28,8 @@ Free models are weaker coders, so they never get an open-ended task:
 
 ## Set up (once)
 
-1. **Aider:** `python3 -m pip install aider-install && aider-install`
+1. **Aider:** `uv tool install --python 3.12 aider-chat` (or `brew install uv` first). It's
+   installed on your machine, not in the repo.
 2. **A free Gemini key:** at [aistudio.google.com/apikey](https://aistudio.google.com/apikey),
    create a key in a Google Cloud project that has **no billing account**. Keep it in your
    shell, never in the repo:
@@ -52,8 +53,9 @@ edits; often better for weak models), and `--dry-run` (prints the prompts or the
 command and calls nothing). `spec` moves on to the next provider when one is out of free
 quota. Working files (plans, prompts, the shop list) go in `.ai/`, which is gitignored.
 
-The default model names (`gemini-2.5-flash`, `@cf/qwen/qwen2.5-coder-32b-instruct`) change
-over time. Check them against Google's and Cloudflare's model lists, and pass `--model`.
+The default model names (`gemini-3.8-flash`, `@cf/qwen/qwen2.5-coder-32b-instruct`) change
+over time. When one is retired, the runner says so (often with the replacement's name); pass
+`--model <name>`, and update the default in `run.mjs`.
 
 ## Adding a recipe
 
