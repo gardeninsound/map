@@ -177,6 +177,11 @@ auto-merge (every PR, see 6); if it touches the other person's area, add them as
   installation ids are vars in `wish/wrangler.jsonc`; secrets: `TURNSTILE_SECRET`, `GITHUB_APP_KEY`
   (PKCS#8 PEM). `?wish=http://127.0.0.1:8791` points the site at `npm run dev` in wish/ (Turnstile's
   test key is used for a local Worker).
+- **The pelican** (`src/ui/Pelican.tsx`): once a session, 10 s after you join (`PELICAN_AFTER`; it waits if a dialog or scene is open), it flies in over the map and lands
+  beside your rabbit ("Anything you want to add, pumpkin?"), flies up onto the ✿ IDEA button ("Dream it out!"),
+  then off the screen. It's HTML laid over map and HUD (no clicks taken), placed with `CityGame.screenPoint()` and
+  drawn at `CityGame.scale`; flight + timing pure and tested in `src/game/pelican.ts`, words in
+  `src/content/pelican.ts`, 24-wide sprite in `sprites.ts`. Opening anything ends its visit.
 - **Duck Arcade** (in Junction 47's storefront slot, `render/facades.ts`): `src/game/plugins/arcadeDoor.ts`
   puts the door target on its California side; App opens `src/experiences/arcade/DuckArcade.tsx`, a
   three.js first-person room (`ArcadeScene.ts`) with a cabinet per game. The shell: cabinets are data

@@ -248,6 +248,75 @@ export function buildHearts(): { open: HTMLCanvasElement[]; soon: HTMLCanvasElem
   };
 }
 
+/* The pelican who points out the idea box (src/ui/Pelican.tsx): white, black wingtips, a big
+ * yellow pouch under an orange bill. Facing right; 24 wide. Rows are padded out to the width. */
+const PEL_COLORS: Record<string, string> = { k: INK, w: '#ffffff', g: '#c9c6d6', b: '#2b2b38', o: '#f2a33a', y: '#ffd166' };
+const PEL_W = 24;
+const pad = (rows: string[], h: number): Grid => [...rows, ...Array(Math.max(0, h - rows.length)).fill('')].map((r) => r.padEnd(PEL_W, '.'));
+
+const PELICAN_STAND = pad([
+  '.....kkk',
+  '....kwwwk',
+  '...kwwwwwkkkkkkkkkk',
+  '...kwwkwwoooooooooook',
+  '...kwwwwkyyyyyyyyyok',
+  '....kwwkkyyyyyyyyk',
+  '....kwwk.kkkkkkkk',
+  '....kwwk',
+  '....kwwk',
+  '...kwwwk',
+  '..kwwwwwkk',
+  '.kwwwwwwwwkk',
+  'kgggwwwwwwwwk',
+  'kbggggwwwwwwk',
+  'kbbgggggwwwwk',
+  '.kbbbggggwwk',
+  '..kkkbbgwwk',
+  '....kkkkkk',
+  '.....ko.ko',
+  '....koo.koo',
+], 20);
+
+/** in flight the neck folds back and the bill rests on the chest */
+const PELICAN_BODY = pad([
+  '', '', '', '', '', '', '',
+  '...............kkk',
+  '..............kwwwk',
+  '.............kwwkwwkkkkk',
+  'kk........kkwwwwwooooook',
+  'kwwkkkkkkkwwwwwwkyyyyok.',
+  '.kwwwwwwwwwwwwwwwkkkkk..',
+  '..kkwwwwwwwwwwwwk.......',
+  '....kkkkkkkkkkkk........',
+], 18);
+const PEL_WING_UP = pad(['...kk', '..kbbk', '..kbbgk', '...kbggk', '...kgggk', '....kgggk', '....kggggk', '.....kgggwk', '.....kggwwk', '......kgwwk', '......kkwwk'], 11);
+const PEL_WING_DOWN = pad(['.....kgggggk', '......kgggggk', '......kggggk', '.......kgggk', '.......kbbk', '........kk'], 6);
+/** paint a wing over the body, starting at row `y` */
+const wing = (base: Grid, patch: Grid, y: number): Grid =>
+  base.map((row, j) => {
+    const p = patch[j - y];
+    return p ? [...row].map((ch, i) => (p[i] && p[i] !== '.' ? p[i] : ch)).join('') : row;
+  });
+
+export const PELICAN_GRIDS = {
+  stand: PELICAN_STAND,
+  flyUp: wing(PELICAN_BODY, PEL_WING_UP, 0),
+  flyDown: wing(PELICAN_BODY, PEL_WING_DOWN, 12),
+};
+
+export interface PelicanSprites {
+  stand: Record<'left' | 'right', HTMLCanvasElement>;
+  fly: Record<'left' | 'right', [HTMLCanvasElement, HTMLCanvasElement]>;
+}
+
+export function buildPelican(): PelicanSprites {
+  const c = (g: Grid, mirror: boolean) => gridToCanvas(g, PEL_COLORS, mirror);
+  const G = PELICAN_GRIDS;
+  return {
+    stand: { right: c(G.stand, false), left: c(G.stand, true) },
+    fly: { right: [c(G.flyUp, false), c(G.flyDown, false)], left: [c(G.flyUp, true), c(G.flyDown, true)] },
+  };
+}
 /**
  * Ham the cat, a Scottish Fold (16 wide, feet on the bottom row): orange tabby, ears folded
  * flat into a round head, big amber eyes, dark collar with a white tag. Walking side-on
