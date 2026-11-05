@@ -178,6 +178,7 @@ async function spec() {
     console.log(`--- system ---\n${system}\n--- user ---\n${user}\n--- would ask: ${providers().map((p) => `${p.name} (${p.model})`).join(', then ')}`);
     return;
   }
+  const reasons = [];
   for (const p of providers()) {
     // a weak model sometimes answers in the wrong shape: one retry, told what was wrong
     let ask = user;
@@ -189,6 +190,7 @@ async function spec() {
       } catch (e) {
         if (e.quota || e.skip) {
           console.log(`  ${e.message}; trying the next provider`);
+          reasons.push(e.busy ? `${p.name} busy` : e.quota ? `${p.name} out of quota` : `${p.name} model unavailable`);
           break;
         }
         die(e.message);
@@ -206,7 +208,12 @@ async function spec() {
       ask = `${user}\n\nYour last answer was not usable (${checked.problems.join('; ')}). Answer again with one JSON object in the format described, and nothing else.`;
     }
   }
-  die('no provider gave a usable plan (out of quota everywhere, or bad answers). Try again after midnight UTC.');
+  const tips = [];
+  if (reasons.some((r) => r.endsWith('busy'))) tips.push('busy: try again in a few minutes, or a less popular model (node scripts/ai/run.mjs models, then --model <name>)');
+  if (reasons.some((r) => r.endsWith('quota'))) tips.push('out of quota: the free allowance resets at midnight UTC');
+  if (reasons.some((r) => r.endsWith('unavailable'))) tips.push('model unavailable: pick one from node scripts/ai/run.mjs models');
+  if (!process.env.CLOUDFLARE_API_TOKEN) tips.push('a fallback helps: set CLOUDFLARE_API_TOKEN for Workers AI (see the README)');
+  die(`no usable plan (${reasons.join(', ') || 'answers in the wrong shape'}).\n  ${tips.join('\n  ')}`);
 }
 
 // ---- build: plan → change ----
