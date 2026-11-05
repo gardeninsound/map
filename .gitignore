@@ -11,3 +11,6 @@ public/art/
 .wrangler/
 # private working docs (the hosting doc's source etc.) — never committed; the repo is public
 docs/private/
+# the AI helper's working files (scripts/ai/run.mjs) and Aider's history
+.ai/
+.aider*
