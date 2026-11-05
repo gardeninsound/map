@@ -178,7 +178,8 @@ auto-merge (every PR, see 6); if it touches the other person's area, add them as
   + their asset folders) that a thin wrapper component loads and mounts; the kits handle their own keys.
   Duck on the Moon is a port into the app (`DuckMoonScene.ts` + `DuckOnTheMoon.tsx`, words in
   `src/content/duckOnTheMoon.ts`, MP3s in `public/duck-on-the-moon/`). While a game is open,
-  `sfx.gameSound(true)` keeps its sound on even if the map is muted. Wall posters: `POSTERS` in `ArcadeScene.ts`.
+  `sfx.gameSound(true)` keeps its sound on even if the map is muted. Wall posters: `POSTERS` in `ArcadeScene.ts`;
+  the ceiling is a looping forest video (`CEILING_VIDEO`, WebM + MP4 in `public/arcade/ceiling/`) under the fluorescent panels.
   **The bear** (`arcade/ArcadeBear.ts`, low-poly three.js): after the first game of a visit it's right beside you
   with a bag of licorice (`bearLines` in `content/duckArcade.ts`); click/tap the bag (or {A}) to take one, the
   rabbit says "Thanks!" (`sounds.thanks`, the browser's speech pitched up), then it walks off and plays Avocado
