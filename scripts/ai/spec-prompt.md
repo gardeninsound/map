@@ -8,6 +8,10 @@ written recipe:
 
 {{RECIPES}}
 
+Each recipe in full is at the end of these instructions. A plan must use exactly the
+files, the test and the format its recipe gives, and nothing else: never invent a file, a
+test or a field.
+
 Anything else needs a person: new pictures or art, new places on the map, new games or
 scenes, changes to how the site works, sound effects, anything about other visitors or
 accounts, anything that's unclear, and anything that's more than one small change.
@@ -60,3 +64,7 @@ Example. Idea: "a roller coaster you can ride" →
  "summary": "A ride the visitor can go on.",
  "why": "A new ride is a new scene with new art and code.",
  "smaller": ""}
+
+## The recipes in full
+
+{{RECIPES_FULL}}

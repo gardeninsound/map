@@ -58,6 +58,12 @@ export const forbidden = (file) => FORBIDDEN.some((f) => (f.endsWith('/') ? file
 /** One line per recipe, for the spec prompt. */
 export const recipeIndex = (recipes) => recipes.map((r) => `- ${r.name}: ${r.use}`).join('\n');
 
+/** Every recipe in full, so the plan uses the real files, tests and format. */
+export const recipesInFull = (recipes) =>
+  recipes
+    .map((r) => `### ${r.name}\nEdits: ${r.edit.join(', ')}. Test: npx vitest run ${r.test.join(' ')}.${r.read.length ? ` Can read: ${r.read.join(', ')}.` : ''}\n\n${r.body}`)
+    .join('\n\n');
+
 /**
  * A visitor's idea, from the issue the idea box filed, ready to put in a prompt as data.
  * Drops the issue's own wrapping (the "> " quote and the "Sent from…" footer), and anything
@@ -96,6 +102,13 @@ export function checkSpec(raw, recipes) {
   } else {
     if (!Array.isArray(s.steps) || s.steps.length === 0) problems.push('no steps');
     if (!Array.isArray(s.done_when) || s.done_when.length === 0) problems.push('no done_when');
+    // weak models invent helper files and tests: every path the plan names must be the recipe's
+    if (recipe) {
+      const known = new Set([...recipe.edit, ...recipe.read, ...recipe.test]);
+      const named = JSON.stringify([s.steps, s.done_when, s.draft ?? '']).match(/[\w.-]+(?:\/[\w.-]+)+\.(?:tsx?|mjs|js|json|txt|md|csv)\b/g) ?? [];
+      const strange = [...new Set(named)].filter((f) => !known.has(f));
+      if (strange.length) problems.push(`it names files the ${recipe.name} recipe doesn't use: ${strange.join(', ')} (use only ${[...known].join(', ')})`);
+    }
   }
   return { ok: problems.length === 0, problems, spec: s, recipe };
 }

@@ -24,7 +24,7 @@ import { execFileSync, spawnSync } from 'node:child_process';
 import { mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { checkDiff, checkSpec, NEEDS_PERSON, parseRecipe, quoteIdea, recipeIndex } from './lib.mjs';
+import { checkDiff, checkSpec, NEEDS_PERSON, parseRecipe, quoteIdea, recipeIndex, recipesInFull } from './lib.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..', '..');
@@ -177,7 +177,7 @@ async function chatOnce(p, system, user, tries = WAITS.length) {
 // ---- spec: idea → plan ----
 
 async function spec() {
-  const system = read('scripts/ai/spec-prompt.md').replace('{{RECIPES}}', recipeIndex(recipes));
+  const system = read('scripts/ai/spec-prompt.md').replace('{{RECIPES}}', recipeIndex(recipes)).replace('{{RECIPES_FULL}}', recipesInFull(recipes));
   const user = idea();
   if (dryRun) {
     console.log(`--- system ---\n${system}\n--- user ---\n${user}\n--- would ask: ${providers().map((p) => `${p.name} (${p.model})`).join(', then ')}`);
@@ -249,6 +249,7 @@ function build() {
     '',
     'Done when:',
     ...s.done_when.map((x) => `- ${x}`),
+    `- npx vitest run ${recipe.test.join(' ')} passes (the recipe's test, whatever the plan says)`,
     ...(s.draft ? ['', 'Draft of what to add (use it, fix it if it breaks a rule):', s.draft] : []),
   ].join('\n');
   const message = read('scripts/ai/build-prompt.md')

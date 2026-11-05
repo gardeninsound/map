@@ -3,7 +3,7 @@ import { readdirSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
-import { checkDiff, checkSpec, forbidden, parseRecipe, quoteIdea } from './lib.mjs';
+import { checkDiff, checkSpec, forbidden, parseRecipe, quoteIdea, recipesInFull } from './lib.mjs';
 
 const dir = join(dirname(fileURLToPath(import.meta.url)), 'recipes');
 const recipes = readdirSync(dir)
@@ -50,6 +50,25 @@ describe('the spec', () => {
   it('accepts needs-person with a reason', () => {
     expect(checkSpec({ recipe: 'needs-person', summary: 'a garden', why: 'new art' }, recipes).ok).toBe(true);
     expect(checkSpec({ recipe: 'needs-person', summary: 'a garden' }, recipes).ok).toBe(false);
+  });
+
+  it('rejects a plan that names files the recipe does not use', () => {
+    const made_up = {
+      recipe: 'neighbor-voice',
+      summary: 'a gardener',
+      steps: ['In src/content/neighbors.ts add an entry with coordinates from .ai/neighbors.txt.'],
+      done_when: ['npx vitest run src/game/neighbors.test.ts passes'],
+    };
+    const { ok, problems } = checkSpec(made_up, recipes);
+    expect(ok).toBe(false);
+    expect(problems[0]).toMatch(/\.ai\/neighbors\.txt, src\/game\/neighbors\.test\.ts/);
+    expect(checkSpec({ ...made_up, steps: ['In src/content/neighbors.ts add one entry.'], done_when: ['npx vitest run src/content/content.test.ts passes'] }, recipes).ok).toBe(true);
+  });
+
+  it('can show every recipe in full', () => {
+    const text = recipesInFull(recipes);
+    for (const r of recipes) expect(text).toContain(`### ${r.name}`);
+    expect(text).toContain('Test: npx vitest run src/content/content.test.ts');
   });
 
   it('rejects made-up recipes and junk', () => {
