@@ -39,6 +39,8 @@ import { DialogBox } from './ui/MikeDialog';
 import { SceneBoundary } from './ui/SceneBoundary';
 import { SpotsMenu } from './ui/SpotsMenu';
 import { IdeaBox } from './ui/IdeaBox';
+import { Pelican } from './ui/Pelican';
+import { PELICAN_AFTER } from './game/pelican';
 import { TitleScreen } from './ui/TitleScreen';
 import { sounds } from './ui/sounds';
 
@@ -126,6 +128,10 @@ export default function App() {
   const [rabbitsOpen, setRabbitsOpen] = useState(false);
   const [sayOpen, setSayOpen] = useState(false);
   const [started, setStarted] = useState(false);
+  /** the pelican's visit, once a session, PELICAN_AFTER s after you join (ui/Pelican.tsx) */
+  const [pelican, setPelican] = useState(false);
+  const [pelicanDue, setPelicanDue] = useState(false);
+  const pelicanCame = useRef(false);
   const [street, setStreet] = useState<string | null>(null);
   const [storefront, setStorefront] = useState<string | null>(null);
   const [nearby, setNearby] = useState<Target | null>(null);
@@ -274,6 +280,21 @@ export default function App() {
   useEffect(() => {
     if (started) visitors?.join();
   }, [started, visitors]);
+
+  // The pelican comes PELICAN_AFTER s after you join, as soon as nothing's open (Mike's
+  // welcome, a scene…); opening anything while it's here (the idea box it points at) ends its visit.
+  useEffect(() => {
+    if (!started) return;
+    const t = setTimeout(() => setPelicanDue(true), PELICAN_AFTER * 1000);
+    return () => clearTimeout(t);
+  }, [started]);
+  useEffect(() => {
+    if (overlay.kind !== 'none') setPelican(false);
+    else if (pelicanDue && !pelicanCame.current) {
+      pelicanCame.current = true;
+      setPelican(true);
+    }
+  }, [overlay.kind, pelicanDue]);
 
   // The world only moves when nothing is on top of it.
   useEffect(() => {
@@ -609,6 +630,8 @@ export default function App() {
           </Suspense>
         </SceneBoundary>
       )}
+
+      {pelican && game && overlay.kind === 'none' && <Pelican game={game} onDone={() => setPelican(false)} />}
 
       {!started && <TitleScreen onStart={start} />}
     </main>
