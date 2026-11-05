@@ -128,6 +128,11 @@ auto-merge (every PR, see 6); if it touches the other person's area, add them as
   `src/experiences/minigames/ConeCatch.tsx`, rules pure + tested in
   `src/game/coneCatch.ts`; best score in localStorage) via the App's `minigame` overlay, whose `then`
   gets `{ score, best }` back for her closing line. A new character mini game: same overlay, its own component.
+- `src/game/plugins/pegasus.ts` — the pegasus in Pegasus Books (Junction, west side): come within `NOTICE`
+  tiles and it walks out of the door (clipped at the shop front), says hello in a tiny-font bubble
+  (`src/content/pegasus.ts`, one line per visit) with a whinny, then flies off north-east; home again once
+  you're `HOME` tiles away. Pure + tested in `src/game/pegasus.ts`; 24×20 sprite built from parts in
+  `sprites.ts`. A shop's slice of a Junction block face: `src/game/storefrontSlot.ts` (also the arcade door).
 - `src/game/plugins/visitors.ts` — **other people, live**: everyone on the site shares one room
   on the island's relay (`src/net/relay.ts` client; the Worker is `relay/`, its own npm project
   deployed to the gardeninsound Cloudflare account — see `relay/README.md`; its ALLOWED_ORIGINS

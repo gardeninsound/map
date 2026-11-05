@@ -1,6 +1,6 @@
 import { TS, type CityGame, type CityPlugin, type Target } from '../../city';
-import { FACES } from '../../city/world/storefronts';
 import { ARCADE_NAME } from '../../content/duckArcade';
+import { storefrontSlot } from '../storefrontSlot';
 
 /** The block face the arcade stands in, and its tenant there (content: city/world/storefronts.ts). */
 const FACE = 'junction-e-south';
@@ -17,23 +17,11 @@ export class ArcadeDoor implements CityPlugin {
   door: { x: number; y: number } | null = null;
 
   attach(game: CityGame) {
-    const lm = game.world.landmarks.find((l) => l.id === FACE);
-    const face = FACES[FACE];
-    if (!lm || !face) return;
-    const tenants = face.buildings.flatMap((b) => b.tenants);
-    const total = tenants.reduce((a, t) => a + (t.weight ?? 1), 0);
-    const unit = (lm.h * TS) / total;
-    let acc = 0;
-    for (const t of tenants) {
-      const y0 = Math.round(acc * unit);
-      acc += t.weight ?? 1;
-      if (t.name !== TENANT) continue;
-      const y1 = Math.round(acc * unit);
-      const y = lm.y + (y0 + doorY(y1 - y0)) / TS;
-      // on the sidewalk just outside the doors (the face's street side is its west edge)
-      this.door = game.world.nearestWalkable(lm.x - 0.2, y);
-      return;
-    }
+    const slot = storefrontSlot(game.world, FACE, TENANT);
+    if (!slot) return;
+    const y = slot.y0 + doorY(Math.round((slot.y1 - slot.y0) * TS)) / TS;
+    // on the sidewalk just outside the doors (the face's street side is its west edge)
+    this.door = game.world.nearestWalkable(slot.lm.x - 0.2, y);
   }
 
   targets(): Target[] {
