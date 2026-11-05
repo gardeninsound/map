@@ -172,7 +172,8 @@ auto-merge (every PR, see 6); if it touches the other person's area, add them as
   test key is used for a local Worker).
 - `src/game/plugins/dinos.ts` — **toy dinosaurs** (from Mike's GIF) plodding west along the east–west streets
   ("SW … St"): `DINO_COUNT` are always near you; each walks west until its street ends or it's `FAR` behind,
-  then turns up on another east–west street nearby, out of sight. Pure + tested: `src/game/dinos.ts`. Sprite:
+  then turns up on another east–west street nearby, out of sight. Going by you (within `HEAR` tiles) it plays
+  Mike's recording once a pass (`public/sounds/dinosaur.mp3`; not two at once; quiet in scenes and when muted). Pure + tested: `src/game/dinos.ts`. Sprite:
   `node scripts/make-dino.mjs <dino.gif>` keys out the green backdrop, keeps a soft shadow, inks an outline →
   `public/sprites/dino-walk.png` + `src/game/dinoSheet.ts` (the GIF isn't kept: 5.8 MB).
 - **Duck Arcade** (in Junction 47's storefront slot, `render/facades.ts`): `src/game/plugins/arcadeDoor.ts`

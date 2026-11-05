@@ -1,5 +1,5 @@
 import { createWorld } from '../city';
-import { DINO_SPEED, eastWestSpot, FAR, isEastWestName, spawnSpot, stepDino, type Dino } from './dinos';
+import { DINO_SPEED, eastWestSpot, FAR, HEAR, HEAR_GAP, hearDino, isEastWestName, spawnSpot, stepDino, type Dino } from './dinos';
 
 const world = createWorld();
 let seed = 7;
@@ -28,6 +28,26 @@ describe('dinosaurs on the east–west streets', () => {
     // the middle of California Ave, north of the Junction
     const ave = world.project(47.5655, -122.3866);
     expect(eastWestSpot(world, ave.x, ave.y)).toBeNull();
+  });
+
+  it('is heard once as it goes by you, and not two at once', () => {
+    const you = { x: 100, y: 100 };
+    const a: Dino = { pos: { x: 100 + HEAR + 2, y: 100 }, phase: 0 };
+    expect(hearDino(a, you, Infinity)).toBe(false); // still too far
+    a.pos.x = 100 + HEAR - 1;
+    expect(hearDino(a, you, Infinity)).toBe(true);
+    a.pos.x = 100;
+    expect(hearDino(a, you, Infinity)).toBe(false); // once per pass
+    const b: Dino = { pos: { x: 101, y: 100 }, phase: 0 };
+    expect(hearDino(b, you, 1)).toBe(false); // another just played
+    expect(hearDino(b, you, HEAR_GAP)).toBe(true);
+  });
+
+  it('can be heard again after it turns up somewhere new', () => {
+    const d: Dino = { pos: { x: 5, y: 5 }, phase: 0, heard: true };
+    // far from you: it moves on, and is new again
+    stepDino(d, 0.1, world, junction, rand);
+    expect(d.heard).toBe(false);
   });
 
   it('always walks west, and starts over near you when the street ends', () => {

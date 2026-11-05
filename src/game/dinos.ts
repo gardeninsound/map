@@ -14,6 +14,12 @@ export const DINO_SPEED = 1.6;
 export const SPAWN = { min: 18, max: 50 };
 /** this far away and it's gone: it turns up somewhere nearer */
 export const FAR = 70;
+/** it's heard going by once it's this close (tiles), once per pass */
+export const HEAR = 6;
+/** never two at once: seconds after one plays before another can */
+export const HEAR_GAP = 6;
+/** the sound it makes going by (public/) */
+export const DINO_SOUND = 'sounds/dinosaur.mp3';
 /** the street must run on at least this far either side (tiles) to count as east–west here */
 const RUN = 5;
 
@@ -28,6 +34,19 @@ export interface Dino {
   pos: Vec;
   /** seconds, so they don't all step in time */
   phase: number;
+  /** already heard on this pass (cleared when it turns up somewhere new) */
+  heard?: boolean;
+}
+
+/**
+ * Should this one be heard now? Once it comes within HEAR of you, once per pass, and only if
+ * no other has been heard in the last HEAR_GAP seconds (`sinceLast`). Marks it heard.
+ */
+export function hearDino(d: Dino, you: Vec, sinceLast: number): boolean {
+  if (d.heard || sinceLast < HEAR_GAP) return false;
+  if (Math.hypot(d.pos.x - you.x, d.pos.y - you.y) > HEAR) return false;
+  d.heard = true;
+  return true;
 }
 
 /** West Seattle's east–west streets are the "SW … St"s; avenues ("… Ave SW") run north–south. */
@@ -79,5 +98,6 @@ export function stepDino(d: Dino, dt: number, world: Streets, you: Vec, rand: ()
   }
   const spot = spawnSpot(world, you, rand);
   if (spot) d.pos = spot;
+  d.heard = false;
   return true;
 }

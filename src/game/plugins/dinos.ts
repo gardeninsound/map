@@ -1,5 +1,6 @@
 import type { CityGame, CityPlugin, DrawContext } from '../../city';
-import { DINO_COUNT, spawnSpot, stepDino, type Dino } from '../dinos';
+import { sounds } from '../../ui/sounds';
+import { DINO_COUNT, DINO_SOUND, hearDino, spawnSpot, stepDino, type Dino } from '../dinos';
 import { DINO_SHEET } from '../dinoSheet';
 
 /** A seeded random, so a session's dinosaurs don't depend on frame timing in tests. */
@@ -16,12 +17,19 @@ export class Dinos implements CityPlugin {
   dinos: Dino[] = [];
   private rand = rng(Date.now());
   private sheet: HTMLImageElement | null = null;
+  private sound: HTMLAudioElement | null = null;
+  /** seconds since one was last heard */
+  private sinceHeard = Infinity;
 
   attach(game: CityGame) {
     const you = game.player.pos;
     for (let i = 0; i < DINO_COUNT; i++) {
       const spot = spawnSpot(game.world, you, this.rand);
       if (spot) this.dinos.push({ pos: spot, phase: this.rand() * 5 });
+    }
+    if (typeof Audio !== 'undefined') {
+      this.sound = new Audio(`${import.meta.env.BASE_URL}${DINO_SOUND}`);
+      this.sound.preload = 'auto';
     }
     if (typeof Image !== 'undefined') {
       this.sheet = new Image();
@@ -31,7 +39,18 @@ export class Dinos implements CityPlugin {
 
   update(dt: number, game: CityGame) {
     if (game.paused) return;
-    for (const d of this.dinos) stepDino(d, dt, game.world, game.player.pos, this.rand);
+    this.sinceHeard += dt;
+    for (const d of this.dinos) {
+      stepDino(d, dt, game.world, game.player.pos, this.rand);
+      // going by you: its sound, once (quiet inside scenes and when muted)
+      if (hearDino(d, game.player.pos, this.sinceHeard)) {
+        this.sinceHeard = 0;
+        if (this.sound && !game.quiet && !sounds.isMuted()) {
+          this.sound.currentTime = 0;
+          void this.sound.play().catch(() => {});
+        }
+      }
+    }
   }
 
   draw(d: DrawContext) {
