@@ -36,9 +36,12 @@ describe('snack crow', () => {
     expect(altitude({ ...f, t: 4 })).toBe(0);
   });
 
-  it('perches at real storefronts', () => {
+  it('perches at real storefronts, each pattern matching exactly one shop', () => {
     const { shops } = createWorld();
-    for (const s of crowStops) expect(shops.some((shop) => s.shop.test(shop.name)), String(s.shop)).toBe(true);
+    for (const s of crowStops) {
+      // /bakery/i would match two shops and the crow could land at either
+      expect(shops.filter((shop) => s.shop.test(shop.name)).map((shop) => shop.name), String(s.shop)).toHaveLength(1);
+    }
   });
 
   it('always ends its greeting asking for snacks', () => {

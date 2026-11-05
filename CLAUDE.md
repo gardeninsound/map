@@ -177,6 +177,10 @@ auto-merge (every PR, see 6); if it touches the other person's area, add them as
   installation ids are vars in `wish/wrangler.jsonc`; secrets: `TURNSTILE_SECRET`, `GITHUB_APP_KEY`
   (PKCS#8 PEM). `?wish=http://127.0.0.1:8791` points the site at `npm run dev` in wish/ (Turnstile's
   test key is used for a local Worker).
+- `scripts/ai/` — **ideas → changes with free models** (an experiment, run by hand; see its README): `run.mjs spec <issue>`
+  sorts an idea into a plan using a recipe in `scripts/ai/recipes/` (or `needs-person`); `run.mjs build <issue>` has Aider make it,
+  then checks only the recipe's file changed, nothing in `.github/`/`relay/`/`wish/`/`src/city/`, ≤ 80 lines, tests + types green
+  (`lib.mjs`, tested). Free tiers only (Gemini with billing off, then Workers AI). A recipe's example must pass its own test.
 - **The pelican** (`src/ui/Pelican.tsx`): once a session, 10 s after you join (`PELICAN_AFTER`; it waits if a dialog or scene is open), it flies in over the map and lands
   beside your rabbit ("Anything you want to add, pumpkin?"), flies up onto the ✿ IDEA button ("Dream it out!"),
   then off the screen. It's HTML laid over map and HUD (no clicks taken), placed with `CityGame.screenPoint()` and
