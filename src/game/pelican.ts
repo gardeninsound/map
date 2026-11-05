@@ -12,7 +12,7 @@ export interface Pt {
 }
 
 /** seconds after you join (past the title) that it comes, once nothing else is open */
-export const PELICAN_AFTER = 10;
+export const PELICAN_AFTER = 120;
 
 export type PelicanPhase = 'arrive' | 'ask' | 'hop' | 'perch' | 'leave' | 'done';
 const ORDER: Exclude<PelicanPhase, 'done'>[] = ['arrive', 'ask', 'hop', 'perch', 'leave'];
