@@ -19,6 +19,16 @@ describe('world', () => {
     }
   });
 
+  it('walks the alley behind 1918 45th Ave SW (ALLEYS in map-config), beside its hidden house', () => {
+    for (const lat of [47.5857, 47.5861, 47.5865]) {
+      const p = world.project(lat, -122.38836);
+      const r = world.nearestWalkable(p.x, p.y);
+      expect(Math.hypot(r.x - p.x, r.y - p.y), `${lat}`).toBeLessThan(1);
+      expect(world.streetAt(r.x, r.y)).toBe('Alley');
+    }
+    expect(world.landmarks.find((l) => l.id === 'craftsman-45th')?.name).toBe('');
+  });
+
   it('has one connected walkable network (streets, paths, parking lots)', () => {
     const seen = new Uint8Array(world.tiles.length);
     const start = world.tiles.indexOf(Tile.Road);

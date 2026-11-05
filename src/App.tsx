@@ -81,7 +81,8 @@ const LANDMARK_COLOR = '#5fa8a0';
 /**
  * The landmarks, as named places for the map: the Junction's four block faces become one
  * "The Junction shops", other names lose their parenthetical. Most-visited first, so those
- * keep their name tags when the map gets crowded.
+ * keep their name tags when the map gets crowded. A landmark with no name is a secret: drawn,
+ * never listed.
  */
 function mapLandmarks(landmarks: PlacedLandmark[]): MapPlace[] {
   const centre = (l: PlacedLandmark) => ({ x: l.x + l.w / 2, y: l.y + l.h / 2 });
@@ -92,7 +93,7 @@ function mapLandmarks(landmarks: PlacedLandmark[]): MapPlace[] {
     out.push({ name: 'The Junction shops', x: cs.reduce((a, c) => a + c.x, 0) / cs.length, y: cs.reduce((a, c) => a + c.y, 0) / cs.length, color: LANDMARK_COLOR });
   }
   for (const l of landmarks) {
-    if (l.sprite === 'storefronts') continue;
+    if (l.sprite === 'storefronts' || !l.name) continue; // a nameless landmark is a hidden one
     out.push({ name: l.name.replace(/\s*\(.*\)\s*$/, ''), ...centre(l), color: LANDMARK_COLOR });
   }
   return out;
