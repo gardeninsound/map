@@ -104,153 +104,27 @@ auto-merge (every PR, see 6); if it touches the other person's area, add them as
 
 ## Where things live
 
-- `src/game/plugins/` — the app's `CityPlugin`s: `artSpots.ts` (spinning lemons with a beating heart above, from `src/game/lemonSpin.ts`;
-  "unvisited" beacons; targets of kind `place` carrying the `PlacedLocation`), `busker.ts`,
-  `crow.ts`. App.tsx wires them into `CityGame` and handles `onInteract`.
-- `src/game/sprites.ts` — Mike, the lemons (`src/game/lemon.ts`), the crow (same grid format as the city's sprites).
-- First visit: after Mike's welcome the city's hint arrow flashes 4× toward the nearest open
-  spot (remembered in localStorage). The city's `Compass` points at `ArtSpots.open`.
-- `src/game/busker.ts` — the keyboard busker outside Easy Street (Junction): five original
-  chiptune songs — bouncy ones, a calm slow one ("Fog on the Sound") and a low funky groove
-  ("Junction Strut") — as note strings with per-song tone/loudness/bass groove/hats (tested for
-  whole bars), scheduled ahead through the shared AudioContext (the city's `audioContext()`).
-  The playlist runs on the **wall clock** (`whereNow`), so every rabbit hears the same song and bar
-  "now"; drift (a sleeping tab) snaps back to it. `__busker.song` in dev. The busker plugin sets `music.level` from
-  distance (`EARSHOT` tiles, eased); `game.quiet` mutes it inside art scenes; mute respected.
-- `src/game/crow.ts` — the snack crow (pure flight state, tested). Starts outside Les Schwab on
-  Alaska; asks for snacks (choice → reply), then flies to the next perch in
-  `src/content/crow.ts` (storefront regex + lat/lon fallback, lines per stop) and loops home,
-  remembering how often you shared. App's `talk` overlay takes `choices` and a `then` callback.
-- `src/game/plugins/chicken.ts` — the chicken on California outside Greentree Animal Hospital: two questions with two answers
-  each and her reply to each, then "Want to play my mini game?" (all lines in `src/content/chicken.ts`).
-  Yes opens **Cone Catch** (catch falling ice cream cones; missed ones burst into flames on the grass —
-  running into a burning fire or taking a rock costs one of three lives, {A} jumps the fires; lives sit in
-  a 24 px Art Nouveau bar over the 160×120 field;
-  `src/experiences/minigames/ConeCatch.tsx`, rules pure + tested in
-  `src/game/coneCatch.ts`; best score in localStorage) via the App's `minigame` overlay, whose `then`
-  gets `{ score, best }` back for her closing line. A new character mini game: same overlay, its own component.
-- **The hidden house + Ham** (1918 45th Ave SW, Admiral): a nameless landmark (`craftsman-45th` in
-  `content/landmarks.csv`, drawn in `render/landmarks.ts`) — no name, so it's never on the map's place
-  list. The alley behind it is walkable via `ALLEYS` in `scripts/city/map-config.mjs` (listed alleys →
-  concrete lanes, named "Alley"). Ham the cat (`src/game/plugins/ham.ts`, a Scottish Fold) wanders the
-  street and alley within `HAM.leash` tiles of home, sits to look at a rabbit nearby, and says one set
-  of lines per visit through the plain neighbor talk (words in `src/content/ham.ts`; movement pure +
-  tested in `src/game/ham.ts`). `__ham` in dev.
-- `src/game/plugins/pegasus.ts` — the pegasus in Pegasus Books (Junction, west side): come within `NOTICE`
-  tiles and it walks out of the door (clipped at the shop front), says hello in a tiny-font bubble
-  (`src/content/pegasus.ts`, one line per visit) with a whinny, then flies off north-east; home again once
-  you're `HOME` tiles away. Pure + tested in `src/game/pegasus.ts`; 24×20 sprite built from parts in
-  `sprites.ts`. A shop's slice of a Junction block face: `src/game/storefrontSlot.ts` (also the arcade door).
-- `src/game/plugins/visitors.ts` — **other people, live**: everyone on the site shares one room
-  on the island's relay (`src/net/relay.ts` client; the Worker is `relay/`, its own npm project
-  deployed to the gardeninsound Cloudflare account — see `relay/README.md`; its ALLOWED_ORIGINS
-  must include this site's origin; `?relay=ws://127.0.0.1:8790` points the site at `npm run dev`). Each rabbit gets a
-  scarf from its id and fades while its player is in a scene. The minimap shows them, and so does
-  "N OTHER RABBITS HERE". Your rabbit is sent only when it changes, at most 5×/s, because the free
-  relay is metered by messages sent (wire format and easing are pure and tested:
-  `src/game/visitors.ts`). `?solo` walks alone; dev-only `?island=<name>` uses a private room.
-  Each rabbit has a name from its id (scarf colour + West Seattle place, never sent), shown when
-  you're close on a dark tag under its feet (a 3×5 pixel font, `src/game/tinyFont.ts`, also used for
-  bubble text — so it never reads as a map place label) and in the list behind the "N OTHER RABBITS" button, where clicking a rabbit hops you beside it (`Visitors.where`), and which also has the remembered
-  "hide other rabbits" toggle. They talk only in **emotes** from the fixed list in
-  `src/content/emotes.ts` (SAY button, keys 1–9, or walk up to a rabbit — it's a `rabbit` target with
-  a lavender '…' bubble (`Target.bubbleColor`) — and {A} opens the picker, {B} closes it; after you
-  emote, rabbits stop being targets for `TALK_QUIET` s; append only, the wire sends the index), rate-limited
-  when sent and when shown (`RateLimit`), bubbles stacked clear of each other (`stackBubbles`). No free
-  text, and rabbits pass through each other on purpose.
-  **Presence** (`presence()` in `src/game/visitors.ts`, pure + tested): a hidden tab fades your rabbit at
-  once and leaves the room after 2 min; 10 min without input (keys, mouse, taps) fades, 30 min leaves;
-  showing the tab or any input rejoins as the same rabbit (`RelayRoom.pause/resume` keep the id).
-  Dev: `?presence=N` shortens those to N / 2N / 4N s. The relay sweeps sockets silent > 90 s (no
-  message, no ping) every 30 s via a Durable Object alarm, and the client replaces a socket that hears
-  no pong for ~a minute.
-- **Idea box** (✿ IDEA in the HUD): "What would you love to add in the Garden in Sound?" —
-  `src/ui/IdeaBox.tsx` (words in `src/content/ideas.ts`; an optional name, credited in the issue; a real
-  form whose Tab order wraps inside the box) posts to the `wish/` Worker
-  (wish.gardeninsound.website, gardeninsound Cloudflare account), which checks origin + a
-  Cloudflare Turnstile token + 3 ideas/min per address, then files a GitHub issue labelled
-  `suggestion` on the public repo (mentions defused; formatting pure + tested in
-  `wish/src/issue.ts`, run by the root `npm test`; `cd wish && npm test` runs the Worker against a
-  fake GitHub). Issues are filed by the org's **Garden in Sound Wishes GitHub App**
-  (github.com/apps/garden-in-sound-wishes, Issues: write only) so they show as `garden-in-sound-wishes[bot]`:
-  `wish/src/githubApp.ts` signs a JWT with the app key and caches an installation token. App and
-  installation ids are vars in `wish/wrangler.jsonc`; secrets: `TURNSTILE_SECRET`, `GITHUB_APP_KEY`
-  (PKCS#8 PEM). `?wish=http://127.0.0.1:8791` points the site at `npm run dev` in wish/ (Turnstile's
-  test key is used for a local Worker).
-- `scripts/ai/` — **ideas → changes with free models** (an experiment, run by hand; see its README): `run.mjs spec <issue>`
-  sorts an idea into a plan using a recipe in `scripts/ai/recipes/` (or `needs-person`); `run.mjs build <issue>` has Aider make it,
-  then checks only the recipe's file changed, nothing in `.github/`/`relay/`/`wish/`/`src/city/`, ≤ 80 lines, tests + types green
-  (`lib.mjs`, tested). Free tiers only (Gemini with billing off, then Workers AI). A recipe's example must pass its own test.
-- **The pelican** (`src/ui/Pelican.tsx`): once a session, 10 s after you join (`PELICAN_AFTER`; it waits if a dialog or scene is open), it flies in over the map and lands
-  beside your rabbit ("Anything you want to add, pumpkin?"), flies up onto the ✿ IDEA button ("Dream it out!"),
-  then off the screen. It's HTML laid over map and HUD (no clicks taken), placed with `CityGame.screenPoint()` and
-  drawn at `CityGame.scale`; flight + timing pure and tested in `src/game/pelican.ts`, words in
-  `src/content/pelican.ts`, 24-wide sprite in `sprites.ts`. Opening anything ends its visit.
-- `src/game/plugins/dinos.ts` — **toy dinosaurs** (from Mike's GIF) plodding west along the east–west streets
-  ("SW … St"): `DINO_COUNT` are always near you; each walks west until its street ends or it's `FAR` behind,
-  then turns up on another east–west street nearby, out of sight. Going by you (within `HEAR` tiles) it plays
-  Mike's recording once a pass (`public/sounds/dinosaur.mp3`; not two at once; quiet in scenes and when muted). Pure + tested: `src/game/dinos.ts`. Sprite:
-  `node scripts/make-dino.mjs <dino.gif>` keys out the green backdrop, keeps a soft shadow, inks an outline →
-  `public/sprites/dino-walk.png` + `src/game/dinoSheet.ts` (the GIF isn't kept: 5.8 MB).
-- **Duck Arcade** (in Junction 47's storefront slot, `render/facades.ts`): `src/game/plugins/arcadeDoor.ts`
-  puts the door target on its California side; App opens `src/experiences/arcade/DuckArcade.tsx`, a
-  three.js first-person room (`ArcadeScene.ts`) with a cabinet per game. The shell: cabinets are data
-  in `src/content/duckArcade.ts` (`ready` ones launch), `arcade/games.ts` maps id → lazy component
-  taking `{ onExit(result) }` (same as Cone Catch). New duck game: component + one line there + `ready: true`.
-  Duck Scroller and Rabbit Zapper are plain-script kits in `public/` (`duck-scroller.js`, `rabbit-zapper.js`
-  + their asset folders) that a thin wrapper component loads and mounts; the kits handle their own keys.
-  Duck on the Moon is a port into the app (`DuckMoonScene.ts` + `DuckOnTheMoon.tsx`, words in
-  `src/content/duckOnTheMoon.ts`, MP3s in `public/duck-on-the-moon/`). While a game is open,
-  `sfx.gameSound(true)` keeps its sound on even if the map is muted. Wall posters: `POSTERS` in `ArcadeScene.ts`;
-  the ceiling is a looping forest video (`CEILING_VIDEO`, WebM + MP4 in `public/arcade/ceiling/`) under the fluorescent panels.
-  **The bear** (`arcade/ArcadeBear.ts`, low-poly three.js): after the first game of a visit it's right beside you
-  with a bag of licorice (`bearLines` in `content/duckArcade.ts`); click/tap the bag (or {A}) to take one, the
-  rabbit says "Thanks!" (`sounds.thanks`, the browser's speech pitched up), then it walks off and plays Avocado
-  Drop (`BEAR_GAME`, the floor cabinet by the doors) for the rest of the visit. Where it stands and walks is pure +
-  tested: `src/game/arcadeBear.ts`. The smoke test takes a licorice (`window.__arcade.bagOnScreen()`).
-- **Luna Park** (1907–1913) on its pilings off Duwamish Head: `src/game/plugins/lunaPark.ts` turns the pier's
-  water tiles walkable at attach (street name "Luna Park"), paints the boardwalk under everyone and draws the
-  animated rides depth-sorted (gate, Great Figure Eight, Shoot-the-Chutes, Looff carousel, Giant Whirl,
-  Natatorium, two booths, Pat the Educated Horse's hall after a photo — Pat taps out a sum if you ask). Uncle
-  Hiram's Studebaker wagon, pulled by Betsy the Pig, drives back and forth along Alki Ave out front (`lunaWagon.route`,
-  tested to stay on the street). Layout (tiles from the Head's tip) and sign text, with sources, in
-  `src/content/lunaPark.ts`; signs (and the wagon) are targets of kind `luna`, `ask` adds a question. The Figure Eight's sign offers a ride: App's
-  `ride` overlay → `src/experiences/luna/FigureEight.tsx` (three.js, first person at dusk; reduced motion
-  watches from the boardwalk). Tested in `src/game/lunaPark.test.ts` (reachable from Alki Ave, signs walkable).
-- `src/content/` — **content is data**: `locations.ts` (spots, coords, Mike's greetings),
-  `wallTurns.ts` (scene script), `artManifest.ts` (generated, date-ordered).
-- `src/experiences/` — one scene per spot, lazy-loaded via `registry.ts`, wrapped in
-  `SceneBoundary` (a crash drops back to the map). A location with no `experience` shows Mike's
-  "coming soon" lines.
-  - `WallTurns` — gas-station wall photo flipbook with a paint-roller wipe.
-  - `cup/` — **three.js**: the Lulu mug in 3D (`CupScene`), rendered at 1/3 res for the pixel look.
-    You paint the next version over the current one (`CupPainter`: base + next-through-mask canvas
-    → CanvasTexture). Versions are data in `src/content/cupVersions.ts`, reconstructed from the
-    photos (the photos themselves aren't shown).
-  - `park/` — **three.js, first person**: the Seven+ Stories lot at 4731 40th Ave SW (`ParkScene`).
-    Arrows/WASD walk & turn, drag to look; face a sign within ~3 m and press A for the full
-    photo + Mike's line. Signs (photo crop, posts, position, facing, words) are data in
-    `src/content/puppyPark.ts`; a sign whose photo isn't deployed shows its dominant colour.
-- `src/city/` — the city (see above): `world/` (tile grid + map data), `engine/` (`CityGame`,
-  movement, neighbors, input), `render/` (palette, sprites, per-pixel roads, tile art,
-  landmarks), `ui/` (HUD, dialog box, touch pad, sounds, `ui.css`). Import it via
-  `src/city/index.ts`. Its unit tests run with the rest. Holding Shift puts the rabbit on a
-  bicycle at RUN speed (`buildBikeRabbit` in `render/sprites.ts`, `player.riding`; other rabbits
-  see it through a sixth field on the visitors wire). What the map draws:
-  - every public street (no alleys) on its real centreline, at its real width × 2; walkable
-    band ≥ 1.5 tiles; ~300 street names (uint16 per tile)
-  - ~27k houses at their true OSM size/angle (`paintHouses`), nudged back or shrunk where a
-    street reaches them; other buildings as tiles
-  - landmarks (`render/landmarks.ts`): 76 station, Admiral Theatre, Easy Street, the Undersea
-    Aviary, the 7-Eleven, Admiral Safeway, Shadowland, West Seattle Library, and the Junction block faces (`render/storefronts.ts`, data in
-    `world/storefronts.ts`, shop fronts in `render/facades.ts`); a landmark with a `street`
-    side is pulled flush with that street's sidewalk at render time
-  - detailed places (Hiawatha Playfield, West Seattle High School): lawn, walkable footpaths
-    and parking lots (Tile.Parking), pitches/track/courts/pool, buildings from exact
-    outlines (`render/detailArt.ts`)
-- `src/ui/` — `MikeDialog` (the city's DialogBox with Mike as default speaker/portrait), title,
-  spots menu, scene boundary, `sounds` (city `sfx` + roll + caw). Styles: `src/city/ui/ui.css`
-  first, then `src/styles.css` (title, scenes, spots).
+This file is the index. Each area's details live in a `CLAUDE.md` in its own folder, which
+Claude Code loads when it works there. **Keeping it that way:** a new feature adds one line to
+its area's `CLAUDE.md` (what it is, its main file, where its words and tests are). Change this
+root file only for new commands, workflow, conventions or a new area.
+
+- `src/city/` — the city: map data, engine (`CityGame`, movement, neighbors, input), renderer,
+  HUD. Import via `src/city/index.ts`. → `src/city/CLAUDE.md`
+- `src/game/` — the art layer on the map: `plugins/` (`CityPlugin`s: art spots, busker, crow,
+  chicken, Ham, pegasus, dinos, Luna Park, other rabbits…) + their pure, tested rules + `sprites.ts`.
+  App.tsx wires the plugins into `CityGame` and handles `onInteract`. → `src/game/CLAUDE.md`
+- `src/experiences/` — one scene per spot, lazy-loaded via `registry.ts`; the Duck Arcade,
+  Cone Catch, the Luna ride. → `src/experiences/CLAUDE.md`
+- `src/ui/` — React UI over the map: `MikeDialog`, title, spots menu, scene boundary, sounds,
+  idea box, pelican. → `src/ui/CLAUDE.md`
+- `src/content/` — **content is data** (Mike's area): `locations.ts` (spots, coords, Mike's
+  greetings), each character's and scene's words, `artManifest.ts` (generated, date-ordered).
+- `src/net/` + `relay/` — the live relay other rabbits share (`relay/README.md`; the client side
+  is in `src/game/CLAUDE.md`).
+- `wish/` — the idea box's Worker, files suggestions as GitHub issues. → `wish/CLAUDE.md`
+- `scripts/ai/` — **ideas → changes with free models** (an experiment, run by hand). → `scripts/ai/README.md`
+- `scripts/city/` — the OSM → map pipeline (settings in `map-config.mjs`).
 
 ## Conventions
 

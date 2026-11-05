@@ -24,6 +24,8 @@ describe('recipes', () => {
     expect(() => parseRecipe('---\nname: x\nuse: y\nedit: relay/src/index.ts\n---\n')).toThrow(/may not edit/);
     expect(forbidden('.github/workflows/ci.yml')).toBe(true);
     expect(forbidden('src/content/crow.ts')).toBe(false);
+    expect(forbidden('CLAUDE.md')).toBe(true);
+    expect(forbidden('src/game/CLAUDE.md')).toBe(true);
   });
 });
 
