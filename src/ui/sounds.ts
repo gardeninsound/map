@@ -19,6 +19,28 @@ export const sounds = {
   pop: () => tone(880, 0.05, 'square', 0.03, 260),
   bonk: () => tone(170, 0.16, 'triangle', 0.06, -70),
   hop: () => tone(420, 0.12, 'square', 0.025, 320),
+  /** the arcade bear, about to talk: a friendly low rumble */
+  bear: () => {
+    tone(130, 0.16, 'triangle', 0.07, 30);
+    setTimeout(() => tone(165, 0.2, 'triangle', 0.07, -40), 150);
+  },
+  /** the rabbit says "Thanks!" in a small high voice (the browser's speech, sped up and pitched up) */
+  thanks: () => {
+    if (sfx.isMuted()) return;
+    const speech = typeof speechSynthesis !== 'undefined' ? speechSynthesis : null;
+    if (speech && typeof SpeechSynthesisUtterance !== 'undefined') {
+      const u = new SpeechSynthesisUtterance('Thanks!');
+      u.pitch = 2;
+      u.rate = 1.3;
+      u.volume = 0.9;
+      speech.cancel();
+      speech.speak(u);
+    } else {
+      // no speech here: a two-note squeak
+      tone(1100, 0.07, 'square', 0.03, 200);
+      setTimeout(() => tone(1400, 0.1, 'square', 0.03, 300), 90);
+    }
+  },
   whoosh: () => {
     tone(320, 0.28, 'sawtooth', 0.025, -220);
     setTimeout(() => tone(140, 0.2, 'triangle', 0.03, -60), 60);

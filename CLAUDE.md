@@ -179,6 +179,11 @@ auto-merge (every PR, see 6); if it touches the other person's area, add them as
   Duck on the Moon is a port into the app (`DuckMoonScene.ts` + `DuckOnTheMoon.tsx`, words in
   `src/content/duckOnTheMoon.ts`, MP3s in `public/duck-on-the-moon/`). While a game is open,
   `sfx.gameSound(true)` keeps its sound on even if the map is muted. Wall posters: `POSTERS` in `ArcadeScene.ts`.
+  **The bear** (`arcade/ArcadeBear.ts`, low-poly three.js): after the first game of a visit it's right beside you
+  with a bag of licorice (`bearLines` in `content/duckArcade.ts`); click/tap the bag (or {A}) to take one, the
+  rabbit says "Thanks!" (`sounds.thanks`, the browser's speech pitched up), then it walks off and plays Avocado
+  Drop (`BEAR_GAME`, the floor cabinet by the doors) for the rest of the visit. Where it stands and walks is pure +
+  tested: `src/game/arcadeBear.ts`. The smoke test takes a licorice (`window.__arcade.bagOnScreen()`).
 - **Luna Park** (1907–1913) on its pilings off Duwamish Head: `src/game/plugins/lunaPark.ts` turns the pier's
   water tiles walkable at attach (street name "Luna Park"), paints the boardwalk under everyone and draws the
   animated rides depth-sorted (gate, Great Figure Eight, Shoot-the-Chutes, Looff carousel, Giant Whirl,

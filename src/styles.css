@@ -376,9 +376,12 @@
   max-width: min(560px, calc(100% - 32px)); background: var(--paper); color: var(--ink);
   font-family: var(--pixel); font-size: 10px; line-height: 1.6; padding: 10px 14px; box-shadow: var(--frame);
 }
+/* the bear holding out its licorice: how to take one */
+.arcade-take { bottom: 120px; background: var(--yellow); }
+.arcade-take span { white-space: nowrap; }
 .arcade-menu {
   position: absolute; inset: 0; z-index: 3; display: grid; place-content: center; gap: 12px;
-  padding: 16px; background: rgba(18, 14, 31, 0.82);
+  padding: 16px; overflow-y: auto; background: rgba(18, 14, 31, 0.82);
 }
 .arcade-menu h3 { margin: 0; text-align: center; font-family: var(--pixel); font-weight: 400; font-size: 14px; color: var(--yellow); }
 .arcade-menu ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; width: min(560px, calc(100vw - 32px)); }
