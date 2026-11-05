@@ -1,13 +1,24 @@
 import { Suspense, useEffect, useRef, useState } from 'react';
-import { buttonLabel, input, isTouch, TouchPad, withButtons } from '../../city';
-import { ARCADE_NAME, ARCADE_WHERE, arcadeAfter, arcadeGames, arcadeIntro, arcadeSoon, type ArcadeGame } from '../../content/duckArcade';
+import { buildRabbit, buttonLabel, input, isTouch, TouchPad, withButtons } from '../../city';
+import { ARCADE_NAME, ARCADE_WHERE, arcadeAfter, arcadeGames, arcadeIntro, arcadeSoon, BEAR_NAME, bearLines, type ArcadeGame } from '../../content/duckArcade';
 import { DialogBox } from '../../ui/MikeDialog';
 import { SceneBoundary } from '../../ui/SceneBoundary';
 import { sounds as sfx } from '../../ui/sounds';
+import { bearPortrait } from './ArcadeBear';
 import { ArcadeScene } from './ArcadeScene';
 import { arcadeComponents } from './games';
 
 const playable = (g: ArcadeGame) => g.ready && !!arcadeComponents[g.id];
+
+/**
+ * The bear, after the first game of a visit: right beside you as the game closes, talking,
+ * holding out the licorice for you to take, your thanks, then its goodbye (and off it goes
+ * to play Avocado Drop, where it stays for the rest of the visit).
+ */
+type BearStep = 'none' | 'offer' | 'take' | 'thanks' | 'off';
+
+let rabbitFace: string | null = null;
+const rabbitPortrait = () => (rabbitFace ??= buildRabbit().down[0]!.toDataURL());
 
 /**
  * Inside the Duck Arcade: walk the room in first person, step up to a cabinet and press
@@ -23,10 +34,28 @@ export default function DuckArcade({ onExit }: { onExit(): void }) {
   const [sel, setSel] = useState(0);
   const [playing, setPlaying] = useState<ArcadeGame | null>(null);
   const [note, setNote] = useState<string | null>(null);
+  const [bear, setBear] = useState<BearStep>('none');
+  const bearRef = useRef(bear);
+  bearRef.current = bear;
+  /** the bear has been over this visit (it comes once, after your first game) */
+  const metBear = useRef(false);
+
+  /** you took a licorice (clicked the bag, or {A} while it's held out) */
+  const takeLicorice = () => {
+    if (bearRef.current !== 'take') return;
+    sfx.pop();
+    scene.current?.bearGive();
+    setTimeout(() => sfx.thanks(), 150);
+    setBear('thanks');
+  };
+  const takeRef = useRef(takeLicorice);
+  takeRef.current = takeLicorice;
 
   useEffect(() => {
-    const s = new ArcadeScene(host.current!, { onNear: setNear }, arcadeGames);
+    const s = new ArcadeScene(host.current!, { onNear: setNear, onLicorice: () => takeRef.current() }, arcadeGames);
     scene.current = s;
+    // for the smoke test (and poking at it in dev)
+    (window as unknown as { __arcade?: ArcadeScene }).__arcade = s;
     let raf = 0;
     const poll = () => {
       const d = input.dir();
@@ -41,8 +70,8 @@ export default function DuckArcade({ onExit }: { onExit(): void }) {
   }, []);
 
   useEffect(() => {
-    if (scene.current) scene.current.paused = intro || menu || playing !== null;
-  }, [intro, menu, playing]);
+    if (scene.current) scene.current.paused = intro || menu || playing !== null || bear !== 'none';
+  }, [intro, menu, playing, bear]);
 
   // in the games list, arrows / WASD move the highlight
   useEffect(() => {
@@ -76,6 +105,11 @@ export default function DuckArcade({ onExit }: { onExit(): void }) {
       return;
     }
     sfx.confirm();
+    // the bear was on its way over: never mind, it goes back to its game
+    if (bearRef.current !== 'none') {
+      setBear('none');
+      scene.current?.bearGoPlay();
+    }
     scene.current?.faceCabinet(i);
     input.clear();
     setNote(null);
@@ -90,6 +124,15 @@ export default function DuckArcade({ onExit }: { onExit(): void }) {
         const st = state.current;
         if (st.playing) return; // the game has the buttons
         if (st.intro && b !== 'b') return; // the dialog handles its own A; B always leaves
+        const step = bearRef.current;
+        if (step !== 'none' && b !== 'b' && b !== 'menu') {
+          // the bear's dialogs take their own A; while it holds out the bag, A takes one
+          if (step === 'take' && b === 'a') {
+            input.consume('a');
+            takeRef.current();
+          }
+          return;
+        }
         if (b === 'menu') {
           input.consume('menu');
           sfx.confirm();
@@ -137,7 +180,7 @@ export default function DuckArcade({ onExit }: { onExit(): void }) {
         </div>
       </header>
 
-      {nearGame && !intro && !menu && !playing && (
+      {nearGame && !intro && !menu && !playing && bear === 'none' && (
         <div className="nearby park-prompt">
           <div className="nearby-name">{nearGame.title}</div>
           <div className="nearby-hint">
@@ -146,9 +189,38 @@ export default function DuckArcade({ onExit }: { onExit(): void }) {
         </div>
       )}
 
-      {note && !playing && <p className="arcade-note" role="status">{note}</p>}
+      {note && !playing && bear === 'none' && <p className="arcade-note" role="status">{note}</p>}
 
-      {!intro && !menu && !playing && !isTouch() && (
+      {!menu && !playing && bear === 'offer' && (
+        <div className="scene-dialog">
+          <DialogBox lines={bearLines.offer} speaker={BEAR_NAME} portrait={bearPortrait()} onDone={() => setBear('take')} />
+        </div>
+      )}
+      {!menu && !playing && bear === 'take' && (
+        <p className="arcade-note arcade-take" role="status">
+          {bearLines.take(isTouch())} <span>· <kbd>{buttonLabel('a')}</kbd></span>
+        </p>
+      )}
+      {!menu && !playing && bear === 'thanks' && (
+        <div className="scene-dialog">
+          <DialogBox lines={bearLines.thanks} speaker="You" portrait={rabbitPortrait()} onDone={() => { sfx.bear(); setBear('off'); }} />
+        </div>
+      )}
+      {!menu && !playing && bear === 'off' && (
+        <div className="scene-dialog">
+          <DialogBox
+            lines={bearLines.off}
+            speaker={BEAR_NAME}
+            portrait={bearPortrait()}
+            onDone={() => {
+              setBear('none');
+              scene.current?.bearGoPlay();
+            }}
+          />
+        </div>
+      )}
+
+      {!intro && !menu && !playing && bear === 'none' && !isTouch() && (
         <p className="cup-hint">arrows / WASD walk &amp; turn · drag to look · T games list</p>
       )}
 
@@ -192,6 +264,13 @@ export default function DuckArcade({ onExit }: { onExit(): void }) {
                   input.clear();
                   setPlaying(null);
                   setNote(arcadeAfter(playing, r.score, r.best));
+                  // after the first game, the bear is right there with its licorice
+                  if (!metBear.current) {
+                    metBear.current = true;
+                    scene.current?.bearAppear();
+                    sfx.bear();
+                    setBear('offer');
+                  }
                 }}
               />
             </Suspense>
