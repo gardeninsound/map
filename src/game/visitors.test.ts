@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { EMOTES, SCARF_NAMES } from '../content/emotes';
-import { MY_SCARF, RateLimit, SCARVES, SEND_INTERVAL, decode, decodeEmote, easeVisitor, encode, newVisitor, rabbitName, scarfFor, sendLimit, shouldSend, stackBubbles, type RabbitState } from './visitors';
+import { MY_SCARF, PRESENCE, RateLimit, SCARVES, SEND_INTERVAL, decode, decodeEmote, easeVisitor, encode, newVisitor, presence, rabbitName, scarfFor, sendLimit, shouldSend, stackBubbles, type RabbitState } from './visitors';
 
 const at = (x: number, y: number, more: Partial<RabbitState> = {}): RabbitState => ({ pos: { x, y }, facing: 'down', moving: false, away: false, ...more });
 
@@ -99,5 +99,32 @@ describe('stackBubbles with fixed bubbles', () => {
   it('lifts a bubble above a fixed one it would cover', () => {
     const [y] = stackBubbles([{ x: 0, y: 100, w: 40, h: 10 }], 2, [{ x: 0, y: 102, w: 15, h: 15 }]);
     expect(y).toBeLessThanOrEqual(102 - 15 - 2);
+  });
+});
+
+describe('presence: here, away or gone', () => {
+  it('a visible tab in use is here', () => {
+    expect(presence(null, 0)).toBe('here');
+    expect(presence(null, PRESENCE.idleAway - 1)).toBe('here');
+  });
+
+  it('a hidden tab fades at once, then leaves after two minutes', () => {
+    expect(PRESENCE.hiddenGone).toBe(120);
+    expect(presence(0, 0)).toBe('away');
+    expect(presence(PRESENCE.hiddenGone - 1, 0)).toBe('away');
+    expect(presence(PRESENCE.hiddenGone, 0)).toBe('gone');
+  });
+
+  it('no input for ten minutes fades, thirty leaves', () => {
+    expect(PRESENCE.idleAway).toBe(600);
+    expect(PRESENCE.idleGone).toBe(1800);
+    expect(presence(null, PRESENCE.idleAway)).toBe('away');
+    expect(presence(null, PRESENCE.idleGone - 1)).toBe('away');
+    expect(presence(null, PRESENCE.idleGone)).toBe('gone');
+  });
+
+  it('hidden wins over recent input, and timings can be shortened (dev ?presence=N)', () => {
+    expect(presence(5, 0, { hiddenGone: 2, idleAway: 4, idleGone: 8 })).toBe('gone');
+    expect(presence(null, 5, { hiddenGone: 2, idleAway: 4, idleGone: 8 })).toBe('away');
   });
 });

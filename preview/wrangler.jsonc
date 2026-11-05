@@ -1,0 +1,14 @@
+// Previews of pull requests: the built site (../dist), served by Cloudflare as a preview
+// version of this Worker, one link per PR (pr-<number>-garden-preview.<…>.workers.dev).
+// The live site is NOT here: it stays on GitHub Pages. Uploaded by
+// .github/workflows/preview.yml; see README.md.
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "garden-preview",
+  // the project's Cloudflare account (Mike's), so an upload can't land anywhere else
+  "account_id": "7de05f51e1fe91fd717fe174fcfba85d",
+  "compatibility_date": "2026-11-01",
+  "assets": { "directory": "../dist" },
+  "workers_dev": true,
+  "preview_urls": true
+}

@@ -37,6 +37,7 @@ import type { MiniGameResult } from './experiences/minigames/ConeCatch';
 import { DialogBox } from './ui/MikeDialog';
 import { SceneBoundary } from './ui/SceneBoundary';
 import { SpotsMenu } from './ui/SpotsMenu';
+import { IdeaBox } from './ui/IdeaBox';
 import { TitleScreen } from './ui/TitleScreen';
 import { sounds } from './ui/sounds';
 
@@ -60,7 +61,9 @@ type Overlay =
   | { kind: 'arcade' }
   /** riding Luna Park's Great Figure Eight */
   | { kind: 'ride' }
-  | { kind: 'spots' };
+  | { kind: 'spots' }
+  /** the idea box: "What would you love to add?" → a GitHub issue */
+  | { kind: 'idea' };
 
 const ConeCatch = lazy(() => import('./experiences/minigames/ConeCatch'));
 const DuckArcade = lazy(() => import('./experiences/arcade/DuckArcade'));
@@ -148,7 +151,10 @@ export default function App() {
     // relay; in dev, `?island=<name>` uses a private room so tests don't walk onto the real one.
     const params = new URLSearchParams(location.search);
     const island = (import.meta.env.DEV && params.get('island')) || undefined;
-    const live = params.has('solo') ? null : new Visitors(params.get('relay') ?? undefined, island);
+    // dev: `?presence=N` → a hidden tab leaves after N s, idle fades after 2N and leaves after 4N
+    const fast = import.meta.env.DEV ? Number(params.get('presence')) : 0;
+    const timings = fast > 0 ? { hiddenGone: fast, idleAway: 2 * fast, idleGone: 4 * fast } : undefined;
+    const live = params.has('solo') ? null : new Visitors(params.get('relay') ?? undefined, island, timings);
     if (live) live.onChange = () => setRabbitTick((n) => n + 1);
     const g = new CityGame(canvas.current!, world, {
       start: world.project(START.lat, START.lon),
@@ -410,6 +416,14 @@ export default function App() {
                 </button>
               )}
               <button
+                className="hud-idea"
+                onClick={() => { sounds.confirm(); setOverlay({ kind: 'idea' }); }}
+                aria-pressed={overlay.kind === 'idea'}
+                aria-label="Suggest something to add to the Garden in Sound"
+              >
+                {touch ? '✿' : '✿ IDEA'}
+              </button>
+              <button
                 onClick={() => {
                   sounds.setMuted(!muted);
                   setMuted(!muted);
@@ -554,6 +568,8 @@ export default function App() {
           onClose={closeOverlay}
         />
       )}
+
+      {overlay.kind === 'idea' && <IdeaBox street={street} onClose={closeOverlay} />}
 
       {Scene && overlay.kind === 'scene' && (
         <SceneBoundary onError={closeOverlay}>

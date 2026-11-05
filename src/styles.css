@@ -201,6 +201,56 @@
 .spot-actions button:focus-visible, .spots-close:focus-visible { outline: 3px dashed var(--pink); outline-offset: 5px; }
 .spots-foot { font-size: 15px; margin: 14px 0 0; opacity: 0.75; }
 
+/* ── Idea box (src/ui/IdeaBox.tsx) ─────────── */
+.idea-layer {
+  position: absolute; inset: 0; z-index: 25;
+  display: grid; place-items: start center; padding: 72px 16px 16px; overflow: auto;
+  background: rgba(43, 35, 80, 0.45);
+}
+.idea {
+  width: min(520px, 100%);
+  background: var(--paper); color: var(--ink); padding: 16px 18px;
+  box-shadow: var(--frame), 10px 10px 0 12px rgba(0,0,0,0.25);
+  animation: rise 200ms steps(5) both;
+  display: flex; flex-direction: column; gap: 10px; position: relative;
+}
+.idea-close { position: absolute; top: 10px; right: 10px; }
+.idea-close:focus-visible { outline: 3px dashed var(--pink); outline-offset: 2px; }
+.idea h2 { padding-right: 36px; font-family: var(--pixel); font-weight: 400; font-size: 12px; line-height: 1.7; margin: 0; color: #7a40a0; text-wrap: balance; }
+.idea-hint { margin: 0; font-size: 17px; }
+.idea textarea {
+  width: 100%; min-height: 128px; resize: vertical;
+  font-family: var(--body); font-size: 18px; line-height: 1.4; color: var(--ink);
+  background: #fff; border: 0; padding: 10px 12px; box-shadow: 0 0 0 3px var(--ink); margin: 3px 0;
+}
+.idea textarea:focus-visible { outline: 3px dashed var(--pink); outline-offset: 5px; }
+.idea textarea::placeholder { color: #8a7fa8; }
+.idea-meta { display: flex; justify-content: space-between; gap: 12px; font-size: 14px; opacity: 0.8; }
+.idea-count { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.idea-name { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+.idea-name label { font-family: var(--pixel); font-size: 10px; line-height: 1.5; }
+.idea-name input {
+  width: 100%; font-family: var(--body); font-size: 18px; color: var(--ink);
+  background: #fff; border: 0; padding: 8px 12px; box-shadow: 0 0 0 3px var(--ink); margin: 3px 0;
+}
+.idea-name input:focus-visible { outline: 3px dashed var(--pink); outline-offset: 5px; }
+.idea-name input::placeholder { color: #8a7fa8; }
+.idea-name-hint { font-size: 14px; opacity: 0.8; }
+.idea-captcha { min-height: 65px; }
+.idea-error { margin: 0; font-size: 15px; color: #a3261c; }
+.idea-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.idea-actions button {
+  font-family: var(--pixel); font-size: 10px; border: 0; padding: 10px 12px;
+  background: var(--paper); box-shadow: 0 0 0 3px var(--ink);
+}
+.idea-actions button.primary { background: var(--yellow); }
+.idea-actions button:disabled { opacity: 0.45; cursor: default; }
+.idea-actions button:focus-visible { outline: 3px dashed var(--pink); outline-offset: 5px; }
+.idea-thanks { display: flex; flex-direction: column; gap: 8px; }
+.idea-thanks p { margin: 0; font-size: 18px; }
+.idea-thanks .idea-thanks-big { font-family: var(--pixel); font-size: 13px; color: #2f8f45; margin: 6px 0 2px; }
+@media (prefers-reduced-motion: reduce) { .idea { animation: none; } }
+
 /* ── Seven+ Stories (first-person lot) ─────────── */
 .park-scene { background: #8ec5ff; }
 .park-stage { position: absolute; inset: 0; }
