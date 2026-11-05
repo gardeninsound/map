@@ -170,7 +170,8 @@ auto-merge (every PR, see 6); if it touches the other person's area, add them as
   + their asset folders) that a thin wrapper component loads and mounts; the kits handle their own keys.
   Duck on the Moon is a port into the app (`DuckMoonScene.ts` + `DuckOnTheMoon.tsx`, words in
   `src/content/duckOnTheMoon.ts`, MP3s in `public/duck-on-the-moon/`). While a game is open,
-  `sfx.gameSound(true)` keeps its sound on even if the map is muted. Wall posters: `POSTERS` in `ArcadeScene.ts`.
+  `sfx.gameSound(true)` keeps its sound on even if the map is muted. Wall posters: `POSTERS` in `ArcadeScene.ts`;
+  the ceiling is a looping forest video (`CEILING_VIDEO`, WebM + MP4 in `public/arcade/ceiling/`) under the fluorescent panels.
 - **Luna Park** (1907–1913) on its pilings off Duwamish Head: `src/game/plugins/lunaPark.ts` turns the pier's
   water tiles walkable at attach (street name "Luna Park"), paints the boardwalk under everyone and draws the
   animated rides depth-sorted (gate, Great Figure Eight, Shoot-the-Chutes, Looff carousel, Giant Whirl,

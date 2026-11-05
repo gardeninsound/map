@@ -1,7 +1,7 @@
 import { execFileSync } from 'node:child_process';
 // @ts-expect-error plain-JS script shared with npm run art:publish
 import { neededArt } from '../../scripts/neededArt.mjs';
-import { POSTERS } from '../experiences/arcade/ArcadeScene';
+import { CEILING_VIDEO, POSTERS } from '../experiences/arcade/ArcadeScene';
 import { arcadeGames } from './duckArcade';
 import { moonStories } from './duckOnTheMoon';
 
@@ -21,6 +21,7 @@ describe('published files', () => {
   it('arcade posters, cabinet fronts and game sounds are in git', () => {
     const files = [
       ...POSTERS.map(([name]) => `public/arcade/posters/${name}.webp`),
+      ...CEILING_VIDEO.map((file) => `public/${file}`),
       ...arcadeGames.flatMap((g) => (g.front ? [`public/${g.front}`] : [])),
       ...Object.values(moonStories).map((s) => `public/duck-on-the-moon/${s.file}`),
     ];

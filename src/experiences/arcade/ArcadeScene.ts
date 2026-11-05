@@ -40,6 +40,12 @@ export const POSTERS: [string, number, number, number, number, number][] = [
   ['poster-shag', 410, 549, -5.5, 4.5 - 0.03, Math.PI],
   ['poster-guitar', 410, 549, 5.5, 4.5 - 0.03, Math.PI],
 ];
+/**
+ * The ceiling: looking up through misty fir trees, a short loop (public/arcade/ceiling/, made
+ * from Mike's GIF; WebM first, MP4 for Safari). The fluorescent panels hang just under it.
+ */
+export const CEILING_VIDEO = ['arcade/ceiling/forest.webm', 'arcade/ceiling/forest.mp4'];
+
 /** poster width, metres; each hangs centred between the wainscot and the neon stripe */
 const POSTER_W = 0.85;
 const POSTER_Y = 1.92;
@@ -123,6 +129,7 @@ export class ArcadeScene {
   private last = 0;
   private lastBlink = -1;
   private disposed = false;
+  private sky: HTMLVideoElement | null = null;
   paused = false;
 
   constructor(
@@ -190,7 +197,7 @@ export class ArcadeScene {
     floor.position.set(cx, 0, cz);
     s.add(floor);
 
-    const ceiling = new THREE.Mesh(new THREE.PlaneGeometry(W, D), lambert('#1d1830'));
+    const ceiling = new THREE.Mesh(new THREE.PlaneGeometry(W, D), this.skyMaterial());
     ceiling.rotation.x = Math.PI / 2;
     ceiling.position.set(cx, h, cz);
     s.add(ceiling);
@@ -306,6 +313,30 @@ export class ArcadeScene {
     this.duck.position.set(-4.2, 0, 2.6);
     this.duck.rotation.y = -0.6;
     s.add(this.duck);
+  }
+
+  /** The forest loop as the ceiling's texture: unlit (it's daylight up there), a touch dimmed
+   * so the panels still read as the light. Holds still on its first frame for reduced motion. */
+  private skyMaterial() {
+    const v = document.createElement('video');
+    v.muted = true;
+    v.loop = true;
+    v.playsInline = true;
+    v.preload = 'auto';
+    for (const file of CEILING_VIDEO) {
+      const src = document.createElement('source');
+      src.src = `${import.meta.env.BASE_URL}${file}`;
+      src.type = file.endsWith('.webm') ? 'video/webm' : 'video/mp4';
+      v.appendChild(src);
+    }
+    const tex = new THREE.VideoTexture(v);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    tex.magFilter = tex.minFilter = THREE.NearestFilter;
+    const still = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+    if (still) v.addEventListener('loadeddata', () => (tex.needsUpdate = true), { once: true });
+    else v.play().catch(() => {}); // muted, so autoplay is allowed; if not, the first frame stays
+    this.sky = v;
+    return new THREE.MeshBasicMaterial({ map: tex, color: '#b9b6c8' });
   }
 
   private buildCabinet(game: ArcadeGame, [x, z, yaw]: [number, number, number]) {
@@ -516,6 +547,11 @@ export class ArcadeScene {
   dispose() {
     this.disposed = true;
     cancelAnimationFrame(this.raf);
+    if (this.sky) {
+      this.sky.pause();
+      this.sky.replaceChildren();
+      this.sky.load();
+    }
     window.removeEventListener('pointermove', this.onMove);
     window.removeEventListener('pointerup', this.onUp);
     window.removeEventListener('resize', this.resize);
