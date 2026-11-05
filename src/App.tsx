@@ -26,6 +26,7 @@ import { ArtSpots, type PlacedLocation } from './game/plugins/artSpots';
 import { Busker } from './game/plugins/busker';
 import { Crow } from './game/plugins/crow';
 import { Chicken } from './game/plugins/chicken';
+import { Ham } from './game/plugins/ham';
 import { Pegasus } from './game/plugins/pegasus';
 import { BigCup } from './game/plugins/bigCup';
 import { Seal } from './game/plugins/seal';
@@ -149,6 +150,7 @@ export default function App() {
     const crow = new Crow();
     const chicken = new Chicken();
     const pegasus = new Pegasus();
+    const ham = new Ham();
     const luna = new LunaPark();
     // Everyone else on the island, live. `?solo` walks alone; `?relay=` points at another
     // relay; in dev, `?island=<name>` uses a private room so tests don't walk onto the real one.
@@ -162,7 +164,7 @@ export default function App() {
     const g = new CityGame(canvas.current!, world, {
       start: world.project(START.lat, START.lon),
       voices: neighborVoices,
-      plugins: [art, new BigCup(art), new Seal(), arcadeDoor.current, luna, busker, crow, chicken, pegasus, ...(live ? [live] : [])],
+      plugins: [art, new BigCup(art), new Seal(), arcadeDoor.current, luna, busker, crow, chicken, pegasus, ham, ...(live ? [live] : [])],
       events: {
         onStreet: setStreet,
         onStorefront: setStorefront,
@@ -242,7 +244,7 @@ export default function App() {
       },
     });
     g.paused = true;
-    if (import.meta.env.DEV) Object.assign(window, { __game: g, __busker: busker, __crow: crow, __chicken: chicken, __pegasus: pegasus, __art: art, __luna: luna, __visitors: live }); // test hooks
+    if (import.meta.env.DEV) Object.assign(window, { __game: g, __busker: busker, __crow: crow, __chicken: chicken, __pegasus: pegasus, __ham: ham, __art: art, __luna: luna, __visitors: live }); // test hooks
     // Dev review hooks: ?at=lat,lon (or ?atTile=x,y) skips the title and drops you there;
     // ?audit scans the whole map for road-drawing glitches (scripts/city/road-audit.mjs).
     const q = new URLSearchParams(location.search);
