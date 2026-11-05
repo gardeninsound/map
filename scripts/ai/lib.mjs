@@ -21,6 +21,9 @@ export const FORBIDDEN = [
 
 /** A build that changes more lines than this goes to a person instead. */
 export const MAX_CHANGED_LINES = 80;
+/** Recipes add things. A build that removes more lines than this has gone wrong (a reply cut
+ *  off part way through a file can wipe out the rest of it). */
+export const MAX_REMOVED_LINES = 3;
 
 export const NEEDS_PERSON = 'needs-person';
 
@@ -124,7 +127,7 @@ export function checkDiff(numstat, recipe, max = MAX_CHANGED_LINES) {
     .filter(Boolean)
     .map((l) => {
       const [add, del, file] = l.split('\t');
-      return { file, lines: (Number(add) || 0) + (Number(del) || 0) };
+      return { file, lines: (Number(add) || 0) + (Number(del) || 0), removed: Number(del) || 0 };
     });
   const problems = [];
   if (rows.length === 0) problems.push('nothing changed');
@@ -132,6 +135,8 @@ export function checkDiff(numstat, recipe, max = MAX_CHANGED_LINES) {
     if (forbidden(file)) problems.push(`touched ${file}, which bots never edit`);
     else if (!recipe.edit.includes(file)) problems.push(`touched ${file}, outside the recipe (${recipe.edit.join(', ')})`);
   }
+  const removed = rows.reduce((a, r) => a + r.removed, 0);
+  if (removed > MAX_REMOVED_LINES) problems.push(`removed ${removed} lines (recipes add; at most ${MAX_REMOVED_LINES} may go)`);
   const total = rows.reduce((a, r) => a + r.lines, 0);
   if (total > max) problems.push(`changed ${total} lines (most allowed: ${max})`);
   return { ok: problems.length === 0, problems, files: rows.map((r) => r.file), lines: total };

@@ -277,6 +277,9 @@ function build() {
     '--test-cmd', test,
     '--auto-test',
     '--aiderignore', ignoreFile,
+    // search/replace blocks, not the whole file: a reply cut off part way then fails to apply,
+    // instead of saving a file chopped in half
+    '--edit-format', 'diff',
     '--map-tokens', '0', // it's handed the files; no need to map the repo
     '--no-auto-commits',
     '--no-gitignore',

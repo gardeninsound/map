@@ -62,13 +62,13 @@ describe('the spec', () => {
     const { ok, problems } = checkSpec(made_up, recipes);
     expect(ok).toBe(false);
     expect(problems[0]).toMatch(/\.ai\/neighbors\.txt, src\/game\/neighbors\.test\.ts/);
-    expect(checkSpec({ ...made_up, steps: ['In src/content/neighbors.ts add one entry.'], done_when: ['npx vitest run src/content/content.test.ts passes'] }, recipes).ok).toBe(true);
+    expect(checkSpec({ ...made_up, steps: ['In src/content/neighbors.ts add one entry.'], done_when: ['npx vitest run src/content/neighbors.test.ts passes'] }, recipes).ok).toBe(true);
   });
 
   it('can show every recipe in full', () => {
     const text = recipesInFull(recipes);
     for (const r of recipes) expect(text).toContain(`### ${r.name}`);
-    expect(text).toContain('Test: npx vitest run src/content/content.test.ts');
+    expect(text).toContain('Test: npx vitest run src/content/neighbors.test.ts');
   });
 
   it('rejects made-up recipes and junk', () => {
@@ -89,5 +89,7 @@ describe('the diff', () => {
     expect(checkDiff('1\t0\t.github/workflows/ci.yml', crow).problems[0]).toMatch(/never edit/);
     expect(checkDiff('200\t0\tsrc/content/crow.ts', crow).problems[0]).toMatch(/200 lines/);
     expect(checkDiff('', crow).problems).toEqual(['nothing changed']);
+    // a reply cut off part way through the file: one line in, the rest of the file gone
+    expect(checkDiff('1\t27\tsrc/content/crow.ts', crow).problems[0]).toMatch(/removed 27 lines/);
   });
 });

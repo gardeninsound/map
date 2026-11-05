@@ -2,8 +2,8 @@
 name: neighbor-voice
 use: a new person wandering the streets who says a line or two when you walk up (a neighbor, a shopkeeper, a dog walker…)
 edit: src/content/neighbors.ts
-read: src/content/content.test.ts
-test: src/content/content.test.ts
+read: src/content/neighbors.test.ts
+test: src/content/neighbors.test.ts
 ---
 # Recipe: a neighbor's voice
 
@@ -33,4 +33,5 @@ just before the closing `];`. Change nothing else in the file. Don't touch `busk
 ## Done when
 
 - `neighborVoices` has exactly one more entry than before, at the end.
-- `npx vitest run src/content/content.test.ts` passes.
+- `npx vitest run src/content/neighbors.test.ts` passes (a name, 1–3 lines under 100
+  characters, no emoji, no links, never "press A").
