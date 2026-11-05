@@ -14,6 +14,7 @@ Everything runs on free plans.
 | Rabbits relay | `relay.gardeninsound.website` | Cloudflare Worker `bearisland-relay` | [`relay/`](../relay) |
 | Idea box | `wish.gardeninsound.website` | Cloudflare Worker `garden-wish` | [`wish/`](../wish) |
 | Captcha | — | Cloudflare Turnstile | used by `src/ui/IdeaBox.tsx` + `wish/` |
+| PR previews | `pr-<number>-garden-preview.gardeninsound.workers.dev` | Cloudflare Worker `garden-preview` (files only) | [`preview/`](../preview) |
 | Idea author | `garden-in-sound-wishes[bot]` | GitHub App "Garden in Sound Wishes" | used by `wish/src/githubApp.ts` |
 
 The repo belongs to the [`gardeninsound`](https://github.com/gardeninsound) GitHub org. The
@@ -49,14 +50,18 @@ flowchart LR
 [`CLAUDE.md`](../CLAUDE.md#git-workflow-everyone-claude-included). In short:
 
 1. Make a short branch from fresh `main`, then open a pull request.
-2. The **Check** workflow runs: a size guard (no file over 2 MB unless listed in
+2. The **Preview** workflow comments a link to the PR's own copy of the site,
+   `https://pr-<number>-garden-preview.gardeninsound.workers.dev`, updated on every push. It's a
+   full copy: real rabbits, and the idea box files real issues marked `[preview pr-<number>]`.
+   See [`preview/README.md`](../preview/README.md).
+3. The **Check** workflow runs: a size guard (no file over 2 MB unless listed in
    `.github/large-files.txt`), `npm test`, `npm run build`, and `npm run smoke` (the built site
    in a real browser).
-3. Every PR auto-merges (squash) the moment the Check passes; nobody waits for an OK. A PR that
+4. Every PR auto-merges (squash) the moment the Check passes; nobody waits for an OK. A PR that
    touches the other person's area adds them as a reviewer, as a heads-up: **Jim** for technical
    changes, **Mike** for the art and the words.
-4. GitHub Pages deploys the site in about a minute.
-5. **The Workers don't deploy themselves.** After a merge that changes `relay/` or `wish/`, run
+5. GitHub Pages deploys the site in about a minute.
+6. **The Workers don't deploy themselves.** After a merge that changes `relay/` or `wish/`, run
    `npx wrangler deploy` in that folder from `main`. Each `wrangler.jsonc` pins the project's
    Cloudflare account, so a deploy can't land anywhere else.
 
@@ -67,7 +72,7 @@ Each Worker also has an end-to-end test that runs locally, not in the Check:
 
 Each visitor keeps one WebSocket open to the relay, which forwards positions and emotes to
 everyone else in the room. It stores nothing. It only accepts connections from
-`gardeninsound.website`, `www.gardeninsound.website` and localhost, and allows at most 64
+`gardeninsound.website`, `www.gardeninsound.website`, PR previews and localhost, and allows at most 64
 rabbits in a room. Rabbits only send while they move, at most 5 times a second, because the
 free plan is metered by messages.
 
@@ -97,7 +102,7 @@ box tells visitors that ideas are public.
 
 The Worker checks, in order:
 
-1. the page's origin (the site or localhost only);
+1. the page's origin (the site, a PR preview, or localhost);
 2. the text: 5–1000 characters, and a name of at most 60;
 3. at most 3 ideas a minute from one address (only well-formed ones count);
 4. the Turnstile token, to confirm a person sent it.
@@ -108,11 +113,13 @@ issue's body, never run.
 
 ## Secrets
 
-There are two, both stored as encrypted Worker secrets on `garden-wish`. Neither is in the repo.
+Three in all, none of them in the repo. Two are encrypted Worker secrets on `garden-wish`; the
+third is a GitHub Actions secret.
 
 | Secret | What it is | To replace it |
 |---|---|---|
 | `TURNSTILE_SECRET` | the server half of the captcha | rotate it on the Turnstile widget in Cloudflare, then run `npx wrangler secret put TURNSTILE_SECRET` in `wish/` |
+| `CLOUDFLARE_API_TOKEN` (GitHub Actions secret) | lets the Preview workflow upload previews: Cloudflare API token with only **Workers Scripts: Edit** on the project's account | create a new token in Cloudflare (preferably an account token: Manage Account → Account API Tokens), run `gh secret set CLOUDFLARE_API_TOKEN`, then delete the old token |
 | `GITHUB_APP_KEY` | the GitHub App's private key, in PKCS#8 format | on the app's settings page, choose **Generate a private key**. Convert it with `openssl pkcs8 -topk8 -nocrypt -in key.pem`, run `npx wrangler secret put GITHUB_APP_KEY`, then delete the old key on GitHub |
 
 These are public by design and live in code: the Turnstile site key (`src/content/ideas.ts`), the
@@ -125,6 +132,7 @@ app and installation ids (`wish/wrangler.jsonc`), and the Cloudflare account id 
 |---|---|
 | Deploy the site | Merge a PR into `main`. |
 | Deploy a Worker | From `main`, run `cd relay && npx wrangler deploy` (or the same in `wish/`). You need a wrangler login (`npx wrangler login`) as a member of the project's Cloudflare account. |
+| See a PR before it merges | Click **View deployment** on the PR (or the **Preview** link in its comments). |
 | Let another site use the relay or the idea box | Add its origin to `ALLOWED_ORIGINS` in that Worker's `wrangler.jsonc`, then open a PR, merge it, and deploy. |
 | Change DNS | Cloudflare → `gardeninsound.website` → DNS. Keep the records pointing to GitHub proxied, and keep SSL/TLS on **Full** (see the gotchas below). |
 | A replaced art file still shows the old version | Cloudflare → Caching → Configuration → **Purge Everything**. Code never needs this: every build gets new file names. |

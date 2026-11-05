@@ -41,7 +41,16 @@ export function check(body: unknown): Checked {
   return { ok: true, text, street: line(b.street, 80), name: line(b.name, NAME_MAX) };
 }
 
-export function issueFor(text: string, street: string | null, name: string | null = null) {
+/**
+ * Which preview of a pull request the idea came from ("pr-20"), or null for the live site.
+ * Previews are served at https://<alias>-garden-preview.<account>.workers.dev (preview/).
+ */
+export function previewOf(origin: string | null): string | null {
+  const m = /^https:\/\/([a-z0-9-]+?)-garden-preview\.[a-z0-9-]+\.workers\.dev$/.exec(origin ?? '');
+  return m ? m[1] : null;
+}
+
+export function issueFor(text: string, street: string | null, name: string | null = null, preview: string | null = null) {
   const firstLine = text.split('\n')[0];
   const short = firstLine.length > 60 ? firstLine.slice(0, 57).trimEnd() + '…' : firstLine;
   const quoted = noMentions(text)
@@ -51,8 +60,8 @@ export function issueFor(text: string, street: string | null, name: string | nul
   const who = name ? ` by **${noMentions(name).replace(/[*_`~\\[\]<>]/g, '')}**` : '';
   const where = street ? ` · the rabbit was on ${noMentions(street)}` : '';
   return {
-    title: `Idea: ${noMentions(short)}`,
-    body: `${quoted}\n\n---\n<sub>Sent from the map's idea box${who}${where}.</sub>`,
+    title: `${preview ? `[preview ${preview}] ` : ''}Idea: ${noMentions(short)}`,
+    body: `${quoted}\n\n---\n<sub>Sent from the map's idea box${preview ? ` on the ${preview} preview` : ''}${who}${where}.</sub>`,
     labels: [LABEL],
   };
 }
