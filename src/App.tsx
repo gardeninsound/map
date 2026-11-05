@@ -25,6 +25,7 @@ import { ArtSpots, type PlacedLocation } from './game/plugins/artSpots';
 import { Busker } from './game/plugins/busker';
 import { Crow } from './game/plugins/crow';
 import { Chicken } from './game/plugins/chicken';
+import { Ham } from './game/plugins/ham';
 import { Pegasus } from './game/plugins/pegasus';
 import { BigCup } from './game/plugins/bigCup';
 import { Seal } from './game/plugins/seal';
@@ -38,6 +39,8 @@ import { DialogBox } from './ui/MikeDialog';
 import { SceneBoundary } from './ui/SceneBoundary';
 import { SpotsMenu } from './ui/SpotsMenu';
 import { IdeaBox } from './ui/IdeaBox';
+import { Pelican } from './ui/Pelican';
+import { PELICAN_AFTER } from './game/pelican';
 import { TitleScreen } from './ui/TitleScreen';
 import { sounds } from './ui/sounds';
 
@@ -80,7 +83,8 @@ const LANDMARK_COLOR = '#5fa8a0';
 /**
  * The landmarks, as named places for the map: the Junction's four block faces become one
  * "The Junction shops", other names lose their parenthetical. Most-visited first, so those
- * keep their name tags when the map gets crowded.
+ * keep their name tags when the map gets crowded. A landmark with no name is a secret: drawn,
+ * never listed.
  */
 function mapLandmarks(landmarks: PlacedLandmark[]): MapPlace[] {
   const centre = (l: PlacedLandmark) => ({ x: l.x + l.w / 2, y: l.y + l.h / 2 });
@@ -91,7 +95,7 @@ function mapLandmarks(landmarks: PlacedLandmark[]): MapPlace[] {
     out.push({ name: 'The Junction shops', x: cs.reduce((a, c) => a + c.x, 0) / cs.length, y: cs.reduce((a, c) => a + c.y, 0) / cs.length, color: LANDMARK_COLOR });
   }
   for (const l of landmarks) {
-    if (l.sprite === 'storefronts') continue;
+    if (l.sprite === 'storefronts' || !l.name) continue; // a nameless landmark is a hidden one
     out.push({ name: l.name.replace(/\s*\(.*\)\s*$/, ''), ...centre(l), color: LANDMARK_COLOR });
   }
   return out;
@@ -125,6 +129,10 @@ export default function App() {
   const [rabbitsOpen, setRabbitsOpen] = useState(false);
   const [sayOpen, setSayOpen] = useState(false);
   const [started, setStarted] = useState(false);
+  /** the pelican's visit, once a session, PELICAN_AFTER s after you join (ui/Pelican.tsx) */
+  const [pelican, setPelican] = useState(false);
+  const [pelicanDue, setPelicanDue] = useState(false);
+  const pelicanCame = useRef(false);
   const [street, setStreet] = useState<string | null>(null);
   const [storefront, setStorefront] = useState<string | null>(null);
   const [nearby, setNearby] = useState<Target | null>(null);
@@ -144,6 +152,7 @@ export default function App() {
     const crow = new Crow();
     const chicken = new Chicken();
     const pegasus = new Pegasus();
+    const ham = new Ham();
     const luna = new LunaPark();
     // Everyone else on the island, live. `?solo` walks alone; `?relay=` points at another
     // relay; in dev, `?island=<name>` uses a private room so tests don't walk onto the real one.
@@ -157,7 +166,7 @@ export default function App() {
     const g = new CityGame(canvas.current!, world, {
       start: world.project(START.lat, START.lon),
       voices: neighborVoices,
-      plugins: [art, new BigCup(art), new Seal(), arcadeDoor.current, luna, busker, crow, chicken, pegasus, ...(live ? [live] : [])],
+      plugins: [art, new BigCup(art), new Seal(), arcadeDoor.current, luna, busker, crow, chicken, pegasus, ham, ...(live ? [live] : [])],
       events: {
         onStreet: setStreet,
         onStorefront: setStorefront,
@@ -237,7 +246,7 @@ export default function App() {
       },
     });
     g.paused = true;
-    if (import.meta.env.DEV) Object.assign(window, { __game: g, __busker: busker, __crow: crow, __chicken: chicken, __pegasus: pegasus, __art: art, __luna: luna, __visitors: live }); // test hooks
+    if (import.meta.env.DEV) Object.assign(window, { __game: g, __busker: busker, __crow: crow, __chicken: chicken, __pegasus: pegasus, __ham: ham, __art: art, __luna: luna, __visitors: live }); // test hooks
     // Review hooks: ?at=lat,lon (or ?atTile=x,y, or ?at=arcade) skips the title and drops you there;
     // ?audit scans the whole map for road-drawing glitches (scripts/city/road-audit.mjs).
     const q = new URLSearchParams(location.search);
@@ -276,6 +285,21 @@ export default function App() {
   useEffect(() => {
     if (started) visitors?.join();
   }, [started, visitors]);
+
+  // The pelican comes PELICAN_AFTER s after you join, as soon as nothing's open (Mike's
+  // welcome, a scene…); opening anything while it's here (the idea box it points at) ends its visit.
+  useEffect(() => {
+    if (!started) return;
+    const t = setTimeout(() => setPelicanDue(true), PELICAN_AFTER * 1000);
+    return () => clearTimeout(t);
+  }, [started]);
+  useEffect(() => {
+    if (overlay.kind !== 'none') setPelican(false);
+    else if (pelicanDue && !pelicanCame.current) {
+      pelicanCame.current = true;
+      setPelican(true);
+    }
+  }, [overlay.kind, pelicanDue]);
 
   // The world only moves when nothing is on top of it.
   useEffect(() => {
@@ -574,6 +598,8 @@ export default function App() {
           </Suspense>
         </SceneBoundary>
       )}
+
+      {pelican && game && overlay.kind === 'none' && <Pelican game={game} onDone={() => setPelican(false)} />}
 
       {!started && <TitleScreen onStart={start} />}
     </main>

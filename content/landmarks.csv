@@ -34,3 +34,4 @@ pcc-admiral,PCC Community Market,pcc-market,,47.577457,-122.387086,5,4,2749 Cali
 school-of-rock,School of Rock,school-of-rock,,47.560799,-122.384357,4,3,4701 41st Ave SW,manual,,,E
 uptown-espresso,Uptown Espresso,uptown-espresso,,47.559172,-122.387565,5,3,"4301 SW Edmunds St at California, the Junction: home of the velvet foam (OSM cafe node 440843430)",manual,,,
 shadowland,Shadowland,shadowland,4458 California Ave SW,47.562987,-122.386586,2,3,"Retro neon sign: SHADOW bar, V pylon with disc, LAND down a column",geocoded,4458 California Ave SW,"Shadowland, 4458, California Avenue Southwest, Alaska Junction, West Seattle, Seattle, King County, Washington, 98116, United States",W
+craftsman-45th,,craftsman-45th,,47.586143,-122.388734,3,3,"Hidden: no name, so it never shows on the map or in any list; you find it by walking down 45th (1918 45th Ave SW, Admiral). The alley behind it is walkable (ALLEYS in scripts/city/map-config.mjs)",manual,,,W

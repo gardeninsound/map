@@ -338,5 +338,15 @@
   "w": 2,
   "h": 3,
   "street": "W"
+ },
+ {
+  "id": "craftsman-45th",
+  "name": "",
+  "sprite": "craftsman-45th",
+  "lat": 47.586143,
+  "lon": -122.388734,
+  "w": 3,
+  "h": 3,
+  "street": "W"
  }
 ]

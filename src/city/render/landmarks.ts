@@ -1390,6 +1390,89 @@ function shadowland(ctx: Ctx, w: number, h: number) {
   px(ctx, INK, 0, h - 3, w, 1);
 }
 
+/**
+ * 1918 45th Ave SW, Admiral — a 1½-storey Craftsman: dark asphalt roof with a wide shed
+ * dormer in brown shingles (a pair of white double-hung windows), tan lap siding under a deep
+ * porch, the dark front door with its little panes, wide brown steps, a big rhododendron
+ * with pumpkins on top, a fir behind, and an autumn leaf pile on the lawn (family photo).
+ */
+function craftsman45th(ctx: Ctx, w: number, h: number) {
+  const roof = '#4c4f57', roofLight = '#62666e', shingle = '#8a6a55', shingleLine = '#76584a';
+  const siding = '#cdb994', sidingLine = '#b5a17c', trim = '#f3f0ea', wood = '#7a6150', woodLight = '#94796a';
+  const base = h - 3;
+  lawn(ctx, w, h);
+  // the fir behind, over the right of the roof
+  for (let y = 0; y < 22; y++) {
+    const half = Math.min(6, 1 + Math.floor(y / 3));
+    px(ctx, '#24513a', 40 - half, y, half * 2 + 1, 1);
+    if (y % 3 === 2) px(ctx, '#356b4c', 40 - half + 1, y, half, 1);
+  }
+  px(ctx, 'rgba(0,0,0,0.2)', 2, base, w - 2, 3);
+  // the main roof: eaves run the full width, gable ends slope off at the sides
+  hipRoof(ctx, 2, w - 2, 10, 25, 0.45, roof, roofLight);
+  // the shed dormer: shingled box under its own flat eave
+  px(ctx, INK, 9, 3, 30, 1);
+  px(ctx, trim, 9, 4, 30, 1);
+  px(ctx, roof, 10, 5, 28, 1);
+  px(ctx, shingle, 11, 6, 26, 11);
+  for (let y = 7; y < 17; y += 2) for (let x = 11 + (y % 4 === 1 ? 2 : 0); x < 37; x += 4) px(ctx, shingleLine, x, y, 1, 1);
+  for (let y = 8; y < 17; y += 2) px(ctx, shingleLine, 11, y, 26, 1);
+  px(ctx, trim, 15, 7, 18, 9); // the window pair in one white frame
+  for (const wx of [16, 25]) {
+    px(ctx, '#3b4a6b', wx, 8, 7, 3);
+    px(ctx, '#3b4a6b', wx, 12, 7, 3);
+    px(ctx, '#6f86b8', wx, 8, 1, 1);
+    px(ctx, trim, wx + 3, 8, 1, 3); // upper sash muntin
+  }
+  px(ctx, INK, 10, 6, 1, 11);
+  px(ctx, INK, 37, 6, 1, 11);
+  px(ctx, trim, 34, 6, 1, 13); // downspout off the dormer
+  // main eave and gutter
+  px(ctx, INK, 0, 25, w, 1);
+  px(ctx, trim, 0, 26, w, 1);
+  // under the porch: tan lap siding, shaded at the top
+  px(ctx, siding, 2, 27, w - 4, 18);
+  for (let y = 29; y < 45; y += 2) px(ctx, sidingLine, 2, y, w - 4, 1);
+  px(ctx, 'rgba(0,0,0,0.18)', 2, 27, w - 4, 3);
+  // the front door: white casing, dark wood, a row of little panes, the house number beside
+  px(ctx, trim, 10, 30, 8, 13);
+  px(ctx, '#4a3328', 11, 31, 6, 12);
+  for (let i = 0; i < 3; i++) px(ctx, '#9fb6c9', 12 + i * 2 - (i ? 0 : 0), 32, 1, 2);
+  px(ctx, '#3b2a22', 12, 35, 4, 1);
+  px(ctx, '#c9a35a', 16, 37, 1, 1); // knob
+  px(ctx, '#3a3a3a', 5, 31, 4, 2); // 1918
+  px(ctx, '#d8d0c0', 5, 32, 1, 1);
+  // the front window
+  paneWindow(ctx, 29, 30, 9, 7, 2, 1, trim);
+  // porch posts and the downspout by the steps
+  px(ctx, trim, 2, 27, 2, 16);
+  px(ctx, trim, 21, 27, 2, 16);
+  px(ctx, trim, 23, 27, 1, 16);
+  // wide wooden steps down to the walk, with a rail on the right
+  for (let i = 0; i < 5; i++) {
+    const y = 39 + i, x0 = 3 - Math.min(i, 2);
+    px(ctx, i % 2 ? wood : woodLight, x0, y, 20 - x0 + 1, 1);
+  }
+  px(ctx, INK, 1, 44, 22, 1);
+  px(ctx, wood, 22, 36, 1, 8);
+  px(ctx, wood, 20, 36, 3, 1);
+  // the rhododendron, with pumpkins on top
+  for (const [cx, cy, r] of [[29, 41, 5], [36, 39, 6], [43, 40, 5], [40, 43, 4]] as const) disc(ctx, cx, cy, r, '#2f5e46');
+  for (let i = 0; i < 18; i++) px(ctx, i % 3 ? '#467d5d' : '#5c9470', 26 + ((i * 7) % 21), 35 + ((i * 5) % 10), 1, 1);
+  px(ctx, '#e07a2a', 29, 36, 2, 2);
+  px(ctx, '#f0a040', 33, 34, 2, 2);
+  px(ctx, '#e8e2d0', 26, 37, 2, 2);
+  px(ctx, '#3a5a2a', 30, 35, 1, 1);
+  // the leaf pile on the lawn
+  for (let y = 0; y < 5; y++) {
+    const half = 3 + y * 2;
+    px(ctx, y % 2 ? '#9a5a2a' : '#b5702e', 34 - half, base - 2 + y, half * 2, 1);
+  }
+  for (let i = 0; i < 14; i++) px(ctx, ['#d9a03a', '#c0602a', '#7a4422'][i % 3], 25 + ((i * 11) % 19), base - 1 + ((i * 3) % 4), 1, 1);
+  px(ctx, '#d9a03a', 21, base + 2, 1, 1);
+  px(ctx, '#c0602a', 45, base + 1, 1, 1);
+}
+
 const SPRITES: Record<string, (ctx: Ctx, w: number, h: number, id: string) => void> = {
   becu,
   circa,
@@ -1411,6 +1494,7 @@ const SPRITES: Record<string, (ctx: Ctx, w: number, h: number, id: string) => vo
   'seven-eleven': sevenEleven,
   shadowland,
   'satterlee-house': satterleeHouse,
+  'craftsman-45th': craftsman45th,
   'hainsworth-house': hainsworthHouse,
   'alki-homestead': alkiHomestead,
   'undersea-aviary': underseaAviary,
