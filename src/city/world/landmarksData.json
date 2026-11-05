@@ -348,5 +348,15 @@
   "w": 3,
   "h": 3,
   "street": "W"
+ },
+ {
+  "id": "dakota-place",
+  "name": "Dakota Place Park",
+  "sprite": "dakota-place",
+  "lat": 47.566875,
+  "lon": -122.387338,
+  "w": 4,
+  "h": 3,
+  "street": "E"
  }
 ]
