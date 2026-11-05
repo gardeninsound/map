@@ -57,6 +57,9 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
   live at https://gardeninsound.website (custom domain from `public/CNAME`, served at the root, `base: '/'`).
   To move it to gardeninsound.website/map/ later: `base: '/map/'`, drop `public/CNAME`, and give the
   domain to an org `gardeninsound.github.io` repo (every asset URL already uses `BASE_URL`).
+- PR previews: every same-repo PR gets `https://pr-<N>-garden-preview.gardeninsound.workers.dev`, commented on the PR
+  (`.github/workflows/preview.yml` → `preview/`, a files-only Worker; `wrangler versions upload --preview-alias pr-<N>`;
+  secret `CLOUDFLARE_API_TOKEN`). Previews use the real relay and idea box (issues titled `[preview pr-<N>]`).
 
 ## Git workflow (everyone, Claude included)
 
