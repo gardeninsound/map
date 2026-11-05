@@ -6,9 +6,11 @@ const at = (x: number, y: number, more: Partial<RabbitState> = {}): RabbitState 
 
 describe('visitors', () => {
   it('round-trips a rabbit through the wire, to 1/20 tile', () => {
-    const s = at(101.234, 55.01, { facing: 'left', moving: true, away: true });
+    const s = at(101.234, 55.01, { facing: 'left', moving: true, away: true, riding: true });
     const back = decode(JSON.parse(JSON.stringify(encode(s))));
-    expect(back).toEqual({ pos: { x: 101.25, y: 55 }, facing: 'left', moving: true, away: true });
+    expect(back).toEqual({ pos: { x: 101.25, y: 55 }, facing: 'left', moving: true, away: true, riding: true });
+    // a rabbit from an older client (five fields) is walking
+    expect(decode([1, 2, 0, 1, 0])?.riding).toBe(false);
   });
 
   it('rejects malformed messages from the network', () => {
@@ -27,6 +29,7 @@ describe('visitors', () => {
     expect(shouldSend(encode(at(10, 10, { moving: true })), still, 0.01)).toBe(true);
     expect(shouldSend(still, encode(at(10, 10, { facing: 'up' })), 0.01)).toBe(true);
     expect(shouldSend(still, encode(at(10, 10, { away: true })), 0.01)).toBe(true);
+    expect(shouldSend(still, encode(at(10, 10, { riding: true })), 0.01)).toBe(true);
   });
 
   it('glides toward new positions and snaps on a teleport', () => {

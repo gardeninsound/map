@@ -53,6 +53,7 @@ flowchart LR
 2. The **Preview** workflow comments a link to the PR's own copy of the site,
    `https://pr-<number>-garden-preview.gardeninsound.workers.dev`, updated on every push. It's a
    full copy: real rabbits, and the idea box files real issues marked `[preview pr-<number>]`.
+   When the PR closes, the preview is replaced by a short "this preview has closed" page.
    See [`preview/README.md`](../preview/README.md).
 3. The **Check** workflow runs: a size guard (no file over 2 MB unless listed in
    `.github/large-files.txt`), `npm test`, `npm run build`, and `npm run smoke` (the built site

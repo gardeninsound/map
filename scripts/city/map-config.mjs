@@ -83,3 +83,17 @@ export const HOUSES = {
   /** px: the smallest side a house is drawn with, so tiny ones still read */
   minPx: 6,
 };
+
+/**
+ * Alleys aren't streets (fetch-osm leaves them out), but one listed here is walkable: a
+ * concrete lane (like a park path: no kerb, no asphalt) on its OSM centreline. `points` are
+ * [lat, lon], copied from the OSM way so it works without refetching. `name` shows in the HUD.
+ */
+export const ALLEYS = {
+  /** metres, before ROADS.widthScale */
+  width: 5,
+  lanes: [
+    // behind 1918 45th Ave SW (landmark `craftsman-45th`), Hill St → Holgate St; OSM way 11997225
+    { name: 'Alley', points: [[47.586809, -122.388322], [47.586719, -122.388326], [47.585492, -122.388387], [47.585403, -122.388392]] },
+  ],
+};

@@ -89,7 +89,29 @@ export const arcadeGames: ArcadeGame[] = [
     colors: { body: '#2b2b38', screen: '#ffd23f', trim: '#ff7eb6' },
     ready: false,
   },
+  // last, so it gets the slot out on the floor (ArcadeScene SLOTS)
+  {
+    id: 'avocado-drop',
+    title: 'AVOCADO DROP',
+    blurb: 'The bear’s favourite: catch the avocados before they go splat. Coming soon.',
+    colors: { body: '#4f7f34', screen: '#d8e89a', trim: '#f3d27a' },
+    ready: false,
+  },
 ];
+
+/**
+ * The bear who hangs out in the arcade: after you finish a game it comes over with a bag of
+ * licorice, then goes off to play its own game (the cabinet with id BEAR_GAME).
+ */
+export const BEAR_NAME = 'Bear';
+export const BEAR_GAME = 'avocado-drop';
+export const bearLines = {
+  offer: ["Wow! You're really good at that game. Want a licorice?"],
+  /** under the bag while it waits; {A} also takes one */
+  take: (touch: boolean) => (touch ? 'tap the licorice to take one' : 'click the licorice to take one'),
+  thanks: ['Thanks!'],
+  off: ["Cool. I'm going to play Avocado Drop."],
+};
 
 /** What Mike says as you walk in. */
 export const arcadeIntro = [

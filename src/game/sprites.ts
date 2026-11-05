@@ -157,6 +157,77 @@ export function buildChicken(): Walker {
   return { right, left, down: right, up: left };
 }
 
+/**
+ * The pegasus from Pegasus Books (facing right, 24×20, feet on the bottom row): white, with the
+ * yellow wings and teal mane of the horse painted in the shop's window. w white, g shade,
+ * m mane, y/o wing, h hoof, n nose. Built from parts: a body, legs, and a wing laid over it.
+ */
+const PEG_COLORS: Record<string, string> = { k: INK, w: '#ffffff', g: '#d9d4ec', m: '#2ec4b6', y: '#ffd166', o: '#e8a33a', h: '#6b4a2b', n: '#f4a6b8' };
+
+const PEG_BODY: Grid = [
+  '........................',
+  '..................k.....',
+  '.................kwk....',
+  '................kwwwwk..',
+  '...............kmwwkwwk.',
+  '...............kmwwwwwwk',
+  '..............kmmwwwwwnk',
+  '..............kmwwkkkkk.',
+  '.............kmmwwk.....',
+  '....kkkkkkkkkmwwwwk.....',
+  '.kkkwwwwwwwwwwwwwwk.....',
+  'kmmkwwwwwwwwwwwwwwk.....',
+  'kmk.kwwwwwwwwwwwwgk.....',
+  'km..kgwwwwwwwwwwggk.....',
+  '.k..kggwwwwwwwwwggk.....',
+  '....kkkkkkkkkkkkkkk.....',
+];
+/** rows 16–19: standing, mid-stride, and tucked up in flight */
+const PEG_LEGS = {
+  stand: ['.....kwkkwk..kwkkwk.....', '.....kwkkwk..kwkkwk.....', '.....kwkkwk..kwkkwk.....', '.....khkkhk..khkkhk.....'],
+  stride: ['.....kwkkwk..kwkkwk.....', '....kwk..kwkkwk..kwk....', '...kwk....kwkkwk...kwk..', '...khk....khkkhk...khk..'],
+  tucked: ['....kwk.......kwwk......', '...kwk.........kwwk.....', '..khk...........khk.....', '........................'],
+};
+/** wings, laid over the body at [x, y]; '.' lets the body show through */
+const PEG_WINGS: Record<'folded' | 'up' | 'down', [number, number, Grid]> = {
+  folded: [6, 10, ['.yyyyyyy', 'yooyyyyy', '..yyyyyy', '..kkkkkk']],
+  up: [3, 0, ['.kk........', '.kyyk......', '..kyyyk....', '...kyoyyk..', '....kyoyyk.', '.....kyyoyk', '......kyyyk', '.......kyyk', '........kyk', '.........yy']],
+  down: [6, 13, ['..yyyyy..', '.kyoyyyk.', '.kyyoyyk.', '..kyyok..', '...kyk...', '....k....']],
+};
+
+function overlay(base: Grid, [x, y, patch]: [number, number, Grid]): Grid {
+  return base.map((row, j) => {
+    const p = patch[j - y];
+    if (!p) return row;
+    return [...row].map((ch, i) => (i >= x && i < x + p.length && p[i - x] !== '.' ? p[i - x] : ch)).join('');
+  });
+}
+
+const pegasus = (legs: keyof typeof PEG_LEGS, wing: keyof typeof PEG_WINGS): Grid => overlay([...PEG_BODY, ...PEG_LEGS[legs]], PEG_WINGS[wing]);
+
+export const PEGASUS_GRIDS = {
+  stand: pegasus('stand', 'folded'),
+  stride: pegasus('stride', 'folded'),
+  flyUp: pegasus('tucked', 'up'),
+  flyDown: pegasus('tucked', 'down'),
+};
+
+export interface PegasusSprites {
+  /** [stand, stride] */
+  walk: Record<'left' | 'right', HTMLCanvasElement[]>;
+  /** [wings up, wings down] */
+  fly: Record<'left' | 'right', HTMLCanvasElement[]>;
+}
+
+export function buildPegasus(): PegasusSprites {
+  const G = PEGASUS_GRIDS;
+  const frames = (grids: Grid[], mirror: boolean) => grids.map((g) => gridToCanvas(g, PEG_COLORS, mirror));
+  return {
+    walk: { right: frames([G.stand, G.stride], false), left: frames([G.stand, G.stride], true) },
+    fly: { right: frames([G.flyUp, G.flyDown], false), left: frames([G.flyUp, G.flyDown], true) },
+  };
+}
+
 /** Mike, standing by his art: two bob frames. */
 export function buildMike(): HTMLCanvasElement[] {
   return [gridToCanvas(MIKE_DOWN, MIKE_COLORS), gridToCanvas(hop(MIKE_DOWN), MIKE_COLORS)];
@@ -176,3 +247,127 @@ export function buildHearts(): { open: HTMLCanvasElement[]; soon: HTMLCanvasElem
     soon: [HEART, HEART_BEAT].map((g) => gridToCanvas(g, colors('#e8a59a', '#ffffff'))),
   };
 }
+
+/* The pelican who points out the idea box (src/ui/Pelican.tsx): white, black wingtips, a big
+ * yellow pouch under an orange bill. Facing right; 24 wide. Rows are padded out to the width. */
+const PEL_COLORS: Record<string, string> = { k: INK, w: '#ffffff', g: '#c9c6d6', b: '#2b2b38', o: '#f2a33a', y: '#ffd166' };
+const PEL_W = 24;
+const pad = (rows: string[], h: number): Grid => [...rows, ...Array(Math.max(0, h - rows.length)).fill('')].map((r) => r.padEnd(PEL_W, '.'));
+
+const PELICAN_STAND = pad([
+  '.....kkk',
+  '....kwwwk',
+  '...kwwwwwkkkkkkkkkk',
+  '...kwwkwwoooooooooook',
+  '...kwwwwkyyyyyyyyyok',
+  '....kwwkkyyyyyyyyk',
+  '....kwwk.kkkkkkkk',
+  '....kwwk',
+  '....kwwk',
+  '...kwwwk',
+  '..kwwwwwkk',
+  '.kwwwwwwwwkk',
+  'kgggwwwwwwwwk',
+  'kbggggwwwwwwk',
+  'kbbgggggwwwwk',
+  '.kbbbggggwwk',
+  '..kkkbbgwwk',
+  '....kkkkkk',
+  '.....ko.ko',
+  '....koo.koo',
+], 20);
+
+/** in flight the neck folds back and the bill rests on the chest */
+const PELICAN_BODY = pad([
+  '', '', '', '', '', '', '',
+  '...............kkk',
+  '..............kwwwk',
+  '.............kwwkwwkkkkk',
+  'kk........kkwwwwwooooook',
+  'kwwkkkkkkkwwwwwwkyyyyok.',
+  '.kwwwwwwwwwwwwwwwkkkkk..',
+  '..kkwwwwwwwwwwwwk.......',
+  '....kkkkkkkkkkkk........',
+], 18);
+const PEL_WING_UP = pad(['...kk', '..kbbk', '..kbbgk', '...kbggk', '...kgggk', '....kgggk', '....kggggk', '.....kgggwk', '.....kggwwk', '......kgwwk', '......kkwwk'], 11);
+const PEL_WING_DOWN = pad(['.....kgggggk', '......kgggggk', '......kggggk', '.......kgggk', '.......kbbk', '........kk'], 6);
+/** paint a wing over the body, starting at row `y` */
+const wing = (base: Grid, patch: Grid, y: number): Grid =>
+  base.map((row, j) => {
+    const p = patch[j - y];
+    return p ? [...row].map((ch, i) => (p[i] && p[i] !== '.' ? p[i] : ch)).join('') : row;
+  });
+
+export const PELICAN_GRIDS = {
+  stand: PELICAN_STAND,
+  flyUp: wing(PELICAN_BODY, PEL_WING_UP, 0),
+  flyDown: wing(PELICAN_BODY, PEL_WING_DOWN, 12),
+};
+
+export interface PelicanSprites {
+  stand: Record<'left' | 'right', HTMLCanvasElement>;
+  fly: Record<'left' | 'right', [HTMLCanvasElement, HTMLCanvasElement]>;
+}
+
+export function buildPelican(): PelicanSprites {
+  const c = (g: Grid, mirror: boolean) => gridToCanvas(g, PEL_COLORS, mirror);
+  const G = PELICAN_GRIDS;
+  return {
+    stand: { right: c(G.stand, false), left: c(G.stand, true) },
+    fly: { right: [c(G.flyUp, false), c(G.flyDown, false)], left: [c(G.flyUp, true), c(G.flyDown, true)] },
+  };
+}
+/**
+ * Ham the cat, a Scottish Fold (16 wide, feet on the bottom row): orange tabby, ears folded
+ * flat into a round head, big amber eyes, dark collar with a white tag. Walking side-on
+ * (facing right, tail up) in two strides, and sitting square to you (also the portrait).
+ */
+const HAM_COLORS: Record<string, string> = { k: INK, o: '#c27c3e', d: '#8f5428', l: '#e3ad6c', e: '#f0b81c', p: '#1a1a1a', n: '#d98a80', c: '#2c2c30', t: '#f2f2f2' };
+const HAM_HEAD: Grid = [
+  '..kk............',
+  '.kook...........',
+  '.kok......kkkk..',
+  '.kok.....kdoddk.',
+  '..kok...kooooook',
+  '..kokkkkkoepoepk',
+  '..kooddodokolnok',
+  '..koooooookoook.',
+  '..koodoodoocctk.',
+  '..kollllllllkk..',
+];
+const HAM_STRIDES: Grid[] = [
+  ['...kok.kok.kok..', '...kok..kokkok..', '...kk...kk.kk...'],
+  ['..kok..kok..kok.', '.kok....kok.kok.', '.kk......kk..kk.'],
+];
+const HAM_SIT: Grid = [
+  '................',
+  '....kkkkkkkk....',
+  '...kddoddoddk...',
+  '..kooooooooook..',
+  '..koeepooeepok..',
+  '..koeeppoeepok..',
+  '..koooolnooook..',
+  '...kooolloook...',
+  '....kccctcck....',
+  '...kooolloook...',
+  '..koooollooook..',
+  '..koodollodook..',
+  '..koooollooookd.',
+  '..kllookkoollkdk',
+  '...kkkk..kkkkkk.',
+];
+/** a paw up to the face, licking */
+const HAM_GROOM: Grid = HAM_SIT.map((row, y) => (y === 7 ? '...koollllook...' : y === 8 ? '....kcclllck....' : y === 9 ? '...koolllook....' : row));
+
+export interface HamSprites {
+  walk: { left: HTMLCanvasElement[]; right: HTMLCanvasElement[] };
+  sit: HTMLCanvasElement;
+  groom: HTMLCanvasElement;
+}
+
+export function buildHam(): HamSprites {
+  const walk = (mirror: boolean) => HAM_STRIDES.map((legs) => gridToCanvas([...HAM_HEAD, ...legs], HAM_COLORS, mirror));
+  return { walk: { right: walk(false), left: walk(true) }, sit: gridToCanvas(HAM_SIT, HAM_COLORS), groom: gridToCanvas(HAM_GROOM, HAM_COLORS) };
+}
+
+export const hamGrids = { head: HAM_HEAD, strides: HAM_STRIDES, sit: HAM_SIT, groom: HAM_GROOM, colors: HAM_COLORS };

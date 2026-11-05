@@ -2,7 +2,7 @@ import { Tile, markerSpot, type World } from '../world/world';
 import { input } from './input';
 import { facingFor, step, type Facing, type Vec } from './movement';
 import { INK, PAL } from '../render/palette';
-import { buildArrows, buildSprites, type SpriteSet, type Walker } from '../render/sprites';
+import { buildArrows, buildSprites, drawStanding, type SpriteSet, type Walker } from '../render/sprites';
 import { CHUNK, ChunkCache, TS, hash } from '../render/tileArt';
 import { rng, spawnNpcs, wander, type Npc, type NeighborVoice } from './npcs';
 
@@ -85,6 +85,8 @@ export interface CityGameOptions {
   voices?: NeighborVoice[];
   /** the player's sprite; defaults to the rabbit */
   player?: Walker;
+  /** the player's sprite while running (Shift); defaults to the rabbit on a bicycle */
+  rider?: Walker;
 }
 
 /** Map text: neighborhoods loudest, parks (≥ ~2 hectares) in green, big schools small. */
@@ -104,7 +106,8 @@ export function zoomFor(w: number, h: number): number {
  * street names, and room for plugins. Pause it while something is on top of the map.
  */
 export class CityGame {
-  player: { pos: Vec; facing: Facing; walkT: number; moving: boolean };
+  /** `riding`: Shift is held, so it goes at RUN speed on a bicycle */
+  player: { pos: Vec; facing: Facing; walkT: number; moving: boolean; riding: boolean };
   /** the player can't move (a dialog or scene is open) */
   paused = false;
   /** keep the street quiet (e.g. while a full-screen scene is open) — plugins read this */
@@ -116,6 +119,7 @@ export class CityGame {
   private rand = rng(42);
   private sprites: SpriteSet;
   private playerSprite: Walker;
+  private riderSprite: Walker;
   private chunks: ChunkCache;
   private ctx: CanvasRenderingContext2D;
   private zoom = 3;
@@ -140,10 +144,11 @@ export class CityGame {
     this.ctx = canvas.getContext('2d')!;
     this.sprites = buildSprites();
     this.playerSprite = options.player ?? this.sprites.rabbit;
+    this.riderSprite = options.rider ?? this.sprites.bike;
     this.chunks = new ChunkCache(world);
     this.events = options.events ?? {};
     this.plugins = options.plugins ?? [];
-    this.player = { pos: world.nearestWalkable(options.start.x, options.start.y), facing: 'up', walkT: 0, moving: false };
+    this.player = { pos: world.nearestWalkable(options.start.x, options.start.y), facing: 'up', walkT: 0, moving: false, riding: false };
     this.npcs = spawnNpcs(world, options.npcCount ?? 120, options.voices);
     this.plugins.forEach((p) => p.attach?.(this));
     this.resize();
@@ -152,6 +157,18 @@ export class CityGame {
   /** Where a sign or marker can stand beside the nearest street, always within reach (see markerSpot). */
   besideRoad(p: Vec): Vec {
     return markerSpot(this.world, p);
+  }
+
+  /** How many screen (CSS) px one map pixel is. */
+  get scale() {
+    return this.zoom;
+  }
+
+  /** Where a tile point is on screen, in CSS px from the viewport's top-left (for HTML laid over the map). */
+  screenPoint(p: Vec): Vec {
+    const cam = this.camera();
+    const r = this.canvas.getBoundingClientRect();
+    return { x: r.left + (p.x * TS - cam.x) * this.zoom, y: r.top + (p.y * TS - cam.y) * this.zoom };
   }
 
   resize() {
@@ -212,10 +229,12 @@ export class CityGame {
     const p = this.player;
     if (this.paused) {
       p.moving = false;
+      p.riding = false;
       return;
     }
     const dir = input.dir();
-    const next = step(p.pos, dir, dt, input.running() ? RUN : WALK, this.world.isWalkable);
+    p.riding = input.running();
+    const next = step(p.pos, dir, dt, p.riding ? RUN : WALK, this.world.isWalkable);
     p.moving = next !== p.pos && (next.x !== p.pos.x || next.y !== p.pos.y);
     p.facing = facingFor(dir, p.facing);
     p.pos = next;
@@ -363,15 +382,16 @@ export class CityGame {
       });
     }
     const p = this.player;
-    const frames = this.playerSprite[p.facing];
+    const frames = (p.riding ? this.riderSprite : this.playerSprite)[p.facing];
     const frame = p.moving ? Math.floor(p.walkT * 8) % 2 : 0;
     items.push({
       y: p.pos.y,
       draw: () => {
         const s = toScreen(p.pos);
         ctx.fillStyle = 'rgba(0,0,0,0.22)';
-        ctx.fillRect(s.x - 5, s.y + 1, 10, 2);
-        ctx.drawImage(frames[frame], s.x - 8, s.y - 14);
+        const w = p.riding && (p.facing === 'left' || p.facing === 'right') ? 18 : 10;
+        ctx.fillRect(s.x - w / 2, s.y + 1, w, 2);
+        drawStanding(ctx, frames[frame], s.x, s.y);
       },
     });
     items.sort((a, b) => a.y - b.y).forEach((a) => a.draw());

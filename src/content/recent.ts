@@ -17,6 +17,7 @@ export interface RecentChange {
 }
 
 export const recentChanges: RecentChange[] = [
+  { title: 'The pegasus at Pegasus Books', date: '2026-11-04', at: { lat: 47.561664, lon: -122.386939 } },
   { title: 'Duck Arcade: Duck on the Moon', date: '2026-10-28', at: { arcade: true } },
   { title: 'Luna Park, 1907–1913', date: '2026-10-27', at: { lat: 47.59557, lon: -122.38624 } },
   { title: 'Duck Arcade: Rabbit Zapper', date: '2026-10-27', at: { arcade: true } },

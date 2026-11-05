@@ -1,5 +1,7 @@
 import * as THREE from 'three';
-import type { ArcadeGame } from '../../content/duckArcade';
+import { BEAR_GAME, type ArcadeGame } from '../../content/duckArcade';
+import { besideYou, easeAngle, lookYaw, route, yawTo, type Obstacle, type Spot } from '../../game/arcadeBear';
+import { ArcadeBear } from './ArcadeBear';
 
 /** Render at 1/PIXEL resolution and scale up crisp, like the park and the map. */
 const PIXEL = 3;
@@ -22,6 +24,12 @@ const SLOTS: [number, number, number][] = [
   [6.3, -3, -Math.PI / 2],
   [-6.3, -0.2, Math.PI / 2],
   [6.3, -0.2, -Math.PI / 2],
+  // out on the floor near the doors, side on: the bear's Avocado Drop
+  [3.6, 1.6, -Math.PI / 2],
+];
+/** open floor the bear can walk through to get round things */
+const AISLES: Spot[] = [
+  { x: 0, z: -3.8 }, { x: 0, z: -0.5 }, { x: 0, z: 2.8 }, { x: -3.4, z: -1.6 }, { x: 3, z: -1.6 }, { x: -1.6, z: 1.2 }, { x: 1.8, z: 3.4 },
 ];
 
 /**
@@ -40,6 +48,12 @@ export const POSTERS: [string, number, number, number, number, number][] = [
   ['poster-shag', 410, 549, -5.5, 4.5 - 0.03, Math.PI],
   ['poster-guitar', 410, 549, 5.5, 4.5 - 0.03, Math.PI],
 ];
+/**
+ * The ceiling: looking up through misty fir trees, a short loop (public/arcade/ceiling/, made
+ * from Mike's GIF; WebM first, MP4 for Safari). The fluorescent panels hang just under it.
+ */
+export const CEILING_VIDEO = ['arcade/ceiling/forest.webm', 'arcade/ceiling/forest.mp4'];
+
 /** poster width, metres; each hangs centred between the wainscot and the neon stripe */
 const POSTER_W = 0.85;
 const POSTER_Y = 1.92;
@@ -79,6 +93,35 @@ function paintDuck(g: CanvasRenderingContext2D, x: number, y: number, s: number,
   );
 }
 
+/** An avocado half, 5×7: green skin, pale flesh, a brown pit. */
+const AVOCADO = ['.ggg.', 'glllg', 'glllg', 'glplg', 'glppg', 'glllg', '.ggg.'];
+function paintAvocado(g: CanvasRenderingContext2D, x: number, y: number, s: number) {
+  const colors: Record<string, string> = { g: '#3f6b2a', l: '#d8e89a', p: '#7a4a26' };
+  AVOCADO.forEach((row, j) =>
+    [...row].forEach((ch, i) => {
+      if (!colors[ch]) return;
+      g.fillStyle = colors[ch];
+      g.fillRect(x + i * s, y + j * s, s, s);
+    }),
+  );
+}
+
+/** A cabinet's screen while the bear plays it: avocados dropping into a basket, its score going up. */
+function paintPlaying(g: CanvasRenderingContext2D, c: ArcadeGame['colors'], t: number) {
+  g.fillStyle = '#10131f';
+  g.fillRect(0, 0, 96, 50);
+  for (let i = 0; i < 3; i++) {
+    const fall = (t * 0.6 + i * 0.37) % 1;
+    paintAvocado(g, 14 + i * 30, Math.round(-14 + fall * 56), 2);
+  }
+  // the basket, sliding under them
+  g.fillStyle = '#c8873a';
+  g.fillRect(Math.round(38 + Math.sin(t * 2.4) * 30), 44, 18, 5);
+  g.fillStyle = c.screen;
+  g.fillRect(0, 50, 96, 22);
+  centredText(g, `BEAR ${String(Math.floor(t * 7) % 10000).padStart(4, '0')}`, 48, 57, '#1c1b22');
+}
+
 function centredText(g: CanvasRenderingContext2D, text: string, cx: number, y: number, color: string, size = 8) {
   g.font = `${size}px ${FONT}`;
   g.textBaseline = 'top';
@@ -90,6 +133,8 @@ function centredText(g: CanvasRenderingContext2D, text: string, cx: number, y: n
 export interface ArcadeEvents {
   /** the cabinet you're standing at and facing, or null */
   onNear(index: number | null): void;
+  /** you clicked (or tapped) the bear's bag of licorice */
+  onLicorice?(): void;
 }
 
 interface Cabinet {
@@ -100,6 +145,8 @@ interface Cabinet {
   normal: THREE.Vector3;
   screen: THREE.CanvasTexture;
   paint(blink: boolean, t: number): void;
+  /** the bear is playing it: its screen shows the game going */
+  playing: boolean;
 }
 
 /**
@@ -118,11 +165,18 @@ export class ArcadeScene {
   private dragging: { x: number; y: number } | null = null;
   private cabinets: Cabinet[] = [];
   private duck = new THREE.Group();
+  private bear = new ArcadeBear();
+  /** turn your head to follow the bear: while it comes over and talks ('talk'), and as it
+   * walks off to its game ('follow', until it starts playing or you move) */
+  private watchBear: false | 'talk' | 'follow' = false;
+  private raycaster = new THREE.Raycaster();
+  private downAt: { x: number; y: number } | null = null;
   private near: number | null = null;
   private raf = 0;
   private last = 0;
   private lastBlink = -1;
   private disposed = false;
+  private sky: HTMLVideoElement | null = null;
   paused = false;
 
   constructor(
@@ -139,6 +193,7 @@ export class ArcadeScene {
 
     this.buildRoom();
     games.slice(0, SLOTS.length).forEach((g, i) => this.buildCabinet(g, SLOTS[i]));
+    this.scene.add(this.bear.group);
 
     el.addEventListener('pointerdown', this.onDown);
     window.addEventListener('pointermove', this.onMove);
@@ -190,7 +245,7 @@ export class ArcadeScene {
     floor.position.set(cx, 0, cz);
     s.add(floor);
 
-    const ceiling = new THREE.Mesh(new THREE.PlaneGeometry(W, D), lambert('#1d1830'));
+    const ceiling = new THREE.Mesh(new THREE.PlaneGeometry(W, D), this.skyMaterial());
     ceiling.rotation.x = Math.PI / 2;
     ceiling.position.set(cx, h, cz);
     s.add(ceiling);
@@ -308,6 +363,30 @@ export class ArcadeScene {
     s.add(this.duck);
   }
 
+  /** The forest loop as the ceiling's texture: unlit (it's daylight up there), a touch dimmed
+   * so the panels still read as the light. Holds still on its first frame for reduced motion. */
+  private skyMaterial() {
+    const v = document.createElement('video');
+    v.muted = true;
+    v.loop = true;
+    v.playsInline = true;
+    v.preload = 'auto';
+    for (const file of CEILING_VIDEO) {
+      const src = document.createElement('source');
+      src.src = `${import.meta.env.BASE_URL}${file}`;
+      src.type = file.endsWith('.webm') ? 'video/webm' : 'video/mp4';
+      v.appendChild(src);
+    }
+    const tex = new THREE.VideoTexture(v);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    tex.magFilter = tex.minFilter = THREE.NearestFilter;
+    const still = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+    if (still) v.addEventListener('loadeddata', () => (tex.needsUpdate = true), { once: true });
+    else v.play().catch(() => {}); // muted, so autoplay is allowed; if not, the first frame stays
+    this.sky = v;
+    return new THREE.MeshBasicMaterial({ map: tex, color: '#b9b6c8' });
+  }
+
   private buildCabinet(game: ArcadeGame, [x, z, yaw]: [number, number, number]) {
     const c = game.colors;
     const g = new THREE.Group();
@@ -379,12 +458,13 @@ export class ArcadeScene {
       const dx = Math.round(40 + Math.sin(t * 1.3) * 30);
       paintDuck(ctx, dx, 36, 2);
       centredText(ctx, game.title, 48, 8, c.trim);
-      if (blink) centredText(ctx, game.ready ? 'PRESS A' : 'SOON', 48, 22, '#ffffff');
+      if (cabinet.playing) {
+        paintPlaying(ctx, c, t);
+      } else if (blink) centredText(ctx, game.ready ? 'PRESS A' : 'SOON', 48, 22, '#ffffff');
       ctx.fillStyle = 'rgba(0,0,0,0.18)';
       for (let y = 0; y < 72; y += 2) ctx.fillRect(0, y, 96, 1); // scanlines
       screen.needsUpdate = true;
     };
-    paint(true, 0);
     const bezel = new THREE.Mesh(new THREE.BoxGeometry(0.86, 0.7, 0.04), dark);
     bezel.position.set(0, 1.45, 0.45);
     bezel.rotation.x = -0.18;
@@ -415,14 +495,17 @@ export class ArcadeScene {
     g.position.set(x, 0, z);
     g.rotation.y = yaw;
     this.scene.add(g);
-    this.cabinets.push({
+    const cabinet: Cabinet = {
       game,
       x,
       z,
       normal: new THREE.Vector3(Math.sin(yaw), 0, Math.cos(yaw)),
       screen,
       paint,
-    });
+      playing: false,
+    };
+    this.cabinets.push(cabinet);
+    paint(true, 0);
   }
 
   /** Stand in front of cabinet `i`, facing it (for picking a game from the menu). */
@@ -434,28 +517,108 @@ export class ArcadeScene {
     this.yaw = Math.atan2(-c.normal.x, c.normal.z);
   }
 
+  /** The bear is right there beside you (as a game closes), facing you, holding up its licorice. */
+  bearAppear() {
+    const you = { x: this.pos.x, z: this.pos.z };
+    this.cabinets.forEach((c) => (c.playing = false));
+    const at = besideYou(you, this.yaw, ROOM, this.obstacles(true));
+    this.bear.place(at);
+    this.bear.face(yawTo(at, you));
+    this.bear.offer(true);
+    // you're already looking at it when the game's screen goes
+    this.yaw = lookYaw(you, at);
+    this.pitch = -0.1;
+    this.watchBear = 'talk';
+  }
+
+  /** You took a licorice. */
+  bearGive() {
+    this.bear.give();
+  }
+
+  /** Off it goes to play Avocado Drop (from wherever it is; nothing if it's not in yet). */
+  bearGoPlay() {
+    this.watchBear = false;
+    const c = this.cabinets.find((k) => k.game.id === BEAR_GAME);
+    if (!this.bear.shown || !c) return;
+    this.watchBear = 'follow';
+    const stand = { x: c.x + c.normal.x * 1.0, z: c.z + c.normal.z * 1.0 };
+    this.bear.walk(route(this.bear.pos, stand, this.obstacles(true), AISLES), () => {
+      this.bear.face(yawTo(stand, c));
+      this.bear.play();
+      c.playing = true;
+      if (this.watchBear === 'follow') this.watchBear = false;
+    });
+  }
+
+  /** Where the licorice is on screen (client px) while it's held out, else null: for tests. */
+  bagOnScreen(): { x: number; y: number } | null {
+    if (!this.bear.offering) return null;
+    const p = this.bear.bagTarget.getWorldPosition(new THREE.Vector3()).project(this.camera);
+    if (p.z > 1) return null;
+    const r = this.renderer.domElement.getBoundingClientRect();
+    return { x: r.left + ((p.x + 1) / 2) * r.width, y: r.top + ((1 - p.y) / 2) * r.height };
+  }
+
+  /** what the bear walks round: cabinets, the big duck, and (if `you`) you */
+  private obstacles(you: boolean): Obstacle[] {
+    const list: Obstacle[] = this.cabinets.map((c) => ({ x: c.x, z: c.z, r: 0.55 }));
+    list.push({ x: this.duck.position.x, z: this.duck.position.z, r: 1.15 });
+    if (you) list.push({ x: this.pos.x, z: this.pos.z, r: 0.35 });
+    return list;
+  }
+
   private onDown = (e: PointerEvent) => {
     this.dragging = { x: e.clientX, y: e.clientY };
+    this.downAt = { x: e.clientX, y: e.clientY };
     this.renderer.domElement.setPointerCapture(e.pointerId);
   };
 
+  /** is the screen point over the bear's licorice? */
+  private overBag(clientX: number, clientY: number) {
+    if (!this.bear.offering) return false;
+    const r = this.renderer.domElement.getBoundingClientRect();
+    const ndc = new THREE.Vector2(((clientX - r.left) / r.width) * 2 - 1, -((clientY - r.top) / r.height) * 2 + 1);
+    this.raycaster.setFromCamera(ndc, this.camera);
+    return this.raycaster.intersectObject(this.bear.bagTarget, true).length > 0;
+  }
+
   private onMove = (e: PointerEvent) => {
-    if (!this.dragging) return;
+    if (!this.dragging) {
+      if (e.target === this.renderer.domElement) this.renderer.domElement.style.cursor = this.overBag(e.clientX, e.clientY) ? 'pointer' : '';
+      return;
+    }
+    // in the middle of offering, looking around is the bear's job
+    if (this.watchBear) return;
     this.yaw += (e.clientX - this.dragging.x) * 0.005;
     this.pitch = THREE.MathUtils.clamp(this.pitch - (e.clientY - this.dragging.y) * 0.004, -0.8, 0.8);
     this.dragging = { x: e.clientX, y: e.clientY };
   };
 
-  private onUp = () => {
+  private onUp = (e: PointerEvent) => {
     this.dragging = null;
+    const d = this.downAt;
+    this.downAt = null;
+    // a click (not a drag) on the bag takes a licorice
+    if (d && Math.hypot(e.clientX - d.x, e.clientY - d.y) < 8 && this.overBag(e.clientX, e.clientY)) this.events.onLicorice?.();
   };
 
   private blocked(x: number, z: number) {
     if (Math.hypot(x - this.duck.position.x, z - this.duck.position.z) < 1.4) return true;
+    if (this.bear.shown && Math.hypot(x - this.bear.pos.x, z - this.bear.pos.z) < 0.7) return true;
     return this.cabinets.some((c) => Math.hypot(c.x - x, c.z - z) < 0.95);
   }
 
   private update(dt: number) {
+    this.bear.update(dt, this.last / 1000);
+    // walking or turning yourself: stop following it off
+    if (this.watchBear === 'follow' && !this.paused && (this.move.forward || this.move.turn)) this.watchBear = false;
+    if (this.watchBear && this.bear.shown) {
+      // turn to watch it, looking a touch down at the bag while it talks
+      const k = 1 - Math.exp(-dt * 3);
+      this.yaw = easeAngle(this.yaw, lookYaw(this.pos, this.bear.pos), k);
+      this.pitch += ((this.watchBear === 'talk' ? -0.1 : -0.03) - this.pitch) * k;
+    }
     if (this.paused) return;
     this.yaw += this.move.turn * TURN * dt;
     const speed = (this.move.run ? RUN : WALK) * dt * this.move.forward;
@@ -516,6 +679,11 @@ export class ArcadeScene {
   dispose() {
     this.disposed = true;
     cancelAnimationFrame(this.raf);
+    if (this.sky) {
+      this.sky.pause();
+      this.sky.replaceChildren();
+      this.sky.load();
+    }
     window.removeEventListener('pointermove', this.onMove);
     window.removeEventListener('pointerup', this.onUp);
     window.removeEventListener('resize', this.resize);

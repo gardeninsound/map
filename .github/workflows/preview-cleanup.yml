@@ -1,0 +1,54 @@
+name: Preview cleanup
+
+# When a pull request closes (merged or not), its preview stops being a live copy of the site:
+# pr-<number> is re-uploaded with a small "this preview has closed" page (preview/closed/), so an
+# old preview no longer joins the real relay or files real ideas. Cloudflare has no command to
+# delete a preview alias; uploading over it is the documented way to change what it shows.
+# Its GitHub deployments are also marked inactive, so the PR stops showing an active deployment.
+on:
+  pull_request:
+    types: [closed]
+    branches: [main]
+
+permissions:
+  contents: read
+  deployments: write
+
+concurrency:
+  group: preview-${{ github.event.pull_request.number }}
+  cancel-in-progress: false # let a last preview upload finish first, then close it
+
+jobs:
+  close:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          sparse-checkout: preview
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: preview/package-lock.json
+      - run: npm ci
+        working-directory: preview
+
+      - name: Replace the preview with the "closed" page
+        working-directory: preview
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: >-
+          npx wrangler versions upload
+          --assets ./closed
+          --preview-alias "pr-${{ github.event.pull_request.number }}"
+          --message "PR #${{ github.event.pull_request.number }} closed"
+
+      - name: Mark its deployments inactive
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BRANCH: ${{ github.event.pull_request.head.ref }}
+        run: |
+          for id in $(gh api "repos/$GITHUB_REPOSITORY/deployments?environment=preview&ref=$BRANCH&per_page=100" -q '.[].id'); do
+            gh api -X POST "repos/$GITHUB_REPOSITORY/deployments/$id/statuses" -f state=inactive -q .state
+          done
