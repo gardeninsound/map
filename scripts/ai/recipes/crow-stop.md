@@ -43,4 +43,5 @@ In `src/content/crow.ts`, add one object to `crowStops`, right before the entry 
 ## Done when
 
 - `crowStops` has one more entry, second to last.
-- `npx vitest run src/game/crow.test.ts` passes (the shop is real, the greeting asks for snacks).
+- `npx vitest run src/game/crow.test.ts` passes (the pattern matches exactly one real shop, the
+  greeting asks for snacks).

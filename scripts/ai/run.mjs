@@ -159,7 +159,7 @@ async function chatOnce(p, system, user, tries = WAITS.length) {
   });
   const text = await res.text();
   if (res.status === 429 || /quota|rate.?limit|exhausted|neurons/i.test(res.ok ? '' : text)) {
-    throw Object.assign(new Error(`${p.name}: out of free quota for now`), { quota: true });
+    throw Object.assign(new Error(`${p.model}: out of free quota for now (newer models get smaller daily limits)`), { quota: true });
   }
   if (res.status === 404 && /model/i.test(text)) {
     // models get retired; the error usually names the replacement
