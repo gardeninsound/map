@@ -52,8 +52,10 @@ flowchart LR
 2. The **Check** workflow runs: a size guard (no file over 2 MB unless listed in
    `.github/large-files.txt`), `npm test`, `npm run build`, and `npm run smoke` (the built site
    in a real browser).
-3. Shared PRs need an OK: **Jim** for technical changes, **Mike** for the art and the words.
-4. Squash-merge. GitHub Pages deploys the site in about a minute.
+3. Every PR auto-merges (squash) the moment the Check passes; nobody waits for an OK. A PR that
+   touches the other person's area adds them as a reviewer, as a heads-up: **Jim** for technical
+   changes, **Mike** for the art and the words.
+4. GitHub Pages deploys the site in about a minute.
 5. **The Workers don't deploy themselves.** After a merge that changes `relay/` or `wish/`, run
    `npx wrangler deploy` in that folder from `main`. Each `wrangler.jsonc` pins the project's
    Cloudflare account, so a deploy can't land anywhere else.
