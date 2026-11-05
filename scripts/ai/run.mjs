@@ -36,13 +36,14 @@ const CF_ACCOUNT = process.env.CLOUDFLARE_ACCOUNT_ID || '7de05f51e1fe91fd717fe17
 const PROVIDERS = {
   gemini: {
     key: () => process.env.GEMINI_API_KEY,
-    model: 'gemini-3.8-flash',
+    // newest first; older Flash models are less in demand, so they answer when the newest is busy
+    models: ['gemini-3.8-flash', 'gemini-3.7-flash', 'gemini-3.6-flash', 'gemini-3.5-flash', 'gemini-flash-lite-latest'],
     api: 'https://generativelanguage.googleapis.com/v1beta/openai',
     aider: (model) => ({ args: ['--model', `gemini/${model}`], env: {} }),
   },
   workers: {
     key: () => process.env.CLOUDFLARE_API_TOKEN,
-    model: '@cf/qwen/qwen2.5-coder-32b-instruct',
+    models: ['@cf/qwen/qwen2.5-coder-32b-instruct'],
     api: `https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT}/ai/v1`,
     aider: (model, p) => ({
       args: ['--model', `openai/${model}`, '--openai-api-base', p.api],
@@ -78,13 +79,16 @@ if (command !== 'models' && (!['spec', 'build'].includes(command) || (!issueArg 
 const key = typedIdea ? 'idea' : String(Number(issueArg));
 if (command !== 'models' && key === 'NaN') die(`"${issueArg}" isn't an issue number`);
 
-/** Providers to try, best first: one named with --provider, else every one with a key. */
+/**
+ * What to try, best first: each provider (one named with --provider, else all) with each of
+ * its models (or just --model), keeping those with a key.
+ */
 function providers() {
   const names = providerName ? [providerName] : Object.keys(PROVIDERS);
-  const list = names.map((n) => {
+  const list = names.flatMap((n) => {
     const p = PROVIDERS[n];
     if (!p) die(`unknown provider "${n}" (gemini or workers)`);
-    return { name: n, ...p, model: modelName || p.model };
+    return (modelName ? [modelName] : p.models).map((model) => ({ name: n, ...p, model }));
   });
   const ready = list.filter((p) => p.key());
   if (!ready.length && !dryRun) die('no key: set GEMINI_API_KEY, or CLOUDFLARE_API_TOKEN for Workers AI (see scripts/ai/README.md)');
@@ -126,19 +130,20 @@ function writeShops() {
 const BUSY = [500, 502, 503, 504];
 const WAITS = [3, 10, 30]; // seconds between tries when a free server is busy
 
-async function chat(p, system, user) {
+/** `waits`: the full WAITS for the last thing to try; one short retry when there's another to fall back on. */
+async function chat(p, system, user, waits = WAITS) {
   for (let i = 0; ; i++) {
     try {
-      return await chatOnce(p, system, user);
+      return await chatOnce(p, system, user, waits.length);
     } catch (e) {
-      if (!e.busy || i >= WAITS.length) throw e;
-      console.log(`  ${p.name} is busy (HTTP ${e.status}); trying again in ${WAITS[i]} s`);
-      await new Promise((r) => setTimeout(r, WAITS[i] * 1000));
+      if (!e.busy || i >= waits.length) throw e;
+      console.log(`  ${p.model} is busy (HTTP ${e.status}); trying again in ${waits[i]} s`);
+      await new Promise((r) => setTimeout(r, waits[i] * 1000));
     }
   }
 }
 
-async function chatOnce(p, system, user) {
+async function chatOnce(p, system, user, tries = WAITS.length) {
   const res = await fetch(`${p.api}/chat/completions`, {
     method: 'POST',
     headers: { Authorization: `Bearer ${p.key()}`, 'Content-Type': 'application/json' },
@@ -162,7 +167,7 @@ async function chatOnce(p, system, user) {
     throw Object.assign(new Error(`${p.name}: model "${p.model}" isn't available${hint ? ` (it suggests ${hint})` : ''}. Try --model <name>`), { skip: true });
   }
   if (BUSY.includes(res.status)) {
-    throw Object.assign(new Error(`${p.name}: still busy after ${WAITS.length + 1} tries`), { busy: true, skip: true, status: res.status });
+    throw Object.assign(new Error(`${p.model}: still busy after ${tries + 1} tries`), { busy: true, skip: true, status: res.status });
   }
   if (!res.ok) throw new Error(`${p.name}: HTTP ${res.status} ${text.slice(0, 300)}`);
   const data = JSON.parse(text);
@@ -179,18 +184,20 @@ async function spec() {
     return;
   }
   const reasons = [];
-  for (const p of providers()) {
+  const all = providers();
+  for (const [n, p] of all.entries()) {
+    const waits = n === all.length - 1 ? WAITS : WAITS.slice(0, 1);
     // a weak model sometimes answers in the wrong shape: one retry, told what was wrong
     let ask = user;
     for (let attempt = 1; attempt <= 2; attempt++) {
       let raw;
       try {
         console.log(`… asking ${p.name} (${p.model})${attempt > 1 ? ', again' : ''}`);
-        raw = await chat(p, system, ask);
+        raw = await chat(p, system, ask, waits);
       } catch (e) {
         if (e.quota || e.skip) {
-          console.log(`  ${e.message}; trying the next provider`);
-          reasons.push(e.busy ? `${p.name} busy` : e.quota ? `${p.name} out of quota` : `${p.name} model unavailable`);
+          console.log(`  ${e.message}${n < all.length - 1 ? '; trying the next model' : ''}`);
+          reasons.push(e.busy ? `${p.model} busy` : e.quota ? `${p.model} out of quota` : `${p.model} unavailable`);
           break;
         }
         die(e.message);
@@ -251,7 +258,8 @@ function build() {
   const messageFile = join(OUT, `${key}.build.md`);
   writeFileSync(messageFile, message);
 
-  const p = providers()[0];
+  // the model that wrote the plan answered just now, so build with it (unless told otherwise)
+  const p = (!providerName && !modelName && providers().find((x) => x.name === s.provider && x.model === s.model)) || providers()[0];
   const model = p.aider(p.model, p);
   const test = `npx vitest run ${recipe.test.join(' ')}`;
   const args = [
@@ -301,15 +309,17 @@ function build() {
 mkdirSync(OUT, { recursive: true });
 /** The models each provider's key can use (names to pass to --model). */
 async function models() {
+  const seen = new Set();
   for (const p of providers()) {
-    if (!p.key()) continue;
+    if (!p.key() || seen.has(p.name)) continue;
+    seen.add(p.name);
     const res = await fetch(`${p.api}/models`, { headers: { Authorization: `Bearer ${p.key()}` } });
     if (!res.ok) {
       console.log(`${p.name}: HTTP ${res.status} (${(await res.text()).slice(0, 200)})`);
       continue;
     }
     const ids = ((await res.json()).data ?? []).map((m) => String(m.id).replace(/^models\//, '')).sort();
-    console.log(`${p.name} (default ${p.model}):\n${ids.map((id) => `  ${id}`).join('\n')}`);
+    console.log(`${p.name} (tries ${modelName || PROVIDERS[p.name].models.join(', then ')}):\n${ids.map((id) => `  ${id}`).join('\n')}`);
   }
 }
 
