@@ -1,6 +1,6 @@
 /**
  * Smoke test of the built site in a real browser: does it boot, can you walk into the Duck
- * Arcade, does every playable cabinet open and close? Fails on any page error, console error
+ * Arcade, does every playable cabinet open and close, does the bear hand you a licorice? Fails on any page error, console error
  * or failed request (a missing file is a 404). Runs in CI on every PR after `npm run build`.
  *
  * Usage: npm run build && npm run smoke   (locally uses your installed Chrome; CI uses
@@ -40,6 +40,27 @@ const dismiss = async (sel) => {
 };
 const assertClean = () => {
   if (problems.length) throw new Error(`${problems.length} problem(s):\n  ${problems.join('\n  ')}`);
+};
+
+/** after the first game the bear is right beside you, holding out its licorice: take one */
+const meetTheBear = async () => {
+  check('the bear and its licorice');
+  // the bear's lines follow each other in the same box: Space only until this one is gone
+  const says = async (text) => {
+    const box = page.locator('.scene-dialog', { hasText: text });
+    await box.waitFor({ timeout: 20_000 });
+    for (let i = 0; i < 16 && (await box.count()); i++) {
+      await page.keyboard.press('Space');
+      await page.waitForTimeout(250);
+    }
+  };
+  await says(/licorice/i);
+  await page.locator('.arcade-take').waitFor();
+  const bag = await page.evaluate(() => window.__arcade?.bagOnScreen());
+  if (!bag) throw new Error('the bear is not holding out its licorice');
+  await page.mouse.click(bag.x, bag.y);
+  await says(/Thanks!/);
+  await says(/Avocado Drop/);
 };
 
 try {
@@ -96,8 +117,16 @@ try {
       await page.locator('.arcade-game').waitFor({ state: 'detached', timeout: 5000 });
     });
     assertClean();
+    if (title === titles[0]) {
+      await meetTheBear();
+      assertClean();
+    } else {
+      // only once a visit: after that it's busy with Avocado Drop
+      await settle(500);
+      if (await page.locator('.scene-dialog').count()) throw new Error('the bear came over again');
+    }
   }
-  console.log(`smoke ok: boots, arcade, ${titles.length} cabinets`);
+  console.log(`smoke ok: boots, arcade, ${titles.length} cabinets, the bear`);
 } catch (e) {
   mkdirSync('screenshots/smoke', { recursive: true });
   await page.screenshot({ path: 'screenshots/smoke/failure.png' }).catch(() => {});

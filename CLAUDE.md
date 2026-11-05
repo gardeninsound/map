@@ -128,6 +128,11 @@ auto-merge (every PR, see 6); if it touches the other person's area, add them as
   `src/experiences/minigames/ConeCatch.tsx`, rules pure + tested in
   `src/game/coneCatch.ts`; best score in localStorage) via the App's `minigame` overlay, whose `then`
   gets `{ score, best }` back for her closing line. A new character mini game: same overlay, its own component.
+- `src/game/plugins/pegasus.ts` — the pegasus in Pegasus Books (Junction, west side): come within `NOTICE`
+  tiles and it walks out of the door (clipped at the shop front), says hello in a tiny-font bubble
+  (`src/content/pegasus.ts`, one line per visit) with a whinny, then flies off north-east; home again once
+  you're `HOME` tiles away. Pure + tested in `src/game/pegasus.ts`; 24×20 sprite built from parts in
+  `sprites.ts`. A shop's slice of a Junction block face: `src/game/storefrontSlot.ts` (also the arcade door).
 - `src/game/plugins/visitors.ts` — **other people, live**: everyone on the site shares one room
   on the island's relay (`src/net/relay.ts` client; the Worker is `relay/`, its own npm project
   deployed to the gardeninsound Cloudflare account — see `relay/README.md`; its ALLOWED_ORIGINS
@@ -175,6 +180,11 @@ auto-merge (every PR, see 6); if it touches the other person's area, add them as
   `src/content/duckOnTheMoon.ts`, MP3s in `public/duck-on-the-moon/`). While a game is open,
   `sfx.gameSound(true)` keeps its sound on even if the map is muted. Wall posters: `POSTERS` in `ArcadeScene.ts`;
   the ceiling is a looping forest video (`CEILING_VIDEO`, WebM + MP4 in `public/arcade/ceiling/`) under the fluorescent panels.
+  **The bear** (`arcade/ArcadeBear.ts`, low-poly three.js): after the first game of a visit it's right beside you
+  with a bag of licorice (`bearLines` in `content/duckArcade.ts`); click/tap the bag (or {A}) to take one, the
+  rabbit says "Thanks!" (`sounds.thanks`, the browser's speech pitched up), then it walks off and plays Avocado
+  Drop (`BEAR_GAME`, the floor cabinet by the doors) for the rest of the visit. Where it stands and walks is pure +
+  tested: `src/game/arcadeBear.ts`. The smoke test takes a licorice (`window.__arcade.bagOnScreen()`).
 - **Luna Park** (1907–1913) on its pilings off Duwamish Head: `src/game/plugins/lunaPark.ts` turns the pier's
   water tiles walkable at attach (street name "Luna Park"), paints the boardwalk under everyone and draws the
   animated rides depth-sorted (gate, Great Figure Eight, Shoot-the-Chutes, Looff carousel, Giant Whirl,
@@ -201,7 +211,9 @@ auto-merge (every PR, see 6); if it touches the other person's area, add them as
 - `src/city/` — the city (see above): `world/` (tile grid + map data), `engine/` (`CityGame`,
   movement, neighbors, input), `render/` (palette, sprites, per-pixel roads, tile art,
   landmarks), `ui/` (HUD, dialog box, touch pad, sounds, `ui.css`). Import it via
-  `src/city/index.ts`. Its unit tests run with the rest. What the map draws:
+  `src/city/index.ts`. Its unit tests run with the rest. Holding Shift puts the rabbit on a
+  bicycle at RUN speed (`buildBikeRabbit` in `render/sprites.ts`, `player.riding`; other rabbits
+  see it through a sixth field on the visitors wire). What the map draws:
   - every public street (no alleys) on its real centreline, at its real width × 2; walkable
     band ≥ 1.5 tiles; ~300 street names (uint16 per tile)
   - ~27k houses at their true OSM size/angle (`paintHouses`), nudged back or shrunk where a

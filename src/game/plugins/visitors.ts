@@ -1,4 +1,4 @@
-import { buildRabbit, gridToCanvas, INK, tone, type CityGame, type CityPlugin, type DrawContext, type Grid, type Target, type Walker } from '../../city';
+import { buildBikeRabbit, buildRabbit, drawStanding, gridToCanvas, INK, tone, type CityGame, type CityPlugin, type DrawContext, type Grid, type Target, type Walker } from '../../city';
 import type { MapMarker } from '../../city';
 import { EMOTES } from '../../content/emotes';
 import { joinRelay, type RelayRoom } from '../../net/relay';
@@ -71,6 +71,7 @@ export class Visitors implements CityPlugin {
   private room: RelayRoom | null = null;
   private game: CityGame | null = null;
   private sprites = new Map<string, Walker>();
+  private bikes = new Map<string, Walker>();
   private last: RabbitWire | null = null;
   private sinceSend = 0;
   private clock = 0;
@@ -308,7 +309,7 @@ export class Visitors implements CityPlugin {
     const g = this.game;
     if (!g) return null;
     const p = g.player;
-    return encode({ pos: p.pos, facing: p.facing, moving: p.moving && !g.paused && this.state === 'here', away: g.paused || this.state !== 'here' });
+    return encode({ pos: p.pos, facing: p.facing, moving: p.moving && !g.paused && this.state === 'here', away: g.paused || this.state !== 'here', riding: p.riding && !g.paused });
   }
 
   update(dt: number) {
@@ -325,9 +326,10 @@ export class Visitors implements CityPlugin {
     }
   }
 
-  private spriteFor(id: string): Walker {
-    let s = this.sprites.get(id);
-    if (!s) this.sprites.set(id, (s = buildRabbit(scarfFor(id))));
+  private spriteFor(id: string, riding = false): Walker {
+    const cache = riding ? this.bikes : this.sprites;
+    let s = cache.get(id);
+    if (!s) cache.set(id, (s = (riding ? buildBikeRabbit : buildRabbit)(scarfFor(id))));
     return s;
   }
 
@@ -347,7 +349,7 @@ export class Visitors implements CityPlugin {
     for (const v of this._hidden ? [] : this.visitors.values()) {
       const s = d.toScreen(v.shown);
       if (!d.onScreen(s, 40)) continue;
-      const frames = this.spriteFor(v.id)[v.target.facing];
+      const frames = this.spriteFor(v.id, v.target.riding)[v.target.facing];
       const frame = v.walkT ? Math.floor(v.walkT * 8) % 2 : 0;
       const said = this.said.get(v.id);
       const near = Math.hypot(v.shown.x - me.x, v.shown.y - me.y) < NAME_RANGE;
@@ -361,7 +363,7 @@ export class Visitors implements CityPlugin {
           if (v.target.away) ctx.globalAlpha = 0.45;
           ctx.fillStyle = 'rgba(0,0,0,0.22)';
           ctx.fillRect(s.x - 5, s.y + 1, 10, 2);
-          ctx.drawImage(frames[frame]!, s.x - 8, s.y - 14);
+          drawStanding(ctx, frames[frame]!, s.x, s.y);
           ctx.restore();
         },
       });
