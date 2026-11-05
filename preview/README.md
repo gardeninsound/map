@@ -22,6 +22,11 @@ it still deploys from `main` to GitHub Pages.
   files real issues, titled `[preview pr-<number>] Idea: …`. Both Workers allow
   `https://*-garden-preview.gardeninsound.workers.dev`, and the Turnstile widget lists
   `gardeninsound.workers.dev`.
+- When a PR closes (merged or not), the [Preview cleanup workflow](../.github/workflows/preview-cleanup.yml)
+  re-uploads `pr-<number>` with [`closed/index.html`](closed/index.html): a small "this preview
+  has closed" page with no game, relay or idea box. It also marks the PR's GitHub deployments
+  inactive. Cloudflare can't delete an alias, but uploading over one replaces it, and it keeps
+  at most 1,000 aliases per Worker, dropping the oldest.
 - Previews are public to anyone who has the link, like the repo.
 - PRs from forks don't get a preview: GitHub doesn't give them the Cloudflare token.
 
