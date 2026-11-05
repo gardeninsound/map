@@ -129,6 +129,13 @@ auto-merge (every PR, see 6); if it touches the other person's area, add them as
   `src/experiences/minigames/ConeCatch.tsx`, rules pure + tested in
   `src/game/coneCatch.ts`; best score in localStorage) via the App's `minigame` overlay, whose `then`
   gets `{ score, best }` back for her closing line. A new character mini game: same overlay, its own component.
+- **The hidden house + Ham** (1918 45th Ave SW, Admiral): a nameless landmark (`craftsman-45th` in
+  `content/landmarks.csv`, drawn in `render/landmarks.ts`) — no name, so it's never on the map's place
+  list. The alley behind it is walkable via `ALLEYS` in `scripts/city/map-config.mjs` (listed alleys →
+  concrete lanes, named "Alley"). Ham the cat (`src/game/plugins/ham.ts`, a Scottish Fold) wanders the
+  street and alley within `HAM.leash` tiles of home, sits to look at a rabbit nearby, and says one set
+  of lines per visit through the plain neighbor talk (words in `src/content/ham.ts`; movement pure +
+  tested in `src/game/ham.ts`). `__ham` in dev.
 - `src/game/plugins/pegasus.ts` — the pegasus in Pegasus Books (Junction, west side): come within `NOTICE`
   tiles and it walks out of the door (clipped at the shop front), says hello in a tiny-font bubble
   (`src/content/pegasus.ts`, one line per visit) with a whinny, then flies off north-east; home again once
