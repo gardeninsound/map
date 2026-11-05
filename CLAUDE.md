@@ -21,7 +21,7 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
 
 - `npm run dev` → http://localhost:5173/
 - `npm test` · `npm run build` (tsc + vite) — both must be green before committing (and in CI on every PR, see Git workflow)
-- `npm run smoke` (after `npm run build`) — the built site in a real browser via Playwright: title, RECENT to
+- `npm run smoke` (after `npm run build`) — the built site in a real browser via Playwright: title, `?at=arcade` to
   the Duck Arcade, opens + closes every playable cabinet; fails on any page error, console error or 404
   (`scripts/smoke.mjs`; failure shot in `screenshots/smoke/`). Uses your Chrome locally, Chromium in CI.
 - `npm run images [srcDir]` — raw photos/videos → `public/art/<set>/` (AVIF stills 1200 px +
@@ -263,4 +263,4 @@ Unit tests cover content invariants (every spot has art and sits by a walkable s
 slideshows, busker songs, crow flight, sprites, and the city's own tests in `src/city/`. For visuals, drive real Chrome: `playwright-core` from `~/code/games/arcade/node_modules`
 with `channel: 'chrome'`; save shots under `screenshots/` (gitignored). In dev, `window.__game` is
 the live `CityGame`, plus `__art`, `__busker`, `__crow` (the plugins) for scripted checks;
-`?at=lat,lon` or `?atTile=x,y` skips the title and drops you there.
+`?at=lat,lon`, `?atTile=x,y` or `?at=arcade` (beside the Duck Arcade door) skips the title and drops you there — on the live site too.
