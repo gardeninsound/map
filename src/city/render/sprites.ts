@@ -214,6 +214,8 @@ export const hop = (g: Grid): Grid => [...g.slice(1), '.'.repeat(g[0].length)];
 export interface SpriteSet {
   /** the default player: a rabbit in a teal scarf */
   rabbit: Walker;
+  /** the player while Shift is held: the rabbit on a bicycle */
+  bike: Walker;
 }
 
 /** A sprite in four directions with a hop frame each, from a down/up/side grid set. */
@@ -229,5 +231,82 @@ export function buildRabbit(scarf?: string): Walker {
 }
 
 export function buildSprites(): SpriteSet {
-  return { rabbit: buildRabbit() };
+  return { rabbit: buildRabbit(), bike: buildBikeRabbit() };
+}
+
+/* The rabbit on a bicycle (hold Shift): 20×18 side on, 16×20 head on. r frame, m hub/tyre, y lamp. */
+const BIKE_COLORS: Record<string, string> = { ...RABBIT_COLORS, r: '#e84a5f', m: '#9a98b0', y: '#ffd23f' };
+
+const BIKE_RIGHT: Grid = [
+  '........kk..........',
+  '.......kwwk.........',
+  '.......kwpk..kk.....',
+  '.......kwpk.kwwk....',
+  '........kwkkwpk.....',
+  '........kkwwwkk.....',
+  '.......kwwwwwwwk....',
+  '......kwwwwwwkwk....',
+  '......kwwwwwwwwpk...',
+  '......kgwwwwwwwk....',
+  '.......kttttttk.....',
+  '......kgwwwwgwwk....',
+  '..kkkk..rrrrrrrrkkk.',
+  '.k....kr.r...rk.r..k',
+  '.k.m.rk...r.r.k.m..k',
+  '.k..mrkrrrkr..k..m.k',
+  '.k....k.......k....k',
+  '..kkkk.........kkkk.',
+];
+
+/** [x, y, colour char] pixels painted over a grid */
+type Patch = [number, number, string][];
+const paint = (g: Grid, patch: Patch): Grid => {
+  const rows = g.map((r) => [...r]);
+  for (const [x, y, ch] of patch) rows[y]![x] = ch;
+  return rows.map((r) => r.join(''));
+};
+/** the two pedalling frames: the leg down and forward, then up; the hubs turn a notch */
+const BIKE_RIGHT_A = paint(BIKE_RIGHT, [
+  [10, 12, 'w'], [10, 13, 'w'], [11, 13, 'w'], [11, 14, 'w'], [11, 15, 'w'], [11, 16, 'k'], [12, 16, 'k'], [9, 14, 'k'],
+]);
+const BIKE_RIGHT_B = paint(BIKE_RIGHT, [
+  [10, 12, 'w'], [11, 12, 'w'], [11, 13, 'k'], [12, 13, 'k'], [9, 16, 'k'],
+  [3, 14, '.'], [4, 14, 'm'], [4, 15, '.'], [3, 15, 'm'], [16, 14, '.'], [17, 14, 'm'], [17, 15, '.'], [16, 15, 'm'],
+]);
+
+/** head on: the top of the rabbit, handlebars (with a headlight, or none from behind), knees, the tyre */
+const bikeFront = (top: Grid, bar: string, legs: Grid): Grid => [...top.slice(0, 12), bar, '..kk.kwrrwk.kk..', ...legs];
+const BAR_FRONT = 'kwwkkkkyykkkkwwk';
+const BAR_BACK = 'kwwkkkkkkkkkkwwk';
+/** one foot down, the other up, either side of the tyre */
+const LEGS_A: Grid = ['....kwkmmkkk....', '....kwkmmk......', '....kkkmmk......', '......kmmk......', '......kmmk......', '.......kk.......'];
+const LEGS_B: Grid = ['....kkkmmkwk....', '......kmmkwk....', '......kmmkkk....', '......kmmk......', '......kmmk......', '.......kk.......'];
+/** from behind, a red reflector on the mudguard */
+const reflector = (g: Grid) => paint(g, [[7, 14, 'r'], [8, 14, 'r']]);
+
+export const BIKE_GRIDS = {
+  BIKE_RIGHT_A,
+  BIKE_RIGHT_B,
+  BIKE_DOWN_A: bikeFront(RABBIT_DOWN, BAR_FRONT, LEGS_A),
+  BIKE_DOWN_B: bikeFront(RABBIT_DOWN, BAR_FRONT, LEGS_B),
+  BIKE_UP_A: reflector(bikeFront(RABBIT_UP, BAR_BACK, LEGS_A)),
+  BIKE_UP_B: reflector(bikeFront(RABBIT_UP, BAR_BACK, LEGS_B)),
+};
+
+/** The rabbit riding a bicycle, two pedalling frames per direction, optionally in another scarf. */
+export function buildBikeRabbit(scarf?: string): Walker {
+  const colors = scarf ? { ...BIKE_COLORS, t: scarf } : BIKE_COLORS;
+  const G = BIKE_GRIDS;
+  const pair = (a: Grid, b: Grid, mirror = false) => [gridToCanvas(a, colors, mirror), gridToCanvas(b, colors, mirror)];
+  return {
+    down: pair(G.BIKE_DOWN_A, G.BIKE_DOWN_B),
+    up: pair(G.BIKE_UP_A, G.BIKE_UP_B),
+    right: pair(G.BIKE_RIGHT_A, G.BIKE_RIGHT_B),
+    left: pair(G.BIKE_RIGHT_A, G.BIKE_RIGHT_B, true),
+  };
+}
+
+/** Draw a walker frame standing at screen point (x, y): centred, feet (or wheels) on the spot. */
+export function drawStanding(ctx: CanvasRenderingContext2D, img: HTMLCanvasElement, x: number, y: number) {
+  ctx.drawImage(img, x - (img.width >> 1), y - img.height + 2);
 }
