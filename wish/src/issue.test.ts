@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { check, clean, issueFor, MAX_LENGTH, NAME_MAX } from './issue';
+import { check, clean, issueFor, MAX_LENGTH, NAME_MAX, previewOf } from './issue';
 
 describe('idea box → GitHub issue', () => {
   it('keeps newlines, drops control characters and piles of blank lines', () => {
@@ -49,5 +49,18 @@ describe('idea box → GitHub issue', () => {
     expect(i.title.length).toBeLessThanOrEqual('Idea: '.length + 58);
     expect(i.title.endsWith('…')).toBe(true);
     expect(i.body).not.toContain('rabbit was on');
+  });
+
+  it('marks ideas sent from a pull request preview', () => {
+    expect(previewOf('https://pr-20-garden-preview.gardeninsound.workers.dev')).toBe('pr-20');
+    expect(previewOf('https://38d330c9-garden-preview.gardeninsound.workers.dev')).toBe('38d330c9');
+    for (const live of ['https://gardeninsound.website', 'https://garden-preview.gardeninsound.workers.dev', 'http://localhost:5173', null]) {
+      expect(previewOf(live)).toBeNull();
+    }
+    expect(previewOf('https://pr-1-garden-preview.evil.example')).toBeNull();
+    const i = issueFor('A koi pond', null, null, 'pr-20');
+    expect(i.title).toBe('[preview pr-20] Idea: A koi pond');
+    expect(i.body).toContain("Sent from the map's idea box on the pr-20 preview.");
+    expect(issueFor('A koi pond', null).title).toBe('Idea: A koi pond');
   });
 });
