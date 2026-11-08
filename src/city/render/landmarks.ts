@@ -1568,6 +1568,89 @@ function dakotaPlace(ctx: Ctx, w: number, h: number) {
 }
 
 
+/**
+ * The Alki Bathing Pavilion (1911–1955), on today's bathhouse site in Alki Beach Park: "a
+ * magnificent frame Recreation Pavilion", dedicated on the Fourth of July 1911, painted white,
+ * with dressing and locker rooms, a gym, club rooms, a café and a viewing balcony for
+ * spectators; a wide planked promenade ran along the seawall. Its exact form isn't recorded in
+ * the sources we found (Seattle DON historic sites; Paul Dorpat's Now & Then), so the hipped
+ * roof and the full-width balcony are a period-faithful reading of that description.
+ */
+function alkiPavilion(ctx: Ctx, w: number, h: number) {
+  const white = '#f3efe4', siding = '#dcd6c8', shade = '#c9c2b2', trim = '#3f6b5a', trimLight = '#56806e';
+  const glass = '#34465e', plank = '#b08a5a', plankDark = '#8a6a44';
+  // sand all round, a little lawn at the back
+  px(ctx, '#e8d9a8', 0, 0, w, h);
+  for (let i = 0; i < 40; i++) px(ctx, i % 2 ? '#d8c690' : '#f2e6bf', (i * 23) % w, (i * 13) % h, 1, 1);
+  px(ctx, 'rgba(0,0,0,0.2)', 6, h - 9, w - 9, 3);
+
+  // the hipped roof, a flag on the ridge
+  hipRoof(ctx, 5, w - 5, 4, 13, 1.4, trim, trimLight);
+  const mid = Math.round(w / 2);
+  px(ctx, INK, mid, 0, 1, 4);
+  px(ctx, '#d63a3a', mid + 1, 0, 4, 3);
+  px(ctx, '#f3efe4', mid + 1, 1, 4, 1);
+  px(ctx, '#2f4f8f', mid + 1, 0, 2, 2);
+
+  // upper floor: the spectators' balcony, full width, under the eave
+  px(ctx, INK, 4, 13, w - 8, 13);
+  px(ctx, shade, 5, 14, w - 10, 11);
+  // the people at the rail: hats, dark suits, white dresses
+  const folk: [number, string, string][] = [[9, '#3a3346', '#2a2433'], [14, '#f3efe4', '#c9a26a'], [22, '#3a3346', '#2a2433'], [27, '#f3efe4', '#d68fa6'], [44, '#3a3346', '#1c1b22'], [52, '#f3efe4', '#c9a26a'], [57, '#3a3346', '#2a2433'], [66, '#f3efe4', '#d68fa6']];
+  for (const [fx, body, hat] of folk) {
+    if (fx > w - 10) continue;
+    px(ctx, hat, fx - 1, 16, 4, 1);
+    px(ctx, '#e9c9a6', fx, 17, 2, 2);
+    px(ctx, body, fx, 19, 2, 3);
+  }
+  // posts and the railing with its balusters
+  for (let x = 5; x < w - 5; x += 9) px(ctx, white, x, 14, 2, 11);
+  px(ctx, white, 5, 21, w - 10, 1);
+  for (let x = 6; x < w - 5; x += 2) px(ctx, white, x, 22, 1, 3);
+  px(ctx, white, 5, 24, w - 10, 1);
+  // trim band between the floors
+  px(ctx, INK, 4, 25, w - 8, 1);
+  px(ctx, trim, 4, 26, w - 8, 1);
+
+  // ground floor: white clapboard, windows, the entrance under its sign
+  px(ctx, INK, 4, 27, w - 8, h - 36);
+  px(ctx, white, 5, 27, w - 10, h - 37);
+  for (let y = 29; y < h - 10; y += 2) px(ctx, siding, 5, y, w - 10, 1);
+  const name = 'PAVILION';
+  const tw = textWidth(name);
+  const sx = Math.round((w - tw) / 2) - 2;
+  px(ctx, INK, sx - 1, 27, tw + 6, 8);
+  px(ctx, trim, sx, 28, tw + 4, 6);
+  pixelText(ctx, name, sx + 2, 28, '#f3e6cc');
+  // two windows either side of the sign
+  for (const wx of [5, 13, w - 20, w - 12]) {
+    px(ctx, INK, wx - 1, 30, 8, 8);
+    paneWindow(ctx, wx, 31, 6, 6, 2, 2, white, glass);
+  }
+  // double doors, steps down to the promenade
+  px(ctx, INK, mid - 6, 35, 12, h - 44);
+  px(ctx, '#7a5a3a', mid - 5, 36, 5, h - 45);
+  px(ctx, '#7a5a3a', mid + 1, 36, 4, h - 45);
+  px(ctx, '#e8c25a', mid - 1, 39, 1, 1);
+  px(ctx, '#e8c25a', mid + 1, 39, 1, 1);
+  px(ctx, '#d8d3cc', mid - 7, h - 9, 14, 1);
+
+  // the wide planked promenade along the front
+  px(ctx, INK, 0, h - 8, w, 1);
+  px(ctx, plank, 0, h - 7, w, 7);
+  for (let x = 2; x < w; x += 4) px(ctx, plankDark, x, h - 7, 1, 7);
+  px(ctx, plankDark, 0, h - 4, w, 1);
+
+  // two bathers in 1911 striped wool suits, out on the boards
+  for (const [bx, stripe] of [[w - 12, '#2f4f8f'], [w - 7, '#d63a3a']] as const) {
+    px(ctx, '#e9c9a6', bx, h - 13, 2, 2);
+    px(ctx, INK, bx - 1, h - 14, 4, 1);
+    for (let i = 0; i < 4; i++) px(ctx, i % 2 ? '#f3efe4' : stripe, bx, h - 11 + i, 2, 1);
+    px(ctx, '#e9c9a6', bx, h - 7, 1, 2);
+    px(ctx, '#e9c9a6', bx + 1, h - 7, 1, 2);
+  }
+}
+
 const SPRITES: Record<string, (ctx: Ctx, w: number, h: number, id: string) => void> = {
   becu,
   circa,
@@ -1597,6 +1680,7 @@ const SPRITES: Record<string, (ctx: Ctx, w: number, h: number, id: string) => vo
   'easy-street-records': easyStreetRecords,
   'gas-station-76': gasStation76,
   'dakota-place': dakotaPlace,
+  'alki-pavilion': alkiPavilion,
   // a whole block face of shops; the landmark id picks the face in content/storefronts.ts
   storefronts: (ctx, w, h, id) => drawBlockFace(ctx, id, w, h),
 };
