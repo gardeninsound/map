@@ -1474,6 +1474,101 @@ function craftsman45th(ctx: Ctx, w: number, h: number) {
 }
 
 /**
+ * Dakota Place Park (4304 SW Dakota St, at California): the old California Avenue Substation,
+ * a one-story brick Seattle City Light building on a slight rise, a city landmark (2003),
+ * renovated in 2012 as a park building; its front door faces Dakota. A paved plaza on its
+ * west side with a tree and a bench, lawn and shrubs round it, the brown Seattle Parks sign.
+ */
+function dakotaPlace(ctx: Ctx, w: number, h: number) {
+  const brick = '#a4553f', mortar = '#8a4536', brickLight = '#b8664c';
+  const concrete = '#d9d3c4', concreteShade = '#b9b2a2', glass = '#34465e';
+  lawn(ctx, w, h);
+
+  // the plaza on the west side: pale pavers with joints
+  const pw = 22;
+  px(ctx, '#cfc6b2', 0, 14, pw, h - 20);
+  for (let y = 17; y < h - 6; y += 4) px(ctx, '#bdb39d', 0, y, pw, 1);
+  for (let x = 3; x < pw; x += 5) px(ctx, '#bdb39d', x, 14, 1, h - 20);
+  // a path from the plaza down to Dakota
+  px(ctx, '#cfc6b2', 8, h - 6, 7, 6);
+
+  // the building: shadow, flat roof seen from just above, a concrete parapet cap
+  const bx = 24, bw = w - bx - 2, top = 6, wall = 13, base = h - 9;
+  px(ctx, 'rgba(0,0,0,0.22)', bx - 2, base, bw + 3, 3);
+  px(ctx, INK, bx - 1, top - 1, bw + 2, wall - top + 1);
+  px(ctx, '#7d7a73', bx, top, bw, wall - top - 2);
+  for (let i = 0; i < 14; i++) px(ctx, i % 2 ? '#8e8b83' : '#6d6a63', bx + 1 + ((i * 7) % (bw - 2)), top + 1 + ((i * 3) % 4), 1, 1);
+  px(ctx, concrete, bx - 1, wall - 2, bw + 2, 2);
+  px(ctx, INK, bx - 1, wall, bw + 2, 1);
+  // brick walls, a concrete band near the top
+  px(ctx, INK, bx - 1, wall, bw + 2, base - wall + 1);
+  px(ctx, brick, bx, wall + 1, bw, base - wall - 1);
+  for (let y = wall + 5; y < base; y += 2) px(ctx, mortar, bx, y, bw, 1);
+  px(ctx, brickLight, bx, wall + 1, bw, 1);
+  px(ctx, concrete, bx, wall + 2, bw, 2);
+  px(ctx, concreteShade, bx, wall + 3, bw, 1);
+
+  // tall many-paned windows (the industrial sash put back in the 2012 renovation), concrete sills
+  const door = bx + Math.round(bw / 2) - 4;
+  for (const wx of [bx + 3, bx + bw - 10]) {
+    px(ctx, INK, wx - 1, wall + 6, 9, 15);
+    paneWindow(ctx, wx, wall + 7, 7, 13, 3, 4, '#e9e4d8', glass);
+    px(ctx, concrete, wx - 1, wall + 21, 9, 1);
+  }
+
+  // the front door on Dakota: a concrete surround, double doors, a lamp above
+  px(ctx, INK, door - 2, wall + 5, 12, base - wall - 5);
+  px(ctx, concrete, door - 1, wall + 6, 10, base - wall - 6);
+  px(ctx, INK, door + 1, wall + 9, 6, base - wall - 9);
+  px(ctx, '#3d5a4c', door + 2, wall + 10, 2, base - wall - 10);
+  px(ctx, '#3d5a4c', door + 4, wall + 10, 2, base - wall - 10);
+  px(ctx, '#e8c25a', door + 3, wall + 16, 1, 1);
+  px(ctx, '#e8c25a', door + 4, wall + 16, 1, 1);
+  px(ctx, '#fff3b0', door + 3, wall + 7, 2, 1);
+
+  // up from the sidewalk: steps to the door, a low wall along the rise
+  for (let i = 0; i < 3; i++) px(ctx, i % 2 ? '#c8c2b8' : '#d8d3cc', door - 2 - i, base + 1 + i * 2, 12 + i * 2, 2);
+  px(ctx, INK, bx - 1, base + 1, door - bx - 2, 1);
+  px(ctx, concrete, bx - 1, base + 2, door - bx - 2, 3);
+  px(ctx, INK, door + 12, base + 1, bx + bw - door - 11, 1);
+  px(ctx, concrete, door + 12, base + 2, bx + bw - door - 11, 3);
+
+  // shrubs along the foundation
+  for (const [sx, sw] of [[bx, 9], [bx + bw - 9, 9]] as const) {
+    px(ctx, INK, sx, base - 3, sw, 4);
+    px(ctx, '#2f6b48', sx + 1, base - 2, sw - 2, 3);
+    for (let i = sx + 2; i < sx + sw - 1; i += 3) px(ctx, '#4f8f63', i, base - 2, 1, 1);
+  }
+
+  // on the plaza: a tree, a bench, a planter of flowers
+  px(ctx, 'rgba(0,0,0,0.2)', 3, 25, 13, 3);
+  px(ctx, '#6b4a2b', 9, 16, 2, 10);
+  px(ctx, INK, 3, 3, 14, 13);
+  px(ctx, '#3f7d4e', 4, 4, 12, 11);
+  px(ctx, '#5a9a62', 5, 5, 5, 4);
+  px(ctx, '#2f6b48', 11, 10, 4, 4);
+  px(ctx, INK, 2, 5, 1, 9);
+  px(ctx, INK, 17, 5, 1, 9);
+  px(ctx, INK, 12, 30, 9, 1);
+  px(ctx, '#8a5a3a', 12, 31, 9, 2);
+  px(ctx, INK, 13, 33, 1, 2);
+  px(ctx, INK, 19, 33, 1, 2);
+  px(ctx, INK, 1, 31, 7, 5);
+  px(ctx, '#7a7468', 2, 32, 5, 3);
+  for (const [fx, c] of [[2, '#ff7eb6'], [4, '#ffd23f'], [6, '#ff7eb6']] as const) px(ctx, c, fx, 31, 1, 1);
+
+  // the Seattle Parks sign, brown with cream letters, by the sidewalk
+  const sign = 'DAKOTA';
+  const sw = textWidth(sign) + 4;
+  px(ctx, INK, 1, h - 11, sw + 2, 9);
+  px(ctx, '#5a3a24', 2, h - 10, sw, 7);
+  pixelText(ctx, sign, 4, h - 9, '#f3e6cc');
+  px(ctx, INK, 4, h - 2, 1, 2);
+  px(ctx, INK, sw - 1, h - 2, 1, 2);
+}
+
+
+/**
  * The Alki Bathing Pavilion (1911–1955), on today's bathhouse site in Alki Beach Park: "a
  * magnificent frame Recreation Pavilion", dedicated on the Fourth of July 1911, painted white,
  * with dressing and locker rooms, a gym, club rooms, a café and a viewing balcony for
@@ -1556,7 +1651,6 @@ function alkiPavilion(ctx: Ctx, w: number, h: number) {
   }
 }
 
-
 const SPRITES: Record<string, (ctx: Ctx, w: number, h: number, id: string) => void> = {
   becu,
   circa,
@@ -1585,6 +1679,7 @@ const SPRITES: Record<string, (ctx: Ctx, w: number, h: number, id: string) => vo
   'admiral-theatre': admiralTheatre,
   'easy-street-records': easyStreetRecords,
   'gas-station-76': gasStation76,
+  'dakota-place': dakotaPlace,
   'alki-pavilion': alkiPavilion,
   // a whole block face of shops; the landmark id picks the face in content/storefronts.ts
   storefronts: (ctx, w, h, id) => drawBlockFace(ctx, id, w, h),

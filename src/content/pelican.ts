@@ -1,5 +1,5 @@
 /**
- * The pelican who shows you the idea box: 10 s after you join it lands beside you, asks,
+ * The pelican who shows you the idea box: 2 minutes after you join it lands beside you, asks,
  * then flies up onto the ✿ IDEA button (src/ui/Pelican.tsx, flight in src/game/pelican.ts).
  * Drafts — Mike's to rewrite.
  */

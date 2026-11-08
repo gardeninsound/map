@@ -15,8 +15,9 @@ see it through a sixth field on the visitors wire). What the map draws:
 - ~27k houses at their true OSM size/angle (`paintHouses`), nudged back or shrunk where a
   street reaches them; other buildings as tiles
 - landmarks (`render/landmarks.ts`): 76 station, Admiral Theatre, Easy Street, the Undersea
-  Aviary, the 7-Eleven, Admiral Safeway, Shadowland, West Seattle Library, the 1911 Alki Bathing Pavilion (gone since
-  1955, drawn on its site from the written record; the sources are in its comment), and the Junction block faces (`render/storefronts.ts`, data in
+  Aviary, the 7-Eleven, Admiral Safeway, Shadowland, West Seattle Library, Dakota Place Park (the old brick
+  substation and its plaza), the 1911 Alki Bathing Pavilion (gone since 1955, drawn on its site from the
+  written record; the sources are in its comment), and the Junction block faces (`render/storefronts.ts`, data in
   `world/storefronts.ts`, shop fronts in `render/facades.ts`); a landmark with a `street`
   side is pulled flush with that street's sidewalk at render time
 - detailed places (Hiawatha Playfield, West Seattle High School): lawn, walkable footpaths
