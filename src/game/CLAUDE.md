@@ -50,7 +50,7 @@ plugins into `CityGame` and handles `onInteract`.
   you're `HOME` tiles away. Pure + tested in `src/game/pegasus.ts`; 24×20 sprite built from parts in
   `sprites.ts`. A shop's slice of a Junction block face: `src/game/storefrontSlot.ts` (also the arcade door).
 - `src/game/plugins/dinos.ts` — **toy dinosaurs** (from Mike's GIF) plodding west along the east–west streets
-  ("SW … St"): `DINO_COUNT` are always near you; each walks west until its street ends or it's `FAR` behind,
+  ("SW … St"): `DINO_COUNT` (2) are always somewhere near you; each walks west until its street ends or it's `FAR` behind,
   then turns up on another east–west street nearby, out of sight. Going by you (within `HEAR` tiles) it plays
   Mike's recording once a pass (`public/sounds/dinosaur.mp3`; not two at once; quiet in scenes and when muted). Pure + tested: `src/game/dinos.ts`. Sprite:
   `node scripts/make-dino.mjs <dino.gif>` keys out the green backdrop, keeps a soft shadow, inks an outline →

@@ -7,7 +7,7 @@
 import type { Vec } from '../city';
 
 /** how many are out at once */
-export const DINO_COUNT = 6;
+export const DINO_COUNT = 2;
 /** tiles a second: an unhurried plod (the rabbit walks 8) */
 export const DINO_SPEED = 1.6;
 /** a new one turns up this far from you: past the edge of the screen, not too far to meet */
