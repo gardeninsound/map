@@ -56,7 +56,9 @@ export function parseRecipe(text) {
   return { name: head.name, use: head.use, edit, read: list(head.read), test: list(head.test), body: m[2].trim() };
 }
 
-export const forbidden = (file) => FORBIDDEN.some((f) => (f.endsWith('/') ? file.startsWith(f) : file === f));
+export const forbidden = (file) =>
+  /(^|\/)CLAUDE\.md$/.test(file) || // every folder's notes, not just the root's
+  FORBIDDEN.some((f) => (f.endsWith('/') ? file.startsWith(f) : file === f));
 
 /** One line per recipe, for the spec prompt. */
 export const recipeIndex = (recipes) => recipes.map((r) => `- ${r.name}: ${r.use}`).join('\n');
