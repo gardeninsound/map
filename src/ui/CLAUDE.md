@@ -9,7 +9,7 @@ first, then `src/styles.css` (title, scenes, spots).
   form whose Tab order wraps inside the box) posts to the `wish/` Worker (how it files issues:
   `wish/CLAUDE.md`). `?wish=http://127.0.0.1:8791` points the site at `npm run dev` in wish/ (Turnstile's
   test key is used for a local Worker).
-- **The pelican** (`src/ui/Pelican.tsx`): once a session, 10 s after you join (`PELICAN_AFTER`; it waits if a dialog or scene is open), it flies in over the map and lands
+- **The pelican** (`src/ui/Pelican.tsx`): once a session, 2 minutes after you join (`PELICAN_AFTER`, 120 s; it waits if a dialog or scene is open), it flies in over the map and lands
   beside your rabbit ("Anything you want to add, pumpkin?"), flies up onto the ✿ IDEA button ("Dream it out!"),
   then off the screen. It's HTML laid over map and HUD (no clicks taken), placed with `CityGame.screenPoint()` and
   drawn at `CityGame.scale`; flight + timing pure and tested in `src/game/pelican.ts`, words in
