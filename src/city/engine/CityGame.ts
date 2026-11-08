@@ -34,6 +34,21 @@ export interface Target {
   data?: unknown;
 }
 
+/**
+ * Something the player is in that takes over where it can go, how fast, and how it looks
+ * (a plugin sets `game.vehicle`; e.g. a rowboat on the water). Shift does nothing in one.
+ */
+export interface Vehicle {
+  /** can the player be at (x, y)? replaces walkable-street ground */
+  canGo(x: number, y: number): boolean;
+  /** tiles a second */
+  speed: number;
+  /** drawn in place of the rabbit, feet (or keel) on the spot, two frames while moving */
+  sprite: Walker;
+  /** frames a second while moving (default 8) */
+  fps?: number;
+}
+
 /** A depth-sorted draw call: actors with a larger `y` draw on top. */
 export interface DrawItem {
   y: number;
@@ -110,6 +125,8 @@ export class CityGame {
   player: { pos: Vec; facing: Facing; walkT: number; moving: boolean; riding: boolean };
   /** the player can't move (a dialog or scene is open) */
   paused = false;
+  /** what the player is in, if anything (see Vehicle) */
+  vehicle: Vehicle | null = null;
   /** keep the street quiet (e.g. while a full-screen scene is open) — plugins read this */
   quiet = false;
   readonly npcs: Npc[];
@@ -233,8 +250,9 @@ export class CityGame {
       return;
     }
     const dir = input.dir();
-    p.riding = input.running();
-    const next = step(p.pos, dir, dt, p.riding ? RUN : WALK, this.world.isWalkable);
+    const v = this.vehicle;
+    p.riding = !v && input.running();
+    const next = step(p.pos, dir, dt, v ? v.speed : p.riding ? RUN : WALK, v ? v.canGo : this.world.isWalkable);
     p.moving = next !== p.pos && (next.x !== p.pos.x || next.y !== p.pos.y);
     p.facing = facingFor(dir, p.facing);
     p.pos = next;
@@ -382,15 +400,18 @@ export class CityGame {
       });
     }
     const p = this.player;
-    const frames = (p.riding ? this.riderSprite : this.playerSprite)[p.facing];
-    const frame = p.moving ? Math.floor(p.walkT * 8) % 2 : 0;
+    const v = this.vehicle;
+    const frames = (v ? v.sprite : p.riding ? this.riderSprite : this.playerSprite)[p.facing];
+    const frame = p.moving ? Math.floor(p.walkT * (v?.fps ?? 8)) % 2 : 0;
     items.push({
       y: p.pos.y,
       draw: () => {
         const s = toScreen(p.pos);
-        ctx.fillStyle = 'rgba(0,0,0,0.22)';
-        const w = p.riding && (p.facing === 'left' || p.facing === 'right') ? 18 : 10;
-        ctx.fillRect(s.x - w / 2, s.y + 1, w, 2);
+        if (!v) {
+          ctx.fillStyle = 'rgba(0,0,0,0.22)';
+          const w = p.riding && (p.facing === 'left' || p.facing === 'right') ? 18 : 10;
+          ctx.fillRect(s.x - w / 2, s.y + 1, w, 2);
+        }
         drawStanding(ctx, frames[frame], s.x, s.y);
       },
     });

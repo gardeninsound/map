@@ -46,6 +46,8 @@ export const sounds = {
       setTimeout(() => tone(1400, 0.1, 'square', 0.03, 300), 90);
     }
   },
+  /** an oar dipping in, rowing the boat at the end of 58th */
+  paddle: () => tone(300, 0.12, 'triangle', 0.025, -160),
   whoosh: () => {
     tone(320, 0.28, 'sawtooth', 0.025, -220);
     setTimeout(() => tone(140, 0.2, 'triangle', 0.03, -60), 60);

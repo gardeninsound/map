@@ -371,3 +371,115 @@ export function buildHam(): HamSprites {
 }
 
 export const hamGrids = { head: HAM_HEAD, strides: HAM_STRIDES, sit: HAM_SIT, groom: HAM_GROOM, colors: HAM_COLORS };
+
+/*
+ * The rowboat at the end of 58th (plugins/rowboat.ts), with or without the rabbit aboard: a
+ * wooden hull, the rabbit sitting in it from the waist up, oars forward and back for the two
+ * rowing frames. Side on 26×16; end on 18×22. Feet (keel) on the bottom row like any walker.
+ */
+const HULL = '#8a5a3a', HULL_DARK = '#6b4226', DECK = '#c08a52', OAR = '#d9b07a', SPLASH = '#e8f6fb';
+
+function boatCanvas(w: number, h: number, paint: (g: CanvasRenderingContext2D) => void, mirror = false) {
+  const c = document.createElement('canvas');
+  c.width = w;
+  c.height = h;
+  const g = c.getContext('2d')!;
+  if (mirror) {
+    g.translate(w, 0);
+    g.scale(-1, 1);
+  }
+  paint(g);
+  return c;
+}
+const fill = (g: CanvasRenderingContext2D, color: string, x: number, y: number, w = 1, h = 1) => {
+  g.fillStyle = color;
+  g.fillRect(x, y, w, h);
+};
+/** a 1-px line of `color` from (x0, y0) to (x1, y1) */
+function line(g: CanvasRenderingContext2D, color: string, x0: number, y0: number, x1: number, y1: number) {
+  const n = Math.max(Math.abs(x1 - x0), Math.abs(y1 - y0));
+  for (let i = 0; i <= n; i++) fill(g, color, Math.round(x0 + ((x1 - x0) * i) / n), Math.round(y0 + ((y1 - y0) * i) / n));
+}
+
+/** Side on, bow to the right. `rabbit`: its right-facing frame, or null for the empty boat. */
+function sideBoat(g: CanvasRenderingContext2D, rabbit: HTMLCanvasElement | null, stroke: 0 | 1 | null) {
+  // the oar behind the hull
+  if (stroke !== null) {
+    const [x0, x1] = stroke ? [15, 21] : [11, 4];
+    line(g, OAR, x0, 9, x1, 14);
+    fill(g, SPLASH, x1 - 1, 15, 3, 1);
+  }
+  // the rabbit, from the waist up (the hull hides the rest)
+  if (rabbit) g.drawImage(rabbit, 0, 0, 16, 11, 5, -1, 16, 11);
+  // the hull: gunwale, planks, pointed ends
+  fill(g, INK, 1, 9, 24, 1);
+  fill(g, INK, 0, 10, 1, 1);
+  fill(g, INK, 25, 10, 1, 1);
+  fill(g, HULL, 1, 10, 24, 2);
+  fill(g, INK, 1, 12, 1, 1);
+  fill(g, INK, 24, 12, 1, 1);
+  fill(g, HULL_DARK, 2, 12, 22, 2);
+  fill(g, INK, 2, 14, 1, 1);
+  fill(g, INK, 23, 14, 1, 1);
+  fill(g, INK, 3, 14, 20, 1);
+  fill(g, DECK, 2, 10, 22, 1);
+  // the oar's blade in front of the hull on the near side
+  if (stroke !== null) {
+    const [x0, x1] = stroke ? [13, 19] : [13, 7];
+    line(g, OAR, x0, 10, x1, 15);
+  }
+}
+
+/** End on (seen from behind going up, from the front going down): pointed both ends, oars out to the sides. */
+function endBoat(g: CanvasRenderingContext2D, rabbit: HTMLCanvasElement | null, stroke: 0 | 1 | null) {
+  const rows: [number, number][] = [[3, 2], [3, 3], [2, 4], [2, 5], [1, 6], [1, 6], [1, 6], [1, 6], [1, 6], [1, 6], [1, 6], [1, 6], [1, 6], [2, 5], [2, 5], [3, 4], [3, 3], [4, 2]];
+  rows.forEach(([inset, half], j) => {
+    const y = 3 + j;
+    const x0 = 9 - half - (inset > 2 ? 0 : 1);
+    const w = (half + (inset > 2 ? 0 : 1)) * 2;
+    fill(g, INK, x0 - 1, y, w + 2, 1);
+    fill(g, j < 2 || j > rows.length - 3 ? HULL : DECK, x0, y, w, 1);
+  });
+  // the seat
+  fill(g, HULL, 3, 13, 12, 1);
+  // oars out to either side
+  if (stroke !== null) {
+    const dy = stroke ? 2 : -2;
+    for (const [x0, x1] of [[4, 0], [13, 17]] as const) {
+      line(g, OAR, x0, 12, x1, 12 + dy);
+      fill(g, SPLASH, x1 - 1, 13 + dy, 2, 1);
+    }
+  }
+  if (rabbit) g.drawImage(rabbit, 0, 0, 16, 12, 1, 2, 16, 12);
+}
+
+export interface RowboatSprites {
+  /** the rabbit rowing, two strokes per direction (a Walker for the city's Vehicle) */
+  rowing: Walker;
+  /** the empty boat, tied up */
+  empty: { side: HTMLCanvasElement; end: HTMLCanvasElement };
+}
+
+export function buildRowboat(rabbit: Walker): RowboatSprites {
+  const side = (stroke: 0 | 1, mirror: boolean) => boatCanvas(26, 16, (g) => sideBoat(g, rabbit.right[0]!, stroke), mirror);
+  const end = (r: HTMLCanvasElement, stroke: 0 | 1) => boatCanvas(18, 22, (g) => endBoat(g, r, stroke));
+  return {
+    rowing: {
+      right: [side(0, false), side(1, false)],
+      left: [side(0, true), side(1, true)],
+      up: [end(rabbit.up[0]!, 0), end(rabbit.up[0]!, 1)],
+      down: [end(rabbit.down[0]!, 0), end(rabbit.down[0]!, 1)],
+    },
+    empty: {
+      side: boatCanvas(26, 16, (g) => sideBoat(g, null, null)),
+      // from above, oars shipped: lying along the seat, blades past either end
+      end: boatCanvas(18, 22, (g) => {
+        endBoat(g, null, null);
+        line(g, OAR, 6, 6, 6, 19);
+        line(g, OAR, 11, 6, 11, 19);
+        fill(g, OAR, 5, 18, 3, 2);
+        fill(g, OAR, 10, 18, 3, 2);
+      }),
+    },
+  };
+}

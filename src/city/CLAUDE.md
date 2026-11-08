@@ -9,7 +9,8 @@ movement, neighbors, input), `render/` (palette, sprites, per-pixel roads, tile 
 landmarks), `ui/` (HUD, dialog box, touch pad, sounds, `ui.css`). Import it via
 `src/city/index.ts`. Its unit tests run with the rest. Holding Shift puts the rabbit on a
 bicycle at RUN speed (`buildBikeRabbit` in `render/sprites.ts`, `player.riding`; other rabbits
-see it through a sixth field on the visitors wire). What the map draws:
+see it through a sixth field on the visitors wire). A plugin can put the player in a `Vehicle`
+  (`game.vehicle`: where it can go, its speed, its sprite — the rowboat uses it); Shift does nothing then. What the map draws:
 - every public street (no alleys) on its real centreline, at its real width × 2; walkable
   band ≥ 1.5 tiles; ~300 street names (uint16 per tile)
 - ~27k houses at their true OSM size/angle (`paintHouses`), nudged back or shrunk where a
