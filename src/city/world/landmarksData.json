@@ -348,5 +348,14 @@
   "w": 3,
   "h": 3,
   "street": "W"
+ },
+ {
+  "id": "alki-pavilion",
+  "name": "Alki Bathing Pavilion (1911)",
+  "sprite": "alki-pavilion",
+  "lat": 47.579695,
+  "lon": -122.40964,
+  "w": 5,
+  "h": 3
  }
 ]
