@@ -14,7 +14,7 @@ export { createWorld, distanceField, isBuilding, isWalkableTile, markerSpot, Til
 export type { DrawnBuilding, MapLabel, ParkFeature, PlacedLandmark, RoadLine, Storefront, TileCode, World } from './world/world';
 
 export { CityGame, zoomFor } from './engine/CityGame';
-export type { CityGameEvents, CityGameOptions, CityPlugin, DrawContext, DrawItem, Target } from './engine/CityGame';
+export type { CityGameEvents, CityGameOptions, CityPlugin, DrawContext, DrawItem, Target, Vehicle } from './engine/CityGame';
 export { facingFor, fits, step, FOOT } from './engine/movement';
 export type { Facing, Vec } from './engine/movement';
 export { cityVoices, NPC_PALETTES, rng, spawnNpcs, wander } from './engine/npcs';

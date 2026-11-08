@@ -31,6 +31,7 @@ import { BigCup } from './game/plugins/bigCup';
 import { Seal } from './game/plugins/seal';
 import { ArcadeDoor } from './game/plugins/arcadeDoor';
 import { Dinos } from './game/plugins/dinos';
+import { Rowboat } from './game/plugins/rowboat';
 import { LunaPark, lunaSignPortrait } from './game/plugins/lunaPark';
 import { lunaRideInvite, type LunaSign } from './content/lunaPark';
 import { Visitors } from './game/plugins/visitors';
@@ -155,6 +156,7 @@ export default function App() {
     const pegasus = new Pegasus();
     const dinos = new Dinos();
     const ham = new Ham();
+    const rowboat = new Rowboat();
     const luna = new LunaPark();
     // Everyone else on the island, live. `?solo` walks alone; `?relay=` points at another
     // relay; in dev, `?island=<name>` uses a private room so tests don't walk onto the real one.
@@ -168,7 +170,7 @@ export default function App() {
     const g = new CityGame(canvas.current!, world, {
       start: world.project(START.lat, START.lon),
       voices: neighborVoices,
-      plugins: [art, new BigCup(art), dinos, new Seal(), arcadeDoor.current, luna, busker, crow, chicken, pegasus, ham, ...(live ? [live] : [])],
+      plugins: [art, new BigCup(art), dinos, new Seal(), arcadeDoor.current, luna, busker, crow, chicken, pegasus, ham, rowboat, ...(live ? [live] : [])],
       events: {
         onStreet: setStreet,
         onStorefront: setStorefront,
@@ -177,6 +179,9 @@ export default function App() {
           sounds.confirm();
           if (t.kind === 'arcade') {
             setOverlay({ kind: 'arcade' });
+          } else if (t.kind === 'boat') {
+            // the rowboat at the end of 58th: climb in, or back out onto the shore
+            rowboat.interact(g);
           } else if (t.kind === 'luna') {
             // a sign at Luna Park; the Figure Eight's offers a ride, Pat answers a sum
             const sign = t.data as LunaSign;
@@ -248,7 +253,7 @@ export default function App() {
       },
     });
     g.paused = true;
-    if (import.meta.env.DEV) Object.assign(window, { __game: g, __busker: busker, __crow: crow, __chicken: chicken, __pegasus: pegasus, __ham: ham, __dinos: dinos, __art: art, __luna: luna, __visitors: live }); // test hooks
+    if (import.meta.env.DEV) Object.assign(window, { __game: g, __busker: busker, __crow: crow, __chicken: chicken, __pegasus: pegasus, __ham: ham, __rowboat: rowboat, __dinos: dinos, __art: art, __luna: luna, __visitors: live }); // test hooks
     // Review hooks: ?at=lat,lon (or ?atTile=x,y, or ?at=arcade) skips the title and drops you there;
     // ?audit scans the whole map for road-drawing glitches (scripts/city/road-audit.mjs).
     const q = new URLSearchParams(location.search);

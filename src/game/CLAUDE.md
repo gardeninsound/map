@@ -36,6 +36,14 @@ plugins into `CityGame` and handles `onInteract`.
   street and alley within `HAM.leash` tiles of home, sits to look at a rabbit nearby, and says one set
   of lines per visit through the plain neighbor talk (words in `src/content/ham.ts`; movement pure +
   tested in `src/game/ham.ts`). `__ham` in dev.
+- `src/game/plugins/rowboat.ts` — **the rowboat at the end of 58th Ave SW** on Alki: at attach a 2-wide wooden dock is
+  laid from where 58th meets Alki Ave west across the park and sand to the water (tiles turned walkable, street sign
+  "58th Ave Dock"; laid once per map, so React's dev double start reuses it), the boat tied up at its end. {A}
+  climbs in: the plugin sets `game.vehicle` (rows on water tiles only, `BOAT_SPEED`, the rabbit drawn in the boat);
+  {A} where walkable ground is within `SHORE_REACH` (the dock, a pier — not the sand) climbs out, and the boat
+  stays there until you're `BOAT_HOME` tiles off, then it's back at the dock. Rules pure + tested in
+  `src/game/rowboat.ts`; sprites (`buildRowboat`, drawn round the rabbit's own frames) in `sprites.ts`; words in
+  `src/content/rowboat.ts`.
 - `src/game/plugins/pegasus.ts` — the pegasus in Pegasus Books (Junction, west side): come within `NOTICE`
   tiles and it walks out of the door (clipped at the shop front), says hello in a tiny-font bubble
   (`src/content/pegasus.ts`, one line per visit) with a whinny, then flies off north-east; home again once
