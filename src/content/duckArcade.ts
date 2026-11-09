@@ -21,6 +21,9 @@ export interface ArcadeGame {
 }
 
 export const ARCADE_NAME = 'Duck Arcade';
+
+/** The room's music: looped quietly while you're on the floor (paused while a cabinet's game plays). */
+export const ARCADE_MUSIC = { file: 'arcade/Paddles_at_Dawn.mp3', volume: 0.2 };
 export const ARCADE_WHERE = 'California & Alaska · the Junction';
 
 export const arcadeGames: ArcadeGame[] = [
