@@ -3,7 +3,6 @@ import { execFileSync } from 'node:child_process';
 import { neededArt } from '../../scripts/neededArt.mjs';
 import { CEILING_VIDEO, POSTERS } from '../experiences/arcade/ArcadeScene';
 import { DINO_SHEET } from '../game/dinoSheet';
-import { DINO_SOUND } from '../game/dinos';
 import { arcadeGames } from './duckArcade';
 import { moonStories } from './duckOnTheMoon';
 
@@ -25,7 +24,6 @@ describe('published files', () => {
       ...POSTERS.map(([name]) => `public/arcade/posters/${name}.webp`),
       ...CEILING_VIDEO.map((file) => `public/${file}`),
       `public/${DINO_SHEET.file}`,
-      `public/${DINO_SOUND}`,
       ...arcadeGames.flatMap((g) => (g.front ? [`public/${g.front}`] : [])),
       ...Object.values(moonStories).map((s) => `public/duck-on-the-moon/${s.file}`),
     ];
