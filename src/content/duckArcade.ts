@@ -105,6 +105,8 @@ export const arcadeGames: ArcadeGame[] = [
  */
 export const BEAR_NAME = 'Bear';
 export const BEAR_GAME = 'avocado-drop';
+/** The deer who plays Quack Hero all visit long, bobbing to the beat (experiences/arcade/ArcadeDeer.ts). */
+export const DEER_GAME = 'quack-hero';
 export const bearLines = {
   offer: ["Wow! You're really good at that game. Want a licorice?"],
   /** under the bag while it waits; {A} also takes one */
