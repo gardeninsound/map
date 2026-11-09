@@ -12,7 +12,7 @@ export interface Pt {
 }
 
 /** seconds after you join (past the title) that it comes, once nothing else is open */
-export const PELICAN_AFTER = 120;
+export const PELICAN_AFTER = 300;
 
 export type PelicanPhase = 'arrive' | 'ask' | 'hop' | 'perch' | 'leave' | 'done';
 const ORDER: Exclude<PelicanPhase, 'done'>[] = ['arrive', 'ask', 'hop', 'perch', 'leave'];
@@ -53,6 +53,19 @@ export function phaseAt(t: number, times: PelicanTimes = PELICAN_TIMES): { phase
 }
 
 export const totalTime = (times: PelicanTimes = PELICAN_TIMES) => ORDER.reduce((s, p) => s + times[p], 0);
+
+/** Seconds into the visit at which `phase` starts. */
+export const phaseStart = (phase: Exclude<PelicanPhase, 'done'>, times: PelicanTimes = PELICAN_TIMES) =>
+  ORDER.slice(0, ORDER.indexOf(phase)).reduce((s, p) => s + times[p], 0);
+
+/**
+ * You tapped {A} (Space): while it's still flying in or asking, it heads for the IDEA button
+ * right away. Returns the time to jump to (later than `t`), or `t` if it's already on its way.
+ */
+export function skipAhead(t: number, times: PelicanTimes = PELICAN_TIMES): number {
+  const { phase } = phaseAt(t, times);
+  return phase === 'arrive' || phase === 'ask' ? phaseStart('hop', times) : t;
+}
 
 /** A swooping flight from a to b: a curve through a point `lift` px above the higher end. */
 export function arc(a: Pt, b: Pt, k: number, lift: number): Pt {
