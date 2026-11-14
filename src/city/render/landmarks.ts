@@ -334,7 +334,7 @@ function underseaAviary(ctx: Ctx, w: number, h: number) {
   }
   for (const ax of [cx - rx + 2, cx + rx - 5]) {
     px(ctx, '#5fa8a0', ax, base - 2, 4, 2);
-    for (let i = 0; i < 4; i++) px(ctx, i % 2 ? '#e8a59a' : '#7fc0b0', ax + i, base - 4 + (i % 2), 1, 2);
+    for (let i = 0; i < 4; i++) px(ctx, i % 2 ? '#e8a59a' : '#79aab0', ax + i, base - 4 + (i % 2), 1, 2);
   }
   // birds on the rebar
   for (const [bx, by] of [[cx - 16, top(cx - 16) - 2], [cx + 13, top(cx + 13) - 2], [cx + 20, top(cx + 20) - 2]]) {
@@ -361,8 +361,8 @@ function paneWindow(ctx: Ctx, x: number, y: number, w: number, h: number, cols: 
 
 /** A house lot's lawn behind the drawing, so its corners read as yard, not paving. */
 function lawn(ctx: Ctx, w: number, h: number) {
-  px(ctx, '#5e9a72', 0, 0, w, h);
-  for (let i = 0; i < 40; i++) px(ctx, i % 2 ? '#4b8460' : '#79b48a', (i * 29) % w, (i * 17) % h, 1, 2);
+  px(ctx, '#8f9a52', 0, 0, w, h);
+  for (let i = 0; i < 40; i++) px(ctx, i % 2 ? '#76813f' : '#b3b064', (i * 29) % w, (i * 17) % h, 1, 2);
 }
 
 /** A hipped roof seen from the front: a trapezoid from a ridge down to the eaves, ink-edged. */
@@ -438,9 +438,9 @@ function satterleeHouse(ctx: Ctx, w: number, h: number) {
   px(ctx, INK, 1, base, w - 2, 1);
   // hedges either side of the steps
   for (const [hx, hw] of [[0, 15], [33, 15]] as const) {
-    px(ctx, '#2f6b48', hx, 40, hw, 5);
+    px(ctx, '#6e7a34', hx, 40, hw, 5);
     px(ctx, INK, hx, 39, hw, 1);
-    for (let i = hx + 1; i < hx + hw; i += 3) px(ctx, '#4f8f63', i, 41 + (i % 2), 1, 1);
+    for (let i = hx + 1; i < hx + hw; i += 3) px(ctx, '#f0a03a', i, 41 + (i % 2), 1, 1);
   }
 }
 
@@ -501,7 +501,7 @@ function hainsworthHouse(ctx: Ctx, w: number, h: number) {
   // roses climbing the wall by the door
   for (let i = 0; i < 14; i++) {
     const rx = 15 + ((i * 5) % 6), ry = 30 + ((i * 7) % 11);
-    px(ctx, i % 3 ? '#4f8f63' : '#e8a59a', rx, ry, 1, 1);
+    px(ctx, i % 3 ? '#f0a03a' : '#e8a59a', rx, ry, 1, 1);
   }
   px(ctx, INK, 1, base, w - 2, 1);
   // the wrought-iron fence: a rail of pointed arches along the front
@@ -948,8 +948,8 @@ function westSeattleLibrary(ctx: Ctx, w: number, h: number) {
   // shrubs along the foundation
   for (const sx of [4, w - 18]) {
     px(ctx, INK, sx, h - 11, 14, 4);
-    px(ctx, '#2f6b48', sx + 1, h - 10, 12, 3);
-    for (let i = sx + 2; i < sx + 13; i += 3) px(ctx, '#4f8f63', i, h - 10, 1, 1);
+    px(ctx, '#6e7a34', sx + 1, h - 10, 12, 3);
+    for (let i = sx + 2; i < sx + 13; i += 3) px(ctx, '#f0a03a', i, h - 10, 1, 1);
   }
 }
 
@@ -1536,17 +1536,17 @@ function dakotaPlace(ctx: Ctx, w: number, h: number) {
   // shrubs along the foundation
   for (const [sx, sw] of [[bx, 9], [bx + bw - 9, 9]] as const) {
     px(ctx, INK, sx, base - 3, sw, 4);
-    px(ctx, '#2f6b48', sx + 1, base - 2, sw - 2, 3);
-    for (let i = sx + 2; i < sx + sw - 1; i += 3) px(ctx, '#4f8f63', i, base - 2, 1, 1);
+    px(ctx, '#6e7a34', sx + 1, base - 2, sw - 2, 3);
+    for (let i = sx + 2; i < sx + sw - 1; i += 3) px(ctx, '#f0a03a', i, base - 2, 1, 1);
   }
 
   // on the plaza: a tree, a bench, a planter of flowers
   px(ctx, 'rgba(0,0,0,0.2)', 3, 25, 13, 3);
   px(ctx, '#6b4a2b', 9, 16, 2, 10);
   px(ctx, INK, 3, 3, 14, 13);
-  px(ctx, '#3f7d4e', 4, 4, 12, 11);
-  px(ctx, '#5a9a62', 5, 5, 5, 4);
-  px(ctx, '#2f6b48', 11, 10, 4, 4);
+  px(ctx, '#c4531f', 4, 4, 12, 11);
+  px(ctx, '#f0a03a', 5, 5, 5, 4);
+  px(ctx, '#6e7a34', 11, 10, 4, 4);
   px(ctx, INK, 2, 5, 1, 9);
   px(ctx, INK, 17, 5, 1, 9);
   px(ctx, INK, 12, 30, 9, 1);
