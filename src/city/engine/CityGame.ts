@@ -47,6 +47,8 @@ export interface Vehicle {
   sprite: Walker;
   /** frames a second while moving (default 8) */
   fps?: number;
+  /** it's a bicycle: other players see you riding (the visitors wire's `riding`) */
+  riding?: boolean;
 }
 
 /** A depth-sorted draw call: actors with a larger `y` draw on top. */
@@ -251,7 +253,7 @@ export class CityGame {
     }
     const dir = input.dir();
     const v = this.vehicle;
-    p.riding = !v && input.running();
+    p.riding = v ? !!v.riding : input.running();
     const next = step(p.pos, dir, dt, v ? v.speed : p.riding ? RUN : WALK, v ? v.canGo : this.world.isWalkable);
     p.moving = next !== p.pos && (next.x !== p.pos.x || next.y !== p.pos.y);
     p.facing = facingFor(dir, p.facing);

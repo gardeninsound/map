@@ -4,7 +4,8 @@
  * the snack crow.
  * Same ASCII-grid format as the city's sprites (src/city/render/sprites.ts).
  */
-import { gridToCanvas, hop, INK, type Grid, type Walker } from '../city';
+import { BIKE_GRIDS, gridToCanvas, hop, INK, type Grid, type Walker } from '../city';
+import type { AnimalKind } from '../content/bikeRace';
 import { LEMON_RIPE, LEMON_UNRIPE } from './lemon';
 import { HEART, HEART_BEAT, lemonSpin } from './lemonSpin';
 
@@ -482,4 +483,57 @@ export function buildRowboat(rabbit: Walker): RowboatSprites {
       }),
     },
   };
+}
+
+/*
+ * The bike racers (plugins/bikeRace.ts): animals on bicycles seen head on, racing toward you
+ * down California. Each is an animal's head and shoulders (12 rows: ears, face, jersey) on
+ * the city bike's lower half (handlebars, knees, pedalling legs, tyre), 16×20, two frames.
+ * k ink, w fur, g fur shade, u muzzle, x mask, o bill, j jersey; r frame, y lamp, m tyre.
+ */
+const HEAD: Grid = [
+  '...kwwwwwwwwk...',
+  '..kwwwwwwwwwwk..',
+  '..kwwkwwwwkwwk..',
+  '..kwwwwwwwwwwk..',
+  '..kwwwuuuuwwwk..',
+  '..kgwwukkuwwgk..',
+  '...kgwwwwwwgk...',
+  '....kkkkkkkk....',
+  '...kjjjjjjjjk...',
+];
+/** an animal's 12 top rows: its ears over the shared head, then any changes to the face (row → line) */
+const animalTop = (ears: Grid, face: Record<number, string> = {}): Grid => [...ears, ...HEAD].map((row, i) => face[i] ?? row);
+const ANIMAL_TOPS: Record<AnimalKind, Grid> = {
+  fox: animalTop(['..k..........k..', '..kk........kk..', '..kwk......kwk..']),
+  bear: animalTop(['................', '..kkk......kkk..', '..kgwk....kwgk..']),
+  cat: animalTop(['................', '...k........k...', '..kwk......kwk..']),
+  raccoon: animalTop(['................', '...kk......kk...', '..kwwk....kwwk..'], { 5: '..kxxkxxxxkxxk..' }),
+  frog: animalTop(['................', '..kkk......kkk..', '.kwkwk....kwkwk.'], { 5: '..kwwwwwwwwwwk..', 8: '..kgwkkkkkkwgk..' }),
+  duck: animalTop(['................', '.....kkkkkk.....', '....kwwwwwwk....'], { 7: '..kwwoooooowwk..', 8: '..kgwoooooowgk..' }),
+  dog: animalTop(['................', '..kkk......kkk..', '.kggk......kggk.'], { 3: '.kgkwwwwwwwwkgk.', 4: '.kgkwwwwwwwwkgk.', 5: '.kkkwkwwwwkwkkk.' }),
+};
+const FUR: Record<AnimalKind, Record<string, string>> = {
+  fox: { w: '#e8762c', g: '#c4531f', u: '#fff1e0' },
+  bear: { w: '#8a5a3b', g: '#6b4226', u: '#e0b98c' },
+  cat: { w: '#a7a5b6', g: '#7c7a8e', u: '#f3efe4' },
+  raccoon: { w: '#8f8b86', g: '#6e6a66', u: '#e9e4d8', x: '#2a2433' },
+  frog: { w: '#6fbf4a', g: '#4f9a34', u: '#d8eaa0' },
+  duck: { w: '#ffd23f', g: '#e8b020', u: '#ffd23f', o: '#f47b20' },
+  dog: { w: '#e8d2a6', g: '#a8784a', u: '#fff1e0' },
+};
+/** the city bike's lower half, both pedal strokes */
+const bikeBottom = (g: Grid) => g.slice(12);
+export const ANIMAL_BIKE_GRIDS = Object.fromEntries(
+  (Object.keys(ANIMAL_TOPS) as AnimalKind[]).map((k) => [
+    k,
+    [BIKE_GRIDS.BIKE_DOWN_A, BIKE_GRIDS.BIKE_DOWN_B].map((g) => [...ANIMAL_TOPS[k], ...bikeBottom(g)]),
+  ]),
+) as Record<AnimalKind, [Grid, Grid]>;
+
+/** An animal on its bike in its jersey: the two pedalling frames. */
+export function buildAnimalBike(kind: AnimalKind, jersey: string): [HTMLCanvasElement, HTMLCanvasElement] {
+  const colors = { k: INK, y: '#ffd23f', m: '#9a98b0', r: jersey, j: jersey, ...FUR[kind] };
+  const [a, b] = ANIMAL_BIKE_GRIDS[kind];
+  return [gridToCanvas(a, colors), gridToCanvas(b, colors)];
 }
