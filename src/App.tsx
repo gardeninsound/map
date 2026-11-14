@@ -1,6 +1,8 @@
 import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   bindKeyboard,
+  buildBikeRabbit,
+  buildRabbit,
   CityGame,
   Compass,
   createWorld,
@@ -34,6 +36,8 @@ import { BikeRace } from './game/plugins/bikeRace';
 import { raceResult } from './content/bikeRace';
 import { Dinos } from './game/plugins/dinos';
 import { Rowboat } from './game/plugins/rowboat';
+import { LookPicker } from './ui/LookPicker';
+import { dress, loadLook, lookCode, LOOK_SCARVES, saveLook } from './game/look';
 import { ChickenBoxing } from './game/plugins/chickenBoxing';
 import { ANNOUNCER, ringside } from './content/chickenBoxing';
 import { buildChicken } from './game/sprites';
@@ -136,6 +140,9 @@ export default function App() {
   const [, setRabbitTick] = useState(0);
   const [rabbitsOpen, setRabbitsOpen] = useState(false);
   const [sayOpen, setSayOpen] = useState(false);
+  // your rabbit's fur, scarf and hat (idea box #38, #34), remembered here and sent to everyone
+  const [look, setLook] = useState(loadLook);
+  const [lookOpen, setLookOpen] = useState(false);
   const [started, setStarted] = useState(false);
   /** the pelican's visit, once a session, PELICAN_AFTER s after you join (ui/Pelican.tsx) */
   const [pelican, setPelican] = useState(false);
@@ -312,6 +319,15 @@ export default function App() {
     };
   }, [world]);
 
+  // Dress your rabbit (walking and on the bike), remember the look, and send it with your rabbit.
+  useEffect(() => {
+    saveLook(look);
+    if (!game) return;
+    const scarf = LOOK_SCARVES[look.scarf];
+    game.setPlayerSprites(dress(buildRabbit(scarf), look), dress(buildBikeRabbit(scarf), look));
+    if (visitors) visitors.look = lookCode(look);
+  }, [game, visitors, look]);
+
   // Show up on everyone else's map once past the title screen.
   useEffect(() => {
     if (started) visitors?.join();
@@ -440,6 +456,9 @@ export default function App() {
                   {touch ? '♥' : '♥ SAY'}
                 </button>
               )}
+              <button onClick={() => setLookOpen((o) => !o)} aria-pressed={lookOpen} aria-label="Change how your rabbit looks">
+                {touch ? '◆' : '◆ LOOK'}
+              </button>
               <button
                 className="hud-idea"
                 onClick={() => { sounds.confirm(); setOverlay({ kind: 'idea' }); }}
@@ -458,6 +477,7 @@ export default function App() {
                 {muted ? '♪ OFF' : '♪ ON'}
               </button>
             </div>
+            {lookOpen && overlay.kind === 'none' && <LookPicker look={look} onChange={setLook} onClose={() => setLookOpen(false)} />}
             {visitors && sayOpen && overlay.kind === 'none' && (
               <div className="say-picker" role="group" aria-label="Say something">
                 {EMOTES.map((e, i) => (

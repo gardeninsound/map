@@ -131,3 +131,12 @@ describe('presence: here, away or gone', () => {
     expect(presence(null, 5, { hiddenGone: 2, idleAway: 4, idleGone: 8 })).toBe('away');
   });
 });
+
+describe('looks on the wire', () => {
+  it('carries your look, and older messages read as the default', () => {
+    const s = { pos: { x: 3, y: 4 }, facing: 'down' as const, moving: false, away: false, riding: false, look: 0x123 };
+    expect(decode(encode(s))?.look).toBe(0x123);
+    expect(decode([3, 4, 1, 0, 0, 0])?.look).toBeUndefined();
+    expect(decode([3, 4, 1, 0, 0, 0, 'hat'])?.look).toBeUndefined();
+  });
+});

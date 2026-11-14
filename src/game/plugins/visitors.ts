@@ -1,4 +1,5 @@
 import { buildBikeRabbit, buildRabbit, drawStanding, gridToCanvas, INK, tone, type CityGame, type CityPlugin, type DrawContext, type Grid, type Target, type Walker } from '../../city';
+import { dress, lookFrom, LOOK_SCARVES } from '../look';
 import type { MapMarker } from '../../city';
 import { EMOTES } from '../../content/emotes';
 import { joinRelay, type RelayRoom } from '../../net/relay';
@@ -71,6 +72,8 @@ export class Visitors implements CityPlugin {
   private room: RelayRoom | null = null;
   private game: CityGame | null = null;
   private sprites = new Map<string, Walker>();
+  /** your look (game/look.ts), sent with your rabbit */
+  look = 0;
   private bikes = new Map<string, Walker>();
   private last: RabbitWire | null = null;
   private sinceSend = 0;
@@ -309,7 +312,7 @@ export class Visitors implements CityPlugin {
     const g = this.game;
     if (!g) return null;
     const p = g.player;
-    return encode({ pos: p.pos, facing: p.facing, moving: p.moving && !g.paused && this.state === 'here', away: g.paused || this.state !== 'here', riding: p.riding && !g.paused });
+    return encode({ pos: p.pos, facing: p.facing, moving: p.moving && !g.paused && this.state === 'here', away: g.paused || this.state !== 'here', riding: p.riding && !g.paused, look: this.look });
   }
 
   update(dt: number) {
@@ -326,10 +329,17 @@ export class Visitors implements CityPlugin {
     }
   }
 
-  private spriteFor(id: string, riding = false): Walker {
+  private spriteFor(id: string, riding = false, code?: number): Walker {
     const cache = riding ? this.bikes : this.sprites;
-    let s = cache.get(id);
-    if (!s) cache.set(id, (s = (riding ? buildBikeRabbit : buildRabbit)(scarfFor(id))));
+    const key = `${id}:${code ?? ''}`;
+    let s = cache.get(key);
+    if (!s) {
+      const build = riding ? buildBikeRabbit : buildRabbit;
+      // dressed in the look they picked, or their default scarf
+      const look = code ? lookFrom(code) : null;
+      s = look ? dress(build(LOOK_SCARVES[look.scarf]), look) : build(scarfFor(id));
+      cache.set(key, s);
+    }
     return s;
   }
 
@@ -349,7 +359,7 @@ export class Visitors implements CityPlugin {
     for (const v of this._hidden ? [] : this.visitors.values()) {
       const s = d.toScreen(v.shown);
       if (!d.onScreen(s, 40)) continue;
-      const frames = this.spriteFor(v.id, v.target.riding)[v.target.facing];
+      const frames = this.spriteFor(v.id, v.target.riding, v.target.look)[v.target.facing];
       const frame = v.walkT ? Math.floor(v.walkT * 8) % 2 : 0;
       const said = this.said.get(v.id);
       const near = Math.hypot(v.shown.x - me.x, v.shown.y - me.y) < NAME_RANGE;

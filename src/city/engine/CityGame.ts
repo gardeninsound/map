@@ -242,6 +242,12 @@ export class CityGame {
   /** the neighbor you're talking to (also set for plugin targets that carry an `npc`) */
   lastTalked: Npc | null = null;
 
+  /** Swap the player's sprites (walking, and on the bike) — e.g. a rabbit dressed in its own look. */
+  setPlayerSprites(player: Walker, rider: Walker) {
+    this.playerSprite = player;
+    this.riderSprite = rider;
+  }
+
   teleport(p: Vec) {
     this.player.pos = this.world.nearestWalkable(p.x, p.y);
     this.player.facing = 'down';
