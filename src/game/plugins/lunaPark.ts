@@ -737,7 +737,7 @@ function drawWagon(ctx: Ctx, at: Vec, pig: Vec, dir: number, t: number) {
   px(ctx, '#4a2e1a', f(13, 4), wy - 8, 4, 1); // tongue
   px(ctx, INK, wx - 15, wy - 18, 31, 11);
   px(ctx, '#3f7a4a', wx - 14, wy - 17, 29, 9);
-  px(ctx, '#5a9a62', wx - 14, wy - 17, 29, 2); // top board, catching light
+  px(ctx, '#f0a03a', wx - 14, wy - 17, 29, 2); // top board, catching light
   px(ctx, '#2c5a36', wx - 14, wy - 10, 29, 2);
   px(ctx, GOLD, wx - 13, wy - 13, 27, 1); // pinstripe
   // red wheels with turning spokes; the back ones bigger

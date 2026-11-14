@@ -5,8 +5,8 @@
   position: absolute; inset: 0; z-index: 30;
   display: grid; place-items: center; padding: 16px;
   background:
-    linear-gradient(transparent 62%, #2f8f45 62%, #2f8f45 70%, #7ed957 70%),
-    linear-gradient(#2b2350, #7a40a0 45%, #ff7eb6 62%);
+    linear-gradient(transparent 62%, #6e7a34 62%, #6e7a34 70%, #b3b064 70%),
+    linear-gradient(#3b1f2b, #c4531f 45%, #ff2e93 62%);
 }
 .title-sky { position: absolute; inset: 0; pointer-events: none; }
 .star {
@@ -19,7 +19,7 @@
   box-shadow: var(--frame), 12px 12px 0 12px rgba(0,0,0,0.25);
   max-width: 560px;
 }
-.title-kicker { font-family: var(--pixel); font-size: 10px; color: #7a40a0; margin: 0 0 18px; }
+.title-kicker { font-family: var(--pixel); font-size: 10px; color: #a3321e; margin: 0 0 18px; }
 .title-logo {
   font-family: var(--pixel); font-weight: 400;
   font-size: clamp(28px, 10vw, 72px); line-height: 1.15; margin: 0;
