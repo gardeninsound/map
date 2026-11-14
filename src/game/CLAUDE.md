@@ -80,6 +80,11 @@ plugins into `CityGame` and handles `onInteract`.
   `src/game/chickenBoxing.ts`: 3 rounds of punches on a beat, knockdowns with a count, rests in the corners), so every
   rabbit sees the same punch; feathers + a thud when one lands, the bell each round. Ringside {A}: the announcer
   (target kind `boxing`; names, colours, lines in `src/content/chickenBoxing.ts`). `__boxing` in dev.
+- `src/game/plugins/forestMaze.ts` — **the forest maze in Schmitz Preserve** (idea box #42): a seeded perfect maze (`makeMaze`, pure +
+  tested in `src/game/maze.ts`) carved at attach through a 29×29 square of forest (tiles → walkable, street sign "Schmitz Preserve
+  maze"; once per map), entered off the street on the west, dirt trails drawn along the paths and bushes in wall gaps. A fairy
+  ring in the middle (target `maze`); while inside, a hint says {B} hops you out (back to the street by the way in). Words in
+  `src/content/forestMaze.ts`.
 
 ## Other people, live (`plugins/visitors.ts`)
 
