@@ -80,6 +80,10 @@ plugins into `CityGame` and handles `onInteract`.
   `src/game/chickenBoxing.ts`: 3 rounds of punches on a beat, knockdowns with a count, rests in the corners), so every
   rabbit sees the same punch; feathers + a thud when one lands, the bell each round. Ringside {A}: the announcer
   (target kind `boxing`; names, colours, lines in `src/content/chickenBoxing.ts`). `__boxing` in dev.
+- `src/game/plugins/ponies.ts` — **pastel ponies in Lincoln Park's meadow** (idea box #36 asked for My Little Pony G1; those are
+  Hasbro's, so this is Bear Island's own herd): five graze and trot within `LEASH` tiles of `PONY_MEADOW`, on lawn or trail; {A} (target
+  `pony`) and one stands still to say hi. Pure + tested in `src/game/ponies.ts`; 20×16 sprites in `src/game/ponySprites.ts`; names,
+  colours, lines in `src/content/ponies.ts`.
 
 ## Other people, live (`plugins/visitors.ts`)
 
