@@ -24,3 +24,6 @@ see it through a sixth field on the visitors wire). A plugin can put the player 
 - detailed places (Hiawatha Playfield, West Seattle High School): lawn, walkable footpaths
   and parking lots (Tile.Parking), pitches/track/courts/pool, buildings from exact
   outlines (`render/detailArt.ts`)
+- West Seattle Stadium (35th Ave SW): OSM only has an unnamed, wooded park there, so it's hand-patched into
+  `worldData.json` (features/roadLine tagged `stadium`): lawn grounds, the walkable track and football field,
+  grandstands along 35th and a gate path between them in from the sidewalk
