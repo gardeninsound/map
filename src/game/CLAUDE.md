@@ -44,6 +44,14 @@ plugins into `CityGame` and handles `onInteract`.
   stays there until you're `BOAT_HOME` tiles off, then it's back at the dock. Rules pure + tested in
   `src/game/rowboat.ts`; sprites (`buildRowboat`, drawn round the rabbit's own frames) in `sprites.ts`; words in
   `src/content/rowboat.ts`.
+- `src/game/plugins/bikeRace.ts` — **the Admiral-to-Alaska bike race**: seven animals on bikes (fox, bear, cat, raccoon,
+  frog, duck, dog; names/jerseys/lines in `src/content/bikeRace.ts`) wait under a START banner on California at SW Admiral Way.
+  {A} there puts you on the grid on your bike (`game.vehicle`, `riding: true` so other rabbits see the bike; no Shift needed),
+  3-2-1-GO, then everyone races south to the FINISH banner at SW Alaska St (~2.2 km); your place and time show at the top;
+  at the line the winner tells you how you did (`onFinish` → App's talk overlay). More than `OFF_COURSE` tiles off California
+  and you've left the race; once you're well away, they're back on the line. Course (follows California's own run of road row
+  by row, skipping crossings and lots beside it), riders' speeds and standings are pure + tested in `src/game/bikeRace.ts`;
+  animal sprites (`ANIMAL_BIKE_GRIDS`, heads on the city bike's lower half) in `sprites.ts`.
 - `src/game/plugins/pegasus.ts` — the pegasus in Pegasus Books (Junction, west side): come within `NOTICE`
   tiles and it walks out of the door (clipped at the shop front), says hello in a tiny-font bubble
   (`src/content/pegasus.ts`, one line per visit) with a whinny, then flies off north-east; home again once

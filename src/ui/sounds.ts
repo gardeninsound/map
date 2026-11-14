@@ -53,6 +53,10 @@ export const sounds = {
   },
   /** an oar dipping in, rowing the boat at the end of 58th */
   paddle: () => tone(300, 0.12, 'triangle', 0.025, -160),
+  /** the bike race: a beep on 3, 2, 1, a higher one for GO, a little fanfare at the line */
+  raceBeep: () => tone(660, 0.14, 'square', 0.04),
+  raceGo: () => tone(1320, 0.3, 'square', 0.045),
+  raceFinish: () => [784, 988, 1175, 1568].forEach((f, i) => setTimeout(() => tone(f, 0.16, 'square', 0.035), i * 110)),
   whoosh: () => {
     tone(320, 0.28, 'sawtooth', 0.025, -220);
     setTimeout(() => tone(140, 0.2, 'triangle', 0.03, -60), 60);
