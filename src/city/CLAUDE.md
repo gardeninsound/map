@@ -11,6 +11,14 @@ landmarks), `ui/` (HUD, dialog box, touch pad, sounds, `ui.css`). Import it via
 bicycle at RUN speed (`buildBikeRabbit` in `render/sprites.ts`, `player.riding`; other rabbits
 see it through a sixth field on the visitors wire). A plugin can put the player in a `Vehicle`
   (`game.vehicle`: where it can go, its speed, its sprite — the rowboat uses it); Shift does nothing then. What the map draws:
+- **two resolutions**: chunks and the map canvas are kept at `RES` (2)× the map's pixels (`render/tileArt.ts`); everything
+  is drawn at map size and looks as before, but the trees (`paintFineTrees`, 3 shapes, `buildFineTrees`) and the shoreline
+  (`paintFineShore` / `paintFineBeach`: each fine pixel blends the 4 nearest tiles, so water and sand edges curve) use
+  half-size pixels, only over bare ground (a 1× chunk is built first, trees left out; anything painted over the ground
+  wins). `CityGame` draws through a RES× transform; `ChunkCache.base()` is the 1× chunk (the road audit reads it); the
+  newest `KEEP_CHUNKS` fine chunks are kept
+- park trails (roadLines with `k`) are thin dirt paths (`TRAIL_R`, `PAL.trail`) down the middle of their walkable
+  corridor, which stays lawn
 - every public street (no alleys) on its real centreline, at its real width × 2; walkable
   band ≥ 1.5 tiles; ~300 street names (uint16 per tile)
 - ~27k houses at their true OSM size/angle (`paintHouses`), nudged back or shrunk where a

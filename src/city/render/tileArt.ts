@@ -8,6 +8,16 @@ import {
 
 export const TS = 16; // pixels per tile
 export const CHUNK = 32; // tiles per chunk side
+/**
+ * Chunks (and the map canvas) are kept at RES× the map's pixels: everything is drawn at map
+ * size and so looks just as before, but the trees and the shoreline use the extra detail —
+ * their pixels are half the size of everything else's.
+ */
+export const RES = 2;
+/** chunks kept drawn; older ones are dropped and redrawn if you come back (each is RES² bigger) */
+const KEEP_CHUNKS = 40;
+/** px: a park trail's half-width (the walkable corridor round it stays lawn) */
+const TRAIL_R = 2;
 
 /** Deterministic 0..1 hash per tile, so decoration is stable across reloads. */
 export function hash(x: number, y: number, seed = 0): number {
@@ -38,7 +48,8 @@ function grass(ctx: Ctx, ox: number, oy: number, tx: number, ty: number, flowers
   }
 }
 
-function tree(ctx: Ctx, ox: number, oy: number, tx: number, ty: number) {
+/** The old tree, one map pixel per pixel (still used where nothing draws the fine one). */
+function coarseTree(ctx: Ctx, ox: number, oy: number, tx: number, ty: number) {
   const jx = Math.floor(hash(tx, ty, 7) * 3) - 1;
   const jy = Math.floor(hash(tx, ty, 8) * 3) - 1;
   const x = ox + jx;
@@ -164,8 +175,10 @@ function freeway(ctx: Ctx, ox: number, oy: number, tx: number, ty: number) {
 
 /** Paint one tile at (ox, oy) in a chunk canvas. Road tiles get ground; the road itself is
  * painted per pixel afterwards (see paintRoads). */
-export function drawTile(ctx: Ctx, world: World, tx: number, ty: number, ox: number, oy: number) {
+export function drawTile(ctx: Ctx, world: World, tx: number, ty: number, ox: number, oy: number, trees?: { tx: number; ty: number }[]) {
   const t = world.tileAt(tx, ty);
+  // with a list to fill, trees are left for the fine 2× pass (paintFineTrees); without, drawn now
+  const tree = (ctx: Ctx, ox: number, oy: number, tx: number, ty: number) => (trees ? trees.push({ tx, ty }) : coarseTree(ctx, ox, oy, tx, ty));
   switch (t) {
     case Tile.Water:
       return water(ctx, ox, oy, tx, ty, world);
@@ -225,6 +238,8 @@ interface Seg {
   by: number;
   r: number;
   a: number;
+  /** a park trail: a thin dirt path, under any street it meets */
+  trail?: boolean;
 }
 
 /**
@@ -237,6 +252,8 @@ function paintRoads(ctx: Ctx, segs: Seg[], ox: number, oy: number, size: number)
   if (!segs.length) return;
   const img = ctx.getImageData(0, 0, size, size);
   const cls = new Uint8Array(size * size);
+  /** trails: 1 = the path's worn edge, 2 = its middle */
+  const trail = new Uint8Array(size * size);
   for (const g of segs) {
     const x0 = Math.max(0, Math.floor(Math.min(g.ax, g.bx) - g.r - ox));
     const x1 = Math.min(size - 1, Math.ceil(Math.max(g.ax, g.bx) + g.r - ox));
@@ -251,8 +268,13 @@ function paintRoads(ctx: Ctx, segs: Seg[], ox: number, oy: number, size: number)
         const t = Math.max(0, Math.min(1, ((px - g.ax) * dx + (py - g.ay) * dy) / len2));
         const d = Math.hypot(px - (g.ax + t * dx), py - (g.ay + t * dy));
         if (d >= g.r) continue;
-        const c = d < g.a ? 3 : d < g.a + CURB ? 2 : 1;
         const i = x + y * size;
+        if (g.trail) {
+          const c = d < g.r - 1 ? 2 : 1;
+          if (c > trail[i]) trail[i] = c;
+          continue;
+        }
+        const c = d < g.a ? 3 : d < g.a + CURB ? 2 : 1;
         if (c > cls[i]) cls[i] = c;
       }
     }
@@ -261,9 +283,19 @@ function paintRoads(ctx: Ctx, segs: Seg[], ox: number, oy: number, size: number)
   const rgb = (hex: string) => [1, 3, 5].map((k) => parseInt(hex.slice(k, k + 2), 16));
   const COLORS = [null, rgb(PAL.sidewalk), rgb(PAL.curb), rgb(PAL.road)];
   const GRAIN = rgb(PAL.roadGrain);
+  const TRAIL = [null, rgb(PAL.trailEdge), rgb(PAL.trail)];
   for (let i = 0; i < cls.length; i++) {
     const c = cls[i];
-    if (!c) continue;
+    if (!c) {
+      // a trail, where no street is
+      const t = trail[i];
+      if (!t) continue;
+      const col = TRAIL[t]!;
+      img.data[i * 4] = col[0];
+      img.data[i * 4 + 1] = col[1];
+      img.data[i * 4 + 2] = col[2];
+      continue;
+    }
     let col = COLORS[c]!;
     if (c === 3 && hash(((ox + (i % size)) >> 1), ((oy + ((i / size) | 0)) >> 1), 5) < 0.05) col = GRAIN;
     img.data[i * 4] = col[0];
@@ -423,6 +455,181 @@ function paintHouses(ctx: Ctx, houses: HouseRect[], ox: number, oy: number, size
 }
 
 /** Lazily rendered CHUNK×CHUNK tile canvases. */
+type Bare = (X: number, Y: number) => boolean;
+const HI = CHUNK * TS * RES; // a fine chunk's side, px
+/** a colour as [r, g, b] for the fine painters */
+const rgb3 = (hex: string) => rgbOf(hex) as [number, number, number];
+/** write colour `c` (with opacity `a`) into fine pixel (X, Y) */
+function put(d: Uint8ClampedArray, X: number, Y: number, c: [number, number, number], a = 1) {
+  if (X < 0 || Y < 0 || X >= HI || Y >= HI) return;
+  const i = (Y * HI + X) * 4;
+  d[i] = Math.round(d[i] * (1 - a) + c[0] * a);
+  d[i + 1] = Math.round(d[i + 1] * (1 - a) + c[1] * a);
+  d[i + 2] = Math.round(d[i + 2] * (1 - a) + c[2] * a);
+}
+
+/**
+ * A tree at RES× — 32×32 fine pixels for its 16-px tile: a lumpy round canopy lit from the
+ * top left with a dark outline and flecks of light and shade, a trunk, a soft shadow. Three
+ * shapes, so a wood doesn't look stamped. Built once per palette, as colour indices.
+ */
+type FineTree = Int8Array; // 32×32: -1 empty, 0 shadow, 1 trunk, 2 dark, 3 mid, 4 light
+let fineTrees: FineTree[] | null = null;
+export function buildFineTrees(): FineTree[] {
+  const shapes: [number, number, number][][] = [
+    [[16, 12, 9], [10, 15, 6], [22, 15, 6], [16, 7, 6]],
+    [[15, 13, 9], [21, 10, 6], [10, 11, 5], [19, 17, 5]],
+    [[16, 11, 8], [11, 14, 7], [21, 14, 7], [16, 17, 5]],
+  ];
+  return shapes.map((blobs, v) => {
+    const t = new Int8Array(32 * 32).fill(-1);
+    const inCanopy = (x: number, y: number) => blobs.some(([bx, by, r]) => (x - bx) ** 2 + (y - by) ** 2 < r * r);
+    for (let y = 0; y < 32; y++) {
+      for (let x = 0; x < 32; x++) {
+        const i = x + y * 32;
+        // the shadow on the ground, then the trunk
+        if (((x - 16) / 11) ** 2 + ((y - 27) / 2.6) ** 2 < 1) t[i] = 0;
+        if (x >= 14 && x <= 17 && y >= 18 && y <= 27) t[i] = 1;
+        if (!inCanopy(x, y)) continue;
+        const edge = !inCanopy(x - 1, y) || !inCanopy(x + 1, y) || !inCanopy(x, y - 1) || !inCanopy(x, y + 1);
+        const lit = (x - 16) + (y - 12); // < 0 toward the top left
+        let c = edge ? 2 : lit < -9 ? 4 : lit > 7 ? 2 : 3;
+        // leaf flecks
+        const f = hash(x, y, 40 + v);
+        if (!edge && f < 0.08) c = 4;
+        else if (!edge && f > 0.93) c = 2;
+        t[i] = c;
+      }
+    }
+    return t;
+  });
+}
+
+/** The fine trees for one chunk, each where its tile is (jittered as before), only over bare ground. */
+function paintFineTrees(d: Uint8ClampedArray, trees: { tx: number; ty: number }[], cx: number, cy: number, bare: Bare) {
+  if (!trees.length) return;
+  const sprites = (fineTrees ??= buildFineTrees());
+  const colors = [rgb3('#000000'), rgb3(PAL.trunk), rgb3(PAL.treeDark), rgb3(PAL.tree), rgb3(PAL.treeLight)];
+  for (const { tx, ty } of trees) {
+    const t = sprites[Math.floor(hash(tx, ty, 21) * sprites.length)]!;
+    const jx = Math.floor(hash(tx, ty, 7) * 3) - 1;
+    const jy = Math.floor(hash(tx, ty, 8) * 3) - 1;
+    const X0 = ((tx - cx * CHUNK) * TS + jx) * RES;
+    const Y0 = ((ty - cy * CHUNK) * TS + jy) * RES;
+    for (let y = 0; y < 32; y++) {
+      for (let x = 0; x < 32; x++) {
+        const c = t[x + y * 32]!;
+        if (c < 0) continue;
+        const X = X0 + x, Y = Y0 + y;
+        if (X < 0 || Y < 0 || X >= HI || Y >= HI || !bare(X, Y)) continue;
+        put(d, X, Y, colors[c]!, c === 0 ? 0.18 : 1);
+      }
+    }
+  }
+}
+
+/**
+ * The beach's inland edge at the fine pixels, the same way as the waterline: where sand meets
+ * lawn, each fine pixel blends the four nearest tiles (sand and water count as beach) and is
+ * sand past halfway — so the beach curves instead of stepping. Only over bare ground.
+ */
+function paintFineBeach(d: Uint8ClampedArray, world: World, cx: number, cy: number, bare: Bare) {
+  const kind = (tx: number, ty: number) => world.tileAt(tx, ty);
+  const sandy = (tx: number, ty: number) => {
+    const t = kind(tx, ty);
+    return t === Tile.Beach || t === Tile.Water ? 1 : 0;
+  };
+  const F = TS * RES;
+  const SAND = rgb3(PAL.sand), SAND_DARK = rgb3(PAL.sandDark), GRASS = rgb3(PAL.grass), GRASS_DARK = rgb3(PAL.grassDark);
+  for (let j = 0; j < CHUNK; j++) {
+    for (let i = 0; i < CHUNK; i++) {
+      const tx = cx * CHUNK + i, ty = cy * CHUNK + j;
+      const t = kind(tx, ty);
+      if (t === Tile.Water) continue;
+      const isBeach = t === Tile.Beach;
+      // only where a beach meets lawn: the beach tile, or a land tile beside one
+      let edge = false;
+      for (let dy = -1; dy <= 1 && !edge; dy++) {
+        for (let dx = -1; dx <= 1; dx++) {
+          const n = kind(tx + dx, ty + dy);
+          if (n !== Tile.Water && (n === Tile.Beach) !== isBeach) { edge = true; break; }
+        }
+      }
+      if (!edge) continue;
+      for (let y = 0; y < F; y++) {
+        for (let x = 0; x < F; x++) {
+          const X = i * F + x, Y = j * F + y;
+          if (!bare(X, Y)) continue;
+          const fx = tx + (x + 0.5) / F - 0.5, fy = ty + (y + 0.5) / F - 0.5;
+          const ix = Math.floor(fx), iy = Math.floor(fy), kx = fx - ix, ky = fy - iy;
+          const v = (sandy(ix, iy) * (1 - kx) + sandy(ix + 1, iy) * kx) * (1 - ky) + (sandy(ix, iy + 1) * (1 - kx) + sandy(ix + 1, iy + 1) * kx) * ky;
+          const sandHere = v > 0.5;
+          if (sandHere === isBeach) continue;
+          const h = hash(cx * 4096 + X, cy * 4096 + Y, 33);
+          put(d, X, Y, sandHere ? (h < 0.05 ? SAND_DARK : SAND) : h < 0.06 ? GRASS_DARK : GRASS);
+        }
+      }
+    }
+  }
+}
+
+/**
+ * The shoreline at the fine pixels: around every tile where land meets water, each fine pixel
+ * asks how wet it is by blending the water/land of the four nearest tile centres, and is water
+ * past halfway — so the shore runs in slopes and curves instead of whole-tile steps. Shore water
+ * is repainted clean: foam right at the land, a lighter wash, then open water; land that was
+ * water becomes sand (or lawn, away from a beach) with fine specks. Only over bare ground, so
+ * piers, roads and drawings stay on top.
+ */
+function paintFineShore(d: Uint8ClampedArray, world: World, cx: number, cy: number, bare: Bare) {
+  const wet = (tx: number, ty: number) => (world.tileAt(tx, ty) === Tile.Water ? 1 : 0);
+  /** how wet the point (in tiles) is, blended between the four nearest tile centres */
+  const wetness = (x: number, y: number) => {
+    const fx = x - 0.5, fy = y - 0.5;
+    const ix = Math.floor(fx), iy = Math.floor(fy);
+    const kx = fx - ix, ky = fy - iy;
+    const top = wet(ix, iy) * (1 - kx) + wet(ix + 1, iy) * kx;
+    const bottom = wet(ix, iy + 1) * (1 - kx) + wet(ix + 1, iy + 1) * kx;
+    return top * (1 - ky) + bottom * ky;
+  };
+  const F = TS * RES; // fine px per tile
+  const fineWet = (X: number, Y: number) => wetness(cx * CHUNK + (X + 0.5) / F, cy * CHUNK + (Y + 0.5) / F) > 0.5;
+  const WATER = rgb3(PAL.water), LIGHT = rgb3(PAL.waterLight), FOAM = rgb3(PAL.foam), DEEP = rgb3(PAL.waterDeep);
+  const SAND = rgb3(PAL.sand), SAND_DARK = rgb3(PAL.sandDark), GRASS = rgb3(PAL.grass), GRASS_DARK = rgb3(PAL.grassDark);
+  for (let j = 0; j < CHUNK; j++) {
+    for (let i = 0; i < CHUNK; i++) {
+      const tx = cx * CHUNK + i, ty = cy * CHUNK + j;
+      const here = wet(tx, ty);
+      // only tiles on the shore: their 8 neighbours aren't all like them
+      let shore = false;
+      for (let dy = -1; dy <= 1 && !shore; dy++) for (let dx = -1; dx <= 1; dx++) if (wet(tx + dx, ty + dy) !== here) { shore = true; break; }
+      if (!shore) continue;
+      // land that turns out wet or dry here: a beach's sand, else lawn
+      const beach = [[0, 0], [0, -1], [0, 1], [-1, 0], [1, 0]].some(([dx, dy]) => world.tileAt(tx + dx!, ty + dy!) === Tile.Beach);
+      const [landFill, landSpeck] = beach || here ? [SAND, SAND_DARK] : [GRASS, GRASS_DARK];
+      for (let y = 0; y < F; y++) {
+        for (let x = 0; x < F; x++) {
+          const X = i * F + x, Y = j * F + y;
+          if (!bare(X, Y)) continue;
+          const w = fineWet(X, Y);
+          if (!w) {
+            // dry: leave a land tile's own ground alone; dry ground in a water tile is sand or lawn
+            if (here) put(d, X, Y, hash(cx * 4096 + X, cy * 4096 + Y, 31) < 0.05 ? landSpeck : landFill);
+            continue;
+          }
+          // wet: how close is the land (fine px, up to 3)?
+          let near = 9;
+          for (let r = 1; r <= 3 && near === 9; r++) {
+            if (!fineWet(X - r, Y) || !fineWet(X + r, Y) || !fineWet(X, Y - r) || !fineWet(X, Y + r)) near = r;
+          }
+          const h = hash(cx * 4096 + X, cy * 4096 + Y, 32);
+          put(d, X, Y, near <= 2 ? FOAM : near === 3 ? LIGHT : h < 0.01 ? DEEP : WATER);
+        }
+      }
+    }
+  }
+}
+
 export class ChunkCache {
   private cache = new Map<number, HTMLCanvasElement>();
   private segs = new Map<number, Seg[]>();
@@ -491,9 +698,10 @@ export class ChunkCache {
           ay: line.p[i - 1][1] * TS,
           bx: line.p[i][0] * TS,
           by: line.p[i][1] * TS,
-          r,
-          // a park path is all concrete: no asphalt, no kerb
+          // a park trail is a thin dirt path down the middle of its walkable corridor
+          r: line.k ? TRAIL_R : r,
           a: line.k ? -1 : r - SIDEWALK,
+          trail: !!line.k,
         };
         for (let cy = Math.floor((Math.min(g.ay, g.by) - r) / span); cy <= Math.floor((Math.max(g.ay, g.by) + r) / span); cy++) {
           for (let cx = Math.floor((Math.min(g.ax, g.bx) - r) / span); cx <= Math.floor((Math.max(g.ax, g.bx) + r) / span); cx++) {
@@ -550,17 +758,62 @@ export class ChunkCache {
     return gap;
   }
 
+  /**
+   * A chunk at RES× (what the map draws): the 1× chunk scaled up, then the trees and the
+   * shoreline drawn finer on top — only where nothing (a road, a house, a field, a dock)
+   * was painted over the ground. The most recent KEEP_CHUNKS are kept.
+   */
   get(cx: number, cy: number): HTMLCanvasElement {
     const key = cx * 10000 + cy;
-    let c = this.cache.get(key);
-    if (!c) {
-      c = document.createElement('canvas');
+    const hit = this.cache.get(key);
+    if (hit) {
+      // most recently used goes to the back of the line
+      this.cache.delete(key);
+      this.cache.set(key, hit);
+      return hit;
+    }
+    const size = CHUNK * TS;
+    const { canvas: base, trees, ground } = this.build(cx, cy);
+    const fin = base.getContext('2d')!.getImageData(0, 0, size, size).data;
+    const c = document.createElement('canvas');
+    c.width = c.height = size * RES;
+    const ctx = c.getContext('2d', { willReadFrequently: true })!;
+    ctx.imageSmoothingEnabled = false;
+    ctx.drawImage(base, 0, 0, size * RES, size * RES);
+    const hi = ctx.getImageData(0, 0, size * RES, size * RES);
+    /** is the 1× pixel under hi pixel (X, Y) still bare ground (nothing painted over it)? */
+    const bare = (X: number, Y: number) => {
+      const i = ((Y >> 1) * size + (X >> 1)) * 4;
+      return fin[i] === ground[i] && fin[i + 1] === ground[i + 1] && fin[i + 2] === ground[i + 2];
+    };
+    paintFineBeach(hi.data, this.world, cx, cy, bare);
+    paintFineShore(hi.data, this.world, cx, cy, bare);
+    paintFineTrees(hi.data, trees, cx, cy, bare);
+    ctx.putImageData(hi, 0, 0);
+    this.cache.set(key, c);
+    if (this.cache.size > KEEP_CHUNKS) this.cache.delete(this.cache.keys().next().value!);
+    return c;
+  }
+
+  /** A chunk at the map's own 1× pixels, trees left out (as the road audit reads it). */
+  base(cx: number, cy: number): HTMLCanvasElement {
+    return this.build(cx, cy).canvas;
+  }
+
+  private build(cx: number, cy: number): { canvas: HTMLCanvasElement; trees: { tx: number; ty: number }[]; ground: Uint8ClampedArray } {
+    const key = cx * 10000 + cy;
+    const trees: { tx: number; ty: number }[] = [];
+    let ground: Uint8ClampedArray;
+    {
+      const c = document.createElement('canvas');
       c.width = c.height = CHUNK * TS;
       const ctx = c.getContext('2d', { willReadFrequently: true })!;
-      // 1. ground and everything flat
+      // 1. ground and everything flat (the trees are noted, for the fine pass)
       for (let y = 0; y < CHUNK; y++) {
-        for (let x = 0; x < CHUNK; x++) drawTile(ctx, this.world, cx * CHUNK + x, cy * CHUNK + y, x * TS, y * TS);
+        for (let x = 0; x < CHUNK; x++) drawTile(ctx, this.world, cx * CHUNK + x, cy * CHUNK + y, x * TS, y * TS, trees);
       }
+      // the bare ground, before anything is painted over it
+      ground = ctx.getImageData(0, 0, CHUNK * TS, CHUNK * TS).data;
       // 1b. park features: fields, courts, the track, playgrounds, the pool
       paintParkFeatures(ctx, this.parks.get(key) ?? [], cx * CHUNK * TS, cy * CHUNK * TS, CHUNK * TS, (x, y) => hash(x, y, 13));
       // 1c. parking lots: asphalt, stalls along the aisles, parked cars
@@ -590,8 +843,7 @@ export class ChunkCache {
         }
         ctx.restore();
       }
-      this.cache.set(key, c);
+      return { canvas: c, trees, ground };
     }
-    return c;
   }
 }

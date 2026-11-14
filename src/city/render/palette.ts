@@ -30,6 +30,9 @@ export const PAL = {
   roadGrain: '#54413f',
   curb: '#e8cfae',
   sidewalk: '#f0dcc0',
+  /** a park trail: packed dirt, a worn darker edge */
+  trail: '#cfae7a',
+  trailEdge: '#a8854f',
   freeway: '#857168',
   freewayLine: '#f2b53a',
   window: '#f3c98b',

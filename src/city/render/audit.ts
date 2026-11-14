@@ -29,7 +29,7 @@ export function auditRoads(world: World): Artifact[] {
   const out: Artifact[] = [];
   for (let cy = 0; cy * CHUNK < world.h; cy++) {
     for (let cx = 0; cx * CHUNK < world.w; cx++) {
-      const data = chunks.get(cx, cy).getContext('2d')!.getImageData(0, 0, size, size).data;
+      const data = chunks.base(cx, cy).getContext('2d')!.getImageData(0, 0, size, size).data;
       const isRoad = new Uint8Array(size * size);
       for (let i = 0; i < size * size; i++) isRoad[i] = ROAD.has((data[i * 4] << 16) | (data[i * 4 + 1] << 8) | data[i * 4 + 2]) ? 1 : 0;
       const seen = new Uint8Array(size * size);

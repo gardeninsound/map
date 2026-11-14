@@ -3,7 +3,7 @@ import { input } from './input';
 import { facingFor, step, type Facing, type Vec } from './movement';
 import { INK, PAL } from '../render/palette';
 import { buildArrows, buildSprites, drawStanding, type SpriteSet, type Walker } from '../render/sprites';
-import { CHUNK, ChunkCache, TS, hash } from '../render/tileArt';
+import { CHUNK, ChunkCache, RES, TS, hash } from '../render/tileArt';
 import { rng, spawnNpcs, wander, type Npc, type NeighborVoice } from './npcs';
 
 const WALK = 8; // tiles / second (a tile is 12 m — game time, not real time)
@@ -194,10 +194,14 @@ export class CityGame {
     const w = window.innerWidth;
     const h = window.innerHeight;
     this.zoom = zoomFor(w, h);
-    this.canvas.width = Math.ceil(w / this.zoom);
-    this.canvas.height = Math.ceil(h / this.zoom);
-    this.canvas.style.width = `${this.canvas.width * this.zoom}px`;
-    this.canvas.style.height = `${this.canvas.height * this.zoom}px`;
+    // the canvas holds RES fine pixels per map pixel (the trees and shoreline use them);
+    // everything is drawn in map pixels through a RES× transform, so it all keeps its size
+    const mw = Math.ceil(w / this.zoom);
+    const mh = Math.ceil(h / this.zoom);
+    this.canvas.width = mw * RES;
+    this.canvas.height = mh * RES;
+    this.canvas.style.width = `${mw * this.zoom}px`;
+    this.canvas.style.height = `${mh * this.zoom}px`;
     this.ctx.imageSmoothingEnabled = false;
   }
 
@@ -326,8 +330,13 @@ export class CityGame {
     }
   }
 
+  /** the view's size in map pixels */
+  private get view() {
+    return { w: this.canvas.width / RES, h: this.canvas.height / RES };
+  }
+
   private camera() {
-    const { width: vw, height: vh } = this.canvas;
+    const { w: vw, h: vh } = this.view;
     const maxX = this.world.w * TS - vw;
     const maxY = this.world.h * TS - vh;
     return {
@@ -338,7 +347,9 @@ export class CityGame {
 
   private draw(time: number) {
     const ctx = this.ctx;
-    const { width: vw, height: vh } = this.canvas;
+    ctx.setTransform(RES, 0, 0, RES, 0, 0);
+    ctx.imageSmoothingEnabled = false;
+    const { w: vw, h: vh } = this.view;
     const cam = this.camera();
     ctx.fillStyle = PAL.water;
     ctx.fillRect(0, 0, vw, vh);
@@ -347,7 +358,7 @@ export class CityGame {
     const span = CHUNK * TS;
     for (let cy = Math.floor(cam.y / span); cy <= Math.floor((cam.y + vh) / span); cy++) {
       for (let cx = Math.floor(cam.x / span); cx <= Math.floor((cam.x + vw) / span); cx++) {
-        ctx.drawImage(this.chunks.get(cx, cy), cx * span - cam.x, cy * span - cam.y);
+        ctx.drawImage(this.chunks.get(cx, cy), cx * span - cam.x, cy * span - cam.y, span, span);
       }
     }
 
@@ -471,7 +482,7 @@ export class CityGame {
       if (l.size < style.minSize) continue;
       const x = Math.round(l.x * TS - cam.x);
       const y = Math.round(l.y * TS - cam.y);
-      if (x < -200 || y < -20 || x > this.canvas.width + 200 || y > this.canvas.height + 20) continue;
+      if (x < -200 || y < -20 || x > this.view.w + 200 || y > this.view.h + 20) continue;
       ctx.font = style.font;
       const text = l.kind === 'school' ? l.name : l.name.toUpperCase();
       ctx.lineWidth = 3;
