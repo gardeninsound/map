@@ -80,6 +80,10 @@ plugins into `CityGame` and handles `onInteract`.
   `src/game/chickenBoxing.ts`: 3 rounds of punches on a beat, knockdowns with a count, rests in the corners), so every
   rabbit sees the same punch; feathers + a thud when one lands, the bell each round. Ringside {A}: the announcer
   (target kind `boxing`; names, colours, lines in `src/content/chickenBoxing.ts`). `__boxing` in dev.
+- `src/game/plugins/flock.ts` — **crows and gulls** (idea box #43, #40): 7 crows on the streets and 6 gulls on the beach sand are
+  always somewhere near you, pecking; come within `STARTLE` tiles and one flaps off away from you and lands `FLEE` tiles off
+  (a caw / a gull's cry, `sounds.gull`); left `FAR` behind, it turns up again near you out of sight. Pure + tested in
+  `src/game/flock.ts`; the gull sprite (`buildGull`) in `sprites.ts`.
 
 ## Other people, live (`plugins/visitors.ts`)
 

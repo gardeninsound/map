@@ -101,6 +101,58 @@ const CROW_FLY_DOWN: Grid = [
 
 const CROW_COLORS: Record<string, string> = { k: INK, b: '#191526', s: '#5a4d99', w: '#ffffff', n: '#8a86a0' };
 
+/** A herring gull, facing right: w white, g grey back, b black wingtips, y beak, o legs. Rows padded to 16. */
+const pad16 = (g: string[]): Grid => g.map((r) => r.padEnd(16, "."));
+const GULL_PERCH = pad16([
+  '', '', '', '', '',
+  '.........kkk',
+  '........kwwwk',
+  '........kwkwyy',
+  '..kkk...kwwwk',
+  '.kgggkkkwwwk',
+  'kbgggggwwwwk',
+  '.kbggggwwwwk',
+  '..kkgggwwwk',
+  '....kkkkkk',
+  '.....o..o',
+  '.....o..o',
+]);
+const GULL_FLY_UP = pad16([
+  '', '', '',
+  '.bk.........kb',
+  '.bgk.......kgb',
+  '..ggk.....kgg',
+  '...ggk...kgg',
+  '....gkkkkkg.kk',
+  '.....kwwwwwkwyy',
+  '....kwwwwwwwk',
+  '.....kkkkkkk',
+  '', '', '', '', '',
+]);
+const GULL_FLY_DOWN = pad16([
+  '', '', '', '', '', '',
+  '.........kk',
+  '....kkkkkkwk',
+  '...kwwwwwwwyy',
+  '..kgggwwwwk',
+  '.kgggkkkkk.',
+  'kbggk',
+  'kbgk',
+  '.kk',
+  '', '',
+]);
+const GULL_COLORS: Record<string, string> = { k: INK, w: '#f6f4ee', g: '#a9b2bd', b: '#2a2a33', y: '#f2b33a', o: '#e8a35a' };
+export const GULL_GRIDS = { perch: GULL_PERCH, flyUp: GULL_FLY_UP, flyDown: GULL_FLY_DOWN };
+
+/** A gull: perched (two frames, a hop) and flying (wings up, down), each way. */
+export function buildGull(): CrowSprites {
+  const side = (mirror: boolean) => [gridToCanvas(GULL_PERCH, GULL_COLORS, mirror), gridToCanvas(hop(GULL_PERCH), GULL_COLORS, mirror)];
+  const right = side(false);
+  const left = side(true);
+  const wings = (mirror: boolean) => [GULL_FLY_UP, GULL_FLY_DOWN].map((g) => gridToCanvas(g, GULL_COLORS, mirror));
+  return { perch: { right, left, down: right, up: left }, fly: { right: wings(false), left: wings(true) } };
+}
+
 /** The chicken, facing right: w feathers, g shade, r comb + wattle, y beak, o feet. */
 const CHICKEN: Grid = [
   '................',

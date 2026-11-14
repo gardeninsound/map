@@ -15,6 +15,11 @@ export const sounds = {
     tone(620, 0.14, 'sawtooth', 0.035, -260);
     setTimeout(() => tone(600, 0.16, 'sawtooth', 0.035, -280), 190);
   },
+  /** a gull taking off: a high, falling kee-ow */
+  gull: () => {
+    tone(1500, 0.12, 'sawtooth', 0.018, -300);
+    setTimeout(() => tone(1250, 0.22, 'sawtooth', 0.018, -500), 120);
+  },
   /** the chicken outside the vet */
   cluck: () => {
     tone(720, 0.05, 'square', 0.03, -220);
