@@ -80,6 +80,10 @@ plugins into `CityGame` and handles `onInteract`.
   `src/game/chickenBoxing.ts`: 3 rounds of punches on a beat, knockdowns with a count, rests in the corners), so every
   rabbit sees the same punch; feathers + a thud when one lands, the bell each round. Ringside {A}: the announcer
   (target kind `boxing`; names, colours, lines in `src/content/chickenBoxing.ts`). `__boxing` in dev.
+- `src/game/plugins/mermaids.ts` — **mermaids off Alki** (idea box #37): three on rocks just offshore — Marina beside the 58th Ave
+  rowboat dock (walk up; needs `Rowboat`, so it's listed after it), Coral and Pearl along the beach (row up). Within `SEE` tiles they
+  call catch phrases in tiny-font bubbles (`callingAt`, punctuation dropped by `bubbleText`); {A} (target `mermaid`) and one chats.
+  Rocks + calls pure + tested in `src/game/mermaids.ts`; sprite in `src/game/mermaidSprites.ts`; names/phrases in `src/content/mermaids.ts`.
 
 ## Other people, live (`plugins/visitors.ts`)
 
