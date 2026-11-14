@@ -112,6 +112,7 @@ export const lunaRides: LunaRide[] = [
     lines: [
       'THE GIANT WHIRL. It\'s in the photographs from 1911, but nobody wrote down how it worked.',
       'So it\'s drawn here as a circle swing, the big thrill of the day: cars on long arms, flung out over the boardwalk.',
+      'Climb in for a whirl?',
     ],
   },
   {
@@ -191,6 +192,13 @@ export const lunaWagon: LunaSign & { route: { x: number; y: number }[] } = {
 
 /** The Figure Eight's sign offers the ride. */
 export const lunaRideInvite = { yes: 'Ride it', no: 'Not today' };
+
+/** Shown riding the Giant Whirl (idea box #41). */
+export const whirlScript = {
+  title: 'THE GIANT WHIRL',
+  where: 'Luna Park · Duwamish Head · 1907',
+  again: '{A} ride again · {B} back to the boardwalk',
+};
 
 /** Shown in the ride scene. */
 export const figureEightScript = {
