@@ -39,7 +39,7 @@ const rgb = (hex: string) => [1, 3, 5].map((k) => parseInt(hex.slice(k, k + 2), 
 const C = {
   turfA: rgb('#4f9a5c'),
   turfB: rgb('#5aa868'),
-  endZone: rgb('#2f6b48'),
+  endZone: rgb('#6e7a34'),
   line: rgb('#f3e6cc'),
   clay: rgb('#c8895a'),
   clayDark: rgb('#b0744a'),
@@ -50,7 +50,7 @@ const C = {
   chips: rgb('#c9a26b'),
   chipsDark: rgb('#b08850'),
   water: rgb('#5fa8a0'),
-  waterLight: rgb('#7fc0b0'),
+  waterLight: rgb('#79aab0'),
   rim: rgb('#f3e6cc'),
   bench: rgb('#a8a39a'),
   benchDark: rgb('#8a857c'),
@@ -264,7 +264,7 @@ export interface PreparedLot {
 }
 
 const LOT = {
-  asphalt: rgb('#6b5a55'),
+  asphalt: rgb('#5f4a48'),
   grain: rgb('#5f4f4b'),
   kerb: rgb('#e5cdb2'),
   stripe: rgb('#f3e6cc'),

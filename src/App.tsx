@@ -34,6 +34,9 @@ import { BikeRace } from './game/plugins/bikeRace';
 import { raceResult } from './content/bikeRace';
 import { Dinos } from './game/plugins/dinos';
 import { Rowboat } from './game/plugins/rowboat';
+import { ChickenBoxing } from './game/plugins/chickenBoxing';
+import { ANNOUNCER, ringside } from './content/chickenBoxing';
+import { buildChicken } from './game/sprites';
 import { LunaPark, lunaSignPortrait } from './game/plugins/lunaPark';
 import { lunaRideInvite, type LunaSign } from './content/lunaPark';
 import { Visitors } from './game/plugins/visitors';
@@ -81,6 +84,7 @@ const FULL_SCREEN: Overlay['kind'][] = ['scene', 'minigame', 'arcade', 'ride'];
 
 /** the sign picture in Luna Park's dialog boxes, drawn on first use */
 let signPortrait: string | undefined;
+let boxerPortrait: string | undefined;
 
 const LANDMARK_COLOR = '#5fa8a0';
 
@@ -160,6 +164,7 @@ export default function App() {
     const ham = new Ham();
     const race = new BikeRace();
     const rowboat = new Rowboat();
+    const boxing = new ChickenBoxing();
     const luna = new LunaPark();
     // Everyone else on the island, live. `?solo` walks alone; `?relay=` points at another
     // relay; in dev, `?island=<name>` uses a private room so tests don't walk onto the real one.
@@ -173,7 +178,7 @@ export default function App() {
     const g = new CityGame(canvas.current!, world, {
       start: world.project(START.lat, START.lon),
       voices: neighborVoices,
-      plugins: [art, new BigCup(art), dinos, new Seal(), arcadeDoor.current, luna, busker, crow, chicken, pegasus, ham, race, rowboat, ...(live ? [live] : [])],
+      plugins: [art, new BigCup(art), dinos, new Seal(), arcadeDoor.current, luna, busker, crow, chicken, pegasus, ham, race, rowboat, boxing, ...(live ? [live] : [])],
       events: {
         onStreet: setStreet,
         onStorefront: setStorefront,
@@ -188,6 +193,11 @@ export default function App() {
           } else if (t.kind === 'boat') {
             // the rowboat at the end of 58th: climb in, or back out onto the shore
             rowboat.interact(g);
+          } else if (t.kind === 'boxing') {
+            // ringside at the stadium: the announcer on the bout so far
+            const b = boxing.bout;
+            sounds.cluck();
+            setOverlay({ kind: 'talk', speaker: ANNOUNCER, portrait: (boxerPortrait ??= buildChicken().right[0]!.toDataURL()), lines: ringside(b.round, b.rest, b.landed) });
           } else if (t.kind === 'luna') {
             // a sign at Luna Park; the Figure Eight's offers a ride, Pat answers a sum
             const sign = t.data as LunaSign;
@@ -267,7 +277,7 @@ export default function App() {
         lines: raceResult(r.place, r.total, r.winner, r.seconds),
       });
     g.paused = true;
-    if (import.meta.env.DEV) Object.assign(window, { __game: g, __busker: busker, __crow: crow, __chicken: chicken, __pegasus: pegasus, __ham: ham, __race: race, __rowboat: rowboat, __dinos: dinos, __art: art, __luna: luna, __visitors: live }); // test hooks
+    if (import.meta.env.DEV) Object.assign(window, { __game: g, __busker: busker, __crow: crow, __chicken: chicken, __pegasus: pegasus, __ham: ham, __race: race, __rowboat: rowboat, __boxing: boxing, __dinos: dinos, __art: art, __luna: luna, __visitors: live }); // test hooks
     // Review hooks: ?at=lat,lon (or ?atTile=x,y, or ?at=arcade) skips the title and drops you there;
     // ?audit scans the whole map for road-drawing glitches (scripts/city/road-audit.mjs).
     const q = new URLSearchParams(location.search);

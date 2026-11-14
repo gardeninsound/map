@@ -109,7 +109,7 @@ export interface CityGameOptions {
 /** Map text: neighborhoods loudest, parks (≥ ~2 hectares) in green, big schools small. */
 const LABEL_STYLE = {
   hood: { font: '8px "Press Start 2P"', fill: '#e6b23a', stroke: INK, minSize: 0 },
-  park: { font: '8px "Press Start 2P"', fill: '#e5f0dc', stroke: '#173f2b', minSize: 150 },
+  park: { font: '8px "Press Start 2P"', fill: '#e5f0dc', stroke: '#7a2e14', minSize: 150 },
   school: { font: '6px "Press Start 2P"', fill: '#f3e6cc', stroke: INK, minSize: 60 },
 } as const;
 
