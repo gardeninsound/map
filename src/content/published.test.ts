@@ -4,7 +4,7 @@ import { neededArt } from '../../scripts/neededArt.mjs';
 import { CEILING_VIDEO, POSTERS } from '../experiences/arcade/ArcadeScene';
 import { DINO_SHEET } from '../game/dinoSheet';
 import { DINO_SOUND } from '../game/dinos';
-import { arcadeGames } from './duckArcade';
+import { arcadeGames, ARCADE_MUSIC } from './duckArcade';
 import { moonStories } from './duckOnTheMoon';
 
 /**
@@ -27,6 +27,7 @@ describe('published files', () => {
       `public/${DINO_SHEET.file}`,
       `public/${DINO_SOUND}`,
       ...arcadeGames.flatMap((g) => (g.front ? [`public/${g.front}`] : [])),
+      `public/${ARCADE_MUSIC.file}`,
       ...Object.values(moonStories).map((s) => `public/duck-on-the-moon/${s.file}`),
     ];
     expect(missing(files)).toEqual([]);

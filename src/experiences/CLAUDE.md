@@ -31,6 +31,8 @@ Duck on the Moon is a port into the app (`DuckMoonScene.ts` + `DuckOnTheMoon.tsx
 `src/content/duckOnTheMoon.ts`, MP3s in `public/duck-on-the-moon/`). While a game is open,
 `sfx.gameSound(true)` keeps its sound on even if the map is muted. Wall posters: `POSTERS` in `ArcadeScene.ts`;
 the ceiling is a looping forest video (`CEILING_VIDEO`, WebM + MP4 in `public/arcade/ceiling/`) under the fluorescent panels.
+Music: `ARCADE_MUSIC` in `content/duckArcade.ts` ("Paddles at Dawn", `public/arcade/`) loops quietly on the floor, pauses while
+a cabinet's game plays, silent when the map is muted.
 
 **The deer** (`arcade/ArcadeDeer.ts`, low-poly like the bear): a cartoon buck at Quack Hero (`DEER_GAME`) from the moment you
 walk in, hooves tapping the buttons to the beat, head bobbing, tail flicking, a little hop now and then; its screen shows the
