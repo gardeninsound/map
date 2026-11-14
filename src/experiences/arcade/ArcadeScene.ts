@@ -1,7 +1,8 @@
 import * as THREE from 'three';
-import { BEAR_GAME, type ArcadeGame } from '../../content/duckArcade';
+import { BEAR_GAME, DEER_GAME, type ArcadeGame } from '../../content/duckArcade';
 import { besideYou, easeAngle, lookYaw, route, yawTo, type Obstacle, type Spot } from '../../game/arcadeBear';
 import { ArcadeBear } from './ArcadeBear';
+import { ArcadeDeer } from './ArcadeDeer';
 
 /** Render at 1/PIXEL resolution and scale up crisp, like the park and the map. */
 const PIXEL = 3;
@@ -15,7 +16,7 @@ const ROOM = { minX: -7, maxX: 7, minZ: -6.5, maxZ: 4.5, h: 4 };
 const MARGIN = 0.45;
 
 /** Where cabinets stand (x, z, facing yaw: 0 faces +z, toward the doors), filled in order. */
-const SLOTS: [number, number, number][] = [
+export const SLOTS: [number, number, number][] = [
   [-4.5, -5.9, 0],
   [-1.5, -5.9, 0],
   [1.5, -5.9, 0],
@@ -106,10 +107,33 @@ function paintAvocado(g: CanvasRenderingContext2D, x: number, y: number, s: numb
   );
 }
 
-/** A cabinet's screen while the bear plays it: avocados dropping into a basket, its score going up. */
-function paintPlaying(g: CanvasRenderingContext2D, c: ArcadeGame['colors'], t: number) {
+/**
+ * A cabinet's screen while someone plays it, their score going up underneath: the bear's
+ * avocados dropping into a basket, or the deer's notes falling down three lanes to the beat.
+ */
+function paintPlaying(g: CanvasRenderingContext2D, c: ArcadeGame['colors'], t: number, who: 'bear' | 'deer') {
   g.fillStyle = '#10131f';
   g.fillRect(0, 0, 96, 50);
+  if (who === 'deer') {
+    const lanes = ['#ff7eb6', '#ffd23f', '#7fd9c4'];
+    lanes.forEach((color, i) => {
+      const x = 22 + i * 26;
+      g.fillStyle = '#26293a';
+      g.fillRect(x - 1, 0, 2, 50);
+      // notes coming down, each lane on its own off-beat
+      for (let k = 0; k < 3; k++) {
+        const y = Math.round(((t * 0.9 + k / 3 + i * 0.21) % 1) * 46);
+        paintDuck(g, x - 8, y - 6, 2, color);
+      }
+      // the hit line, flashing as a note lands
+      g.fillStyle = Math.sin(t * Math.PI * 4 + i) > 0.7 ? '#ffffff' : color;
+      g.fillRect(x - 9, 44, 18, 2);
+    });
+    g.fillStyle = c.screen;
+    g.fillRect(0, 50, 96, 22);
+    centredText(g, `DEER ${String(Math.floor(t * 11) % 10000).padStart(4, '0')}`, 48, 57, '#1c1b22');
+    return;
+  }
   for (let i = 0; i < 3; i++) {
     const fall = (t * 0.6 + i * 0.37) % 1;
     paintAvocado(g, 14 + i * 30, Math.round(-14 + fall * 56), 2);
@@ -145,8 +169,8 @@ interface Cabinet {
   normal: THREE.Vector3;
   screen: THREE.CanvasTexture;
   paint(blink: boolean, t: number): void;
-  /** the bear is playing it: its screen shows the game going */
-  playing: boolean;
+  /** who's playing it (the bear, the deer), if anyone: its screen shows the game going */
+  playing: 'bear' | 'deer' | null;
 }
 
 /**
@@ -166,6 +190,7 @@ export class ArcadeScene {
   private cabinets: Cabinet[] = [];
   private duck = new THREE.Group();
   private bear = new ArcadeBear();
+  private deer = new ArcadeDeer();
   /** turn your head to follow the bear: while it comes over and talks ('talk'), and as it
    * walks off to its game ('follow', until it starts playing or you move) */
   private watchBear: false | 'talk' | 'follow' = false;
@@ -194,6 +219,14 @@ export class ArcadeScene {
     this.buildRoom();
     games.slice(0, SLOTS.length).forEach((g, i) => this.buildCabinet(g, SLOTS[i]));
     this.scene.add(this.bear.group);
+    // the deer is already at its cabinet when you walk in, playing
+    const deerCab = this.cabinets.find((k) => k.game.id === DEER_GAME);
+    if (deerCab) {
+      const at = { x: deerCab.x + deerCab.normal.x * 0.95, z: deerCab.z + deerCab.normal.z * 0.95 };
+      this.deer.place(at, yawTo(at, deerCab));
+      deerCab.playing = 'deer';
+      this.scene.add(this.deer.group);
+    }
 
     el.addEventListener('pointerdown', this.onDown);
     window.addEventListener('pointermove', this.onMove);
@@ -459,7 +492,7 @@ export class ArcadeScene {
       paintDuck(ctx, dx, 36, 2);
       centredText(ctx, game.title, 48, 8, c.trim);
       if (cabinet.playing) {
-        paintPlaying(ctx, c, t);
+        paintPlaying(ctx, c, t, cabinet.playing);
       } else if (blink) centredText(ctx, game.ready ? 'PRESS A' : 'SOON', 48, 22, '#ffffff');
       ctx.fillStyle = 'rgba(0,0,0,0.18)';
       for (let y = 0; y < 72; y += 2) ctx.fillRect(0, y, 96, 1); // scanlines
@@ -502,7 +535,7 @@ export class ArcadeScene {
       normal: new THREE.Vector3(Math.sin(yaw), 0, Math.cos(yaw)),
       screen,
       paint,
-      playing: false,
+      playing: null,
     };
     this.cabinets.push(cabinet);
     paint(true, 0);
@@ -520,7 +553,8 @@ export class ArcadeScene {
   /** The bear is right there beside you (as a game closes), facing you, holding up its licorice. */
   bearAppear() {
     const you = { x: this.pos.x, z: this.pos.z };
-    this.cabinets.forEach((c) => (c.playing = false));
+    // the bear leaves its game (the deer plays on)
+    this.cabinets.forEach((c) => c.playing === 'bear' && (c.playing = null));
     const at = besideYou(you, this.yaw, ROOM, this.obstacles(true));
     this.bear.place(at);
     this.bear.face(yawTo(at, you));
@@ -546,7 +580,7 @@ export class ArcadeScene {
     this.bear.walk(route(this.bear.pos, stand, this.obstacles(true), AISLES), () => {
       this.bear.face(yawTo(stand, c));
       this.bear.play();
-      c.playing = true;
+      c.playing = 'bear';
       if (this.watchBear === 'follow') this.watchBear = false;
     });
   }
@@ -564,6 +598,7 @@ export class ArcadeScene {
   private obstacles(you: boolean): Obstacle[] {
     const list: Obstacle[] = this.cabinets.map((c) => ({ x: c.x, z: c.z, r: 0.55 }));
     list.push({ x: this.duck.position.x, z: this.duck.position.z, r: 1.15 });
+    list.push({ x: this.deer.pos.x, z: this.deer.pos.z, r: 0.45 });
     if (you) list.push({ x: this.pos.x, z: this.pos.z, r: 0.35 });
     return list;
   }
@@ -606,6 +641,7 @@ export class ArcadeScene {
   private blocked(x: number, z: number) {
     if (Math.hypot(x - this.duck.position.x, z - this.duck.position.z) < 1.4) return true;
     if (this.bear.shown && Math.hypot(x - this.bear.pos.x, z - this.bear.pos.z) < 0.7) return true;
+    if (Math.hypot(x - this.deer.pos.x, z - this.deer.pos.z) < 0.6) return true;
     return this.cabinets.some((c) => Math.hypot(c.x - x, c.z - z) < 0.95);
   }
 
@@ -669,6 +705,7 @@ export class ArcadeScene {
       this.cabinets.forEach((c) => c.paint(blink, t / 1000));
     }
     this.duck.rotation.y = -0.6 + Math.sin(t / 1800) * 0.4;
+    this.deer.update(t / 1000);
     const bob = this.move.forward && !this.paused ? Math.sin(t / 140) * 0.025 : 0;
     this.camera.position.set(this.pos.x, EYE + bob, this.pos.z);
     this.camera.rotation.set(this.pitch, -this.yaw, 0, 'YXZ');

@@ -1,6 +1,6 @@
 import { Suspense, useEffect, useRef, useState } from 'react';
 import { buildRabbit, buttonLabel, input, isTouch, TouchPad, withButtons } from '../../city';
-import { ARCADE_NAME, ARCADE_WHERE, arcadeAfter, arcadeGames, arcadeIntro, arcadeSoon, BEAR_NAME, bearLines, type ArcadeGame } from '../../content/duckArcade';
+import { ARCADE_MUSIC, ARCADE_NAME, ARCADE_WHERE, arcadeAfter, arcadeGames, arcadeIntro, arcadeSoon, BEAR_NAME, bearLines, type ArcadeGame } from '../../content/duckArcade';
 import { DialogBox } from '../../ui/MikeDialog';
 import { SceneBoundary } from '../../ui/SceneBoundary';
 import { sounds as sfx } from '../../ui/sounds';
@@ -159,6 +159,25 @@ export default function DuckArcade({ onExit }: { onExit(): void }) {
   useEffect(() => {
     sfx.gameSound(!!Game);
     return () => sfx.gameSound(false);
+  }, [Game]);
+
+  // the room's music: quiet, looping, paused while a game plays, silent when the map is muted
+  const music = useRef<HTMLAudioElement | null>(null);
+  useEffect(() => {
+    const a = new Audio(`${import.meta.env.BASE_URL}${ARCADE_MUSIC.file}`);
+    a.loop = true;
+    a.volume = ARCADE_MUSIC.volume;
+    music.current = a;
+    return () => {
+      a.pause();
+      music.current = null;
+    };
+  }, []);
+  useEffect(() => {
+    const a = music.current;
+    if (!a) return;
+    if (Game || sfx.isMuted()) a.pause();
+    else void a.play().catch(() => {}); // a browser that blocks it just stays quiet
   }, [Game]);
 
   return (

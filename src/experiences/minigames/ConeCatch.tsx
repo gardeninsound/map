@@ -181,7 +181,7 @@ const buildCones = () =>
 const ROCK: Grid = ['.kkkk.', 'kgglgk', 'kgggdk', 'kgdggk', '.kkkk.'];
 const ROCK_COLORS = { k: INK, g: '#8a857c', l: '#b8b3aa', d: '#6e6a62' };
 
-const SKY = '#7fc0b0';
+const SKY = '#79aab0';
 const STRIPES = ['#b8322a', '#f3e6cc'];
 const FLAME = ['#fff4c0', '#ffd166', '#f47b20', '#e4202c'];
 
@@ -241,8 +241,8 @@ function draw(
     const keys = isTouch() ? 'TAP HIGH TO JUMP' : withButtons('ARROWS RUN, {A} JUMPS');
     const lines =
       phase === 'title'
-        ? [['CONE CATCH', '#e6b23a'], ['catch the cones,', '#f3e6cc'], ['jump the fires!', '#f3e6cc'], [keys, '#e8a59a'], [start, '#7fc0b0']]
-        : [[s.lives <= 0 ? 'OUCH! GAME OVER' : "TIME'S UP!", '#e6b23a'], [`${s.score} CONES`, '#f3e6cc'], [`BEST ${best}`, '#e8a59a'], ['', ''], [isTouch() ? 'TAP TO PLAY AGAIN' : withButtons('{A} AGAIN'), '#7fc0b0']];
+        ? [['CONE CATCH', '#e6b23a'], ['catch the cones,', '#f3e6cc'], ['jump the fires!', '#f3e6cc'], [keys, '#e8a59a'], [start, '#79aab0']]
+        : [[s.lives <= 0 ? 'OUCH! GAME OVER' : "TIME'S UP!", '#e6b23a'], [`${s.score} CONES`, '#f3e6cc'], [`BEST ${best}`, '#e8a59a'], ['', ''], [isTouch() ? 'TAP TO PLAY AGAIN' : withButtons('{A} AGAIN'), '#79aab0']];
     lines.forEach(([text, color], i) => {
       ctx.fillStyle = color;
       ctx.font = i === 0 ? '8px "Press Start 2P"' : '6px "Press Start 2P"';
@@ -264,8 +264,8 @@ const NOUVEAU = {
   panelShade: '#e5d6b4',
   gold: '#c89834',
   goldLight: '#e6c26a',
-  sage: '#4f8f63',
-  sageDark: '#2f6b48',
+  sage: '#f0a03a',
+  sageDark: '#6e7a34',
   heart: '#b8322a',
   heartLight: '#e8a59a',
   lost: '#d8c8a8',

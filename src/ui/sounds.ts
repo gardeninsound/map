@@ -46,6 +46,11 @@ export const sounds = {
       setTimeout(() => tone(1400, 0.1, 'square', 0.03, 300), 90);
     }
   },
+  /** the boxing bell at the stadium: ding-ding, quieter the farther you are */
+  boxingBell: (loud = 1) => {
+    tone(1320, 0.5, 'sine', 0.05 * loud, -20);
+    setTimeout(() => tone(1320, 0.6, 'sine', 0.05 * loud, -20), 260);
+  },
   /** an oar dipping in, rowing the boat at the end of 58th */
   paddle: () => tone(300, 0.12, 'triangle', 0.025, -160),
   whoosh: () => {

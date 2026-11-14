@@ -1,11 +1,11 @@
 /* west-seattle-map UI: tokens, HUD, dialog, touch pad. Apps add their own on top. */
 :root {
-  --ink: #2b2350;
-  --paper: #fff7e6;
-  --pink: #ff7eb6;
-  --teal: #2ec4b6;
-  --yellow: #ffe066;
-  --orange: #ff8c42;
+  --ink: #3b1f2b;
+  --paper: #fff1e0;
+  --pink: #ff2e93;
+  --teal: #8f9a52;
+  --yellow: #ffb627;
+  --orange: #e8622a;
   --sky: #3a86ff;
   --pixel: 'Press Start 2P', monospace;
   --body: 'Pixelify Sans', system-ui, sans-serif;

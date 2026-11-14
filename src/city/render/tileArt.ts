@@ -89,7 +89,7 @@ const BUILDING_LOOK = {
   [Tile.Block]: { roof: '#d9b98a', roofLight: '#e8cfa6', wall: '#f3e6cc', trim: '#a8814e' },
   [Tile.Civic]: { roof: '#a8362a', roofLight: '#c25040', wall: '#b8322a', trim: '#7a2318' },
 } as const;
-const AWNINGS = ['#b8322a', '#5fa8a0', '#e0a93a', '#e8a59a', '#2f6b48', '#d98c78', '#c8892c'];
+const AWNINGS = ['#b8322a', '#5fa8a0', '#e0a93a', '#e8a59a', '#6e7a34', '#d98c78', '#c8892c'];
 
 /**
  * A tile of a big building, drawn top-down with SNES-style 3/4 cheats: flat roof with
