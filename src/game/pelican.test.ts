@@ -1,4 +1,4 @@
-import { arc, pelicanAt, phaseAt, PELICAN_TIMES, PELICAN_TIMES_STILL, totalTime, type PelicanPoints } from './pelican';
+import { arc, pelicanAt, phaseAt, phaseStart, skipAhead, PELICAN_TIMES, PELICAN_TIMES_STILL, totalTime, type PelicanPoints } from './pelican';
 import { PELICAN_GRIDS } from './sprites';
 
 const pts: PelicanPoints = { from: { x: -80, y: 200 }, byYou: { x: 500, y: 400 }, button: { x: 900, y: 40 }, away: { x: 1200, y: -140 } };
@@ -54,5 +54,18 @@ describe('pelican sprites', () => {
       expect(row).toHaveLength(24);
       expect(row).toMatch(/^[.kwgboy]+$/);
     }
+  });
+});
+
+describe('tapping Space while the pelican is here', () => {
+  const hop = phaseStart('hop');
+  it('sends it to the IDEA button right away while it flies in or asks', () => {
+    expect(skipAhead(0.5)).toBe(hop);
+    expect(skipAhead(PELICAN_TIMES.arrive + 1)).toBe(hop);
+    expect(phaseAt(skipAhead(PELICAN_TIMES.arrive + 1)).phase).toBe('hop');
+  });
+  it('does nothing once it is already on its way', () => {
+    expect(skipAhead(hop + 0.3)).toBe(hop + 0.3);
+    expect(skipAhead(totalTime() - 0.1)).toBe(totalTime() - 0.1);
   });
 });

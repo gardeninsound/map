@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import type { CityGame } from '../city';
+import { input, type CityGame } from '../city';
 import { pelicanLines } from '../content/pelican';
-import { PELICAN_TIMES, PELICAN_TIMES_STILL, pelicanAt, type PelicanFrame, type PelicanPhase } from '../game/pelican';
+import { PELICAN_TIMES, PELICAN_TIMES_STILL, pelicanAt, skipAhead, type PelicanFrame, type PelicanPhase } from '../game/pelican';
 import { buildPelican } from '../game/sprites';
 import { sounds } from './sounds';
 
@@ -35,7 +35,19 @@ export function Pelican({ game, onDone }: { game: CityGame; onDone(): void }) {
     const src = (c: HTMLCanvasElement) => url.get(c) ?? (url.set(c, c.toDataURL()), url.get(c)!);
     const still = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
     const times = still ? PELICAN_TIMES_STILL : PELICAN_TIMES;
-    const start = performance.now();
+    let start = performance.now();
+    /** seconds into the visit, as of the last frame */
+    let shownT = 0;
+    // {A} (Space) while it's flying in or asking: off it goes to the IDEA button now (and that
+    // press is the pelican's, so it doesn't also talk to whoever's nearby)
+    const off = input.on((b) => {
+      if (b !== 'a') return;
+      const to = skipAhead(shownT, times);
+      if (to <= shownT) return;
+      input.consume('a');
+      start -= (to - shownT) * 1000;
+      shownT = to;
+    });
     const from = { x: -80, y: window.innerHeight * 0.3 };
     let last: PelicanPhase | null = null;
     let raf = 0;
@@ -44,6 +56,7 @@ export function Pelican({ game, onDone }: { game: CityGame; onDone(): void }) {
     const tick = (now: number) => {
       // the first frame can be stamped a touch before `start`
       const t = Math.max(0, (now - start) / 1000);
+      shownT = t;
       const base = game.scale;
       const you = game.screenPoint(game.player.pos);
       const el = document.querySelector(BUTTON);
@@ -81,6 +94,7 @@ export function Pelican({ game, onDone }: { game: CityGame; onDone(): void }) {
     raf = requestAnimationFrame(tick);
     return () => {
       cancelAnimationFrame(raf);
+      off();
       perched?.classList.remove('pelican-perch');
     };
   }, [game]);
