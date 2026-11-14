@@ -65,6 +65,13 @@ plugins into `CityGame` and handles `onInteract`.
   `src/content/lunaPark.ts`; signs (and the wagon) are targets of kind `luna`, `ask` adds a question. The Figure Eight's sign offers a ride: App's
   `ride` overlay → `src/experiences/luna/FigureEight.tsx` (three.js, first person at dusk; reduced motion
   watches from the boardwalk). Tested in `src/game/lunaPark.test.ts` (reachable from Alki Ave, signs walkable).
+- `src/game/plugins/chickenBoxing.ts` — **giant chickens boxing in West Seattle Stadium**: a ring on the football field
+  (its tiles made solid at attach, so you watch from the track), two ~5-tile-tall low-poly chickens in gloves and trunks
+  (three.js, `src/game/boxing3d.ts`, lazy-loaded within `LOAD_NEAR` tiles, rendered at map-pixel size from the 3/4 view
+  and drawn into the map depth-sorted). The fight runs on the wall clock (`boutAt`, pure + tested in
+  `src/game/chickenBoxing.ts`: 3 rounds of punches on a beat, knockdowns with a count, rests in the corners), so every
+  rabbit sees the same punch; feathers + a thud when one lands, the bell each round. Ringside {A}: the announcer
+  (target kind `boxing`; names, colours, lines in `src/content/chickenBoxing.ts`). `__boxing` in dev.
 
 ## Other people, live (`plugins/visitors.ts`)
 

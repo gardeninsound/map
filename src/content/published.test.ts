@@ -3,7 +3,7 @@ import { execFileSync } from 'node:child_process';
 import { neededArt } from '../../scripts/neededArt.mjs';
 import { CEILING_VIDEO, POSTERS } from '../experiences/arcade/ArcadeScene';
 import { DINO_SHEET } from '../game/dinoSheet';
-import { arcadeGames } from './duckArcade';
+import { arcadeGames, ARCADE_MUSIC } from './duckArcade';
 import { moonStories } from './duckOnTheMoon';
 
 /**
@@ -25,6 +25,7 @@ describe('published files', () => {
       ...CEILING_VIDEO.map((file) => `public/${file}`),
       `public/${DINO_SHEET.file}`,
       ...arcadeGames.flatMap((g) => (g.front ? [`public/${g.front}`] : [])),
+      `public/${ARCADE_MUSIC.file}`,
       ...Object.values(moonStories).map((s) => `public/duck-on-the-moon/${s.file}`),
     ];
     expect(missing(files)).toEqual([]);
