@@ -34,6 +34,8 @@ import { BikeRace } from './game/plugins/bikeRace';
 import { raceResult } from './content/bikeRace';
 import { Dinos } from './game/plugins/dinos';
 import { Rowboat } from './game/plugins/rowboat';
+import { Garden } from './game/plugins/garden';
+import { gardenSign, GARDEN_NAME } from './content/garden';
 import { ChickenBoxing } from './game/plugins/chickenBoxing';
 import { ANNOUNCER, ringside } from './content/chickenBoxing';
 import { buildChicken } from './game/sprites';
@@ -164,6 +166,7 @@ export default function App() {
     const ham = new Ham();
     const race = new BikeRace();
     const rowboat = new Rowboat();
+    const garden = new Garden();
     const boxing = new ChickenBoxing();
     const luna = new LunaPark();
     // Everyone else on the island, live. `?solo` walks alone; `?relay=` points at another
@@ -178,7 +181,7 @@ export default function App() {
     const g = new CityGame(canvas.current!, world, {
       start: world.project(START.lat, START.lon),
       voices: neighborVoices,
-      plugins: [art, new BigCup(art), dinos, new Seal(), arcadeDoor.current, luna, busker, crow, chicken, pegasus, ham, race, rowboat, boxing, ...(live ? [live] : [])],
+      plugins: [garden, art, new BigCup(art), dinos, new Seal(), arcadeDoor.current, luna, busker, crow, chicken, pegasus, ham, race, rowboat, boxing, ...(live ? [live] : [])],
       events: {
         onStreet: setStreet,
         onStorefront: setStorefront,
@@ -198,6 +201,10 @@ export default function App() {
             const b = boxing.bout;
             sounds.cluck();
             setOverlay({ kind: 'talk', speaker: ANNOUNCER, portrait: (boxerPortrait ??= buildChicken().right[0]!.toDataURL()), lines: ringside(b.round, b.rest, b.landed) });
+          } else if (t.kind === 'garden') {
+            // the seasonal garden's sign (idea box #12): what's out this month
+            const out = garden.blooming().map((b) => b.plant.name);
+            setOverlay({ kind: 'talk', speaker: GARDEN_NAME, lines: gardenSign(new Date().getMonth() + 1, out) });
           } else if (t.kind === 'luna') {
             // a sign at Luna Park; the Figure Eight's offers a ride, Pat answers a sum
             const sign = t.data as LunaSign;
@@ -277,7 +284,7 @@ export default function App() {
         lines: raceResult(r.place, r.total, r.winner, r.seconds),
       });
     g.paused = true;
-    if (import.meta.env.DEV) Object.assign(window, { __game: g, __busker: busker, __crow: crow, __chicken: chicken, __pegasus: pegasus, __ham: ham, __race: race, __rowboat: rowboat, __boxing: boxing, __dinos: dinos, __art: art, __luna: luna, __visitors: live }); // test hooks
+    if (import.meta.env.DEV) Object.assign(window, { __game: g, __busker: busker, __crow: crow, __chicken: chicken, __pegasus: pegasus, __ham: ham, __race: race, __rowboat: rowboat, __garden: garden, __boxing: boxing, __dinos: dinos, __art: art, __luna: luna, __visitors: live }); // test hooks
     // Review hooks: ?at=lat,lon (or ?atTile=x,y, or ?at=arcade) skips the title and drops you there;
     // ?audit scans the whole map for road-drawing glitches (scripts/city/road-audit.mjs).
     const q = new URLSearchParams(location.search);

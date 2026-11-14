@@ -80,6 +80,10 @@ plugins into `CityGame` and handles `onInteract`.
   `src/game/chickenBoxing.ts`: 3 rounds of punches on a beat, knockdowns with a count, rests in the corners), so every
   rabbit sees the same punch; feathers + a thud when one lands, the bell each round. Ringside {A}: the announcer
   (target kind `boxing`; names, colours, lines in `src/content/chickenBoxing.ts`). `__boxing` in dev.
+- `src/game/plugins/garden.ts` — **the seasonal garden at Dragonfly Garden** (Delridge; idea box #12): the park's trees cleared at
+  attach, gravel paths between soil beds, each bed a planting in flower this month by the real calendar (`inBloom`: coming up, full,
+  fading at the end of its run — pure + tested in `src/game/garden.ts`); a sign by the street ({A}, target `garden`) says what's out.
+  Plantings (months, shape, colour) and the sign in `src/content/garden.ts`.
 
 ## Other people, live (`plugins/visitors.ts`)
 
