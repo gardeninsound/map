@@ -35,7 +35,8 @@ plugins into `CityGame` and handles `onInteract`.
   concrete lanes, named "Alley"). Ham the cat (`src/game/plugins/ham.ts`, a Scottish Fold) wanders the
   street and alley within `HAM.leash` tiles of home, sits to look at a rabbit nearby, and says one set
   of lines per visit through the plain neighbor talk (words in `src/content/ham.ts`; movement pure +
-  tested in `src/game/ham.ts`). `__ham` in dev.
+  tested in `src/game/ham.ts`). After the lines Ham asks for pets (idea box #30): `hamPets` choices in the App, `Ham.pet()`
+  floats hearts and purrs (`sounds.purr`). `__ham` in dev.
 - `src/game/plugins/rowboat.ts` — **the rowboat at the end of 58th Ave SW** on Alki: at attach a 2-wide wooden dock is
   laid from where 58th meets Alki Ave west across the park and sand to the water (tiles turned walkable, street sign
   "58th Ave Dock"; laid once per map, so React's dev double start reuses it), the boat tied up at its end. {A}
@@ -80,6 +81,9 @@ plugins into `CityGame` and handles `onInteract`.
   `src/game/chickenBoxing.ts`: 3 rounds of punches on a beat, knockdowns with a count, rests in the corners), so every
   rabbit sees the same punch; feathers + a thud when one lands, the bell each round. Ringside {A}: the announcer
   (target kind `boxing`; names, colours, lines in `src/content/chickenBoxing.ts`). `__boxing` in dev.
+- `src/game/plugins/squirrels.ts` — **squirrels** (idea box #30): five always near you on the ground by park trees; a person (a
+  neighbor NPC, not `custom`) within `SCARE` tiles sends one up the nearest tree, where only its tail shows till nobody's within
+  `CLEAR` for `CALM` s. Rabbits don't scare them. Pure + tested in `src/game/squirrels.ts`; sprites in `src/game/squirrelSprites.ts`.
 
 ## Other people, live (`plugins/visitors.ts`)
 

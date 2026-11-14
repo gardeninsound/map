@@ -42,7 +42,17 @@ export class Ham implements CityPlugin {
     game.npcs.push(this.npc);
   }
 
+  /** seconds of hearts left over Ham, after pets */
+  hearts = 0;
+
+  /** Pets: a purr and hearts floating up. */
+  pet() {
+    this.hearts = 2.5;
+    sounds.purr();
+  }
+
   update(dt: number, game: CityGame) {
+    this.hearts = Math.max(0, this.hearts - dt);
     const s = this.state;
     if (!s || !this.home) return;
     const talking = this.npc.talking;
@@ -75,6 +85,14 @@ export class Ham implements CityPlugin {
           // grooming: paw up, then down, then up
           const img = s.mode === 'groom' && time % 0.8 < 0.45 ? sprites.groom : sprites.sit;
           ctx.drawImage(img, p.x - 8, p.y - 14);
+        }
+        // pets: little hearts drifting up
+        for (let i = 0; i < 3 && this.hearts > 0; i++) {
+          const age = (2.5 - this.hearts + i * 0.5) % 1.5;
+          const hx = Math.round(p.x - 4 + i * 4 + Math.sin(time * 4 + i) * 1.5), hy = Math.round(p.y - 18 - age * 14);
+          ctx.fillStyle = '#ff2e93';
+          ctx.fillRect(hx, hy, 2, 1); ctx.fillRect(hx + 3, hy, 2, 1);
+          ctx.fillRect(hx - 1, hy + 1, 7, 1); ctx.fillRect(hx, hy + 2, 5, 1); ctx.fillRect(hx + 1, hy + 3, 3, 1); ctx.fillRect(hx + 2, hy + 4, 1, 1);
         }
       },
     });

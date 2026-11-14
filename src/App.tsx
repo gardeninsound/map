@@ -24,8 +24,10 @@ import { experiences } from './experiences/registry';
 import { ArtSpots, type PlacedLocation } from './game/plugins/artSpots';
 import { Busker } from './game/plugins/busker';
 import { Crow } from './game/plugins/crow';
+import { Squirrels } from './game/plugins/squirrels';
 import { Chicken } from './game/plugins/chicken';
 import { Ham } from './game/plugins/ham';
+import { HAM_NAME, hamPets } from './content/ham';
 import { Pegasus } from './game/plugins/pegasus';
 import { BigCup } from './game/plugins/bigCup';
 import { Seal } from './game/plugins/seal';
@@ -158,6 +160,7 @@ export default function App() {
     const art = new ArtSpots(locations);
     const busker = new Busker();
     const crow = new Crow();
+    const squirrels = new Squirrels();
     const chicken = new Chicken();
     const pegasus = new Pegasus();
     const dinos = new Dinos();
@@ -178,7 +181,7 @@ export default function App() {
     const g = new CityGame(canvas.current!, world, {
       start: world.project(START.lat, START.lon),
       voices: neighborVoices,
-      plugins: [art, new BigCup(art), dinos, new Seal(), arcadeDoor.current, luna, busker, crow, chicken, pegasus, ham, race, rowboat, boxing, ...(live ? [live] : [])],
+      plugins: [art, new BigCup(art), dinos, new Seal(), arcadeDoor.current, luna, busker, crow, squirrels, chicken, pegasus, ham, race, rowboat, boxing, ...(live ? [live] : [])],
       events: {
         onStreet: setStreet,
         onStorefront: setStorefront,
@@ -262,6 +265,17 @@ export default function App() {
                 ],
               });
             ask(0);
+          } else if (t.npc === ham.npc) {
+            // Ham says the lines, then asks for pets (idea box #30)
+            const talk = { kind: 'talk', speaker: HAM_NAME, portrait: g.portraitOf(ham.npc) } as const;
+            setOverlay({
+              ...talk,
+              lines: [...t.npc.voice.lines, hamPets.ask],
+              choices: [
+                { label: hamPets.yes, onPick: () => { ham.pet(); setOverlay({ ...talk, lines: hamPets.after }); } },
+                { label: hamPets.no, onPick: () => setOverlay({ ...talk, lines: hamPets.bye }) },
+              ],
+            });
           } else if (t.npc) {
             setOverlay({ kind: 'talk', lines: t.npc.voice.lines, speaker: t.npc.voice.name, portrait: g.portraitOf(t.npc) });
           }
@@ -277,7 +291,7 @@ export default function App() {
         lines: raceResult(r.place, r.total, r.winner, r.seconds),
       });
     g.paused = true;
-    if (import.meta.env.DEV) Object.assign(window, { __game: g, __busker: busker, __crow: crow, __chicken: chicken, __pegasus: pegasus, __ham: ham, __race: race, __rowboat: rowboat, __boxing: boxing, __dinos: dinos, __art: art, __luna: luna, __visitors: live }); // test hooks
+    if (import.meta.env.DEV) Object.assign(window, { __game: g, __busker: busker, __crow: crow, __squirrels: squirrels, __chicken: chicken, __pegasus: pegasus, __ham: ham, __race: race, __rowboat: rowboat, __boxing: boxing, __dinos: dinos, __art: art, __luna: luna, __visitors: live }); // test hooks
     // Review hooks: ?at=lat,lon (or ?atTile=x,y, or ?at=arcade) skips the title and drops you there;
     // ?audit scans the whole map for road-drawing glitches (scripts/city/road-audit.mjs).
     const q = new URLSearchParams(location.search);
