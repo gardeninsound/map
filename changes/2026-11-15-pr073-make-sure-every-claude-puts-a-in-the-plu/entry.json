@@ -1,0 +1,147 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "8d9874a838f5aa246e91f464a698d5ce0c6bab8a",
+  "parent": "366405dcc2bac4137601d95940b358ae86f69d87",
+  "pr": 73,
+  "title": "Make sure every Claude puts {A} in the plugin: a rule, a guard, a minigame action",
+  "url": "https://github.com/gardeninsound/map/pull/73",
+  "merged_at": "2026-11-15T22:05:46Z",
+  "body": "After #72, the new pattern for what {A} does was only described in `src/game/CLAUDE.md`, which Claude loads only once it opens a file there. The root `CLAUDE.md` and the old crow/chicken/Ham branches still pointed at App.tsx. This makes sure any Claude, Mike's included, follows the new pattern:\n\n- **Root `CLAUDE.md`**, which every session loads: convention 7. What {A} does goes in the plugin's `act()`, never a new branch in App's `onInteract`. The crow, chicken and Ham are still there only until they're moved, so don't copy them.\n- **`src/game/CLAUDE.md`** no longer says App handles `onInteract`.\n- **Guard: `src/game/onInteract.test.ts`** fails CI on any new branch in `onInteract`. Its message spells out how to do it instead, with examples (ponies for a simple dialog, Luna Park for choices leading to a ride). Tried with a branch added on purpose; it fails with those steps.\n- **A `minigame` action** whose `then` gets the score, so a character with its own game (like the chicken's Cone Catch) can be written the new way too. Before this there'd have been no allowed way to write one.\n\n@exit320-stack: heads-up. If your Claude ever adds a character the old way, CI will stop it and say how to do it right.\n\n## Story\nIdea:\nWhere: none\nAsked vs made:\nMike:\nNote: Two people each working with their own Claude: the instructions get them most of the way, the test catches the rest.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "7a28db1eddd94b9d19fff014ce61dfa44cc33ca2",
+      "message": "Make sure every Claude puts {A} in the plugin: a rule, a guard, a minigame action\n\n- Root CLAUDE.md (always loaded): convention 7, what {A} does goes in\n  the plugin's act(); never a new branch in App's onInteract; the crow,\n  chicken and Ham are still there only until moved, don't copy them.\n- src/game/CLAUDE.md no longer says App handles onInteract.\n- src/game/onInteract.test.ts fails on any new branch in onInteract, and\n  its message says exactly how to do it instead (with examples).\n- Action gets `minigame` (then gets the score), so a character with its\n  own game, like the chicken, can be written the new way too.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-15T22:04:07Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 5,
+      "deletions": 1
+    },
+    {
+      "path": "src/App.tsx",
+      "status": "M",
+      "additions": 1,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/CLAUDE.md",
+      "status": "M",
+      "additions": 8,
+      "deletions": 7
+    },
+    {
+      "path": "src/game/actions.test.ts",
+      "status": "M",
+      "additions": 8,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/actions.ts",
+      "status": "M",
+      "additions": 5,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/onInteract.test.ts",
+      "status": "A",
+      "additions": 43,
+      "deletions": 0
+    }
+  ],
+  "additions": 70,
+  "deletions": 8,
+  "areas": [
+    "characters & map life",
+    "docs"
+  ],
+  "branch": "a-press-guard",
+  "opened_at": "2026-11-15T22:04:12Z",
+  "merged_by": "vlandham",
+  "summary": "After #72, the new pattern for what {A} does was only described in `src/game/CLAUDE.md`, which Claude loads only once it opens a file there. The root `CLAUDE.md` and the old crow/chicken/Ham branches still pointed at App.tsx. This makes sure any Claude, Mike's included, follows the new pattern:\n\n- **Root `CLAUDE.md`**, which every session loads: convention 7. What {A} does goes in the plugin's `act()`, never a new branch in App's `onInteract`. The crow, chicken and Ham are still there only until they're moved, so don't copy them.\n- **`src/game/CLAUDE.md`** no longer says App handles `onInteract`.\n- **Guard: `src/game/onInteract.test.ts`** fails CI on any new branch in `onInteract`. Its message spells out how to do it instead, with examples (ponies for a simple dialog, Luna Park for choices leading to a ride). Tried with a branch added on purpose; it fails with those steps.\n- **A `minigame` action** whose `then` gets the score, so a character with its own game (like the chicken's Cone Catch) can be written the new way too. Before this there'd have been no allowed way to write one.\n\n@exit320-stack: heads-up. If your Claude ever adds a character the old way, CI will stop it and say how to do it right.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": "Two people each working with their own Claude: the instructions get them most of the way, the test catches the rest.\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+    "shots": true,
+    "present": true
+  },
+  "ideas": [],
+  "requested_reviewers": [
+    "exit320-stack"
+  ],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-15T22:04:35Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-73-garden-preview.gardeninsound.workers.dev\n\nUpdated for 7a28db1. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-73]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-73-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 21,
+    "scenes": 11,
+    "content_files": 27,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 26825,
+    "commits": 97
+  },
+  "shots": [
+    {
+      "query": "at=47.5612,-122.3868",
+      "lat": 47.5612,
+      "lon": -122.3868,
+      "label": "the Junction, where everyone starts",
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "production",
+      "after": "production"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+  },
+  "first_recorded_at": "2026-11-15T22:06:37.161Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T22:06:37.161Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43767333582"
+}

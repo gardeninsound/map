@@ -2,7 +2,22 @@
 
 Every change that went live on [gardeninsound.website](https://gardeninsound.website), newest first, with the wish that started it, what was made, who made it, and how the spot looked before and after. Written automatically by [`.github/workflows/story.yml`](https://github.com/gardeninsound/map/blob/main/.github/workflows/story.yml) when a change merges; the raw records are in `changes/` and `wishes/`, and `story.json` indexes them all.
 
-**79** changes · **12** wishes from visitors, **11** answered · **0** still waiting
+**80** changes · **12** wishes from visitors, **11** answered · **0** still waiting
+
+---
+
+### Nov 15, 2026 · Make sure every Claude puts {A} in the plugin: a rule, a guard, a minigame action ([#73](https://github.com/gardeninsound/map/pull/73))
+
+Two people each working with their own Claude: the instructions get them most of the way, the test catches the rest.
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+| before · the Junction, where everyone starts | after |
+|---|---|
+| <img src="changes/2026-11-15-pr073-make-sure-every-claude-puts-a-in-the-plu/before-1.webp" width="400"> | <img src="changes/2026-11-15-pr073-make-sure-every-claude-puts-a-in-the-plu/after-1.webp" width="400"> |
+
+<img src="changes/2026-11-15-pr073-make-sure-every-claude-puts-a-in-the-plu/moving-1.webp" width="400" alt="moving">
+
+<sub>vlandham with Claude Code · 6 files, +70 −8 · characters & map life, docs · [record](changes/2026-11-15-pr073-make-sure-every-claude-puts-a-in-the-plu/entry.json)</sub>
 
 ---
 

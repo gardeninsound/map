@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-11-15T22:00:03.826Z",
+  "generated_at": "2026-11-15T22:07:00.208Z",
   "changes": [
     {
       "pr": null,
@@ -3976,6 +3976,54 @@
         "arcade_cabinets_ready": 4,
         "source_lines": 26768,
         "commits": 96
+      }
+    },
+    {
+      "pr": 73,
+      "sha": "8d9874a838f5aa246e91f464a698d5ce0c6bab8a",
+      "title": "Make sure every Claude puts {A} in the plugin: a rule, a guard, a minigame action",
+      "url": "https://github.com/gardeninsound/map/pull/73",
+      "merged_at": "2026-11-15T22:05:46Z",
+      "dir": "changes/2026-11-15-pr073-make-sure-every-claude-puts-a-in-the-plu",
+      "ideas": [],
+      "summary": "After #72, the new pattern for what {A} does was only described in `src/game/CLAUDE.md`, which Claude loads only once it opens a file there. The root `CLAUDE.md` and the old crow/chicken/Ham branches still pointed at App.tsx. This makes sure any Claude, Mike's included, follows the new pattern:\n\n- **Root `CLAUDE.md`**, which every session loads: convention 7. What {A} does goes in the plugin's `act()`, never a new branch in App's `onInteract`. The crow, chicken and Ham are still there only until they're moved, so don't copy them.\n- **`src/game/CLAUDE.md`** no longer says App handles `onInteract`.\n- **Guard: `src/game/onInteract.test.ts`** fails CI on any new branch in `onInteract`. Its message spells out how to do it instead, with examples (ponies for a simple dialog, Luna Park for choices leading to a ride). Tried with a branch added on purpose; it fails with those steps.\n- **A `minigame` action** whose `then` gets the score, so a character with its own game (like the chicken's Cone Catch) can be written the new way too. Before this there'd have been no allowed way to write one.\n\n@exit320-stack: heads-up. If your Claude ever adds a character the old way, CI will stop it and say how to do it right.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": "Two people each working with their own Claude: the instructions get them most of the way, the test catches the rest.\n🤖 Generated with [Claude Code](https://claude.com/claude-code)"
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 6,
+      "additions": 70,
+      "deletions": 8,
+      "areas": [
+        "characters & map life",
+        "docs"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5612,-122.3868",
+          "lat": 47.5612,
+          "lon": -122.3868,
+          "label": "the Junction, where everyone starts",
+          "before": "changes/2026-11-15-pr073-make-sure-every-claude-puts-a-in-the-plu/before-1.webp",
+          "after": "changes/2026-11-15-pr073-make-sure-every-claude-puts-a-in-the-plu/after-1.webp",
+          "moving": "changes/2026-11-15-pr073-make-sure-every-claude-puts-a-in-the-plu/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 21,
+        "scenes": 11,
+        "content_files": 27,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 26825,
+        "commits": 97
       }
     }
   ],
