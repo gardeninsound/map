@@ -71,7 +71,7 @@ type Overlay =
   /** inside the Duck Arcade */
   | { kind: 'arcade' }
   /** riding Luna Park's Great Figure Eight */
-  | { kind: 'ride' }
+  | { kind: 'ride'; ride?: 'whirl' }
   | { kind: 'spots' }
   /** the idea box: "What would you love to add?" → a GitHub issue */
   | { kind: 'idea' };
@@ -79,6 +79,7 @@ type Overlay =
 const ConeCatch = lazy(() => import('./experiences/minigames/ConeCatch'));
 const DuckArcade = lazy(() => import('./experiences/arcade/DuckArcade'));
 const FigureEight = lazy(() => import('./experiences/luna/FigureEight'));
+const GiantWhirl = lazy(() => import('./experiences/luna/GiantWhirl'));
 
 /** Overlays that take the whole screen: the map's HUD and touch pad hide under them. */
 const FULL_SCREEN: Overlay['kind'][] = ['scene', 'minigame', 'arcade', 'ride'];
@@ -209,9 +210,9 @@ export default function App() {
               ...talk,
               lines: sign.lines,
               choices:
-                sign.id === 'figure8'
+                sign.id === 'figure8' || sign.id === 'whirl'
                   ? [
-                      { label: lunaRideInvite.yes, onPick: () => setOverlay({ kind: 'ride' }) },
+                      { label: lunaRideInvite.yes, onPick: () => setOverlay(sign.id === 'whirl' ? { kind: 'ride', ride: 'whirl' } : { kind: 'ride' }) },
                       { label: lunaRideInvite.no, onPick: () => setOverlay({ kind: 'none' }) },
                     ]
                   : ask
@@ -627,7 +628,7 @@ export default function App() {
       {overlay.kind === 'ride' && (
         <SceneBoundary onError={closeOverlay}>
           <Suspense fallback={<div className="scene scene-loading">Loading…</div>}>
-            <FigureEight onExit={closeOverlay} />
+            {overlay.ride === 'whirl' ? <GiantWhirl onExit={closeOverlay} /> : <FigureEight onExit={closeOverlay} />}
           </Suspense>
         </SceneBoundary>
       )}
