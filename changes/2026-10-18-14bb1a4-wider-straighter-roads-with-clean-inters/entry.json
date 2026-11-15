@@ -1,0 +1,129 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "14bb1a4d1a6a36ef02174eec5326e5191056e0b3",
+  "parent": "23e2785b557389db7f90d6f38ece8204a568145a",
+  "pr": null,
+  "title": "Wider, straighter roads with clean intersections",
+  "url": "https://github.com/gardeninsound/map/commit/14bb1a4d1a6a36ef02174eec5326e5191056e0b3",
+  "merged_at": "2026-10-18T15:50:18-07:00",
+  "body": "- California 4 tiles, other streets 3; diagonals widened to match\n- Chain each street's OSM ways, cut at intersections, snap near-axis\n  runs to tile centres so straight streets stay straight\n- Drop turn ramps and short unnamed stubs; report unreachable streets\n- 45° curb cuts at corners and staircase notches\n- More review spots (Erskine Way, California & Admiral)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "authors": [
+    {
+      "login": null,
+      "name": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "14bb1a4d1a6a36ef02174eec5326e5191056e0b3",
+      "message": "Wider, straighter roads with clean intersections\n\n- California 4 tiles, other streets 3; diagonals widened to match\n- Chain each street's OSM ways, cut at intersections, snap near-axis\n  runs to tile centres so straight streets stay straight\n- Drop turn ramps and short unnamed stubs; report unreachable streets\n- 45° curb cuts at corners and staircase notches\n- More review spots (Erskine Way, California & Admiral)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "at": "2026-10-18T15:50:18-07:00"
+    }
+  ],
+  "files": [
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 5,
+      "deletions": 2
+    },
+    {
+      "path": "scripts/build-map.mjs",
+      "status": "M",
+      "additions": 133,
+      "deletions": 15
+    },
+    {
+      "path": "scripts/map-config.mjs",
+      "status": "M",
+      "additions": 15,
+      "deletions": 5
+    },
+    {
+      "path": "scripts/review-map.mjs",
+      "status": "M",
+      "additions": 2,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/render/tileArt.ts",
+      "status": "M",
+      "additions": 42,
+      "deletions": 0
+    },
+    {
+      "path": "src/world/worldData.json",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    }
+  ],
+  "additions": 198,
+  "deletions": 23,
+  "areas": [
+    "characters & map life",
+    "docs",
+    "tools"
+  ],
+  "summary": "- California 4 tiles, other streets 3; diagonals widened to match\n- Chain each street's OSM ways, cut at intersections, snap near-axis\n  runs to tile centres so straight streets stay straight\n- Drop turn ramps and short unnamed stubs; report unreachable streets\n- 45° curb cuts at corners and staircase notches\n- More review spots (Erskine Way, California & Admiral)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 11,
+    "plugins": 0,
+    "scenes": 2,
+    "content_files": 8,
+    "source_lines": 6344,
+    "commits": 3
+  },
+  "shots": [
+    {
+      "query": "at=47.5612,-122.3868",
+      "lat": 47.5612,
+      "lon": -122.3868,
+      "label": "the Junction, where everyone starts",
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ],
+        "after": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ]
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "note": "stills lossless; moving loop half size"
+  },
+  "first_recorded_at": "2026-11-15T16:30:23.173Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:30:23.173Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43735787534"
+}

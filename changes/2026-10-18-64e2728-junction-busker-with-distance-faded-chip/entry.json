@@ -1,0 +1,148 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "64e2728bb61d6862674ceaf5a45ed863ba6ac5fb",
+  "parent": "23a878f9a788dcc46da6a5519f029192835b88df",
+  "pr": null,
+  "title": "Junction busker with distance-faded chiptune music",
+  "url": "https://github.com/gardeninsound/map/commit/64e2728bb61d6862674ceaf5a45ed863ba6ac5fb",
+  "merged_at": "2026-10-18T16:20:58-07:00",
+  "body": "- Keyboard player on the curb outside Easy Street, rocking on the beat\n  with musical notes floating up\n- Three original songs synthesized via Web Audio; volume follows your\n  distance and fades out past ~130 m, hushed inside art scenes, honors mute\n- Talkable, with song-title chatter\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "authors": [
+    {
+      "login": null,
+      "name": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "64e2728bb61d6862674ceaf5a45ed863ba6ac5fb",
+      "message": "Junction busker with distance-faded chiptune music\n\n- Keyboard player on the curb outside Easy Street, rocking on the beat\n  with musical notes floating up\n- Three original songs synthesized via Web Audio; volume follows your\n  distance and fades out past ~130 m, hushed inside art scenes, honors mute\n- Talkable, with song-title chatter\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "at": "2026-10-18T16:20:58-07:00"
+    }
+  ],
+  "files": [
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 4,
+      "deletions": 0
+    },
+    {
+      "path": "src/App.tsx",
+      "status": "M",
+      "additions": 5,
+      "deletions": 1
+    },
+    {
+      "path": "src/content/neighbors.ts",
+      "status": "M",
+      "additions": 9,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/Game.ts",
+      "status": "M",
+      "additions": 83,
+      "deletions": 1
+    },
+    {
+      "path": "src/game/busker.test.ts",
+      "status": "A",
+      "additions": 19,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/busker.ts",
+      "status": "A",
+      "additions": 185,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/npcs.ts",
+      "status": "M",
+      "additions": 3,
+      "deletions": 1
+    },
+    {
+      "path": "src/game/render/sprites.ts",
+      "status": "M",
+      "additions": 10,
+      "deletions": 0
+    },
+    {
+      "path": "src/ui/sfx.ts",
+      "status": "M",
+      "additions": 11,
+      "deletions": 0
+    }
+  ],
+  "additions": 329,
+  "deletions": 3,
+  "areas": [
+    "characters & map life",
+    "ui",
+    "words & content",
+    "docs"
+  ],
+  "summary": "- Keyboard player on the curb outside Easy Street, rocking on the beat\n  with musical notes floating up\n- Three original songs synthesized via Web Audio; volume follows your\n  distance and fades out past ~130 m, hushed inside art scenes, honors mute\n- Talkable, with song-title chatter\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 11,
+    "plugins": 0,
+    "scenes": 3,
+    "content_files": 9,
+    "source_lines": 7493,
+    "commits": 5
+  },
+  "shots": [
+    {
+      "query": "at=47.5613,-122.3868",
+      "lat": 47.5613,
+      "lon": -122.3868,
+      "label": null,
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ],
+        "after": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ]
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "note": "stills lossless; moving loop half size"
+  },
+  "first_recorded_at": "2026-11-15T16:30:23.173Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:30:23.173Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43735787534"
+}

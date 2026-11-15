@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "kind": "wish",
+  "issue": 40,
+  "url": "https://github.com/gardeninsound/map/issues/40",
+  "asked_at": "2026-11-05T19:34:05Z",
+  "original": {
+    "title": "Idea: Add some sea gulls near the beach.",
+    "body": "> Add some sea gulls near the beach.\n\n---\n<sub>Sent from the map's idea box by **YOUR SON!!!!!** · the rabbit was on SW Hill St.</sub>",
+    "text": "Add some sea gulls near the beach.",
+    "name": "YOUR SON!!!!!",
+    "street": "SW Hill St",
+    "preview": null,
+    "fromIdeaBox": true
+  },
+  "first_recorded_at": "2026-11-15T16:30:23.173Z",
+  "history": [
+    {
+      "at": "2026-11-05T19:34:05Z",
+      "state": "open"
+    },
+    {
+      "at": "2026-11-15T00:12:50Z",
+      "state": "closed:completed"
+    }
+  ],
+  "state": "closed:completed",
+  "answered_by": [],
+  "current": {
+    "title": "Idea: Add some sea gulls near the beach.",
+    "body": "> Add some sea gulls near the beach.\n\n---\n<sub>Sent from the map's idea box by **YOUR SON!!!!!** · the rabbit was on SW Hill St.</sub>",
+    "text": "Add some sea gulls near the beach.",
+    "name": "YOUR SON!!!!!",
+    "street": "SW Hill St",
+    "preview": null,
+    "fromIdeaBox": true
+  },
+  "title": "Idea: Add some sea gulls near the beach.",
+  "labels": [
+    "suggestion"
+  ],
+  "closed_at": "2026-11-15T00:12:50Z",
+  "comments": [],
+  "last_recorded_at": "2026-11-15T16:30:23.173Z"
+}

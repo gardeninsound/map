@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "kind": "wish",
+  "issue": 38,
+  "url": "https://github.com/gardeninsound/map/issues/38",
+  "asked_at": "2026-11-05T04:46:05Z",
+  "original": {
+    "title": "Idea: more character customization",
+    "body": "> more character customization\n\n---\n<sub>Sent from the map's idea box · the rabbit was on 47th Ave SW.</sub>",
+    "text": "more character customization",
+    "name": null,
+    "street": "47th Ave SW",
+    "preview": null,
+    "fromIdeaBox": true
+  },
+  "first_recorded_at": "2026-11-15T16:30:23.173Z",
+  "history": [
+    {
+      "at": "2026-11-05T04:46:05Z",
+      "state": "open"
+    },
+    {
+      "at": "2026-11-15T00:31:07Z",
+      "state": "closed:completed"
+    }
+  ],
+  "state": "closed:completed",
+  "answered_by": [],
+  "current": {
+    "title": "Idea: more character customization",
+    "body": "> more character customization\n\n---\n<sub>Sent from the map's idea box · the rabbit was on 47th Ave SW.</sub>",
+    "text": "more character customization",
+    "name": null,
+    "street": "47th Ave SW",
+    "preview": null,
+    "fromIdeaBox": true
+  },
+  "title": "Idea: more character customization",
+  "labels": [
+    "suggestion"
+  ],
+  "closed_at": "2026-11-15T00:31:07Z",
+  "comments": [],
+  "last_recorded_at": "2026-11-15T16:30:23.173Z"
+}

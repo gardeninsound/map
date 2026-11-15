@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "kind": "wish",
+  "issue": 41,
+  "url": "https://github.com/gardeninsound/map/issues/41",
+  "asked_at": "2026-11-06T01:05:08Z",
+  "original": {
+    "title": "Idea: Make it so that you can ride the Giant Whirl in luna park.",
+    "body": "> Make it so that you can ride the Giant Whirl in luna park.\n\n---\n<sub>Sent from the map's idea box by **YOUR SON!!!!!** · the rabbit was on Luna Park.</sub>",
+    "text": "Make it so that you can ride the Giant Whirl in luna park.",
+    "name": "YOUR SON!!!!!",
+    "street": "Luna Park",
+    "preview": null,
+    "fromIdeaBox": true
+  },
+  "first_recorded_at": "2026-11-15T16:30:23.173Z",
+  "history": [
+    {
+      "at": "2026-11-06T01:05:08Z",
+      "state": "open"
+    },
+    {
+      "at": "2026-11-15T00:13:06Z",
+      "state": "closed:completed"
+    }
+  ],
+  "state": "closed:completed",
+  "answered_by": [],
+  "current": {
+    "title": "Idea: Make it so that you can ride the Giant Whirl in luna park.",
+    "body": "> Make it so that you can ride the Giant Whirl in luna park.\n\n---\n<sub>Sent from the map's idea box by **YOUR SON!!!!!** · the rabbit was on Luna Park.</sub>",
+    "text": "Make it so that you can ride the Giant Whirl in luna park.",
+    "name": "YOUR SON!!!!!",
+    "street": "Luna Park",
+    "preview": null,
+    "fromIdeaBox": true
+  },
+  "title": "Idea: Make it so that you can ride the Giant Whirl in luna park.",
+  "labels": [
+    "suggestion"
+  ],
+  "closed_at": "2026-11-15T00:13:06Z",
+  "comments": [],
+  "last_recorded_at": "2026-11-15T16:30:23.173Z"
+}

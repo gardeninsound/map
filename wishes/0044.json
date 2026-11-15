@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "kind": "wish",
+  "issue": 44,
+  "url": "https://github.com/gardeninsound/map/issues/44",
+  "asked_at": "2026-11-06T03:18:05Z",
+  "original": {
+    "title": "Idea: Can you add Hope Lutheran?",
+    "body": "> Can you add Hope Lutheran?\n\n---\n<sub>Sent from the map's idea box by **Luca santo** · the rabbit was on SW Dakota St.</sub>",
+    "text": "Can you add Hope Lutheran?",
+    "name": "Luca santo",
+    "street": "SW Dakota St",
+    "preview": null,
+    "fromIdeaBox": true
+  },
+  "first_recorded_at": "2026-11-15T16:30:23.173Z",
+  "history": [
+    {
+      "at": "2026-11-06T03:18:05Z",
+      "state": "open"
+    },
+    {
+      "at": "2026-11-15T00:13:19Z",
+      "state": "closed:completed"
+    }
+  ],
+  "state": "closed:completed",
+  "answered_by": [],
+  "current": {
+    "title": "Idea: Can you add Hope Lutheran?",
+    "body": "> Can you add Hope Lutheran?\n\n---\n<sub>Sent from the map's idea box by **Luca santo** · the rabbit was on SW Dakota St.</sub>",
+    "text": "Can you add Hope Lutheran?",
+    "name": "Luca santo",
+    "street": "SW Dakota St",
+    "preview": null,
+    "fromIdeaBox": true
+  },
+  "title": "Idea: Can you add Hope Lutheran?",
+  "labels": [
+    "suggestion"
+  ],
+  "closed_at": "2026-11-15T00:13:19Z",
+  "comments": [],
+  "last_recorded_at": "2026-11-15T16:30:23.173Z"
+}

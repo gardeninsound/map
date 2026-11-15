@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "kind": "wish",
+  "issue": 7,
+  "url": "https://github.com/gardeninsound/map/issues/7",
+  "asked_at": "2026-11-04T22:09:04Z",
+  "original": {
+    "title": "Idea: I would love to see bikes on the roads - with the people.",
+    "body": "> I would love to see bikes on the roads - with the people.\n\n---\n<sub>Sent from the map's idea box.</sub>",
+    "text": "I would love to see bikes on the roads - with the people.",
+    "name": null,
+    "street": null,
+    "preview": null,
+    "fromIdeaBox": true
+  },
+  "first_recorded_at": "2026-11-15T16:30:23.173Z",
+  "history": [
+    {
+      "at": "2026-11-04T22:09:04Z",
+      "state": "open"
+    },
+    {
+      "at": "2026-11-04T22:49:09Z",
+      "state": "closed:completed"
+    }
+  ],
+  "state": "closed:completed",
+  "answered_by": [],
+  "current": {
+    "title": "Idea: I would love to see bikes on the roads - with the people.",
+    "body": "> I would love to see bikes on the roads - with the people.\n\n---\n<sub>Sent from the map's idea box.</sub>",
+    "text": "I would love to see bikes on the roads - with the people.",
+    "name": null,
+    "street": null,
+    "preview": null,
+    "fromIdeaBox": true
+  },
+  "title": "Idea: I would love to see bikes on the roads - with the people.",
+  "labels": [
+    "suggestion"
+  ],
+  "closed_at": "2026-11-04T22:49:09Z",
+  "comments": [],
+  "last_recorded_at": "2026-11-15T16:30:23.173Z"
+}

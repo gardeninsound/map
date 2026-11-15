@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "kind": "wish",
+  "issue": 12,
+  "url": "https://github.com/gardeninsound/map/issues/12",
+  "asked_at": "2026-11-04T22:49:41Z",
+  "original": {
+    "title": "Idea: To see a garden with flowers growing - appropriate to the…",
+    "body": "> To see a garden with flowers growing - appropriate to the season\n\n---\n<sub>Sent from the map's idea box by **Jimmy**.</sub>",
+    "text": "To see a garden with flowers growing - appropriate to the season",
+    "name": "Jimmy",
+    "street": null,
+    "preview": null,
+    "fromIdeaBox": true
+  },
+  "first_recorded_at": "2026-11-15T16:30:23.173Z",
+  "history": [
+    {
+      "at": "2026-11-04T22:49:41Z",
+      "state": "open"
+    },
+    {
+      "at": "2026-11-15T00:26:41Z",
+      "state": "closed:completed"
+    }
+  ],
+  "state": "closed:completed",
+  "answered_by": [],
+  "current": {
+    "title": "Idea: To see a garden with flowers growing - appropriate to the…",
+    "body": "> To see a garden with flowers growing - appropriate to the season\n\n---\n<sub>Sent from the map's idea box by **Jimmy**.</sub>",
+    "text": "To see a garden with flowers growing - appropriate to the season",
+    "name": "Jimmy",
+    "street": null,
+    "preview": null,
+    "fromIdeaBox": true
+  },
+  "title": "Idea: To see a garden with flowers growing - appropriate to the…",
+  "labels": [
+    "suggestion"
+  ],
+  "closed_at": "2026-11-15T00:26:41Z",
+  "comments": [],
+  "last_recorded_at": "2026-11-15T16:30:23.173Z"
+}

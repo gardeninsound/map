@@ -1,0 +1,407 @@
+{
+  "schema": 1,
+  "generated_at": "2026-11-15T16:32:11.836Z",
+  "changes": [
+    {
+      "pr": null,
+      "sha": "806659730c751aabf719c285a3b732ad3c7af377",
+      "title": "Bear Island map: pixel West Seattle overworld with first art scenes",
+      "url": "https://github.com/gardeninsound/map/commit/806659730c751aabf719c285a3b732ad3c7af377",
+      "merged_at": "2026-10-18T15:18:19-07:00",
+      "dir": "changes/2026-10-18-8066597-bear-island-map-pixel-west-seattle-overw",
+      "ideas": [],
+      "summary": "- OSM-generated West Seattle (12 m tiles): real streets, footprint houses,\n  storefronts, parks with labels; walkable arterials incl. bridges\n- Rabbit avatar, wandering neighbors, Mike dialog, minimap, touch controls\n- Art spots from content/places.csv (geocoded via Nominatim)\n- Scenes: gas-station wall flipbook, 3D paintable Lulu cup (three.js)\n- Processed art kept out of git; regenerate with npm run images\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 57,
+      "additions": 12643,
+      "deletions": 0,
+      "areas": [
+        "characters & map life",
+        "scenes & games",
+        "ui",
+        "words & content",
+        "art & sound",
+        "ci",
+        "docs",
+        "tools"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5668,-122.3868",
+          "lat": 47.5668,
+          "lon": -122.3868,
+          "label": null,
+          "before": null,
+          "after": "changes/2026-10-18-8066597-bear-island-map-pixel-west-seattle-overw/after-1.webp",
+          "moving": "changes/2026-10-18-8066597-bear-island-map-pixel-west-seattle-overw/moving-1.webp"
+        },
+        {
+          "query": "at=47.5598,-122.3868",
+          "lat": 47.5598,
+          "lon": -122.3868,
+          "label": null,
+          "before": null,
+          "after": "changes/2026-10-18-8066597-bear-island-map-pixel-west-seattle-overw/after-2.webp",
+          "moving": "changes/2026-10-18-8066597-bear-island-map-pixel-west-seattle-overw/moving-2.webp"
+        },
+        {
+          "query": "at=47.576107,-122.385041",
+          "lat": 47.576107,
+          "lon": -122.385041,
+          "label": null,
+          "before": null,
+          "after": "changes/2026-10-18-8066597-bear-island-map-pixel-west-seattle-overw/after-3.webp",
+          "moving": "changes/2026-10-18-8066597-bear-island-map-pixel-west-seattle-overw/moving-3.webp"
+        }
+      ],
+      "census": {
+        "spots": 11,
+        "plugins": 0,
+        "scenes": 2,
+        "content_files": 7,
+        "source_lines": 5943,
+        "commits": 1
+      }
+    },
+    {
+      "pr": null,
+      "sha": "23e2785b557389db7f90d6f38ece8204a568145a",
+      "title": "Map cleanup, landmarks, and art-spot shortcuts",
+      "url": "https://github.com/gardeninsound/map/commit/23e2785b557389db7f90d6f38ece8204a568145a",
+      "merged_at": "2026-10-18T15:36:09-07:00",
+      "dir": "changes/2026-10-18-23e2785-map-cleanup-landmarks-and-art-spot-short",
+      "ideas": [],
+      "summary": "- Roads: one fixed width per street (scripts/map-config.mjs), simplified\n  polylines, constant-width bands; arterials 2 tiles to match 12 m lots\n- Sidewalks drawn on road edge tiles so they're identical everywhere\n- Landmarks sheet (content/landmarks.csv) geocoded and placed beside the\n  street: 76 station with the mural wall, Admiral Theatre\n- Gas-station wall spot moved to the 76 at 4001 California Ave SW\n- SPOTS menu (T): jump to any art spot or straight into its scene\n- npm run map:review: repeatable before/after map screenshots\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 24,
+      "additions": 704,
+      "deletions": 85,
+      "areas": [
+        "map pipeline",
+        "characters & map life",
+        "ui",
+        "words & content",
+        "docs",
+        "tools"
+      ],
+      "shots": [
+        {
+          "query": "at=47.568236,-122.387332",
+          "lat": 47.568236,
+          "lon": -122.387332,
+          "label": null,
+          "before": "changes/2026-10-18-23e2785-map-cleanup-landmarks-and-art-spot-short/before-1.webp",
+          "after": "changes/2026-10-18-23e2785-map-cleanup-landmarks-and-art-spot-short/after-1.webp",
+          "moving": "changes/2026-10-18-23e2785-map-cleanup-landmarks-and-art-spot-short/moving-1.webp"
+        },
+        {
+          "query": "at=47.581969,-122.386942",
+          "lat": 47.581969,
+          "lon": -122.386942,
+          "label": null,
+          "before": "changes/2026-10-18-23e2785-map-cleanup-landmarks-and-art-spot-short/before-2.webp",
+          "after": "changes/2026-10-18-23e2785-map-cleanup-landmarks-and-art-spot-short/after-2.webp",
+          "moving": "changes/2026-10-18-23e2785-map-cleanup-landmarks-and-art-spot-short/moving-2.webp"
+        }
+      ],
+      "census": {
+        "spots": 11,
+        "plugins": 0,
+        "scenes": 2,
+        "content_files": 8,
+        "source_lines": 6302,
+        "commits": 2
+      }
+    },
+    {
+      "pr": null,
+      "sha": "14bb1a4d1a6a36ef02174eec5326e5191056e0b3",
+      "title": "Wider, straighter roads with clean intersections",
+      "url": "https://github.com/gardeninsound/map/commit/14bb1a4d1a6a36ef02174eec5326e5191056e0b3",
+      "merged_at": "2026-10-18T15:50:18-07:00",
+      "dir": "changes/2026-10-18-14bb1a4-wider-straighter-roads-with-clean-inters",
+      "ideas": [],
+      "summary": "- California 4 tiles, other streets 3; diagonals widened to match\n- Chain each street's OSM ways, cut at intersections, snap near-axis\n  runs to tile centres so straight streets stay straight\n- Drop turn ramps and short unnamed stubs; report unreachable streets\n- 45° curb cuts at corners and staircase notches\n- More review spots (Erskine Way, California & Admiral)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 6,
+      "additions": 198,
+      "deletions": 23,
+      "areas": [
+        "characters & map life",
+        "docs",
+        "tools"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5612,-122.3868",
+          "lat": 47.5612,
+          "lon": -122.3868,
+          "label": "the Junction, where everyone starts",
+          "before": "changes/2026-10-18-14bb1a4-wider-straighter-roads-with-clean-inters/before-1.webp",
+          "after": "changes/2026-10-18-14bb1a4-wider-straighter-roads-with-clean-inters/after-1.webp",
+          "moving": "changes/2026-10-18-14bb1a4-wider-straighter-roads-with-clean-inters/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 11,
+        "plugins": 0,
+        "scenes": 2,
+        "content_files": 8,
+        "source_lines": 6344,
+        "commits": 3
+      }
+    },
+    {
+      "pr": null,
+      "sha": "23a878f9a788dcc46da6a5519f029192835b88df",
+      "title": "Compass, first-visit arrow, octilinear roads, Seven+ Stories walk",
+      "url": "https://github.com/gardeninsound/map/commit/23a878f9a788dcc46da6a5519f029192835b88df",
+      "merged_at": "2026-10-18T16:16:04-07:00",
+      "dir": "changes/2026-10-18-23a878f-compass-first-visit-arrow-octilinear-roa",
+      "ideas": [],
+      "summary": "- HUD compass points to the nearest art spot with a scene\n- New visitors get a flashing arrow toward it after Mike's welcome\n- Roads snapped to 0/45/90° with half-tile curb cuts: clean diagonals\n- Seven+ Stories: first-person three.js walk of the lot at\n  4731 40th Ave SW, signs standing in the field, close-up reading\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 18,
+      "additions": 960,
+      "deletions": 34,
+      "areas": [
+        "characters & map life",
+        "scenes & games",
+        "ui",
+        "words & content",
+        "docs",
+        "tools"
+      ],
+      "shots": [
+        {
+          "query": "at=47.560466,-122.382939",
+          "lat": 47.560466,
+          "lon": -122.382939,
+          "label": null,
+          "before": "changes/2026-10-18-23a878f-compass-first-visit-arrow-octilinear-roa/before-1.webp",
+          "after": "changes/2026-10-18-23a878f-compass-first-visit-arrow-octilinear-roa/after-1.webp",
+          "moving": "changes/2026-10-18-23a878f-compass-first-visit-arrow-octilinear-roa/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 11,
+        "plugins": 0,
+        "scenes": 3,
+        "content_files": 9,
+        "source_lines": 7171,
+        "commits": 4
+      }
+    },
+    {
+      "pr": null,
+      "sha": "64e2728bb61d6862674ceaf5a45ed863ba6ac5fb",
+      "title": "Junction busker with distance-faded chiptune music",
+      "url": "https://github.com/gardeninsound/map/commit/64e2728bb61d6862674ceaf5a45ed863ba6ac5fb",
+      "merged_at": "2026-10-18T16:20:58-07:00",
+      "dir": "changes/2026-10-18-64e2728-junction-busker-with-distance-faded-chip",
+      "ideas": [],
+      "summary": "- Keyboard player on the curb outside Easy Street, rocking on the beat\n  with musical notes floating up\n- Three original songs synthesized via Web Audio; volume follows your\n  distance and fades out past ~130 m, hushed inside art scenes, honors mute\n- Talkable, with song-title chatter\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 9,
+      "additions": 329,
+      "deletions": 3,
+      "areas": [
+        "characters & map life",
+        "ui",
+        "words & content",
+        "docs"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5613,-122.3868",
+          "lat": 47.5613,
+          "lon": -122.3868,
+          "label": null,
+          "before": "changes/2026-10-18-64e2728-junction-busker-with-distance-faded-chip/before-1.webp",
+          "after": "changes/2026-10-18-64e2728-junction-busker-with-distance-faded-chip/after-1.webp",
+          "moving": "changes/2026-10-18-64e2728-junction-busker-with-distance-faded-chip/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 11,
+        "plugins": 0,
+        "scenes": 3,
+        "content_files": 9,
+        "source_lines": 7493,
+        "commits": 5
+      }
+    }
+  ],
+  "wishes": [
+    {
+      "issue": 7,
+      "url": "https://github.com/gardeninsound/map/issues/7",
+      "asked_at": "2026-11-04T22:09:04Z",
+      "text": "I would love to see bikes on the roads - with the people.",
+      "name": null,
+      "street": null,
+      "state": "closed:completed",
+      "answered_by": []
+    },
+    {
+      "issue": 12,
+      "url": "https://github.com/gardeninsound/map/issues/12",
+      "asked_at": "2026-11-04T22:49:41Z",
+      "text": "To see a garden with flowers growing - appropriate to the season",
+      "name": "Jimmy",
+      "street": null,
+      "state": "closed:completed",
+      "answered_by": []
+    },
+    {
+      "issue": 30,
+      "url": "https://github.com/gardeninsound/map/issues/30",
+      "asked_at": "2026-11-05T04:11:45Z",
+      "text": "Add some squirels that hide if humans draw neer, and ham the cat that asks for pets",
+      "name": "YOUR SON!!!!!",
+      "street": "45th Ave SW",
+      "state": "closed:completed",
+      "answered_by": []
+    },
+    {
+      "issue": 34,
+      "url": "https://github.com/gardeninsound/map/issues/34",
+      "asked_at": "2026-11-05T04:41:03Z",
+      "text": "some little hats the rabits could wear and mini version of us and mst3k people walking around who we could talk to",
+      "name": "zia vallandingham jims kid",
+      "street": "California Ave SW",
+      "state": "open",
+      "answered_by": []
+    },
+    {
+      "issue": 36,
+      "url": "https://github.com/gardeninsound/map/issues/36",
+      "asked_at": "2026-11-05T04:44:46Z",
+      "text": "add my little ponys (g1)",
+      "name": null,
+      "street": "47th Ave SW",
+      "state": "closed:completed",
+      "answered_by": []
+    },
+    {
+      "issue": 37,
+      "url": "https://github.com/gardeninsound/map/issues/37",
+      "asked_at": "2026-11-05T04:45:30Z",
+      "text": "add mermaids saying catch phrases like \"eyes closed sun so close\"",
+      "name": "zia vallandingham",
+      "street": "47th Ave SW",
+      "state": "closed:completed",
+      "answered_by": []
+    },
+    {
+      "issue": 38,
+      "url": "https://github.com/gardeninsound/map/issues/38",
+      "asked_at": "2026-11-05T04:46:05Z",
+      "text": "more character customization",
+      "name": null,
+      "street": "47th Ave SW",
+      "state": "closed:completed",
+      "answered_by": []
+    },
+    {
+      "issue": 40,
+      "url": "https://github.com/gardeninsound/map/issues/40",
+      "asked_at": "2026-11-05T19:34:05Z",
+      "text": "Add some sea gulls near the beach.",
+      "name": "YOUR SON!!!!!",
+      "street": "SW Hill St",
+      "state": "closed:completed",
+      "answered_by": []
+    },
+    {
+      "issue": 41,
+      "url": "https://github.com/gardeninsound/map/issues/41",
+      "asked_at": "2026-11-06T01:05:08Z",
+      "text": "Make it so that you can ride the Giant Whirl in luna park.",
+      "name": "YOUR SON!!!!!",
+      "street": "Luna Park",
+      "state": "closed:completed",
+      "answered_by": []
+    },
+    {
+      "issue": 42,
+      "url": "https://github.com/gardeninsound/map/issues/42",
+      "asked_at": "2026-11-06T01:12:32Z",
+      "text": "forests could be like a maze, but you could always teleport out.",
+      "name": "YOUR SON!!!!!",
+      "street": "SW Hudson St",
+      "state": "closed:completed",
+      "answered_by": []
+    },
+    {
+      "issue": 43,
+      "url": "https://github.com/gardeninsound/map/issues/43",
+      "asked_at": "2026-11-06T01:28:47Z",
+      "text": "MORE CROWS!!!",
+      "name": "YOUR SON!!!!!",
+      "street": "SW College St",
+      "state": "closed:completed",
+      "answered_by": []
+    },
+    {
+      "issue": 44,
+      "url": "https://github.com/gardeninsound/map/issues/44",
+      "asked_at": "2026-11-06T03:18:05Z",
+      "text": "Can you add Hope Lutheran?",
+      "name": "Luca santo",
+      "street": "SW Dakota St",
+      "state": "closed:completed",
+      "answered_by": []
+    }
+  ]
+}

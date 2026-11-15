@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "kind": "wish",
+  "issue": 36,
+  "url": "https://github.com/gardeninsound/map/issues/36",
+  "asked_at": "2026-11-05T04:44:46Z",
+  "original": {
+    "title": "Idea: add my little ponys (g1)",
+    "body": "> add my little ponys (g1)\n\n---\n<sub>Sent from the map's idea box · the rabbit was on 47th Ave SW.</sub>",
+    "text": "add my little ponys (g1)",
+    "name": null,
+    "street": "47th Ave SW",
+    "preview": null,
+    "fromIdeaBox": true
+  },
+  "first_recorded_at": "2026-11-15T16:30:23.173Z",
+  "history": [
+    {
+      "at": "2026-11-05T04:44:46Z",
+      "state": "open"
+    },
+    {
+      "at": "2026-11-15T00:24:26Z",
+      "state": "closed:completed"
+    }
+  ],
+  "state": "closed:completed",
+  "answered_by": [],
+  "current": {
+    "title": "Idea: add my little ponys (g1)",
+    "body": "> add my little ponys (g1)\n\n---\n<sub>Sent from the map's idea box · the rabbit was on 47th Ave SW.</sub>",
+    "text": "add my little ponys (g1)",
+    "name": null,
+    "street": "47th Ave SW",
+    "preview": null,
+    "fromIdeaBox": true
+  },
+  "title": "Idea: add my little ponys (g1)",
+  "labels": [
+    "suggestion"
+  ],
+  "closed_at": "2026-11-15T00:24:26Z",
+  "comments": [],
+  "last_recorded_at": "2026-11-15T16:30:23.173Z"
+}

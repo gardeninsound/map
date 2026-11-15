@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "kind": "wish",
+  "issue": 37,
+  "url": "https://github.com/gardeninsound/map/issues/37",
+  "asked_at": "2026-11-05T04:45:30Z",
+  "original": {
+    "title": "Idea: add mermaids saying catch phrases like \"eyes closed sun s…",
+    "body": "> add mermaids saying catch phrases like \"eyes closed sun so close\"\n\n---\n<sub>Sent from the map's idea box by **zia vallandingham** · the rabbit was on 47th Ave SW.</sub>",
+    "text": "add mermaids saying catch phrases like \"eyes closed sun so close\"",
+    "name": "zia vallandingham",
+    "street": "47th Ave SW",
+    "preview": null,
+    "fromIdeaBox": true
+  },
+  "first_recorded_at": "2026-11-15T16:30:23.173Z",
+  "history": [
+    {
+      "at": "2026-11-05T04:45:30Z",
+      "state": "open"
+    },
+    {
+      "at": "2026-11-15T00:20:43Z",
+      "state": "closed:completed"
+    }
+  ],
+  "state": "closed:completed",
+  "answered_by": [],
+  "current": {
+    "title": "Idea: add mermaids saying catch phrases like \"eyes closed sun s…",
+    "body": "> add mermaids saying catch phrases like \"eyes closed sun so close\"\n\n---\n<sub>Sent from the map's idea box by **zia vallandingham** · the rabbit was on 47th Ave SW.</sub>",
+    "text": "add mermaids saying catch phrases like \"eyes closed sun so close\"",
+    "name": "zia vallandingham",
+    "street": "47th Ave SW",
+    "preview": null,
+    "fromIdeaBox": true
+  },
+  "title": "Idea: add mermaids saying catch phrases like \"eyes closed sun s…",
+  "labels": [
+    "suggestion"
+  ],
+  "closed_at": "2026-11-15T00:20:43Z",
+  "comments": [],
+  "last_recorded_at": "2026-11-15T16:30:23.173Z"
+}

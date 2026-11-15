@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "kind": "wish",
+  "issue": 42,
+  "url": "https://github.com/gardeninsound/map/issues/42",
+  "asked_at": "2026-11-06T01:12:32Z",
+  "original": {
+    "title": "Idea: forests could be like a maze, but you could always telepo…",
+    "body": "> forests could be like a maze, but you could always teleport out.\n\n---\n<sub>Sent from the map's idea box by **YOUR SON!!!!!** · the rabbit was on SW Hudson St.</sub>",
+    "text": "forests could be like a maze, but you could always teleport out.",
+    "name": "YOUR SON!!!!!",
+    "street": "SW Hudson St",
+    "preview": null,
+    "fromIdeaBox": true
+  },
+  "first_recorded_at": "2026-11-15T16:30:23.173Z",
+  "history": [
+    {
+      "at": "2026-11-06T01:12:32Z",
+      "state": "open"
+    },
+    {
+      "at": "2026-11-15T00:29:11Z",
+      "state": "closed:completed"
+    }
+  ],
+  "state": "closed:completed",
+  "answered_by": [],
+  "current": {
+    "title": "Idea: forests could be like a maze, but you could always telepo…",
+    "body": "> forests could be like a maze, but you could always teleport out.\n\n---\n<sub>Sent from the map's idea box by **YOUR SON!!!!!** · the rabbit was on SW Hudson St.</sub>",
+    "text": "forests could be like a maze, but you could always teleport out.",
+    "name": "YOUR SON!!!!!",
+    "street": "SW Hudson St",
+    "preview": null,
+    "fromIdeaBox": true
+  },
+  "title": "Idea: forests could be like a maze, but you could always telepo…",
+  "labels": [
+    "suggestion"
+  ],
+  "closed_at": "2026-11-15T00:29:11Z",
+  "comments": [],
+  "last_recorded_at": "2026-11-15T16:30:23.173Z"
+}

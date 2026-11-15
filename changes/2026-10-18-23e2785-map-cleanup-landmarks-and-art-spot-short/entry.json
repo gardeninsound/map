@@ -1,0 +1,258 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "23e2785b557389db7f90d6f38ece8204a568145a",
+  "parent": "806659730c751aabf719c285a3b732ad3c7af377",
+  "pr": null,
+  "title": "Map cleanup, landmarks, and art-spot shortcuts",
+  "url": "https://github.com/gardeninsound/map/commit/23e2785b557389db7f90d6f38ece8204a568145a",
+  "merged_at": "2026-10-18T15:36:09-07:00",
+  "body": "- Roads: one fixed width per street (scripts/map-config.mjs), simplified\n  polylines, constant-width bands; arterials 2 tiles to match 12 m lots\n- Sidewalks drawn on road edge tiles so they're identical everywhere\n- Landmarks sheet (content/landmarks.csv) geocoded and placed beside the\n  street: 76 station with the mural wall, Admiral Theatre\n- Gas-station wall spot moved to the 76 at 4001 California Ave SW\n- SPOTS menu (T): jump to any art spot or straight into its scene\n- npm run map:review: repeatable before/after map screenshots\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "authors": [
+    {
+      "login": null,
+      "name": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "23e2785b557389db7f90d6f38ece8204a568145a",
+      "message": "Map cleanup, landmarks, and art-spot shortcuts\n\n- Roads: one fixed width per street (scripts/map-config.mjs), simplified\n  polylines, constant-width bands; arterials 2 tiles to match 12 m lots\n- Sidewalks drawn on road edge tiles so they're identical everywhere\n- Landmarks sheet (content/landmarks.csv) geocoded and placed beside the\n  street: 76 station with the mural wall, Admiral Theatre\n- Gas-station wall spot moved to the 76 at 4001 California Ave SW\n- SPOTS menu (T): jump to any art spot or straight into its scene\n- npm run map:review: repeatable before/after map screenshots\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "at": "2026-10-18T15:36:09-07:00"
+    }
+  ],
+  "files": [
+    {
+      "path": ".gitignore",
+      "status": "M",
+      "additions": 1,
+      "deletions": 0
+    },
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 11,
+      "deletions": 1
+    },
+    {
+      "path": "content/landmarks.csv",
+      "status": "A",
+      "additions": 3,
+      "deletions": 0
+    },
+    {
+      "path": "content/places.csv",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "package.json",
+      "status": "M",
+      "additions": 2,
+      "deletions": 1
+    },
+    {
+      "path": "scripts/build-map.mjs",
+      "status": "M",
+      "additions": 117,
+      "deletions": 21
+    },
+    {
+      "path": "scripts/map-config.mjs",
+      "status": "A",
+      "additions": 30,
+      "deletions": 0
+    },
+    {
+      "path": "scripts/places.mjs",
+      "status": "M",
+      "additions": 57,
+      "deletions": 30
+    },
+    {
+      "path": "scripts/review-map.mjs",
+      "status": "A",
+      "additions": 39,
+      "deletions": 0
+    },
+    {
+      "path": "src/App.tsx",
+      "status": "M",
+      "additions": 48,
+      "deletions": 1
+    },
+    {
+      "path": "src/content/content.test.ts",
+      "status": "M",
+      "additions": 11,
+      "deletions": 0
+    },
+    {
+      "path": "src/content/landmarksData.json",
+      "status": "A",
+      "additions": 20,
+      "deletions": 0
+    },
+    {
+      "path": "src/content/placesData.json",
+      "status": "M",
+      "additions": 4,
+      "deletions": 4
+    },
+    {
+      "path": "src/game/Game.ts",
+      "status": "M",
+      "additions": 1,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/input.ts",
+      "status": "M",
+      "additions": 2,
+      "deletions": 1
+    },
+    {
+      "path": "src/game/render/landmarks.ts",
+      "status": "A",
+      "additions": 168,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/render/tileArt.ts",
+      "status": "M",
+      "additions": 37,
+      "deletions": 22
+    },
+    {
+      "path": "src/styles.css",
+      "status": "M",
+      "additions": 34,
+      "deletions": 0
+    },
+    {
+      "path": "src/ui/Hud.tsx",
+      "status": "M",
+      "additions": 1,
+      "deletions": 0
+    },
+    {
+      "path": "src/ui/SpotsMenu.tsx",
+      "status": "A",
+      "additions": 100,
+      "deletions": 0
+    },
+    {
+      "path": "src/ui/TitleScreen.tsx",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "src/world/world.ts",
+      "status": "M",
+      "additions": 15,
+      "deletions": 0
+    },
+    {
+      "path": "src/world/worldData.json",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "tsconfig.tsbuildinfo",
+      "status": "D",
+      "additions": 0,
+      "deletions": 1
+    }
+  ],
+  "additions": 704,
+  "deletions": 85,
+  "areas": [
+    "map pipeline",
+    "characters & map life",
+    "ui",
+    "words & content",
+    "docs",
+    "tools"
+  ],
+  "summary": "- Roads: one fixed width per street (scripts/map-config.mjs), simplified\n  polylines, constant-width bands; arterials 2 tiles to match 12 m lots\n- Sidewalks drawn on road edge tiles so they're identical everywhere\n- Landmarks sheet (content/landmarks.csv) geocoded and placed beside the\n  street: 76 station with the mural wall, Admiral Theatre\n- Gas-station wall spot moved to the 76 at 4001 California Ave SW\n- SPOTS menu (T): jump to any art spot or straight into its scene\n- npm run map:review: repeatable before/after map screenshots\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 11,
+    "plugins": 0,
+    "scenes": 2,
+    "content_files": 8,
+    "source_lines": 6302,
+    "commits": 2
+  },
+  "shots": [
+    {
+      "query": "at=47.568236,-122.387332",
+      "lat": 47.568236,
+      "lon": -122.387332,
+      "label": null,
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ],
+        "after": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ]
+      }
+    },
+    {
+      "query": "at=47.581969,-122.386942",
+      "lat": 47.581969,
+      "lon": -122.386942,
+      "label": null,
+      "guessed": true,
+      "before": "before-2.webp",
+      "after": "after-2.webp",
+      "moving": "moving-2.webp",
+      "problems": {
+        "before": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ],
+        "after": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ]
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "note": "stills lossless; moving loop half size"
+  },
+  "first_recorded_at": "2026-11-15T16:30:23.173Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:30:23.173Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43735787534"
+}

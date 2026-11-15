@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "kind": "wish",
+  "issue": 43,
+  "url": "https://github.com/gardeninsound/map/issues/43",
+  "asked_at": "2026-11-06T01:28:47Z",
+  "original": {
+    "title": "Idea: MORE CROWS!!!",
+    "body": "> MORE CROWS!!!\n\n---\n<sub>Sent from the map's idea box by **YOUR SON!!!!!** · the rabbit was on SW College St.</sub>",
+    "text": "MORE CROWS!!!",
+    "name": "YOUR SON!!!!!",
+    "street": "SW College St",
+    "preview": null,
+    "fromIdeaBox": true
+  },
+  "first_recorded_at": "2026-11-15T16:30:23.173Z",
+  "history": [
+    {
+      "at": "2026-11-06T01:28:47Z",
+      "state": "open"
+    },
+    {
+      "at": "2026-11-15T00:12:49Z",
+      "state": "closed:completed"
+    }
+  ],
+  "state": "closed:completed",
+  "answered_by": [],
+  "current": {
+    "title": "Idea: MORE CROWS!!!",
+    "body": "> MORE CROWS!!!\n\n---\n<sub>Sent from the map's idea box by **YOUR SON!!!!!** · the rabbit was on SW College St.</sub>",
+    "text": "MORE CROWS!!!",
+    "name": "YOUR SON!!!!!",
+    "street": "SW College St",
+    "preview": null,
+    "fromIdeaBox": true
+  },
+  "title": "Idea: MORE CROWS!!!",
+  "labels": [
+    "suggestion"
+  ],
+  "closed_at": "2026-11-15T00:12:49Z",
+  "comments": [],
+  "last_recorded_at": "2026-11-15T16:30:23.173Z"
+}

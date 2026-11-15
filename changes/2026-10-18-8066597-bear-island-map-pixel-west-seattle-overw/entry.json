@@ -1,0 +1,470 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "806659730c751aabf719c285a3b732ad3c7af377",
+  "parent": null,
+  "pr": null,
+  "title": "Bear Island map: pixel West Seattle overworld with first art scenes",
+  "url": "https://github.com/gardeninsound/map/commit/806659730c751aabf719c285a3b732ad3c7af377",
+  "merged_at": "2026-10-18T15:18:19-07:00",
+  "body": "- OSM-generated West Seattle (12 m tiles): real streets, footprint houses,\n  storefronts, parks with labels; walkable arterials incl. bridges\n- Rabbit avatar, wandering neighbors, Mike dialog, minimap, touch controls\n- Art spots from content/places.csv (geocoded via Nominatim)\n- Scenes: gas-station wall flipbook, 3D paintable Lulu cup (three.js)\n- Processed art kept out of git; regenerate with npm run images\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "authors": [
+    {
+      "login": null,
+      "name": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "806659730c751aabf719c285a3b732ad3c7af377",
+      "message": "Bear Island map: pixel West Seattle overworld with first art scenes\n\n- OSM-generated West Seattle (12 m tiles): real streets, footprint houses,\n  storefronts, parks with labels; walkable arterials incl. bridges\n- Rabbit avatar, wandering neighbors, Mike dialog, minimap, touch controls\n- Art spots from content/places.csv (geocoded via Nominatim)\n- Scenes: gas-station wall flipbook, 3D paintable Lulu cup (three.js)\n- Processed art kept out of git; regenerate with npm run images\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "at": "2026-10-18T15:18:19-07:00"
+    }
+  ],
+  "files": [
+    {
+      "path": ".github/workflows/deploy.yml",
+      "status": "A",
+      "additions": 40,
+      "deletions": 0
+    },
+    {
+      "path": ".gitignore",
+      "status": "A",
+      "additions": 8,
+      "deletions": 0
+    },
+    {
+      "path": "CLAUDE.md",
+      "status": "A",
+      "additions": 72,
+      "deletions": 0
+    },
+    {
+      "path": "README.md",
+      "status": "A",
+      "additions": 23,
+      "deletions": 0
+    },
+    {
+      "path": "content/places.csv",
+      "status": "A",
+      "additions": 12,
+      "deletions": 0
+    },
+    {
+      "path": "data/art-meta.json",
+      "status": "A",
+      "additions": 2546,
+      "deletions": 0
+    },
+    {
+      "path": "data/source/cup-rabbit-photo.png",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "index.html",
+      "status": "A",
+      "additions": 15,
+      "deletions": 0
+    },
+    {
+      "path": "package-lock.json",
+      "status": "A",
+      "additions": 2781,
+      "deletions": 0
+    },
+    {
+      "path": "package.json",
+      "status": "A",
+      "additions": 36,
+      "deletions": 0
+    },
+    {
+      "path": "public/favicon.svg",
+      "status": "A",
+      "additions": 1,
+      "deletions": 0
+    },
+    {
+      "path": "public/sprites/cup-rabbit.png",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/sprites/mike-portrait.png",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "scripts/build-map.mjs",
+      "status": "A",
+      "additions": 299,
+      "deletions": 0
+    },
+    {
+      "path": "scripts/fetch-osm.mjs",
+      "status": "A",
+      "additions": 53,
+      "deletions": 0
+    },
+    {
+      "path": "scripts/make-cup-rabbit.mjs",
+      "status": "A",
+      "additions": 32,
+      "deletions": 0
+    },
+    {
+      "path": "scripts/make-portrait.mjs",
+      "status": "A",
+      "additions": 38,
+      "deletions": 0
+    },
+    {
+      "path": "scripts/places.mjs",
+      "status": "A",
+      "additions": 95,
+      "deletions": 0
+    },
+    {
+      "path": "scripts/process-images.mjs",
+      "status": "A",
+      "additions": 133,
+      "deletions": 0
+    },
+    {
+      "path": "src/App.tsx",
+      "status": "A",
+      "additions": 149,
+      "deletions": 0
+    },
+    {
+      "path": "src/content/artManifest.ts",
+      "status": "A",
+      "additions": 2573,
+      "deletions": 0
+    },
+    {
+      "path": "src/content/content.test.ts",
+      "status": "A",
+      "additions": 44,
+      "deletions": 0
+    },
+    {
+      "path": "src/content/cupVersions.ts",
+      "status": "A",
+      "additions": 134,
+      "deletions": 0
+    },
+    {
+      "path": "src/content/locations.ts",
+      "status": "A",
+      "additions": 53,
+      "deletions": 0
+    },
+    {
+      "path": "src/content/neighbors.ts",
+      "status": "A",
+      "additions": 34,
+      "deletions": 0
+    },
+    {
+      "path": "src/content/placesData.json",
+      "status": "A",
+      "additions": 148,
+      "deletions": 0
+    },
+    {
+      "path": "src/content/types.ts",
+      "status": "A",
+      "additions": 10,
+      "deletions": 0
+    },
+    {
+      "path": "src/content/wallTurns.ts",
+      "status": "A",
+      "additions": 23,
+      "deletions": 0
+    },
+    {
+      "path": "src/experiences/WallTurns.tsx",
+      "status": "A",
+      "additions": 264,
+      "deletions": 0
+    },
+    {
+      "path": "src/experiences/cup/CupPaint.tsx",
+      "status": "A",
+      "additions": 223,
+      "deletions": 0
+    },
+    {
+      "path": "src/experiences/cup/CupScene.ts",
+      "status": "A",
+      "additions": 387,
+      "deletions": 0
+    },
+    {
+      "path": "src/experiences/cup/cupTexture.ts",
+      "status": "A",
+      "additions": 203,
+      "deletions": 0
+    },
+    {
+      "path": "src/experiences/registry.ts",
+      "status": "A",
+      "additions": 16,
+      "deletions": 0
+    },
+    {
+      "path": "src/fonts.d.ts",
+      "status": "A",
+      "additions": 2,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/Game.ts",
+      "status": "A",
+      "additions": 365,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/input.ts",
+      "status": "A",
+      "additions": 99,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/movement.test.ts",
+      "status": "A",
+      "additions": 68,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/movement.ts",
+      "status": "A",
+      "additions": 66,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/npcs.test.ts",
+      "status": "A",
+      "additions": 53,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/npcs.ts",
+      "status": "A",
+      "additions": 99,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/render/palette.ts",
+      "status": "A",
+      "additions": 30,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/render/sprites.test.ts",
+      "status": "A",
+      "additions": 9,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/render/sprites.ts",
+      "status": "A",
+      "additions": 230,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/render/tileArt.ts",
+      "status": "A",
+      "additions": 243,
+      "deletions": 0
+    },
+    {
+      "path": "src/main.tsx",
+      "status": "A",
+      "additions": 13,
+      "deletions": 0
+    },
+    {
+      "path": "src/styles.css",
+      "status": "A",
+      "additions": 338,
+      "deletions": 0
+    },
+    {
+      "path": "src/ui/DialogBox.tsx",
+      "status": "A",
+      "additions": 101,
+      "deletions": 0
+    },
+    {
+      "path": "src/ui/Hud.tsx",
+      "status": "A",
+      "additions": 108,
+      "deletions": 0
+    },
+    {
+      "path": "src/ui/SceneBoundary.tsx",
+      "status": "A",
+      "additions": 19,
+      "deletions": 0
+    },
+    {
+      "path": "src/ui/TitleScreen.tsx",
+      "status": "A",
+      "additions": 42,
+      "deletions": 0
+    },
+    {
+      "path": "src/ui/TouchPad.tsx",
+      "status": "A",
+      "additions": 49,
+      "deletions": 0
+    },
+    {
+      "path": "src/ui/sfx.ts",
+      "status": "A",
+      "additions": 48,
+      "deletions": 0
+    },
+    {
+      "path": "src/world/world.ts",
+      "status": "A",
+      "additions": 186,
+      "deletions": 0
+    },
+    {
+      "path": "src/world/worldData.json",
+      "status": "A",
+      "additions": 1,
+      "deletions": 0
+    },
+    {
+      "path": "tsconfig.json",
+      "status": "A",
+      "additions": 18,
+      "deletions": 0
+    },
+    {
+      "path": "tsconfig.tsbuildinfo",
+      "status": "A",
+      "additions": 1,
+      "deletions": 0
+    },
+    {
+      "path": "vite.config.ts",
+      "status": "A",
+      "additions": 10,
+      "deletions": 0
+    }
+  ],
+  "additions": 12643,
+  "deletions": 0,
+  "areas": [
+    "characters & map life",
+    "scenes & games",
+    "ui",
+    "words & content",
+    "art & sound",
+    "ci",
+    "docs",
+    "tools"
+  ],
+  "summary": "- OSM-generated West Seattle (12 m tiles): real streets, footprint houses,\n  storefronts, parks with labels; walkable arterials incl. bridges\n- Rabbit avatar, wandering neighbors, Mike dialog, minimap, touch controls\n- Art spots from content/places.csv (geocoded via Nominatim)\n- Scenes: gas-station wall flipbook, 3D paintable Lulu cup (three.js)\n- Processed art kept out of git; regenerate with npm run images\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 11,
+    "plugins": 0,
+    "scenes": 2,
+    "content_files": 7,
+    "source_lines": 5943,
+    "commits": 1
+  },
+  "shots": [
+    {
+      "query": "at=47.5668,-122.3868",
+      "lat": 47.5668,
+      "lon": -122.3868,
+      "label": null,
+      "guessed": true,
+      "before": null,
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ]
+      }
+    },
+    {
+      "query": "at=47.5598,-122.3868",
+      "lat": 47.5598,
+      "lon": -122.3868,
+      "label": null,
+      "guessed": true,
+      "before": null,
+      "after": "after-2.webp",
+      "moving": "moving-2.webp",
+      "problems": {
+        "before": [],
+        "after": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ]
+      }
+    },
+    {
+      "query": "at=47.576107,-122.385041",
+      "lat": 47.576107,
+      "lon": -122.385041,
+      "label": null,
+      "guessed": true,
+      "before": null,
+      "after": "after-3.webp",
+      "moving": "moving-3.webp",
+      "problems": {
+        "before": [],
+        "after": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ]
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "note": "stills lossless; moving loop half size"
+  },
+  "first_recorded_at": "2026-11-15T16:30:23.173Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:30:23.173Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43735787534"
+}

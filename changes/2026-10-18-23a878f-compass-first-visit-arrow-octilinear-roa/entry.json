@@ -1,0 +1,204 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "23a878f9a788dcc46da6a5519f029192835b88df",
+  "parent": "14bb1a4d1a6a36ef02174eec5326e5191056e0b3",
+  "pr": null,
+  "title": "Compass, first-visit arrow, octilinear roads, Seven+ Stories walk",
+  "url": "https://github.com/gardeninsound/map/commit/23a878f9a788dcc46da6a5519f029192835b88df",
+  "merged_at": "2026-10-18T16:16:04-07:00",
+  "body": "- HUD compass points to the nearest art spot with a scene\n- New visitors get a flashing arrow toward it after Mike's welcome\n- Roads snapped to 0/45/90° with half-tile curb cuts: clean diagonals\n- Seven+ Stories: first-person three.js walk of the lot at\n  4731 40th Ave SW, signs standing in the field, close-up reading\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "authors": [
+    {
+      "login": null,
+      "name": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "23a878f9a788dcc46da6a5519f029192835b88df",
+      "message": "Compass, first-visit arrow, octilinear roads, Seven+ Stories walk\n\n- HUD compass points to the nearest art spot with a scene\n- New visitors get a flashing arrow toward it after Mike's welcome\n- Roads snapped to 0/45/90° with half-tile curb cuts: clean diagonals\n- Seven+ Stories: first-person three.js walk of the lot at\n  4731 40th Ave SW, signs standing in the field, close-up reading\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "at": "2026-10-18T16:16:04-07:00"
+    }
+  ],
+  "files": [
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 11,
+      "deletions": 2
+    },
+    {
+      "path": "content/places.csv",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "scripts/build-map.mjs",
+      "status": "M",
+      "additions": 33,
+      "deletions": 2
+    },
+    {
+      "path": "scripts/map-config.mjs",
+      "status": "M",
+      "additions": 6,
+      "deletions": 0
+    },
+    {
+      "path": "scripts/review-map.mjs",
+      "status": "M",
+      "additions": 1,
+      "deletions": 0
+    },
+    {
+      "path": "src/App.tsx",
+      "status": "M",
+      "additions": 33,
+      "deletions": 4
+    },
+    {
+      "path": "src/content/placesData.json",
+      "status": "M",
+      "additions": 7,
+      "deletions": 6
+    },
+    {
+      "path": "src/content/puppyPark.ts",
+      "status": "A",
+      "additions": 109,
+      "deletions": 0
+    },
+    {
+      "path": "src/experiences/park/ParkScene.ts",
+      "status": "A",
+      "additions": 341,
+      "deletions": 0
+    },
+    {
+      "path": "src/experiences/park/ParkWalk.tsx",
+      "status": "A",
+      "additions": 132,
+      "deletions": 0
+    },
+    {
+      "path": "src/experiences/registry.ts",
+      "status": "M",
+      "additions": 1,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/Game.ts",
+      "status": "M",
+      "additions": 38,
+      "deletions": 1
+    },
+    {
+      "path": "src/game/render/sprites.ts",
+      "status": "M",
+      "additions": 52,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/render/tileArt.ts",
+      "status": "M",
+      "additions": 48,
+      "deletions": 15
+    },
+    {
+      "path": "src/styles.css",
+      "status": "M",
+      "additions": 53,
+      "deletions": 2
+    },
+    {
+      "path": "src/ui/Compass.test.ts",
+      "status": "A",
+      "additions": 24,
+      "deletions": 0
+    },
+    {
+      "path": "src/ui/Compass.tsx",
+      "status": "A",
+      "additions": 69,
+      "deletions": 0
+    },
+    {
+      "path": "src/world/worldData.json",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    }
+  ],
+  "additions": 960,
+  "deletions": 34,
+  "areas": [
+    "characters & map life",
+    "scenes & games",
+    "ui",
+    "words & content",
+    "docs",
+    "tools"
+  ],
+  "summary": "- HUD compass points to the nearest art spot with a scene\n- New visitors get a flashing arrow toward it after Mike's welcome\n- Roads snapped to 0/45/90° with half-tile curb cuts: clean diagonals\n- Seven+ Stories: first-person three.js walk of the lot at\n  4731 40th Ave SW, signs standing in the field, close-up reading\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 11,
+    "plugins": 0,
+    "scenes": 3,
+    "content_files": 9,
+    "source_lines": 7171,
+    "commits": 4
+  },
+  "shots": [
+    {
+      "query": "at=47.560466,-122.382939",
+      "lat": 47.560466,
+      "lon": -122.382939,
+      "label": null,
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ],
+        "after": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ]
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "note": "stills lossless; moving loop half size"
+  },
+  "first_recorded_at": "2026-11-15T16:30:23.173Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:30:23.173Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43735787534"
+}
