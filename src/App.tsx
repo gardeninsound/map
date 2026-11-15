@@ -37,6 +37,7 @@ import { BikeRace } from './game/plugins/bikeRace';
 import { raceResult } from './content/bikeRace';
 import { Dinos } from './game/plugins/dinos';
 import { Rowboat } from './game/plugins/rowboat';
+import { Ponies, type MeadowPony } from './game/plugins/ponies';
 import { Mermaids, type PlacedMermaid } from './game/plugins/mermaids';
 import { mermaidChat } from './content/mermaids';
 import { ChickenBoxing } from './game/plugins/chickenBoxing';
@@ -172,6 +173,7 @@ export default function App() {
     const ham = new Ham();
     const race = new BikeRace();
     const rowboat = new Rowboat();
+    const ponies = new Ponies();
     const mermaids = new Mermaids(rowboat);
     const boxing = new ChickenBoxing();
     const luna = new LunaPark();
@@ -187,7 +189,7 @@ export default function App() {
     const g = new CityGame(canvas.current!, world, {
       start: world.project(START.lat, START.lon),
       voices: neighborVoices,
-      plugins: [art, new BigCup(art), dinos, new Seal(), arcadeDoor.current, luna, busker, crow, flock, squirrels, chicken, pegasus, ham, race, rowboat, mermaids, boxing, ...(live ? [live] : [])],
+      plugins: [art, new BigCup(art), dinos, new Seal(), arcadeDoor.current, luna, busker, crow, flock, squirrels, chicken, pegasus, ham, race, rowboat, mermaids, ponies, boxing, ...(live ? [live] : [])],
       events: {
         onStreet: setStreet,
         onStorefront: setStorefront,
@@ -207,6 +209,11 @@ export default function App() {
             const b = boxing.bout;
             sounds.cluck();
             setOverlay({ kind: 'talk', speaker: ANNOUNCER, portrait: (boxerPortrait ??= buildChicken().right[0]!.toDataURL()), lines: ringside(b.round, b.rest, b.landed) });
+          } else if (t.kind === 'pony') {
+            // a pony in Lincoln Park's meadow (idea box #36): stops and says hi
+            const h = t.data as MeadowPony;
+            ponies.talking = h;
+            setOverlay({ kind: 'talk', speaker: h.pony.name, portrait: ponies.portrait(h), lines: h.pony.lines });
           } else if (t.kind === 'mermaid') {
             // a mermaid off Alki (idea box #37): her next catch phrase
             const p = t.data as PlacedMermaid;
@@ -301,7 +308,7 @@ export default function App() {
         lines: raceResult(r.place, r.total, r.winner, r.seconds),
       });
     g.paused = true;
-    if (import.meta.env.DEV) Object.assign(window, { __game: g, __art: art, __dinos: dinos, __luna: luna, __busker: busker, __crow: crow, __flock: flock, __squirrels: squirrels, __chicken: chicken, __pegasus: pegasus, __ham: ham, __race: race, __rowboat: rowboat, __mermaids: mermaids, __boxing: boxing, __visitors: live }); // test hooks
+    if (import.meta.env.DEV) Object.assign(window, { __game: g, __art: art, __dinos: dinos, __luna: luna, __busker: busker, __crow: crow, __flock: flock, __squirrels: squirrels, __chicken: chicken, __pegasus: pegasus, __ham: ham, __race: race, __rowboat: rowboat, __mermaids: mermaids, __ponies: ponies, __boxing: boxing, __visitors: live }); // test hooks
     // Review hooks: ?at=lat,lon (or ?atTile=x,y, or ?at=arcade) skips the title and drops you there;
     // ?audit scans the whole map for road-drawing glitches (scripts/city/road-audit.mjs).
     const q = new URLSearchParams(location.search);
