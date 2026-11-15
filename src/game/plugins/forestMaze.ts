@@ -2,6 +2,8 @@ import { hash, input, Tile, withButtons, type CityGame, type CityPlugin, type Dr
 import { MAZE_CELLS, MAZE_NAME, MAZE_NW, MAZE_SEED, mazeHint, mazeMiddle } from '../../content/forestMaze';
 import { sounds } from '../../ui/sounds';
 import { makeMaze, type Maze } from '../maze';
+import { talk, type Action, type Actor } from '../actions';
+
 
 /** the maze laid on each map, so React's dev double start doesn't carve it twice */
 const laid = new WeakMap<object, { x0: number; y0: number; out: Vec } | null>();
@@ -13,7 +15,7 @@ const laid = new WeakMap<object, { x0: number; y0: number; out: Vec } | null>();
  * the street, to a fairy ring in a clearing in the middle (target `maze`). While you're in
  * it a hint at the top says {B} hops you out — back to the street by the way in.
  */
-export class ForestMaze implements CityPlugin {
+export class ForestMaze implements CityPlugin, Actor {
   maze: Maze = makeMaze(MAZE_CELLS, MAZE_SEED);
   x0 = 0;
   y0 = 0;
@@ -55,6 +57,11 @@ export class ForestMaze implements CityPlugin {
       sounds.whoosh();
       game.teleport(this.out);
     });
+  }
+
+  /** {A} at the fairy ring in the middle */
+  act(t: Target): Action | null {
+    return t.kind === 'maze' ? talk(mazeMiddle.label.name, mazeMiddle.lines) : null;
   }
 
   targets(): Target[] {

@@ -1,9 +1,11 @@
 import { INK, Tile, type CityGame, type CityPlugin, type DrawContext, type Target, type Vec } from '../../city';
-import { mermaidLabel, mermaids, type Mermaid } from '../../content/mermaids';
+import { mermaidChat, mermaidLabel, mermaids, type Mermaid } from '../../content/mermaids';
 import { bubbleText, callingAt, rockNear, SEE } from '../mermaids';
 import { buildMermaid } from '../mermaidSprites';
 import { drawTiny, TINY_H, tinyWidth } from '../tinyFont';
 import type { Rowboat } from './rowboat';
+import { talk, type Action, type Actor } from '../actions';
+
 
 export interface PlacedMermaid {
   m: Mermaid;
@@ -18,7 +20,7 @@ export interface PlacedMermaid {
  * 58th (reach her on foot), the others along the beach (row up). Near the shore you see
  * them call their catch phrases in bubbles; {A} close by and one chats (target `mermaid`).
  */
-export class Mermaids implements CityPlugin {
+export class Mermaids implements CityPlugin, Actor {
   placed: PlacedMermaid[] = [];
   private sprites: HTMLCanvasElement[][] = [];
   private you: Vec = { x: 0, y: 0 };
@@ -42,6 +44,13 @@ export class Mermaids implements CityPlugin {
       taken.push(rock);
       this.placed.push({ m, rock, said: 0 });
     }
+  }
+
+  /** {A} on a mermaid: her next catch phrase */
+  act(t: Target): Action | null {
+    if (t.kind !== 'mermaid') return null;
+    const p = t.data as PlacedMermaid;
+    return talk(p.m.name, mermaidChat(p.m, this.nextPhrase(p)), { portrait: this.portrait(p) });
   }
 
   targets(): Target[] {

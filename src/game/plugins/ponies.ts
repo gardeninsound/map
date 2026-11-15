@@ -2,6 +2,8 @@ import { rng, Tile, type CityGame, type CityPlugin, type DrawContext, type Targe
 import { ponies, PONY_MEADOW, ponyLabel, type Pony } from '../../content/ponies';
 import { newPony, ponyTick, type PonyState } from '../ponies';
 import { buildPony, type PonySprites } from '../ponySprites';
+import { talk, type Action, type Actor } from '../actions';
+
 
 export interface MeadowPony {
   pony: Pony;
@@ -13,7 +15,7 @@ export interface MeadowPony {
  * content/ponies.ts, wandering pure + tested in game/ponies.ts): five graze and trot about the
  * meadow and the trails through it. Walk up and {A} (target `pony`): one stops to say hi.
  */
-export class Ponies implements CityPlugin {
+export class Ponies implements CityPlugin, Actor {
   herd: MeadowPony[] = [];
   /** the one you're talking to stands still */
   talking: MeadowPony | null = null;
@@ -36,6 +38,14 @@ export class Ponies implements CityPlugin {
       if (!this.suits(at.x, at.y)) at = { ...p };
       return { pony, s: newPony(at, this.rand) };
     });
+  }
+
+  /** {A} on a pony: it stands still and says hi */
+  act(t: Target): Action | null {
+    if (t.kind !== 'pony') return null;
+    const h = t.data as MeadowPony;
+    this.talking = h;
+    return talk(h.pony.name, h.pony.lines, { portrait: this.portrait(h) });
   }
 
   targets(): Target[] {

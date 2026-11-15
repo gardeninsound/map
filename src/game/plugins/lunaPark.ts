@@ -1,5 +1,7 @@
 import { INK, PAL, Tile, TS, pixelText, type CityGame, type CityPlugin, type DrawContext, type Target, type Vec } from '../../city';
-import { LUNA_BRIDGE, LUNA_ORIGIN, LUNA_PIER, lunaRides, lunaWagon, type LunaRide, type TileRect } from '../../content/lunaPark';
+import { LUNA_BRIDGE, LUNA_ORIGIN, LUNA_PIER, lunaRideInvite, lunaRides, lunaWagon, type LunaRide, type LunaSign, type TileRect } from '../../content/lunaPark';
+import { close, talk, type Action, type Actor } from '../actions';
+
 
 type Ctx = CanvasRenderingContext2D;
 const px = (ctx: Ctx, color: string, x: number, y: number, w = 1, h = 1) => {
@@ -38,7 +40,9 @@ function bulbs(ctx: Ctx, ax: number, ay: number, bx: number, by: number, t: numb
  * behind Betsy the Pig; walk up to him and he's a target too.
  * Layout and words: src/content/lunaPark.ts.
  */
-export class LunaPark implements CityPlugin {
+let signPortrait: string | undefined;
+
+export class LunaPark implements CityPlugin, Actor {
   /** the origin tile (top-left corner of the tile at the tip of the Head) */
   origin: Vec = { x: 0, y: 0 };
   private deck: HTMLCanvasElement | null = null;
@@ -102,6 +106,27 @@ export class LunaPark implements CityPlugin {
     this.chutes = (this.chutes + dt) % CHUTE_CYCLE;
     const len = this.route[this.route.length - 1]?.at ?? 0;
     if (len) this.wagon = (this.wagon + WAGON_SPEED * dt) % (2 * len);
+  }
+
+  /** {A} at a sign: its lines; the Figure Eight's and the Whirl's offer a ride, Pat answers a sum */
+  act(t: Target): Action | null {
+    if (t.kind !== 'luna') return null;
+    const sign = t.data as LunaSign;
+    const portrait = (signPortrait ??= lunaSignPortrait());
+    const ride = sign.id === 'figure8' || sign.id === 'whirl' ? sign.id : null;
+    const { ask } = sign;
+    const choices = ride
+      ? [
+          { label: lunaRideInvite.yes, next: { kind: 'ride', ride } as const },
+          { label: lunaRideInvite.no, next: close },
+        ]
+      : ask
+        ? [
+            { label: ask.label, next: talk(sign.name, ask.reply, { portrait }) },
+            { label: ask.done, next: close },
+          ]
+        : undefined;
+    return talk(sign.name, sign.lines, { portrait, ...(choices ? { choices } : {}) });
   }
 
   targets(): Target[] {

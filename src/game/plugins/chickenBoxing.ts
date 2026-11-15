@@ -1,8 +1,11 @@
 import { dice, now, Tile, tone, type CityGame, type CityPlugin, type DrawContext, type Target, type Vec } from '../../city';
-import { boxers, boxingWatch, RING_AT } from '../../content/chickenBoxing';
+import { ANNOUNCER, boxers, boxingWatch, ringside, RING_AT } from '../../content/chickenBoxing';
 import { sounds } from '../../ui/sounds';
 import { boutAt, type Bout } from '../chickenBoxing';
 import type { BoxingScene } from '../boxing3d';
+import { buildChicken } from '../sprites';
+import { talk, type Action, type Actor } from '../actions';
+
 
 /** the 3D scene loads once you're this close (tiles); thuds carry this far */
 const LOAD_NEAR = 45;
@@ -27,7 +30,9 @@ interface Feather {
  * into the map depth-sorted; feathers fly when a punch lands, with a thud, and the bell
  * rings each round. Ringside, {A}: the announcer (words in content/chickenBoxing.ts).
  */
-export class ChickenBoxing implements CityPlugin {
+let announcerPortrait: string | undefined;
+
+export class ChickenBoxing implements CityPlugin, Actor {
   private rand = dice('boxing-feathers');
   ring: Vec = { x: 0, y: 0 };
   bout: Bout = boutAt(0);
@@ -47,6 +52,14 @@ export class ChickenBoxing implements CityPlugin {
         if (Math.abs(x + 0.5 - this.ring.x) < RING / 2 && Math.abs(y + 0.5 - this.ring.y) < RING / 2) w.tiles[x + y * w.w] = Tile.Landmark;
       }
     }
+  }
+
+  /** {A} ringside: the announcer on the bout so far */
+  act(t: Target): Action | null {
+    if (t.kind !== 'boxing') return null;
+    sounds.cluck();
+    const b = this.bout;
+    return talk(ANNOUNCER, ringside(b.round, b.rest, b.landed), { portrait: (announcerPortrait ??= buildChicken().right[0]!.toDataURL()) });
   }
 
   targets(): Target[] {

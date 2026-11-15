@@ -1,5 +1,7 @@
 import { INK, Tile, today, type CityGame, type CityPlugin, type DrawContext, type Target, type Vec } from '../../city';
-import { GARDEN_BOX, GARDEN_NAME, type Shape } from '../../content/garden';
+import { GARDEN_BOX, GARDEN_NAME, gardenSign, type Shape } from '../../content/garden';
+import { talk, type Action, type Actor } from '../actions';
+
 import { beds, inBloom, type InBloom } from '../garden';
 
 type Ctx = CanvasRenderingContext2D;
@@ -82,7 +84,7 @@ function plant(ctx: Ctx, b: InBloom, x: number, y: number, sway: number) {
  * month by the real calendar — coming up, in full flower, fading at the end of its run. A
  * sign by the street ({A}, target `garden`) says what's out.
  */
-export class Garden implements CityPlugin {
+export class Garden implements CityPlugin, Actor {
   /** top-left and size, tiles */
   box = { x: 0, y: 0, w: 0, h: 0 };
   sign: Vec = { x: 0, y: 0 };
@@ -107,6 +109,12 @@ export class Garden implements CityPlugin {
     const day = now.toDateString();
     if (day !== this.today) [this.today, this.bloom] = [day, inBloom(now)];
     return this.bloom;
+  }
+
+  /** {A} at the sign: what's out this month */
+  act(t: Target): Action | null {
+    if (t.kind !== 'garden') return null;
+    return talk(GARDEN_NAME, gardenSign(today().getMonth() + 1, this.blooming().map((b) => b.plant.name)));
   }
 
   targets(): Target[] {
