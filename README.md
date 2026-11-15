@@ -2,7 +2,22 @@
 
 Every change that went live on [gardeninsound.website](https://gardeninsound.website), newest first, with the wish that started it, what was made, who made it, and how the spot looked before and after. Written automatically by [`.github/workflows/story.yml`](https://github.com/gardeninsound/map/blob/main/.github/workflows/story.yml) when a change merges; the raw records are in `changes/` and `wishes/`, and `story.json` indexes them all.
 
-**77** changes · **12** wishes from visitors, **11** answered · **0** still waiting
+**78** changes · **12** wishes from visitors, **11** answered · **0** still waiting
+
+---
+
+### Nov 15, 2026 · One clock for the game (?time=, ?seed=) and ?open= links into anything ([#71](https://github.com/gardeninsound/map/pull/71))
+
+Part of a review of how time, scenes, structures and characters work. The garden by month was the first thing it made possible to show.
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+| before · the garden sign in April | after |
+|---|---|
+| <img src="changes/2026-11-15-pr071-one-clock-for-the-game-time-seed-and-ope/before-1.webp" width="400"> | <img src="changes/2026-11-15-pr071-one-clock-for-the-game-time-seed-and-ope/after-1.webp" width="400"> |
+
+<img src="changes/2026-11-15-pr071-one-clock-for-the-game-time-seed-and-ope/moving-1.webp" width="400" alt="moving">
+
+<sub>vlandham with Claude Code · 25 files, +361 −67 · city, characters & map life, scenes & games, ui, ci, docs, tools · [record](changes/2026-11-15-pr071-one-clock-for-the-game-time-seed-and-ope/entry.json)</sub>
 
 ---
 

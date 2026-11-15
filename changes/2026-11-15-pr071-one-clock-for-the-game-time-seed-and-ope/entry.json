@@ -1,0 +1,273 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "70e90c93d191b199e7a536e903d6d8cb87f00e89",
+  "parent": "22fb00138a90bb5564725455b277df0898c41b4b",
+  "pr": 71,
+  "title": "One clock for the game (?time=, ?seed=) and ?open= links into anything",
+  "url": "https://github.com/gardeninsound/map/pull/71",
+  "merged_at": "2026-11-15T20:29:48Z",
+  "body": "Two review tools, so a link (or the story log's camera) can show any moment and go inside anything.\n\n**The clock** (`src/city/clock.ts`)\n- Everything that goes by the date or by chance now asks `now()` / `today()` / `dice(name)` instead of `Date.now()` / `Math.random()`: the garden and its sign, the busker, the boxing bout and its feathers, the dinosaurs, the bike race and Cone Catch. Each `dice` name is its own seeded stream.\n- `?time=2026-04-15` (or `…T19:30`) starts the clock at that moment; `?seed=7` makes chance repeat. With neither, nothing changes for visitors.\n- Network timing (the relay) and animation frames stay on the real clock.\n\n**`?open=` links** (`src/ui/openLink.ts`, pure + tested)\n- `?open=garden`, `?open=boat`, `?open=sundrop`: any target by kind, key or name. It stands you beside it and presses {A} through the same path a visitor's {A} takes (`CityGame.interactWith`; the frame's A-press now calls the same method).\n- `scene:<spot id>`, `arcade`, `arcade:<cabinet id>` (goes in as choosing it from GAMES does), `ride:figure8|whirl`, `minigame:cone-catch`, `idea`, `spots`.\n- The smoke test opens one of each kind.\n\n**Story log**: `Where:` now takes `open:garden` or a raw query (`?open=garden&time=2026-04-15`), and every photo pins `seed=1` plus the change's merge time, so before and after differ only by the change and the garden shows its month.\n\nKnown limit: `?open=crow` finds a street crow first, since the snack crow and the street crows share the name \"A crow\".\n\n@exit320-stack: heads-up. Links like `gardeninsound.website/?open=sundrop` or `?open=scene:rush-hour` now work on the live site, which is handy for showing someone one thing. New things that go by the time or chance should use `now()` / `dice()` (src/city/CLAUDE.md).\n\n## Story\nIdea:\nWhere: ?open=garden&time=2026-04-15 — the garden sign in April\nAsked vs made:\nMike:\nNote: Part of a review of how time, scenes, structures and characters work. The garden by month was the first thing it made possible to show.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "19d9b00c856e914a67a6fbbedd9ce0f1d159c82d",
+      "message": "One clock for the game (?time=, ?seed=) and ?open= links into anything\n\nThe clock (src/city/clock.ts): everything that goes by the date or chance\nasks now()/today()/dice(name) instead of Date.now()/Math.random() (garden,\nits sign, busker, boxing bout and feathers, dinosaurs, bike race, Cone\nCatch). ?time= starts the clock at a moment; ?seed= makes chance repeat.\n\n?open= (src/ui/openLink.ts): any target by kind, key or name (walks up and\npresses A through CityGame.interactWith, the same path as a visitor's A),\nplus scene:<spot>, arcade[:<cabinet>], ride:figure8|whirl,\nminigame:cone-catch, idea, spots. The smoke test tries one of each kind.\n\nThe story log uses both: Where: takes open:… or a raw query, and every\nphoto pins seed=1 and the change's merge time.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-15T20:26:18Z"
+    }
+  ],
+  "files": [
+    {
+      "path": ".github/pull_request_template.md",
+      "status": "M",
+      "additions": 2,
+      "deletions": 1
+    },
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 2,
+      "deletions": 0
+    },
+    {
+      "path": "scripts/smoke.mjs",
+      "status": "M",
+      "additions": 18,
+      "deletions": 2
+    },
+    {
+      "path": "scripts/story/README.md",
+      "status": "M",
+      "additions": 6,
+      "deletions": 2
+    },
+    {
+      "path": "scripts/story/lib.mjs",
+      "status": "M",
+      "additions": 8,
+      "deletions": 1
+    },
+    {
+      "path": "scripts/story/lib.test.mjs",
+      "status": "M",
+      "additions": 2,
+      "deletions": 0
+    },
+    {
+      "path": "scripts/story/record.mjs",
+      "status": "M",
+      "additions": 5,
+      "deletions": 4
+    },
+    {
+      "path": "scripts/story/shoot.mjs",
+      "status": "M",
+      "additions": 5,
+      "deletions": 2
+    },
+    {
+      "path": "src/App.tsx",
+      "status": "M",
+      "additions": 38,
+      "deletions": 5
+    },
+    {
+      "path": "src/city/CLAUDE.md",
+      "status": "M",
+      "additions": 5,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/clock.test.ts",
+      "status": "A",
+      "additions": 40,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/clock.ts",
+      "status": "A",
+      "additions": 64,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/engine/CityGame.ts",
+      "status": "M",
+      "additions": 33,
+      "deletions": 24
+    },
+    {
+      "path": "src/city/index.ts",
+      "status": "M",
+      "additions": 2,
+      "deletions": 0
+    },
+    {
+      "path": "src/experiences/arcade/DuckArcade.tsx",
+      "status": "M",
+      "additions": 11,
+      "deletions": 1
+    },
+    {
+      "path": "src/experiences/minigames/ConeCatch.tsx",
+      "status": "M",
+      "additions": 3,
+      "deletions": 2
+    },
+    {
+      "path": "src/game/busker.ts",
+      "status": "M",
+      "additions": 2,
+      "deletions": 2
+    },
+    {
+      "path": "src/game/plugins/bikeRace.ts",
+      "status": "M",
+      "additions": 2,
+      "deletions": 8
+    },
+    {
+      "path": "src/game/plugins/chickenBoxing.ts",
+      "status": "M",
+      "additions": 4,
+      "deletions": 3
+    },
+    {
+      "path": "src/game/plugins/dinos.ts",
+      "status": "M",
+      "additions": 2,
+      "deletions": 8
+    },
+    {
+      "path": "src/game/plugins/garden.ts",
+      "status": "M",
+      "additions": 2,
+      "deletions": 2
+    },
+    {
+      "path": "src/main.tsx",
+      "status": "M",
+      "additions": 4,
+      "deletions": 0
+    },
+    {
+      "path": "src/ui/CLAUDE.md",
+      "status": "M",
+      "additions": 3,
+      "deletions": 0
+    },
+    {
+      "path": "src/ui/openLink.test.ts",
+      "status": "A",
+      "additions": 39,
+      "deletions": 0
+    },
+    {
+      "path": "src/ui/openLink.ts",
+      "status": "A",
+      "additions": 59,
+      "deletions": 0
+    }
+  ],
+  "additions": 361,
+  "deletions": 67,
+  "areas": [
+    "city",
+    "characters & map life",
+    "scenes & games",
+    "ui",
+    "ci",
+    "docs",
+    "tools"
+  ],
+  "branch": "clock-and-open",
+  "opened_at": "2026-11-15T20:27:44Z",
+  "merged_by": "vlandham",
+  "summary": "Two review tools, so a link (or the story log's camera) can show any moment and go inside anything.\n\n**The clock** (`src/city/clock.ts`)\n- Everything that goes by the date or by chance now asks `now()` / `today()` / `dice(name)` instead of `Date.now()` / `Math.random()`: the garden and its sign, the busker, the boxing bout and its feathers, the dinosaurs, the bike race and Cone Catch. Each `dice` name is its own seeded stream.\n- `?time=2026-04-15` (or `…T19:30`) starts the clock at that moment; `?seed=7` makes chance repeat. With neither, nothing changes for visitors.\n- Network timing (the relay) and animation frames stay on the real clock.\n\n**`?open=` links** (`src/ui/openLink.ts`, pure + tested)\n- `?open=garden`, `?open=boat`, `?open=sundrop`: any target by kind, key or name. It stands you beside it and presses {A} through the same path a visitor's {A} takes (`CityGame.interactWith`; the frame's A-press now calls the same method).\n- `scene:<spot id>`, `arcade`, `arcade:<cabinet id>` (goes in as choosing it from GAMES does), `ride:figure8|whirl`, `minigame:cone-catch`, `idea`, `spots`.\n- The smoke test opens one of each kind.\n\n**Story log**: `Where:` now takes `open:garden` or a raw query (`?open=garden&time=2026-04-15`), and every photo pins `seed=1` plus the change's merge time, so before and after differ only by the change and the garden shows its month.\n\nKnown limit: `?open=crow` finds a street crow first, since the snack crow and the street crows share the name \"A crow\".\n\n@exit320-stack: heads-up. Links like `gardeninsound.website/?open=sundrop` or `?open=scene:rush-hour` now work on the live site, which is handy for showing someone one thing. New things that go by the time or chance should use `now()` / `dice()` (src/city/CLAUDE.md).",
+  "story": {
+    "ideas": [],
+    "where": [
+      {
+        "query": "open=garden&time=2026-04-15",
+        "label": "the garden sign in April"
+      }
+    ],
+    "askedVsMade": null,
+    "mike": null,
+    "note": "Part of a review of how time, scenes, structures and characters work. The garden by month was the first thing it made possible to show.\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+    "shots": true,
+    "present": true
+  },
+  "ideas": [],
+  "requested_reviewers": [
+    "exit320-stack"
+  ],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-15T20:28:10Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-71-garden-preview.gardeninsound.workers.dev\n\nUpdated for 19d9b00. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-71]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-71-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 21,
+    "scenes": 11,
+    "content_files": 27,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 26610,
+    "commits": 95
+  },
+  "shots": [
+    {
+      "query": "open=garden&time=2026-04-15",
+      "lat": null,
+      "lon": null,
+      "label": "the garden sign in April",
+      "guessed": false,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ],
+        "after": []
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "production",
+      "after": "production"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+  },
+  "first_recorded_at": "2026-11-15T20:30:15.636Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T20:30:15.636Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43758387689"
+}

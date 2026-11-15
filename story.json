@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-11-15T20:20:27.034Z",
+  "generated_at": "2026-11-15T20:30:38.435Z",
   "changes": [
     {
       "pr": null,
@@ -3875,6 +3875,59 @@
         "arcade_cabinets_ready": 4,
         "source_lines": 26360,
         "commits": 94
+      }
+    },
+    {
+      "pr": 71,
+      "sha": "70e90c93d191b199e7a536e903d6d8cb87f00e89",
+      "title": "One clock for the game (?time=, ?seed=) and ?open= links into anything",
+      "url": "https://github.com/gardeninsound/map/pull/71",
+      "merged_at": "2026-11-15T20:29:48Z",
+      "dir": "changes/2026-11-15-pr071-one-clock-for-the-game-time-seed-and-ope",
+      "ideas": [],
+      "summary": "Two review tools, so a link (or the story log's camera) can show any moment and go inside anything.\n\n**The clock** (`src/city/clock.ts`)\n- Everything that goes by the date or by chance now asks `now()` / `today()` / `dice(name)` instead of `Date.now()` / `Math.random()`: the garden and its sign, the busker, the boxing bout and its feathers, the dinosaurs, the bike race and Cone Catch. Each `dice` name is its own seeded stream.\n- `?time=2026-04-15` (or `…T19:30`) starts the clock at that moment; `?seed=7` makes chance repeat. With neither, nothing changes for visitors.\n- Network timing (the relay) and animation frames stay on the real clock.\n\n**`?open=` links** (`src/ui/openLink.ts`, pure + tested)\n- `?open=garden`, `?open=boat`, `?open=sundrop`: any target by kind, key or name. It stands you beside it and presses {A} through the same path a visitor's {A} takes (`CityGame.interactWith`; the frame's A-press now calls the same method).\n- `scene:<spot id>`, `arcade`, `arcade:<cabinet id>` (goes in as choosing it from GAMES does), `ride:figure8|whirl`, `minigame:cone-catch`, `idea`, `spots`.\n- The smoke test opens one of each kind.\n\n**Story log**: `Where:` now takes `open:garden` or a raw query (`?open=garden&time=2026-04-15`), and every photo pins `seed=1` plus the change's merge time, so before and after differ only by the change and the garden shows its month.\n\nKnown limit: `?open=crow` finds a street crow first, since the snack crow and the street crows share the name \"A crow\".\n\n@exit320-stack: heads-up. Links like `gardeninsound.website/?open=sundrop` or `?open=scene:rush-hour` now work on the live site, which is handy for showing someone one thing. New things that go by the time or chance should use `now()` / `dice()` (src/city/CLAUDE.md).",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": "Part of a review of how time, scenes, structures and characters work. The garden by month was the first thing it made possible to show.\n🤖 Generated with [Claude Code](https://claude.com/claude-code)"
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 25,
+      "additions": 361,
+      "deletions": 67,
+      "areas": [
+        "city",
+        "characters & map life",
+        "scenes & games",
+        "ui",
+        "ci",
+        "docs",
+        "tools"
+      ],
+      "shots": [
+        {
+          "query": "open=garden&time=2026-04-15",
+          "lat": null,
+          "lon": null,
+          "label": "the garden sign in April",
+          "before": "changes/2026-11-15-pr071-one-clock-for-the-game-time-seed-and-ope/before-1.webp",
+          "after": "changes/2026-11-15-pr071-one-clock-for-the-game-time-seed-and-ope/after-1.webp",
+          "moving": "changes/2026-11-15-pr071-one-clock-for-the-game-time-seed-and-ope/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 21,
+        "scenes": 11,
+        "content_files": 27,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 26610,
+        "commits": 95
       }
     }
   ],
