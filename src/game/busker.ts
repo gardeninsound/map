@@ -7,7 +7,7 @@
  * when you loaded the page, so the song and the bar the busker is on "now" are the same
  * for every rabbit (to within how well their clocks agree, usually well under a second).
  */
-import { audioContext, sfx } from '../city';
+import { audioContext, now, sfx } from '../city';
 
 /** "NOTE:beats" tokens; R = rest. Lead lines are written to loop. */
 export interface Song {
@@ -211,7 +211,7 @@ export class BuskerMusic {
   }
 
   private wall() {
-    return Date.now() / 1000 + this.clockOffset;
+    return now() / 1000 + this.clockOffset; // the game's clock (city/clock.ts)
   }
 
   /** seconds per beat of the song playing now */

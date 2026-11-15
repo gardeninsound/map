@@ -160,3 +160,5 @@ slideshows, busker songs, crow flight, sprites, and the city's own tests in `src
 with `channel: 'chrome'`; save shots under `screenshots/` (gitignored). In dev, `window.__game` is
 the live `CityGame`, plus `__art`, `__busker`, `__crow` (the plugins) for scripted checks;
 `?at=lat,lon`, `?atTile=x,y` or `?at=arcade` (beside the Duck Arcade door) skips the title and drops you there — on the live site too.
+`?open=…` goes further, into a scene, a cabinet, a ride or a character's dialog (`src/ui/CLAUDE.md`); `?time=…` and `?seed=…` pin
+the game's clock and chance (`src/city/CLAUDE.md`) for screenshots that repeat.

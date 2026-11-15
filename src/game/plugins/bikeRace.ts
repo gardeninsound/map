@@ -1,4 +1,4 @@
-import { buildBikeRabbit, type CityGame, type CityPlugin, type DrawContext, type Target, type Vec, type Vehicle } from '../../city';
+import { buildBikeRabbit, dice, type CityGame, type CityPlugin, type DrawContext, type Target, type Vec, type Vehicle } from '../../city';
 import { ordinal, RACE_FINISH, RACE_START, RACE_STREET, raceAnimals, raceBanners, raceJoin, type AnimalKind } from '../../content/bikeRace';
 import { sounds } from '../../ui/sounds';
 import { buildCourse, COUNTDOWN, courseAt, lineUp, OFF_COURSE, placeOf, progressOf, RACE_SPEED, ride, type Course, type Racer } from '../bikeRace';
@@ -19,12 +19,6 @@ export interface RaceResult {
 const YOU_LANE = 1.125;
 const YOU_START = 0.4;
 
-/** A seeded random, so each race's field differs. */
-function rng(seed: number) {
-  let s = seed >>> 0 || 1;
-  return () => ((s = (s * 16807) % 2147483647) / 2147483647);
-}
-
 /**
  * The Admiral-to-Alaska bike race (rules in game/bikeRace.ts, words in content/bikeRace.ts):
  * seven animals on bikes wait under the START banner on California at SW Admiral Way. {A}
@@ -43,7 +37,7 @@ export class BikeRace implements CityPlugin {
   you: { d: number; finished: number | null; inRace: boolean } = { d: 0, finished: null, inRace: false };
   /** the App shows the result when you cross the line */
   onFinish: ((r: RaceResult) => void) | null = null;
-  private rand = rng(Date.now());
+  private rand = dice('bike-race'); // ?seed= makes it repeatable (city/clock.ts)
   private sprites: Map<AnimalKind, [HTMLCanvasElement, HTMLCanvasElement]> | null = null;
   private vehicle: Vehicle | null = null;
   private lastBeep = 99;

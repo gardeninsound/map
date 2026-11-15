@@ -9,7 +9,8 @@ Idea:
 <!-- the idea-box wish(es) this answers, e.g. #36 -->
 Where:
 <!-- where to point the camera, one per line or split by ";":
-     47.5310, -122.3960 — the meadow  ·  arcade  ·  tile 120, 340  ·  title  ·  none -->
+     47.5310, -122.3960 — the meadow  ·  arcade  ·  open:garden (inside a scene or a
+     character's dialog: any ?open= link)  ·  tile 120, 340  ·  title  ·  none -->
 Asked vs made:
 <!-- if this isn't quite what the visitor asked for: how, and why -->
 Mike:

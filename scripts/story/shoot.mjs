@@ -48,7 +48,7 @@ export async function launch() {
  * Photographs each place on the site at `url`. Returns one result per place:
  * `{ still, moving, problems }` (file names inside `outDir`, page errors seen while there).
  */
-export async function shoot(browser, url, places, outDir, { prefix, moving = false, settleMs = 3500 } = {}) {
+export async function shoot(browser, url, places, outDir, { prefix, moving = false, settleMs = 3500, time = null } = {}) {
   const sharp = (await import('sharp')).default;
   mkdirSync(outDir, { recursive: true });
   const results = [];
@@ -59,7 +59,10 @@ export async function shoot(browser, url, places, outDir, { prefix, moving = fal
     page.on('console', (m) => m.type() === 'error' && problems.push(`console: ${m.text()}`));
     const res = { still: null, moving: null, problems };
     try {
-      await page.goto(`${url}?solo${place.query === 'title' ? '' : `&${place.query}`}`, { waitUntil: 'load' });
+      // seed=1 and the moment of the change (src/city/clock.ts): the same chance every time, and the
+      // garden in the month it was; builds from before the clock simply ignore them
+      const pin = `&seed=1${time && !/(^|&)time=/.test(place.query) ? `&time=${encodeURIComponent(time)}` : ''}`;
+      await page.goto(`${url}?solo${pin}${place.query === 'title' ? '' : `&${place.query}`}`, { waitUntil: 'load' });
       await page.locator('canvas').first().waitFor({ timeout: 15_000 });
       await page.waitForTimeout(settleMs);
       if (place.query !== 'title' && (await page.locator('.title-start').count()))

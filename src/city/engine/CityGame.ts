@@ -296,20 +296,7 @@ export class CityGame {
     }
 
     // The closest thing you can interact with: plugin targets and the neighbors.
-    const candidates: Target[] = this.plugins.flatMap((pl) => pl.targets?.(this) ?? []);
-    for (const npc of this.npcs) {
-      if (npc.inactive || Math.abs(npc.pos.x - p.pos.x) > 4 || Math.abs(npc.pos.y - p.pos.y) > 4) continue;
-      candidates.push({
-        key: `npc:${npc.id}`,
-        kind: 'npc',
-        x: npc.pos.x,
-        y: npc.pos.y,
-        label: { name: npc.voice.name, verb: 'say hi' },
-        bubble: '…',
-        weight: 0.8,
-        npc,
-      });
-    }
+    const candidates = this.allTargets((npc) => Math.abs(npc.pos.x - p.pos.x) <= 4 && Math.abs(npc.pos.y - p.pos.y) <= 4);
     let near: Target | null = null;
     let best = REACH;
     for (const t of candidates) {
@@ -323,17 +310,39 @@ export class CityGame {
       this.nearby = near;
       this.events.onNearby?.(near);
     }
-    if (input.consume('a') && near) {
-      const n = near.npc;
-      if (n) {
-        // Turn to face each other.
-        n.talking = true;
-        this.lastTalked = n;
-        n.facing = facingFor({ x: p.pos.x - n.pos.x, y: p.pos.y - n.pos.y }, n.facing);
-        p.facing = facingFor({ x: n.pos.x - p.pos.x, y: n.pos.y - p.pos.y }, p.facing);
-      }
-      this.events.onInteract?.(near);
+    if (input.consume('a') && near) this.press(near);
+  }
+
+  /**
+   * Everything you could press {A} on: plugin targets and the neighbors (all of them, or those
+   * `npcNear` keeps; the frame's own search only looks a few tiles round you).
+   */
+  allTargets(npcNear: (npc: Npc) => boolean = () => true): Target[] {
+    const out: Target[] = this.plugins.flatMap((pl) => pl.targets?.(this) ?? []);
+    for (const npc of this.npcs) {
+      if (npc.inactive || !npcNear(npc)) continue;
+      out.push({ key: `npc:${npc.id}`, kind: 'npc', x: npc.pos.x, y: npc.pos.y, label: { name: npc.voice.name, verb: 'say hi' }, bubble: '…', weight: 0.8, npc });
     }
+    return out;
+  }
+
+  /** Stand beside a target and press {A} on it, exactly as walking up does (review links: ?open=). */
+  interactWith(t: Target) {
+    this.teleport({ x: t.x, y: t.y + 1 });
+    this.press(t);
+  }
+
+  /** {A} on a target: a neighbor and you turn to face each other, then the app's onInteract */
+  private press(t: Target) {
+    const p = this.player;
+    const n = t.npc;
+    if (n) {
+      n.talking = true;
+      this.lastTalked = n;
+      n.facing = facingFor({ x: p.pos.x - n.pos.x, y: p.pos.y - n.pos.y }, n.facing);
+      p.facing = facingFor({ x: n.pos.x - p.pos.x, y: n.pos.y - p.pos.y }, p.facing);
+    }
+    this.events.onInteract?.(t);
   }
 
   /** the view's size in map pixels */
