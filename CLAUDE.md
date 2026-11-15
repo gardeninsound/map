@@ -45,7 +45,8 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
   `scripts/city/landmarks.mjs`), then rasterize OSM → `src/city/world/worldData.json` +
   `screenshots/map-preview.png` (`scripts/city/build-map.mjs`). All knobs in
   `scripts/city/map-config.mjs`: street widths (true width from lanes, × `widthScale` 2), house
-  push/shrink, detailed places.
+  push/shrink, detailed places. Places OSM lacks are **sites** (`scripts/city/sites/*.json`), drawn in on
+  every build; never hand-edit `worldData.json`.
 - `npm run audit [-- N]` — with `npm run dev` up (set `MAP_URL` if Vite isn't on 5173): renders
   every chunk at `?audit` and counts road-drawing glitches (slivers walled in by road, loose road
   fragments; detailed places skipped), writes `screenshots/audit/audit.json` + shots of the N biggest.
