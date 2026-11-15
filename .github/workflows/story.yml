@@ -1,0 +1,126 @@
+name: Story
+
+# The project's story log (scripts/story/README.md): every change that reaches main, photographed
+# before and after where it happened, with the visitor's wish that started it and the words
+# around it; every idea-box wish as it first arrived; a weekly photo of every spot. Written to
+# the `story` branch, never to main, so it doesn't deploy or weigh down the site. Its README is
+# the readable chronicle: https://github.com/gardeninsound/map/tree/story
+#
+# Every run catches up on whatever isn't recorded yet (oldest first), so a run that's skipped
+# or cancelled loses nothing: the next one, or the nightly one, picks it up.
+on:
+  push:
+    branches: [main]
+  # a merged PR's description edited afterwards → record it again (the photos are kept)
+  pull_request:
+    types: [edited]
+    branches: [main]
+  issues:
+    types: [opened, edited, closed, reopened, labeled]
+  issue_comment:
+    types: [created]
+  schedule:
+    - cron: '23 10 * * *' # nightly catch-up (~3 am Seattle); on Mondays also the spot portraits
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: How many unrecorded changes to record (oldest first). Use ~100 to backfill.
+        default: '5'
+      redo:
+        description: Record one change again — a PR number or a commit sha.
+        default: ''
+      reshoot:
+        description: With redo, take its photos again too.
+        type: boolean
+        default: false
+      portraits:
+        description: Also photograph every spot today.
+        type: boolean
+        default: false
+
+permissions:
+  contents: write # pushes the story branch (main is protected and untouched)
+  issues: read
+  pull-requests: read
+
+concurrency:
+  group: story
+  cancel-in-progress: false
+
+jobs:
+  record:
+    # wishes: idea-box issues only (not PR comments, not the Preview bot); edits: merged PRs only
+    if: >-
+      (github.event_name != 'issues' && github.event_name != 'issue_comment' && github.event_name != 'pull_request') ||
+      (github.event_name == 'pull_request' && github.event.pull_request.merged) ||
+      (github.event_name != 'pull_request' && !github.event.issue.pull_request && contains(github.event.issue.labels.*.name, 'suggestion'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    env:
+      GH_TOKEN: ${{ github.token }}
+      FACTS_ONLY: ${{ github.event_name == 'issues' || github.event_name == 'issue_comment' }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 0 # builds any earlier commit for its "before" photo
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+
+      - if: env.FACTS_ONLY != 'true'
+        run: npm ci
+      - if: env.FACTS_ONLY != 'true'
+        run: npx playwright install --with-deps chromium
+
+      - name: Check out the story branch
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          if git ls-remote --exit-code --heads origin story >/dev/null; then
+            git fetch origin story
+            git worktree add -B story .story origin/story
+          else
+            git worktree add --orphan -b story .story
+          fi
+
+      - name: Record
+        env:
+          EVENT: ${{ github.event_name }}
+          LIMIT: ${{ inputs.limit || '5' }}
+          REDO: ${{ inputs.redo || (github.event_name == 'pull_request' && github.event.pull_request.number) || '' }}
+          RESHOOT: ${{ inputs.reshoot }}
+          PORTRAITS: ${{ inputs.portraits }}
+        run: |
+          args=(--out .story --wishes --chronicle)
+          if [ "$FACTS_ONLY" = true ]; then
+            args+=(--no-shots)
+          else
+            args+=(--missing --limit "$LIMIT")
+            if [ -n "$REDO" ]; then
+              if [[ "$REDO" =~ ^[0-9]+$ ]]; then args+=(--pr "$REDO"); else args+=(--commit "$REDO"); fi
+              args+=(--redo)
+              [ "$RESHOOT" = true ] && args+=(--reshoot)
+            fi
+            if [ "$PORTRAITS" = true ] || { [ "$EVENT" = schedule ] && [ "$(date -u +%u)" = 1 ]; }; then
+              args+=(--portraits)
+            fi
+          fi
+          node scripts/story/record.mjs "${args[@]}"
+
+      - name: Save to the story branch
+        if: always()
+        working-directory: .story
+        env:
+          EVENT: ${{ github.event_name }}
+        run: |
+          git add -A
+          if git diff --cached --quiet; then echo "nothing new"; exit 0; fi
+          git commit -q -m "story: $(git diff --cached --name-only | grep -c entry.json) change(s), $(git diff --cached --name-only | grep -c '^wishes/') wish(es) ($EVENT)"
+          for i in 1 2 3 4 5; do
+            git push origin HEAD:story && exit 0
+            sleep $((i * 5))
+            git pull --rebase -q origin story
+          done
+          exit 1

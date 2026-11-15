@@ -57,6 +57,9 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
   live at https://gardeninsound.website (custom domain from `public/CNAME`, served at the root, `base: '/'`).
   To move it to gardeninsound.website/map/ later: `base: '/map/'`, drop `public/CNAME`, and give the
   domain to an org `gardeninsound.github.io` repo (every asset URL already uses `BASE_URL`).
+- `npm run story -- --out .story …` — the story log by hand (it runs itself in `.github/workflows/story.yml`):
+  every change to `main` with its wish, words and before/after photos, every idea-box wish, weekly
+  spot portraits → the **`story` branch** (never main). → `scripts/story/README.md`
 - PR previews: every same-repo PR gets `https://pr-<N>-garden-preview.gardeninsound.workers.dev`, commented on the PR
   (`.github/workflows/preview.yml` → `preview/`, a files-only Worker; `wrangler versions upload --preview-alias pr-<N>`;
   secret `CLOUDFLARE_API_TOKEN`). Previews use the real relay and idea box (issues titled `[preview pr-<N>]`). On close,
@@ -74,8 +77,12 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
    resolve conflicts on the branch, keeping both sides' features.
 4. **Small commits**, each with `npm test` + `npm run build` green (and `npm run smoke` for anything
    you can see or hear).
-5. **Open a PR into `main`** (`gh pr create --fill`). The **Check** workflow (`.github/workflows/ci.yml`)
-   runs the size guard, tests, build and smoke test; `main` requires it to pass.
+5. **Open a PR into `main`** with a **`## Story` section** in its description (the template's
+   `Idea:` / `Where:` / `Asked vs made:` / `Mike:` / `Note:` lines; `--fill` skips the template, so
+   write the body). The story log keeps it with the change and photographs each `Where` before
+   and after (`scripts/story/README.md`). Claude fills in `Idea`, `Where` and `Asked vs made` from
+   the work, and leaves `Mike:` empty unless Mike said the words himself. The **Check** workflow
+   (`.github/workflows/ci.yml`) runs the size guard, tests, build and smoke test; `main` requires it to pass.
 6. **Every PR auto-merges**: `gh pr merge --auto --squash --delete-branch` — GitHub merges (= deploys)
    the moment Check is green and never if it fails; fix on the branch and it goes in. Nobody waits for
    an OK. When a PR touches the other person's area, add them as a reviewer so they hear about it — a
@@ -125,6 +132,7 @@ root file only for new commands, workflow, conventions or a new area.
 - `wish/` — the idea box's Worker, files suggestions as GitHub issues. → `wish/CLAUDE.md`
 - `scripts/ai/` — **ideas → changes with free models** (an experiment, run by hand). → `scripts/ai/README.md`
 - `scripts/city/` — the OSM → map pipeline (settings in `map-config.mjs`).
+- `scripts/story/` — **the story log**: how the island grew, written to the `story` branch. → `scripts/story/README.md`
 
 ## Conventions
 

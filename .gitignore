@@ -14,3 +14,5 @@ docs/private/
 # the AI helper's working files (scripts/ai/run.mjs) and Aider's history
 .ai/
 .aider*
+# the story log's branch, checked out beside the code (scripts/story/README.md)
+.story/
