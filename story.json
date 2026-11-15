@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-11-15T16:32:11.836Z",
+  "generated_at": "2026-11-15T16:43:07.481Z",
   "changes": [
     {
       "pr": null,
@@ -279,6 +279,1509 @@
         "content_files": 9,
         "source_lines": 7493,
         "commits": 5
+      }
+    },
+    {
+      "pr": null,
+      "sha": "ce54cb83ad525a9fd809b8fa37f5e367669cb491",
+      "title": "Paint roads per pixel from centrelines; remove corner-patch artifacts",
+      "url": "https://github.com/gardeninsound/map/commit/ce54cb83ad525a9fd809b8fa37f5e367669cb491",
+      "merged_at": "2026-10-18T16:31:08-07:00",
+      "dir": "changes/2026-10-18-ce54cb8-paint-roads-per-pixel-from-centrelines-r",
+      "ideas": [],
+      "summary": "- Export road centrelines; renderer paints asphalt / curb / sidewalk by\n  distance, merging crossings cleanly with round ends and bends\n- Walkable road tiles use the same distance rule, so drawn = walkable\n- Snap to tile centre or edge by width parity; carry a street's column\n  through intersections\n- Buildings drawn after roads; drop bevel/notch/nub/trim rules\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 5,
+      "additions": 178,
+      "deletions": 170,
+      "areas": [
+        "characters & map life",
+        "docs",
+        "tools"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5612,-122.3868",
+          "lat": 47.5612,
+          "lon": -122.3868,
+          "label": "the Junction, where everyone starts",
+          "before": "changes/2026-10-18-ce54cb8-paint-roads-per-pixel-from-centrelines-r/before-1.webp",
+          "after": "changes/2026-10-18-ce54cb8-paint-roads-per-pixel-from-centrelines-r/after-1.webp",
+          "moving": "changes/2026-10-18-ce54cb8-paint-roads-per-pixel-from-centrelines-r/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 11,
+        "plugins": 0,
+        "scenes": 3,
+        "content_files": 9,
+        "source_lines": 7490,
+        "commits": 6
+      }
+    },
+    {
+      "pr": null,
+      "sha": "2376644aa5c21f0cf5254e2f4f80439f9a918fa4",
+      "title": "Photo slideshows: 24 stills each; Rush Hour boards scene",
+      "url": "https://github.com/gardeninsound/map/commit/2376644aa5c21f0cf5254e2f4f80439f9a918fa4",
+      "merged_at": "2026-10-18T16:38:10-07:00",
+      "dir": "changes/2026-10-18-2376644-photo-slideshows-24-stills-each-rush-hou",
+      "ideas": [],
+      "summary": "- Gas-station wall slideshow limited to 24 stills, evenly spread, no video\n- Slideshow scene now reads a per-spot script (content/wallTurns.ts)\n- Rush Hour moved to 4454 California Ave SW with its own slideshow\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 6,
+      "additions": 116,
+      "deletions": 22,
+      "areas": [
+        "scenes & games",
+        "words & content"
+      ],
+      "shots": [
+        {
+          "query": "at=47.563730,-122.386654",
+          "lat": 47.56373,
+          "lon": -122.386654,
+          "label": null,
+          "before": "changes/2026-10-18-2376644-photo-slideshows-24-stills-each-rush-hou/before-1.webp",
+          "after": "changes/2026-10-18-2376644-photo-slideshows-24-stills-each-rush-hou/after-1.webp",
+          "moving": "changes/2026-10-18-2376644-photo-slideshows-24-stills-each-rush-hou/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 11,
+        "plugins": 0,
+        "scenes": 3,
+        "content_files": 9,
+        "source_lines": 7583,
+        "commits": 7
+      }
+    },
+    {
+      "pr": null,
+      "sha": "84646d6a414cf1bf81f364ae6ab90695bab9b407",
+      "title": "Snack crow that flies between perches",
+      "url": "https://github.com/gardeninsound/map/commit/84646d6a414cf1bf81f364ae6ab90695bab9b407",
+      "merged_at": "2026-10-18T16:38:39-07:00",
+      "dir": "changes/2026-10-18-84646d6-snack-crow-that-flies-between-perches",
+      "ideas": [],
+      "summary": "- Perches outside Les Schwab on Alaska and asks the rabbit for snacks\n  (Share a carrot / Sorry, no snacks), replies, caws, then flies over the\n  rooftops to its next stop: Top Pot, Spud on Alki, Luna Park, then home\n- Back at Les Schwab it remembers how many times you shared\n- Stops and lines are data in src/content/crow.ts; flight state is pure\n  and tested in src/game/crow.ts\n- Talk overlay now takes choices and a `then` callback\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "mike"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 8,
+      "additions": 372,
+      "deletions": 7,
+      "areas": [
+        "characters & map life",
+        "ui",
+        "words & content",
+        "docs"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5612,-122.3868",
+          "lat": 47.5612,
+          "lon": -122.3868,
+          "label": "the Junction, where everyone starts",
+          "before": "changes/2026-10-18-84646d6-snack-crow-that-flies-between-perches/before-1.webp",
+          "after": "changes/2026-10-18-84646d6-snack-crow-that-flies-between-perches/after-1.webp",
+          "moving": "changes/2026-10-18-84646d6-snack-crow-that-flies-between-perches/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 11,
+        "plugins": 0,
+        "scenes": 3,
+        "content_files": 10,
+        "source_lines": 7944,
+        "commits": 8
+      }
+    },
+    {
+      "pr": null,
+      "sha": "15796d631ca18765ba664770036cd2a68b879b56",
+      "title": "Publish the slideshow photos (24 stills each, ~11.5 MB)",
+      "url": "https://github.com/gardeninsound/map/commit/15796d631ca18765ba664770036cd2a68b879b56",
+      "merged_at": "2026-10-18T16:41:26-07:00",
+      "dir": "changes/2026-10-18-15796d6-publish-the-slideshow-photos-24-stills-e",
+      "ideas": [],
+      "summary": "Only the stills the gas-station wall and Rush Hour slideshows show, plus\nthumbnails, force-added past the public/art ignore so those scenes work\non the deployed site. The rest of the processed art stays out of git.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 97,
+      "additions": 2,
+      "deletions": 1,
+      "areas": [
+        "art & sound"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5612,-122.3868",
+          "lat": 47.5612,
+          "lon": -122.3868,
+          "label": "the Junction, where everyone starts",
+          "before": "changes/2026-10-18-15796d6-publish-the-slideshow-photos-24-stills-e/before-1.webp",
+          "after": "changes/2026-10-18-15796d6-publish-the-slideshow-photos-24-stills-e/after-1.webp",
+          "moving": "changes/2026-10-18-15796d6-publish-the-slideshow-photos-24-stills-e/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 11,
+        "plugins": 0,
+        "scenes": 3,
+        "content_files": 10,
+        "source_lines": 7944,
+        "commits": 9
+      }
+    },
+    {
+      "pr": null,
+      "sha": "5f0f9e74ca607c175d1db53fb63cc5398620000a",
+      "title": "AVIF art pipeline + publish step; drop old WebPs",
+      "url": "https://github.com/gardeninsound/map/commit/5f0f9e74ca607c175d1db53fb63cc5398620000a",
+      "merged_at": "2026-10-18T19:06:05-07:00",
+      "dir": "changes/2026-10-18-5f0f9e7-avif-art-pipeline-publish-step-drop-old",
+      "ideas": [],
+      "summary": "- process-images: AVIF stills (1200 px) and thumbnails (320 px) from the\n  originals, settings in ENCODE, stale outputs deleted, videos not re-encoded\n- art:publish: stage exactly the files the scenes show (slideshow picks,\n  park signs, SPOTS thumbnails) using the app's own selection code\n- All art URLs go through src/content/art.ts\n- Published art: 105 files / 5.3 MB (was 96 WebPs / 11.5 MB)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 213,
+      "additions": 2040,
+      "deletions": 1614,
+      "areas": [
+        "scenes & games",
+        "ui",
+        "words & content",
+        "art & sound",
+        "docs",
+        "tools"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5612,-122.3868",
+          "lat": 47.5612,
+          "lon": -122.3868,
+          "label": "the Junction, where everyone starts",
+          "before": "changes/2026-10-18-5f0f9e7-avif-art-pipeline-publish-step-drop-old/before-1.webp",
+          "after": "changes/2026-10-18-5f0f9e7-avif-art-pipeline-publish-step-drop-old/after-1.webp",
+          "moving": "changes/2026-10-18-5f0f9e7-avif-art-pipeline-publish-step-drop-old/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 11,
+        "plugins": 0,
+        "scenes": 3,
+        "content_files": 11,
+        "source_lines": 7957,
+        "commits": 10
+      }
+    },
+    {
+      "pr": null,
+      "sha": "b43fcd3391b864c9914648d473bc1a2c4aa8c973",
+      "title": "Recover from stale cached pages after a deploy; defer audio",
+      "url": "https://github.com/gardeninsound/map/commit/b43fcd3391b864c9914648d473bc1a2c4aa8c973",
+      "merged_at": "2026-10-18T19:09:27-07:00",
+      "dir": "changes/2026-10-18-b43fcd3-recover-from-stale-cached-pages-after-a",
+      "ideas": [],
+      "summary": "- index.html: if the main script/style 404s (a cached page pointing at a\n  previous deploy's files) or a scene chunk fails, reload once fresh\n- Don't create the AudioContext before the first user gesture\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 3,
+      "additions": 33,
+      "deletions": 0,
+      "areas": [
+        "ui"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5612,-122.3868",
+          "lat": 47.5612,
+          "lon": -122.3868,
+          "label": "the Junction, where everyone starts",
+          "before": "changes/2026-10-18-b43fcd3-recover-from-stale-cached-pages-after-a/before-1.webp",
+          "after": "changes/2026-10-18-b43fcd3-recover-from-stale-cached-pages-after-a/after-1.webp",
+          "moving": "changes/2026-10-18-b43fcd3-recover-from-stale-cached-pages-after-a/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 11,
+        "plugins": 0,
+        "scenes": 3,
+        "content_files": 11,
+        "source_lines": 7969,
+        "commits": 11
+      }
+    },
+    {
+      "pr": null,
+      "sha": "e562d968977185fcfca5886dee0b4b069547f3fd",
+      "title": "Run on west-seattle-map: the city moves to its own package",
+      "url": "https://github.com/gardeninsound/map/commit/e562d968977185fcfca5886dee0b4b069547f3fd",
+      "merged_at": "2026-10-18T19:54:20-07:00",
+      "dir": "changes/2026-10-18-e562d96-run-on-west-seattle-map-the-city-moves-t",
+      "ideas": [],
+      "summary": "- Map pipeline, world, renderer, engine, neighbors, input, HUD, dialog,\n  touch pad and sounds now come from ../west-seattle-map (file: dep)\n- Art spots, busker and crow become CityPlugins (src/game/plugins/)\n- Mike / easel / crow sprites, Mike's dialog defaults and extra sounds\n  stay here; places sheet uses the shared sheet helpers\n- Deploy checks out both repos (read-only deploy key for the private one)\n- Esc now leaves Seven+ Stories even during its intro\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 52,
+      "additions": 684,
+      "deletions": 3667,
+      "areas": [
+        "map pipeline",
+        "characters & map life",
+        "scenes & games",
+        "ui",
+        "words & content",
+        "ci",
+        "docs",
+        "tools"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5613,-122.3868",
+          "lat": 47.5613,
+          "lon": -122.3868,
+          "label": null,
+          "before": "changes/2026-10-18-e562d96-run-on-west-seattle-map-the-city-moves-t/before-1.webp",
+          "after": null,
+          "moving": null
+        }
+      ],
+      "census": {
+        "spots": 11,
+        "plugins": 3,
+        "scenes": 3,
+        "content_files": 10,
+        "source_lines": 5964,
+        "commits": 12
+      }
+    },
+    {
+      "pr": null,
+      "sha": "58cbd6041eccc04e734822baff92a0cfa7cfbd53",
+      "title": "Mike is the default speaker again, even when speaker={undefined}",
+      "url": "https://github.com/gardeninsound/map/commit/58cbd6041eccc04e734822baff92a0cfa7cfbd53",
+      "merged_at": "2026-10-18T19:55:44-07:00",
+      "dir": "changes/2026-10-18-58cbd60-mike-is-the-default-speaker-again-even-w",
+      "ideas": [],
+      "summary": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 4,
+      "additions": 214,
+      "deletions": 3,
+      "areas": [
+        "ui"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5612,-122.3868",
+          "lat": 47.5612,
+          "lon": -122.3868,
+          "label": "the Junction, where everyone starts",
+          "before": null,
+          "after": null,
+          "moving": null
+        }
+      ],
+      "census": {
+        "spots": 11,
+        "plugins": 3,
+        "scenes": 3,
+        "content_files": 10,
+        "source_lines": 5981,
+        "commits": 13
+      }
+    },
+    {
+      "pr": null,
+      "sha": "872376ffe72ce4d1fa1f1520bb1bf31e2fe844e4",
+      "title": "Pin west-seattle-map to v0.1.0 instead of linking the sibling folder",
+      "url": "https://github.com/gardeninsound/map/commit/872376ffe72ce4d1fa1f1520bb1bf31e2fe844e4",
+      "merged_at": "2026-10-18T20:01:19-07:00",
+      "dir": "changes/2026-10-18-872376f-pin-west-seattle-map-to-v010-instead-of",
+      "ideas": [],
+      "summary": "City changes now reach Bear Island only when the tag is bumped. CI\ninstalls the private dependency over SSH with the read-only deploy key.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 6,
+      "additions": 25,
+      "deletions": 54,
+      "areas": [
+        "ci",
+        "docs"
+      ],
+      "shots": [],
+      "census": {
+        "spots": 11,
+        "plugins": 3,
+        "scenes": 3,
+        "content_files": 10,
+        "source_lines": 5981,
+        "commits": 14
+      }
+    },
+    {
+      "pr": null,
+      "sha": "d365680a45da6af7ad3622eb6531ca8441098265",
+      "title": "Disconnect from west-seattle-map: keep our own copy of the city",
+      "url": "https://github.com/gardeninsound/map/commit/d365680a45da6af7ad3622eb6531ca8441098265",
+      "merged_at": "2026-10-18T20:57:33-07:00",
+      "dir": "changes/2026-10-18-d365680-disconnect-from-west-seattle-map-keep-ou",
+      "ideas": [],
+      "summary": "The city (v0.1.0) now lives in src/city/ and is maintained here; the\npackage dependency, the SSH deploy step and the shared sheet helper import\nare gone. west-seattle-map continues as its own, separate project.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 50,
+      "additions": 2701,
+      "deletions": 63,
+      "areas": [
+        "city",
+        "characters & map life",
+        "scenes & games",
+        "ui",
+        "words & content",
+        "ci",
+        "docs",
+        "tools"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5612,-122.3868",
+          "lat": 47.5612,
+          "lon": -122.3868,
+          "label": null,
+          "before": null,
+          "after": "changes/2026-10-18-d365680-disconnect-from-west-seattle-map-keep-ou/after-1.webp",
+          "moving": "changes/2026-10-18-d365680-disconnect-from-west-seattle-map-keep-ou/moving-1.webp"
+        },
+        {
+          "query": "at=47.5795,-122.405",
+          "lat": 47.5795,
+          "lon": -122.405,
+          "label": null,
+          "before": null,
+          "after": "changes/2026-10-18-d365680-disconnect-from-west-seattle-map-keep-ou/after-2.webp",
+          "moving": "changes/2026-10-18-d365680-disconnect-from-west-seattle-map-keep-ou/moving-2.webp"
+        },
+        {
+          "query": "at=47.5845,-122.3825",
+          "lat": 47.5845,
+          "lon": -122.3825,
+          "label": null,
+          "before": null,
+          "after": "changes/2026-10-18-d365680-disconnect-from-west-seattle-map-keep-ou/after-3.webp",
+          "moving": "changes/2026-10-18-d365680-disconnect-from-west-seattle-map-keep-ou/moving-3.webp"
+        }
+      ],
+      "census": {
+        "spots": 11,
+        "plugins": 3,
+        "scenes": 3,
+        "content_files": 10,
+        "source_lines": 8333,
+        "commits": 15
+      }
+    },
+    {
+      "pr": null,
+      "sha": "11357771ec63097c99d9bf472efc0e8eb66b1919",
+      "title": "Port the real-scale city onto src/city; bring the map pipeline back",
+      "url": "https://github.com/gardeninsound/map/commit/11357771ec63097c99d9bf472efc0e8eb66b1919",
+      "merged_at": "2026-10-19T17:58:11-07:00",
+      "dir": "changes/2026-10-19-1135777-port-the-real-scale-city-onto-srccity-br",
+      "ideas": [],
+      "summary": "Ports city-detail (built before the split) onto the src/city layout.\n\nCity (src/city)\n- Map data regenerated by the OSM pipeline, restored as scripts/city/\n  (fetch-osm, fetch-detail, landmarks, build-map, map-config) with\n  npm run map / map:fetch. Proposal: upstream had made the data a frozen\n  snapshot generated in west-seattle-map.\n- Every public street (no alleys) on its real centreline at its real\n  width x2; ~300 street names (uint16 per tile); one walkable network\n- ~27k houses at true OSM size/angle; building multipolygons (25 were\n  missing, including West Seattle High School)\n- Landmarks: Easy Street, Undersea Aviary, 7-Eleven, the Junction block\n  faces with every business + 5 shop fronts; street-side landmarks hug\n  the measured sidewalk\n- Detailed places (Hiawatha Playfield, West Seattle High School): lawn,\n  walkable paths and parking lots, pitches/track/courts, exact outlines\n- Palette from the mid-century rooms reference\n- besideRoad keeps markers off buildings, lots and landmarks\n\nGame\n- Lemons replace easels (ripe = open, green = coming soon), traced from a\n  photo by scripts/make-lemon.mjs; spots for the aviary and the 7-Eleven\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "mike"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 34,
+      "additions": 2991,
+      "deletions": 146,
+      "areas": [
+        "city",
+        "map pipeline",
+        "characters & map life",
+        "ui",
+        "words & content",
+        "docs",
+        "tools"
+      ],
+      "shots": [
+        {
+          "query": "at=47.568236,-122.387332",
+          "lat": 47.568236,
+          "lon": -122.387332,
+          "label": null,
+          "before": "changes/2026-10-19-1135777-port-the-real-scale-city-onto-srccity-br/before-1.webp",
+          "after": "changes/2026-10-19-1135777-port-the-real-scale-city-onto-srccity-br/after-1.webp",
+          "moving": "changes/2026-10-19-1135777-port-the-real-scale-city-onto-srccity-br/moving-1.webp"
+        },
+        {
+          "query": "at=47.581969,-122.386942",
+          "lat": 47.581969,
+          "lon": -122.386942,
+          "label": null,
+          "before": "changes/2026-10-19-1135777-port-the-real-scale-city-onto-srccity-br/before-2.webp",
+          "after": "changes/2026-10-19-1135777-port-the-real-scale-city-onto-srccity-br/after-2.webp",
+          "moving": "changes/2026-10-19-1135777-port-the-real-scale-city-onto-srccity-br/moving-2.webp"
+        },
+        {
+          "query": "at=47.561447,-122.387258",
+          "lat": 47.561447,
+          "lon": -122.387258,
+          "label": null,
+          "before": "changes/2026-10-19-1135777-port-the-real-scale-city-onto-srccity-br/before-3.webp",
+          "after": "changes/2026-10-19-1135777-port-the-real-scale-city-onto-srccity-br/after-3.webp",
+          "moving": "changes/2026-10-19-1135777-port-the-real-scale-city-onto-srccity-br/moving-3.webp"
+        }
+      ],
+      "census": {
+        "spots": 13,
+        "plugins": 3,
+        "scenes": 3,
+        "content_files": 10,
+        "source_lines": 10059,
+        "commits": 16
+      }
+    },
+    {
+      "pr": null,
+      "sha": "4d725a6bd40008b10f7a117f5a97eaacd9e85b9b",
+      "title": "Dialog choices: arrow keys move the highlight",
+      "url": "https://github.com/gardeninsound/map/commit/4d725a6bd40008b10f7a117f5a97eaacd9e85b9b",
+      "merged_at": "2026-10-19T21:00:41-07:00",
+      "dir": "changes/2026-10-19-4d725a6-dialog-choices-arrow-keys-move-the-highl",
+      "ideas": [],
+      "summary": "The arrows were kept by the game controller for walking, so only the\nfirst choice could be picked, and it was always painted as highlighted.\nNow left/right (up/down, WASD) move the selection, wrapping around; A,\nSpace or Enter picks it; hover selects too. The yellow highlight follows\nthe selection. Applies to every dialog with choices (chicken, crow, art\nspots).\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "mike"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 3,
+      "additions": 101,
+      "deletions": 9,
+      "areas": [
+        "city"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5612,-122.3868",
+          "lat": 47.5612,
+          "lon": -122.3868,
+          "label": "the Junction, where everyone starts",
+          "before": "changes/2026-10-19-4d725a6-dialog-choices-arrow-keys-move-the-highl/before-1.webp",
+          "after": "changes/2026-10-19-4d725a6-dialog-choices-arrow-keys-move-the-highl/after-1.webp",
+          "moving": "changes/2026-10-19-4d725a6-dialog-choices-arrow-keys-move-the-highl/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 13,
+        "plugins": 3,
+        "scenes": 3,
+        "content_files": 10,
+        "source_lines": 10150,
+        "commits": 17
+      }
+    },
+    {
+      "pr": null,
+      "sha": "18e4ad0fe026e6dc05e905fe3442321061a48eef",
+      "title": "A chicken by the vet on California, and her mini game, Cone Catch",
+      "url": "https://github.com/gardeninsound/map/commit/18e4ad0fe026e6dc05e905fe3442321061a48eef",
+      "merged_at": "2026-10-19T21:00:42-07:00",
+      "dir": "changes/2026-10-19-18e4ad0-a-chicken-by-the-vet-on-california-and-h",
+      "ideas": [],
+      "summary": "- The chicken stands outside Greentree Animal Hospital (4440 California\n  Ave SW), pecks and looks about. She asks two questions, two answers\n  each with her reply to each, then \"Want to play my mini game?\"\n  (lines in src/content/chicken.ts).\n- Cone Catch: catch falling ice cream cones (four flavours); missed ones\n  hit the grass and burst into flames. Running into a burning fire or\n  taking a rock costs one of three lives; Space jumps the fires. 30 s\n  rounds that speed up, best score saved. Lives in a 24 px Art Nouveau\n  bar (arched medallions, whiplash vines) over the 160x120 field.\n  Touch: hold lower left/right to run, tap high to jump.\n- Rules are pure and tested (src/game/coneCatch.ts). App gains a\n  general `minigame` overlay that hands { score, best } back to the\n  character for her closing line.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "mike"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 10,
+      "additions": 880,
+      "deletions": 7,
+      "areas": [
+        "characters & map life",
+        "scenes & games",
+        "ui",
+        "words & content",
+        "docs"
+      ],
+      "shots": [
+        {
+          "query": "at=47.56339,-122.386444",
+          "lat": 47.56339,
+          "lon": -122.386444,
+          "label": null,
+          "before": "changes/2026-10-19-18e4ad0-a-chicken-by-the-vet-on-california-and-h/before-1.webp",
+          "after": "changes/2026-10-19-18e4ad0-a-chicken-by-the-vet-on-california-and-h/after-1.webp",
+          "moving": "changes/2026-10-19-18e4ad0-a-chicken-by-the-vet-on-california-and-h/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 13,
+        "plugins": 4,
+        "scenes": 4,
+        "content_files": 11,
+        "source_lines": 11010,
+        "commits": 18
+      }
+    },
+    {
+      "pr": null,
+      "sha": "42c7de251c8581f2aa99ae4e40c090e0d504a014",
+      "title": "Landmarks from west-seattle-map, close road holes, npm run audit",
+      "url": "https://github.com/gardeninsound/map/commit/42c7de251c8581f2aa99ae4e40c090e0d504a014",
+      "merged_at": "2026-10-24T13:41:12-07:00",
+      "dir": "changes/2026-10-24-42c7de2-landmarks-from-west-seattle-map-close-ro",
+      "ideas": [],
+      "summary": "Ported by hand from west-seattle-map (v0.3.0+):\n- Landmarks: Admiral Safeway, Shadowland, West Seattle Library, each\n  pulled flush with the street on its west. Map rebuilt from a fresh OSM\n  fetch (otherwise 55 tiles differ, 6 houses fewer).\n- Road painter fills small pockets walled in by asphalt (sidewalk scraps\n  where wide streets cross, e.g. Fauntleroy & Genesee). Fixed on the way:\n  the flood stopped early once a region was too big, leaving it half-seen,\n  so its remainder looked enclosed and got paved in pieces (more slivers,\n  not fewer); now every region floods fully, with bounds checks.\n- npm run audit (scripts/city/road-audit.mjs + src/city/render/audit.ts):\n  renders every chunk at ?audit, counts slivers/fragments (detailed places\n  skipped), writes screenshots/audit/. 38 sidewalk-bounded slivers remain.\n- Dev hook ?atTile=x,y alongside ?at=lat,lon.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 10,
+      "additions": 334,
+      "deletions": 9,
+      "areas": [
+        "city",
+        "map pipeline",
+        "docs"
+      ],
+      "shots": [
+        {
+          "query": "at=47.579985,-122.386027",
+          "lat": 47.579985,
+          "lon": -122.386027,
+          "label": null,
+          "before": "changes/2026-10-24-42c7de2-landmarks-from-west-seattle-map-close-ro/before-1.webp",
+          "after": "changes/2026-10-24-42c7de2-landmarks-from-west-seattle-map-close-ro/after-1.webp",
+          "moving": "changes/2026-10-24-42c7de2-landmarks-from-west-seattle-map-close-ro/moving-1.webp"
+        },
+        {
+          "query": "at=47.562987,-122.386586",
+          "lat": 47.562987,
+          "lon": -122.386586,
+          "label": null,
+          "before": "changes/2026-10-24-42c7de2-landmarks-from-west-seattle-map-close-ro/before-2.webp",
+          "after": "changes/2026-10-24-42c7de2-landmarks-from-west-seattle-map-close-ro/after-2.webp",
+          "moving": "changes/2026-10-24-42c7de2-landmarks-from-west-seattle-map-close-ro/moving-2.webp"
+        },
+        {
+          "query": "at=47.582731,-122.384704",
+          "lat": 47.582731,
+          "lon": -122.384704,
+          "label": null,
+          "before": "changes/2026-10-24-42c7de2-landmarks-from-west-seattle-map-close-ro/before-3.webp",
+          "after": "changes/2026-10-24-42c7de2-landmarks-from-west-seattle-map-close-ro/after-3.webp",
+          "moving": "changes/2026-10-24-42c7de2-landmarks-from-west-seattle-map-close-ro/moving-3.webp"
+        }
+      ],
+      "census": {
+        "spots": 13,
+        "plugins": 4,
+        "scenes": 4,
+        "content_files": 11,
+        "source_lines": 11264,
+        "commits": 19
+      }
+    },
+    {
+      "pr": null,
+      "sha": "82bbc209aeeb33e5b946d67113394a46e49b895a",
+      "title": "Merge chicken: Schmitz Park snuggle, Duck Arcade, Garden in Sound landmarks",
+      "url": "https://github.com/gardeninsound/map/commit/82bbc209aeeb33e5b946d67113394a46e49b895a",
+      "merged_at": "2026-10-26T08:10:44-07:00",
+      "dir": "changes/2026-10-26-82bbc20-merge-chicken-schmitz-park-snuggle-duck",
+      "ideas": [],
+      "summary": "Landmarks conflict: keep chicken's Safeway and West Seattle Library drawings,\nadd main's Shadowland sign; landmarksData + worldData regenerated (npm run map).\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "mike"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 63,
+      "additions": 4038,
+      "deletions": 207,
+      "areas": [
+        "city",
+        "map pipeline",
+        "characters & map life",
+        "scenes & games",
+        "ui",
+        "words & content",
+        "art & sound",
+        "docs",
+        "tools"
+      ],
+      "shots": [
+        {
+          "query": "at=arcade",
+          "lat": null,
+          "lon": null,
+          "label": "the Duck Arcade",
+          "before": "changes/2026-10-26-82bbc20-merge-chicken-schmitz-park-snuggle-duck/before-1.webp",
+          "after": "changes/2026-10-26-82bbc20-merge-chicken-schmitz-park-snuggle-duck/after-1.webp",
+          "moving": "changes/2026-10-26-82bbc20-merge-chicken-schmitz-park-snuggle-duck/moving-1.webp"
+        },
+        {
+          "query": "at=47.558082,-122.401155",
+          "lat": 47.558082,
+          "lon": -122.401155,
+          "label": null,
+          "before": "changes/2026-10-26-82bbc20-merge-chicken-schmitz-park-snuggle-duck/before-2.webp",
+          "after": "changes/2026-10-26-82bbc20-merge-chicken-schmitz-park-snuggle-duck/after-2.webp",
+          "moving": "changes/2026-10-26-82bbc20-merge-chicken-schmitz-park-snuggle-duck/moving-2.webp"
+        },
+        {
+          "query": "at=47.580011,-122.378473",
+          "lat": 47.580011,
+          "lon": -122.378473,
+          "label": null,
+          "before": "changes/2026-10-26-82bbc20-merge-chicken-schmitz-park-snuggle-duck/before-3.webp",
+          "after": "changes/2026-10-26-82bbc20-merge-chicken-schmitz-park-snuggle-duck/after-3.webp",
+          "moving": "changes/2026-10-26-82bbc20-merge-chicken-schmitz-park-snuggle-duck/moving-3.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 7,
+        "scenes": 7,
+        "content_files": 14,
+        "arcade_cabinets_ready": 2,
+        "source_lines": 14305,
+        "commits": 24
+      }
+    },
+    {
+      "pr": null,
+      "sha": "238fcad452ef5d8c3fb6b9b0f87f22f28c4548d4",
+      "title": "Duck Arcade: Duck on the Moon, Rabbit Zapper, new posters; Luna Park; game sound on",
+      "url": "https://github.com/gardeninsound/map/commit/238fcad452ef5d8c3fb6b9b0f87f22f28c4548d4",
+      "merged_at": "2026-11-04T13:22:16-08:00",
+      "dir": "changes/2026-11-04-238fcad-duck-arcade-duck-on-the-moon-rabbit-zapp",
+      "ideas": [],
+      "summary": "- Duck on the Moon: Pip's listening game on a paper-cut moon (three.js), sounds as MP3\n- Rabbit Zapper cabinet, four more pop-art posters on the arcade walls\n- Luna Park (1907-1913) on its pilings off Duwamish Head, with the Figure Eight ride\n- Mini games start with their sound on even when the map is muted (not saved)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "mike"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 33,
+      "additions": 3607,
+      "deletions": 8,
+      "areas": [
+        "city",
+        "characters & map life",
+        "scenes & games",
+        "words & content",
+        "art & sound",
+        "docs"
+      ],
+      "shots": [
+        {
+          "query": "at=arcade",
+          "lat": null,
+          "lon": null,
+          "label": "the Duck Arcade",
+          "before": "changes/2026-11-04-238fcad-duck-arcade-duck-on-the-moon-rabbit-zapp/before-1.webp",
+          "after": "changes/2026-11-04-238fcad-duck-arcade-duck-on-the-moon-rabbit-zapp/after-1.webp",
+          "moving": "changes/2026-11-04-238fcad-duck-arcade-duck-on-the-moon-rabbit-zapp/moving-1.webp"
+        },
+        {
+          "query": "at=47.5953,-122.3876",
+          "lat": 47.5953,
+          "lon": -122.3876,
+          "label": null,
+          "before": "changes/2026-11-04-238fcad-duck-arcade-duck-on-the-moon-rabbit-zapp/before-2.webp",
+          "after": "changes/2026-11-04-238fcad-duck-arcade-duck-on-the-moon-rabbit-zapp/after-2.webp",
+          "moving": "changes/2026-11-04-238fcad-duck-arcade-duck-on-the-moon-rabbit-zapp/moving-2.webp"
+        },
+        {
+          "query": "at=47.59557,-122.38624",
+          "lat": 47.59557,
+          "lon": -122.38624,
+          "label": null,
+          "before": "changes/2026-11-04-238fcad-duck-arcade-duck-on-the-moon-rabbit-zapp/before-3.webp",
+          "after": "changes/2026-11-04-238fcad-duck-arcade-duck-on-the-moon-rabbit-zapp/after-3.webp",
+          "moving": "changes/2026-11-04-238fcad-duck-arcade-duck-on-the-moon-rabbit-zapp/moving-3.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 8,
+        "scenes": 10,
+        "content_files": 16,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 16890,
+        "commits": 25
+      }
+    },
+    {
+      "pr": null,
+      "sha": "8b304cd72a313b7fb1b58e551ccffbb57e541f9e",
+      "title": "Merge main: gardeninsound/map at the root, live rabbits and emotes",
+      "url": "https://github.com/gardeninsound/map/commit/8b304cd72a313b7fb1b58e551ccffbb57e541f9e",
+      "merged_at": "2026-11-04T13:26:00-08:00",
+      "dir": "changes/2026-11-04-8b304cd-merge-main-gardeninsoundmap-at-the-root",
+      "ideas": [],
+      "summary": "Kept both sides in App.tsx: Luna Park and the live Visitors plugin.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "mike"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 19,
+      "additions": 1131,
+      "deletions": 25,
+      "areas": [
+        "city",
+        "map pipeline",
+        "characters & map life",
+        "words & content",
+        "relay",
+        "docs"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5612,-122.3868",
+          "lat": 47.5612,
+          "lon": -122.3868,
+          "label": "the Junction, where everyone starts",
+          "before": "changes/2026-11-04-8b304cd-merge-main-gardeninsoundmap-at-the-root/before-1.webp",
+          "after": "changes/2026-11-04-8b304cd-merge-main-gardeninsoundmap-at-the-root/after-1.webp",
+          "moving": "changes/2026-11-04-8b304cd-merge-main-gardeninsoundmap-at-the-root/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 9,
+        "scenes": 10,
+        "content_files": 17,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 17936,
+        "commits": 39
+      }
+    },
+    {
+      "pr": null,
+      "sha": "2e01f7e6c5157c82ebd9cca3dbb0ae350ad8acb0",
+      "title": "Stale-deploy reload: only react to our own /assets/ files",
+      "url": "https://github.com/gardeninsound/map/commit/2e01f7e6c5157c82ebd9cca3dbb0ae350ad8acb0",
+      "merged_at": "2026-11-04T13:29:21-08:00",
+      "dir": "changes/2026-11-04-2e01f7e-stale-deploy-reload-only-react-to-our-ow",
+      "ideas": [],
+      "summary": "Cloudflare injects its Web Analytics beacon; ad blockers (uBO Lite) block it, the\nscript-error listener took that for a stale deploy and reloaded, and main.tsx re-arms\nthe guard on every load — an endless reload loop. Third-party failures now don't count.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 1,
+      "additions": 12,
+      "deletions": 1,
+      "areas": [],
+      "shots": [],
+      "census": {
+        "spots": 15,
+        "plugins": 9,
+        "scenes": 10,
+        "content_files": 17,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 17936,
+        "commits": 40
+      }
+    },
+    {
+      "pr": null,
+      "sha": "84ca6344ff25929b46b82b882c41ae755cc1f386",
+      "title": "Relay: Bear Island's own copy of the arcade relay in relay/, allow-list gardeninsound.website only",
+      "url": "https://github.com/gardeninsound/map/commit/84ca6344ff25929b46b82b882c41ae755cc1f386",
+      "merged_at": "2026-11-04T13:33:50-08:00",
+      "dir": "changes/2026-11-04-84ca634-relay-bear-islands-own-copy-of-the-arcad",
+      "ideas": [],
+      "summary": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 9,
+      "additions": 2023,
+      "deletions": 2,
+      "areas": [
+        "relay",
+        "docs"
+      ],
+      "shots": [],
+      "census": {
+        "spots": 15,
+        "plugins": 9,
+        "scenes": 10,
+        "content_files": 17,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 17936,
+        "commits": 41
+      }
+    },
+    {
+      "pr": null,
+      "sha": "bf6cb451c97e8cb873ff8589a32a73ea9f8d9e8b",
+      "title": "Relay: deployed to the gardeninsound Cloudflare account at relay.gardeninsound.website; the site uses it",
+      "url": "https://github.com/gardeninsound/map/commit/bf6cb451c97e8cb873ff8589a32a73ea9f8d9e8b",
+      "merged_at": "2026-11-04T13:39:40-08:00",
+      "dir": "changes/2026-11-04-bf6cb45-relay-deployed-to-the-gardeninsound-clou",
+      "ideas": [],
+      "summary": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 2,
+      "additions": 7,
+      "deletions": 3,
+      "areas": [
+        "relay"
+      ],
+      "shots": [],
+      "census": {
+        "spots": 15,
+        "plugins": 9,
+        "scenes": 10,
+        "content_files": 17,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 17936,
+        "commits": 42
+      }
+    },
+    {
+      "pr": 5,
+      "sha": "01177b753995aa71c24562e69027d705a31c50d7",
+      "title": "Git workflow: PRs + auto-merge, Check with smoke test, published-files test, size guard",
+      "url": "https://github.com/gardeninsound/map/pull/5",
+      "merged_at": "2026-11-04T22:02:06Z",
+      "dir": "changes/2026-11-04-pr005-git-workflow-prs-auto-merge-check-with-s",
+      "ideas": [],
+      "summary": "New standard for working in this repo, for both of us and for Claude sessions. Needs your OK, @vlandham. It changes how we both push.\n\n**Rules** (new \"Git workflow\" section in CLAUDE.md)\n- One short branch per feature, cut from fresh `main`; merge within a day or two\n- Unfinished work merges hidden behind a switch (`ready: false`, no `experience`, a dev `?flag`) instead of living on a long branch\n- Pull `main` at the start of each session\n- Everything reaches `main` through a PR; never push to `main` directly\n- **Feature PRs auto-merge** when the Check is green (`gh pr merge --auto --squash --delete-branch`)\n- **Shared PRs wait for the other person**: `src/city/`, `App.tsx`, `relay/`, `.github/`, CLAUDE.md, dependencies, `scripts/city/`\n\n**Check workflow** (`.github/workflows/ci.yml`) on every PR into `main`:\n- **Size guard:** no added/changed file over 2 MB unless listed in `.github/large-files.txt` (the four big files already in the repo are listed)\n- **Tests**, incl. new `src/content/published.test.ts`: every file the content points at (art, posters, cabinet fronts, game sounds) is in git, so nothing that only lives on one laptop 404s online. The art list is shared with `art:publish` via `scripts/neededArt.mjs`\n- **Build**\n- **Smoke test** (`npm run smoke`, Playwright): the built site boots with `?solo`, RECENT to the Duck Arcade, opens and closes every playable cabinet; fails on any page error, console error or 404. A missing file was checked to fail it.\n\nAfter merge: protect `main` (require PRs + a green Check), so auto-merge has something to wait on.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "exit320-stack"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 10,
+      "additions": 316,
+      "deletions": 35,
+      "areas": [
+        "scenes & games",
+        "words & content",
+        "ci",
+        "docs",
+        "tools"
+      ],
+      "shots": [
+        {
+          "query": "at=arcade",
+          "lat": null,
+          "lon": null,
+          "label": "the Duck Arcade",
+          "before": "changes/2026-11-04-pr005-git-workflow-prs-auto-merge-check-with-s/before-1.webp",
+          "after": "changes/2026-11-04-pr005-git-workflow-prs-auto-merge-check-with-s/after-1.webp",
+          "moving": "changes/2026-11-04-pr005-git-workflow-prs-auto-merge-check-with-s/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 9,
+        "scenes": 10,
+        "content_files": 17,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 17965,
+        "commits": 43
+      }
+    },
+    {
+      "pr": 6,
+      "sha": "6f130974647be0c3230a724f6c92a734bf347343",
+      "title": "Idea box: \"What would you love to add in the Garden in Sound?\" → GitHub issues",
+      "url": "https://github.com/gardeninsound/map/pull/6",
+      "merged_at": "2026-11-04T22:21:29Z",
+      "dir": "changes/2026-11-04-pr006-idea-box-what-would-you-love-to-add-in-t",
+      "ideas": [],
+      "summary": "The first half of the AI change-request flow from the hosting doc: visitors suggest, and each idea lands as a GitHub issue. No agent runs yet. That would be the `ai-build` label step later.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 13,
+      "additions": 2284,
+      "deletions": 1,
+      "areas": [
+        "ui",
+        "words & content",
+        "idea box",
+        "docs"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5612,-122.3868",
+          "lat": 47.5612,
+          "lon": -122.3868,
+          "label": "the Junction, where everyone starts",
+          "before": "changes/2026-11-04-pr006-idea-box-what-would-you-love-to-add-in-t/before-1.webp",
+          "after": "changes/2026-11-04-pr006-idea-box-what-would-you-love-to-add-in-t/after-1.webp",
+          "moving": "changes/2026-11-04-pr006-idea-box-what-would-you-love-to-add-in-t/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 9,
+        "scenes": 10,
+        "content_files": 18,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 18237,
+        "commits": 44
+      }
+    },
+    {
+      "pr": 9,
+      "sha": "92be624bc1a017022bdeb88882c50d905deac735",
+      "title": "Idea box: ideas filed by the Garden in Sound bot, not a person",
+      "url": "https://github.com/gardeninsound/map/pull/9",
+      "merged_at": "2026-11-04T22:40:04Z",
+      "dir": "changes/2026-11-04-pr009-idea-box-ideas-filed-by-the-garden-in-so",
+      "ideas": [],
+      "summary": "Ideas from the ✿ IDEA box are filed by a GitHub App owned by the org, so they show as **`garden-in-sound[bot]`** instead of as Vince.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 6,
+      "additions": 167,
+      "deletions": 14,
+      "areas": [
+        "idea box",
+        "docs"
+      ],
+      "shots": [],
+      "census": {
+        "spots": 15,
+        "plugins": 9,
+        "scenes": 10,
+        "content_files": 18,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 18237,
+        "commits": 45
+      }
+    },
+    {
+      "pr": 10,
+      "sha": "3c68708bd1bb061d0207829b91321831f93f0d79",
+      "title": "Git workflow: who OKs shared PRs (Vince for technical, Mike for art and words)",
+      "url": "https://github.com/gardeninsound/map/pull/10",
+      "merged_at": "2026-11-04T22:45:45Z",
+      "dir": "changes/2026-11-04-pr010-git-workflow-who-oks-shared-prs-vince-fo",
+      "ideas": [],
+      "summary": "Clarifies rule 6 in CLAUDE.md. Shared PRs still wait for an OK, but who gives it depends on the change:\n\n- **Technical** (Workers, CI, GitHub/Cloudflare setup, dependencies, city engine, map pipeline, CLAUDE.md dev notes) → **Vince** as tech lead. If he opened or asked for it, that's the OK.\n- **Art and words** (what scenes show, Mike's lines and copy in `src/content/`, which spots and art appear) → **Mike**.\n\nAlso adds `wish/` (the idea-box Worker) to the shared list next to `relay/`.\n\nAsked for by Vince.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 1,
+      "additions": 7,
+      "deletions": 2,
+      "areas": [
+        "docs"
+      ],
+      "shots": [],
+      "census": {
+        "spots": 15,
+        "plugins": 9,
+        "scenes": 10,
+        "content_files": 18,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 18237,
+        "commits": 46
+      }
+    },
+    {
+      "pr": 11,
+      "sha": "f2ccfdd44b3db70b281c5d54bf203c63dec82753",
+      "title": "Idea box: optional name in the issue, and Tab works through the form",
+      "url": "https://github.com/gardeninsound/map/pull/11",
+      "merged_at": "2026-11-04T22:48:00Z",
+      "dir": "changes/2026-11-04-pr011-idea-box-optional-name-in-the-issue-and",
+      "ideas": [],
+      "summary": null,
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 8,
+      "additions": 121,
+      "deletions": 31,
+      "areas": [
+        "ui",
+        "words & content",
+        "idea box",
+        "docs"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5612,-122.3868",
+          "lat": 47.5612,
+          "lon": -122.3868,
+          "label": "the Junction, where everyone starts",
+          "before": "changes/2026-11-04-pr011-idea-box-optional-name-in-the-issue-and/before-1.webp",
+          "after": "changes/2026-11-04-pr011-idea-box-optional-name-in-the-issue-and/after-1.webp",
+          "moving": "changes/2026-11-04-pr011-idea-box-optional-name-in-the-issue-and/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 9,
+        "scenes": 10,
+        "content_files": 18,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 18294,
+        "commits": 47
+      }
+    },
+    {
+      "pr": 13,
+      "sha": "2ca571cf7b049c62a71e606f12fa72ca59572388",
+      "title": "Idea box docs: app renamed to Garden in Sound Wishes",
+      "url": "https://github.com/gardeninsound/map/pull/13",
+      "merged_at": "2026-11-04T22:51:38Z",
+      "dir": "changes/2026-11-04-pr013-idea-box-docs-app-renamed-to-garden-in-s",
+      "ideas": [],
+      "summary": "The GitHub App was renamed in its settings (same app, id 5618995). Ideas now show as `garden-in-sound-wishes[bot]`. This updates the name and link in CLAUDE.md and in comments in `wish/`. No code or config values change; the Worker signs in by app id, so nothing needs redeploying.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 4,
+      "additions": 7,
+      "deletions": 7,
+      "areas": [
+        "idea box",
+        "docs"
+      ],
+      "shots": [],
+      "census": {
+        "spots": 15,
+        "plugins": 9,
+        "scenes": 10,
+        "content_files": 18,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 18294,
+        "commits": 48
+      }
+    },
+    {
+      "pr": 14,
+      "sha": "c75fe1f511f5bdce8ab5a7bd0808d8caa7504f09",
+      "title": "Busker: a calm song and a funky groove, in sync for everyone",
+      "url": "https://github.com/gardeninsound/map/pull/14",
+      "merged_at": "2026-11-04T23:02:52Z",
+      "dir": "changes/2026-11-04-pr014-busker-a-calm-song-and-a-funky-groove-in",
+      "ideas": [],
+      "summary": null,
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 4,
+      "additions": 230,
+      "deletions": 35,
+      "areas": [
+        "characters & map life",
+        "docs"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5612,-122.3868",
+          "lat": 47.5612,
+          "lon": -122.3868,
+          "label": "the Junction, where everyone starts",
+          "before": "changes/2026-11-04-pr014-busker-a-calm-song-and-a-funky-groove-in/before-1.webp",
+          "after": "changes/2026-11-04-pr014-busker-a-calm-song-and-a-funky-groove-in/after-1.webp",
+          "moving": "changes/2026-11-04-pr014-busker-a-calm-song-and-a-funky-groove-in/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 9,
+        "scenes": 10,
+        "content_files": 18,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 18486,
+        "commits": 49
+      }
+    },
+    {
+      "pr": 15,
+      "sha": "d1ed74496c42d8c167c625e46bea8d637a470888",
+      "title": "Presence: rabbits fade when away, leave when gone; relay sweeps dead connections",
+      "url": "https://github.com/gardeninsound/map/pull/15",
+      "merged_at": "2026-11-04T23:25:23Z",
+      "dir": "changes/2026-11-04-pr015-presence-rabbits-fade-when-away-leave-wh",
+      "ideas": [],
+      "summary": "Answers \"does a rabbit go away when someone stops looking?\" Before this PR: only when they closed the tab. A background tab, a sleeping laptop or a killed phone browser left a ghost rabbit, counted, indefinitely.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 8,
+      "additions": 273,
+      "deletions": 13,
+      "areas": [
+        "characters & map life",
+        "relay",
+        "docs"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5612,-122.3868",
+          "lat": 47.5612,
+          "lon": -122.3868,
+          "label": "the Junction, where everyone starts",
+          "before": "changes/2026-11-04-pr015-presence-rabbits-fade-when-away-leave-wh/before-1.webp",
+          "after": "changes/2026-11-04-pr015-presence-rabbits-fade-when-away-leave-wh/after-1.webp",
+          "moving": "changes/2026-11-04-pr015-presence-rabbits-fade-when-away-leave-wh/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 9,
+        "scenes": 10,
+        "content_files": 18,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 18660,
+        "commits": 50
+      }
+    },
+    {
+      "pr": 16,
+      "sha": "13a535796a1e046fc604a2eeea217112b74d2c9a",
+      "title": "CLAUDE.md: the tech lead is Jim",
+      "url": "https://github.com/gardeninsound/map/pull/16",
+      "merged_at": "2026-11-04T23:43:31Z",
+      "dir": "changes/2026-11-04-pr016-claudemd-the-tech-lead-is-jim",
+      "ideas": [],
+      "summary": "Claude wrote the wrong name (\"Vince\") into the shared-PR rule in #10. This fixes the three mentions. No other changes.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 1,
+      "additions": 3,
+      "deletions": 3,
+      "areas": [
+        "docs"
+      ],
+      "shots": [],
+      "census": {
+        "spots": 15,
+        "plugins": 9,
+        "scenes": 10,
+        "content_files": 18,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 18660,
+        "commits": 51
+      }
+    },
+    {
+      "pr": 17,
+      "sha": "e003c05b9c6eca33f50e4a42a805e3cf1843caac",
+      "title": "Docs: how Garden in Sound is hosted (docs/hosting.md)",
+      "url": "https://github.com/gardeninsound/map/pull/17",
+      "merged_at": "2026-11-04T23:53:45Z",
+      "dir": "changes/2026-11-04-pr017-docs-how-garden-in-sound-is-hosted-docsh",
+      "ideas": [],
+      "summary": "Adds `docs/hosting.md`, the public parts of the hosting write-up: what runs where (with a Mermaid diagram), how a change goes live (Worker deploys are manual), the relay's presence rules, the idea box's checks, secret names and how to replace them (no values), common jobs, and gotchas. The README gets the live link and a pointer.\n\nLeft out on purpose, since the repo is public: open security to-dos, personal account history, and the plans for agents building from suggestions. Those stay in the private doc. Its source moves to `docs/private/`, which is now gitignored.\n\nDocs only; touches no shared paths.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 3,
+      "additions": 158,
+      "deletions": 0,
+      "areas": [
+        "docs"
+      ],
+      "shots": [],
+      "census": {
+        "spots": 15,
+        "plugins": 9,
+        "scenes": 10,
+        "content_files": 18,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 18660,
+        "commits": 52
+      }
+    },
+    {
+      "pr": 18,
+      "sha": "d2ed79faafc453e1372a6cee24faed958249fed9",
+      "title": "Git workflow: every PR auto-merges on a green Check",
+      "url": "https://github.com/gardeninsound/map/pull/18",
+      "merged_at": "2026-11-05T01:04:50Z",
+      "dir": "changes/2026-11-04-pr018-git-workflow-every-pr-auto-merges-on-a-g",
+      "ideas": [],
+      "summary": "Mike asked to change rule 6 of the Git workflow (CLAUDE.md) and its summary in docs/hosting.md so either of us can ship without waiting:\n\n- **Every PR auto-merges** the moment the Check is green. Nobody waits for an OK.\n- A PR that touches the other person's area adds them as a **reviewer, as a heads-up**: Jim for technical areas (`src/city/`, `App.tsx`, `relay/`, `wish/`, `.github/`, dependencies, `scripts/city/`), Mike for the art and the words. They comment or follow up with a fix after it's live.\n\nThe Check (size guard, tests, build, smoke) still blocks anything that fails.\n\nThis one changes the review rule itself, so it waits for Jim's OK under the current rule; merging it turns the new rule on.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "exit320-stack"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 2,
+      "additions": 13,
+      "deletions": 12,
+      "areas": [
+        "docs"
+      ],
+      "shots": [],
+      "census": {
+        "spots": 15,
+        "plugins": 9,
+        "scenes": 10,
+        "content_files": 18,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 18660,
+        "commits": 53
       }
     }
   ],

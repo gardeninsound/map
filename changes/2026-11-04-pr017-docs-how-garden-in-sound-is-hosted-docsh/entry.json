@@ -1,0 +1,92 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "e003c05b9c6eca33f50e4a42a805e3cf1843caac",
+  "parent": "13a535796a1e046fc604a2eeea217112b74d2c9a",
+  "pr": 17,
+  "title": "Docs: how Garden in Sound is hosted (docs/hosting.md)",
+  "url": "https://github.com/gardeninsound/map/pull/17",
+  "merged_at": "2026-11-04T23:53:45Z",
+  "body": "Adds `docs/hosting.md`, the public parts of the hosting write-up: what runs where (with a Mermaid diagram), how a change goes live (Worker deploys are manual), the relay's presence rules, the idea box's checks, secret names and how to replace them (no values), common jobs, and gotchas. The README gets the live link and a pointer.\n\nLeft out on purpose, since the repo is public: open security to-dos, personal account history, and the plans for agents building from suggestions. Those stay in the private doc. Its source moves to `docs/private/`, which is now gitignored.\n\nDocs only; touches no shared paths.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "15a52b5da30f82261c804bbca1eb1127fe5170b6",
+      "message": "Docs: docs/hosting.md (what runs where, how changes go live, runbook) + README pointer\n\nThe public parts of the hosting doc: services and addresses, a diagram, the ship flow (Worker\ndeploys are manual), relay presence rules, the idea box's checks, secret names and how to\nrotate them (no values), common jobs and gotchas. The private working doc's source moves to\ndocs/private/, which is gitignored.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-04T23:51:33Z"
+    }
+  ],
+  "files": [
+    {
+      "path": ".gitignore",
+      "status": "M",
+      "additions": 2,
+      "deletions": 0
+    },
+    {
+      "path": "README.md",
+      "status": "M",
+      "additions": 8,
+      "deletions": 0
+    },
+    {
+      "path": "docs/hosting.md",
+      "status": "A",
+      "additions": 148,
+      "deletions": 0
+    }
+  ],
+  "additions": 158,
+  "deletions": 0,
+  "areas": [
+    "docs"
+  ],
+  "branch": "docs-hosting",
+  "opened_at": "2026-11-04T23:51:37Z",
+  "merged_by": "vlandham",
+  "summary": "Adds `docs/hosting.md`, the public parts of the hosting write-up: what runs where (with a Mermaid diagram), how a change goes live (Worker deploys are manual), the relay's presence rules, the idea box's checks, secret names and how to replace them (no values), common jobs, and gotchas. The README gets the live link and a pointer.\n\nLeft out on purpose, since the repo is public: open security to-dos, personal account history, and the plans for agents building from suggestions. Those stay in the private doc. Its source moves to `docs/private/`, which is now gitignored.\n\nDocs only; touches no shared paths.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "requested_reviewers": [],
+  "reviews": [],
+  "labels": [],
+  "discussion": [],
+  "preview_url": null,
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 9,
+    "scenes": 10,
+    "content_files": 18,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 18660,
+    "commits": 52
+  },
+  "shots": [],
+  "first_recorded_at": "2026-11-15T16:42:16.040Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:42:16.040Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736872248"
+}

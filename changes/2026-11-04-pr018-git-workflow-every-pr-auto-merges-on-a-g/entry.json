@@ -1,0 +1,95 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "d2ed79faafc453e1372a6cee24faed958249fed9",
+  "parent": "e003c05b9c6eca33f50e4a42a805e3cf1843caac",
+  "pr": 18,
+  "title": "Git workflow: every PR auto-merges on a green Check",
+  "url": "https://github.com/gardeninsound/map/pull/18",
+  "merged_at": "2026-11-05T01:04:50Z",
+  "body": "Mike asked to change rule 6 of the Git workflow (CLAUDE.md) and its summary in docs/hosting.md so either of us can ship without waiting:\n\n- **Every PR auto-merges** the moment the Check is green. Nobody waits for an OK.\n- A PR that touches the other person's area adds them as a **reviewer, as a heads-up**: Jim for technical areas (`src/city/`, `App.tsx`, `relay/`, `wish/`, `.github/`, dependencies, `scripts/city/`), Mike for the art and the words. They comment or follow up with a fix after it's live.\n\nThe Check (size guard, tests, build, smoke) still blocks anything that fails.\n\nThis one changes the review rule itself, so it waits for Jim's OK under the current rule; merging it turns the new rule on.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n",
+  "authors": [
+    {
+      "login": "exit320-stack"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "5919acc32c444dd3ddd776b52ec802d1b5fd2301",
+      "message": "Git workflow: every PR auto-merges on a green Check; the other person is a heads-up reviewer\n\nRule 6 no longer has shared PRs wait for an OK. A PR touching the other\nperson's area (Jim: technical; Mike: art and words) adds them as a reviewer\nso they hear about it, and they follow up after it's live if needed.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-05T00:53:36Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 9,
+      "deletions": 10
+    },
+    {
+      "path": "docs/hosting.md",
+      "status": "M",
+      "additions": 4,
+      "deletions": 2
+    }
+  ],
+  "additions": 13,
+  "deletions": 12,
+  "areas": [
+    "docs"
+  ],
+  "branch": "merge-rule",
+  "opened_at": "2026-11-05T00:53:41Z",
+  "merged_by": "vlandham",
+  "summary": "Mike asked to change rule 6 of the Git workflow (CLAUDE.md) and its summary in docs/hosting.md so either of us can ship without waiting:\n\n- **Every PR auto-merges** the moment the Check is green. Nobody waits for an OK.\n- A PR that touches the other person's area adds them as a **reviewer, as a heads-up**: Jim for technical areas (`src/city/`, `App.tsx`, `relay/`, `wish/`, `.github/`, dependencies, `scripts/city/`), Mike for the art and the words. They comment or follow up with a fix after it's live.\n\nThe Check (size guard, tests, build, smoke) still blocks anything that fails.\n\nThis one changes the review rule itself, so it waits for Jim's OK under the current rule; merging it turns the new rule on.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "requested_reviewers": [
+    "vlandham"
+  ],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-05T00:55:17Z",
+      "by": "exit320-stack",
+      "body": "@vlandham Mike would like to run this by you: any issues with letting every PR auto-merge once the Check is green? The idea is just to make things more fluid, with neither of us waiting on the other to ship.\n\nWhat would change:\n- Today, a PR touching `src/city/`, `App.tsx`, `relay/`, `wish/`, `.github/`, dependencies or `scripts/city/` waits for your OK. After this, it merges on green, and you're added as a reviewer so you hear about it and can follow up after it's live.\n- The same goes the other way for Mike's area (art, copy in `src/content/`).\n- The Check (size guard, tests, build, smoke) still blocks anything that fails.\n\nThree branches are waiting on this: `galapagos-title` (title typo), `pegasus` (a pegasus walks out of Pegasus Books; one line in `App.tsx`), and `bicycle` (holding Shift puts the rabbit on a bike; touches `src/city/` sprites and drawing, plus an optional sixth field on the visitors wire that older clients ignore).\n\nAre there places you'd still want to gate, such as `.github/`, `relay/` or `wish/` (the Workers deploy by hand anyway), or the wire format? If so, we can keep a short list that waits and let everything else flow.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n",
+      "bot": false
+    }
+  ],
+  "preview_url": null,
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 9,
+    "scenes": 10,
+    "content_files": 18,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 18660,
+    "commits": 53
+  },
+  "shots": [],
+  "first_recorded_at": "2026-11-15T16:42:16.040Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:42:16.040Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736872248"
+}

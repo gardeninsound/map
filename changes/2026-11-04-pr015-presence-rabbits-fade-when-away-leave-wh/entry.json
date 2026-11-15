@@ -1,0 +1,151 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "d1ed74496c42d8c167c625e46bea8d637a470888",
+  "parent": "c75fe1f511f5bdce8ab5a7bd0808d8caa7504f09",
+  "pr": 15,
+  "title": "Presence: rabbits fade when away, leave when gone; relay sweeps dead connections",
+  "url": "https://github.com/gardeninsound/map/pull/15",
+  "merged_at": "2026-11-04T23:25:23Z",
+  "body": "Answers \"does a rabbit go away when someone stops looking?\" Before this PR: only when they closed the tab. A background tab, a sleeping laptop or a killed phone browser left a ghost rabbit, counted, indefinitely.\n\n## Rules (`presence()` in `src/game/visitors.ts`, pure + tested)\n| | Rabbit for everyone else | Count |\n|---|---|---|\n| Tab hidden | fades at once (\"away\") | still counted |\n| Hidden 2 min | leaves the room | drops |\n| 10 min without keys/mouse/taps | fades | still counted |\n| 30 min without input | leaves the room | drops |\n| Show the tab / any input | back, **same rabbit and name** | back up |\n\n## How\n- **Site:** `RelayRoom` gains `pause()`/`resume()`, which keep the peer id. The visitors plugin checks every second (timers keep running in hidden tabs) and sends \"away\" immediately, since the game loop stops when the tab is hidden. Dev only: `?presence=N` shortens the timings to N / 2N / 4N seconds.\n- **Relay:** a Durable Object alarm runs every 30 s while anyone is connected. It closes connections silent for 90 s (no message and no keep-alive ping, using Cloudflare's `getWebSocketAutoResponseTimestamp`) and tells everyone they left. Live pages ping every 25 s. Messages from a swept connection are ignored. The cost is one alarm per 30 s per active room.\n- **Client watchdog:** a socket that hears no pong for about a minute is replaced. That covers a laptop waking with a half-dead connection, or a page swept without noticing.\n\n## Tests\n- Unit tests: 4 for `presence()`. 260 total, all green.\n- `cd relay && npm test`: a second local relay with a 2 s limit sweeps the silent client (everyone hears it leave and its later messages are ignored), while the pinging client stays. The test now has a 2-minute overall time limit.\n- Chrome, two players, local relay, `?presence=2`: A hides → B sees A fade → A is gone and B's count drops → A comes back as the same rabbit → A idles → fades → gone → A presses a key → back.\n- `npm run build` and `npm run smoke` are green.\n\n## After merge\nThe site deploys automatically. The relay needs `cd relay && npx wrangler deploy` (Mike's account, pinned).\n\nTechnical shared PR (`relay/`, `App.tsx`, CLAUDE.md), so Vince's OK is enough.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "7ad35476c5d3f6e4b166c49d4955d41264ebd0a8",
+      "message": "Presence: away rabbits fade, gone ones leave; the relay sweeps dead sockets\n\n- presence() (pure, tested): a hidden tab fades at once and leaves the room after 2 min;\n  10 min without input (keys, mouse, taps) fades, 30 min leaves. Showing the tab or any\n  input rejoins as the same rabbit: RelayRoom gains pause()/resume(), which keep the id.\n- The plugin checks every second (timers run in hidden tabs) and sends away straight off,\n  since the game loop stops when the tab is hidden. Dev: ?presence=N shortens the timings.\n- relay/: a Durable Object alarm every 30 s while anyone is connected closes sockets silent\n  for 90 s (no message, no ping — via getWebSocketAutoResponseTimestamp) and tells everyone\n  they left; messages from a swept socket are ignored. The client replaces a socket that\n  hears no pong for ~a minute (a laptop waking, or swept without noticing).\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-04T23:20:48Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 6,
+      "deletions": 0
+    },
+    {
+      "path": "relay/src/index.ts",
+      "status": "M",
+      "additions": 40,
+      "deletions": 1
+    },
+    {
+      "path": "relay/test.mjs",
+      "status": "M",
+      "additions": 46,
+      "deletions": 5
+    },
+    {
+      "path": "src/App.tsx",
+      "status": "M",
+      "additions": 4,
+      "deletions": 1
+    },
+    {
+      "path": "src/game/plugins/visitors.ts",
+      "status": "M",
+      "additions": 80,
+      "deletions": 1
+    },
+    {
+      "path": "src/game/visitors.test.ts",
+      "status": "M",
+      "additions": 28,
+      "deletions": 1
+    },
+    {
+      "path": "src/game/visitors.ts",
+      "status": "M",
+      "additions": 22,
+      "deletions": 0
+    },
+    {
+      "path": "src/net/relay.ts",
+      "status": "M",
+      "additions": 47,
+      "deletions": 4
+    }
+  ],
+  "additions": 273,
+  "deletions": 13,
+  "areas": [
+    "characters & map life",
+    "relay",
+    "docs"
+  ],
+  "branch": "presence-timeout",
+  "opened_at": "2026-11-04T23:20:52Z",
+  "merged_by": "vlandham",
+  "summary": "Answers \"does a rabbit go away when someone stops looking?\" Before this PR: only when they closed the tab. A background tab, a sleeping laptop or a killed phone browser left a ghost rabbit, counted, indefinitely.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "requested_reviewers": [],
+  "reviews": [],
+  "labels": [],
+  "discussion": [],
+  "preview_url": null,
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 9,
+    "scenes": 10,
+    "content_files": 18,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 18660,
+    "commits": 50
+  },
+  "shots": [
+    {
+      "query": "at=47.5612,-122.3868",
+      "lat": 47.5612,
+      "lon": -122.3868,
+      "label": "the Junction, where everyone starts",
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "development",
+      "after": "development"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+  },
+  "first_recorded_at": "2026-11-15T16:42:16.040Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:42:16.040Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736872248"
+}

@@ -1,0 +1,126 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "c75fe1f511f5bdce8ab5a7bd0808d8caa7504f09",
+  "parent": "2ca571cf7b049c62a71e606f12fa72ca59572388",
+  "pr": 14,
+  "title": "Busker: a calm song and a funky groove, in sync for everyone",
+  "url": "https://github.com/gardeninsound/map/pull/14",
+  "merged_at": "2026-11-04T23:02:52Z",
+  "body": "## Two new songs, both gentler than the bouncy three\n- **Fog on the Sound**: calm and slow (76 bpm, D major). A soft triangle lead with long notes, a bass that just rolls under it, no sparkle. Plays twice through (about 51 s).\n- **Junction Strut**: a low funky groove (98 bpm, E dorian). Syncopated 16th-note bass, soft offbeat hi-hats, and a quiet lead that mostly leaves space. Plays twice through (about 40 s).\n- Songs can now set their own lead tone, loudness, bass groove, hats, sparkle and repeats. The three bouncy songs are unchanged.\n- Playlist (about 2¼ minutes): Trust the Flux → Fog on the Sound → Puppies Without Pants → Junction Strut → So Glad You Are Here.\n\n## The same song for everyone\nThe playlist position comes from the time of day (`whereNow`), not from when you loaded the page, so every rabbit hears the same song and the same bar. That's accurate to within how well their device clocks agree, usually well under a second. No network traffic is involved. If a tab sleeps or the audio is suspended, it snaps back to the shared position when it wakes.\n\n## Tests\n- Every song is whole bars, and its groove and hats fit inside the bar. There's a calm song and a syncopated one, both quieter. The \"now\" position runs continuously through two cycles, wraps cleanly, and gives every song its turn (`busker.test.ts`).\n- In Chrome: two players who loaded 8.5 s apart were on the same song; beside the busker the music moved into the next song on time; no page errors.\n- `npm test`, `npm run build` and `npm run smoke` are green.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "dd8be00d039290aab2150ddefd83915e070c9fe1",
+      "message": "Busker: a calm slow song and a funky groove; the playlist runs on the wall clock\n\nSongs take per-song tone, loudness, bass groove, hi-hats, sparkle and repeats. New:\n\"Fog on the Sound\" (76 bpm, soft triangle lead, rolling bass, twice through) and\n\"Junction Strut\" (98 bpm, syncopated bass, offbeat hats, a quiet lead that leaves space),\nboth quieter than the bouncy three. Where the busker is in the playlist comes from the\ntime of day (whereNow), so every rabbit hears the same song and bar; a tab that slept snaps\nback to the shared position.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-04T23:01:15Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 6,
+      "deletions": 3
+    },
+    {
+      "path": "src/game/busker.test.ts",
+      "status": "M",
+      "additions": 47,
+      "deletions": 3
+    },
+    {
+      "path": "src/game/busker.ts",
+      "status": "M",
+      "additions": 173,
+      "deletions": 29
+    },
+    {
+      "path": "src/game/plugins/busker.ts",
+      "status": "M",
+      "additions": 4,
+      "deletions": 0
+    }
+  ],
+  "additions": 230,
+  "deletions": 35,
+  "areas": [
+    "characters & map life",
+    "docs"
+  ],
+  "branch": "busker-moods",
+  "opened_at": "2026-11-04T23:01:19Z",
+  "merged_by": "vlandham",
+  "summary": null,
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "requested_reviewers": [],
+  "reviews": [],
+  "labels": [],
+  "discussion": [],
+  "preview_url": null,
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 9,
+    "scenes": 10,
+    "content_files": 18,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 18486,
+    "commits": 49
+  },
+  "shots": [
+    {
+      "query": "at=47.5612,-122.3868",
+      "lat": 47.5612,
+      "lon": -122.3868,
+      "label": "the Junction, where everyone starts",
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "development",
+      "after": "development"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+  },
+  "first_recorded_at": "2026-11-15T16:42:16.040Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:42:16.040Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736872248"
+}
