@@ -169,6 +169,9 @@ export function coordsFromPatches(patches, max = 3) {
   return out;
 }
 
+/** the `base` a commit's vite.config.ts builds for (the setting, not a comment that mentions one) */
+export const baseOf = (config) => /^\s*base:\s*['"]([^'"]+)['"]/m.exec(config)?.[1] ?? '/';
+
 /** a short folder-safe slug from a title */
 export function slug(s, max = 40) {
   return (
@@ -334,26 +337,55 @@ export function renderChronicle(entries, wishes, repo) {
   return L.join('\n');
 }
 
-/** `story.json`: one line per change and wish, for anything built on top (an in-game board, a time-lapse). */
+/**
+ * `story.json`: everything a reader needs in one file (the /story/ page reads only this): each
+ * change with its wishes, words, pictures and census, oldest first, and every wish. The full
+ * record of each change stays in its `entry.json`.
+ */
 export function renderIndex(entries, wishes) {
   return {
     schema: SCHEMA,
+    generated_at: new Date().toISOString(),
     changes: [...entries]
       .sort((a, b) => a.entry.merged_at.localeCompare(b.entry.merged_at))
       .map(({ dir, entry: e }) => ({
         pr: e.pr,
         sha: e.sha,
-        title: e.title,
+        title: e.title.replace(/\s*\(idea box[^)]*\)\s*$/i, ''),
+        url: e.url,
         merged_at: e.merged_at,
         dir,
-        ideas: (e.ideas ?? []).map((w) => w.issue),
-        where: (e.shots ?? []).map((s) => ({ query: s.query, lat: s.lat ?? null, lon: s.lon ?? null, label: s.label ?? null })),
-        shots: (e.shots ?? []).flatMap((s) => [s.before, s.after, s.moving].filter(Boolean).map((f) => `${dir}/${f}`)),
-        areas: e.areas,
+        ideas: (e.ideas ?? []).map((w) => ({ issue: w.issue, url: w.url, text: w.text || w.title, name: w.name ?? null, street: w.street ?? null, asked_at: w.asked_at ?? null })),
+        summary: e.summary ?? null,
+        story: { askedVsMade: e.story?.askedVsMade ?? null, mike: e.story?.mike ?? null, note: e.story?.note ?? null },
+        authors: [...new Set((e.authors ?? []).map((a) => a.login ?? a.name).filter(Boolean))],
+        tools: e.made_with?.tools ?? [],
+        files: e.files?.length ?? 0,
+        additions: e.additions ?? 0,
+        deletions: e.deletions ?? 0,
+        areas: e.areas ?? [],
+        shots: (e.shots ?? []).map((s) => ({
+          query: s.query,
+          lat: s.lat ?? null,
+          lon: s.lon ?? null,
+          label: s.label ?? null,
+          before: s.before ? `${dir}/${s.before}` : null,
+          after: s.after ? `${dir}/${s.after}` : null,
+          moving: s.moving ? `${dir}/${s.moving}` : null,
+        })),
         census: e.census ?? null,
       })),
     wishes: [...wishes]
       .sort((a, b) => a.issue - b.issue)
-      .map((w) => ({ issue: w.issue, asked_at: w.asked_at, text: w.original.text, name: w.original.name, street: w.original.street, state: w.state, answered_by: w.answered_by })),
+      .map((w) => ({
+        issue: w.issue,
+        url: w.url,
+        asked_at: w.asked_at,
+        text: w.original.text,
+        name: w.original.name,
+        street: w.original.street,
+        state: w.state,
+        answered_by: (w.answered_by ?? []).map((a) => ({ pr: a.pr, sha: a.sha, merged_at: a.merged_at })),
+      })),
   };
 }

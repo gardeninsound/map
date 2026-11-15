@@ -2,6 +2,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   areasOf,
+  baseOf,
   changeDir,
   coordsFromPatches,
   ideaRefs,
@@ -135,6 +136,12 @@ describe('areasOf / coordsFromPatches / dirs', () => {
     expect(summaryOf('Closes #3\n\n🤖 Generated with [Claude Code](x)')).toBeNull();
   });
 
+  it("reads a build's base from its vite config, not from a comment", () => {
+    expect(baseOf("  // set base: '/map/' — every asset URL…\n  base: '/',\n")).toBe('/');
+    expect(baseOf("export default { base: '/bearisland-map/' }".replace('{ ', '{\n  '))).toBe('/bearisland-map/');
+    expect(baseOf('')).toBe('/');
+  });
+
   it('finds the preview link', () => {
     expect(previewUrl([{ body: 'nice' }, { body: '**Preview:** https://pr-64-garden-preview.x.workers.dev\n\nUpdated' }])).toBe('https://pr-64-garden-preview.x.workers.dev');
   });
@@ -207,9 +214,15 @@ describe('chronicle', () => {
     expect(md).toContain('“a ferry”');
   });
 
-  it('indexes changes oldest first with their pictures', () => {
+  it('indexes changes oldest first with everything the page shows', () => {
     const idx = renderIndex([{ dir, entry }], wishes);
-    expect(idx.changes[0].shots).toEqual([`${dir}/before-1.webp`, `${dir}/after-1.webp`, `${dir}/moving-1.webp`]);
+    const c = idx.changes[0];
+    expect(c.title).toBe("Pastel ponies in Lincoln Park's meadow");
+    expect(c.shots[0]).toMatchObject({ before: `${dir}/before-1.webp`, after: `${dir}/after-1.webp`, moving: `${dir}/moving-1.webp`, label: 'the meadow' });
+    expect(c.ideas[0]).toMatchObject({ issue: 36, text: 'add my little ponys (g1)', street: '47th Ave SW' });
+    expect(c.story.mike).toBe('I always wanted horses in that meadow.');
+    expect(c.authors).toEqual(['exit320-stack']);
+    expect(c.files).toBe(2);
     expect(idx.wishes[0].text).toBe('a ferry');
   });
 });

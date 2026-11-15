@@ -6,8 +6,11 @@ automatically, so the project can tell its own story later. That record is: what
 for, in the visitor's words; what was made and why it differs; who made it and with which
 tools; and how the place looked before and after.
 
-**Read it:** the [`story` branch](https://github.com/gardeninsound/map/tree/story). Its README
-is the chronicle, newest first, with the pictures.
+**Read it:** at [gardeninsound.website/story/](https://gardeninsound.website/story/) (not linked
+from the map yet), which shows the log with growth charts, a before/after wipe for each place,
+and the wishes still waiting. It reads `story.json` straight from the branch, so it's current
+without a deploy (`src/story/`). The [`story` branch](https://github.com/gardeninsound/map/tree/story)'s
+README holds the same chronicle in plain Markdown.
 
 ## What gets recorded
 
@@ -92,5 +95,5 @@ a `limit` of ~100 backfills everything, and `redo` takes a PR number or sha.
 | `record.mjs` | the recorder: asks git and GitHub, builds, photographs, writes |
 | `shoot.mjs` | the camera: serves any build and photographs places on it |
 
-Built on top later, from `story.json`: an in-game notice board of recent arrivals, a
-time-lapse of the island growing, a write-up for a show.
+Built on top of `story.json`: the /story/ page. Later, perhaps: an in-game notice board of
+recent arrivals, a time-lapse of the island growing, a write-up for a show.

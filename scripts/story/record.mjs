@@ -21,6 +21,7 @@ import { parseArgs } from 'node:util';
 import {
   SCHEMA,
   areasOf,
+  baseOf,
   changeDir,
   coordsFromPatches,
   ideaRefs,
@@ -153,7 +154,7 @@ async function photograph(sha, places, outDir, prefix, moving) {
   const dist = buildAt(sha);
   if (!dist) return places.map(() => ({ still: null, moving: null, problems: ['build failed'] }));
   const cam = await getCamera();
-  const base = /\bbase:\s*['"]([^'"]+)['"]/.exec(tryGit('show', `${sha}:vite.config.ts`) ?? '')?.[1] ?? '/';
+  const base = baseOf(tryGit('show', `${sha}:vite.config.ts`) ?? '');
   const server = await cam.serve(dist, base);
   try {
     return await cam.shoot(cam.browser, server.url, places, outDir, { prefix, moving });
@@ -183,12 +184,13 @@ function placesFor(story, files, patch, areas) {
 
 function census(sha) {
   const c = {};
-  const count = (dir, re) => (tryGit('ls-tree', '--name-only', `${sha}:${dir}`) ?? '').split('\n').filter((f) => re.test(f)).length;
+  const count = (dir, re, deep = false) =>
+    (tryGit('ls-tree', ...(deep ? ['-r'] : []), '--name-only', `${sha}:${dir}`) ?? '').split('\n').filter((f) => re.test(f)).length;
   try {
     c.spots = JSON.parse(git('show', `${sha}:src/content/placesData.json`)).length;
   } catch {}
   c.plugins = count('src/game/plugins', /^(?!.*\.test\.).*\.tsx?$/);
-  c.scenes = count('src/experiences', /^(?!.*\.test\.).*\.tsx$/);
+  c.scenes = count('src/experiences', /^(?!.*\.test\.).*\.tsx$/, true); // scene + game components, in their folders
   c.content_files = count('src/content', /^(?!.*\.test\.).*\.(ts|json)$/);
   const arcade = tryGit('show', `${sha}:src/content/duckArcade.ts`);
   if (arcade) c.arcade_cabinets_ready = (arcade.match(/ready:\s*true/g) ?? []).length;

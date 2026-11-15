@@ -133,6 +133,9 @@ root file only for new commands, workflow, conventions or a new area.
 - `scripts/ai/` — **ideas → changes with free models** (an experiment, run by hand). → `scripts/ai/README.md`
 - `scripts/city/` — the OSM → map pipeline (settings in `map-config.mjs`).
 - `scripts/story/` — **the story log**: how the island grew, written to the `story` branch. → `scripts/story/README.md`
+- `src/story/` — the **/story/** page (a second Vite entry, `story/index.html`; not linked from the map yet): reads
+  `story.json` live from the story branch (`?src=<url>` for a local copy, e.g. `?src=/.story/` in dev); rules in
+  `model.ts` (tested); covered by the smoke test on a made-up log.
 
 ## Conventions
 
