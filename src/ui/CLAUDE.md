@@ -15,3 +15,4 @@ first, then `src/styles.css` (title, scenes, spots).
   (`skipAhead`; that press is the pelican's alone). It's HTML laid over map and HUD (no clicks taken), placed with `CityGame.screenPoint()` and
   drawn at `CityGame.scale`; flight + timing pure and tested in `src/game/pelican.ts`, words in
   `src/content/pelican.ts`, 24-wide sprite in `sprites.ts`. Opening anything ends its visit.
+- `LookPicker.tsx` — the ◆ LOOK panel: fur, scarf and hat for your rabbit (rules in `src/game/look.ts`), each hat previewed on your rabbit.

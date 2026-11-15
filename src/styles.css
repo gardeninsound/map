@@ -453,3 +453,27 @@
 .hud-buttons button.pelican-perch { background: var(--yellow); animation: pelican-perch 0.5s ease-in-out infinite alternate; }
 @keyframes pelican-perch { to { transform: translateY(2px); } }
 @media (prefers-reduced-motion: reduce) { .hud-buttons button.pelican-perch { animation: none; } }
+
+/* the LOOK panel: fur, scarf and hat for your rabbit (ui/LookPicker.tsx) */
+.look-picker {
+  display: flex; flex-direction: column; gap: 10px; align-items: flex-end;
+  background: var(--paper); color: var(--ink); padding: 10px 12px; max-width: 340px;
+  font-family: var(--pixel); font-size: 9px;
+  box-shadow: 0 0 0 3px var(--ink), 4px 4px 0 3px rgba(0,0,0,0.25);
+}
+.look-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: flex-end; }
+.look-label { margin-right: 4px; }
+.look-swatch {
+  width: 20px; height: 20px; border: 0; margin: 0; padding: 0; cursor: pointer;
+  box-shadow: 0 0 0 2px var(--ink);
+}
+.look-swatch[aria-pressed='true'], .look-hat[aria-pressed='true'] { box-shadow: 0 0 0 2px var(--ink), 0 0 0 5px var(--yellow); }
+.look-hat {
+  width: 40px; height: 40px; padding: 4px; border: 0; margin: 0; cursor: pointer;
+  background: #8f9a52; box-shadow: 0 0 0 2px var(--ink);
+}
+.look-hat img { width: 32px; height: 32px; image-rendering: pixelated; display: block; }
+.look-done {
+  font-family: var(--pixel); font-size: 9px; border: 0; cursor: pointer; padding: 6px 10px;
+  background: var(--yellow); color: var(--ink); box-shadow: 0 0 0 2px var(--ink);
+}

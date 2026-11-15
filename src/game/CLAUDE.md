@@ -81,6 +81,10 @@ plugins into `CityGame` and handles `onInteract`.
   `src/game/chickenBoxing.ts`: 3 rounds of punches on a beat, knockdowns with a count, rests in the corners), so every
   rabbit sees the same punch; feathers + a thud when one lands, the bell each round. Ringside {A}: the announcer
   (target kind `boxing`; names, colours, lines in `src/content/chickenBoxing.ts`). `__boxing` in dev.
+- `src/game/look.ts` — **your rabbit's look** (idea box #38, #34): fur (5), scarf (8) and hat (8: beanie, top hat, party hat, crown,
+  flower crown, bucket hat, ball cap) picked in the LOOK panel (`src/ui/LookPicker.tsx`), remembered in localStorage, sent as one
+  number (`lookCode`) — the 7th field on the visitors wire; older clients ignore it. `dress()` recolours the fur and puts the hat on
+  every frame wherever the head is (`headAnchor`), walking and on the bike; `CityGame.setPlayerSprites` swaps yours in. Pure + tested.
 - `src/game/plugins/forestMaze.ts` — **the forest maze in Schmitz Preserve** (idea box #42): a seeded perfect maze (`makeMaze`, pure +
   tested in `src/game/maze.ts`) carved at attach through a 29×29 square of forest (tiles → walkable, street sign "Schmitz Preserve
   maze"; once per map), entered off the street on the west, dirt trails drawn along the paths and bushes in wall gaps. A fairy
@@ -112,7 +116,7 @@ Everyone on the site shares one room
 on the island's relay (`src/net/relay.ts` client; the Worker is `relay/`, its own npm project
 deployed to the gardeninsound Cloudflare account — see `relay/README.md`; its ALLOWED_ORIGINS
 must include this site's origin; `?relay=ws://127.0.0.1:8790` points the site at `npm run dev`). Each rabbit gets a
-scarf from its id and fades while its player is in a scene. The minimap shows them, and so does
+scarf from its id (or the look its player picked) and fades while its player is in a scene. The minimap shows them, and so does
 "N OTHER RABBITS HERE". Your rabbit is sent only when it changes, at most 5×/s, because the free
 relay is metered by messages sent (wire format and easing are pure and tested:
 `src/game/visitors.ts`). `?solo` walks alone; dev-only `?island=<name>` uses a private room.
