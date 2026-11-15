@@ -1,7 +1,7 @@
 /**
  * Smoke test of the built site in a real browser: does it boot, can you walk into the Duck
  * Arcade, does every playable cabinet open and close, does the bear hand you a licorice? Fails on any page error, console error
- * or failed request (a missing file is a 404). Also opens /story/ on a made-up log. Runs in CI on every PR after `npm run build`.
+ * or failed request (a missing file is a 404). Also tries the ?open= links and opens /story/ on a made-up log. Runs in CI on every PR after `npm run build`.
  *
  * Usage: npm run build && npm run smoke   (locally uses your installed Chrome; CI uses
  * Playwright's Chromium). Shots of a failure land in screenshots/smoke/.
@@ -124,6 +124,22 @@ try {
     }
   }
 
+  // ?open= links (src/ui/openLink.ts): each kind opens what it should, with no errors
+  for (const [link, sel] of [
+    ['open=garden&time=2026-04-15', '.dialog'],
+    ['open=sundrop', '.dialog'],
+    ['open=scene:gas-station-wall', '.scene'],
+    ['open=arcade:duck-on-the-moon', '.arcade-game'],
+    ['open=minigame:cone-catch&seed=3', '.minigame-canvas'],
+    ['open=ride:whirl', '.scene'],
+  ]) {
+    check(`?${link}`);
+    await page.goto(`${base}?solo&${link}`);
+    await page.locator(sel).first().waitFor({ timeout: 15_000 });
+    await settle(1000);
+    assertClean();
+  }
+
   // /story/ (the story log page): fed a one-change log, so it doesn't depend on the story branch
   check('/story/ page');
   await page.route((u) => u.pathname.startsWith('/__story/'), (route) =>
@@ -149,7 +165,7 @@ try {
   await page.locator('#pr-64 .story-wish', { hasText: 'add my little ponys' }).waitFor({ timeout: 10_000 });
   assertClean();
 
-  console.log(`smoke ok: boots, arcade, ${titles.length} cabinets, the bear, /story/`);
+  console.log(`smoke ok: boots, arcade, ${titles.length} cabinets, the bear, ?open= links, /story/`);
 } catch (e) {
   mkdirSync('screenshots/smoke', { recursive: true });
   await page.screenshot({ path: 'screenshots/smoke/failure.png' }).catch(() => {});

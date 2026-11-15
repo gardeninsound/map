@@ -159,14 +159,14 @@ async function getCamera() {
   }
   return camera;
 }
-async function photograph(sha, places, outDir, prefix, moving) {
+async function photograph(sha, places, outDir, prefix, moving, time = null) {
   const dist = buildAt(sha);
   if (!dist) return places.map(() => ({ still: null, moving: null, problems: ['build failed'] }));
   const cam = await getCamera();
   const base = baseOf(tryGit('show', `${sha}:vite.config.ts`) ?? '');
   const server = await cam.serve(dist, base);
   try {
-    return await cam.shoot(cam.browser, server.url, places, outDir, { prefix, moving });
+    return await cam.shoot(cam.browser, server.url, places, outDir, { prefix, moving, time });
   } finally {
     await server.close();
   }
@@ -318,8 +318,9 @@ async function recordChange(sha, recorded) {
     if (prev.camera) e.camera = prev.camera;
   } else if (SHOTS && places.length) {
     for (const f of readdirSync(abs)) if (/^(before|after|moving)-\d+\.webp$/.test(f)) rmSync(join(abs, f));
-    const before = parent ? await photograph(parent, places, abs, 'before', false) : [];
-    const after = await photograph(sha, places, abs, 'after', true);
+    // both at the moment it merged, so before and after differ only by the change
+    const before = parent ? await photograph(parent, places, abs, 'before', false, e.merged_at) : [];
+    const after = await photograph(sha, places, abs, 'after', true, e.merged_at);
     e.shots.forEach((s, i) => {
       s.before = before[i]?.still ?? null;
       s.after = after[i]?.still ?? null;

@@ -6,6 +6,10 @@ import '@fontsource/pixelify-sans/600.css';
 import './city/ui/ui.css';
 import './styles.css';
 import App from './App';
+import { clockFromSearch, setClock } from './city';
+
+// ?time= / ?seed= pin the game's clock and chance (src/city/clock.ts), before anything reads them
+setClock(clockFromSearch(location.search));
 
 // Loaded fine: re-arm the stale-deploy reload guard in index.html for next time.
 try {

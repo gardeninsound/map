@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { INK, PAL, gridToCanvas, input, isTouch, pixelText, withButtons, type Grid } from '../../city';
+import { dice, INK, PAL, gridToCanvas, input, isTouch, pixelText, withButtons, type Grid } from '../../city';
 import { FIELD, FIRE_LIFE, ROUND, jump, newRound, step, type ConeCatchState } from '../../game/coneCatch';
 import { buildChicken } from '../../game/sprites';
 import { sounds } from '../../ui/sounds';
@@ -95,6 +95,7 @@ export default function ConeCatch({ onExit }: { onExit(result: MiniGameResult): 
     const ctx = canvas.current!.getContext('2d')!;
     ctx.imageSmoothingEnabled = false;
     const art = { chicken: buildChicken(), cones: buildCones(), rock: gridToCanvas(ROCK, ROCK_COLORS) };
+    const rand = dice('cone-catch'); // ?seed= drops the same cones every time
     let raf = 0;
     let last = 0;
     const loop = (t: number) => {
@@ -104,7 +105,7 @@ export default function ConeCatch({ onExit }: { onExit(result: MiniGameResult): 
       const playing = phaseRef.current === 'play';
       const dir = playing ? input.dir().x : 0;
       if (dir) facing.current = dir < 0 ? 'left' : 'right';
-      step(s, dt, dir, Math.random);
+      step(s, dt, dir, rand);
       if (playing) {
         if (s.caught) sounds.pop();
         if (s.hit || s.scorched) sounds.bonk();

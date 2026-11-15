@@ -1,4 +1,4 @@
-import { INK, Tile, type CityGame, type CityPlugin, type DrawContext, type Target, type Vec } from '../../city';
+import { INK, Tile, today, type CityGame, type CityPlugin, type DrawContext, type Target, type Vec } from '../../city';
 import { GARDEN_BOX, GARDEN_NAME, type Shape } from '../../content/garden';
 import { beds, inBloom, type InBloom } from '../garden';
 
@@ -103,7 +103,7 @@ export class Garden implements CityPlugin {
 
   /** what's out right now (cached for the day) */
   blooming(): InBloom[] {
-    const now = new Date();
+    const now = today(); // the game's clock: ?time= shows another month's garden
     const day = now.toDateString();
     if (day !== this.today) [this.today, this.bloom] = [day, inBloom(now)];
     return this.bloom;

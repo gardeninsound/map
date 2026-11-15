@@ -25,7 +25,8 @@ const rabbitPortrait = () => (rabbitFace ??= buildRabbit().down[0]!.toDataURL())
  * {A} to play its game; GAMES (or T) lists every cabinet. A game runs full screen over the
  * room and drops you back in front of its cabinet with your score. {B} walks back out.
  */
-export default function DuckArcade({ onExit }: { onExit(): void }) {
+/** `start`: a cabinet's id to go straight into (skipping the intro), from ?open=arcade:<id> */
+export default function DuckArcade({ onExit, start }: { onExit(): void; start?: string }) {
   const host = useRef<HTMLDivElement>(null);
   const scene = useRef<ArcadeScene | null>(null);
   const [near, setNear] = useState<number | null>(null);
@@ -115,6 +116,15 @@ export default function DuckArcade({ onExit }: { onExit(): void }) {
     setNote(null);
     setPlaying(g);
   };
+
+  // ?open=arcade:<id>: straight to that cabinet, as choosing it from the GAMES menu does
+  useEffect(() => {
+    const i = start ? arcadeGames.findIndex((g) => g.id === start) : -1;
+    if (i < 0) return;
+    setIntro(false);
+    play(i);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [start]);
 
   const state = useRef({ near, intro, menu, sel, playing, onExit, play });
   state.current = { near, intro, menu, sel, playing, onExit, play };

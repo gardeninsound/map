@@ -40,3 +40,8 @@ see it through a sixth field on the visitors wire). A plugin can put the player 
   map is missing a site. So far: **West Seattle Stadium** (35th Ave SW; OSM only has an unnamed wooded park): lawn
   grounds, the walkable track and football field, grandstands along 35th and a gate path in from the sidewalk
   (features/road line tagged `stadium`)
+- **the clock** (`clock.ts`): the game's one "now" and its dice. Anything that goes by the date, the time of day or
+  chance uses `now()` / `today()` / `dice('<name>')` (each name its own seeded stream), never `Date.now()` /
+  `Math.random()`. `?time=2026-03-15T19:30` (local; a date alone is noon) starts the clock there, `?seed=7` makes chance
+  repeat; `main.tsx` sets it before anything is built. Network timing (the relay) and animation frames stay real.
+  `CityGame.allTargets()` / `interactWith(target)`: everything you could press {A} on, and pressing it from a link.

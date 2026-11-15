@@ -17,7 +17,7 @@ import {
   type MapPlace,
   type PlacedLandmark,
   type Target,
-} from './city';
+ today } from './city';
 import { START, locations, welcome } from './content/locations';
 import { CROW_NAME, crowChoices, crowGreeting, crowReply } from './content/crow';
 import { CHICKEN_NAME, chickenAfter, chickenInvite, chickenQuestions } from './content/chicken';
@@ -64,6 +64,7 @@ import { Pelican } from './ui/Pelican';
 import { PELICAN_AFTER } from './game/pelican';
 import { TitleScreen } from './ui/TitleScreen';
 import { sounds } from './ui/sounds';
+import { findTarget, openFromSearch } from './ui/openLink';
 
 type Overlay =
   | { kind: 'none' }
@@ -81,8 +82,8 @@ type Overlay =
   | { kind: 'scene'; loc: PlacedLocation }
   /** a character's mini game; `then` gets the result when you come back to the map */
   | { kind: 'minigame'; then(result: MiniGameResult): void }
-  /** inside the Duck Arcade */
-  | { kind: 'arcade' }
+  /** inside the Duck Arcade (`game`: straight into that cabinet, from ?open=arcade:<id>) */
+  | { kind: 'arcade'; game?: string }
   /** riding Luna Park's Great Figure Eight */
   | { kind: 'ride'; ride?: 'whirl' }
   | { kind: 'spots' }
@@ -228,7 +229,7 @@ export default function App() {
           } else if (t.kind === 'garden') {
             // the seasonal garden's sign (idea box #12): what's out this month
             const out = garden.blooming().map((b) => b.plant.name);
-            setOverlay({ kind: 'talk', speaker: GARDEN_NAME, lines: gardenSign(new Date().getMonth() + 1, out) });
+            setOverlay({ kind: 'talk', speaker: GARDEN_NAME, lines: gardenSign(today().getMonth() + 1, out) });
           } else if (t.kind === 'pony') {
             // a pony in Lincoln Park's meadow (idea box #36): stops and says hi
             const h = t.data as MeadowPony;
@@ -469,6 +470,38 @@ export default function App() {
     },
     [game, spots],
   );
+  // ?open= (src/ui/openLink.ts): opens something through the same paths a visitor's {A} takes,
+  // for review links and the story log's camera. A moment after the map starts, once everyone's placed.
+  useEffect(() => {
+    if (!game || !spots) return;
+    const link = openFromSearch(location.search);
+    if (!link) return;
+    setStarted(true);
+    const t = setTimeout(() => {
+      input.clear();
+      if (link.kind === 'target') {
+        const target = findTarget(game.allTargets(), link.name);
+        if (target) game.interactWith(target);
+        else console.warn(`?open=${link.name}: nothing by that name on the map`);
+      } else if (link.kind === 'scene') {
+        const loc = spots.places.find((l) => l.id === link.id);
+        if (loc) travel(loc, true);
+        else console.warn(`?open=scene:${link.id}: no such spot`);
+      } else if (link.kind === 'arcade') {
+        const door = arcadeDoor.current.door;
+        if (door) game.teleport(door);
+        setOverlay(link.game ? { kind: 'arcade', game: link.game } : { kind: 'arcade' });
+      } else if (link.kind === 'ride') {
+        setOverlay(link.ride === 'whirl' ? { kind: 'ride', ride: 'whirl' } : { kind: 'ride' });
+      } else if (link.kind === 'minigame') {
+        setOverlay({ kind: 'minigame', then: () => setOverlay({ kind: 'none' }) });
+      } else {
+        setOverlay({ kind: link.panel });
+      }
+    }, 400);
+    return () => clearTimeout(t);
+  }, [game, spots, travel]);
+
   const openSpots = spots?.open ?? [];
   const landmarkPlaces = useMemo(() => (game ? mapLandmarks(game.world.landmarks) : []), [game]);
 
@@ -681,7 +714,7 @@ export default function App() {
       {overlay.kind === 'arcade' && (
         <SceneBoundary onError={closeOverlay}>
           <Suspense fallback={<div className="scene scene-loading">Loading…</div>}>
-            <DuckArcade onExit={closeOverlay} />
+            <DuckArcade onExit={closeOverlay} start={overlay.game} />
           </Suspense>
         </SceneBoundary>
       )}

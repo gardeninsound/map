@@ -1,4 +1,4 @@
-import { Tile, tone, type CityGame, type CityPlugin, type DrawContext, type Target, type Vec } from '../../city';
+import { dice, now, Tile, tone, type CityGame, type CityPlugin, type DrawContext, type Target, type Vec } from '../../city';
 import { boxers, boxingWatch, RING_AT } from '../../content/chickenBoxing';
 import { sounds } from '../../ui/sounds';
 import { boutAt, type Bout } from '../chickenBoxing';
@@ -28,6 +28,7 @@ interface Feather {
  * rings each round. Ringside, {A}: the announcer (words in content/chickenBoxing.ts).
  */
 export class ChickenBoxing implements CityPlugin {
+  private rand = dice('boxing-feathers');
   ring: Vec = { x: 0, y: 0 };
   bout: Bout = boutAt(0);
   private scene: BoxingScene | null = null;
@@ -65,7 +66,7 @@ export class ChickenBoxing implements CityPlugin {
         }
       });
     }
-    this.bout = boutAt(Date.now() / 1000);
+    this.bout = boutAt(now() / 1000);
     const b = this.bout;
     const loud = this.near < HEAR && !game.quiet ? 1 - this.near / HEAR : 0;
     // the bell, start and end of each round
@@ -83,7 +84,7 @@ export class ChickenBoxing implements CityPlugin {
       const head = this.scene?.headPx(hit as 0 | 1);
       if (head) {
         for (let i = 0; i < 7; i++) {
-          this.feathers.push({ x: head.x, y: head.y, vx: (Math.random() - 0.5) * 50, vy: -10 - Math.random() * 30, life: 1.2 + Math.random() * 0.6 });
+          this.feathers.push({ x: head.x, y: head.y, vx: (this.rand() - 0.5) * 50, vy: -10 - this.rand() * 30, life: 1.2 + this.rand() * 0.6 });
         }
       }
     }

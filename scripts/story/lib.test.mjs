@@ -73,6 +73,8 @@ describe('parseWhere', () => {
     expect(parseWhere('arcade')).toEqual({ query: 'at=arcade', label: 'the Duck Arcade' });
     expect(parseWhere('tile 120, 340')).toEqual({ query: 'atTile=120,340', label: null });
     expect(parseWhere('none')).toBeNull();
+    expect(parseWhere('open:arcade:duck-on-the-moon')).toEqual({ query: 'open=arcade:duck-on-the-moon', label: 'arcade:duck-on-the-moon' });
+    expect(parseWhere('?open=garden&time=2026-04-15 — tulips')).toEqual({ query: 'open=garden&time=2026-04-15', label: 'tulips' });
     expect(parseWhere('somewhere nice')).toBeNull();
   });
 });

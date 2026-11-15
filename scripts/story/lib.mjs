@@ -65,7 +65,9 @@ export function parseStory(body) {
 /**
  * One place to photograph, as the site's own review hooks take it:
  *   `47.5310, -122.3960` (lat, lon) · `arcade` (the Duck Arcade door) · `tile 120, 340` ·
- *   `title` (the title screen). Anything after `—` or `(` is a caption. `none` → null.
+ *   `title` (the title screen) · `open:garden` (a ?open= link: inside a scene, a character's
+ *   dialog) · `?open=garden&time=2026-04-15` (any query, as is). Anything after `—` or `(` is a
+ *   caption. `none` → null.
  */
 export function parseWhere(s) {
   if (!s) return null;
@@ -75,6 +77,11 @@ export function parseWhere(s) {
   if (!t || /^(none|-|n\/a|nowhere)$/.test(t)) return null;
   if (t === 'arcade') return { query: 'at=arcade', label: caption ?? 'the Duck Arcade' };
   if (t === 'title') return { query: 'title', label: caption ?? 'the title screen' };
+  // the site's ?open= links (src/ui/openLink.ts): `open:garden`, `open:arcade:duck-on-the-moon`
+  const open = /^open\s*:\s*(\S+)$/.exec(t);
+  if (open) return { query: `open=${open[1]}`, label: caption ?? open[1] };
+  // any query the site understands, as is: `?open=garden&time=2026-04-15`
+  if (/^\?[\w-]+=/.test(spot.trim())) return { query: spot.trim().slice(1), label: caption };
   const tile = /^tile\s*:?\s*(\d+)\s*,\s*(\d+)$/.exec(t);
   if (tile) return { query: `atTile=${tile[1]},${tile[2]}`, label: caption };
   const ll = /^(-?\d{1,3}\.\d+)\s*,\s*(-?\d{1,3}\.\d+)$/.exec(t);

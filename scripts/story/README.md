@@ -43,13 +43,17 @@ Commits that went to `main` before PRs existed (Oct 18 – Nov 4) are recorded f
 
 ## Where the camera points
 
-1. The PR's `Where:` lines, if any (`47.531, -122.396 — the meadow`, `arcade`, `title`, `none`).
+1. The PR's `Where:` lines, if any (`47.531, -122.396 — the meadow`, `arcade`, `title`, `none`,
+   `open:garden` or `open:arcade:duck-on-the-moon` to go inside a scene or a character's dialog,
+   or any query as is: `?open=garden&time=2026-04-15`).
 2. Otherwise, West Seattle coordinates the diff adds (a new place's `lat`/`lon`), plus the
    Duck Arcade if arcade files changed.
 3. Otherwise, the Junction where everyone starts, if the change touched anything visible.
    Changes to CI, docs, the relay or tools only get no photos.
 
-Every change after the first is built twice, at its own commit and the one before, and both
+Every photo pins the game's clock to the moment the change merged and its chance to `seed=1`
+(`src/city/clock.ts`), so before and after differ only by the change, and the garden shows the
+month it was. Every change after the first is built twice, at its own commit and the one before, and both
 builds are photographed through the site's review hooks (`?solo&at=…`). The photos show
 what a visitor would have seen at the time. Until early November `?at=` only worked in
 development builds, so commits like that are built in development mode, the one way to reach a

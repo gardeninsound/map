@@ -1,12 +1,6 @@
-import type { CityGame, CityPlugin, DrawContext } from '../../city';
+import { dice, type CityGame, type CityPlugin, type DrawContext } from '../../city';
 import { DINO_COUNT, spawnSpot, stepDino, type Dino } from '../dinos';
 import { DINO_SHEET } from '../dinoSheet';
-
-/** A seeded random, so a session's dinosaurs don't depend on frame timing in tests. */
-function rng(seed: number) {
-  let s = seed >>> 0 || 1;
-  return () => ((s = (s * 16807) % 2147483647) / 2147483647);
-}
 
 /**
  * Toy dinosaurs plodding west along the east–west streets (walking in game/dinos.ts, sprite
@@ -14,7 +8,7 @@ function rng(seed: number) {
  */
 export class Dinos implements CityPlugin {
   dinos: Dino[] = [];
-  private rand = rng(Date.now());
+  private rand = dice('dinos'); // ?seed= makes it repeatable (city/clock.ts)
   private sheet: HTMLImageElement | null = null;
 
   attach(game: CityGame) {
