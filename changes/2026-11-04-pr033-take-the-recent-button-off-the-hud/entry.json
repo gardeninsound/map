@@ -1,0 +1,149 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "23ba177e06468d5f788f81d48d3acaa70893fded",
+  "parent": "0b5f5b39c39756a7e132f24f3ebdf4b2853d5917",
+  "pr": 33,
+  "title": "Take the RECENT button off the HUD",
+  "url": "https://github.com/gardeninsound/map/pull/33",
+  "merged_at": "2026-11-05T04:41:56Z",
+  "body": "Takes the RECENT button off the HUD (Mike's call). Also removes what only it used: the jump to each recent change, its caption, and its list (`src/content/recent.ts`).\n\n**Jim, heads-up:**\n- The smoke test used RECENT to reach the Duck Arcade. It now goes straight there with the new `?at=arcade`.\n- `?at=lat,lon` / `?atTile=x,y` now work on the live site too, not only in dev: a link that starts you somewhere, no title screen. `__` dev hooks and `?audit` stay dev-only.\n- Touches `App.tsx`, `scripts/smoke.mjs` and CLAUDE.md. Merged with `main` (Ham's dev hook kept).\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n",
+  "authors": [
+    {
+      "login": "exit320-stack"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "1ff1674e91375295e54501b1b0b8102dd69bfce1",
+      "message": "Take the RECENT button off the HUD\n\nRemoves the button, its jump-to-the-next-change code and caption, and its\nlist (content/recent.ts). The smoke test reaches the Duck Arcade with\n?at=arcade instead; ?at / ?atTile now work on the live site too.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-05T04:11:00Z"
+    },
+    {
+      "sha": "f0b3b8a055e4ea677e95522fe807e009aecbb8b9",
+      "message": "Merge remote-tracking branch 'origin/main' into no-recent\n\n# Conflicts:\n#\tsrc/App.tsx",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-05T04:40:22Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 2,
+      "deletions": 2
+    },
+    {
+      "path": "scripts/smoke.mjs",
+      "status": "M",
+      "additions": 7,
+      "deletions": 10
+    },
+    {
+      "path": "src/App.tsx",
+      "status": "M",
+      "additions": 10,
+      "deletions": 45
+    },
+    {
+      "path": "src/content/recent.ts",
+      "status": "D",
+      "additions": 0,
+      "deletions": 36
+    },
+    {
+      "path": "src/styles.css",
+      "status": "M",
+      "additions": 0,
+      "deletions": 8
+    }
+  ],
+  "additions": 19,
+  "deletions": 101,
+  "areas": [
+    "words & content",
+    "docs",
+    "tools"
+  ],
+  "branch": "no-recent",
+  "opened_at": "2026-11-05T04:40:27Z",
+  "merged_by": "exit320-stack",
+  "summary": "Takes the RECENT button off the HUD (Mike's call). Also removes what only it used: the jump to each recent change, its caption, and its list (`src/content/recent.ts`).\n\n**Jim, heads-up:**\n- The smoke test used RECENT to reach the Duck Arcade. It now goes straight there with the new `?at=arcade`.\n- `?at=lat,lon` / `?atTile=x,y` now work on the live site too, not only in dev: a link that starts you somewhere, no title screen. `__` dev hooks and `?audit` stay dev-only.\n- Touches `App.tsx`, `scripts/smoke.mjs` and CLAUDE.md. Merged with `main` (Ham's dev hook kept).",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "requested_reviewers": [
+    "vlandham"
+  ],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-05T04:41:03Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-33-garden-preview.gardeninsound.workers.dev\n\nUpdated for f0b3b8a. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-33]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-33-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 11,
+    "scenes": 10,
+    "content_files": 20,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 20616,
+    "commits": 65
+  },
+  "shots": [
+    {
+      "query": "at=47.5612,-122.3868",
+      "lat": 47.5612,
+      "lon": -122.3868,
+      "label": "the Junction, where everyone starts",
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "development",
+      "after": "production"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+  },
+  "first_recorded_at": "2026-11-15T16:43:39.483Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:43:39.483Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736942138"
+}

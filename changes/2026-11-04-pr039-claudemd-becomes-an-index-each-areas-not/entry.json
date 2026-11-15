@@ -1,0 +1,162 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "6fb247dc66c598fbfdebbbaf9e5361e3313e7014",
+  "parent": "5527bcb16cb7c3fccda58114efc8672268d7cb56",
+  "pr": 39,
+  "title": "CLAUDE.md becomes an index; each area's notes move to its own folder's CLAUDE.md",
+  "url": "https://github.com/gardeninsound/map/pull/39",
+  "merged_at": "2026-11-05T04:50:32Z",
+  "body": "The root CLAUDE.md was turning into a changelog: almost every PR edited its \"Where things live\" section, all of it loaded every session, and parallel PRs conflicted on it.\n\n- **Root CLAUDE.md** (276 → 150 lines): commands, git workflow, Check, conventions and verifying unchanged; \"Where things live\" is now a one-line-per-area index, plus the rule that a new feature adds its line to its area's file, not the root.\n- **Per-folder notes**, loaded only when Claude works there: `src/game/`, `src/experiences/`, `src/ui/`, `src/city/`, `wish/`. Text moved word for word, apart from short headers and a few cross-pointers.\n- **AI helper**: `forbidden()` now refuses every `CLAUDE.md`, not just the root one (tested).\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "4ef3c83a8ba322ea92d29ead5a8c3a7bca439029",
+      "message": "CLAUDE.md becomes an index; each area's notes move to its own folder's CLAUDE.md\n\nThe root keeps commands, git workflow, conventions and verifying, plus a one-line-per-area\nmap. Feature notes move verbatim to src/game, src/experiences, src/ui, src/city and wish/,\nwhich Claude Code loads only when working there. New rule: a feature adds one line to its\narea's CLAUDE.md, not the root. The AI helper now refuses to edit any CLAUDE.md.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-05T04:48:25Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 21,
+      "deletions": 147
+    },
+    {
+      "path": "scripts/ai/lib.mjs",
+      "status": "M",
+      "additions": 3,
+      "deletions": 1
+    },
+    {
+      "path": "scripts/ai/lib.test.mjs",
+      "status": "M",
+      "additions": 2,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/CLAUDE.md",
+      "status": "A",
+      "additions": 23,
+      "deletions": 0
+    },
+    {
+      "path": "src/experiences/CLAUDE.md",
+      "status": "A",
+      "additions": 39,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/CLAUDE.md",
+      "status": "A",
+      "additions": 87,
+      "deletions": 0
+    },
+    {
+      "path": "src/ui/CLAUDE.md",
+      "status": "A",
+      "additions": 16,
+      "deletions": 0
+    },
+    {
+      "path": "wish/CLAUDE.md",
+      "status": "A",
+      "additions": 13,
+      "deletions": 0
+    }
+  ],
+  "additions": 204,
+  "deletions": 148,
+  "areas": [
+    "city",
+    "characters & map life",
+    "scenes & games",
+    "ui",
+    "idea box",
+    "docs",
+    "tools"
+  ],
+  "branch": "claude-md-toc",
+  "opened_at": "2026-11-05T04:48:57Z",
+  "merged_by": "vlandham",
+  "summary": "The root CLAUDE.md was turning into a changelog: almost every PR edited its \"Where things live\" section, all of it loaded every session, and parallel PRs conflicted on it.\n\n- **Root CLAUDE.md** (276 → 150 lines): commands, git workflow, Check, conventions and verifying unchanged; \"Where things live\" is now a one-line-per-area index, plus the rule that a new feature adds its line to its area's file, not the root.\n- **Per-folder notes**, loaded only when Claude works there: `src/game/`, `src/experiences/`, `src/ui/`, `src/city/`, `wish/`. Text moved word for word, apart from short headers and a few cross-pointers.\n- **AI helper**: `forbidden()` now refuses every `CLAUDE.md`, not just the root one (tested).",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "requested_reviewers": [],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-05T04:49:23Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-39-garden-preview.gardeninsound.workers.dev\n\nUpdated for 4ef3c83. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-39]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-39-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 12,
+    "scenes": 10,
+    "content_files": 20,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 20896,
+    "commits": 68
+  },
+  "shots": [
+    {
+      "query": "at=47.5612,-122.3868",
+      "lat": 47.5612,
+      "lon": -122.3868,
+      "label": "the Junction, where everyone starts",
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "production",
+      "after": "production"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+  },
+  "first_recorded_at": "2026-11-15T16:43:39.483Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:43:39.483Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736942138"
+}

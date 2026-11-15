@@ -25,7 +25,14 @@
     }
   ],
   "state": "closed:completed",
-  "answered_by": [],
+  "answered_by": [
+    {
+      "pr": 60,
+      "sha": "dd9f425dcb91f15048d32737387890ab813e5d41",
+      "title": "Hope Lutheran Church at 42nd & Oregon (idea box #44)",
+      "merged_at": "2026-11-15T00:13:18Z"
+    }
+  ],
   "current": {
     "title": "Idea: Can you add Hope Lutheran?",
     "body": "> Can you add Hope Lutheran?\n\n---\n<sub>Sent from the map's idea box by **Luca santo** · the rabbit was on SW Dakota St.</sub>",
@@ -41,5 +48,5 @@
   ],
   "closed_at": "2026-11-15T00:13:19Z",
   "comments": [],
-  "last_recorded_at": "2026-11-15T16:30:23.173Z"
+  "last_recorded_at": "2026-11-15T16:43:39.483Z"
 }

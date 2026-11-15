@@ -219,9 +219,7 @@
         "before": [
           "this build has no ?at= hook: the shot is its title screen"
         ],
-        "after": [
-          "this build has no ?at= hook: the shot is its title screen"
-        ]
+        "after": []
       }
     },
     {
@@ -237,9 +235,7 @@
         "before": [
           "this build has no ?at= hook: the shot is its title screen"
         ],
-        "after": [
-          "this build has no ?at= hook: the shot is its title screen"
-        ]
+        "after": []
       }
     }
   ],
@@ -249,10 +245,14 @@
       "height": 768
     },
     "zoom": 3,
-    "note": "stills lossless; moving loop half size"
+    "build": {
+      "before": "production",
+      "after": "development"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
   },
   "first_recorded_at": "2026-11-15T16:30:23.173Z",
   "earlier": [],
-  "recorded_at": "2026-11-15T16:30:23.173Z",
-  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43735787534"
+  "recorded_at": "2026-11-15T16:43:39.483Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736942138"
 }

@@ -25,7 +25,14 @@
     }
   ],
   "state": "closed:completed",
-  "answered_by": [],
+  "answered_by": [
+    {
+      "pr": 62,
+      "sha": "38aef0ac23dc479e68f566eaa27a1cc1f12a071a",
+      "title": "Squirrels that hide from people; Ham asks for pets (idea box #30)",
+      "merged_at": "2026-11-15T00:17:33Z"
+    }
+  ],
   "current": {
     "title": "Idea: Add some squirels that hide if humans draw neer, and ham…",
     "body": "> Add some squirels that hide if humans draw neer, and ham the cat that asks for pets\n\n---\n<sub>Sent from the map's idea box by **YOUR SON!!!!!** · the rabbit was on 45th Ave SW.</sub>",
@@ -41,5 +48,5 @@
   ],
   "closed_at": "2026-11-15T00:17:35Z",
   "comments": [],
-  "last_recorded_at": "2026-11-15T16:30:23.173Z"
+  "last_recorded_at": "2026-11-15T16:43:39.483Z"
 }

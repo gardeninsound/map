@@ -1,0 +1,202 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "5527bcb16cb7c3fccda58114efc8672268d7cb56",
+  "parent": "731c8b4739f24d5c8107591588ac3a7af6a8d004",
+  "pr": 35,
+  "title": "Toy dinosaurs plod west along the east–west streets",
+  "url": "https://github.com/gardeninsound/map/pull/35",
+  "merged_at": "2026-11-05T04:44:53Z",
+  "body": "Mike's walking toy dinosaur GIF, plodding west along the east–west streets, with his recording playing as one goes by.\n\n- **Sprite:** `node scripts/make-dino.mjs <dino.gif>` keys out the green backdrop, keeps the shadow (see-through) and inks an outline. Output: a 42-frame, 52×19 sheet, `public/sprites/dino-walk.png` (9 KB), plus `src/game/dinoSheet.ts`. The 5.8 MB GIF isn't kept.\n- **Walking:** six are always near you, each walking west down the middle of a \"SW … St\". At the end of the street, or once far behind you, it turns up on another east–west street nearby, out of sight. Pure + tested: `src/game/dinos.ts`.\n- **Sound:** Mike's recording, as `public/sounds/dinosaur.mp3` (55 KB). It plays once a pass when a dinosaur comes within 6 tiles; never two at once; quiet in scenes and when muted.\n- Both files are in the published-files test.\n- **Jim, heads-up:** a plugin line + dev hook in `App.tsx`, and a CLAUDE.md note. Merged with `main` (Ham and the pelican kept).\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n",
+  "authors": [
+    {
+      "login": "exit320-stack"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "33fca75ef8620c8456df33e7327be2680fa86dbb",
+      "message": "Toy dinosaurs plod west along the east–west streets\n\nMike's walking-dinosaur GIF, cut out of its green backdrop (soft shadow kept,\nink outline added) by scripts/make-dino.mjs into a 42-frame, 52×19 sprite sheet\n(9 KB). Six are always near you, each walking west down the middle of an\neast–west \"SW … St\"; at the end of the street, or once far behind you, it turns\nup on another east–west street nearby, out of sight. Pure + tested\n(game/dinos.ts); sprite in the published-files test.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-05T04:22:24Z"
+    },
+    {
+      "sha": "3f3c8afe8dd640ff4be70a2e9140fc519cc0595f",
+      "message": "Dinosaurs: Mike's recording plays once as one goes by you\n\nRecording.mp3 (4.5 s, 55 KB) in as public/sounds/dinosaur.mp3. When a dinosaur\ncomes within 6 tiles it plays once for that pass; never two at once (6 s apart),\nquiet inside scenes and when muted. Pure + tested (hearDino); the file is in\nthe published-files test.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-05T04:33:05Z"
+    },
+    {
+      "sha": "3029c14259c19de012093f631a8b864831f69ee4",
+      "message": "Merge remote-tracking branch 'origin/main' into dinosaurs\n\n# Conflicts:\n#\tCLAUDE.md\n#\tsrc/App.tsx",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-05T04:43:09Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 6,
+      "deletions": 0
+    },
+    {
+      "path": "public/sounds/dinosaur.mp3",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/sprites/dino-walk.png",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "scripts/make-dino.mjs",
+      "status": "A",
+      "additions": 132,
+      "deletions": 0
+    },
+    {
+      "path": "src/App.tsx",
+      "status": "M",
+      "additions": 4,
+      "deletions": 2
+    },
+    {
+      "path": "src/content/published.test.ts",
+      "status": "M",
+      "additions": 4,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/dinoSheet.ts",
+      "status": "A",
+      "additions": 2,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/dinos.test.ts",
+      "status": "A",
+      "additions": 71,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/dinos.ts",
+      "status": "A",
+      "additions": 103,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/plugins/dinos.ts",
+      "status": "A",
+      "additions": 71,
+      "deletions": 0
+    }
+  ],
+  "additions": 393,
+  "deletions": 2,
+  "areas": [
+    "characters & map life",
+    "words & content",
+    "art & sound",
+    "docs",
+    "tools"
+  ],
+  "branch": "dinosaurs",
+  "opened_at": "2026-11-05T04:43:13Z",
+  "merged_by": "exit320-stack",
+  "summary": "Mike's walking toy dinosaur GIF, plodding west along the east–west streets, with his recording playing as one goes by.\n\n- **Sprite:** `node scripts/make-dino.mjs <dino.gif>` keys out the green backdrop, keeps the shadow (see-through) and inks an outline. Output: a 42-frame, 52×19 sheet, `public/sprites/dino-walk.png` (9 KB), plus `src/game/dinoSheet.ts`. The 5.8 MB GIF isn't kept.\n- **Walking:** six are always near you, each walking west down the middle of a \"SW … St\". At the end of the street, or once far behind you, it turns up on another east–west street nearby, out of sight. Pure + tested: `src/game/dinos.ts`.\n- **Sound:** Mike's recording, as `public/sounds/dinosaur.mp3` (55 KB). It plays once a pass when a dinosaur comes within 6 tiles; never two at once; quiet in scenes and when muted.\n- Both files are in the published-files test.\n- **Jim, heads-up:** a plugin line + dev hook in `App.tsx`, and a CLAUDE.md note. Merged with `main` (Ham and the pelican kept).",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "requested_reviewers": [
+    "vlandham"
+  ],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-05T04:43:40Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-35-garden-preview.gardeninsound.workers.dev\n\nUpdated for 3029c14. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-35]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-35-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 12,
+    "scenes": 10,
+    "content_files": 20,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 20896,
+    "commits": 67
+  },
+  "shots": [
+    {
+      "query": "at=47.5612,-122.3868",
+      "lat": 47.5612,
+      "lon": -122.3868,
+      "label": null,
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      }
+    },
+    {
+      "query": "at=47.5655,-122.3866",
+      "lat": 47.5655,
+      "lon": -122.3866,
+      "label": null,
+      "guessed": true,
+      "before": "before-2.webp",
+      "after": "after-2.webp",
+      "moving": "moving-2.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "production",
+      "after": "production"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+  },
+  "first_recorded_at": "2026-11-15T16:43:39.483Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:43:39.483Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736942138"
+}

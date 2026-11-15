@@ -25,7 +25,14 @@
     }
   ],
   "state": "closed:completed",
-  "answered_by": [],
+  "answered_by": [
+    {
+      "pr": 65,
+      "sha": "8bccba399cd74231290450a03a47ef609b2f1513",
+      "title": "A seasonal flower garden at Dragonfly Garden (idea box #12)",
+      "merged_at": "2026-11-15T00:26:40Z"
+    }
+  ],
   "current": {
     "title": "Idea: To see a garden with flowers growing - appropriate to the…",
     "body": "> To see a garden with flowers growing - appropriate to the season\n\n---\n<sub>Sent from the map's idea box by **Jimmy**.</sub>",
@@ -41,5 +48,5 @@
   ],
   "closed_at": "2026-11-15T00:26:41Z",
   "comments": [],
-  "last_recorded_at": "2026-11-15T16:30:23.173Z"
+  "last_recorded_at": "2026-11-15T16:43:39.483Z"
 }

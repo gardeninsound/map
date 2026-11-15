@@ -1,0 +1,140 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "4a87a5b39511d5107720548b29ffc91b97950dea",
+  "parent": "32d3693e30ea0ec783c2b99e64e14fb69e7735c9",
+  "pr": 50,
+  "title": "Duck Arcade: \"Paddles at Dawn\" loops quietly while you're on the floor",
+  "url": "https://github.com/gardeninsound/map/pull/50",
+  "merged_at": "2026-11-14T18:18:53Z",
+  "body": "Mike's track (public/arcade/Paddles_at_Dawn.mp3, 1:07, 1.6 MB) plays at 20%\nvolume, looping, from the moment you walk in; it pauses while a cabinet's game\nplays (each has its own sound) and picks up again after; silent when the map is\nmuted. File and volume: ARCADE_MUSIC in content/duckArcade.ts; in the\npublished-files test.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+  "authors": [
+    {
+      "login": "exit320-stack"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "1bdc9c56073dd753c5d7a9b14c7f0792d303a803",
+      "message": "Duck Arcade: \"Paddles at Dawn\" loops quietly while you're on the floor\n\nMike's track (public/arcade/Paddles_at_Dawn.mp3, 1:07, 1.6 MB) plays at 20%\nvolume, looping, from the moment you walk in; it pauses while a cabinet's game\nplays (each has its own sound) and picks up again after; silent when the map is\nmuted. File and volume: ARCADE_MUSIC in content/duckArcade.ts; in the\npublished-files test.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-09T13:33:56Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "public/arcade/Paddles_at_Dawn.mp3",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "src/content/duckArcade.ts",
+      "status": "M",
+      "additions": 3,
+      "deletions": 0
+    },
+    {
+      "path": "src/content/published.test.ts",
+      "status": "M",
+      "additions": 2,
+      "deletions": 1
+    },
+    {
+      "path": "src/experiences/CLAUDE.md",
+      "status": "M",
+      "additions": 2,
+      "deletions": 0
+    },
+    {
+      "path": "src/experiences/arcade/DuckArcade.tsx",
+      "status": "M",
+      "additions": 20,
+      "deletions": 1
+    }
+  ],
+  "additions": 27,
+  "deletions": 2,
+  "areas": [
+    "scenes & games",
+    "words & content",
+    "art & sound"
+  ],
+  "branch": "arcade-music",
+  "opened_at": "2026-11-14T18:17:35Z",
+  "merged_by": "exit320-stack",
+  "summary": "Mike's track (public/arcade/Paddles_at_Dawn.mp3, 1:07, 1.6 MB) plays at 20%\nvolume, looping, from the moment you walk in; it pauses while a cabinet's game\nplays (each has its own sound) and picks up again after; silent when the map is\nmuted. File and volume: ARCADE_MUSIC in content/duckArcade.ts; in the\npublished-files test.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "requested_reviewers": [],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-14T18:18:06Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-50-garden-preview.gardeninsound.workers.dev\n\nUpdated for 1bdc9c5. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-50]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-50-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 13,
+    "scenes": 10,
+    "content_files": 21,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 21733,
+    "commits": 75
+  },
+  "shots": [
+    {
+      "query": "at=arcade",
+      "lat": null,
+      "lon": null,
+      "label": "the Duck Arcade",
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "production",
+      "after": "production"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+  },
+  "first_recorded_at": "2026-11-15T16:43:39.483Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:43:39.483Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736942138"
+}

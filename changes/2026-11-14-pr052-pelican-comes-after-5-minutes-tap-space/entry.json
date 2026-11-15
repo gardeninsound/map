@@ -1,0 +1,140 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "5a3763336742b78da86ef36f35ee3cb26ea75820",
+  "parent": "4a87a5b39511d5107720548b29ffc91b97950dea",
+  "pr": 52,
+  "title": "Pelican: comes after 5 minutes; tap Space and it flies to IDEA right away",
+  "url": "https://github.com/gardeninsound/map/pull/52",
+  "merged_at": "2026-11-14T18:18:55Z",
+  "body": "PELICAN_AFTER 120 → 300 s. While it's flying in or asking beside you, {A}\n(Space) sends it straight up to the IDEA button (skipAhead, pure + tested);\nthat press is the pelican's alone, so it doesn't also talk to anyone nearby.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+  "authors": [
+    {
+      "login": "exit320-stack"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "c7aa1b0de747b9a416a67877f4aaf862e90735e8",
+      "message": "Pelican: comes after 5 minutes; tap Space and it flies to IDEA right away\n\nPELICAN_AFTER 120 → 300 s. While it's flying in or asking beside you, {A}\n(Space) sends it straight up to the IDEA button (skipAhead, pure + tested);\nthat press is the pelican's alone, so it doesn't also talk to anyone nearby.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-09T13:44:36Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "src/content/pelican.ts",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "src/game/pelican.test.ts",
+      "status": "M",
+      "additions": 14,
+      "deletions": 1
+    },
+    {
+      "path": "src/game/pelican.ts",
+      "status": "M",
+      "additions": 14,
+      "deletions": 1
+    },
+    {
+      "path": "src/ui/CLAUDE.md",
+      "status": "M",
+      "additions": 3,
+      "deletions": 2
+    },
+    {
+      "path": "src/ui/Pelican.tsx",
+      "status": "M",
+      "additions": 17,
+      "deletions": 3
+    }
+  ],
+  "additions": 49,
+  "deletions": 8,
+  "areas": [
+    "characters & map life",
+    "ui",
+    "words & content"
+  ],
+  "branch": "pelican-5min",
+  "opened_at": "2026-11-14T18:17:49Z",
+  "merged_by": "exit320-stack",
+  "summary": "PELICAN_AFTER 120 → 300 s. While it's flying in or asking beside you, {A}\n(Space) sends it straight up to the IDEA button (skipAhead, pure + tested);\nthat press is the pelican's alone, so it doesn't also talk to anyone nearby.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "requested_reviewers": [],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-14T18:18:15Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-52-garden-preview.gardeninsound.workers.dev\n\nUpdated for c7aa1b0. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-52]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-52-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 13,
+    "scenes": 10,
+    "content_files": 21,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 21773,
+    "commits": 76
+  },
+  "shots": [
+    {
+      "query": "at=47.5612,-122.3868",
+      "lat": 47.5612,
+      "lon": -122.3868,
+      "label": "the Junction, where everyone starts",
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "production",
+      "after": "production"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+  },
+  "first_recorded_at": "2026-11-15T16:43:39.483Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:43:39.483Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736942138"
+}

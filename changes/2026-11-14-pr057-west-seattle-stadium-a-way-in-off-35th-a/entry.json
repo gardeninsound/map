@@ -1,0 +1,122 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "198c2c1c7e7f48235d72581ffb6df7ba2877220c",
+  "parent": "e0a752e98dd01b2358e051ef6d1aa4316b828a09",
+  "pr": 57,
+  "title": "West Seattle Stadium: a way in off 35th Ave SW",
+  "url": "https://github.com/gardeninsound/map/pull/57",
+  "merged_at": "2026-11-14T18:19:40Z",
+  "body": "OSM has only an unnamed wooded park there. Hand-patched into worldData: lawn\ngrounds, walkable track and football field, grandstands along 35th with a gate\npath between them from the sidewalk, and the name in the HUD.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+  "authors": [
+    {
+      "login": "exit320-stack"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "821ecb1c572a2ae08c23e6123bdf7da8058af2ca",
+      "message": "West Seattle Stadium: a way in off 35th Ave SW\n\nOSM has only an unnamed wooded park there. Hand-patched into worldData: lawn\ngrounds, walkable track and football field, grandstands along 35th with a gate\npath between them from the sidewalk, and the name in the HUD.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-14T03:16:00Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "src/city/CLAUDE.md",
+      "status": "M",
+      "additions": 3,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/world/worldData.json",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    }
+  ],
+  "additions": 4,
+  "deletions": 1,
+  "areas": [
+    "city"
+  ],
+  "branch": "stadium-gate",
+  "opened_at": "2026-11-14T18:18:21Z",
+  "merged_by": "exit320-stack",
+  "summary": "OSM has only an unnamed wooded park there. Hand-patched into worldData: lawn\ngrounds, walkable track and football field, grandstands along 35th with a gate\npath between them from the sidewalk, and the name in the HUD.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "requested_reviewers": [
+    "vlandham"
+  ],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-14T18:18:43Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-57-garden-preview.gardeninsound.workers.dev\n\nUpdated for 821ecb1. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-57]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-57-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 13,
+    "scenes": 10,
+    "content_files": 21,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 21778,
+    "commits": 78
+  },
+  "shots": [
+    {
+      "query": "at=47.5612,-122.3868",
+      "lat": 47.5612,
+      "lon": -122.3868,
+      "label": "the Junction, where everyone starts",
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "production",
+      "after": "production"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+  },
+  "first_recorded_at": "2026-11-15T16:43:39.483Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:43:39.483Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736942138"
+}

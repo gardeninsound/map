@@ -1,0 +1,155 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "1e0ca4d03f1510bac7b8e6f1af40706d4fb48667",
+  "parent": "806a7e82fbb9e301966690bb2be14ee19ced0742",
+  "pr": 46,
+  "title": "Dakota Place Park in 8-bit: the old brick substation and its plaza",
+  "url": "https://github.com/gardeninsound/map/pull/46",
+  "merged_at": "2026-11-08T17:20:52Z",
+  "body": "Dakota Place Park in 8-bit: a hand-drawn landmark (4×3 tiles) on the NW corner of California Ave SW & SW Dakota St.\n\n- **The building:** the 1920s California Avenue Substation (Seattle City Light): one-story brick, tall many-paned windows, a flat roof behind a concrete parapet. Its front door is up a few steps facing Dakota.\n- **Around it:** a paved plaza on its west side with a tree, a bench and a planter; lawn, shrubs and the brown Seattle Parks sign.\n\nSources: [Seattle Parks](https://seattle.gov/parks/parks/dakota-place-park), [the city's landmark report](https://www.seattle.gov/documents/departments/neighborhoods/historicpreservation/landmarks/relateddocuments/cal-ave-substation-designation.pdf).\n\n**Jim, heads-up (map data):** my local OSM copy differs a little from your last build, so instead of a full `npm run map` I patched only the park into `worldData.json`: its 12 footprint tiles, its landmark entry, and the 2 houses it replaces. The next real rebuild reproduces it from `content/landmarks.csv`.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n",
+  "authors": [
+    {
+      "login": "exit320-stack"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "6be5a88078de43b1c1bae0fa91ed796362380d96",
+      "message": "Dakota Place Park in 8-bit: the old brick substation and its plaza\n\nA hand-drawn landmark (4×3 tiles) on the NW corner of California & Dakota: the\n1920s California Avenue Substation (Seattle City Light), one-story brick with\ntall many-paned windows, a flat roof behind a concrete parapet, its front door\nup a few steps facing Dakota; a paved plaza on its west side with a tree, a\nbench and a planter; lawn, shrubs, the brown Seattle Parks sign.\n\nMap data: only the park's footprint, its landmark entry and the two houses it\nreplaces changed (the local OSM copy differs a little from the last build, so\nthe rest of worldData.json is kept as it was rather than rebuilt).\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-05T04:54:23Z"
+    },
+    {
+      "sha": "761c02103af47d792892ffb56b9b4f8ff751eb6f",
+      "message": "Merge remote-tracking branch 'origin/main' into dakota-place",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-08T17:18:16Z"
+    },
+    {
+      "sha": "bcc5e4e8a477184c80dd9a8627b6f5e1f68d6aca",
+      "message": "Dakota Place Park in the city's landmark list\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-08T17:19:18Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "content/landmarks.csv",
+      "status": "M",
+      "additions": 1,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/CLAUDE.md",
+      "status": "M",
+      "additions": 2,
+      "deletions": 1
+    },
+    {
+      "path": "src/city/render/landmarks.ts",
+      "status": "M",
+      "additions": 96,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/world/landmarksData.json",
+      "status": "M",
+      "additions": 10,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/world/worldData.json",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    }
+  ],
+  "additions": 110,
+  "deletions": 2,
+  "areas": [
+    "city",
+    "map pipeline"
+  ],
+  "branch": "dakota-place",
+  "opened_at": "2026-11-08T17:19:22Z",
+  "merged_by": "exit320-stack",
+  "summary": "Dakota Place Park in 8-bit: a hand-drawn landmark (4×3 tiles) on the NW corner of California Ave SW & SW Dakota St.\n\n- **The building:** the 1920s California Avenue Substation (Seattle City Light): one-story brick, tall many-paned windows, a flat roof behind a concrete parapet. Its front door is up a few steps facing Dakota.\n- **Around it:** a paved plaza on its west side with a tree, a bench and a planter; lawn, shrubs and the brown Seattle Parks sign.\n\nSources: [Seattle Parks](https://seattle.gov/parks/parks/dakota-place-park), [the city's landmark report](https://www.seattle.gov/documents/departments/neighborhoods/historicpreservation/landmarks/relateddocuments/cal-ave-substation-designation.pdf).\n\n**Jim, heads-up (map data):** my local OSM copy differs a little from your last build, so instead of a full `npm run map` I patched only the park into `worldData.json`: its 12 footprint tiles, its landmark entry, and the 2 houses it replaces. The next real rebuild reproduces it from `content/landmarks.csv`.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "requested_reviewers": [
+    "vlandham"
+  ],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-08T17:19:47Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-46-garden-preview.gardeninsound.workers.dev\n\nUpdated for bcc5e4e. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-46]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-46-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 12,
+    "scenes": 10,
+    "content_files": 20,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 20992,
+    "commits": 70
+  },
+  "shots": [
+    {
+      "query": "at=47.566875,-122.387338",
+      "lat": 47.566875,
+      "lon": -122.387338,
+      "label": null,
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "production",
+      "after": "production"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+  },
+  "first_recorded_at": "2026-11-15T16:43:39.483Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:43:39.483Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736942138"
+}

@@ -1,0 +1,135 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "806a7e82fbb9e301966690bb2be14ee19ced0742",
+  "parent": "6fb247dc66c598fbfdebbbaf9e5361e3313e7014",
+  "pr": 45,
+  "title": "Pelican: comes 2 minutes after you join, not 10 seconds",
+  "url": "https://github.com/gardeninsound/map/pull/45",
+  "merged_at": "2026-11-08T17:19:31Z",
+  "body": "The pelican now comes 2 minutes after you join (it was 10 seconds), still waiting if a dialog or scene is open. `PELICAN_AFTER` 10 → 120, plus its notes.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n",
+  "authors": [
+    {
+      "login": "exit320-stack"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "d9a47e413b00f2cb5bc4e7052234aed17f38211c",
+      "message": "Pelican: comes 2 minutes after you join, not 10 seconds\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-05T04:55:20Z"
+    },
+    {
+      "sha": "f22ec155ee703b5477f1a851a5c868091e038cb7",
+      "message": "Merge remote-tracking branch 'origin/main' into pelican-later\n\n# Conflicts:\n#\tCLAUDE.md",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-08T17:18:01Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "src/content/pelican.ts",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "src/game/pelican.ts",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "src/ui/CLAUDE.md",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    }
+  ],
+  "additions": 3,
+  "deletions": 3,
+  "areas": [
+    "characters & map life",
+    "ui",
+    "words & content"
+  ],
+  "branch": "pelican-later",
+  "opened_at": "2026-11-08T17:18:05Z",
+  "merged_by": "exit320-stack",
+  "summary": "The pelican now comes 2 minutes after you join (it was 10 seconds), still waiting if a dialog or scene is open. `PELICAN_AFTER` 10 → 120, plus its notes.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "requested_reviewers": [],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-08T17:18:32Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-45-garden-preview.gardeninsound.workers.dev\n\nUpdated for f22ec15. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-45]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-45-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 12,
+    "scenes": 10,
+    "content_files": 20,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 20896,
+    "commits": 69
+  },
+  "shots": [
+    {
+      "query": "at=47.5612,-122.3868",
+      "lat": 47.5612,
+      "lon": -122.3868,
+      "label": "the Junction, where everyone starts",
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "production",
+      "after": "production"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+  },
+  "first_recorded_at": "2026-11-15T16:43:39.483Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:43:39.483Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736942138"
+}

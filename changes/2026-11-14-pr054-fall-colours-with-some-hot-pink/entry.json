@@ -1,0 +1,166 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "e0a752e98dd01b2358e051ef6d1aa4316b828a09",
+  "parent": "5a3763336742b78da86ef36f35ee3cb26ea75820",
+  "pr": 54,
+  "title": "Fall colours, with some hot pink",
+  "url": "https://github.com/gardeninsound/map/pull/54",
+  "merged_at": "2026-11-14T18:19:31Z",
+  "body": "The map palette goes autumn: olive-gold lawns, trees burnt orange, rust and\ngold, fallen leaves in the grass (some hot pink), a cooler grey-teal sea, warm\nsand, rust/pumpkin/mustard roofs with the odd hot-pink one, amber windows. The\nsame swap where landmark, park and Cone Catch drawings copied the old greens.\nUI: a louder hot pink, marigold for yellow, olive for teal, aubergine outlines,\nwarmer paper; the title screen gets an autumn dusk. The 3D rooms are unchanged.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+  "authors": [
+    {
+      "login": "exit320-stack"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "882c5964c7b529dba8899f7cb5b0702ef890d735",
+      "message": "Fall colours, with some hot pink\n\nThe map palette goes autumn: olive-gold lawns, trees burnt orange, rust and\ngold, fallen leaves in the grass (some hot pink), a cooler grey-teal sea, warm\nsand, rust/pumpkin/mustard roofs with the odd hot-pink one, amber windows. The\nsame swap where landmark, park and Cone Catch drawings copied the old greens.\nUI: a louder hot pink, marigold for yellow, olive for teal, aubergine outlines,\nwarmer paper; the title screen gets an autumn dusk. The 3D rooms are unchanged.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-14T00:50:25Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "src/city/engine/CityGame.ts",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "src/city/render/detailArt.ts",
+      "status": "M",
+      "additions": 3,
+      "deletions": 3
+    },
+    {
+      "path": "src/city/render/landmarks.ts",
+      "status": "M",
+      "additions": 13,
+      "deletions": 13
+    },
+    {
+      "path": "src/city/render/palette.ts",
+      "status": "M",
+      "additions": 33,
+      "deletions": 28
+    },
+    {
+      "path": "src/city/render/tileArt.ts",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "src/city/ui/ui.css",
+      "status": "M",
+      "additions": 6,
+      "deletions": 6
+    },
+    {
+      "path": "src/experiences/minigames/ConeCatch.tsx",
+      "status": "M",
+      "additions": 5,
+      "deletions": 5
+    },
+    {
+      "path": "src/game/plugins/lunaPark.ts",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "src/styles.css",
+      "status": "M",
+      "additions": 3,
+      "deletions": 3
+    }
+  ],
+  "additions": 66,
+  "deletions": 61,
+  "areas": [
+    "city",
+    "characters & map life",
+    "scenes & games"
+  ],
+  "branch": "fall-colors",
+  "opened_at": "2026-11-14T18:18:00Z",
+  "merged_by": "exit320-stack",
+  "summary": "The map palette goes autumn: olive-gold lawns, trees burnt orange, rust and\ngold, fallen leaves in the grass (some hot pink), a cooler grey-teal sea, warm\nsand, rust/pumpkin/mustard roofs with the odd hot-pink one, amber windows. The\nsame swap where landmark, park and Cone Catch drawings copied the old greens.\nUI: a louder hot pink, marigold for yellow, olive for teal, aubergine outlines,\nwarmer paper; the title screen gets an autumn dusk. The 3D rooms are unchanged.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "requested_reviewers": [
+    "vlandham"
+  ],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-14T18:18:24Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-54-garden-preview.gardeninsound.workers.dev\n\nUpdated for 882c596. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-54]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-54-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 13,
+    "scenes": 10,
+    "content_files": 21,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 21778,
+    "commits": 77
+  },
+  "shots": [
+    {
+      "query": "at=47.5612,-122.3868",
+      "lat": 47.5612,
+      "lon": -122.3868,
+      "label": "the Junction, where everyone starts",
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "production",
+      "after": "production"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+  },
+  "first_recorded_at": "2026-11-15T16:43:39.483Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:43:39.483Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736942138"
+}

@@ -1,0 +1,167 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "b3fe669496caee0a112bbe36ad73d7cf986e790d",
+  "parent": "198c2c1c7e7f48235d72581ffb6df7ba2877220c",
+  "pr": 58,
+  "title": "Giant chickens boxing in West Seattle Stadium",
+  "url": "https://github.com/gardeninsound/map/pull/58",
+  "merged_at": "2026-11-14T18:19:55Z",
+  "body": "A ring on the football field; two ~5-tile-tall low-poly chickens (three.js,\nlazy-loaded near the stadium, rendered at map-pixel size) slug it out on the\nwall clock: rounds, knockdowns with a count, rests in the corners, feathers\nand a thud on every landed punch, the bell each round. Ringside, the ring\nannouncer sums up the bout. Fight rules pure + tested.\n\nOSM has only an unnamed wooded park there. Hand-patched into worldData: lawn\ngrounds, walkable track and football field, grandstands along 35th with a gate\npath between them from the sidewalk, and the name in the HUD.\nStacked on #57 (West Seattle Stadium access) — merge that first; this PR's diff includes it until then.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n",
+  "authors": [
+    {
+      "login": "exit320-stack"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "821ecb1c572a2ae08c23e6123bdf7da8058af2ca",
+      "message": "West Seattle Stadium: a way in off 35th Ave SW\n\nOSM has only an unnamed wooded park there. Hand-patched into worldData: lawn\ngrounds, walkable track and football field, grandstands along 35th with a gate\npath between them from the sidewalk, and the name in the HUD.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-14T03:16:00Z"
+    },
+    {
+      "sha": "46a6cc9a788414e6463dbdf05cd29c296c06f1e4",
+      "message": "Giant chickens boxing in West Seattle Stadium\n\nA ring on the football field; two ~5-tile-tall low-poly chickens (three.js,\nlazy-loaded near the stadium, rendered at map-pixel size) slug it out on the\nwall clock: rounds, knockdowns with a count, rests in the corners, feathers\nand a thud on every landed punch, the bell each round. Ringside, the ring\nannouncer sums up the bout. Fight rules pure + tested.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-14T03:25:19Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "src/App.tsx",
+      "status": "M",
+      "additions": 12,
+      "deletions": 2
+    },
+    {
+      "path": "src/content/chickenBoxing.ts",
+      "status": "A",
+      "additions": 42,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/CLAUDE.md",
+      "status": "M",
+      "additions": 7,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/boxing3d.ts",
+      "status": "A",
+      "additions": 208,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/chickenBoxing.test.ts",
+      "status": "A",
+      "additions": 79,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/chickenBoxing.ts",
+      "status": "A",
+      "additions": 142,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/plugins/chickenBoxing.ts",
+      "status": "A",
+      "additions": 134,
+      "deletions": 0
+    },
+    {
+      "path": "src/ui/sounds.ts",
+      "status": "M",
+      "additions": 5,
+      "deletions": 0
+    }
+  ],
+  "additions": 629,
+  "deletions": 2,
+  "areas": [
+    "characters & map life",
+    "ui",
+    "words & content"
+  ],
+  "branch": "chicken-boxing",
+  "opened_at": "2026-11-14T18:18:28Z",
+  "merged_by": "exit320-stack",
+  "summary": "A ring on the football field; two ~5-tile-tall low-poly chickens (three.js,\nlazy-loaded near the stadium, rendered at map-pixel size) slug it out on the\nwall clock: rounds, knockdowns with a count, rests in the corners, feathers\nand a thud on every landed punch, the bell each round. Ringside, the ring\nannouncer sums up the bout. Fight rules pure + tested.\n\nOSM has only an unnamed wooded park there. Hand-patched into worldData: lawn\ngrounds, walkable track and football field, grandstands along 35th with a gate\npath between them from the sidewalk, and the name in the HUD.\nStacked on #57 (West Seattle Stadium access) — merge that first; this PR's diff includes it until then.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "requested_reviewers": [
+    "vlandham"
+  ],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-14T18:18:52Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-58-garden-preview.gardeninsound.workers.dev\n\nUpdated for 46a6cc9. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-58]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-58-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 14,
+    "scenes": 10,
+    "content_files": 22,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 22398,
+    "commits": 79
+  },
+  "shots": [
+    {
+      "query": "at=47.56274,-122.37489",
+      "lat": 47.56274,
+      "lon": -122.37489,
+      "label": null,
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "production",
+      "after": "production"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+  },
+  "first_recorded_at": "2026-11-15T16:43:39.483Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:43:39.483Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736942138"
+}

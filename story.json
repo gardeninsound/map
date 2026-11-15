@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-11-15T16:43:07.481Z",
+  "generated_at": "2026-11-15T17:03:45.323Z",
   "changes": [
     {
       "pr": null,
@@ -1783,6 +1783,2050 @@
         "source_lines": 18660,
         "commits": 53
       }
+    },
+    {
+      "pr": 19,
+      "sha": "28fdabfc2a969f83fba39b294354377c2fef8af2",
+      "title": "Wall That Kept Turning: hand-picked photos, all of this wall, across the whole timeline",
+      "url": "https://github.com/gardeninsound/map/pull/19",
+      "merged_at": "2026-11-05T02:37:35Z",
+      "dir": "changes/2026-11-04-pr019-wall-that-kept-turning-hand-picked-photo",
+      "ideas": [],
+      "summary": "Drops five photos of other walls (Rush Hour boards, the duck, the rat) that the even spread had picked up. The scene now uses 24 hand-picked wall photos from Nov 2023 to Mar 2025, with more from the later stages (Jul 2024 onward: 4 → 9). Off-site photos in the Bus Wall folder are listed in a comment beside `wallTurns.picks`, and a new test checks the picks exist, are stills and stay in date order.\n\nAlso adds `docs/art-pipeline.md`: encoding settings, picking a scene's photos, publishing (linked from the README).\n\nMike approved the photo changes.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 32,
+      "additions": 78,
+      "deletions": 2,
+      "areas": [
+        "words & content",
+        "art & sound",
+        "docs"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5612,-122.3868",
+          "lat": 47.5612,
+          "lon": -122.3868,
+          "label": "the Junction, where everyone starts",
+          "before": "changes/2026-11-04-pr019-wall-that-kept-turning-hand-picked-photo/before-1.webp",
+          "after": "changes/2026-11-04-pr019-wall-that-kept-turning-hand-picked-photo/after-1.webp",
+          "moving": "changes/2026-11-04-pr019-wall-that-kept-turning-hand-picked-photo/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 9,
+        "scenes": 10,
+        "content_files": 18,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 18678,
+        "commits": 54
+      }
+    },
+    {
+      "pr": 21,
+      "sha": "aa7d31980e212f0b08d1c086b9847e334b98444c",
+      "title": "PR previews on Cloudflare: every PR gets its own copy of the site",
+      "url": "https://github.com/gardeninsound/map/pull/21",
+      "merged_at": "2026-11-05T03:05:26Z",
+      "dir": "changes/2026-11-04-pr021-pr-previews-on-cloudflare-every-pr-gets",
+      "ideas": [],
+      "summary": "Every pull request from a branch in this repo gets a link to its own copy of the site, commented on the PR and updated on every push:\n\n**`https://pr-<number>-garden-preview.gardeninsound.workers.dev`**\n\nThe live site is untouched: it still deploys from `main` to GitHub Pages.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 12,
+      "additions": 1762,
+      "deletions": 15,
+      "areas": [
+        "relay",
+        "idea box",
+        "ci",
+        "docs"
+      ],
+      "shots": [],
+      "census": {
+        "spots": 15,
+        "plugins": 9,
+        "scenes": 10,
+        "content_files": 18,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 18678,
+        "commits": 55
+      }
+    },
+    {
+      "pr": 23,
+      "sha": "1b86bf9758f3dc6e6e3d7ef27eca7c647d364a9d",
+      "title": "Previews: a \"View deployment\" button on each PR, linking its preview",
+      "url": "https://github.com/gardeninsound/map/pull/23",
+      "merged_at": "2026-11-05T03:12:49Z",
+      "dir": "changes/2026-11-04-pr023-previews-a-view-deployment-button-on-eac",
+      "ideas": [],
+      "summary": "The preview job becomes a deployment to a `preview` environment, so each PR shows a **View deployment** button with its preview link. The button appears in the PR's timeline and in the merge box. The bot's comment stays too.\n\nThe docs now suggest an account API token (owned by the Cloudflare account, not a person) for `CLOUDFLARE_API_TOKEN`.\n\nThis PR is its own test: it should get the button.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 3,
+      "additions": 12,
+      "deletions": 4,
+      "areas": [
+        "ci",
+        "docs"
+      ],
+      "shots": [],
+      "census": {
+        "spots": 15,
+        "plugins": 9,
+        "scenes": 10,
+        "content_files": 18,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 18678,
+        "commits": 56
+      }
+    },
+    {
+      "pr": 24,
+      "sha": "82ffdf9b73809515a3db8584ecb7b43cf9c0faa4",
+      "title": "Title screen: Galapagos, not Galarpagos",
+      "url": "https://github.com/gardeninsound/map/pull/24",
+      "merged_at": "2026-11-05T03:44:55Z",
+      "dir": "changes/2026-11-04-pr024-title-screen-galapagos-not-galarpagos",
+      "ideas": [],
+      "summary": "Fixes the typo on the title screen: \"Galarpagos\" → \"Galapagos West Seattle\".",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "exit320-stack"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 1,
+      "additions": 1,
+      "deletions": 1,
+      "areas": [
+        "ui"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5612,-122.3868",
+          "lat": 47.5612,
+          "lon": -122.3868,
+          "label": "the Junction, where everyone starts",
+          "before": "changes/2026-11-04-pr024-title-screen-galapagos-not-galarpagos/before-1.webp",
+          "after": "changes/2026-11-04-pr024-title-screen-galapagos-not-galarpagos/after-1.webp",
+          "moving": "changes/2026-11-04-pr024-title-screen-galapagos-not-galarpagos/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 9,
+        "scenes": 10,
+        "content_files": 18,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 18678,
+        "commits": 57
+      }
+    },
+    {
+      "pr": 25,
+      "sha": "1a849174bae05efb8d14642887ebd902dfc15ae5",
+      "title": "A pegasus walks out of Pegasus Books, says hello and flies off",
+      "url": "https://github.com/gardeninsound/map/pull/25",
+      "merged_at": "2026-11-05T03:46:18Z",
+      "dir": "changes/2026-11-04-pr025-a-pegasus-walks-out-of-pegasus-books-say",
+      "ideas": [],
+      "summary": "A pegasus lives in Pegasus Books (Junction, California side). Walk within 4 tiles and it steps out of the door (clipped at the shop front), turns to you and says hello in a tiny-font bubble with a whinny, then spreads its wings and flies off north-east. It's home again once you're 14 tiles away; each visit has the next hello line.\n\n- State is pure + tested: `src/game/pegasus.ts`; plugin `src/game/plugins/pegasus.ts`; lines in `src/content/pegasus.ts` (drafts for Mike).\n- 24×20 sprite from parts in `sprites.ts`; whinny + flap in `ui/sounds.ts`.\n- `src/game/storefrontSlot.ts`: finding a shop's slice of a Junction block face, now shared with the arcade door.\n- **Jim, heads-up:** one line in `App.tsx` adds the plugin (plus a `__pegasus` dev hook), and a Where-things-live entry in CLAUDE.md. RECENT's top entry lands at the bookstore.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "exit320-stack"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 11,
+      "additions": 394,
+      "deletions": 20,
+      "areas": [
+        "characters & map life",
+        "ui",
+        "words & content",
+        "docs"
+      ],
+      "shots": [
+        {
+          "query": "at=arcade",
+          "lat": null,
+          "lon": null,
+          "label": "the Duck Arcade",
+          "before": "changes/2026-11-04-pr025-a-pegasus-walks-out-of-pegasus-books-say/before-1.webp",
+          "after": "changes/2026-11-04-pr025-a-pegasus-walks-out-of-pegasus-books-say/after-1.webp",
+          "moving": "changes/2026-11-04-pr025-a-pegasus-walks-out-of-pegasus-books-say/moving-1.webp"
+        },
+        {
+          "query": "at=47.561664,-122.386939",
+          "lat": 47.561664,
+          "lon": -122.386939,
+          "label": null,
+          "before": "changes/2026-11-04-pr025-a-pegasus-walks-out-of-pegasus-books-say/before-2.webp",
+          "after": "changes/2026-11-04-pr025-a-pegasus-walks-out-of-pegasus-books-say/after-2.webp",
+          "moving": "changes/2026-11-04-pr025-a-pegasus-walks-out-of-pegasus-books-say/moving-2.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 10,
+        "scenes": 10,
+        "content_files": 19,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 19047,
+        "commits": 58
+      }
+    },
+    {
+      "pr": 26,
+      "sha": "6d48ee1cafe310fd735e06e18c342b3010515f60",
+      "title": "Hold Shift and the rabbit rides a bicycle",
+      "url": "https://github.com/gardeninsound/map/pull/26",
+      "merged_at": "2026-11-05T03:46:26Z",
+      "dir": "changes/2026-11-04-pr026-hold-shift-and-the-rabbit-rides-a-bicycl",
+      "ideas": [],
+      "summary": "Holding Shift (already RUN speed) now shows the rabbit on a red bicycle, pedalling, in all four directions: side on 20×18 with both wheels, head on 16×20 with handlebars and a headlight (a red reflector from behind).\n\n**Jim, heads-up, this touches `src/city/`:**\n- `render/sprites.ts`: `buildBikeRabbit(scarf?)`, `BIKE_GRIDS` (tested for shape), and `drawStanding()`, which centres a frame of any size with its feet on the spot (same result as before for 16×16).\n- `engine/CityGame.ts`: `player.riding` (= `input.running()`, false while paused), a `rider` option (defaults to the bike), and a wider shadow side on.\n- **Visitors wire:** an optional sixth field, `riding`. Older clients send five fields, so they're read as walking, and they ignore the sixth. `shouldSend` treats a change in it as a state change. Tested.\n- Touch has no run button yet, so phones can't ride.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "exit320-stack"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 8,
+      "additions": 132,
+      "deletions": 26,
+      "areas": [
+        "city",
+        "characters & map life",
+        "docs"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5612,-122.3868",
+          "lat": 47.5612,
+          "lon": -122.3868,
+          "label": "the Junction, where everyone starts",
+          "before": "changes/2026-11-04-pr026-hold-shift-and-the-rabbit-rides-a-bicycl/before-1.webp",
+          "after": "changes/2026-11-04-pr026-hold-shift-and-the-rabbit-rides-a-bicycl/after-1.webp",
+          "moving": "changes/2026-11-04-pr026-hold-shift-and-the-rabbit-rides-a-bicycl/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 10,
+        "scenes": 10,
+        "content_files": 19,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 19151,
+        "commits": 59
+      }
+    },
+    {
+      "pr": 27,
+      "sha": "00212da18403526d11a160d3052c29eb9e4b608c",
+      "title": "Duck Arcade: a bear with a bag of licorice after your first game",
+      "url": "https://github.com/gardeninsound/map/pull/27",
+      "merged_at": "2026-11-05T03:46:35Z",
+      "dir": "changes/2026-11-04-pr027-duck-arcade-a-bear-with-a-bag-of-licoric",
+      "ideas": [],
+      "summary": "After the first game of a visit to the Duck Arcade, a low-poly bear is right beside you as the game closes: \"Wow! You're really good at that game. Want a licorice?\" It holds up a paper bag of red licorice. Click or tap the bag (or {A}) to take one. The rabbit says \"Thanks!\" (the browser's speech, pitched up; silent when muted). Then the bear says it's off to play Avocado Drop, walks over with the camera following, and plays it for the rest of the visit, avocados falling on its screen.\n\n- New coming-soon cabinet AVOCADO DROP on the floor by the doors (the 9th slot).\n- Model and animation: `arcade/ArcadeBear.ts`. Where it stands and walks (round the cabinets and the duck) is pure + tested: `src/game/arcadeBear.ts`. Words: `bearLines` in `content/duckArcade.ts`.\n- The smoke test now clicks the licorice for real after the first cabinet (`window.__arcade.bagOnScreen()`) and checks the bear doesn't come back after later games.\n- **Jim, heads-up:** a short CLAUDE.md note.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "exit320-stack"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 10,
+      "additions": 750,
+      "deletions": 18,
+      "areas": [
+        "characters & map life",
+        "scenes & games",
+        "ui",
+        "words & content",
+        "docs",
+        "tools"
+      ],
+      "shots": [
+        {
+          "query": "at=arcade",
+          "lat": null,
+          "lon": null,
+          "label": "the Duck Arcade",
+          "before": "changes/2026-11-04-pr027-duck-arcade-a-bear-with-a-bag-of-licoric/before-1.webp",
+          "after": "changes/2026-11-04-pr027-duck-arcade-a-bear-with-a-bag-of-licoric/after-1.webp",
+          "moving": "changes/2026-11-04-pr027-duck-arcade-a-bear-with-a-bag-of-licoric/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 10,
+        "scenes": 10,
+        "content_files": 19,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 19846,
+        "commits": 60
+      }
+    },
+    {
+      "pr": 28,
+      "sha": "be941f4accb40a159e4967ca7fe6156fb464a4b7",
+      "title": "Duck Arcade: misty forest canopy on the ceiling",
+      "url": "https://github.com/gardeninsound/map/pull/28",
+      "merged_at": "2026-11-05T03:49:48Z",
+      "dir": "changes/2026-11-04-pr028-duck-arcade-misty-forest-canopy-on-the-c",
+      "ideas": [],
+      "summary": "Mike's looking-up-through-misty-firs GIF on the Duck Arcade's ceiling, as a looping video texture. The fluorescent panels stay, hanging just below it.\n\n- The 8.5 MB GIF became WebM (376 KB) and MP4 for Safari (287 KB) in `public/arcade/ceiling/`, listed in the published-files test.\n- Unlit and a touch dimmed, so the panels still read as the light. It holds its first frame for reduced motion.\n- **Jim, heads-up:** one CLAUDE.md line.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "exit320-stack"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 5,
+      "additions": 41,
+      "deletions": 3,
+      "areas": [
+        "scenes & games",
+        "words & content",
+        "art & sound",
+        "docs"
+      ],
+      "shots": [
+        {
+          "query": "at=arcade",
+          "lat": null,
+          "lon": null,
+          "label": "the Duck Arcade",
+          "before": "changes/2026-11-04-pr028-duck-arcade-misty-forest-canopy-on-the-c/before-1.webp",
+          "after": "changes/2026-11-04-pr028-duck-arcade-misty-forest-canopy-on-the-c/after-1.webp",
+          "moving": "changes/2026-11-04-pr028-duck-arcade-misty-forest-canopy-on-the-c/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 10,
+        "scenes": 10,
+        "content_files": 19,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 19883,
+        "commits": 61
+      }
+    },
+    {
+      "pr": 29,
+      "sha": "22a962ffe844ed87ce838ff9a61638981f9c6223",
+      "title": "Previews: when a PR closes, its preview becomes a \"this preview has closed\" page",
+      "url": "https://github.com/gardeninsound/map/pull/29",
+      "merged_at": "2026-11-05T04:03:55Z",
+      "dir": "changes/2026-11-04-pr029-previews-when-a-pr-closes-its-preview-be",
+      "ideas": [],
+      "summary": "When a PR closes (merged or not), its preview stops being a live copy of the site.\n\n- **`.github/workflows/preview-cleanup.yml`**, on `pull_request: closed`:\n  - re-uploads `pr-<N>` with `preview/closed/index.html`, a short \"This preview has closed\" page linking to the live site, with no game, relay or idea box;\n  - marks the PR's `preview` deployments inactive, so GitHub stops showing an active deployment.\n- **Why:** old previews stayed online forever, joining the real relay with old code and able to file real ideas. Cloudflare has no command to delete a preview alias; uploading over one replaces it. It also keeps at most 1,000 aliases per Worker.\n- It shares the `preview-<N>` concurrency group with the Preview workflow without cancelling it, so a last upload finishes before the preview is closed.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 5,
+      "additions": 92,
+      "deletions": 1,
+      "areas": [
+        "ci",
+        "docs"
+      ],
+      "shots": [],
+      "census": {
+        "spots": 15,
+        "plugins": 10,
+        "scenes": 10,
+        "content_files": 19,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 19883,
+        "commits": 62
+      }
+    },
+    {
+      "pr": 31,
+      "sha": "82c4f2e9fe01c3b310d5cb2ce0cde659b9eb044c",
+      "title": "A hidden house on 45th, a walkable alley, and Ham the cat",
+      "url": "https://github.com/gardeninsound/map/pull/31",
+      "merged_at": "2026-11-05T04:26:16Z",
+      "dir": "changes/2026-11-04-pr031-a-hidden-house-on-45th-a-walkable-alley",
+      "ideas": [],
+      "summary": "- **Hidden house** at 1918 45th Ave SW: a hand-drawn 1½-storey Craftsman (shed dormer, porch, steps, rhododendron with pumpkins, leaf pile) as a nameless landmark, so it never shows on the map's place list; you find it by walking past.\n- **Walkable alley** behind it (Hill → Holgate): `ALLEYS` in `scripts/city/map-config.mjs` turns listed alleys into concrete lanes, named \"Alley\" in the HUD.\n- **Ham the cat** (Scottish Fold): wanders the street and alley within 8 tiles of home, sits to look at a rabbit that comes close, mews and says one set of lines per visit. Movement pure + tested (`src/game/ham.ts`), lines in `src/content/ham.ts`.\n- Map rebuilt from fresh OSM (~28 unrelated tiles changed).\n\nNot set to auto-merge: holding for a look at the preview first.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 15,
+      "additions": 472,
+      "deletions": 6,
+      "areas": [
+        "city",
+        "map pipeline",
+        "characters & map life",
+        "ui",
+        "words & content",
+        "docs"
+      ],
+      "shots": [
+        {
+          "query": "at=47.586143,-122.388734",
+          "lat": 47.586143,
+          "lon": -122.388734,
+          "label": null,
+          "before": "changes/2026-11-04-pr031-a-hidden-house-on-45th-a-walkable-alley/before-1.webp",
+          "after": "changes/2026-11-04-pr031-a-hidden-house-on-45th-a-walkable-alley/after-1.webp",
+          "moving": "changes/2026-11-04-pr031-a-hidden-house-on-45th-a-walkable-alley/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 11,
+        "scenes": 10,
+        "content_files": 20,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 20311,
+        "commits": 63
+      }
+    },
+    {
+      "pr": 32,
+      "sha": "0b5f5b39c39756a7e132f24f3ebdf4b2853d5917",
+      "title": "A pelican points out the idea box, 10 s after you join",
+      "url": "https://github.com/gardeninsound/map/pull/32",
+      "merged_at": "2026-11-05T04:37:51Z",
+      "dir": "changes/2026-11-04-pr032-a-pelican-points-out-the-idea-box-10-s-a",
+      "ideas": [],
+      "summary": "Once a session, 10 seconds after you're on the map (waiting if a dialog or scene is open), a pelican flies in and lands beside your rabbit: \"Anything you want to add, pumpkin?\" Then it flies up onto the ✿ IDEA button, which lights yellow and bobs, says \"Dream it out!\", and flies off the screen.\n\n- HTML laid over the map and the HUD; it never takes a click. Opening anything (the idea box included) ends its visit.\n- Flight and timing are pure + tested: `src/game/pelican.ts`. Words: `src/content/pelican.ts` (drafts for Mike). 24-wide sprite in `sprites.ts`.\n- Reduced motion: no flying across the screen, but still time to read each line.\n- **Jim, heads-up:** `CityGame` gets `scale` and `screenPoint(tile)`, so HTML can be placed over a map point. `App.tsx` gets the 10 s timer and the overlay, and CLAUDE.md a note. Merged with `main`; the Ham sprite and the pelican sit side by side in `sprites.ts`.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "exit320-stack"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 10,
+      "additions": 400,
+      "deletions": 0,
+      "areas": [
+        "city",
+        "characters & map life",
+        "ui",
+        "words & content",
+        "docs"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5612,-122.3868",
+          "lat": 47.5612,
+          "lon": -122.3868,
+          "label": "the Junction, where everyone starts",
+          "before": "changes/2026-11-04-pr032-a-pelican-points-out-the-idea-box-10-s-a/before-1.webp",
+          "after": "changes/2026-11-04-pr032-a-pelican-points-out-the-idea-box-10-s-a/after-1.webp",
+          "moving": "changes/2026-11-04-pr032-a-pelican-points-out-the-idea-box-10-s-a/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 11,
+        "scenes": 10,
+        "content_files": 21,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 20687,
+        "commits": 64
+      }
+    },
+    {
+      "pr": 33,
+      "sha": "23ba177e06468d5f788f81d48d3acaa70893fded",
+      "title": "Take the RECENT button off the HUD",
+      "url": "https://github.com/gardeninsound/map/pull/33",
+      "merged_at": "2026-11-05T04:41:56Z",
+      "dir": "changes/2026-11-04-pr033-take-the-recent-button-off-the-hud",
+      "ideas": [],
+      "summary": "Takes the RECENT button off the HUD (Mike's call). Also removes what only it used: the jump to each recent change, its caption, and its list (`src/content/recent.ts`).\n\n**Jim, heads-up:**\n- The smoke test used RECENT to reach the Duck Arcade. It now goes straight there with the new `?at=arcade`.\n- `?at=lat,lon` / `?atTile=x,y` now work on the live site too, not only in dev: a link that starts you somewhere, no title screen. `__` dev hooks and `?audit` stay dev-only.\n- Touches `App.tsx`, `scripts/smoke.mjs` and CLAUDE.md. Merged with `main` (Ham's dev hook kept).",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "exit320-stack"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 5,
+      "additions": 19,
+      "deletions": 101,
+      "areas": [
+        "words & content",
+        "docs",
+        "tools"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5612,-122.3868",
+          "lat": 47.5612,
+          "lon": -122.3868,
+          "label": "the Junction, where everyone starts",
+          "before": "changes/2026-11-04-pr033-take-the-recent-button-off-the-hud/before-1.webp",
+          "after": "changes/2026-11-04-pr033-take-the-recent-button-off-the-hud/after-1.webp",
+          "moving": "changes/2026-11-04-pr033-take-the-recent-button-off-the-hud/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 11,
+        "scenes": 10,
+        "content_files": 20,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 20616,
+        "commits": 65
+      }
+    },
+    {
+      "pr": 20,
+      "sha": "731c8b4739f24d5c8107591588ac3a7af6a8d004",
+      "title": "AI helper: free models turn idea-box suggestions into small, checked changes (run by hand)",
+      "url": "https://github.com/gardeninsound/map/pull/20",
+      "merged_at": "2026-11-05T04:43:17Z",
+      "dir": "changes/2026-11-04-pr020-ai-helper-free-models-turn-idea-box-sugg",
+      "ideas": [],
+      "summary": "An experiment: can a **free** AI model turn a visitor's idea (an issue labelled `suggestion`) into a small, correct change? Run by hand on a laptop; nothing is automated, and nothing changes on the live site.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code",
+        "the free-model helper (scripts/ai)"
+      ],
+      "files": 13,
+      "additions": 932,
+      "deletions": 2,
+      "areas": [
+        "characters & map life",
+        "words & content",
+        "docs",
+        "tools"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5612,-122.3868",
+          "lat": 47.5612,
+          "lon": -122.3868,
+          "label": "the Junction, where everyone starts",
+          "before": "changes/2026-11-04-pr020-ai-helper-free-models-turn-idea-box-sugg/before-1.webp",
+          "after": "changes/2026-11-04-pr020-ai-helper-free-models-turn-idea-box-sugg/after-1.webp",
+          "moving": "changes/2026-11-04-pr020-ai-helper-free-models-turn-idea-box-sugg/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 11,
+        "scenes": 10,
+        "content_files": 20,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 20643,
+        "commits": 66
+      }
+    },
+    {
+      "pr": 35,
+      "sha": "5527bcb16cb7c3fccda58114efc8672268d7cb56",
+      "title": "Toy dinosaurs plod west along the east–west streets",
+      "url": "https://github.com/gardeninsound/map/pull/35",
+      "merged_at": "2026-11-05T04:44:53Z",
+      "dir": "changes/2026-11-04-pr035-toy-dinosaurs-plod-west-along-the-eastwe",
+      "ideas": [],
+      "summary": "Mike's walking toy dinosaur GIF, plodding west along the east–west streets, with his recording playing as one goes by.\n\n- **Sprite:** `node scripts/make-dino.mjs <dino.gif>` keys out the green backdrop, keeps the shadow (see-through) and inks an outline. Output: a 42-frame, 52×19 sheet, `public/sprites/dino-walk.png` (9 KB), plus `src/game/dinoSheet.ts`. The 5.8 MB GIF isn't kept.\n- **Walking:** six are always near you, each walking west down the middle of a \"SW … St\". At the end of the street, or once far behind you, it turns up on another east–west street nearby, out of sight. Pure + tested: `src/game/dinos.ts`.\n- **Sound:** Mike's recording, as `public/sounds/dinosaur.mp3` (55 KB). It plays once a pass when a dinosaur comes within 6 tiles; never two at once; quiet in scenes and when muted.\n- Both files are in the published-files test.\n- **Jim, heads-up:** a plugin line + dev hook in `App.tsx`, and a CLAUDE.md note. Merged with `main` (Ham and the pelican kept).",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "exit320-stack"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 10,
+      "additions": 393,
+      "deletions": 2,
+      "areas": [
+        "characters & map life",
+        "words & content",
+        "art & sound",
+        "docs",
+        "tools"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5612,-122.3868",
+          "lat": 47.5612,
+          "lon": -122.3868,
+          "label": null,
+          "before": "changes/2026-11-04-pr035-toy-dinosaurs-plod-west-along-the-eastwe/before-1.webp",
+          "after": "changes/2026-11-04-pr035-toy-dinosaurs-plod-west-along-the-eastwe/after-1.webp",
+          "moving": "changes/2026-11-04-pr035-toy-dinosaurs-plod-west-along-the-eastwe/moving-1.webp"
+        },
+        {
+          "query": "at=47.5655,-122.3866",
+          "lat": 47.5655,
+          "lon": -122.3866,
+          "label": null,
+          "before": "changes/2026-11-04-pr035-toy-dinosaurs-plod-west-along-the-eastwe/before-2.webp",
+          "after": "changes/2026-11-04-pr035-toy-dinosaurs-plod-west-along-the-eastwe/after-2.webp",
+          "moving": "changes/2026-11-04-pr035-toy-dinosaurs-plod-west-along-the-eastwe/moving-2.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 12,
+        "scenes": 10,
+        "content_files": 20,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 20896,
+        "commits": 67
+      }
+    },
+    {
+      "pr": 39,
+      "sha": "6fb247dc66c598fbfdebbbaf9e5361e3313e7014",
+      "title": "CLAUDE.md becomes an index; each area's notes move to its own folder's CLAUDE.md",
+      "url": "https://github.com/gardeninsound/map/pull/39",
+      "merged_at": "2026-11-05T04:50:32Z",
+      "dir": "changes/2026-11-04-pr039-claudemd-becomes-an-index-each-areas-not",
+      "ideas": [],
+      "summary": "The root CLAUDE.md was turning into a changelog: almost every PR edited its \"Where things live\" section, all of it loaded every session, and parallel PRs conflicted on it.\n\n- **Root CLAUDE.md** (276 → 150 lines): commands, git workflow, Check, conventions and verifying unchanged; \"Where things live\" is now a one-line-per-area index, plus the rule that a new feature adds its line to its area's file, not the root.\n- **Per-folder notes**, loaded only when Claude works there: `src/game/`, `src/experiences/`, `src/ui/`, `src/city/`, `wish/`. Text moved word for word, apart from short headers and a few cross-pointers.\n- **AI helper**: `forbidden()` now refuses every `CLAUDE.md`, not just the root one (tested).",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 8,
+      "additions": 204,
+      "deletions": 148,
+      "areas": [
+        "city",
+        "characters & map life",
+        "scenes & games",
+        "ui",
+        "idea box",
+        "docs",
+        "tools"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5612,-122.3868",
+          "lat": 47.5612,
+          "lon": -122.3868,
+          "label": "the Junction, where everyone starts",
+          "before": "changes/2026-11-04-pr039-claudemd-becomes-an-index-each-areas-not/before-1.webp",
+          "after": "changes/2026-11-04-pr039-claudemd-becomes-an-index-each-areas-not/after-1.webp",
+          "moving": "changes/2026-11-04-pr039-claudemd-becomes-an-index-each-areas-not/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 12,
+        "scenes": 10,
+        "content_files": 20,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 20896,
+        "commits": 68
+      }
+    },
+    {
+      "pr": 45,
+      "sha": "806a7e82fbb9e301966690bb2be14ee19ced0742",
+      "title": "Pelican: comes 2 minutes after you join, not 10 seconds",
+      "url": "https://github.com/gardeninsound/map/pull/45",
+      "merged_at": "2026-11-08T17:19:31Z",
+      "dir": "changes/2026-11-08-pr045-pelican-comes-2-minutes-after-you-join-n",
+      "ideas": [],
+      "summary": "The pelican now comes 2 minutes after you join (it was 10 seconds), still waiting if a dialog or scene is open. `PELICAN_AFTER` 10 → 120, plus its notes.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "exit320-stack"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 3,
+      "additions": 3,
+      "deletions": 3,
+      "areas": [
+        "characters & map life",
+        "ui",
+        "words & content"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5612,-122.3868",
+          "lat": 47.5612,
+          "lon": -122.3868,
+          "label": "the Junction, where everyone starts",
+          "before": "changes/2026-11-08-pr045-pelican-comes-2-minutes-after-you-join-n/before-1.webp",
+          "after": "changes/2026-11-08-pr045-pelican-comes-2-minutes-after-you-join-n/after-1.webp",
+          "moving": "changes/2026-11-08-pr045-pelican-comes-2-minutes-after-you-join-n/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 12,
+        "scenes": 10,
+        "content_files": 20,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 20896,
+        "commits": 69
+      }
+    },
+    {
+      "pr": 46,
+      "sha": "1e0ca4d03f1510bac7b8e6f1af40706d4fb48667",
+      "title": "Dakota Place Park in 8-bit: the old brick substation and its plaza",
+      "url": "https://github.com/gardeninsound/map/pull/46",
+      "merged_at": "2026-11-08T17:20:52Z",
+      "dir": "changes/2026-11-08-pr046-dakota-place-park-in-8-bit-the-old-brick",
+      "ideas": [],
+      "summary": "Dakota Place Park in 8-bit: a hand-drawn landmark (4×3 tiles) on the NW corner of California Ave SW & SW Dakota St.\n\n- **The building:** the 1920s California Avenue Substation (Seattle City Light): one-story brick, tall many-paned windows, a flat roof behind a concrete parapet. Its front door is up a few steps facing Dakota.\n- **Around it:** a paved plaza on its west side with a tree, a bench and a planter; lawn, shrubs and the brown Seattle Parks sign.\n\nSources: [Seattle Parks](https://seattle.gov/parks/parks/dakota-place-park), [the city's landmark report](https://www.seattle.gov/documents/departments/neighborhoods/historicpreservation/landmarks/relateddocuments/cal-ave-substation-designation.pdf).\n\n**Jim, heads-up (map data):** my local OSM copy differs a little from your last build, so instead of a full `npm run map` I patched only the park into `worldData.json`: its 12 footprint tiles, its landmark entry, and the 2 houses it replaces. The next real rebuild reproduces it from `content/landmarks.csv`.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "exit320-stack"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 5,
+      "additions": 110,
+      "deletions": 2,
+      "areas": [
+        "city",
+        "map pipeline"
+      ],
+      "shots": [
+        {
+          "query": "at=47.566875,-122.387338",
+          "lat": 47.566875,
+          "lon": -122.387338,
+          "label": null,
+          "before": "changes/2026-11-08-pr046-dakota-place-park-in-8-bit-the-old-brick/before-1.webp",
+          "after": "changes/2026-11-08-pr046-dakota-place-park-in-8-bit-the-old-brick/after-1.webp",
+          "moving": "changes/2026-11-08-pr046-dakota-place-park-in-8-bit-the-old-brick/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 12,
+        "scenes": 10,
+        "content_files": 20,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 20992,
+        "commits": 70
+      }
+    },
+    {
+      "pr": 47,
+      "sha": "e73b41a599f279fa1a54b0d083d78223c9c51bdb",
+      "title": "A rowboat at the end of 58th on Alki: climb in and paddle around",
+      "url": "https://github.com/gardeninsound/map/pull/47",
+      "merged_at": "2026-11-08T17:22:15Z",
+      "dir": "changes/2026-11-08-pr047-a-rowboat-at-the-end-of-58th-on-alki-cli",
+      "ideas": [],
+      "summary": "A rowboat at the end of 58th Ave SW on Alki: climb in and paddle around Puget Sound.\n\n- **Dock and boat:** a 2-wide wooden dock (\"58th Ave Dock\") runs from where 58th meets Alki Ave, across the park and sand to the water, with the rowboat tied up at its end. It's painted as planks, and its tiles are made walkable at attach, like Luna Park's pier.\n- **Rowing:** {A} climbs in. You row on water only, with oar strokes, a splash, a soft paddle sound and a wake. {A} climbs out wherever walkable ground is within reach: the dock, a pier, not the sand.\n- **Left behind**, far away, the boat drifts home to the dock.\n- Rules pure + tested in `src/game/rowboat.ts` (incl. React's dev double start, which used to lay no dock the second time). Sprites drawn round the rabbit's own frames.\n\n**Jim, heads-up (`src/city/`):** a small general `Vehicle` hook on `CityGame`: `game.vehicle = { canGo, speed, sprite, fps? }` takes over where the player can go, how fast and how it's drawn; Shift does nothing in one. Plus the plugin line and a dev hook in `App.tsx`. Other players still see a rabbit on the water: nothing on the wire says \"in a boat\" yet.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "exit320-stack"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 11,
+      "additions": 461,
+      "deletions": 11,
+      "areas": [
+        "city",
+        "characters & map life",
+        "ui",
+        "words & content"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5612,-122.3868",
+          "lat": 47.5612,
+          "lon": -122.3868,
+          "label": "the Junction, where everyone starts",
+          "before": "changes/2026-11-08-pr047-a-rowboat-at-the-end-of-58th-on-alki-cli/before-1.webp",
+          "after": "changes/2026-11-08-pr047-a-rowboat-at-the-end-of-58th-on-alki-cli/after-1.webp",
+          "moving": "changes/2026-11-08-pr047-a-rowboat-at-the-end-of-58th-on-alki-cli/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 13,
+        "scenes": 10,
+        "content_files": 21,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 21433,
+        "commits": 71
+      }
+    },
+    {
+      "pr": 49,
+      "sha": "3b5c00c6ce896f3f68f8697e5b13a094b0f969c3",
+      "title": "Dinosaurs: two near you instead of six",
+      "url": "https://github.com/gardeninsound/map/pull/49",
+      "merged_at": "2026-11-08T17:25:54Z",
+      "dir": "changes/2026-11-08-pr049-dinosaurs-two-near-you-instead-of-six",
+      "ideas": [],
+      "summary": "Dinosaurs are a rarer sight: two near you instead of six (`DINO_COUNT` 6 → 2). Their sound plays less often too, since fewer pass by.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "exit320-stack"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 2,
+      "additions": 2,
+      "deletions": 2,
+      "areas": [
+        "characters & map life"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5612,-122.3868",
+          "lat": 47.5612,
+          "lon": -122.3868,
+          "label": "the Junction, where everyone starts",
+          "before": "changes/2026-11-08-pr049-dinosaurs-two-near-you-instead-of-six/before-1.webp",
+          "after": "changes/2026-11-08-pr049-dinosaurs-two-near-you-instead-of-six/after-1.webp",
+          "moving": "changes/2026-11-08-pr049-dinosaurs-two-near-you-instead-of-six/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 13,
+        "scenes": 10,
+        "content_files": 21,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 21433,
+        "commits": 72
+      }
+    },
+    {
+      "pr": 48,
+      "sha": "8256fb2a586a207d3a7a4fa6c2772cdcf20af8f5",
+      "title": "The original Alki bathhouse: the 1911 Bathing Pavilion, in 8-bit on its site",
+      "url": "https://github.com/gardeninsound/map/pull/48",
+      "merged_at": "2026-11-08T17:26:51Z",
+      "dir": "changes/2026-11-08-pr048-the-original-alki-bathhouse-the-1911-bat",
+      "ideas": [],
+      "summary": "The original Alki bathhouse, the 1911 Bathing Pavilion (gone since 1955), in 8-bit on its own site, where today's bathhouse stands (2701 Alki Ave SW). A 5×3 hand-drawn landmark.\n\n- **From the written record:** a large white wood-frame Recreation Pavilion, dedicated July 4, 1911, with a spectators' viewing balcony, a café, a gym, club rooms and dressing rooms, behind a wide planked promenade.\n- **An interpretation:** its roof and number of storeys aren't described in any source found, so the hipped roof and full-width balcony are a period reading. Sources are in the drawing's comment and below.\n- **Extras:** spectators at the rail, bathers in striped wool suits on the boards.\n\nSources: [Paul Dorpat, Now & Then](https://pauldorpat.com/2011/07/16/seattle-now-then-antique-alki-swimwear/) · [Seattle DON historic sites](https://web.seattle.gov/DPD/HistoricalSite/QueryResult.aspx?ID=191867477) · [Olmsted Online #02716](https://olmstedonline.org/Job/Details/02716)\n\n**Jim, heads-up (map data):** as with Dakota Place (#46), only its footprint and landmark entry are patched into `worldData.json`, not a full rebuild from my local OSM copy. Merged with `main`: both landmarks kept everywhere.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "exit320-stack"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 5,
+      "additions": 97,
+      "deletions": 2,
+      "areas": [
+        "city",
+        "map pipeline"
+      ],
+      "shots": [
+        {
+          "query": "at=47.579695,-122.409640",
+          "lat": 47.579695,
+          "lon": -122.40964,
+          "label": null,
+          "before": "changes/2026-11-08-pr048-the-original-alki-bathhouse-the-1911-bat/before-1.webp",
+          "after": "changes/2026-11-08-pr048-the-original-alki-bathhouse-the-1911-bat/after-1.webp",
+          "moving": "changes/2026-11-08-pr048-the-original-alki-bathhouse-the-1911-bat/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 13,
+        "scenes": 10,
+        "content_files": 21,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 21517,
+        "commits": 73
+      }
+    },
+    {
+      "pr": 51,
+      "sha": "32d3693e30ea0ec783c2b99e64e14fb69e7735c9",
+      "title": "Duck Arcade: a deer plays Quack Hero, bobbing to the beat",
+      "url": "https://github.com/gardeninsound/map/pull/51",
+      "merged_at": "2026-11-14T18:18:48Z",
+      "dir": "changes/2026-11-14-pr051-duck-arcade-a-deer-plays-quack-hero-bobb",
+      "ideas": [],
+      "summary": "A low-poly cartoon buck (antlers, white tail) stands at the Quack Hero cabinet\nfrom the moment you walk in: front hooves tapping the buttons on the beat, head\nbobbing, ears twitching, tail flicking, a little hop now and then. Its screen\nshows the rhythm game going (rubber-duck notes down three lanes, a DEER score).\nYou and the bear walk round it; the bear coming over no longer stops other\ncabinets' screens. DEER_GAME in content/duckArcade.ts; a test checks its\ncabinet and the bear's both stand in the room.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "exit320-stack"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 5,
+      "additions": 206,
+      "deletions": 10,
+      "areas": [
+        "scenes & games",
+        "words & content"
+      ],
+      "shots": [
+        {
+          "query": "at=arcade",
+          "lat": null,
+          "lon": null,
+          "label": "the Duck Arcade",
+          "before": "changes/2026-11-14-pr051-duck-arcade-a-deer-plays-quack-hero-bobb/before-1.webp",
+          "after": "changes/2026-11-14-pr051-duck-arcade-a-deer-plays-quack-hero-bobb/after-1.webp",
+          "moving": "changes/2026-11-14-pr051-duck-arcade-a-deer-plays-quack-hero-bobb/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 13,
+        "scenes": 10,
+        "content_files": 21,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 21710,
+        "commits": 74
+      }
+    },
+    {
+      "pr": 50,
+      "sha": "4a87a5b39511d5107720548b29ffc91b97950dea",
+      "title": "Duck Arcade: \"Paddles at Dawn\" loops quietly while you're on the floor",
+      "url": "https://github.com/gardeninsound/map/pull/50",
+      "merged_at": "2026-11-14T18:18:53Z",
+      "dir": "changes/2026-11-14-pr050-duck-arcade-paddles-at-dawn-loops-quietl",
+      "ideas": [],
+      "summary": "Mike's track (public/arcade/Paddles_at_Dawn.mp3, 1:07, 1.6 MB) plays at 20%\nvolume, looping, from the moment you walk in; it pauses while a cabinet's game\nplays (each has its own sound) and picks up again after; silent when the map is\nmuted. File and volume: ARCADE_MUSIC in content/duckArcade.ts; in the\npublished-files test.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "exit320-stack"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 5,
+      "additions": 27,
+      "deletions": 2,
+      "areas": [
+        "scenes & games",
+        "words & content",
+        "art & sound"
+      ],
+      "shots": [
+        {
+          "query": "at=arcade",
+          "lat": null,
+          "lon": null,
+          "label": "the Duck Arcade",
+          "before": "changes/2026-11-14-pr050-duck-arcade-paddles-at-dawn-loops-quietl/before-1.webp",
+          "after": "changes/2026-11-14-pr050-duck-arcade-paddles-at-dawn-loops-quietl/after-1.webp",
+          "moving": "changes/2026-11-14-pr050-duck-arcade-paddles-at-dawn-loops-quietl/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 13,
+        "scenes": 10,
+        "content_files": 21,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 21733,
+        "commits": 75
+      }
+    },
+    {
+      "pr": 52,
+      "sha": "5a3763336742b78da86ef36f35ee3cb26ea75820",
+      "title": "Pelican: comes after 5 minutes; tap Space and it flies to IDEA right away",
+      "url": "https://github.com/gardeninsound/map/pull/52",
+      "merged_at": "2026-11-14T18:18:55Z",
+      "dir": "changes/2026-11-14-pr052-pelican-comes-after-5-minutes-tap-space",
+      "ideas": [],
+      "summary": "PELICAN_AFTER 120 → 300 s. While it's flying in or asking beside you, {A}\n(Space) sends it straight up to the IDEA button (skipAhead, pure + tested);\nthat press is the pelican's alone, so it doesn't also talk to anyone nearby.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "exit320-stack"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 5,
+      "additions": 49,
+      "deletions": 8,
+      "areas": [
+        "characters & map life",
+        "ui",
+        "words & content"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5612,-122.3868",
+          "lat": 47.5612,
+          "lon": -122.3868,
+          "label": "the Junction, where everyone starts",
+          "before": "changes/2026-11-14-pr052-pelican-comes-after-5-minutes-tap-space/before-1.webp",
+          "after": "changes/2026-11-14-pr052-pelican-comes-after-5-minutes-tap-space/after-1.webp",
+          "moving": "changes/2026-11-14-pr052-pelican-comes-after-5-minutes-tap-space/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 13,
+        "scenes": 10,
+        "content_files": 21,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 21773,
+        "commits": 76
+      }
+    },
+    {
+      "pr": 54,
+      "sha": "e0a752e98dd01b2358e051ef6d1aa4316b828a09",
+      "title": "Fall colours, with some hot pink",
+      "url": "https://github.com/gardeninsound/map/pull/54",
+      "merged_at": "2026-11-14T18:19:31Z",
+      "dir": "changes/2026-11-14-pr054-fall-colours-with-some-hot-pink",
+      "ideas": [],
+      "summary": "The map palette goes autumn: olive-gold lawns, trees burnt orange, rust and\ngold, fallen leaves in the grass (some hot pink), a cooler grey-teal sea, warm\nsand, rust/pumpkin/mustard roofs with the odd hot-pink one, amber windows. The\nsame swap where landmark, park and Cone Catch drawings copied the old greens.\nUI: a louder hot pink, marigold for yellow, olive for teal, aubergine outlines,\nwarmer paper; the title screen gets an autumn dusk. The 3D rooms are unchanged.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "exit320-stack"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 9,
+      "additions": 66,
+      "deletions": 61,
+      "areas": [
+        "city",
+        "characters & map life",
+        "scenes & games"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5612,-122.3868",
+          "lat": 47.5612,
+          "lon": -122.3868,
+          "label": "the Junction, where everyone starts",
+          "before": "changes/2026-11-14-pr054-fall-colours-with-some-hot-pink/before-1.webp",
+          "after": "changes/2026-11-14-pr054-fall-colours-with-some-hot-pink/after-1.webp",
+          "moving": "changes/2026-11-14-pr054-fall-colours-with-some-hot-pink/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 13,
+        "scenes": 10,
+        "content_files": 21,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 21778,
+        "commits": 77
+      }
+    },
+    {
+      "pr": 57,
+      "sha": "198c2c1c7e7f48235d72581ffb6df7ba2877220c",
+      "title": "West Seattle Stadium: a way in off 35th Ave SW",
+      "url": "https://github.com/gardeninsound/map/pull/57",
+      "merged_at": "2026-11-14T18:19:40Z",
+      "dir": "changes/2026-11-14-pr057-west-seattle-stadium-a-way-in-off-35th-a",
+      "ideas": [],
+      "summary": "OSM has only an unnamed wooded park there. Hand-patched into worldData: lawn\ngrounds, walkable track and football field, grandstands along 35th with a gate\npath between them from the sidewalk, and the name in the HUD.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "exit320-stack"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 2,
+      "additions": 4,
+      "deletions": 1,
+      "areas": [
+        "city"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5612,-122.3868",
+          "lat": 47.5612,
+          "lon": -122.3868,
+          "label": "the Junction, where everyone starts",
+          "before": "changes/2026-11-14-pr057-west-seattle-stadium-a-way-in-off-35th-a/before-1.webp",
+          "after": "changes/2026-11-14-pr057-west-seattle-stadium-a-way-in-off-35th-a/after-1.webp",
+          "moving": "changes/2026-11-14-pr057-west-seattle-stadium-a-way-in-off-35th-a/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 13,
+        "scenes": 10,
+        "content_files": 21,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 21778,
+        "commits": 78
+      }
+    },
+    {
+      "pr": 58,
+      "sha": "b3fe669496caee0a112bbe36ad73d7cf986e790d",
+      "title": "Giant chickens boxing in West Seattle Stadium",
+      "url": "https://github.com/gardeninsound/map/pull/58",
+      "merged_at": "2026-11-14T18:19:55Z",
+      "dir": "changes/2026-11-14-pr058-giant-chickens-boxing-in-west-seattle-st",
+      "ideas": [],
+      "summary": "A ring on the football field; two ~5-tile-tall low-poly chickens (three.js,\nlazy-loaded near the stadium, rendered at map-pixel size) slug it out on the\nwall clock: rounds, knockdowns with a count, rests in the corners, feathers\nand a thud on every landed punch, the bell each round. Ringside, the ring\nannouncer sums up the bout. Fight rules pure + tested.\n\nOSM has only an unnamed wooded park there. Hand-patched into worldData: lawn\ngrounds, walkable track and football field, grandstands along 35th with a gate\npath between them from the sidewalk, and the name in the HUD.\nStacked on #57 (West Seattle Stadium access) — merge that first; this PR's diff includes it until then.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "exit320-stack"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 8,
+      "additions": 629,
+      "deletions": 2,
+      "areas": [
+        "characters & map life",
+        "ui",
+        "words & content"
+      ],
+      "shots": [
+        {
+          "query": "at=47.56274,-122.37489",
+          "lat": 47.56274,
+          "lon": -122.37489,
+          "label": null,
+          "before": "changes/2026-11-14-pr058-giant-chickens-boxing-in-west-seattle-st/before-1.webp",
+          "after": "changes/2026-11-14-pr058-giant-chickens-boxing-in-west-seattle-st/after-1.webp",
+          "moving": "changes/2026-11-14-pr058-giant-chickens-boxing-in-west-seattle-st/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 14,
+        "scenes": 10,
+        "content_files": 22,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 22398,
+        "commits": 79
+      }
+    },
+    {
+      "pr": 53,
+      "sha": "e17d79242bd413f583f44a4c9753e5af6480b1a6",
+      "title": "Dinosaurs: no more sound (the stray \"thanks\")",
+      "url": "https://github.com/gardeninsound/map/pull/53",
+      "merged_at": "2026-11-14T18:25:11Z",
+      "dir": "changes/2026-11-14-pr053-dinosaurs-no-more-sound-the-stray-thanks",
+      "ideas": [],
+      "summary": "The recording they played going by (public/sounds/dinosaur.mp3) was a \"thanks\",\nheard at random whenever a dinosaur passed. Removed the file, the code that\nplayed it (HEAR, HEAR_GAP, hearDino, DINO_SOUND) and its tests. The dinosaurs\nstill walk west; they're silent now.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "exit320-stack"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 6,
+      "additions": 4,
+      "deletions": 66,
+      "areas": [
+        "characters & map life",
+        "words & content",
+        "art & sound"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5612,-122.3868",
+          "lat": 47.5612,
+          "lon": -122.3868,
+          "label": "the Junction, where everyone starts",
+          "before": "changes/2026-11-14-pr053-dinosaurs-no-more-sound-the-stray-thanks/before-1.webp",
+          "after": "changes/2026-11-14-pr053-dinosaurs-no-more-sound-the-stray-thanks/after-1.webp",
+          "moving": "changes/2026-11-14-pr053-dinosaurs-no-more-sound-the-stray-thanks/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 14,
+        "scenes": 10,
+        "content_files": 22,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 22337,
+        "commits": 80
+      }
+    },
+    {
+      "pr": 56,
+      "sha": "3f88d7bfd8971e112cf6311ebdcbf872fcaf2a31",
+      "title": "The Admiral-to-Alaska bike race: animals on bikes down California",
+      "url": "https://github.com/gardeninsound/map/pull/56",
+      "merged_at": "2026-11-14T18:25:16Z",
+      "dir": "changes/2026-11-14-pr056-the-admiral-to-alaska-bike-race-animals",
+      "ideas": [],
+      "summary": "Seven animals on bicycles (a fox, bear, cat, raccoon, frog, duck and dog in\nnumbered jerseys) wait under a START banner on California Ave at SW Admiral\nWay. {A} there puts your rabbit on the grid on its bike; 3-2-1-GO, and everyone\nraces south down California to the FINISH banner at SW Alaska St (~2.2 km).\nYour place and time show at the top; at the line the winner says how you did.\nRide off the course and you've left the race; once you're well away, the\nanimals are back on the line for the next one.\n\nCourse (California's own run of road, row by row), riders and standings pure +\ntested (game/bikeRace.ts). City: BIKE_GRIDS exported; a Vehicle can count as\nriding, so other rabbits see your bike in the race.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "exit320-stack"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 10,
+      "additions": 618,
+      "deletions": 5,
+      "areas": [
+        "city",
+        "characters & map life",
+        "ui",
+        "words & content"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5811,-122.3868",
+          "lat": 47.5811,
+          "lon": -122.3868,
+          "label": null,
+          "before": "changes/2026-11-14-pr056-the-admiral-to-alaska-bike-race-animals/before-1.webp",
+          "after": "changes/2026-11-14-pr056-the-admiral-to-alaska-bike-race-animals/after-1.webp",
+          "moving": "changes/2026-11-14-pr056-the-admiral-to-alaska-bike-race-animals/moving-1.webp"
+        },
+        {
+          "query": "at=47.5614,-122.3868",
+          "lat": 47.5614,
+          "lon": -122.3868,
+          "label": null,
+          "before": "changes/2026-11-14-pr056-the-admiral-to-alaska-bike-race-animals/before-2.webp",
+          "after": "changes/2026-11-14-pr056-the-admiral-to-alaska-bike-race-animals/after-2.webp",
+          "moving": "changes/2026-11-14-pr056-the-admiral-to-alaska-bike-race-animals/moving-2.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 15,
+        "scenes": 10,
+        "content_files": 23,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 22942,
+        "commits": 81
+      }
+    },
+    {
+      "pr": 55,
+      "sha": "dc63e7015b418c3e8d7340fdfacc9a70e74f623a",
+      "title": "Finer trees and shoreline (half-size pixels); thin trails in Lincoln Park",
+      "url": "https://github.com/gardeninsound/map/pull/55",
+      "merged_at": "2026-11-14T18:25:54Z",
+      "dir": "changes/2026-11-14-pr055-finer-trees-and-shoreline-half-size-pixe",
+      "ideas": [],
+      "summary": "Chunks and the map canvas now hold 2× the map's pixels. Everything is drawn at\nmap size and looks as before, but:\n- trees are drawn at the fine pixels: a lumpy canopy lit from the top left,\n  outline, leaf flecks, trunk, soft shadow, in three shapes\n- the shoreline is worked out per fine pixel (each blends the four nearest\n  tiles), so the waterline and the beach's inland edge run in curves, with a\n  fine foam line and wash\n- both only over bare ground: a 1× chunk is built first (trees left out), and\n  anything painted over the ground (roads, houses, fields, docks) stays on top\n- park trails are thin dirt paths down the middle of their walkable corridor\nThe newest 40 fine chunks are kept; the road audit reads the 1× chunk.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "exit320-stack"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 6,
+      "additions": 318,
+      "deletions": 23,
+      "areas": [
+        "city"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5612,-122.3868",
+          "lat": 47.5612,
+          "lon": -122.3868,
+          "label": "the Junction, where everyone starts",
+          "before": "changes/2026-11-14-pr055-finer-trees-and-shoreline-half-size-pixe/before-1.webp",
+          "after": "changes/2026-11-14-pr055-finer-trees-and-shoreline-half-size-pixe/after-1.webp",
+          "moving": "changes/2026-11-14-pr055-finer-trees-and-shoreline-half-size-pixe/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 15,
+        "scenes": 10,
+        "content_files": 23,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 23229,
+        "commits": 82
+      }
+    },
+    {
+      "pr": 59,
+      "sha": "dd5a10bf4812367bdffd61e79464f998997a8912",
+      "title": "Crows on the streets, gulls on the beach",
+      "url": "https://github.com/gardeninsound/map/pull/59",
+      "merged_at": "2026-11-15T00:12:48Z",
+      "dir": "changes/2026-11-14-pr059-crows-on-the-streets-gulls-on-the-beach",
+      "ideas": [
+        {
+          "issue": 40,
+          "url": "https://github.com/gardeninsound/map/issues/40",
+          "text": "Add some sea gulls near the beach.",
+          "name": "YOUR SON!!!!!",
+          "street": "SW Hill St",
+          "asked_at": "2026-11-05T19:34:05Z"
+        },
+        {
+          "issue": 43,
+          "url": "https://github.com/gardeninsound/map/issues/43",
+          "text": "MORE CROWS!!!",
+          "name": "YOUR SON!!!!!",
+          "street": "SW College St",
+          "asked_at": "2026-11-06T01:28:47Z"
+        }
+      ],
+      "summary": "Seven crows always somewhere near you on the streets and six gulls on the\nbeach sand, pecking about; walk up and one flaps off away from you with a caw\nor a gull's cry. Left far behind, a bird turns up again near you out of sight.\nRules pure + tested in game/flock.ts; new gull sprite.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "exit320-stack"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 7,
+      "additions": 281,
+      "deletions": 2,
+      "areas": [
+        "characters & map life",
+        "ui"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5612,-122.3868",
+          "lat": 47.5612,
+          "lon": -122.3868,
+          "label": "the Junction, where everyone starts",
+          "before": "changes/2026-11-14-pr059-crows-on-the-streets-gulls-on-the-beach/before-1.webp",
+          "after": "changes/2026-11-14-pr059-crows-on-the-streets-gulls-on-the-beach/after-1.webp",
+          "moving": "changes/2026-11-14-pr059-crows-on-the-streets-gulls-on-the-beach/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 16,
+        "scenes": 10,
+        "content_files": 23,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 23504,
+        "commits": 83
+      }
+    },
+    {
+      "pr": 61,
+      "sha": "d723170e816fdb86a989b748eb1f47ef2c85929c",
+      "title": "Ride the Giant Whirl in Luna Park",
+      "url": "https://github.com/gardeninsound/map/pull/61",
+      "merged_at": "2026-11-15T00:13:05Z",
+      "dir": "changes/2026-11-14-pr061-ride-the-giant-whirl-in-luna-park",
+      "ideas": [
+        {
+          "issue": 41,
+          "url": "https://github.com/gardeninsound/map/issues/41",
+          "text": "Make it so that you can ride the Giant Whirl in luna park.",
+          "name": "YOUR SON!!!!!",
+          "street": "Luna Park",
+          "asked_at": "2026-11-06T01:05:08Z"
+        }
+      ],
+      "summary": "The Giant Whirl's sign now offers a ride: a first-person circle swing on the\npier at dusk. The striped tower spins up, your car swings out on its long arm\nover the boardwalk and the bay, a long whirl at full speed, then it winds\ndown. Drag to look round; reduced motion watches from the boardwalk. Motion\npure + tested.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "exit320-stack"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 7,
+      "additions": 467,
+      "deletions": 4,
+      "areas": [
+        "scenes & games",
+        "words & content"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5612,-122.3868",
+          "lat": 47.5612,
+          "lon": -122.3868,
+          "label": "the Junction, where everyone starts",
+          "before": "changes/2026-11-14-pr061-ride-the-giant-whirl-in-luna-park/before-1.webp",
+          "after": "changes/2026-11-14-pr061-ride-the-giant-whirl-in-luna-park/after-1.webp",
+          "moving": "changes/2026-11-14-pr061-ride-the-giant-whirl-in-luna-park/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 16,
+        "scenes": 11,
+        "content_files": 23,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 23965,
+        "commits": 84
+      }
+    },
+    {
+      "pr": 60,
+      "sha": "dd9f425dcb91f15048d32737387890ab813e5d41",
+      "title": "Hope Lutheran Church at 42nd & Oregon",
+      "url": "https://github.com/gardeninsound/map/pull/60",
+      "merged_at": "2026-11-15T00:13:18Z",
+      "dir": "changes/2026-11-14-pr060-hope-lutheran-church-at-42nd-oregon",
+      "ideas": [
+        {
+          "issue": 44,
+          "url": "https://github.com/gardeninsound/map/issues/44",
+          "text": "Can you add Hope Lutheran?",
+          "name": "Luca santo",
+          "street": "SW Dakota St",
+          "asked_at": "2026-11-06T03:18:05Z"
+        }
+      ],
+      "summary": "A hand-drawn landmark on its OSM footprint, east side of 42nd Ave SW at SW\nOregon St, flush with 42nd: white walls, a steep roof running back north, the\nbell tower with its cross on the street side, an arched door and a round\nwindow in the south gable. No photo-quality description was found, so the\nform is an interpretation (noted in the drawing's comment and the CSV).\n\nMap data: only its footprint tiles (civic → landmark) and landmark entry.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "exit320-stack"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 5,
+      "additions": 88,
+      "deletions": 2,
+      "areas": [
+        "city",
+        "map pipeline"
+      ],
+      "shots": [
+        {
+          "query": "at=47.563329,-122.385056",
+          "lat": 47.563329,
+          "lon": -122.385056,
+          "label": null,
+          "before": "changes/2026-11-14-pr060-hope-lutheran-church-at-42nd-oregon/before-1.webp",
+          "after": "changes/2026-11-14-pr060-hope-lutheran-church-at-42nd-oregon/after-1.webp",
+          "moving": "changes/2026-11-14-pr060-hope-lutheran-church-at-42nd-oregon/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 16,
+        "scenes": 11,
+        "content_files": 23,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 24039,
+        "commits": 85
+      }
+    },
+    {
+      "pr": 62,
+      "sha": "38aef0ac23dc479e68f566eaa27a1cc1f12a071a",
+      "title": "Squirrels that hide from people; Ham asks for pets",
+      "url": "https://github.com/gardeninsound/map/pull/62",
+      "merged_at": "2026-11-15T00:17:33Z",
+      "dir": "changes/2026-11-14-pr062-squirrels-that-hide-from-people-ham-asks",
+      "ideas": [
+        {
+          "issue": 30,
+          "url": "https://github.com/gardeninsound/map/issues/30",
+          "text": "Add some squirels that hide if humans draw neer, and ham the cat that asks for pets",
+          "name": "YOUR SON!!!!!",
+          "street": "45th Ave SW",
+          "asked_at": "2026-11-05T04:11:45Z"
+        }
+      ],
+      "summary": "Five squirrels scamper near park trees close to you; when a neighbor walks\nby, one dashes up the nearest tree and hides, tail hanging out of the\nleaves, till the coast is clear. Rabbits don't scare them. Ham now asks for\npets after the lines: pet, and Ham purrs with hearts floating up.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "exit320-stack"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 9,
+      "additions": 355,
+      "deletions": 3,
+      "areas": [
+        "characters & map life",
+        "ui",
+        "words & content"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5612,-122.3868",
+          "lat": 47.5612,
+          "lon": -122.3868,
+          "label": "the Junction, where everyone starts",
+          "before": "changes/2026-11-14-pr062-squirrels-that-hide-from-people-ham-asks/before-1.webp",
+          "after": "changes/2026-11-14-pr062-squirrels-that-hide-from-people-ham-asks/after-1.webp",
+          "moving": "changes/2026-11-14-pr062-squirrels-that-hide-from-people-ham-asks/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 17,
+        "scenes": 11,
+        "content_files": 23,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 24387,
+        "commits": 86
+      }
+    },
+    {
+      "pr": 63,
+      "sha": "13b298317ec74bb3f4bf0094571b1d9d96280afd",
+      "title": "Mermaids off Alki with catch phrases",
+      "url": "https://github.com/gardeninsound/map/pull/63",
+      "merged_at": "2026-11-15T00:20:41Z",
+      "dir": "changes/2026-11-14-pr063-mermaids-off-alki-with-catch-phrases",
+      "ideas": [
+        {
+          "issue": 37,
+          "url": "https://github.com/gardeninsound/map/issues/37",
+          "text": "add mermaids saying catch phrases like \"eyes closed sun so close\"",
+          "name": "zia vallandingham",
+          "street": "47th Ave SW",
+          "asked_at": "2026-11-05T04:45:30Z"
+        }
+      ],
+      "summary": "Three mermaids on rocks just offshore: Marina by the 58th Ave rowboat dock\n(walk up), Coral and Pearl along the beach (row up). Near the shore they call\nout catch phrases in bubbles (\"eyes closed sun so close\"); up close, one\nchats. Rocks and calls pure + tested.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "exit320-stack"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 7,
+      "additions": 290,
+      "deletions": 2,
+      "areas": [
+        "characters & map life",
+        "words & content"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5806,-122.4058",
+          "lat": 47.5806,
+          "lon": -122.4058,
+          "label": null,
+          "before": "changes/2026-11-14-pr063-mermaids-off-alki-with-catch-phrases/before-1.webp",
+          "after": "changes/2026-11-14-pr063-mermaids-off-alki-with-catch-phrases/after-1.webp",
+          "moving": "changes/2026-11-14-pr063-mermaids-off-alki-with-catch-phrases/moving-1.webp"
+        },
+        {
+          "query": "at=47.5815,-122.4030",
+          "lat": 47.5815,
+          "lon": -122.403,
+          "label": null,
+          "before": "changes/2026-11-14-pr063-mermaids-off-alki-with-catch-phrases/before-2.webp",
+          "after": "changes/2026-11-14-pr063-mermaids-off-alki-with-catch-phrases/after-2.webp",
+          "moving": "changes/2026-11-14-pr063-mermaids-off-alki-with-catch-phrases/moving-2.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 18,
+        "scenes": 11,
+        "content_files": 24,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 24671,
+        "commits": 87
+      }
+    },
+    {
+      "pr": 64,
+      "sha": "36b5b6caf6d322f68708aac13026a3dfe0b3f38c",
+      "title": "Pastel ponies in Lincoln Park's meadow",
+      "url": "https://github.com/gardeninsound/map/pull/64",
+      "merged_at": "2026-11-15T00:24:24Z",
+      "dir": "changes/2026-11-14-pr064-pastel-ponies-in-lincoln-parks-meadow",
+      "ideas": [
+        {
+          "issue": 36,
+          "url": "https://github.com/gardeninsound/map/issues/36",
+          "text": "add my little ponys (g1)",
+          "name": null,
+          "street": "47th Ave SW",
+          "asked_at": "2026-11-05T04:44:46Z"
+        }
+      ],
+      "summary": "The idea asked for My Little Pony G1; those are someone else's characters, so\nthis is Bear Island's own herd: five pastel ponies with their own names graze\nand trot about the meadow and its trails. Walk up and one stops to say hi.\nWandering pure + tested.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "exit320-stack"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 7,
+      "additions": 274,
+      "deletions": 2,
+      "areas": [
+        "characters & map life",
+        "words & content"
+      ],
+      "shots": [
+        {
+          "query": "at=47.53339,-122.39469",
+          "lat": 47.53339,
+          "lon": -122.39469,
+          "label": null,
+          "before": "changes/2026-11-14-pr064-pastel-ponies-in-lincoln-parks-meadow/before-1.webp",
+          "after": "changes/2026-11-14-pr064-pastel-ponies-in-lincoln-parks-meadow/after-1.webp",
+          "moving": "changes/2026-11-14-pr064-pastel-ponies-in-lincoln-parks-meadow/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 19,
+        "scenes": 11,
+        "content_files": 25,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 24939,
+        "commits": 88
+      }
+    },
+    {
+      "pr": 65,
+      "sha": "8bccba399cd74231290450a03a47ef609b2f1513",
+      "title": "A seasonal flower garden at Dragonfly Garden",
+      "url": "https://github.com/gardeninsound/map/pull/65",
+      "merged_at": "2026-11-15T00:26:40Z",
+      "dir": "changes/2026-11-14-pr065-a-seasonal-flower-garden-at-dragonfly-ga",
+      "ideas": [
+        {
+          "issue": 12,
+          "url": "https://github.com/gardeninsound/map/issues/12",
+          "text": "To see a garden with flowers growing - appropriate to the season",
+          "name": "Jimmy",
+          "street": null,
+          "asked_at": "2026-11-04T22:49:41Z"
+        }
+      ],
+      "summary": "Delridge's Dragonfly Garden is cleared of its drawn forest into soil beds and\ngravel paths, planted by the real calendar: snowdrops and hellebores in late\nwinter, crocus, daffodils and tulips in spring, roses, lavender and sunflowers\nin summer, dahlias, asters, mums and pumpkins in fall, kale in winter. Plants\ncome up, flower and fade across their months. A sign by the street says\nwhat's out. Pure + tested.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "exit320-stack"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 6,
+      "additions": 315,
+      "deletions": 2,
+      "areas": [
+        "characters & map life",
+        "words & content"
+      ],
+      "shots": [
+        {
+          "query": "at=47.56628,-122.36807",
+          "lat": 47.56628,
+          "lon": -122.36807,
+          "label": null,
+          "before": "changes/2026-11-14-pr065-a-seasonal-flower-garden-at-dragonfly-ga/before-1.webp",
+          "after": "changes/2026-11-14-pr065-a-seasonal-flower-garden-at-dragonfly-ga/after-1.webp",
+          "moving": "changes/2026-11-14-pr065-a-seasonal-flower-garden-at-dragonfly-ga/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 20,
+        "scenes": 11,
+        "content_files": 26,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 25248,
+        "commits": 89
+      }
+    },
+    {
+      "pr": 66,
+      "sha": "fb0da1c1344426dd9ccae0c612fb26abd1700427",
+      "title": "A forest maze in Schmitz Preserve you can always hop out of",
+      "url": "https://github.com/gardeninsound/map/pull/66",
+      "merged_at": "2026-11-15T00:29:10Z",
+      "dir": "changes/2026-11-14-pr066-a-forest-maze-in-schmitz-preserve-you-ca",
+      "ideas": [
+        {
+          "issue": 42,
+          "url": "https://github.com/gardeninsound/map/issues/42",
+          "text": "forests could be like a maze, but you could always teleport out.",
+          "name": "YOUR SON!!!!!",
+          "street": "SW Hudson St",
+          "asked_at": "2026-11-06T01:12:32Z"
+        }
+      ],
+      "summary": "A perfect maze (seeded, the same for everyone) carved through a 29x29 square\nof the preserve's old-growth forest, entered off the street on the west side,\nwith dirt trails along its paths and a fairy ring in the clearing at the\nmiddle. While you're in it, a hint at the top says {B} hops you out: back to\nthe street by the way in. Maze pure + tested.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "exit320-stack"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 6,
+      "additions": 323,
+      "deletions": 2,
+      "areas": [
+        "characters & map life",
+        "words & content"
+      ],
+      "shots": [
+        {
+          "query": "at=47.575397,-122.402832",
+          "lat": 47.575397,
+          "lon": -122.402832,
+          "label": null,
+          "before": "changes/2026-11-14-pr066-a-forest-maze-in-schmitz-preserve-you-ca/before-1.webp",
+          "after": "changes/2026-11-14-pr066-a-forest-maze-in-schmitz-preserve-you-ca/after-1.webp",
+          "moving": "changes/2026-11-14-pr066-a-forest-maze-in-schmitz-preserve-you-ca/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 21,
+        "scenes": 11,
+        "content_files": 27,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 25564,
+        "commits": 90
+      }
+    },
+    {
+      "pr": 67,
+      "sha": "870481b6b56d9597e38f418d6bc77e35944e32ee",
+      "title": "Pick your rabbit's look: fur, scarf and a hat",
+      "url": "https://github.com/gardeninsound/map/pull/67",
+      "merged_at": "2026-11-15T00:31:06Z",
+      "dir": "changes/2026-11-14-pr067-pick-your-rabbits-look-fur-scarf-and-a-h",
+      "ideas": [
+        {
+          "issue": 34,
+          "url": "https://github.com/gardeninsound/map/issues/34",
+          "text": "some little hats the rabits could wear and mini version of us and mst3k people walking around who we could talk to",
+          "name": "zia vallandingham jims kid",
+          "street": "California Ave SW",
+          "asked_at": "2026-11-05T04:41:03Z"
+        },
+        {
+          "issue": 38,
+          "url": "https://github.com/gardeninsound/map/issues/38",
+          "text": "more character customization",
+          "name": null,
+          "street": "47th Ave SW",
+          "asked_at": "2026-11-05T04:46:05Z"
+        }
+      ],
+      "summary": "A LOOK button opens a panel: five furs, eight scarves and eight hats (beanie,\ntop hat, party hat, crown, flower crown, bucket hat, ball cap), each hat\npreviewed on your rabbit. Remembered in this browser and sent with your\nrabbit as one number (a 7th field on the visitors wire; older clients ignore\nit), so everyone online sees it, walking or on the bike. The engine gets\nsetPlayerSprites to swap yours in. Pure + tested.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "exit320-stack"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 11,
+      "additions": 305,
+      "deletions": 13,
+      "areas": [
+        "city",
+        "characters & map life",
+        "ui"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5612,-122.3868",
+          "lat": 47.5612,
+          "lon": -122.3868,
+          "label": "the Junction, where everyone starts",
+          "before": "changes/2026-11-14-pr067-pick-your-rabbits-look-fur-scarf-and-a-h/before-1.webp",
+          "after": "changes/2026-11-14-pr067-pick-your-rabbits-look-fur-scarf-and-a-h/after-1.webp",
+          "moving": "changes/2026-11-14-pr067-pick-your-rabbits-look-fur-scarf-and-a-h/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 21,
+        "scenes": 11,
+        "content_files": 27,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 25827,
+        "commits": 91
+      }
+    },
+    {
+      "pr": 68,
+      "sha": "37581aab1b2128604da6b8a67a7e6c7584e6b6e7",
+      "title": "Story log: every change, wish and spot recorded, and a /story/ page to read it",
+      "url": "https://github.com/gardeninsound/map/pull/68",
+      "merged_at": "2026-11-15T16:29:51Z",
+      "dir": "changes/2026-11-15-pr068-story-log-every-change-wish-and-spot-rec",
+      "ideas": [],
+      "summary": "A record of how the island grows, written automatically so the project can tell its own story later.\n\n- **Every commit that reaches main** gets a record on a new `story` branch (never main, so no deploys and no extra weight on the site): the PR's words, the idea-box wish it answers in the visitor's own words, who made it and with which tools, a census (spots, characters, scenes…), and **before/after photos** of the place, taken from builds of both commits, plus a moving loop.\n- **Every idea-box wish** is kept exactly as first sent.\n- **Mondays**: a photo of every art spot, a time-lapse whether or not anything changed.\n- Each run catches up on whatever is missing, so a cancelled or skipped run loses nothing.\n- **`/story/`**: a page that reads the log live from the branch (growth charts, a before/after wipe, wishes still waiting). Not linked from the map; `noindex`.\n- PRs now have a **`## Story`** section (template + CLAUDE.md): `Idea`, `Where` (where to point the camera), `Asked vs made`, `Mike`, `Note`. `Mike:` is only ever Mike's own words.\n\n@exit320-stack: heads-up, since this changes what goes in your PR descriptions. The Story lines are how your words and the \"asked vs made\" end up in the record. Details: `scripts/story/README.md`.\n\nOnce merged I'll run the workflow once with a high limit to backfill all ~74 past changes.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": "The log's first entry is the change that starts the log. The recorder was tried locally on 12 real changes; a regex that read the build's base path from a comment cost the recent ones their photos until fixed.\n🤖 Generated with [Claude Code](https://claude.com/claude-code)"
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 18,
+      "additions": 2122,
+      "deletions": 5,
+      "areas": [
+        "ci",
+        "docs",
+        "tools"
+      ],
+      "shots": [],
+      "census": {
+        "spots": 15,
+        "plugins": 21,
+        "scenes": 11,
+        "content_files": 27,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 26360,
+        "commits": 92
+      }
+    },
+    {
+      "pr": 69,
+      "sha": "f7b2ec759f2bf3f7d886f66e9a6f5aa1fb34dd90",
+      "title": "Story log: early builds reach their places; retry failed shots",
+      "url": "https://github.com/gardeninsound/map/pull/69",
+      "merged_at": "2026-11-15T16:41:16Z",
+      "dir": "changes/2026-11-15-pr069-story-log-early-builds-reach-their-place",
+      "ideas": [],
+      "summary": "The story log's first photos were all title screens: until early November `?at=` only worked in development builds (`import.meta.env.DEV && …get('at')`), and the recorder makes production builds. 46 of the 74 commits were like that.\n\n- Those commits are now built with `NODE_ENV=development`, the one way to reach a place on them; each record's `camera.build` says which mode was used.\n- `--retry-shots` (and the workflow's `retry_shots` input) re-records every change whose photos failed or fell back to the title screen. Builds that had no `?at=` at all (the first commit) are skipped, since a title is all they can show.\n- A re-record with `--no-shots` never drops existing photos.\n\nTried locally on the story branch: Oct 18's Junction now shows the street (summer green, before the fall colours) instead of the title.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": "Found when the first page of the log was nothing but intro screens. The site used to keep its \"drop me here\" link to developers only.\n🤖 Generated with [Claude Code](https://claude.com/claude-code)"
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 5,
+      "additions": 84,
+      "deletions": 10,
+      "areas": [
+        "ci",
+        "docs",
+        "tools"
+      ],
+      "shots": [],
+      "census": {
+        "spots": 15,
+        "plugins": 21,
+        "scenes": 11,
+        "content_files": 27,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 26360,
+        "commits": 93
+      }
     }
   ],
   "wishes": [
@@ -1804,7 +3848,13 @@
       "name": "Jimmy",
       "street": null,
       "state": "closed:completed",
-      "answered_by": []
+      "answered_by": [
+        {
+          "pr": 65,
+          "sha": "8bccba399cd74231290450a03a47ef609b2f1513",
+          "merged_at": "2026-11-15T00:26:40Z"
+        }
+      ]
     },
     {
       "issue": 30,
@@ -1814,7 +3864,13 @@
       "name": "YOUR SON!!!!!",
       "street": "45th Ave SW",
       "state": "closed:completed",
-      "answered_by": []
+      "answered_by": [
+        {
+          "pr": 62,
+          "sha": "38aef0ac23dc479e68f566eaa27a1cc1f12a071a",
+          "merged_at": "2026-11-15T00:17:33Z"
+        }
+      ]
     },
     {
       "issue": 34,
@@ -1824,7 +3880,13 @@
       "name": "zia vallandingham jims kid",
       "street": "California Ave SW",
       "state": "open",
-      "answered_by": []
+      "answered_by": [
+        {
+          "pr": 67,
+          "sha": "870481b6b56d9597e38f418d6bc77e35944e32ee",
+          "merged_at": "2026-11-15T00:31:06Z"
+        }
+      ]
     },
     {
       "issue": 36,
@@ -1834,7 +3896,13 @@
       "name": null,
       "street": "47th Ave SW",
       "state": "closed:completed",
-      "answered_by": []
+      "answered_by": [
+        {
+          "pr": 64,
+          "sha": "36b5b6caf6d322f68708aac13026a3dfe0b3f38c",
+          "merged_at": "2026-11-15T00:24:24Z"
+        }
+      ]
     },
     {
       "issue": 37,
@@ -1844,7 +3912,13 @@
       "name": "zia vallandingham",
       "street": "47th Ave SW",
       "state": "closed:completed",
-      "answered_by": []
+      "answered_by": [
+        {
+          "pr": 63,
+          "sha": "13b298317ec74bb3f4bf0094571b1d9d96280afd",
+          "merged_at": "2026-11-15T00:20:41Z"
+        }
+      ]
     },
     {
       "issue": 38,
@@ -1854,7 +3928,13 @@
       "name": null,
       "street": "47th Ave SW",
       "state": "closed:completed",
-      "answered_by": []
+      "answered_by": [
+        {
+          "pr": 67,
+          "sha": "870481b6b56d9597e38f418d6bc77e35944e32ee",
+          "merged_at": "2026-11-15T00:31:06Z"
+        }
+      ]
     },
     {
       "issue": 40,
@@ -1864,7 +3944,13 @@
       "name": "YOUR SON!!!!!",
       "street": "SW Hill St",
       "state": "closed:completed",
-      "answered_by": []
+      "answered_by": [
+        {
+          "pr": 59,
+          "sha": "dd5a10bf4812367bdffd61e79464f998997a8912",
+          "merged_at": "2026-11-15T00:12:48Z"
+        }
+      ]
     },
     {
       "issue": 41,
@@ -1874,7 +3960,13 @@
       "name": "YOUR SON!!!!!",
       "street": "Luna Park",
       "state": "closed:completed",
-      "answered_by": []
+      "answered_by": [
+        {
+          "pr": 61,
+          "sha": "d723170e816fdb86a989b748eb1f47ef2c85929c",
+          "merged_at": "2026-11-15T00:13:05Z"
+        }
+      ]
     },
     {
       "issue": 42,
@@ -1884,7 +3976,13 @@
       "name": "YOUR SON!!!!!",
       "street": "SW Hudson St",
       "state": "closed:completed",
-      "answered_by": []
+      "answered_by": [
+        {
+          "pr": 66,
+          "sha": "fb0da1c1344426dd9ccae0c612fb26abd1700427",
+          "merged_at": "2026-11-15T00:29:10Z"
+        }
+      ]
     },
     {
       "issue": 43,
@@ -1894,7 +3992,13 @@
       "name": "YOUR SON!!!!!",
       "street": "SW College St",
       "state": "closed:completed",
-      "answered_by": []
+      "answered_by": [
+        {
+          "pr": 59,
+          "sha": "dd5a10bf4812367bdffd61e79464f998997a8912",
+          "merged_at": "2026-11-15T00:12:48Z"
+        }
+      ]
     },
     {
       "issue": 44,
@@ -1904,7 +4008,13 @@
       "name": "Luca santo",
       "street": "SW Dakota St",
       "state": "closed:completed",
-      "answered_by": []
+      "answered_by": [
+        {
+          "pr": 60,
+          "sha": "dd9f425dcb91f15048d32737387890ab813e5d41",
+          "merged_at": "2026-11-15T00:13:18Z"
+        }
+      ]
     }
   ]
 }

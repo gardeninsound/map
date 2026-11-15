@@ -1,0 +1,185 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "13b298317ec74bb3f4bf0094571b1d9d96280afd",
+  "parent": "38aef0ac23dc479e68f566eaa27a1cc1f12a071a",
+  "pr": 63,
+  "title": "Mermaids off Alki with catch phrases (idea box #37)",
+  "url": "https://github.com/gardeninsound/map/pull/63",
+  "merged_at": "2026-11-15T00:20:41Z",
+  "body": "Three mermaids on rocks just offshore: Marina by the 58th Ave rowboat dock\n(walk up), Coral and Pearl along the beach (row up). Near the shore they call\nout catch phrases in bubbles (\"eyes closed sun so close\"); up close, one\nchats. Rocks and calls pure + tested.\n\nCloses #37\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+  "authors": [
+    {
+      "login": "exit320-stack"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "3ee886545e35d7adb8564b6f04612e4cb3c47b56",
+      "message": "Mermaids off Alki with catch phrases (idea box #37)\n\nThree mermaids on rocks just offshore: Marina by the 58th Ave rowboat dock\n(walk up), Coral and Pearl along the beach (row up). Near the shore they call\nout catch phrases in bubbles (\"eyes closed sun so close\"); up close, one\nchats. Rocks and calls pure + tested.\n\nCloses #37\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-14T23:17:33Z"
+    },
+    {
+      "sha": "abe5b2178fb681f8ec1e7a8b79ee60a02e3d608e",
+      "message": "Merge remote-tracking branch 'origin/main' into mermaids\n\n# Conflicts:\n#\tsrc/App.tsx\n#\tsrc/game/CLAUDE.md",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-15T00:18:55Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "src/App.tsx",
+      "status": "M",
+      "additions": 9,
+      "deletions": 2
+    },
+    {
+      "path": "src/content/mermaids.ts",
+      "status": "A",
+      "additions": 47,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/CLAUDE.md",
+      "status": "M",
+      "additions": 4,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/mermaidSprites.ts",
+      "status": "A",
+      "additions": 39,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/mermaids.test.ts",
+      "status": "A",
+      "additions": 40,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/mermaids.ts",
+      "status": "A",
+      "additions": 47,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/plugins/mermaids.ts",
+      "status": "A",
+      "additions": 104,
+      "deletions": 0
+    }
+  ],
+  "additions": 290,
+  "deletions": 2,
+  "areas": [
+    "characters & map life",
+    "words & content"
+  ],
+  "branch": "mermaids",
+  "opened_at": "2026-11-15T00:12:05Z",
+  "merged_by": "exit320-stack",
+  "summary": "Three mermaids on rocks just offshore: Marina by the 58th Ave rowboat dock\n(walk up), Coral and Pearl along the beach (row up). Near the shore they call\nout catch phrases in bubbles (\"eyes closed sun so close\"); up close, one\nchats. Rocks and calls pure + tested.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [
+    {
+      "issue": 37,
+      "url": "https://github.com/gardeninsound/map/issues/37",
+      "title": "Idea: add mermaids saying catch phrases like \"eyes closed sun s…",
+      "text": "add mermaids saying catch phrases like \"eyes closed sun so close\"",
+      "name": "zia vallandingham",
+      "street": "47th Ave SW",
+      "asked_at": "2026-11-05T04:45:30Z",
+      "from_idea_box": true
+    }
+  ],
+  "requested_reviewers": [
+    "vlandham"
+  ],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-15T00:12:30Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-63-garden-preview.gardeninsound.workers.dev\n\nUpdated for abe5b21. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-63]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-63-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 18,
+    "scenes": 11,
+    "content_files": 24,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 24671,
+    "commits": 87
+  },
+  "shots": [
+    {
+      "query": "at=47.5806,-122.4058",
+      "lat": 47.5806,
+      "lon": -122.4058,
+      "label": null,
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      }
+    },
+    {
+      "query": "at=47.5815,-122.4030",
+      "lat": 47.5815,
+      "lon": -122.403,
+      "label": null,
+      "guessed": true,
+      "before": "before-2.webp",
+      "after": "after-2.webp",
+      "moving": "moving-2.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "production",
+      "after": "production"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+  },
+  "first_recorded_at": "2026-11-15T16:43:39.483Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:43:39.483Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736942138"
+}

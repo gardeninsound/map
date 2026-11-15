@@ -1,0 +1,148 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "8256fb2a586a207d3a7a4fa6c2772cdcf20af8f5",
+  "parent": "3b5c00c6ce896f3f68f8697e5b13a094b0f969c3",
+  "pr": 48,
+  "title": "The original Alki bathhouse: the 1911 Bathing Pavilion, in 8-bit on its site",
+  "url": "https://github.com/gardeninsound/map/pull/48",
+  "merged_at": "2026-11-08T17:26:51Z",
+  "body": "The original Alki bathhouse, the 1911 Bathing Pavilion (gone since 1955), in 8-bit on its own site, where today's bathhouse stands (2701 Alki Ave SW). A 5×3 hand-drawn landmark.\n\n- **From the written record:** a large white wood-frame Recreation Pavilion, dedicated July 4, 1911, with a spectators' viewing balcony, a café, a gym, club rooms and dressing rooms, behind a wide planked promenade.\n- **An interpretation:** its roof and number of storeys aren't described in any source found, so the hipped roof and full-width balcony are a period reading. Sources are in the drawing's comment and below.\n- **Extras:** spectators at the rail, bathers in striped wool suits on the boards.\n\nSources: [Paul Dorpat, Now & Then](https://pauldorpat.com/2011/07/16/seattle-now-then-antique-alki-swimwear/) · [Seattle DON historic sites](https://web.seattle.gov/DPD/HistoricalSite/QueryResult.aspx?ID=191867477) · [Olmsted Online #02716](https://olmstedonline.org/Job/Details/02716)\n\n**Jim, heads-up (map data):** as with Dakota Place (#46), only its footprint and landmark entry are patched into `worldData.json`, not a full rebuild from my local OSM copy. Merged with `main`: both landmarks kept everywhere.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n",
+  "authors": [
+    {
+      "login": "exit320-stack"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "51776bc94c1810443c2d9ae092e26885480564f4",
+      "message": "The original Alki bathhouse: the 1911 Bathing Pavilion, in 8-bit on its site\n\nA hand-drawn landmark (5×3 tiles) where today's bathhouse stands (2701 Alki Ave\nSW), which replaced it in 1955. From the written record: a large white\nwood-frame Recreation Pavilion, dedicated July 4 1911, with a spectators'\nviewing balcony, a cafe, a gym and club rooms, behind a wide planked promenade.\nIts roof and storeys aren't described in the sources found, so the hipped roof\nand full-width balcony are a period reading (sources in the drawing's comment).\n\nMap data: only its footprint and landmark entry changed (no houses under it).\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-08T16:58:25Z"
+    },
+    {
+      "sha": "b8bd3d1967027a916004330de6f3ff9fc867da6a",
+      "message": "Merge remote-tracking branch 'origin/main' into alki-pavilion\n\n# Conflicts:\n#\tcontent/landmarks.csv\n#\tsrc/city/CLAUDE.md\n#\tsrc/city/render/landmarks.ts\n#\tsrc/city/world/landmarksData.json\n#\tsrc/city/world/worldData.json",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-08T17:24:22Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "content/landmarks.csv",
+      "status": "M",
+      "additions": 1,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/CLAUDE.md",
+      "status": "M",
+      "additions": 2,
+      "deletions": 1
+    },
+    {
+      "path": "src/city/render/landmarks.ts",
+      "status": "M",
+      "additions": 84,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/world/landmarksData.json",
+      "status": "M",
+      "additions": 9,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/world/worldData.json",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    }
+  ],
+  "additions": 97,
+  "deletions": 2,
+  "areas": [
+    "city",
+    "map pipeline"
+  ],
+  "branch": "alki-pavilion",
+  "opened_at": "2026-11-08T17:24:32Z",
+  "merged_by": "exit320-stack",
+  "summary": "The original Alki bathhouse, the 1911 Bathing Pavilion (gone since 1955), in 8-bit on its own site, where today's bathhouse stands (2701 Alki Ave SW). A 5×3 hand-drawn landmark.\n\n- **From the written record:** a large white wood-frame Recreation Pavilion, dedicated July 4, 1911, with a spectators' viewing balcony, a café, a gym, club rooms and dressing rooms, behind a wide planked promenade.\n- **An interpretation:** its roof and number of storeys aren't described in any source found, so the hipped roof and full-width balcony are a period reading. Sources are in the drawing's comment and below.\n- **Extras:** spectators at the rail, bathers in striped wool suits on the boards.\n\nSources: [Paul Dorpat, Now & Then](https://pauldorpat.com/2011/07/16/seattle-now-then-antique-alki-swimwear/) · [Seattle DON historic sites](https://web.seattle.gov/DPD/HistoricalSite/QueryResult.aspx?ID=191867477) · [Olmsted Online #02716](https://olmstedonline.org/Job/Details/02716)\n\n**Jim, heads-up (map data):** as with Dakota Place (#46), only its footprint and landmark entry are patched into `worldData.json`, not a full rebuild from my local OSM copy. Merged with `main`: both landmarks kept everywhere.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "requested_reviewers": [
+    "vlandham"
+  ],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-08T17:24:58Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-48-garden-preview.gardeninsound.workers.dev\n\nUpdated for b8bd3d1. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-48]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-48-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 13,
+    "scenes": 10,
+    "content_files": 21,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 21517,
+    "commits": 73
+  },
+  "shots": [
+    {
+      "query": "at=47.579695,-122.409640",
+      "lat": 47.579695,
+      "lon": -122.40964,
+      "label": null,
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "production",
+      "after": "production"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+  },
+  "first_recorded_at": "2026-11-15T16:43:39.483Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:43:39.483Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736942138"
+}

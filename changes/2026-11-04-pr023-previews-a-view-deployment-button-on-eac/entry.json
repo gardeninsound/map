@@ -1,0 +1,100 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "1b86bf9758f3dc6e6e3d7ef27eca7c647d364a9d",
+  "parent": "aa7d31980e212f0b08d1c086b9847e334b98444c",
+  "pr": 23,
+  "title": "Previews: a \"View deployment\" button on each PR, linking its preview",
+  "url": "https://github.com/gardeninsound/map/pull/23",
+  "merged_at": "2026-11-05T03:12:49Z",
+  "body": "The preview job becomes a deployment to a `preview` environment, so each PR shows a **View deployment** button with its preview link. The button appears in the PR's timeline and in the merge box. The bot's comment stays too.\n\nThe docs now suggest an account API token (owned by the Cloudflare account, not a person) for `CLOUDFLARE_API_TOKEN`.\n\nThis PR is its own test: it should get the button.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "a4a5776230e2237fd7c273805238d998f175b9ce",
+      "message": "Previews: a \"View deployment\" button on each PR, linking its preview\n\nThe preview job is now a deployment to a \"preview\" environment, so GitHub shows the\nlink in the PR's timeline and merge box, not only in a comment that gets buried.\nDocs: prefer an account API token for CLOUDFLARE_API_TOKEN.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-05T03:09:22Z"
+    }
+  ],
+  "files": [
+    {
+      "path": ".github/workflows/preview.yml",
+      "status": "M",
+      "additions": 6,
+      "deletions": 0
+    },
+    {
+      "path": "docs/hosting.md",
+      "status": "M",
+      "additions": 2,
+      "deletions": 2
+    },
+    {
+      "path": "preview/README.md",
+      "status": "M",
+      "additions": 4,
+      "deletions": 2
+    }
+  ],
+  "additions": 12,
+  "deletions": 4,
+  "areas": [
+    "ci",
+    "docs"
+  ],
+  "branch": "preview-deploy-link",
+  "opened_at": "2026-11-05T03:09:26Z",
+  "merged_by": "vlandham",
+  "summary": "The preview job becomes a deployment to a `preview` environment, so each PR shows a **View deployment** button with its preview link. The button appears in the PR's timeline and in the merge box. The bot's comment stays too.\n\nThe docs now suggest an account API token (owned by the Cloudflare account, not a person) for `CLOUDFLARE_API_TOKEN`.\n\nThis PR is its own test: it should get the button.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "requested_reviewers": [],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-05T03:09:53Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-23-garden-preview.gardeninsound.workers.dev\n\nUpdated for a4a5776. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-23]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-23-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 9,
+    "scenes": 10,
+    "content_files": 18,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 18678,
+    "commits": 56
+  },
+  "shots": [],
+  "first_recorded_at": "2026-11-15T16:43:39.483Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:43:39.483Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736942138"
+}

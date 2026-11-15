@@ -1,0 +1,152 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "dd9f425dcb91f15048d32737387890ab813e5d41",
+  "parent": "d723170e816fdb86a989b748eb1f47ef2c85929c",
+  "pr": 60,
+  "title": "Hope Lutheran Church at 42nd & Oregon (idea box #44)",
+  "url": "https://github.com/gardeninsound/map/pull/60",
+  "merged_at": "2026-11-15T00:13:18Z",
+  "body": "A hand-drawn landmark on its OSM footprint, east side of 42nd Ave SW at SW\nOregon St, flush with 42nd: white walls, a steep roof running back north, the\nbell tower with its cross on the street side, an arched door and a round\nwindow in the south gable. No photo-quality description was found, so the\nform is an interpretation (noted in the drawing's comment and the CSV).\n\nMap data: only its footprint tiles (civic → landmark) and landmark entry.\n\nCloses #44\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+  "authors": [
+    {
+      "login": "exit320-stack"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "caaf780f4508500b8c7e6bd2cb51c1c6343079fd",
+      "message": "Hope Lutheran Church at 42nd & Oregon (idea box #44)\n\nA hand-drawn landmark on its OSM footprint, east side of 42nd Ave SW at SW\nOregon St, flush with 42nd: white walls, a steep roof running back north, the\nbell tower with its cross on the street side, an arched door and a round\nwindow in the south gable. No photo-quality description was found, so the\nform is an interpretation (noted in the drawing's comment and the CSV).\n\nMap data: only its footprint tiles (civic → landmark) and landmark entry.\n\nCloses #44\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-14T23:26:34Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "content/landmarks.csv",
+      "status": "M",
+      "additions": 1,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/CLAUDE.md",
+      "status": "M",
+      "additions": 2,
+      "deletions": 1
+    },
+    {
+      "path": "src/city/render/landmarks.ts",
+      "status": "M",
+      "additions": 74,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/world/landmarksData.json",
+      "status": "M",
+      "additions": 10,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/world/worldData.json",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    }
+  ],
+  "additions": 88,
+  "deletions": 2,
+  "areas": [
+    "city",
+    "map pipeline"
+  ],
+  "branch": "hope-lutheran",
+  "opened_at": "2026-11-15T00:11:39Z",
+  "merged_by": "exit320-stack",
+  "summary": "A hand-drawn landmark on its OSM footprint, east side of 42nd Ave SW at SW\nOregon St, flush with 42nd: white walls, a steep roof running back north, the\nbell tower with its cross on the street side, an arched door and a round\nwindow in the south gable. No photo-quality description was found, so the\nform is an interpretation (noted in the drawing's comment and the CSV).\n\nMap data: only its footprint tiles (civic → landmark) and landmark entry.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [
+    {
+      "issue": 44,
+      "url": "https://github.com/gardeninsound/map/issues/44",
+      "title": "Idea: Can you add Hope Lutheran?",
+      "text": "Can you add Hope Lutheran?",
+      "name": "Luca santo",
+      "street": "SW Dakota St",
+      "asked_at": "2026-11-06T03:18:05Z",
+      "from_idea_box": true
+    }
+  ],
+  "requested_reviewers": [
+    "vlandham"
+  ],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-15T00:12:04Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-60-garden-preview.gardeninsound.workers.dev\n\nUpdated for caaf780. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-60]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-60-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 16,
+    "scenes": 11,
+    "content_files": 23,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 24039,
+    "commits": 85
+  },
+  "shots": [
+    {
+      "query": "at=47.563329,-122.385056",
+      "lat": 47.563329,
+      "lon": -122.385056,
+      "label": null,
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "production",
+      "after": "production"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+  },
+  "first_recorded_at": "2026-11-15T16:43:39.483Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:43:39.483Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736942138"
+}

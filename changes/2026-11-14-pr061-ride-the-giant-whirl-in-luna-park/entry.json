@@ -1,0 +1,164 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "d723170e816fdb86a989b748eb1f47ef2c85929c",
+  "parent": "dd5a10bf4812367bdffd61e79464f998997a8912",
+  "pr": 61,
+  "title": "Ride the Giant Whirl in Luna Park (idea box #41)",
+  "url": "https://github.com/gardeninsound/map/pull/61",
+  "merged_at": "2026-11-15T00:13:05Z",
+  "body": "The Giant Whirl's sign now offers a ride: a first-person circle swing on the\npier at dusk. The striped tower spins up, your car swings out on its long arm\nover the boardwalk and the bay, a long whirl at full speed, then it winds\ndown. Drag to look round; reduced motion watches from the boardwalk. Motion\npure + tested.\n\nCloses #41\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+  "authors": [
+    {
+      "login": "exit320-stack"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "59fb5cd04c965ef1e5c4e514d0e6718cc0430e10",
+      "message": "Ride the Giant Whirl in Luna Park (idea box #41)\n\nThe Giant Whirl's sign now offers a ride: a first-person circle swing on the\npier at dusk. The striped tower spins up, your car swings out on its long arm\nover the boardwalk and the bay, a long whirl at full speed, then it winds\ndown. Drag to look round; reduced motion watches from the boardwalk. Motion\npure + tested.\n\nCloses #41\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-14T23:30:52Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "src/App.tsx",
+      "status": "M",
+      "additions": 5,
+      "deletions": 4
+    },
+    {
+      "path": "src/content/lunaPark.ts",
+      "status": "M",
+      "additions": 8,
+      "deletions": 0
+    },
+    {
+      "path": "src/experiences/CLAUDE.md",
+      "status": "M",
+      "additions": 2,
+      "deletions": 0
+    },
+    {
+      "path": "src/experiences/luna/GiantWhirl.tsx",
+      "status": "A",
+      "additions": 84,
+      "deletions": 0
+    },
+    {
+      "path": "src/experiences/luna/GiantWhirlScene.ts",
+      "status": "A",
+      "additions": 284,
+      "deletions": 0
+    },
+    {
+      "path": "src/experiences/luna/whirl.test.ts",
+      "status": "A",
+      "additions": 32,
+      "deletions": 0
+    },
+    {
+      "path": "src/experiences/luna/whirl.ts",
+      "status": "A",
+      "additions": 52,
+      "deletions": 0
+    }
+  ],
+  "additions": 467,
+  "deletions": 4,
+  "areas": [
+    "scenes & games",
+    "words & content"
+  ],
+  "branch": "giant-whirl",
+  "opened_at": "2026-11-15T00:11:48Z",
+  "merged_by": "exit320-stack",
+  "summary": "The Giant Whirl's sign now offers a ride: a first-person circle swing on the\npier at dusk. The striped tower spins up, your car swings out on its long arm\nover the boardwalk and the bay, a long whirl at full speed, then it winds\ndown. Drag to look round; reduced motion watches from the boardwalk. Motion\npure + tested.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [
+    {
+      "issue": 41,
+      "url": "https://github.com/gardeninsound/map/issues/41",
+      "title": "Idea: Make it so that you can ride the Giant Whirl in luna park.",
+      "text": "Make it so that you can ride the Giant Whirl in luna park.",
+      "name": "YOUR SON!!!!!",
+      "street": "Luna Park",
+      "asked_at": "2026-11-06T01:05:08Z",
+      "from_idea_box": true
+    }
+  ],
+  "requested_reviewers": [
+    "vlandham"
+  ],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-15T00:12:14Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-61-garden-preview.gardeninsound.workers.dev\n\nUpdated for 59fb5cd. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-61]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-61-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 16,
+    "scenes": 11,
+    "content_files": 23,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 23965,
+    "commits": 84
+  },
+  "shots": [
+    {
+      "query": "at=47.5612,-122.3868",
+      "lat": 47.5612,
+      "lon": -122.3868,
+      "label": "the Junction, where everyone starts",
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "production",
+      "after": "production"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+  },
+  "first_recorded_at": "2026-11-15T16:43:39.483Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:43:39.483Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736942138"
+}

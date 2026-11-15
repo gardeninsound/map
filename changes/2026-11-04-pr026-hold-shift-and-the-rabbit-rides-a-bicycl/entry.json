@@ -1,0 +1,167 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "6d48ee1cafe310fd735e06e18c342b3010515f60",
+  "parent": "1a849174bae05efb8d14642887ebd902dfc15ae5",
+  "pr": 26,
+  "title": "Hold Shift and the rabbit rides a bicycle",
+  "url": "https://github.com/gardeninsound/map/pull/26",
+  "merged_at": "2026-11-05T03:46:26Z",
+  "body": "Holding Shift (already RUN speed) now shows the rabbit on a red bicycle, pedalling, in all four directions: side on 20×18 with both wheels, head on 16×20 with handlebars and a headlight (a red reflector from behind).\n\n**Jim, heads-up, this touches `src/city/`:**\n- `render/sprites.ts`: `buildBikeRabbit(scarf?)`, `BIKE_GRIDS` (tested for shape), and `drawStanding()`, which centres a frame of any size with its feet on the spot (same result as before for 16×16).\n- `engine/CityGame.ts`: `player.riding` (= `input.running()`, false while paused), a `rider` option (defaults to the bike), and a wider shadow side on.\n- **Visitors wire:** an optional sixth field, `riding`. Older clients send five fields, so they're read as walking, and they ignore the sixth. `shouldSend` treats a change in it as a state change. Tested.\n- Touch has no run button yet, so phones can't ride.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+  "authors": [
+    {
+      "login": "exit320-stack"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "ff6ad34ebe34e80517975342cc4d3d725b3ac2cc",
+      "message": "Hold Shift and the rabbit rides a bicycle\n\nRunning (Shift) now shows the rabbit on a red bicycle, pedalling, in all four\ndirections; other rabbits see you ride (a 6th field on the visitors wire, which\nolder clients send without and ignore).\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-05T00:32:49Z"
+    },
+    {
+      "sha": "9d1b7e34a53b666ba3c8b42c688959ea0f506784",
+      "message": "Merge remote-tracking branch 'origin/main' into bicycle",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-05T03:41:16Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 3,
+      "deletions": 1
+    },
+    {
+      "path": "src/city/engine/CityGame.ts",
+      "status": "M",
+      "additions": 15,
+      "deletions": 7
+    },
+    {
+      "path": "src/city/index.ts",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "src/city/render/sprites.test.ts",
+      "status": "M",
+      "additions": 8,
+      "deletions": 1
+    },
+    {
+      "path": "src/city/render/sprites.ts",
+      "status": "M",
+      "additions": 80,
+      "deletions": 1
+    },
+    {
+      "path": "src/game/plugins/visitors.ts",
+      "status": "M",
+      "additions": 9,
+      "deletions": 7
+    },
+    {
+      "path": "src/game/visitors.test.ts",
+      "status": "M",
+      "additions": 5,
+      "deletions": 2
+    },
+    {
+      "path": "src/game/visitors.ts",
+      "status": "M",
+      "additions": 11,
+      "deletions": 6
+    }
+  ],
+  "additions": 132,
+  "deletions": 26,
+  "areas": [
+    "city",
+    "characters & map life",
+    "docs"
+  ],
+  "branch": "bicycle",
+  "opened_at": "2026-11-05T03:44:15Z",
+  "merged_by": "exit320-stack",
+  "summary": "Holding Shift (already RUN speed) now shows the rabbit on a red bicycle, pedalling, in all four directions: side on 20×18 with both wheels, head on 16×20 with handlebars and a headlight (a red reflector from behind).\n\n**Jim, heads-up, this touches `src/city/`:**\n- `render/sprites.ts`: `buildBikeRabbit(scarf?)`, `BIKE_GRIDS` (tested for shape), and `drawStanding()`, which centres a frame of any size with its feet on the spot (same result as before for 16×16).\n- `engine/CityGame.ts`: `player.riding` (= `input.running()`, false while paused), a `rider` option (defaults to the bike), and a wider shadow side on.\n- **Visitors wire:** an optional sixth field, `riding`. Older clients send five fields, so they're read as walking, and they ignore the sixth. `shouldSend` treats a change in it as a state change. Tested.\n- Touch has no run button yet, so phones can't ride.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "requested_reviewers": [
+    "vlandham"
+  ],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-05T03:44:40Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-26-garden-preview.gardeninsound.workers.dev\n\nUpdated for 9d1b7e3. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-26]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-26-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 10,
+    "scenes": 10,
+    "content_files": 19,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 19151,
+    "commits": 59
+  },
+  "shots": [
+    {
+      "query": "at=47.5612,-122.3868",
+      "lat": 47.5612,
+      "lon": -122.3868,
+      "label": "the Junction, where everyone starts",
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "development",
+      "after": "development"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+  },
+  "first_recorded_at": "2026-11-15T16:43:39.483Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:43:39.483Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736942138"
+}

@@ -25,7 +25,14 @@
     }
   ],
   "state": "closed:completed",
-  "answered_by": [],
+  "answered_by": [
+    {
+      "pr": 59,
+      "sha": "dd5a10bf4812367bdffd61e79464f998997a8912",
+      "title": "Crows on the streets, gulls on the beach (idea box #43, #40)",
+      "merged_at": "2026-11-15T00:12:48Z"
+    }
+  ],
   "current": {
     "title": "Idea: Add some sea gulls near the beach.",
     "body": "> Add some sea gulls near the beach.\n\n---\n<sub>Sent from the map's idea box by **YOUR SON!!!!!** · the rabbit was on SW Hill St.</sub>",
@@ -41,5 +48,5 @@
   ],
   "closed_at": "2026-11-15T00:12:50Z",
   "comments": [],
-  "last_recorded_at": "2026-11-15T16:30:23.173Z"
+  "last_recorded_at": "2026-11-15T16:43:39.483Z"
 }

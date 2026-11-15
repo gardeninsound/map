@@ -1,0 +1,217 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "82c4f2e9fe01c3b310d5cb2ce0cde659b9eb044c",
+  "parent": "22a962ffe844ed87ce838ff9a61638981f9c6223",
+  "pr": 31,
+  "title": "A hidden house on 45th, a walkable alley, and Ham the cat",
+  "url": "https://github.com/gardeninsound/map/pull/31",
+  "merged_at": "2026-11-05T04:26:16Z",
+  "body": "- **Hidden house** at 1918 45th Ave SW: a hand-drawn 1½-storey Craftsman (shed dormer, porch, steps, rhododendron with pumpkins, leaf pile) as a nameless landmark, so it never shows on the map's place list; you find it by walking past.\n- **Walkable alley** behind it (Hill → Holgate): `ALLEYS` in `scripts/city/map-config.mjs` turns listed alleys into concrete lanes, named \"Alley\" in the HUD.\n- **Ham the cat** (Scottish Fold): wanders the street and alley within 8 tiles of home, sits to look at a rabbit that comes close, mews and says one set of lines per visit. Movement pure + tested (`src/game/ham.ts`), lines in `src/content/ham.ts`.\n- Map rebuilt from fresh OSM (~28 unrelated tiles changed).\n\nNot set to auto-merge: holding for a look at the preview first.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "af233d8e026fdf6c2dad91e1a93a32e4a17b64a1",
+      "message": "A hidden house on 45th Ave SW, and the alley behind it is walkable\n\nThe 1½-storey Craftsman at 1918 45th Ave SW drawn as a nameless landmark\n(never on the map's place list; found only by walking past), and ALLEYS in\nmap-config: listed alleys become walkable concrete lanes. Map rebuilt from\nfresh OSM.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-05T04:17:52Z"
+    },
+    {
+      "sha": "fb9118203c138e40202c935f17739647329c0bb8",
+      "message": "Ham the cat wanders the block around the hidden house on 45th\n\nA Scottish Fold (orange tabby, folded ears, amber eyes, collar with a tag)\nwho saunters the street and the alley within 8 tiles of home, sits or\ngrooms now and then, sits to look at a rabbit that comes close, and mews\none set of lines per visit. Movement pure + tested (src/game/ham.ts).\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-05T04:23:14Z"
+    },
+    {
+      "sha": "7d116e0e00b30107d4b61be3c4081cce3a604939",
+      "message": "CLAUDE.md: the hidden house, the alley and Ham\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-05T04:23:20Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 7,
+      "deletions": 0
+    },
+    {
+      "path": "content/landmarks.csv",
+      "status": "M",
+      "additions": 1,
+      "deletions": 0
+    },
+    {
+      "path": "scripts/city/build-map.mjs",
+      "status": "M",
+      "additions": 7,
+      "deletions": 1
+    },
+    {
+      "path": "scripts/city/map-config.mjs",
+      "status": "M",
+      "additions": 14,
+      "deletions": 0
+    },
+    {
+      "path": "src/App.tsx",
+      "status": "M",
+      "additions": 7,
+      "deletions": 4
+    },
+    {
+      "path": "src/city/render/landmarks.ts",
+      "status": "M",
+      "additions": 84,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/world/landmarksData.json",
+      "status": "M",
+      "additions": 10,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/world/world.test.ts",
+      "status": "M",
+      "additions": 10,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/world/worldData.json",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "src/content/ham.ts",
+      "status": "A",
+      "additions": 18,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/ham.test.ts",
+      "status": "A",
+      "additions": 73,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/ham.ts",
+      "status": "A",
+      "additions": 98,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/plugins/ham.ts",
+      "status": "A",
+      "additions": 82,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/sprites.ts",
+      "status": "M",
+      "additions": 55,
+      "deletions": 0
+    },
+    {
+      "path": "src/ui/sounds.ts",
+      "status": "M",
+      "additions": 5,
+      "deletions": 0
+    }
+  ],
+  "additions": 472,
+  "deletions": 6,
+  "areas": [
+    "city",
+    "map pipeline",
+    "characters & map life",
+    "ui",
+    "words & content",
+    "docs"
+  ],
+  "branch": "my-house",
+  "opened_at": "2026-11-05T04:24:01Z",
+  "merged_by": "vlandham",
+  "summary": "- **Hidden house** at 1918 45th Ave SW: a hand-drawn 1½-storey Craftsman (shed dormer, porch, steps, rhododendron with pumpkins, leaf pile) as a nameless landmark, so it never shows on the map's place list; you find it by walking past.\n- **Walkable alley** behind it (Hill → Holgate): `ALLEYS` in `scripts/city/map-config.mjs` turns listed alleys into concrete lanes, named \"Alley\" in the HUD.\n- **Ham the cat** (Scottish Fold): wanders the street and alley within 8 tiles of home, sits to look at a rabbit that comes close, mews and says one set of lines per visit. Movement pure + tested (`src/game/ham.ts`), lines in `src/content/ham.ts`.\n- Map rebuilt from fresh OSM (~28 unrelated tiles changed).\n\nNot set to auto-merge: holding for a look at the preview first.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "requested_reviewers": [],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-05T04:24:24Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-31-garden-preview.gardeninsound.workers.dev\n\nUpdated for 7d116e0. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-31]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-31-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 11,
+    "scenes": 10,
+    "content_files": 20,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 20311,
+    "commits": 63
+  },
+  "shots": [
+    {
+      "query": "at=47.586143,-122.388734",
+      "lat": 47.586143,
+      "lon": -122.388734,
+      "label": null,
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "development",
+      "after": "development"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+  },
+  "first_recorded_at": "2026-11-15T16:43:39.483Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:43:39.483Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736942138"
+}

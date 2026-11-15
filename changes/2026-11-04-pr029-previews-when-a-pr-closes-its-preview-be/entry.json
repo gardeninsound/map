@@ -1,0 +1,112 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "22a962ffe844ed87ce838ff9a61638981f9c6223",
+  "parent": "be941f4accb40a159e4967ca7fe6156fb464a4b7",
+  "pr": 29,
+  "title": "Previews: when a PR closes, its preview becomes a \"this preview has closed\" page",
+  "url": "https://github.com/gardeninsound/map/pull/29",
+  "merged_at": "2026-11-05T04:03:55Z",
+  "body": "When a PR closes (merged or not), its preview stops being a live copy of the site.\n\n- **`.github/workflows/preview-cleanup.yml`**, on `pull_request: closed`:\n  - re-uploads `pr-<N>` with `preview/closed/index.html`, a short \"This preview has closed\" page linking to the live site, with no game, relay or idea box;\n  - marks the PR's `preview` deployments inactive, so GitHub stops showing an active deployment.\n- **Why:** old previews stayed online forever, joining the real relay with old code and able to file real ideas. Cloudflare has no command to delete a preview alias; uploading over one replaces it. It also keeps at most 1,000 aliases per Worker.\n- It shares the `preview-<N>` concurrency group with the Preview workflow without cancelling it, so a last upload finishes before the preview is closed.\n\n## Tested\n\n- Both steps run by hand on the closed PRs #21 and #23–#28:\n  - each `pr-N` now shows the closed page;\n  - their 7 deployments are inactive;\n  - open #20 is untouched;\n  - the Worker's own address is unchanged.\n- The workflow itself runs for the first time when this PR closes. The `pr-<this>` preview should turn into the closed page.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "d8d37014df97002ce4976c17890d204665e454a7",
+      "message": "Previews: when a PR closes, its preview becomes a \"this preview has closed\" page\n\n.github/workflows/preview-cleanup.yml runs on PR close (merged or not): it re-uploads\npr-<N> with preview/closed/index.html (no game, relay or idea box), so old previews stop\njoining the real relay and filing real ideas, and marks the PR's preview deployments\ninactive. Cloudflare can't delete an alias; uploading over it replaces it.\n\nTested by running both steps by hand on the closed PRs (#21, #23–#28): each now shows the\nclosed page and its deployments are inactive; open #20 is untouched.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-05T04:01:32Z"
+    }
+  ],
+  "files": [
+    {
+      "path": ".github/workflows/preview-cleanup.yml",
+      "status": "A",
+      "additions": 54,
+      "deletions": 0
+    },
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 2,
+      "deletions": 1
+    },
+    {
+      "path": "docs/hosting.md",
+      "status": "M",
+      "additions": 1,
+      "deletions": 0
+    },
+    {
+      "path": "preview/README.md",
+      "status": "M",
+      "additions": 5,
+      "deletions": 0
+    },
+    {
+      "path": "preview/closed/index.html",
+      "status": "A",
+      "additions": 30,
+      "deletions": 0
+    }
+  ],
+  "additions": 92,
+  "deletions": 1,
+  "areas": [
+    "ci",
+    "docs"
+  ],
+  "branch": "preview-cleanup",
+  "opened_at": "2026-11-05T04:01:35Z",
+  "merged_by": "vlandham",
+  "summary": "When a PR closes (merged or not), its preview stops being a live copy of the site.\n\n- **`.github/workflows/preview-cleanup.yml`**, on `pull_request: closed`:\n  - re-uploads `pr-<N>` with `preview/closed/index.html`, a short \"This preview has closed\" page linking to the live site, with no game, relay or idea box;\n  - marks the PR's `preview` deployments inactive, so GitHub stops showing an active deployment.\n- **Why:** old previews stayed online forever, joining the real relay with old code and able to file real ideas. Cloudflare has no command to delete a preview alias; uploading over one replaces it. It also keeps at most 1,000 aliases per Worker.\n- It shares the `preview-<N>` concurrency group with the Preview workflow without cancelling it, so a last upload finishes before the preview is closed.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "requested_reviewers": [],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-05T04:01:59Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-29-garden-preview.gardeninsound.workers.dev\n\nUpdated for d8d3701. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-29]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-29-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 10,
+    "scenes": 10,
+    "content_files": 19,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 19883,
+    "commits": 62
+  },
+  "shots": [],
+  "first_recorded_at": "2026-11-15T16:43:39.483Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:43:39.483Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736942138"
+}

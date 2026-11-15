@@ -1,0 +1,113 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "f7b2ec759f2bf3f7d886f66e9a6f5aa1fb34dd90",
+  "parent": "37581aab1b2128604da6b8a67a7e6c7584e6b6e7",
+  "pr": 69,
+  "title": "Story log: early builds reach their places; retry failed shots",
+  "url": "https://github.com/gardeninsound/map/pull/69",
+  "merged_at": "2026-11-15T16:41:16Z",
+  "body": "The story log's first photos were all title screens: until early November `?at=` only worked in development builds (`import.meta.env.DEV && …get('at')`), and the recorder makes production builds. 46 of the 74 commits were like that.\n\n- Those commits are now built with `NODE_ENV=development`, the one way to reach a place on them; each record's `camera.build` says which mode was used.\n- `--retry-shots` (and the workflow's `retry_shots` input) re-records every change whose photos failed or fell back to the title screen. Builds that had no `?at=` at all (the first commit) are skipped, since a title is all they can show.\n- A re-record with `--no-shots` never drops existing photos.\n\nTried locally on the story branch: Oct 18's Junction now shows the street (summer green, before the fall colours) instead of the title.\n\n## Story\nIdea:\nWhere: none\nAsked vs made:\nMike:\nNote: Found when the first page of the log was nothing but intro screens. The site used to keep its \"drop me here\" link to developers only.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "4935da22ba9c6cc4f9ccb5ef75b4a2afff7b7a60",
+      "message": "Story log: early builds reach their places (dev-only ?at=), retry failed shots\n\nUntil early November ?at= only worked in development builds, so the\nrecorder photographed 46 of 74 commits' title screens. It now builds\nthose commits with NODE_ENV=development (noted in camera.build), and\n--retry-shots / the retry_shots input re-takes any photos that failed or\nfell back to the title screen (not for builds that had no ?at= at all).\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-15T16:39:51Z"
+    }
+  ],
+  "files": [
+    {
+      "path": ".github/workflows/story.yml",
+      "status": "M",
+      "additions": 6,
+      "deletions": 0
+    },
+    {
+      "path": "scripts/story/README.md",
+      "status": "M",
+      "additions": 7,
+      "deletions": 3
+    },
+    {
+      "path": "scripts/story/lib.mjs",
+      "status": "M",
+      "additions": 20,
+      "deletions": 0
+    },
+    {
+      "path": "scripts/story/lib.test.mjs",
+      "status": "M",
+      "additions": 20,
+      "deletions": 0
+    },
+    {
+      "path": "scripts/story/record.mjs",
+      "status": "M",
+      "additions": 31,
+      "deletions": 7
+    }
+  ],
+  "additions": 84,
+  "deletions": 10,
+  "areas": [
+    "ci",
+    "docs",
+    "tools"
+  ],
+  "branch": "story-dev-builds",
+  "opened_at": "2026-11-15T16:39:55Z",
+  "merged_by": "vlandham",
+  "summary": "The story log's first photos were all title screens: until early November `?at=` only worked in development builds (`import.meta.env.DEV && …get('at')`), and the recorder makes production builds. 46 of the 74 commits were like that.\n\n- Those commits are now built with `NODE_ENV=development`, the one way to reach a place on them; each record's `camera.build` says which mode was used.\n- `--retry-shots` (and the workflow's `retry_shots` input) re-records every change whose photos failed or fell back to the title screen. Builds that had no `?at=` at all (the first commit) are skipped, since a title is all they can show.\n- A re-record with `--no-shots` never drops existing photos.\n\nTried locally on the story branch: Oct 18's Junction now shows the street (summer green, before the fall colours) instead of the title.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": "Found when the first page of the log was nothing but intro screens. The site used to keep its \"drop me here\" link to developers only.\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+    "shots": true,
+    "present": true
+  },
+  "ideas": [],
+  "requested_reviewers": [],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-15T16:40:20Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-69-garden-preview.gardeninsound.workers.dev\n\nUpdated for 4935da2. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-69]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-69-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 21,
+    "scenes": 11,
+    "content_files": 27,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 26360,
+    "commits": 93
+  },
+  "shots": [],
+  "first_recorded_at": "2026-11-15T16:43:39.483Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:43:39.483Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736942138"
+}

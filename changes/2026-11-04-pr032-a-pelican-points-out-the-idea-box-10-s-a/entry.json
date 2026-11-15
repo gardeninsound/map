@@ -1,0 +1,181 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "0b5f5b39c39756a7e132f24f3ebdf4b2853d5917",
+  "parent": "82c4f2e9fe01c3b310d5cb2ce0cde659b9eb044c",
+  "pr": 32,
+  "title": "A pelican points out the idea box, 10 s after you join",
+  "url": "https://github.com/gardeninsound/map/pull/32",
+  "merged_at": "2026-11-05T04:37:51Z",
+  "body": "Once a session, 10 seconds after you're on the map (waiting if a dialog or scene is open), a pelican flies in and lands beside your rabbit: \"Anything you want to add, pumpkin?\" Then it flies up onto the ✿ IDEA button, which lights yellow and bobs, says \"Dream it out!\", and flies off the screen.\n\n- HTML laid over the map and the HUD; it never takes a click. Opening anything (the idea box included) ends its visit.\n- Flight and timing are pure + tested: `src/game/pelican.ts`. Words: `src/content/pelican.ts` (drafts for Mike). 24-wide sprite in `sprites.ts`.\n- Reduced motion: no flying across the screen, but still time to read each line.\n- **Jim, heads-up:** `CityGame` gets `scale` and `screenPoint(tile)`, so HTML can be placed over a map point. `App.tsx` gets the 10 s timer and the overlay, and CLAUDE.md a note. Merged with `main`; the Ham sprite and the pelican sit side by side in `sprites.ts`.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n",
+  "authors": [
+    {
+      "login": "exit320-stack"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "d6576919e555a0808849e293e55ae3de91d57ddb",
+      "message": "A pelican points out the idea box, 10 s after you join\n\nOnce a session, 10 seconds after you're on the map (waiting if a dialog or\nscene is open), a pelican flies in and lands beside your rabbit: \"Anything you\nwant to add, pumpkin?\" Then it flies up onto the IDEA button (which bobs, lit\nyellow): \"Dream it out!\", and off the screen.\n\nHTML over the map and HUD (no clicks taken), placed with the new\nCityGame.screenPoint() and drawn at CityGame.scale. Flight and timing pure and\ntested (game/pelican.ts), words in content/pelican.ts, sprite in sprites.ts.\nReduced motion: no flying across, still time to read.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-05T04:08:02Z"
+    },
+    {
+      "sha": "da2f549470cd92acf1367e7dbebc7b853e8b5d69",
+      "message": "Merge remote-tracking branch 'origin/main' into pelican\n\n# Conflicts:\n#\tsrc/game/sprites.ts",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-05T04:37:43Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 5,
+      "deletions": 0
+    },
+    {
+      "path": "src/App.tsx",
+      "status": "M",
+      "additions": 23,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/engine/CityGame.ts",
+      "status": "M",
+      "additions": 12,
+      "deletions": 0
+    },
+    {
+      "path": "src/content/pelican.ts",
+      "status": "A",
+      "additions": 11,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/pelican.test.ts",
+      "status": "A",
+      "additions": 58,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/pelican.ts",
+      "status": "A",
+      "additions": 88,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/sprites.ts",
+      "status": "M",
+      "additions": 69,
+      "deletions": 0
+    },
+    {
+      "path": "src/styles.css",
+      "status": "M",
+      "additions": 19,
+      "deletions": 0
+    },
+    {
+      "path": "src/ui/Pelican.tsx",
+      "status": "A",
+      "additions": 110,
+      "deletions": 0
+    },
+    {
+      "path": "src/ui/sounds.ts",
+      "status": "M",
+      "additions": 5,
+      "deletions": 0
+    }
+  ],
+  "additions": 400,
+  "deletions": 0,
+  "areas": [
+    "city",
+    "characters & map life",
+    "ui",
+    "words & content",
+    "docs"
+  ],
+  "branch": "pelican",
+  "opened_at": "2026-11-05T04:37:47Z",
+  "merged_by": "exit320-stack",
+  "summary": "Once a session, 10 seconds after you're on the map (waiting if a dialog or scene is open), a pelican flies in and lands beside your rabbit: \"Anything you want to add, pumpkin?\" Then it flies up onto the ✿ IDEA button, which lights yellow and bobs, says \"Dream it out!\", and flies off the screen.\n\n- HTML laid over the map and the HUD; it never takes a click. Opening anything (the idea box included) ends its visit.\n- Flight and timing are pure + tested: `src/game/pelican.ts`. Words: `src/content/pelican.ts` (drafts for Mike). 24-wide sprite in `sprites.ts`.\n- Reduced motion: no flying across the screen, but still time to read each line.\n- **Jim, heads-up:** `CityGame` gets `scale` and `screenPoint(tile)`, so HTML can be placed over a map point. `App.tsx` gets the 10 s timer and the overlay, and CLAUDE.md a note. Merged with `main`; the Ham sprite and the pelican sit side by side in `sprites.ts`.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "requested_reviewers": [
+    "vlandham"
+  ],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-05T04:38:15Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-32-garden-preview.gardeninsound.workers.dev\n\nUpdated for da2f549. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-32]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-32-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 11,
+    "scenes": 10,
+    "content_files": 21,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 20687,
+    "commits": 64
+  },
+  "shots": [
+    {
+      "query": "at=47.5612,-122.3868",
+      "lat": 47.5612,
+      "lon": -122.3868,
+      "label": "the Junction, where everyone starts",
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "development",
+      "after": "development"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+  },
+  "first_recorded_at": "2026-11-15T16:43:39.483Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:43:39.483Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736942138"
+}

@@ -1,0 +1,179 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "e73b41a599f279fa1a54b0d083d78223c9c51bdb",
+  "parent": "1e0ca4d03f1510bac7b8e6f1af40706d4fb48667",
+  "pr": 47,
+  "title": "A rowboat at the end of 58th on Alki: climb in and paddle around",
+  "url": "https://github.com/gardeninsound/map/pull/47",
+  "merged_at": "2026-11-08T17:22:15Z",
+  "body": "A rowboat at the end of 58th Ave SW on Alki: climb in and paddle around Puget Sound.\n\n- **Dock and boat:** a 2-wide wooden dock (\"58th Ave Dock\") runs from where 58th meets Alki Ave, across the park and sand to the water, with the rowboat tied up at its end. It's painted as planks, and its tiles are made walkable at attach, like Luna Park's pier.\n- **Rowing:** {A} climbs in. You row on water only, with oar strokes, a splash, a soft paddle sound and a wake. {A} climbs out wherever walkable ground is within reach: the dock, a pier, not the sand.\n- **Left behind**, far away, the boat drifts home to the dock.\n- Rules pure + tested in `src/game/rowboat.ts` (incl. React's dev double start, which used to lay no dock the second time). Sprites drawn round the rabbit's own frames.\n\n**Jim, heads-up (`src/city/`):** a small general `Vehicle` hook on `CityGame`: `game.vehicle = { canGo, speed, sprite, fps? }` takes over where the player can go, how fast and how it's drawn; Shift does nothing in one. Plus the plugin line and a dev hook in `App.tsx`. Other players still see a rabbit on the water: nothing on the wire says \"in a boat\" yet.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n",
+  "authors": [
+    {
+      "login": "exit320-stack"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "849733ff1faf4508a1c275a71bf7d925ca960f04",
+      "message": "A rowboat at the end of 58th on Alki: climb in and paddle around\n\nA 2-wide wooden dock runs from where 58th Ave SW meets Alki Ave, across the\npark and sand to the water (\"58th Ave Dock\"), with a rowboat tied up at its\nend. {A} climbs in: you row on the water only (oar strokes, a splash, a wake),\nand {A} climbs back out wherever walkable ground is beside you (the dock, a\npier). Left behind far away, the boat drifts home to the dock.\n\nCity: a small Vehicle hook (game.vehicle: where the player can go, speed,\nsprite), which the rowboat uses. Rules pure + tested (game/rowboat.ts).\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-08T17:14:50Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "src/App.tsx",
+      "status": "M",
+      "additions": 7,
+      "deletions": 2
+    },
+    {
+      "path": "src/city/CLAUDE.md",
+      "status": "M",
+      "additions": 2,
+      "deletions": 1
+    },
+    {
+      "path": "src/city/engine/CityGame.ts",
+      "status": "M",
+      "additions": 28,
+      "deletions": 7
+    },
+    {
+      "path": "src/city/index.ts",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "src/content/rowboat.ts",
+      "status": "A",
+      "additions": 7,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/CLAUDE.md",
+      "status": "M",
+      "additions": 8,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/plugins/rowboat.ts",
+      "status": "A",
+      "additions": 171,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/rowboat.test.ts",
+      "status": "A",
+      "additions": 54,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/rowboat.ts",
+      "status": "A",
+      "additions": 69,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/sprites.ts",
+      "status": "M",
+      "additions": 112,
+      "deletions": 0
+    },
+    {
+      "path": "src/ui/sounds.ts",
+      "status": "M",
+      "additions": 2,
+      "deletions": 0
+    }
+  ],
+  "additions": 461,
+  "deletions": 11,
+  "areas": [
+    "city",
+    "characters & map life",
+    "ui",
+    "words & content"
+  ],
+  "branch": "rowboat",
+  "opened_at": "2026-11-08T17:20:51Z",
+  "merged_by": "exit320-stack",
+  "summary": "A rowboat at the end of 58th Ave SW on Alki: climb in and paddle around Puget Sound.\n\n- **Dock and boat:** a 2-wide wooden dock (\"58th Ave Dock\") runs from where 58th meets Alki Ave, across the park and sand to the water, with the rowboat tied up at its end. It's painted as planks, and its tiles are made walkable at attach, like Luna Park's pier.\n- **Rowing:** {A} climbs in. You row on water only, with oar strokes, a splash, a soft paddle sound and a wake. {A} climbs out wherever walkable ground is within reach: the dock, a pier, not the sand.\n- **Left behind**, far away, the boat drifts home to the dock.\n- Rules pure + tested in `src/game/rowboat.ts` (incl. React's dev double start, which used to lay no dock the second time). Sprites drawn round the rabbit's own frames.\n\n**Jim, heads-up (`src/city/`):** a small general `Vehicle` hook on `CityGame`: `game.vehicle = { canGo, speed, sprite, fps? }` takes over where the player can go, how fast and how it's drawn; Shift does nothing in one. Plus the plugin line and a dev hook in `App.tsx`. Other players still see a rabbit on the water: nothing on the wire says \"in a boat\" yet.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "requested_reviewers": [
+    "vlandham"
+  ],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-08T17:21:17Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-47-garden-preview.gardeninsound.workers.dev\n\nUpdated for 849733f. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-47]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-47-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 13,
+    "scenes": 10,
+    "content_files": 21,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 21433,
+    "commits": 71
+  },
+  "shots": [
+    {
+      "query": "at=47.5612,-122.3868",
+      "lat": 47.5612,
+      "lon": -122.3868,
+      "label": "the Junction, where everyone starts",
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "production",
+      "after": "production"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+  },
+  "first_recorded_at": "2026-11-15T16:43:39.483Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:43:39.483Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736942138"
+}

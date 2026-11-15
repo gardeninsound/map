@@ -25,7 +25,14 @@
     }
   ],
   "state": "closed:completed",
-  "answered_by": [],
+  "answered_by": [
+    {
+      "pr": 66,
+      "sha": "fb0da1c1344426dd9ccae0c612fb26abd1700427",
+      "title": "A forest maze in Schmitz Preserve you can always hop out of (idea box #42)",
+      "merged_at": "2026-11-15T00:29:10Z"
+    }
+  ],
   "current": {
     "title": "Idea: forests could be like a maze, but you could always telepo…",
     "body": "> forests could be like a maze, but you could always teleport out.\n\n---\n<sub>Sent from the map's idea box by **YOUR SON!!!!!** · the rabbit was on SW Hudson St.</sub>",
@@ -41,5 +48,5 @@
   ],
   "closed_at": "2026-11-15T00:29:11Z",
   "comments": [],
-  "last_recorded_at": "2026-11-15T16:30:23.173Z"
+  "last_recorded_at": "2026-11-15T16:43:39.483Z"
 }

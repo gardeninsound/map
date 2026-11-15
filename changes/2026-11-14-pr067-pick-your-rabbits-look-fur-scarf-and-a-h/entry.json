@@ -1,0 +1,206 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "870481b6b56d9597e38f418d6bc77e35944e32ee",
+  "parent": "fb0da1c1344426dd9ccae0c612fb26abd1700427",
+  "pr": 67,
+  "title": "Pick your rabbit's look: fur, scarf and a hat (idea box #38, #34)",
+  "url": "https://github.com/gardeninsound/map/pull/67",
+  "merged_at": "2026-11-15T00:31:06Z",
+  "body": "A LOOK button opens a panel: five furs, eight scarves and eight hats (beanie,\ntop hat, party hat, crown, flower crown, bucket hat, ball cap), each hat\npreviewed on your rabbit. Remembered in this browser and sent with your\nrabbit as one number (a 7th field on the visitors wire; older clients ignore\nit), so everyone online sees it, walking or on the bike. The engine gets\nsetPlayerSprites to swap yours in. Pure + tested.\n\nCloses #38\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+  "authors": [
+    {
+      "login": "exit320-stack"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "848d77bbb5211786ea08becc6247911e6f087b6f",
+      "message": "Pick your rabbit's look: fur, scarf and a hat (idea box #38, #34)\n\nA LOOK button opens a panel: five furs, eight scarves and eight hats (beanie,\ntop hat, party hat, crown, flower crown, bucket hat, ball cap), each hat\npreviewed on your rabbit. Remembered in this browser and sent with your\nrabbit as one number (a 7th field on the visitors wire; older clients ignore\nit), so everyone online sees it, walking or on the bike. The engine gets\nsetPlayerSprites to swap yours in. Pure + tested.\n\nCloses #38\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-14T23:39:26Z"
+    },
+    {
+      "sha": "c01f5e5e2e5647ff4a14599a8ab80408792c3ffe",
+      "message": "Merge remote-tracking branch 'origin/main' into rabbit-look\n\n# Conflicts:\n#\tsrc/App.tsx\n#\tsrc/game/CLAUDE.md",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-15T00:29:56Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "src/App.tsx",
+      "status": "M",
+      "additions": 20,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/engine/CityGame.ts",
+      "status": "M",
+      "additions": 6,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/CLAUDE.md",
+      "status": "M",
+      "additions": 5,
+      "deletions": 1
+    },
+    {
+      "path": "src/game/look.test.ts",
+      "status": "A",
+      "additions": 28,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/look.ts",
+      "status": "A",
+      "additions": 142,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/plugins/visitors.ts",
+      "status": "M",
+      "additions": 15,
+      "deletions": 5
+    },
+    {
+      "path": "src/game/visitors.test.ts",
+      "status": "M",
+      "additions": 9,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/visitors.ts",
+      "status": "M",
+      "additions": 9,
+      "deletions": 7
+    },
+    {
+      "path": "src/styles.css",
+      "status": "M",
+      "additions": 24,
+      "deletions": 0
+    },
+    {
+      "path": "src/ui/CLAUDE.md",
+      "status": "M",
+      "additions": 1,
+      "deletions": 0
+    },
+    {
+      "path": "src/ui/LookPicker.tsx",
+      "status": "A",
+      "additions": 46,
+      "deletions": 0
+    }
+  ],
+  "additions": 305,
+  "deletions": 13,
+  "areas": [
+    "city",
+    "characters & map life",
+    "ui"
+  ],
+  "branch": "rabbit-look",
+  "opened_at": "2026-11-15T00:12:37Z",
+  "merged_by": "exit320-stack",
+  "summary": "A LOOK button opens a panel: five furs, eight scarves and eight hats (beanie,\ntop hat, party hat, crown, flower crown, bucket hat, ball cap), each hat\npreviewed on your rabbit. Remembered in this browser and sent with your\nrabbit as one number (a 7th field on the visitors wire; older clients ignore\nit), so everyone online sees it, walking or on the bike. The engine gets\nsetPlayerSprites to swap yours in. Pure + tested.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [
+    {
+      "issue": 34,
+      "url": "https://github.com/gardeninsound/map/issues/34",
+      "title": "Idea: some little hats the rabits could wear and mini version o…",
+      "text": "some little hats the rabits could wear and mini version of us and mst3k people walking around who we could talk to",
+      "name": "zia vallandingham jims kid",
+      "street": "California Ave SW",
+      "asked_at": "2026-11-05T04:41:03Z",
+      "from_idea_box": true
+    },
+    {
+      "issue": 38,
+      "url": "https://github.com/gardeninsound/map/issues/38",
+      "title": "Idea: more character customization",
+      "text": "more character customization",
+      "name": null,
+      "street": "47th Ave SW",
+      "asked_at": "2026-11-05T04:46:05Z",
+      "from_idea_box": true
+    }
+  ],
+  "requested_reviewers": [
+    "vlandham"
+  ],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-15T00:12:58Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-67-garden-preview.gardeninsound.workers.dev\n\nUpdated for c01f5e5. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-67]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-67-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 21,
+    "scenes": 11,
+    "content_files": 27,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 25827,
+    "commits": 91
+  },
+  "shots": [
+    {
+      "query": "at=47.5612,-122.3868",
+      "lat": 47.5612,
+      "lon": -122.3868,
+      "label": "the Junction, where everyone starts",
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "production",
+      "after": "production"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+  },
+  "first_recorded_at": "2026-11-15T16:43:39.483Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:43:39.483Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736942138"
+}

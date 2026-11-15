@@ -25,7 +25,14 @@
     }
   ],
   "state": "closed:completed",
-  "answered_by": [],
+  "answered_by": [
+    {
+      "pr": 63,
+      "sha": "13b298317ec74bb3f4bf0094571b1d9d96280afd",
+      "title": "Mermaids off Alki with catch phrases (idea box #37)",
+      "merged_at": "2026-11-15T00:20:41Z"
+    }
+  ],
   "current": {
     "title": "Idea: add mermaids saying catch phrases like \"eyes closed sun s…",
     "body": "> add mermaids saying catch phrases like \"eyes closed sun so close\"\n\n---\n<sub>Sent from the map's idea box by **zia vallandingham** · the rabbit was on 47th Ave SW.</sub>",
@@ -41,5 +48,5 @@
   ],
   "closed_at": "2026-11-15T00:20:43Z",
   "comments": [],
-  "last_recorded_at": "2026-11-15T16:30:23.173Z"
+  "last_recorded_at": "2026-11-15T16:43:39.483Z"
 }

@@ -21,7 +21,14 @@
     }
   ],
   "state": "open",
-  "answered_by": [],
+  "answered_by": [
+    {
+      "pr": 67,
+      "sha": "870481b6b56d9597e38f418d6bc77e35944e32ee",
+      "title": "Pick your rabbit's look: fur, scarf and a hat (idea box #38, #34)",
+      "merged_at": "2026-11-15T00:31:06Z"
+    }
+  ],
   "current": {
     "title": "Idea: some little hats the rabits could wear and mini version o…",
     "body": "> some little hats the rabits could wear and mini version of us and mst3k people walking around who we could talk to\n\n---\n<sub>Sent from the map's idea box by **zia vallandingham jims kid** · the rabbit was on California Ave SW.</sub>",
@@ -37,5 +44,5 @@
   ],
   "closed_at": null,
   "comments": [],
-  "last_recorded_at": "2026-11-15T16:30:23.173Z"
+  "last_recorded_at": "2026-11-15T16:43:39.483Z"
 }

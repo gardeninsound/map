@@ -1,0 +1,153 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "dc63e7015b418c3e8d7340fdfacc9a70e74f623a",
+  "parent": "3f88d7bfd8971e112cf6311ebdcbf872fcaf2a31",
+  "pr": 55,
+  "title": "Finer trees and shoreline (half-size pixels); thin trails in Lincoln Park",
+  "url": "https://github.com/gardeninsound/map/pull/55",
+  "merged_at": "2026-11-14T18:25:54Z",
+  "body": "Chunks and the map canvas now hold 2× the map's pixels. Everything is drawn at\nmap size and looks as before, but:\n- trees are drawn at the fine pixels: a lumpy canopy lit from the top left,\n  outline, leaf flecks, trunk, soft shadow, in three shapes\n- the shoreline is worked out per fine pixel (each blends the four nearest\n  tiles), so the waterline and the beach's inland edge run in curves, with a\n  fine foam line and wash\n- both only over bare ground: a 1× chunk is built first (trees left out), and\n  anything painted over the ground (roads, houses, fields, docks) stays on top\n- park trails are thin dirt paths down the middle of their walkable corridor\nThe newest 40 fine chunks are kept; the road audit reads the 1× chunk.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+  "authors": [
+    {
+      "login": "exit320-stack"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "1b9ecc9071570c54996fa5bd5e48f9de99a8ffbf",
+      "message": "Finer trees and shoreline (half-size pixels); thin trails in Lincoln Park\n\nChunks and the map canvas now hold 2× the map's pixels. Everything is drawn at\nmap size and looks as before, but:\n- trees are drawn at the fine pixels: a lumpy canopy lit from the top left,\n  outline, leaf flecks, trunk, soft shadow, in three shapes\n- the shoreline is worked out per fine pixel (each blends the four nearest\n  tiles), so the waterline and the beach's inland edge run in curves, with a\n  fine foam line and wash\n- both only over bare ground: a 1× chunk is built first (trees left out), and\n  anything painted over the ground (roads, houses, fields, docks) stays on top\n- park trails are thin dirt paths down the middle of their walkable corridor\nThe newest 40 fine chunks are kept; the road audit reads the 1× chunk.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-14T01:31:34Z"
+    },
+    {
+      "sha": "550c5a1f67fab9c1263426d80d6e6e66cc56d340",
+      "message": "Merge remote-tracking branch 'origin/main' into lincoln-park\n\n# Conflicts:\n#\tsrc/city/render/palette.ts",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-14T18:22:19Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "src/city/CLAUDE.md",
+      "status": "M",
+      "additions": 8,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/engine/CityGame.ts",
+      "status": "M",
+      "additions": 20,
+      "deletions": 9
+    },
+    {
+      "path": "src/city/render/audit.ts",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "src/city/render/fineTrees.test.ts",
+      "status": "A",
+      "additions": 21,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/render/palette.ts",
+      "status": "M",
+      "additions": 3,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/render/tileArt.ts",
+      "status": "M",
+      "additions": 265,
+      "deletions": 13
+    }
+  ],
+  "additions": 318,
+  "deletions": 23,
+  "areas": [
+    "city"
+  ],
+  "branch": "lincoln-park",
+  "opened_at": "2026-11-14T18:18:07Z",
+  "merged_by": "exit320-stack",
+  "summary": "Chunks and the map canvas now hold 2× the map's pixels. Everything is drawn at\nmap size and looks as before, but:\n- trees are drawn at the fine pixels: a lumpy canopy lit from the top left,\n  outline, leaf flecks, trunk, soft shadow, in three shapes\n- the shoreline is worked out per fine pixel (each blends the four nearest\n  tiles), so the waterline and the beach's inland edge run in curves, with a\n  fine foam line and wash\n- both only over bare ground: a 1× chunk is built first (trees left out), and\n  anything painted over the ground (roads, houses, fields, docks) stays on top\n- park trails are thin dirt paths down the middle of their walkable corridor\nThe newest 40 fine chunks are kept; the road audit reads the 1× chunk.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "requested_reviewers": [
+    "vlandham"
+  ],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-14T18:18:31Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-55-garden-preview.gardeninsound.workers.dev\n\nUpdated for 550c5a1. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-55]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-55-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 15,
+    "scenes": 10,
+    "content_files": 23,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 23229,
+    "commits": 82
+  },
+  "shots": [
+    {
+      "query": "at=47.5612,-122.3868",
+      "lat": 47.5612,
+      "lon": -122.3868,
+      "label": "the Junction, where everyone starts",
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "production",
+      "after": "production"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+  },
+  "first_recorded_at": "2026-11-15T16:43:39.483Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:43:39.483Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736942138"
+}

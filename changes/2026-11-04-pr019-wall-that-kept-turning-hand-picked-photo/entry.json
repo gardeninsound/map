@@ -1,0 +1,295 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "28fdabfc2a969f83fba39b294354377c2fef8af2",
+  "parent": "d2ed79faafc453e1372a6cee24faed958249fed9",
+  "pr": 19,
+  "title": "Wall That Kept Turning: hand-picked photos, all of this wall, across the whole timeline",
+  "url": "https://github.com/gardeninsound/map/pull/19",
+  "merged_at": "2026-11-05T02:37:35Z",
+  "body": "Drops five photos of other walls (Rush Hour boards, the duck, the rat) that the even spread had picked up. The scene now uses 24 hand-picked wall photos from Nov 2023 to Mar 2025, with more from the later stages (Jul 2024 onward: 4 → 9). Off-site photos in the Bus Wall folder are listed in a comment beside `wallTurns.picks`, and a new test checks the picks exist, are stills and stay in date order.\n\nAlso adds `docs/art-pipeline.md`: encoding settings, picking a scene's photos, publishing (linked from the README).\n\nMike approved the photo changes.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "a580da5e1fb242762bce98defee258a9d320eb20",
+      "message": "Wall That Kept Turning: hand-picked photos, all of this wall, across the whole timeline\n\nDrops five shots of other walls (Rush Hour boards, the duck, the rat) that the even\nspread had picked up; picks 24 wall photos Nov 2023 → Mar 2025 with more from the later\nstages. Documents the art pipeline (encoding settings, picking, publishing) in\ndocs/art-pipeline.md.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-05T02:35:52Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "README.md",
+      "status": "M",
+      "additions": 2,
+      "deletions": 1
+    },
+    {
+      "path": "docs/art-pipeline.md",
+      "status": "A",
+      "additions": 57,
+      "deletions": 0
+    },
+    {
+      "path": "public/art/bus-wall/img-0680-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-0680.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4250-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4250.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4403-t.avif",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4403.avif",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4450-t.avif",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4450.avif",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4900-t.avif",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4900.avif",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4964-t.avif",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4964.avif",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4995-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4995.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5208-t.avif",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5208.avif",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5211-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5211.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5263-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5263.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5272-t.avif",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5272.avif",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5449-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5449.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5683-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5683.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5727-t.avif",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5727.avif",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "src/content/content.test.ts",
+      "status": "M",
+      "additions": 7,
+      "deletions": 0
+    },
+    {
+      "path": "src/content/wallTurns.ts",
+      "status": "M",
+      "additions": 12,
+      "deletions": 1
+    }
+  ],
+  "additions": 78,
+  "deletions": 2,
+  "areas": [
+    "words & content",
+    "art & sound",
+    "docs"
+  ],
+  "branch": "wall-turns-images",
+  "opened_at": "2026-11-05T02:37:30Z",
+  "merged_by": "vlandham",
+  "summary": "Drops five photos of other walls (Rush Hour boards, the duck, the rat) that the even spread had picked up. The scene now uses 24 hand-picked wall photos from Nov 2023 to Mar 2025, with more from the later stages (Jul 2024 onward: 4 → 9). Off-site photos in the Bus Wall folder are listed in a comment beside `wallTurns.picks`, and a new test checks the picks exist, are stills and stay in date order.\n\nAlso adds `docs/art-pipeline.md`: encoding settings, picking a scene's photos, publishing (linked from the README).\n\nMike approved the photo changes.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "requested_reviewers": [],
+  "reviews": [],
+  "labels": [],
+  "discussion": [],
+  "preview_url": null,
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 9,
+    "scenes": 10,
+    "content_files": 18,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 18678,
+    "commits": 54
+  },
+  "shots": [
+    {
+      "query": "at=47.5612,-122.3868",
+      "lat": 47.5612,
+      "lon": -122.3868,
+      "label": "the Junction, where everyone starts",
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "development",
+      "after": "development"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+  },
+  "first_recorded_at": "2026-11-15T16:43:39.483Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:43:39.483Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736942138"
+}

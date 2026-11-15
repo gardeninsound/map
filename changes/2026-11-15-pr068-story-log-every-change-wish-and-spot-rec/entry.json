@@ -1,0 +1,200 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "37581aab1b2128604da6b8a67a7e6c7584e6b6e7",
+  "parent": "870481b6b56d9597e38f418d6bc77e35944e32ee",
+  "pr": 68,
+  "title": "Story log: every change, wish and spot recorded, and a /story/ page to read it",
+  "url": "https://github.com/gardeninsound/map/pull/68",
+  "merged_at": "2026-11-15T16:29:51Z",
+  "body": "A record of how the island grows, written automatically so the project can tell its own story later.\n\n- **Every commit that reaches main** gets a record on a new `story` branch (never main, so no deploys and no extra weight on the site): the PR's words, the idea-box wish it answers in the visitor's own words, who made it and with which tools, a census (spots, characters, scenes…), and **before/after photos** of the place, taken from builds of both commits, plus a moving loop.\n- **Every idea-box wish** is kept exactly as first sent.\n- **Mondays**: a photo of every art spot, a time-lapse whether or not anything changed.\n- Each run catches up on whatever is missing, so a cancelled or skipped run loses nothing.\n- **`/story/`**: a page that reads the log live from the branch (growth charts, a before/after wipe, wishes still waiting). Not linked from the map; `noindex`.\n- PRs now have a **`## Story`** section (template + CLAUDE.md): `Idea`, `Where` (where to point the camera), `Asked vs made`, `Mike`, `Note`. `Mike:` is only ever Mike's own words.\n\n@exit320-stack: heads-up, since this changes what goes in your PR descriptions. The Story lines are how your words and the \"asked vs made\" end up in the record. Details: `scripts/story/README.md`.\n\nOnce merged I'll run the workflow once with a high limit to backfill all ~74 past changes.\n\n## Story\nIdea:\nWhere: none\nAsked vs made:\nMike:\nNote: The log's first entry is the change that starts the log. The recorder was tried locally on 12 real changes; a regex that read the build's base path from a comment cost the recent ones their photos until fixed.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "c050a6b7b52378d1113091ed921989b1ba6a5155",
+      "message": "Story log: every change, wish and spot, recorded to the story branch\n\nEach commit that reaches main gets a record (facts from git + the PR, the\nwish it answers in the visitor's words, the PR's new \"## Story\" section,\nwho made it and with which tools, a census) plus before/after photos of\nthe place, built from both commits. Idea-box wishes are kept as first\nsent; Mondays photograph every spot. A README chronicle and story.json\nindex sit on top. Written by .github/workflows/story.yml to the story\nbranch, never main; every run catches up on anything missed.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-15T15:41:27Z"
+    },
+    {
+      "sha": "1448111a21b891aaf86c0bd22215352e5d52ca6b",
+      "message": "/story/: a page that shows the story log (not linked from the map yet)\n\nReads story.json live from the story branch: counts, small-multiple growth\ncharts, every change by month and day with its wish, words, a before/after\nwipe and the moving loop, and the wishes still waiting. story.json now\ncarries everything the page needs. Recorder fixes found on the way: serve\neach build at its real base (a comment fooled the regex), count scenes in\ntheir folders. Smoke test opens /story/ on a made-up log.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-15T16:18:31Z"
+    }
+  ],
+  "files": [
+    {
+      "path": ".github/pull_request_template.md",
+      "status": "A",
+      "additions": 18,
+      "deletions": 0
+    },
+    {
+      "path": ".github/workflows/story.yml",
+      "status": "A",
+      "additions": 126,
+      "deletions": 0
+    },
+    {
+      "path": ".gitignore",
+      "status": "M",
+      "additions": 2,
+      "deletions": 0
+    },
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 13,
+      "deletions": 2
+    },
+    {
+      "path": "package.json",
+      "status": "M",
+      "additions": 2,
+      "deletions": 1
+    },
+    {
+      "path": "scripts/smoke.mjs",
+      "status": "M",
+      "additions": 28,
+      "deletions": 2
+    },
+    {
+      "path": "scripts/story/README.md",
+      "status": "A",
+      "additions": 99,
+      "deletions": 0
+    },
+    {
+      "path": "scripts/story/lib.mjs",
+      "status": "A",
+      "additions": 391,
+      "deletions": 0
+    },
+    {
+      "path": "scripts/story/lib.test.mjs",
+      "status": "A",
+      "additions": 228,
+      "deletions": 0
+    },
+    {
+      "path": "scripts/story/record.mjs",
+      "status": "A",
+      "additions": 418,
+      "deletions": 0
+    },
+    {
+      "path": "scripts/story/shoot.mjs",
+      "status": "A",
+      "additions": 113,
+      "deletions": 0
+    },
+    {
+      "path": "src/story/StoryPage.tsx",
+      "status": "A",
+      "additions": 292,
+      "deletions": 0
+    },
+    {
+      "path": "src/story/main.tsx",
+      "status": "A",
+      "additions": 14,
+      "deletions": 0
+    },
+    {
+      "path": "src/story/model.test.ts",
+      "status": "A",
+      "additions": 85,
+      "deletions": 0
+    },
+    {
+      "path": "src/story/model.ts",
+      "status": "A",
+      "additions": 142,
+      "deletions": 0
+    },
+    {
+      "path": "src/story/story.css",
+      "status": "A",
+      "additions": 128,
+      "deletions": 0
+    },
+    {
+      "path": "story/index.html",
+      "status": "A",
+      "additions": 16,
+      "deletions": 0
+    },
+    {
+      "path": "vite.config.ts",
+      "status": "M",
+      "additions": 7,
+      "deletions": 0
+    }
+  ],
+  "additions": 2122,
+  "deletions": 5,
+  "areas": [
+    "ci",
+    "docs",
+    "tools"
+  ],
+  "branch": "story-log",
+  "opened_at": "2026-11-15T16:28:15Z",
+  "merged_by": "vlandham",
+  "summary": "A record of how the island grows, written automatically so the project can tell its own story later.\n\n- **Every commit that reaches main** gets a record on a new `story` branch (never main, so no deploys and no extra weight on the site): the PR's words, the idea-box wish it answers in the visitor's own words, who made it and with which tools, a census (spots, characters, scenes…), and **before/after photos** of the place, taken from builds of both commits, plus a moving loop.\n- **Every idea-box wish** is kept exactly as first sent.\n- **Mondays**: a photo of every art spot, a time-lapse whether or not anything changed.\n- Each run catches up on whatever is missing, so a cancelled or skipped run loses nothing.\n- **`/story/`**: a page that reads the log live from the branch (growth charts, a before/after wipe, wishes still waiting). Not linked from the map; `noindex`.\n- PRs now have a **`## Story`** section (template + CLAUDE.md): `Idea`, `Where` (where to point the camera), `Asked vs made`, `Mike`, `Note`. `Mike:` is only ever Mike's own words.\n\n@exit320-stack: heads-up, since this changes what goes in your PR descriptions. The Story lines are how your words and the \"asked vs made\" end up in the record. Details: `scripts/story/README.md`.\n\nOnce merged I'll run the workflow once with a high limit to backfill all ~74 past changes.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": "The log's first entry is the change that starts the log. The recorder was tried locally on 12 real changes; a regex that read the build's base path from a comment cost the recent ones their photos until fixed.\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+    "shots": true,
+    "present": true
+  },
+  "ideas": [],
+  "requested_reviewers": [
+    "exit320-stack"
+  ],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-15T16:28:40Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-68-garden-preview.gardeninsound.workers.dev\n\nUpdated for 1448111. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-68]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-68-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 21,
+    "scenes": 11,
+    "content_files": 27,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 26360,
+    "commits": 92
+  },
+  "shots": [],
+  "first_recorded_at": "2026-11-15T16:43:39.483Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:43:39.483Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736942138"
+}

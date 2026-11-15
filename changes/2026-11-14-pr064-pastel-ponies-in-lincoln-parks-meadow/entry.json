@@ -1,0 +1,171 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "36b5b6caf6d322f68708aac13026a3dfe0b3f38c",
+  "parent": "13b298317ec74bb3f4bf0094571b1d9d96280afd",
+  "pr": 64,
+  "title": "Pastel ponies in Lincoln Park's meadow (idea box #36)",
+  "url": "https://github.com/gardeninsound/map/pull/64",
+  "merged_at": "2026-11-15T00:24:24Z",
+  "body": "The idea asked for My Little Pony G1; those are someone else's characters, so\nthis is Bear Island's own herd: five pastel ponies with their own names graze\nand trot about the meadow and its trails. Walk up and one stops to say hi.\nWandering pure + tested.\n\nCloses #36\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+  "authors": [
+    {
+      "login": "exit320-stack"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "303d90373d7e45f6067316b9730b5adaed09b9ef",
+      "message": "Pastel ponies in Lincoln Park's meadow (idea box #36)\n\nThe idea asked for My Little Pony G1; those are someone else's characters, so\nthis is Bear Island's own herd: five pastel ponies with their own names graze\nand trot about the meadow and its trails. Walk up and one stops to say hi.\nWandering pure + tested.\n\nCloses #36\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-14T23:20:02Z"
+    },
+    {
+      "sha": "476259a612d1101a92938ee054179be8262eeea1",
+      "message": "Merge remote-tracking branch 'origin/main' into ponies\n\n# Conflicts:\n#\tsrc/App.tsx\n#\tsrc/game/CLAUDE.md",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-15T00:21:07Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "src/App.tsx",
+      "status": "M",
+      "additions": 9,
+      "deletions": 2
+    },
+    {
+      "path": "src/content/ponies.ts",
+      "status": "A",
+      "additions": 25,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/CLAUDE.md",
+      "status": "M",
+      "additions": 4,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/plugins/ponies.ts",
+      "status": "A",
+      "additions": 73,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/ponies.test.ts",
+      "status": "A",
+      "additions": 48,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/ponies.ts",
+      "status": "A",
+      "additions": 63,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/ponySprites.ts",
+      "status": "A",
+      "additions": 52,
+      "deletions": 0
+    }
+  ],
+  "additions": 274,
+  "deletions": 2,
+  "areas": [
+    "characters & map life",
+    "words & content"
+  ],
+  "branch": "ponies",
+  "opened_at": "2026-11-15T00:12:13Z",
+  "merged_by": "exit320-stack",
+  "summary": "The idea asked for My Little Pony G1; those are someone else's characters, so\nthis is Bear Island's own herd: five pastel ponies with their own names graze\nand trot about the meadow and its trails. Walk up and one stops to say hi.\nWandering pure + tested.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [
+    {
+      "issue": 36,
+      "url": "https://github.com/gardeninsound/map/issues/36",
+      "title": "Idea: add my little ponys (g1)",
+      "text": "add my little ponys (g1)",
+      "name": null,
+      "street": "47th Ave SW",
+      "asked_at": "2026-11-05T04:44:46Z",
+      "from_idea_box": true
+    }
+  ],
+  "requested_reviewers": [
+    "vlandham"
+  ],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-15T00:12:43Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-64-garden-preview.gardeninsound.workers.dev\n\nUpdated for 476259a. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-64]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-64-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 19,
+    "scenes": 11,
+    "content_files": 25,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 24939,
+    "commits": 88
+  },
+  "shots": [
+    {
+      "query": "at=47.53339,-122.39469",
+      "lat": 47.53339,
+      "lon": -122.39469,
+      "label": null,
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "production",
+      "after": "production"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+  },
+  "first_recorded_at": "2026-11-15T16:43:39.483Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:43:39.483Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736942138"
+}

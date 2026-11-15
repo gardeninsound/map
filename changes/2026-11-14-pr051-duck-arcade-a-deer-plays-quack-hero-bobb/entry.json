@@ -1,0 +1,139 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "32d3693e30ea0ec783c2b99e64e14fb69e7735c9",
+  "parent": "8256fb2a586a207d3a7a4fa6c2772cdcf20af8f5",
+  "pr": 51,
+  "title": "Duck Arcade: a deer plays Quack Hero, bobbing to the beat",
+  "url": "https://github.com/gardeninsound/map/pull/51",
+  "merged_at": "2026-11-14T18:18:48Z",
+  "body": "A low-poly cartoon buck (antlers, white tail) stands at the Quack Hero cabinet\nfrom the moment you walk in: front hooves tapping the buttons on the beat, head\nbobbing, ears twitching, tail flicking, a little hop now and then. Its screen\nshows the rhythm game going (rubber-duck notes down three lanes, a DEER score).\nYou and the bear walk round it; the bear coming over no longer stops other\ncabinets' screens. DEER_GAME in content/duckArcade.ts; a test checks its\ncabinet and the bear's both stand in the room.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+  "authors": [
+    {
+      "login": "exit320-stack"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "b69f558bd96d00737d22ee06f0ea2b8b405b7088",
+      "message": "Duck Arcade: a deer plays Quack Hero, bobbing to the beat\n\nA low-poly cartoon buck (antlers, white tail) stands at the Quack Hero cabinet\nfrom the moment you walk in: front hooves tapping the buttons on the beat, head\nbobbing, ears twitching, tail flicking, a little hop now and then. Its screen\nshows the rhythm game going (rubber-duck notes down three lanes, a DEER score).\nYou and the bear walk round it; the bear coming over no longer stops other\ncabinets' screens. DEER_GAME in content/duckArcade.ts; a test checks its\ncabinet and the bear's both stand in the room.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-09T13:42:43Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "src/content/duckArcade.test.ts",
+      "status": "A",
+      "additions": 15,
+      "deletions": 0
+    },
+    {
+      "path": "src/content/duckArcade.ts",
+      "status": "M",
+      "additions": 2,
+      "deletions": 0
+    },
+    {
+      "path": "src/experiences/CLAUDE.md",
+      "status": "M",
+      "additions": 3,
+      "deletions": 0
+    },
+    {
+      "path": "src/experiences/arcade/ArcadeDeer.ts",
+      "status": "A",
+      "additions": 139,
+      "deletions": 0
+    },
+    {
+      "path": "src/experiences/arcade/ArcadeScene.ts",
+      "status": "M",
+      "additions": 47,
+      "deletions": 10
+    }
+  ],
+  "additions": 206,
+  "deletions": 10,
+  "areas": [
+    "scenes & games",
+    "words & content"
+  ],
+  "branch": "arcade-deer",
+  "opened_at": "2026-11-14T18:17:42Z",
+  "merged_by": "exit320-stack",
+  "summary": "A low-poly cartoon buck (antlers, white tail) stands at the Quack Hero cabinet\nfrom the moment you walk in: front hooves tapping the buttons on the beat, head\nbobbing, ears twitching, tail flicking, a little hop now and then. Its screen\nshows the rhythm game going (rubber-duck notes down three lanes, a DEER score).\nYou and the bear walk round it; the bear coming over no longer stops other\ncabinets' screens. DEER_GAME in content/duckArcade.ts; a test checks its\ncabinet and the bear's both stand in the room.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "requested_reviewers": [],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-14T18:18:06Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-51-garden-preview.gardeninsound.workers.dev\n\nUpdated for b69f558. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-51]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-51-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 13,
+    "scenes": 10,
+    "content_files": 21,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 21710,
+    "commits": 74
+  },
+  "shots": [
+    {
+      "query": "at=arcade",
+      "lat": null,
+      "lon": null,
+      "label": "the Duck Arcade",
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "production",
+      "after": "production"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+  },
+  "first_recorded_at": "2026-11-15T16:43:39.483Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:43:39.483Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736942138"
+}

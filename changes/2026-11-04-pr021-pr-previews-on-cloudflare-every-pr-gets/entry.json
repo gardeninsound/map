@@ -1,0 +1,156 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "aa7d31980e212f0b08d1c086b9847e334b98444c",
+  "parent": "28fdabfc2a969f83fba39b294354377c2fef8af2",
+  "pr": 21,
+  "title": "PR previews on Cloudflare: every PR gets its own copy of the site",
+  "url": "https://github.com/gardeninsound/map/pull/21",
+  "merged_at": "2026-11-05T03:05:26Z",
+  "body": "Every pull request from a branch in this repo gets a link to its own copy of the site, commented on the PR and updated on every push:\n\n**`https://pr-<number>-garden-preview.gardeninsound.workers.dev`**\n\nThe live site is untouched: it still deploys from `main` to GitHub Pages.\n\n## How\n\n- **`preview/`:** `garden-preview`, a Cloudflare Worker that only serves files, in the project's account (account id pinned).\n- **`.github/workflows/preview.yml`:** builds the PR, then runs `wrangler versions upload --preview-alias pr-<N>`, then comments the link with `gh pr comment --edit-last --create-if-none`.\n  - Fork PRs are skipped, since GitHub doesn't give them the token.\n  - It uses the `CLOUDFLARE_API_TOKEN` Actions secret, which has only Workers Scripts: Edit.\n- **Previews are full copies of the site.**\n  - The relay and the idea box allow `https://*-garden-preview.gardeninsound.workers.dev`. Both are already deployed with this change.\n  - Ideas sent from a preview are titled `[preview pr-<N>] Idea: …` (`previewOf` in `wish/src/issue.ts`, tested).\n  - The Turnstile widget needs `gardeninsound.workers.dev` in its hostnames.\n- **Docs:** `preview/README.md`, `docs/hosting.md` (services, ship flow, secrets, jobs), and CLAUDE.md.\n\n## Tested\n\n- `npm test`, `npm run build` and the `wish/` type check pass.\n- Created `garden-preview` and uploaded a test preview by hand: `pr-0-garden-preview.gardeninsound.workers.dev` returns 200 and serves the site.\n- Live Workers, checked with `curl`:\n  - the relay upgrades a WebSocket from a preview origin (101) and rejects other sites (403);\n  - the idea box returns CORS headers for previews only.\n- This PR's own preview is the end-to-end test.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "ea9409609a53858ac5e3d8815fe808affa722fe7",
+      "message": "PR previews on Cloudflare: every PR gets its own copy of the site\n\n.github/workflows/preview.yml builds each same-repo PR and uploads it as a preview version\nof the garden-preview Worker (preview/, files only, in the project's Cloudflare account):\nhttps://pr-<N>-garden-preview.gardeninsound.workers.dev, commented on the PR and updated\non every push. The live site stays on GitHub Pages.\n\nPreviews are full copies: the relay and the idea box allow\nhttps://*-garden-preview.gardeninsound.workers.dev, and ideas sent from a preview are\ntitled [preview pr-<N>] (previewOf, tested). Needs the CLOUDFLARE_API_TOKEN Actions secret\n(Workers Scripts: Edit only). Docs: preview/README.md, docs/hosting.md, CLAUDE.md.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-05T02:52:03Z"
+    }
+  ],
+  "files": [
+    {
+      "path": ".github/workflows/preview.yml",
+      "status": "A",
+      "additions": 59,
+      "deletions": 0
+    },
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 3,
+      "deletions": 0
+    },
+    {
+      "path": "docs/hosting.md",
+      "status": "M",
+      "additions": 15,
+      "deletions": 7
+    },
+    {
+      "path": "preview/README.md",
+      "status": "A",
+      "additions": 39,
+      "deletions": 0
+    },
+    {
+      "path": "preview/package-lock.json",
+      "status": "A",
+      "additions": 1591,
+      "deletions": 0
+    },
+    {
+      "path": "preview/package.json",
+      "status": "A",
+      "additions": 11,
+      "deletions": 0
+    },
+    {
+      "path": "preview/wrangler.jsonc",
+      "status": "A",
+      "additions": 14,
+      "deletions": 0
+    },
+    {
+      "path": "relay/wrangler.jsonc",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "wish/src/index.ts",
+      "status": "M",
+      "additions": 2,
+      "deletions": 2
+    },
+    {
+      "path": "wish/src/issue.test.ts",
+      "status": "M",
+      "additions": 14,
+      "deletions": 1
+    },
+    {
+      "path": "wish/src/issue.ts",
+      "status": "M",
+      "additions": 12,
+      "deletions": 3
+    },
+    {
+      "path": "wish/wrangler.jsonc",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    }
+  ],
+  "additions": 1762,
+  "deletions": 15,
+  "areas": [
+    "relay",
+    "idea box",
+    "ci",
+    "docs"
+  ],
+  "branch": "pr-previews",
+  "opened_at": "2026-11-05T02:57:57Z",
+  "merged_by": "vlandham",
+  "summary": "Every pull request from a branch in this repo gets a link to its own copy of the site, commented on the PR and updated on every push:\n\n**`https://pr-<number>-garden-preview.gardeninsound.workers.dev`**\n\nThe live site is untouched: it still deploys from `main` to GitHub Pages.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "requested_reviewers": [],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-05T02:58:19Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-21-garden-preview.gardeninsound.workers.dev\n\nUpdated for ea94096. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-21]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-21-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 9,
+    "scenes": 10,
+    "content_files": 18,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 18678,
+    "commits": 55
+  },
+  "shots": [],
+  "first_recorded_at": "2026-11-15T16:43:39.483Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:43:39.483Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736942138"
+}

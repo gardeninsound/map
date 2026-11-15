@@ -1,0 +1,184 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "38aef0ac23dc479e68f566eaa27a1cc1f12a071a",
+  "parent": "dd9f425dcb91f15048d32737387890ab813e5d41",
+  "pr": 62,
+  "title": "Squirrels that hide from people; Ham asks for pets (idea box #30)",
+  "url": "https://github.com/gardeninsound/map/pull/62",
+  "merged_at": "2026-11-15T00:17:33Z",
+  "body": "Five squirrels scamper near park trees close to you; when a neighbor walks\nby, one dashes up the nearest tree and hides, tail hanging out of the\nleaves, till the coast is clear. Rabbits don't scare them. Ham now asks for\npets after the lines: pet, and Ham purrs with hearts floating up.\n\nCloses #30\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+  "authors": [
+    {
+      "login": "exit320-stack"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "f01b9a698e8e929fc060dedbe07edfa3d8876555",
+      "message": "Squirrels that hide from people; Ham asks for pets (idea box #30)\n\nFive squirrels scamper near park trees close to you; when a neighbor walks\nby, one dashes up the nearest tree and hides, tail hanging out of the\nleaves, till the coast is clear. Rabbits don't scare them. Ham now asks for\npets after the lines: pet, and Ham purrs with hearts floating up.\n\nCloses #30\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-14T23:13:36Z"
+    },
+    {
+      "sha": "735cbb951c448cf06e91454974825f0d1a48f387",
+      "message": "Merge remote-tracking branch 'origin/main' into squirrels-ham\n\n# Conflicts:\n#\tsrc/App.tsx\n#\tsrc/game/CLAUDE.md\n#\tsrc/ui/sounds.ts",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-15T00:16:09Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "src/App.tsx",
+      "status": "M",
+      "additions": 16,
+      "deletions": 2
+    },
+    {
+      "path": "src/content/ham.ts",
+      "status": "M",
+      "additions": 9,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/CLAUDE.md",
+      "status": "M",
+      "additions": 5,
+      "deletions": 1
+    },
+    {
+      "path": "src/game/plugins/ham.ts",
+      "status": "M",
+      "additions": 18,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/plugins/squirrels.ts",
+      "status": "A",
+      "additions": 71,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/squirrelSprites.ts",
+      "status": "A",
+      "additions": 43,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/squirrels.test.ts",
+      "status": "A",
+      "additions": 54,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/squirrels.ts",
+      "status": "A",
+      "additions": 135,
+      "deletions": 0
+    },
+    {
+      "path": "src/ui/sounds.ts",
+      "status": "M",
+      "additions": 4,
+      "deletions": 0
+    }
+  ],
+  "additions": 355,
+  "deletions": 3,
+  "areas": [
+    "characters & map life",
+    "ui",
+    "words & content"
+  ],
+  "branch": "squirrels-ham",
+  "opened_at": "2026-11-15T00:11:57Z",
+  "merged_by": "exit320-stack",
+  "summary": "Five squirrels scamper near park trees close to you; when a neighbor walks\nby, one dashes up the nearest tree and hides, tail hanging out of the\nleaves, till the coast is clear. Rabbits don't scare them. Ham now asks for\npets after the lines: pet, and Ham purrs with hearts floating up.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [
+    {
+      "issue": 30,
+      "url": "https://github.com/gardeninsound/map/issues/30",
+      "title": "Idea: Add some squirels that hide if humans draw neer, and ham…",
+      "text": "Add some squirels that hide if humans draw neer, and ham the cat that asks for pets",
+      "name": "YOUR SON!!!!!",
+      "street": "45th Ave SW",
+      "asked_at": "2026-11-05T04:11:45Z",
+      "from_idea_box": true
+    }
+  ],
+  "requested_reviewers": [
+    "vlandham"
+  ],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-15T00:12:24Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-62-garden-preview.gardeninsound.workers.dev\n\nUpdated for 735cbb9. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-62]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-62-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 17,
+    "scenes": 11,
+    "content_files": 23,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 24387,
+    "commits": 86
+  },
+  "shots": [
+    {
+      "query": "at=47.5612,-122.3868",
+      "lat": 47.5612,
+      "lon": -122.3868,
+      "label": "the Junction, where everyone starts",
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "production",
+      "after": "production"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+  },
+  "first_recorded_at": "2026-11-15T16:43:39.483Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:43:39.483Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736942138"
+}

@@ -1,0 +1,165 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "8bccba399cd74231290450a03a47ef609b2f1513",
+  "parent": "36b5b6caf6d322f68708aac13026a3dfe0b3f38c",
+  "pr": 65,
+  "title": "A seasonal flower garden at Dragonfly Garden (idea box #12)",
+  "url": "https://github.com/gardeninsound/map/pull/65",
+  "merged_at": "2026-11-15T00:26:40Z",
+  "body": "Delridge's Dragonfly Garden is cleared of its drawn forest into soil beds and\ngravel paths, planted by the real calendar: snowdrops and hellebores in late\nwinter, crocus, daffodils and tulips in spring, roses, lavender and sunflowers\nin summer, dahlias, asters, mums and pumpkins in fall, kale in winter. Plants\ncome up, flower and fade across their months. A sign by the street says\nwhat's out. Pure + tested.\n\nCloses #12\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+  "authors": [
+    {
+      "login": "exit320-stack"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "b8b128bae100803a4c994e213c4745606672c828",
+      "message": "A seasonal flower garden at Dragonfly Garden (idea box #12)\n\nDelridge's Dragonfly Garden is cleared of its drawn forest into soil beds and\ngravel paths, planted by the real calendar: snowdrops and hellebores in late\nwinter, crocus, daffodils and tulips in spring, roses, lavender and sunflowers\nin summer, dahlias, asters, mums and pumpkins in fall, kale in winter. Plants\ncome up, flower and fade across their months. A sign by the street says\nwhat's out. Pure + tested.\n\nCloses #12\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-14T23:23:23Z"
+    },
+    {
+      "sha": "f8552a7348d885b3addcbce39f2964153423a731",
+      "message": "Merge remote-tracking branch 'origin/main' into season-garden\n\n# Conflicts:\n#\tsrc/App.tsx\n#\tsrc/game/CLAUDE.md",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-15T00:25:04Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "src/App.tsx",
+      "status": "M",
+      "additions": 9,
+      "deletions": 2
+    },
+    {
+      "path": "src/content/garden.ts",
+      "status": "A",
+      "additions": 54,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/CLAUDE.md",
+      "status": "M",
+      "additions": 4,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/garden.test.ts",
+      "status": "A",
+      "additions": 51,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/garden.ts",
+      "status": "A",
+      "additions": 38,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/plugins/garden.ts",
+      "status": "A",
+      "additions": 159,
+      "deletions": 0
+    }
+  ],
+  "additions": 315,
+  "deletions": 2,
+  "areas": [
+    "characters & map life",
+    "words & content"
+  ],
+  "branch": "season-garden",
+  "opened_at": "2026-11-15T00:12:21Z",
+  "merged_by": "exit320-stack",
+  "summary": "Delridge's Dragonfly Garden is cleared of its drawn forest into soil beds and\ngravel paths, planted by the real calendar: snowdrops and hellebores in late\nwinter, crocus, daffodils and tulips in spring, roses, lavender and sunflowers\nin summer, dahlias, asters, mums and pumpkins in fall, kale in winter. Plants\ncome up, flower and fade across their months. A sign by the street says\nwhat's out. Pure + tested.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [
+    {
+      "issue": 12,
+      "url": "https://github.com/gardeninsound/map/issues/12",
+      "title": "Idea: To see a garden with flowers growing - appropriate to the…",
+      "text": "To see a garden with flowers growing - appropriate to the season",
+      "name": "Jimmy",
+      "street": null,
+      "asked_at": "2026-11-04T22:49:41Z",
+      "from_idea_box": true
+    }
+  ],
+  "requested_reviewers": [
+    "vlandham"
+  ],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-15T00:12:47Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-65-garden-preview.gardeninsound.workers.dev\n\nUpdated for f8552a7. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-65]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-65-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 20,
+    "scenes": 11,
+    "content_files": 26,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 25248,
+    "commits": 89
+  },
+  "shots": [
+    {
+      "query": "at=47.56628,-122.36807",
+      "lat": 47.56628,
+      "lon": -122.36807,
+      "label": null,
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "production",
+      "after": "production"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+  },
+  "first_recorded_at": "2026-11-15T16:43:39.483Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:43:39.483Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736942138"
+}

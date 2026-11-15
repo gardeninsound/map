@@ -25,7 +25,14 @@
     }
   ],
   "state": "closed:completed",
-  "answered_by": [],
+  "answered_by": [
+    {
+      "pr": 64,
+      "sha": "36b5b6caf6d322f68708aac13026a3dfe0b3f38c",
+      "title": "Pastel ponies in Lincoln Park's meadow (idea box #36)",
+      "merged_at": "2026-11-15T00:24:24Z"
+    }
+  ],
   "current": {
     "title": "Idea: add my little ponys (g1)",
     "body": "> add my little ponys (g1)\n\n---\n<sub>Sent from the map's idea box · the rabbit was on 47th Ave SW.</sub>",
@@ -41,5 +48,5 @@
   ],
   "closed_at": "2026-11-15T00:24:26Z",
   "comments": [],
-  "last_recorded_at": "2026-11-15T16:30:23.173Z"
+  "last_recorded_at": "2026-11-15T16:43:39.483Z"
 }

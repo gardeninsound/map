@@ -1,0 +1,153 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "e17d79242bd413f583f44a4c9753e5af6480b1a6",
+  "parent": "b3fe669496caee0a112bbe36ad73d7cf986e790d",
+  "pr": 53,
+  "title": "Dinosaurs: no more sound (the stray \"thanks\")",
+  "url": "https://github.com/gardeninsound/map/pull/53",
+  "merged_at": "2026-11-14T18:25:11Z",
+  "body": "The recording they played going by (public/sounds/dinosaur.mp3) was a \"thanks\",\nheard at random whenever a dinosaur passed. Removed the file, the code that\nplayed it (HEAR, HEAR_GAP, hearDino, DINO_SOUND) and its tests. The dinosaurs\nstill walk west; they're silent now.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+  "authors": [
+    {
+      "login": "exit320-stack"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "8b0b91b87726b571c5215a382ccb541f22aa9dbe",
+      "message": "Dinosaurs: no more sound (the stray \"thanks\")\n\nThe recording they played going by (public/sounds/dinosaur.mp3) was a \"thanks\",\nheard at random whenever a dinosaur passed. Removed the file, the code that\nplayed it (HEAR, HEAR_GAP, hearDino, DINO_SOUND) and its tests. The dinosaurs\nstill walk west; they're silent now.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-09T13:46:53Z"
+    },
+    {
+      "sha": "3f145b48551f8fc81cb6a6ea3c7f240435ac5dd7",
+      "message": "Merge remote-tracking branch 'origin/main' into no-dino-sound\n\n# Conflicts:\n#\tsrc/content/published.test.ts",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-14T18:21:12Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "public/sounds/dinosaur.mp3",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "src/content/published.test.ts",
+      "status": "M",
+      "additions": 0,
+      "deletions": 2
+    },
+    {
+      "path": "src/game/CLAUDE.md",
+      "status": "M",
+      "additions": 1,
+      "deletions": 2
+    },
+    {
+      "path": "src/game/dinos.test.ts",
+      "status": "M",
+      "additions": 1,
+      "deletions": 21
+    },
+    {
+      "path": "src/game/dinos.ts",
+      "status": "M",
+      "additions": 0,
+      "deletions": 20
+    },
+    {
+      "path": "src/game/plugins/dinos.ts",
+      "status": "M",
+      "additions": 2,
+      "deletions": 21
+    }
+  ],
+  "additions": 4,
+  "deletions": 66,
+  "areas": [
+    "characters & map life",
+    "words & content",
+    "art & sound"
+  ],
+  "branch": "no-dino-sound",
+  "opened_at": "2026-11-14T18:17:54Z",
+  "merged_by": "exit320-stack",
+  "summary": "The recording they played going by (public/sounds/dinosaur.mp3) was a \"thanks\",\nheard at random whenever a dinosaur passed. Removed the file, the code that\nplayed it (HEAR, HEAR_GAP, hearDino, DINO_SOUND) and its tests. The dinosaurs\nstill walk west; they're silent now.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "requested_reviewers": [],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-14T18:18:20Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-53-garden-preview.gardeninsound.workers.dev\n\nUpdated for 3f145b4. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-53]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-53-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 14,
+    "scenes": 10,
+    "content_files": 22,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 22337,
+    "commits": 80
+  },
+  "shots": [
+    {
+      "query": "at=47.5612,-122.3868",
+      "lat": 47.5612,
+      "lon": -122.3868,
+      "label": "the Junction, where everyone starts",
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "production",
+      "after": "production"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+  },
+  "first_recorded_at": "2026-11-15T16:43:39.483Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:43:39.483Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736942138"
+}
