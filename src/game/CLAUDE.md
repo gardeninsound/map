@@ -2,18 +2,19 @@
 
 The app's `CityPlugin`s live in `plugins/`; their pure, tested rules sit beside them in `src/game/`
 (`<name>.ts` + `<name>.test.ts`); their words live in `src/content/<name>.ts`. App.tsx wires the
-plugins into `CityGame` and handles `onInteract`.
+plugins into `CityGame`; what {A} does is the plugin's own `act()` (below).
 
 **What {A} does is data** (`src/game/actions.ts`): a plugin that's an `Actor` answers `act(target)` for its own targets
-with an `Action` (a `talk` with lines, portrait, `choices` that each lead to another action, and `then`; a `ride`;
-`close`; or `do` for a side effect), and App's `runAction` shows it. **A new character's conversation goes in its plugin**,
+with an `Action` (a `talk` with lines, portrait, `choices` that each lead to another action, and `then`; a `ride`; a
+`minigame` whose `then` gets the score; `close`; or `do` for a side effect), and App's `runAction` shows it. **A new character's conversation goes in its plugin**,
 not in App.tsx, and its test walks it with `pick(action, 'label')` (`src/game/actions.test.ts`). Converted so far: the
 garden sign, the maze's fairy ring, the boxing announcer, the ponies, the mermaids, Luna Park's signs. Still in App's
-`onInteract`: the arcade door, the race, the rowboat, other rabbits, art spots, the crow, the chicken, Ham.
+`onInteract`, to be moved (**don't copy them**): the arcade door, the race, the rowboat, other rabbits, art spots, the crow,
+the chicken, Ham. `src/game/onInteract.test.ts` fails on any new branch there; its message says how to do it instead.
 
 - `src/game/plugins/` — the app's `CityPlugin`s: `artSpots.ts` (spinning lemons with a beating heart above, from `src/game/lemonSpin.ts`;
   "unvisited" beacons; targets of kind `place` carrying the `PlacedLocation`), `busker.ts`,
-  `crow.ts`. App.tsx wires them into `CityGame` and handles `onInteract`.
+  `crow.ts`. App.tsx wires them into `CityGame`; each answers {A} on its own targets with `act()`.
 - `src/game/sprites.ts` — Mike, the lemons (`src/game/lemon.ts`), the crow (same grid format as the city's sprites).
 - First visit: after Mike's welcome the city's hint arrow flashes 4× toward the nearest open
   spot (remembered in localStorage). The city's `Compass` points at `ArtSpots.open`.
@@ -27,7 +28,7 @@ garden sign, the maze's fairy ring, the boxing announcer, the ponies, the mermai
 - `src/game/crow.ts` — the snack crow (pure flight state, tested). Starts outside Les Schwab on
   Alaska; asks for snacks (choice → reply), then flies to the next perch in
   `src/content/crow.ts` (storefront regex + lat/lon fallback, lines per stop) and loops home,
-  remembering how often you shared. App's `talk` overlay takes `choices` and a `then` callback.
+  remembering how often you shared. (Its conversation is still in App's `onInteract`, to move into `act()`.)
 - `src/game/plugins/chicken.ts` — the chicken on California outside Greentree Animal Hospital: two questions with two answers
   each and her reply to each, then "Want to play my mini game?" (all lines in `src/content/chicken.ts`).
   Yes opens **Cone Catch** (catch falling ice cream cones; missed ones burst into flames on the grass —
@@ -42,7 +43,7 @@ garden sign, the maze's fairy ring, the boxing announcer, the ponies, the mermai
   concrete lanes, named "Alley"). Ham the cat (`src/game/plugins/ham.ts`, a Scottish Fold) wanders the
   street and alley within `HAM.leash` tiles of home, sits to look at a rabbit nearby, and says one set
   of lines per visit through the plain neighbor talk (words in `src/content/ham.ts`; movement pure +
-  tested in `src/game/ham.ts`). After the lines Ham asks for pets (idea box #30): `hamPets` choices in the App, `Ham.pet()`
+  tested in `src/game/ham.ts`). After the lines Ham asks for pets (idea box #30): `hamPets` choices (still in App, to move into `act()`), `Ham.pet()`
   floats hearts and purrs (`sounds.purr`). `__ham` in dev.
 - `src/game/plugins/rowboat.ts` — **the rowboat at the end of 58th Ave SW** on Alki: at attach a 2-wide wooden dock is
   laid from where 58th meets Alki Ave west across the park and sand to the water (tiles turned walkable, street sign

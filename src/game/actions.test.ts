@@ -61,6 +61,14 @@ describe('what {A} does, as data', () => {
     expect(pick(a, pat.ask!.done)).toEqual({ kind: 'close' });
   });
 
+  it('a mini game hands its score to what comes next', () => {
+    const a = talk('A chicken', ['Want to play?'], {
+      choices: [{ label: 'Yes!', next: { kind: 'minigame', game: 'cone-catch', then: (r) => talk('A chicken', [`${r.score} cones!`]) } }],
+    });
+    const game = pick(a, 'Yes!');
+    expect(game.kind === 'minigame' && game.then?.({ score: 12, best: 20 })).toMatchObject({ lines: ['12 cones!'] });
+  });
+
   it('pick() refuses a choice that is not there', () => {
     expect(() => pick(talk('x', ['hi']), 'nope')).toThrow(/no choice "nope"/);
   });
