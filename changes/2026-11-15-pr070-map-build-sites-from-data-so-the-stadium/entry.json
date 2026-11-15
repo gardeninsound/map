@@ -1,0 +1,155 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "22fb00138a90bb5564725455b277df0898c41b4b",
+  "parent": "f7b2ec759f2bf3f7d886f66e9a6f5aa1fb34dd90",
+  "pr": 70,
+  "title": "Map build: sites from data, so the stadium survives npm run map",
+  "url": "https://github.com/gardeninsound/map/pull/70",
+  "merged_at": "2026-11-15T20:19:28Z",
+  "body": "West Seattle Stadium (#57) existed only as a hand edit to the generated `src/city/world/worldData.json`. Nothing in `scripts/city/` knew about it, so the next `npm run map` would have silently erased it.\n\n- **Sites** (`scripts/city/sites/*.json`): places OpenStreetMap doesn't have, as data. Each is an ASCII grid of cells anchored by lat/lon (`l` lawn, `w` walkable + named, `W` walkable, `n` named), plus its label, paths and detail features in lat/lon. Anchored by lat/lon, a site stays put if the map's area changes; a build at another tile size refuses it.\n- `build-map.mjs` draws every site after the landmarks and before the houses (so houses stay off it). Rules in `scripts/city/sites.mjs`, tested.\n- The stadium's file was extracted from #57's own diff. A rebuild now reproduces the committed map exactly, stadium included. (The one other difference is a house that any fresh build drops at the edge of Dakota Place Park; the map data isn't touched in this PR.)\n- Guard: `sites.test.mjs` fails if the committed map is missing a site.\n- CLAUDE.md: never hand-edit `worldData.json`; add a site instead.\n\n@exit320-stack: heads-up only. Nothing changes on the map; the stadium is just safe now. Next time something needs adding that OSM lacks, it goes in `scripts/city/sites/`.\n\n## Story\nIdea:\nWhere: 47.56274, -122.37489 — the football field, West Seattle Stadium\nAsked vs made:\nMike:\nNote: Found while reviewing how custom structures are built. The stadium would have vanished on the next map rebuild.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\n",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "218fb2f4be7898475e787d55ad14f118bc201311",
+      "message": "Map build: sites from data, so the stadium survives `npm run map`\n\nWest Seattle Stadium was a hand edit to the generated worldData.json\n(#57); nothing in scripts/city knew about it, so the next map rebuild\nwould have erased it. It's now a site file (scripts/city/sites/): an\nASCII grid of cells anchored by lat/lon, plus its label, gate path and\ntrack/field/grandstand features. build-map applies every site after the\nlandmarks and before the houses. A rebuild reproduces the committed map\n(stadium included); a test fails if the committed map is missing a site.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-15T20:18:12Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 2,
+      "deletions": 1
+    },
+    {
+      "path": "scripts/city/build-map.mjs",
+      "status": "M",
+      "additions": 18,
+      "deletions": 4
+    },
+    {
+      "path": "scripts/city/sites.mjs",
+      "status": "A",
+      "additions": 74,
+      "deletions": 0
+    },
+    {
+      "path": "scripts/city/sites.test.mjs",
+      "status": "A",
+      "additions": 83,
+      "deletions": 0
+    },
+    {
+      "path": "scripts/city/sites/west-seattle-stadium.json",
+      "status": "A",
+      "additions": 441,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/CLAUDE.md",
+      "status": "M",
+      "additions": 7,
+      "deletions": 3
+    }
+  ],
+  "additions": 625,
+  "deletions": 8,
+  "areas": [
+    "city",
+    "map pipeline",
+    "docs"
+  ],
+  "branch": "stadium-in-map-build",
+  "opened_at": "2026-11-15T20:18:16Z",
+  "merged_by": "vlandham",
+  "summary": "West Seattle Stadium (#57) existed only as a hand edit to the generated `src/city/world/worldData.json`. Nothing in `scripts/city/` knew about it, so the next `npm run map` would have silently erased it.\n\n- **Sites** (`scripts/city/sites/*.json`): places OpenStreetMap doesn't have, as data. Each is an ASCII grid of cells anchored by lat/lon (`l` lawn, `w` walkable + named, `W` walkable, `n` named), plus its label, paths and detail features in lat/lon. Anchored by lat/lon, a site stays put if the map's area changes; a build at another tile size refuses it.\n- `build-map.mjs` draws every site after the landmarks and before the houses (so houses stay off it). Rules in `scripts/city/sites.mjs`, tested.\n- The stadium's file was extracted from #57's own diff. A rebuild now reproduces the committed map exactly, stadium included. (The one other difference is a house that any fresh build drops at the edge of Dakota Place Park; the map data isn't touched in this PR.)\n- Guard: `sites.test.mjs` fails if the committed map is missing a site.\n- CLAUDE.md: never hand-edit `worldData.json`; add a site instead.\n\n@exit320-stack: heads-up only. Nothing changes on the map; the stadium is just safe now. Next time something needs adding that OSM lacks, it goes in `scripts/city/sites/`.",
+  "story": {
+    "ideas": [],
+    "where": [
+      {
+        "query": "at=47.56274,-122.37489",
+        "lat": 47.56274,
+        "lon": -122.37489,
+        "label": "the football field, West Seattle Stadium"
+      }
+    ],
+    "askedVsMade": null,
+    "mike": null,
+    "note": "Found while reviewing how custom structures are built. The stadium would have vanished on the next map rebuild.\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+    "shots": true,
+    "present": true
+  },
+  "ideas": [],
+  "requested_reviewers": [
+    "exit320-stack"
+  ],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-15T20:18:39Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-70-garden-preview.gardeninsound.workers.dev\n\nUpdated for 218fb2f. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-70]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-70-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 21,
+    "scenes": 11,
+    "content_files": 27,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 26360,
+    "commits": 94
+  },
+  "shots": [
+    {
+      "query": "at=47.56274,-122.37489",
+      "lat": 47.56274,
+      "lon": -122.37489,
+      "label": "the football field, West Seattle Stadium",
+      "guessed": false,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "production",
+      "after": "production"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+  },
+  "first_recorded_at": "2026-11-15T20:20:01.981Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T20:20:01.981Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43757421221"
+}

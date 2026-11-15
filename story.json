@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-11-15T17:03:45.323Z",
+  "generated_at": "2026-11-15T20:20:27.034Z",
   "changes": [
     {
       "pr": null,
@@ -3826,6 +3826,55 @@
         "arcade_cabinets_ready": 4,
         "source_lines": 26360,
         "commits": 93
+      }
+    },
+    {
+      "pr": 70,
+      "sha": "22fb00138a90bb5564725455b277df0898c41b4b",
+      "title": "Map build: sites from data, so the stadium survives npm run map",
+      "url": "https://github.com/gardeninsound/map/pull/70",
+      "merged_at": "2026-11-15T20:19:28Z",
+      "dir": "changes/2026-11-15-pr070-map-build-sites-from-data-so-the-stadium",
+      "ideas": [],
+      "summary": "West Seattle Stadium (#57) existed only as a hand edit to the generated `src/city/world/worldData.json`. Nothing in `scripts/city/` knew about it, so the next `npm run map` would have silently erased it.\n\n- **Sites** (`scripts/city/sites/*.json`): places OpenStreetMap doesn't have, as data. Each is an ASCII grid of cells anchored by lat/lon (`l` lawn, `w` walkable + named, `W` walkable, `n` named), plus its label, paths and detail features in lat/lon. Anchored by lat/lon, a site stays put if the map's area changes; a build at another tile size refuses it.\n- `build-map.mjs` draws every site after the landmarks and before the houses (so houses stay off it). Rules in `scripts/city/sites.mjs`, tested.\n- The stadium's file was extracted from #57's own diff. A rebuild now reproduces the committed map exactly, stadium included. (The one other difference is a house that any fresh build drops at the edge of Dakota Place Park; the map data isn't touched in this PR.)\n- Guard: `sites.test.mjs` fails if the committed map is missing a site.\n- CLAUDE.md: never hand-edit `worldData.json`; add a site instead.\n\n@exit320-stack: heads-up only. Nothing changes on the map; the stadium is just safe now. Next time something needs adding that OSM lacks, it goes in `scripts/city/sites/`.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": "Found while reviewing how custom structures are built. The stadium would have vanished on the next map rebuild.\n🤖 Generated with [Claude Code](https://claude.com/claude-code)"
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 6,
+      "additions": 625,
+      "deletions": 8,
+      "areas": [
+        "city",
+        "map pipeline",
+        "docs"
+      ],
+      "shots": [
+        {
+          "query": "at=47.56274,-122.37489",
+          "lat": 47.56274,
+          "lon": -122.37489,
+          "label": "the football field, West Seattle Stadium",
+          "before": "changes/2026-11-15-pr070-map-build-sites-from-data-so-the-stadium/before-1.webp",
+          "after": "changes/2026-11-15-pr070-map-build-sites-from-data-so-the-stadium/after-1.webp",
+          "moving": "changes/2026-11-15-pr070-map-build-sites-from-data-so-the-stadium/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 21,
+        "scenes": 11,
+        "content_files": 27,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 26360,
+        "commits": 94
       }
     }
   ],
