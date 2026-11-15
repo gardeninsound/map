@@ -17,7 +17,7 @@ import {
   type MapPlace,
   type PlacedLandmark,
   type Target,
- today } from './city';
+} from './city';
 import { START, locations, welcome } from './content/locations';
 import { CROW_NAME, crowChoices, crowGreeting, crowReply } from './content/crow';
 import { CHICKEN_NAME, chickenAfter, chickenInvite, chickenQuestions } from './content/chicken';
@@ -42,17 +42,11 @@ import { Rowboat } from './game/plugins/rowboat';
 import { LookPicker } from './ui/LookPicker';
 import { dress, loadLook, lookCode, LOOK_SCARVES, saveLook } from './game/look';
 import { ForestMaze } from './game/plugins/forestMaze';
-import { mazeMiddle } from './content/forestMaze';
 import { Garden } from './game/plugins/garden';
-import { gardenSign, GARDEN_NAME } from './content/garden';
-import { Ponies, type MeadowPony } from './game/plugins/ponies';
-import { Mermaids, type PlacedMermaid } from './game/plugins/mermaids';
-import { mermaidChat } from './content/mermaids';
+import { Ponies } from './game/plugins/ponies';
+import { Mermaids } from './game/plugins/mermaids';
 import { ChickenBoxing } from './game/plugins/chickenBoxing';
-import { ANNOUNCER, ringside } from './content/chickenBoxing';
-import { buildChicken } from './game/sprites';
-import { LunaPark, lunaSignPortrait } from './game/plugins/lunaPark';
-import { lunaRideInvite, type LunaSign } from './content/lunaPark';
+import { LunaPark } from './game/plugins/lunaPark';
 import { Visitors } from './game/plugins/visitors';
 import { EMOTES } from './content/emotes';
 import type { MiniGameResult } from './experiences/minigames/ConeCatch';
@@ -65,6 +59,7 @@ import { PELICAN_AFTER } from './game/pelican';
 import { TitleScreen } from './ui/TitleScreen';
 import { sounds } from './ui/sounds';
 import { findTarget, openFromSearch } from './ui/openLink';
+import { isActor, type Action } from './game/actions';
 
 type Overlay =
   | { kind: 'none' }
@@ -98,9 +93,6 @@ const GiantWhirl = lazy(() => import('./experiences/luna/GiantWhirl'));
 /** Overlays that take the whole screen: the map's HUD and touch pad hide under them. */
 const FULL_SCREEN: Overlay['kind'][] = ['scene', 'minigame', 'arcade', 'ride'];
 
-/** the sign picture in Luna Park's dialog boxes, drawn on first use */
-let signPortrait: string | undefined;
-let boxerPortrait: string | undefined;
 
 const LANDMARK_COLOR = '#5fa8a0';
 
@@ -200,16 +192,39 @@ export default function App() {
     const timings = fast > 0 ? { hiddenGone: fast, idleAway: 2 * fast, idleGone: 4 * fast } : undefined;
     const live = params.has('solo') ? null : new Visitors(params.get('relay') ?? undefined, island, timings);
     if (live) live.onChange = () => setRabbitTick((n) => n + 1);
+    const plugins = [garden, art, new BigCup(art), dinos, new Seal(), arcadeDoor.current, luna, busker, crow, flock, squirrels, chicken, pegasus, ham, race, rowboat, mermaids, ponies, maze, boxing, ...(live ? [live] : [])];
+    /** plugins that say what {A} does on their targets */
+    const actors = plugins.filter(isActor);
+    /** an Action (src/game/actions.ts) → the overlay that shows it */
+    const runAction = (a: Action): void => {
+      if (a.kind === 'talk') {
+        setOverlay({
+          kind: 'talk',
+          lines: a.lines,
+          ...(a.speaker ? { speaker: a.speaker } : {}),
+          ...(a.portrait ? { portrait: a.portrait } : {}),
+          ...(a.choices ? { choices: a.choices.map((c) => ({ label: c.label, onPick: () => runAction(c.next) })) } : {}),
+          ...(a.then ? { then: () => runAction(a.then!) } : {}),
+        });
+      } else if (a.kind === 'ride') setOverlay(a.ride === 'whirl' ? { kind: 'ride', ride: 'whirl' } : { kind: 'ride' });
+      else if (a.kind === 'close') setOverlay({ kind: 'none' });
+      else a.run();
+    };
     const g = new CityGame(canvas.current!, world, {
       start: world.project(START.lat, START.lon),
       voices: neighborVoices,
-      plugins: [garden, art, new BigCup(art), dinos, new Seal(), arcadeDoor.current, luna, busker, crow, flock, squirrels, chicken, pegasus, ham, race, rowboat, mermaids, ponies, maze, boxing, ...(live ? [live] : [])],
+      plugins,
       events: {
         onStreet: setStreet,
         onStorefront: setStorefront,
         onNearby: setNearby,
         onInteract: (t) => {
           sounds.confirm();
+          // a plugin that says what {A} does on its own targets (src/game/actions.ts)
+          for (const p of actors) {
+            const a = p.act(t);
+            if (a) return runAction(a);
+          }
           if (t.kind === 'arcade') {
             setOverlay({ kind: 'arcade' });
           } else if (t.kind === 'race') {
@@ -218,48 +233,6 @@ export default function App() {
           } else if (t.kind === 'boat') {
             // the rowboat at the end of 58th: climb in, or back out onto the shore
             rowboat.interact(g);
-          } else if (t.kind === 'boxing') {
-            // ringside at the stadium: the announcer on the bout so far
-            const b = boxing.bout;
-            sounds.cluck();
-            setOverlay({ kind: 'talk', speaker: ANNOUNCER, portrait: (boxerPortrait ??= buildChicken().right[0]!.toDataURL()), lines: ringside(b.round, b.rest, b.landed) });
-          } else if (t.kind === 'maze') {
-            // the fairy ring in the middle of the Schmitz Preserve maze (idea box #42)
-            setOverlay({ kind: 'talk', speaker: mazeMiddle.label.name, lines: mazeMiddle.lines });
-          } else if (t.kind === 'garden') {
-            // the seasonal garden's sign (idea box #12): what's out this month
-            const out = garden.blooming().map((b) => b.plant.name);
-            setOverlay({ kind: 'talk', speaker: GARDEN_NAME, lines: gardenSign(today().getMonth() + 1, out) });
-          } else if (t.kind === 'pony') {
-            // a pony in Lincoln Park's meadow (idea box #36): stops and says hi
-            const h = t.data as MeadowPony;
-            ponies.talking = h;
-            setOverlay({ kind: 'talk', speaker: h.pony.name, portrait: ponies.portrait(h), lines: h.pony.lines });
-          } else if (t.kind === 'mermaid') {
-            // a mermaid off Alki (idea box #37): her next catch phrase
-            const p = t.data as PlacedMermaid;
-            setOverlay({ kind: 'talk', speaker: p.m.name, portrait: mermaids.portrait(p), lines: mermaidChat(p.m, mermaids.nextPhrase(p)) });
-          } else if (t.kind === 'luna') {
-            // a sign at Luna Park; the Figure Eight's offers a ride, Pat answers a sum
-            const sign = t.data as LunaSign;
-            const talk = { kind: 'talk', speaker: sign.name, portrait: (signPortrait ??= lunaSignPortrait()) } as const;
-            const { ask } = sign;
-            setOverlay({
-              ...talk,
-              lines: sign.lines,
-              choices:
-                sign.id === 'figure8' || sign.id === 'whirl'
-                  ? [
-                      { label: lunaRideInvite.yes, onPick: () => setOverlay(sign.id === 'whirl' ? { kind: 'ride', ride: 'whirl' } : { kind: 'ride' }) },
-                      { label: lunaRideInvite.no, onPick: () => setOverlay({ kind: 'none' }) },
-                    ]
-                  : ask
-                    ? [
-                        { label: ask.label, onPick: () => setOverlay({ ...talk, lines: ask.reply }) },
-                        { label: ask.done, onPick: () => setOverlay({ kind: 'none' }) },
-                      ]
-                    : undefined,
-            });
           } else if (t.kind === 'rabbit' && live) {
             // Another player close by: face them and open (or close) the SAY picker.
             g.player.facing = facingFor({ x: t.x - g.player.pos.x, y: t.y - g.player.pos.y }, g.player.facing);

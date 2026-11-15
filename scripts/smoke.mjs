@@ -140,6 +140,19 @@ try {
     assertClean();
   }
 
+  // a plugin's {A} as data (src/game/actions.ts): the Figure Eight's sign → "Ride it" → the ride
+  check('Luna Park sign → ride');
+  await page.goto(`${base}?solo&open=luna:figure8`);
+  await page.locator('.dialog').waitFor({ timeout: 15_000 });
+  for (let i = 0; i < 10 && !(await page.locator('.dialog button').count()); i++) {
+    await page.keyboard.press('Space');
+    await page.waitForTimeout(300);
+  }
+  await page.locator('.dialog button').first().click();
+  await page.locator('.luna-ride').waitFor({ timeout: 15_000 });
+  await settle(1000);
+  assertClean();
+
   // /story/ (the story log page): fed a one-change log, so it doesn't depend on the story branch
   check('/story/ page');
   await page.route((u) => u.pathname.startsWith('/__story/'), (route) =>
@@ -165,7 +178,7 @@ try {
   await page.locator('#pr-64 .story-wish', { hasText: 'add my little ponys' }).waitFor({ timeout: 10_000 });
   assertClean();
 
-  console.log(`smoke ok: boots, arcade, ${titles.length} cabinets, the bear, ?open= links, /story/`);
+  console.log(`smoke ok: boots, arcade, ${titles.length} cabinets, the bear, ?open= links, a sign's ride, /story/`);
 } catch (e) {
   mkdirSync('screenshots/smoke', { recursive: true });
   await page.screenshot({ path: 'screenshots/smoke/failure.png' }).catch(() => {});

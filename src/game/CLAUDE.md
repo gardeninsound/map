@@ -4,6 +4,13 @@ The app's `CityPlugin`s live in `plugins/`; their pure, tested rules sit beside 
 (`<name>.ts` + `<name>.test.ts`); their words live in `src/content/<name>.ts`. App.tsx wires the
 plugins into `CityGame` and handles `onInteract`.
 
+**What {A} does is data** (`src/game/actions.ts`): a plugin that's an `Actor` answers `act(target)` for its own targets
+with an `Action` (a `talk` with lines, portrait, `choices` that each lead to another action, and `then`; a `ride`;
+`close`; or `do` for a side effect), and App's `runAction` shows it. **A new character's conversation goes in its plugin**,
+not in App.tsx, and its test walks it with `pick(action, 'label')` (`src/game/actions.test.ts`). Converted so far: the
+garden sign, the maze's fairy ring, the boxing announcer, the ponies, the mermaids, Luna Park's signs. Still in App's
+`onInteract`: the arcade door, the race, the rowboat, other rabbits, art spots, the crow, the chicken, Ham.
+
 - `src/game/plugins/` — the app's `CityPlugin`s: `artSpots.ts` (spinning lemons with a beating heart above, from `src/game/lemonSpin.ts`;
   "unvisited" beacons; targets of kind `place` carrying the `PlacedLocation`), `busker.ts`,
   `crow.ts`. App.tsx wires them into `CityGame` and handles `onInteract`.
