@@ -1,0 +1,207 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "c61664f3d40a5d93c93c3dd3b8ea8649a422a0d5",
+  "parent": "8d9874a838f5aa246e91f464a698d5ce0c6bab8a",
+  "pr": 74,
+  "title": "What {A} does is data, step 2: every plugin answers act()",
+  "url": "https://github.com/gardeninsound/map/pull/74",
+  "merged_at": "2026-11-15T22:13:43Z",
+  "body": "Finishes moving characters' conversations out of `App.tsx` (step 1: #72, guard: #73).\n\n- **The last eight moved into their plugins' `act()`**, with no behaviour change:\n  - the snack crow: snack → reply → flies off\n  - the chicken: two questions → Cone Catch → a line about your score\n  - Ham: pets → purr\n  - art spots: Mike's greeting → \"Let's see it\"\n  - the arcade door, the bike race, the rowboat, and other rabbits (the SAY picker)\n- **`Action` gains** `arcade`, `scene` (an art spot's), `emotes` (the SAY picker), and `do` with an optional `then` (pet Ham, then his reply).\n- **`App.tsx`**: `onInteract` is now 11 lines (was 109): run the plugin's action, or let a plain city neighbor say its lines. The file went from 735 to 642 lines. The dialog's old art-spot fallback is gone, since spots give their own choices; their \"Let's see it / Maybe later\" words moved to `src/content/locations.ts`.\n- **Guard**: `src/game/onInteract.test.ts` now allows no branches at all (it also catches matching on a target's `key`).\n- **Tests**: the crow, chicken, Ham and art spot conversations are walked as data. In a real browser through `?open=`: the crow takes the carrot, the chicken leads into Cone Catch, Ham purrs, the wall spot opens its scene, the race counts down with you on the grid, and you climb into the boat. The smoke test still walks into the arcade through its door.\n\nStep 3, the plugin list moving to `src/game/plugins/index.ts`, is still to do.\n\n@exit320-stack: heads-up. Every character now works the same way, so any of them is a template: ponies for a simple dialog, the chicken for questions then a game, Ham for a choice that does something.\n\n## Story\nIdea:\nWhere: open:npc:-3 — the chicken, whose questions and mini game now live in her own plugin\nAsked vs made:\nMike:\nNote: App.tsx's {A} handler, once 109 lines and touched by nearly every new character, is down to 11.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "d72b5894f7fbeb064581ec5ee85f9b8f38342142",
+      "message": "What {A} does is data, step 2: every plugin answers act()\n\nThe last eight branches leave App's onInteract for their plugins' act():\nthe snack crow (snack → reply → flies off), the chicken (two questions →\nCone Catch → a line about your score), Ham (pets → purr), art spots\n(Mike's greeting → \"Let's see it\"), the arcade door, the bike race, the\nrowboat and other rabbits (the SAY picker). Action gains arcade, scene,\nemotes and do-then. onInteract is now 11 lines: run the plugin's action,\nor let a plain neighbor say its lines. The dialog's old art-spot\nfallback is gone (spots give their own choices; words in\ncontent/locations.ts). The guard now allows no branches at all.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-15T22:11:20Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "src/App.tsx",
+      "status": "M",
+      "additions": 13,
+      "deletions": 80
+    },
+    {
+      "path": "src/content/locations.ts",
+      "status": "M",
+      "additions": 3,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/CLAUDE.md",
+      "status": "M",
+      "additions": 9,
+      "deletions": 8
+    },
+    {
+      "path": "src/game/actions.test.ts",
+      "status": "M",
+      "additions": 68,
+      "deletions": 1
+    },
+    {
+      "path": "src/game/actions.ts",
+      "status": "M",
+      "additions": 9,
+      "deletions": 3
+    },
+    {
+      "path": "src/game/onInteract.test.ts",
+      "status": "M",
+      "additions": 7,
+      "deletions": 6
+    },
+    {
+      "path": "src/game/plugins/arcadeDoor.ts",
+      "status": "M",
+      "additions": 7,
+      "deletions": 1
+    },
+    {
+      "path": "src/game/plugins/artSpots.ts",
+      "status": "M",
+      "additions": 17,
+      "deletions": 2
+    },
+    {
+      "path": "src/game/plugins/bikeRace.ts",
+      "status": "M",
+      "additions": 9,
+      "deletions": 1
+    },
+    {
+      "path": "src/game/plugins/chicken.ts",
+      "status": "M",
+      "additions": 27,
+      "deletions": 3
+    },
+    {
+      "path": "src/game/plugins/crow.ts",
+      "status": "M",
+      "additions": 20,
+      "deletions": 3
+    },
+    {
+      "path": "src/game/plugins/ham.ts",
+      "status": "M",
+      "additions": 19,
+      "deletions": 3
+    },
+    {
+      "path": "src/game/plugins/rowboat.ts",
+      "status": "M",
+      "additions": 9,
+      "deletions": 1
+    },
+    {
+      "path": "src/game/plugins/visitors.ts",
+      "status": "M",
+      "additions": 11,
+      "deletions": 2
+    }
+  ],
+  "additions": 229,
+  "deletions": 115,
+  "areas": [
+    "characters & map life",
+    "words & content",
+    "docs"
+  ],
+  "branch": "a-press-step-two",
+  "opened_at": "2026-11-15T22:11:24Z",
+  "merged_by": "vlandham",
+  "summary": "Finishes moving characters' conversations out of `App.tsx` (step 1: #72, guard: #73).\n\n- **The last eight moved into their plugins' `act()`**, with no behaviour change:\n  - the snack crow: snack → reply → flies off\n  - the chicken: two questions → Cone Catch → a line about your score\n  - Ham: pets → purr\n  - art spots: Mike's greeting → \"Let's see it\"\n  - the arcade door, the bike race, the rowboat, and other rabbits (the SAY picker)\n- **`Action` gains** `arcade`, `scene` (an art spot's), `emotes` (the SAY picker), and `do` with an optional `then` (pet Ham, then his reply).\n- **`App.tsx`**: `onInteract` is now 11 lines (was 109): run the plugin's action, or let a plain city neighbor say its lines. The file went from 735 to 642 lines. The dialog's old art-spot fallback is gone, since spots give their own choices; their \"Let's see it / Maybe later\" words moved to `src/content/locations.ts`.\n- **Guard**: `src/game/onInteract.test.ts` now allows no branches at all (it also catches matching on a target's `key`).\n- **Tests**: the crow, chicken, Ham and art spot conversations are walked as data. In a real browser through `?open=`: the crow takes the carrot, the chicken leads into Cone Catch, Ham purrs, the wall spot opens its scene, the race counts down with you on the grid, and you climb into the boat. The smoke test still walks into the arcade through its door.\n\nStep 3, the plugin list moving to `src/game/plugins/index.ts`, is still to do.\n\n@exit320-stack: heads-up. Every character now works the same way, so any of them is a template: ponies for a simple dialog, the chicken for questions then a game, Ham for a choice that does something.",
+  "story": {
+    "ideas": [],
+    "where": [
+      {
+        "query": "open=npc:-3",
+        "label": "the chicken, whose questions and mini game now live in her own plugin"
+      }
+    ],
+    "askedVsMade": null,
+    "mike": null,
+    "note": "App.tsx's {A} handler, once 109 lines and touched by nearly every new character, is down to 11.\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+    "shots": true,
+    "present": true
+  },
+  "ideas": [],
+  "requested_reviewers": [
+    "exit320-stack"
+  ],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-15T22:11:52Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-74-garden-preview.gardeninsound.workers.dev\n\nUpdated for d72b589. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-74]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-74-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 21,
+    "scenes": 11,
+    "content_files": 27,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 26938,
+    "commits": 98
+  },
+  "shots": [
+    {
+      "query": "open=npc:-3",
+      "lat": null,
+      "lon": null,
+      "label": "the chicken, whose questions and mini game now live in her own plugin",
+      "guessed": false,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "production",
+      "after": "production"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+  },
+  "first_recorded_at": "2026-11-15T22:14:24.104Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T22:14:24.104Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43768112620"
+}

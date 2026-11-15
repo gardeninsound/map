@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-11-15T22:07:00.208Z",
+  "generated_at": "2026-11-15T22:14:50.065Z",
   "changes": [
     {
       "pr": null,
@@ -4024,6 +4024,55 @@
         "arcade_cabinets_ready": 4,
         "source_lines": 26825,
         "commits": 97
+      }
+    },
+    {
+      "pr": 74,
+      "sha": "c61664f3d40a5d93c93c3dd3b8ea8649a422a0d5",
+      "title": "What {A} does is data, step 2: every plugin answers act()",
+      "url": "https://github.com/gardeninsound/map/pull/74",
+      "merged_at": "2026-11-15T22:13:43Z",
+      "dir": "changes/2026-11-15-pr074-what-a-does-is-data-step-2-every-plugin",
+      "ideas": [],
+      "summary": "Finishes moving characters' conversations out of `App.tsx` (step 1: #72, guard: #73).\n\n- **The last eight moved into their plugins' `act()`**, with no behaviour change:\n  - the snack crow: snack → reply → flies off\n  - the chicken: two questions → Cone Catch → a line about your score\n  - Ham: pets → purr\n  - art spots: Mike's greeting → \"Let's see it\"\n  - the arcade door, the bike race, the rowboat, and other rabbits (the SAY picker)\n- **`Action` gains** `arcade`, `scene` (an art spot's), `emotes` (the SAY picker), and `do` with an optional `then` (pet Ham, then his reply).\n- **`App.tsx`**: `onInteract` is now 11 lines (was 109): run the plugin's action, or let a plain city neighbor say its lines. The file went from 735 to 642 lines. The dialog's old art-spot fallback is gone, since spots give their own choices; their \"Let's see it / Maybe later\" words moved to `src/content/locations.ts`.\n- **Guard**: `src/game/onInteract.test.ts` now allows no branches at all (it also catches matching on a target's `key`).\n- **Tests**: the crow, chicken, Ham and art spot conversations are walked as data. In a real browser through `?open=`: the crow takes the carrot, the chicken leads into Cone Catch, Ham purrs, the wall spot opens its scene, the race counts down with you on the grid, and you climb into the boat. The smoke test still walks into the arcade through its door.\n\nStep 3, the plugin list moving to `src/game/plugins/index.ts`, is still to do.\n\n@exit320-stack: heads-up. Every character now works the same way, so any of them is a template: ponies for a simple dialog, the chicken for questions then a game, Ham for a choice that does something.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": "App.tsx's {A} handler, once 109 lines and touched by nearly every new character, is down to 11.\n🤖 Generated with [Claude Code](https://claude.com/claude-code)"
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 15,
+      "additions": 229,
+      "deletions": 115,
+      "areas": [
+        "characters & map life",
+        "words & content",
+        "docs"
+      ],
+      "shots": [
+        {
+          "query": "open=npc:-3",
+          "lat": null,
+          "lon": null,
+          "label": "the chicken, whose questions and mini game now live in her own plugin",
+          "before": "changes/2026-11-15-pr074-what-a-does-is-data-step-2-every-plugin/before-1.webp",
+          "after": "changes/2026-11-15-pr074-what-a-does-is-data-step-2-every-plugin/after-1.webp",
+          "moving": "changes/2026-11-15-pr074-what-a-does-is-data-step-2-every-plugin/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 21,
+        "scenes": 11,
+        "content_files": 27,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 26938,
+        "commits": 98
       }
     }
   ],

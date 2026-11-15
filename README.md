@@ -2,7 +2,22 @@
 
 Every change that went live on [gardeninsound.website](https://gardeninsound.website), newest first, with the wish that started it, what was made, who made it, and how the spot looked before and after. Written automatically by [`.github/workflows/story.yml`](https://github.com/gardeninsound/map/blob/main/.github/workflows/story.yml) when a change merges; the raw records are in `changes/` and `wishes/`, and `story.json` indexes them all.
 
-**80** changes · **12** wishes from visitors, **11** answered · **0** still waiting
+**81** changes · **12** wishes from visitors, **11** answered · **0** still waiting
+
+---
+
+### Nov 15, 2026 · What {A} does is data, step 2: every plugin answers act() ([#74](https://github.com/gardeninsound/map/pull/74))
+
+App.tsx's {A} handler, once 109 lines and touched by nearly every new character, is down to 11.
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+| before · the chicken, whose questions and mini game now live in her own plugin | after |
+|---|---|
+| <img src="changes/2026-11-15-pr074-what-a-does-is-data-step-2-every-plugin/before-1.webp" width="400"> | <img src="changes/2026-11-15-pr074-what-a-does-is-data-step-2-every-plugin/after-1.webp" width="400"> |
+
+<img src="changes/2026-11-15-pr074-what-a-does-is-data-step-2-every-plugin/moving-1.webp" width="400" alt="moving">
+
+<sub>vlandham with Claude Code · 15 files, +229 −115 · characters & map life, words & content, docs · [record](changes/2026-11-15-pr074-what-a-does-is-data-step-2-every-plugin/entry.json)</sub>
 
 ---
 
