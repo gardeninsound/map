@@ -367,5 +367,15 @@
   "lon": -122.40964,
   "w": 5,
   "h": 3
+ },
+ {
+  "id": "hope-lutheran",
+  "name": "Hope Lutheran Church",
+  "sprite": "hope-lutheran",
+  "lat": 47.563329,
+  "lon": -122.385056,
+  "w": 3,
+  "h": 6,
+  "street": "W"
  }
 ]
