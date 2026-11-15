@@ -1,0 +1,113 @@
+/**
+ * The story log's camera: serves a built site (any commit's `dist/`) and photographs places on
+ * it, using the site's own review hooks (`?solo&at=lat,lon`, `?at=arcade`, `?atTile=x,y`).
+ * Each place gets a still (lossless WebP, so the pixels stay exact) and, if asked, a short
+ * animated WebP loop: the map is alive (ponies trot, crows hop) and a still misses that.
+ *
+ * Used by record.mjs; on its own:
+ *   npm run build && node scripts/story/shoot.mjs --dist dist --at "47.531,-122.396" --out screenshots/story
+ */
+import { mkdirSync, writeFileSync } from 'node:fs';
+import { join, resolve } from 'node:path';
+import { parseArgs } from 'node:util';
+import { parseWhere } from './lib.mjs';
+
+/** zoomFor(1280, 768) is 3: every native pixel is a 3×3 block */
+export const VIEWPORT = { width: 1280, height: 768 };
+const FRAMES = 16;
+const FRAME_MS = 150;
+
+/**
+ * Starts a static server for `dist` (as GitHub Pages serves it: a missing file is a 404), at the
+ * `base` that build was made for (early commits were built for a sub-path).
+ */
+export async function serve(dist, base = '/') {
+  const { preview } = await import('vite');
+  const root = resolve(dist, '..');
+  const server = await preview({
+    root,
+    configFile: false,
+    base,
+    appType: 'mpa',
+    build: { outDir: resolve(dist) },
+    preview: { port: 4190, strictPort: false },
+    logLevel: 'warn',
+  });
+  return { url: server.resolvedUrls.local[0], close: () => new Promise((r) => server.httpServer.close(r)) };
+}
+
+export async function launch() {
+  const { chromium } = await import('playwright');
+  return chromium.launch({
+    ...(process.env.CI ? {} : { channel: 'chrome' }),
+    args: ['--enable-unsafe-swiftshader', '--autoplay-policy=no-user-gesture-required', '--mute-audio'],
+  });
+}
+
+/**
+ * Photographs each place on the site at `url`. Returns one result per place:
+ * `{ still, moving, problems }` (file names inside `outDir`, page errors seen while there).
+ */
+export async function shoot(browser, url, places, outDir, { prefix, moving = false, settleMs = 3500 } = {}) {
+  const sharp = (await import('sharp')).default;
+  mkdirSync(outDir, { recursive: true });
+  const results = [];
+  for (const [i, place] of places.entries()) {
+    const page = await browser.newPage({ viewport: VIEWPORT });
+    const problems = [];
+    page.on('pageerror', (e) => problems.push(`page error: ${e.message}`));
+    page.on('console', (m) => m.type() === 'error' && problems.push(`console: ${m.text()}`));
+    const res = { still: null, moving: null, problems };
+    try {
+      await page.goto(`${url}?solo${place.query === 'title' ? '' : `&${place.query}`}`, { waitUntil: 'load' });
+      await page.locator('canvas').first().waitFor({ timeout: 15_000 });
+      await page.waitForTimeout(settleMs);
+      if (place.query !== 'title' && (await page.locator('.title-start').count()))
+        problems.push('this build has no ?at= hook: the shot is its title screen');
+      await page.evaluate(() => (document.activeElement instanceof HTMLElement ? document.activeElement.blur() : undefined));
+      const still = `${prefix}-${i + 1}.webp`;
+      await sharp(await page.screenshot()).webp({ lossless: true, effort: 6 }).toFile(join(outDir, still));
+      res.still = still;
+      if (moving) {
+        const frames = [];
+        for (let f = 0; f < FRAMES; f++) {
+          frames.push(await page.screenshot());
+          await page.waitForTimeout(FRAME_MS);
+        }
+        // half size (each native pixel 1.5 → still readable), lossy: a loop to watch, not to measure
+        const small = await Promise.all(
+          frames.map((b) => sharp(b).resize(VIEWPORT.width / 2, VIEWPORT.height / 2, { kernel: 'nearest' }).png().toBuffer()),
+        );
+        const name = `moving-${i + 1}.webp`;
+        await sharp(small, { join: { animated: true } })
+          .webp({ quality: 80, effort: 5, loop: 0, delay: Array(FRAMES).fill(FRAME_MS) })
+          .toFile(join(outDir, name));
+        res.moving = name;
+      }
+    } catch (e) {
+      problems.push(`shot failed: ${e.message.split('\n')[0]}`);
+    } finally {
+      await page.close();
+    }
+    results.push(res);
+  }
+  return results;
+}
+
+// CLI
+if (import.meta.url === `file://${process.argv[1]}`) {
+  const { values } = parseArgs({
+    options: { dist: { type: 'string', default: 'dist' }, at: { type: 'string', multiple: true }, out: { type: 'string', default: 'screenshots/story' }, moving: { type: 'boolean', default: true } },
+  });
+  const places = (values.at ?? ['title']).map(parseWhere).filter(Boolean);
+  const server = await serve(values.dist);
+  const browser = await launch();
+  try {
+    const r = await shoot(browser, server.url, places, values.out, { prefix: 'shot', moving: values.moving });
+    writeFileSync(join(values.out, 'shots.json'), JSON.stringify(r, null, 2));
+    console.log(JSON.stringify(r, null, 2));
+  } finally {
+    await browser.close();
+    await server.close();
+  }
+}

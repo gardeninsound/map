@@ -1,7 +1,7 @@
 /**
  * Smoke test of the built site in a real browser: does it boot, can you walk into the Duck
  * Arcade, does every playable cabinet open and close, does the bear hand you a licorice? Fails on any page error, console error
- * or failed request (a missing file is a 404). Runs in CI on every PR after `npm run build`.
+ * or failed request (a missing file is a 404). Also opens /story/ on a made-up log. Runs in CI on every PR after `npm run build`.
  *
  * Usage: npm run build && npm run smoke   (locally uses your installed Chrome; CI uses
  * Playwright's Chromium). Shots of a failure land in screenshots/smoke/.
@@ -123,7 +123,33 @@ try {
       if (await page.locator('.scene-dialog').count()) throw new Error('the bear came over again');
     }
   }
-  console.log(`smoke ok: boots, arcade, ${titles.length} cabinets, the bear`);
+
+  // /story/ (the story log page): fed a one-change log, so it doesn't depend on the story branch
+  check('/story/ page');
+  await page.route((u) => u.pathname.startsWith('/__story/'), (route) =>
+    route.fulfill({
+      contentType: 'application/json',
+      body: JSON.stringify({
+        schema: 1,
+        changes: [
+          {
+            pr: 64, sha: 'abc1234', title: 'Pastel ponies', url: 'https://github.com/gardeninsound/map/pull/64',
+            merged_at: '2026-11-15T00:24:24Z', dir: 'changes/x',
+            ideas: [{ issue: 36, url: 'u', text: 'add my little ponys', name: null, street: '47th Ave SW', asked_at: '2026-11-05T04:44:46Z' }],
+            summary: 'Five pastel ponies.', story: { askedVsMade: null, mike: null, note: null },
+            authors: ['exit320-stack'], tools: [], files: 7, additions: 274, deletions: 2, areas: [], shots: [],
+            census: { spots: 15, plugins: 20, scenes: 11 },
+          },
+        ],
+        wishes: [{ issue: 36, url: 'u', asked_at: '2026-11-05T04:44:46Z', text: 'add my little ponys', name: null, street: null, state: 'closed', answered_by: [{ pr: 64, sha: 'abc1234', merged_at: '2026-11-15T00:24:24Z' }] }],
+      }),
+    }),
+  );
+  await page.goto(`${base}story/?src=/__story/`);
+  await page.locator('#pr-64 .story-wish', { hasText: 'add my little ponys' }).waitFor({ timeout: 10_000 });
+  assertClean();
+
+  console.log(`smoke ok: boots, arcade, ${titles.length} cabinets, the bear, /story/`);
 } catch (e) {
   mkdirSync('screenshots/smoke', { recursive: true });
   await page.screenshot({ path: 'screenshots/smoke/failure.png' }).catch(() => {});
