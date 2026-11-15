@@ -1,0 +1,179 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "01177b753995aa71c24562e69027d705a31c50d7",
+  "parent": "bf6cb451c97e8cb873ff8589a32a73ea9f8d9e8b",
+  "pr": 5,
+  "title": "Git workflow: PRs + auto-merge, Check with smoke test, published-files test, size guard",
+  "url": "https://github.com/gardeninsound/map/pull/5",
+  "merged_at": "2026-11-04T22:02:06Z",
+  "body": "New standard for working in this repo, for both of us and for Claude sessions. Needs your OK, @vlandham. It changes how we both push.\n\n**Rules** (new \"Git workflow\" section in CLAUDE.md)\n- One short branch per feature, cut from fresh `main`; merge within a day or two\n- Unfinished work merges hidden behind a switch (`ready: false`, no `experience`, a dev `?flag`) instead of living on a long branch\n- Pull `main` at the start of each session\n- Everything reaches `main` through a PR; never push to `main` directly\n- **Feature PRs auto-merge** when the Check is green (`gh pr merge --auto --squash --delete-branch`)\n- **Shared PRs wait for the other person**: `src/city/`, `App.tsx`, `relay/`, `.github/`, CLAUDE.md, dependencies, `scripts/city/`\n\n**Check workflow** (`.github/workflows/ci.yml`) on every PR into `main`:\n- **Size guard:** no added/changed file over 2 MB unless listed in `.github/large-files.txt` (the four big files already in the repo are listed)\n- **Tests**, incl. new `src/content/published.test.ts`: every file the content points at (art, posters, cabinet fronts, game sounds) is in git, so nothing that only lives on one laptop 404s online. The art list is shared with `art:publish` via `scripts/neededArt.mjs`\n- **Build**\n- **Smoke test** (`npm run smoke`, Playwright): the built site boots with `?solo`, RECENT to the Duck Arcade, opens and closes every playable cabinet; fails on any page error, console error or 404. A missing file was checked to fail it.\n\nAfter merge: protect `main` (require PRs + a green Check), so auto-merge has something to wait on.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n",
+  "authors": [
+    {
+      "login": "exit320-stack"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "cca756191f4d0cdc305c2be685d584ec014f7326",
+      "message": "Git workflow: branch per feature, PRs into main, Check workflow on PRs\n\nCLAUDE.md gets the rules (for people and Claude); ci.yml runs tests + build on every PR.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-04T21:44:01Z"
+    },
+    {
+      "sha": "e9c612f846cd75b55c8078d996c851d76156d606",
+      "message": "Check: smoke test, published-files test, size guard; auto-merge rules\n\n- scripts/smoke.mjs (npm run smoke): built site in Chromium, arcade + every cabinet, fails on errors/404s\n- src/content/published.test.ts: every file the content points at is in git (art via scripts/neededArt.mjs,\n  shared with art:publish)\n- Size guard in ci.yml: no new/changed file over 2 MB unless in .github/large-files.txt\n- CLAUDE.md: feature PRs auto-merge on green; shared PRs wait for the other person\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "mike",
+      "login": "exit320-stack",
+      "at": "2026-11-04T21:57:18Z"
+    }
+  ],
+  "files": [
+    {
+      "path": ".github/large-files.txt",
+      "status": "A",
+      "additions": 4,
+      "deletions": 0
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "status": "A",
+      "additions": 55,
+      "deletions": 0
+    },
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 41,
+      "deletions": 2
+    },
+    {
+      "path": "package-lock.json",
+      "status": "M",
+      "additions": 30,
+      "deletions": 0
+    },
+    {
+      "path": "package.json",
+      "status": "M",
+      "additions": 3,
+      "deletions": 1
+    },
+    {
+      "path": "scripts/neededArt.mjs",
+      "status": "A",
+      "additions": 39,
+      "deletions": 0
+    },
+    {
+      "path": "scripts/publish-art.mjs",
+      "status": "M",
+      "additions": 5,
+      "deletions": 31
+    },
+    {
+      "path": "scripts/smoke.mjs",
+      "status": "A",
+      "additions": 109,
+      "deletions": 0
+    },
+    {
+      "path": "src/content/published.test.ts",
+      "status": "A",
+      "additions": 29,
+      "deletions": 0
+    },
+    {
+      "path": "src/experiences/arcade/ArcadeScene.ts",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    }
+  ],
+  "additions": 316,
+  "deletions": 35,
+  "areas": [
+    "scenes & games",
+    "words & content",
+    "ci",
+    "docs",
+    "tools"
+  ],
+  "branch": "git-workflow",
+  "opened_at": "2026-11-04T21:49:44Z",
+  "merged_by": "exit320-stack",
+  "summary": "New standard for working in this repo, for both of us and for Claude sessions. Needs your OK, @vlandham. It changes how we both push.\n\n**Rules** (new \"Git workflow\" section in CLAUDE.md)\n- One short branch per feature, cut from fresh `main`; merge within a day or two\n- Unfinished work merges hidden behind a switch (`ready: false`, no `experience`, a dev `?flag`) instead of living on a long branch\n- Pull `main` at the start of each session\n- Everything reaches `main` through a PR; never push to `main` directly\n- **Feature PRs auto-merge** when the Check is green (`gh pr merge --auto --squash --delete-branch`)\n- **Shared PRs wait for the other person**: `src/city/`, `App.tsx`, `relay/`, `.github/`, CLAUDE.md, dependencies, `scripts/city/`\n\n**Check workflow** (`.github/workflows/ci.yml`) on every PR into `main`:\n- **Size guard:** no added/changed file over 2 MB unless listed in `.github/large-files.txt` (the four big files already in the repo are listed)\n- **Tests**, incl. new `src/content/published.test.ts`: every file the content points at (art, posters, cabinet fronts, game sounds) is in git, so nothing that only lives on one laptop 404s online. The art list is shared with `art:publish` via `scripts/neededArt.mjs`\n- **Build**\n- **Smoke test** (`npm run smoke`, Playwright): the built site boots with `?solo`, RECENT to the Duck Arcade, opens and closes every playable cabinet; fails on any page error, console error or 404. A missing file was checked to fail it.\n\nAfter merge: protect `main` (require PRs + a green Check), so auto-merge has something to wait on.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "requested_reviewers": [],
+  "reviews": [
+    {
+      "by": "vlandham",
+      "state": "APPROVED",
+      "at": "2026-11-04T22:01:23Z",
+      "body": ""
+    }
+  ],
+  "labels": [],
+  "discussion": [],
+  "preview_url": null,
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 9,
+    "scenes": 10,
+    "content_files": 17,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 17965,
+    "commits": 43
+  },
+  "shots": [
+    {
+      "query": "at=arcade",
+      "lat": null,
+      "lon": null,
+      "label": "the Duck Arcade",
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ],
+        "after": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ]
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "note": "stills lossless; moving loop half size"
+  },
+  "first_recorded_at": "2026-11-15T16:33:25.935Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:33:25.935Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736055333"
+}

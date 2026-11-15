@@ -1,0 +1,123 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "ce54cb83ad525a9fd809b8fa37f5e367669cb491",
+  "parent": "64e2728bb61d6862674ceaf5a45ed863ba6ac5fb",
+  "pr": null,
+  "title": "Paint roads per pixel from centrelines; remove corner-patch artifacts",
+  "url": "https://github.com/gardeninsound/map/commit/ce54cb83ad525a9fd809b8fa37f5e367669cb491",
+  "merged_at": "2026-10-18T16:31:08-07:00",
+  "body": "- Export road centrelines; renderer paints asphalt / curb / sidewalk by\n  distance, merging crossings cleanly with round ends and bends\n- Walkable road tiles use the same distance rule, so drawn = walkable\n- Snap to tile centre or edge by width parity; carry a street's column\n  through intersections\n- Buildings drawn after roads; drop bevel/notch/nub/trim rules\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "authors": [
+    {
+      "login": null,
+      "name": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "ce54cb83ad525a9fd809b8fa37f5e367669cb491",
+      "message": "Paint roads per pixel from centrelines; remove corner-patch artifacts\n\n- Export road centrelines; renderer paints asphalt / curb / sidewalk by\n  distance, merging crossings cleanly with round ends and bends\n- Walkable road tiles use the same distance rule, so drawn = walkable\n- Snap to tile centre or edge by width parity; carry a street's column\n  through intersections\n- Buildings drawn after roads; drop bevel/notch/nub/trim rules\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "at": "2026-10-18T16:31:08-07:00"
+    }
+  ],
+  "files": [
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 8,
+      "deletions": 7
+    },
+    {
+      "path": "scripts/build-map.mjs",
+      "status": "M",
+      "additions": 62,
+      "deletions": 52
+    },
+    {
+      "path": "src/game/render/tileArt.ts",
+      "status": "M",
+      "additions": 99,
+      "deletions": 110
+    },
+    {
+      "path": "src/world/world.ts",
+      "status": "M",
+      "additions": 8,
+      "deletions": 0
+    },
+    {
+      "path": "src/world/worldData.json",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    }
+  ],
+  "additions": 178,
+  "deletions": 170,
+  "areas": [
+    "characters & map life",
+    "docs",
+    "tools"
+  ],
+  "summary": "- Export road centrelines; renderer paints asphalt / curb / sidewalk by\n  distance, merging crossings cleanly with round ends and bends\n- Walkable road tiles use the same distance rule, so drawn = walkable\n- Snap to tile centre or edge by width parity; carry a street's column\n  through intersections\n- Buildings drawn after roads; drop bevel/notch/nub/trim rules\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 11,
+    "plugins": 0,
+    "scenes": 3,
+    "content_files": 9,
+    "source_lines": 7490,
+    "commits": 6
+  },
+  "shots": [
+    {
+      "query": "at=47.5612,-122.3868",
+      "lat": 47.5612,
+      "lon": -122.3868,
+      "label": "the Junction, where everyone starts",
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ],
+        "after": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ]
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "note": "stills lossless; moving loop half size"
+  },
+  "first_recorded_at": "2026-11-15T16:33:25.935Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:33:25.935Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736055333"
+}

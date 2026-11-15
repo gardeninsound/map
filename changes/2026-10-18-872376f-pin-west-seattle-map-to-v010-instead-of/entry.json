@@ -1,0 +1,101 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "872376ffe72ce4d1fa1f1520bb1bf31e2fe844e4",
+  "parent": "58cbd6041eccc04e734822baff92a0cfa7cfbd53",
+  "pr": null,
+  "title": "Pin west-seattle-map to v0.1.0 instead of linking the sibling folder",
+  "url": "https://github.com/gardeninsound/map/commit/872376ffe72ce4d1fa1f1520bb1bf31e2fe844e4",
+  "merged_at": "2026-10-18T20:01:19-07:00",
+  "body": "City changes now reach Bear Island only when the tag is bumped. CI\ninstalls the private dependency over SSH with the read-only deploy key.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "authors": [
+    {
+      "login": null,
+      "name": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "872376ffe72ce4d1fa1f1520bb1bf31e2fe844e4",
+      "message": "Pin west-seattle-map to v0.1.0 instead of linking the sibling folder\n\nCity changes now reach Bear Island only when the tag is bumped. CI\ninstalls the private dependency over SSH with the read-only deploy key.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "at": "2026-10-18T20:01:19-07:00"
+    }
+  ],
+  "files": [
+    {
+      "path": ".github/workflows/deploy.yml",
+      "status": "M",
+      "additions": 5,
+      "deletions": 16
+    },
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 8,
+      "deletions": 6
+    },
+    {
+      "path": "README.md",
+      "status": "M",
+      "additions": 3,
+      "deletions": 5
+    },
+    {
+      "path": "package-lock.json",
+      "status": "M",
+      "additions": 7,
+      "deletions": 25
+    },
+    {
+      "path": "package.json",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "vite.config.ts",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    }
+  ],
+  "additions": 25,
+  "deletions": 54,
+  "areas": [
+    "ci",
+    "docs"
+  ],
+  "summary": "City changes now reach Bear Island only when the tag is bumped. CI\ninstalls the private dependency over SSH with the read-only deploy key.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 11,
+    "plugins": 3,
+    "scenes": 3,
+    "content_files": 10,
+    "source_lines": 5981,
+    "commits": 14
+  },
+  "shots": [],
+  "first_recorded_at": "2026-11-15T16:33:25.935Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:33:25.935Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736055333"
+}

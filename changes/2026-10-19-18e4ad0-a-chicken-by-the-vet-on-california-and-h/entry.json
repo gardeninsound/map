@@ -1,0 +1,155 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "18e4ad0fe026e6dc05e905fe3442321061a48eef",
+  "parent": "4d725a6bd40008b10f7a117f5a97eaacd9e85b9b",
+  "pr": null,
+  "title": "A chicken by the vet on California, and her mini game, Cone Catch",
+  "url": "https://github.com/gardeninsound/map/commit/18e4ad0fe026e6dc05e905fe3442321061a48eef",
+  "merged_at": "2026-10-19T21:00:42-07:00",
+  "body": "- The chicken stands outside Greentree Animal Hospital (4440 California\n  Ave SW), pecks and looks about. She asks two questions, two answers\n  each with her reply to each, then \"Want to play my mini game?\"\n  (lines in src/content/chicken.ts).\n- Cone Catch: catch falling ice cream cones (four flavours); missed ones\n  hit the grass and burst into flames. Running into a burning fire or\n  taking a rock costs one of three lives; Space jumps the fires. 30 s\n  rounds that speed up, best score saved. Lives in a 24 px Art Nouveau\n  bar (arched medallions, whiplash vines) over the 160x120 field.\n  Touch: hold lower left/right to run, tap high to jump.\n- Rules are pure and tested (src/game/coneCatch.ts). App gains a\n  general `minigame` overlay that hands { score, best } back to the\n  character for her closing line.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "authors": [
+    {
+      "login": null,
+      "name": "mike"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "18e4ad0fe026e6dc05e905fe3442321061a48eef",
+      "message": "A chicken by the vet on California, and her mini game, Cone Catch\n\n- The chicken stands outside Greentree Animal Hospital (4440 California\n  Ave SW), pecks and looks about. She asks two questions, two answers\n  each with her reply to each, then \"Want to play my mini game?\"\n  (lines in src/content/chicken.ts).\n- Cone Catch: catch falling ice cream cones (four flavours); missed ones\n  hit the grass and burst into flames. Running into a burning fire or\n  taking a rock costs one of three lives; Space jumps the fires. 30 s\n  rounds that speed up, best score saved. Lives in a 24 px Art Nouveau\n  bar (arched medallions, whiplash vines) over the 160x120 field.\n  Touch: hold lower left/right to run, tap high to jump.\n- Rules are pure and tested (src/game/coneCatch.ts). App gains a\n  general `minigame` overlay that hands { score, best } back to the\n  character for her closing line.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "mike",
+      "at": "2026-10-19T21:00:42-07:00"
+    }
+  ],
+  "files": [
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 8,
+      "deletions": 0
+    },
+    {
+      "path": "src/App.tsx",
+      "status": "M",
+      "additions": 50,
+      "deletions": 6
+    },
+    {
+      "path": "src/content/chicken.ts",
+      "status": "A",
+      "additions": 57,
+      "deletions": 0
+    },
+    {
+      "path": "src/experiences/minigames/ConeCatch.tsx",
+      "status": "A",
+      "additions": 400,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/coneCatch.test.ts",
+      "status": "A",
+      "additions": 106,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/coneCatch.ts",
+      "status": "A",
+      "additions": 147,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/plugins/chicken.ts",
+      "status": "A",
+      "additions": 56,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/sprites.ts",
+      "status": "M",
+      "additions": 38,
+      "deletions": 1
+    },
+    {
+      "path": "src/styles.css",
+      "status": "M",
+      "additions": 5,
+      "deletions": 0
+    },
+    {
+      "path": "src/ui/sounds.ts",
+      "status": "M",
+      "additions": 13,
+      "deletions": 0
+    }
+  ],
+  "additions": 880,
+  "deletions": 7,
+  "areas": [
+    "characters & map life",
+    "scenes & games",
+    "ui",
+    "words & content",
+    "docs"
+  ],
+  "summary": "- The chicken stands outside Greentree Animal Hospital (4440 California\n  Ave SW), pecks and looks about. She asks two questions, two answers\n  each with her reply to each, then \"Want to play my mini game?\"\n  (lines in src/content/chicken.ts).\n- Cone Catch: catch falling ice cream cones (four flavours); missed ones\n  hit the grass and burst into flames. Running into a burning fire or\n  taking a rock costs one of three lives; Space jumps the fires. 30 s\n  rounds that speed up, best score saved. Lives in a 24 px Art Nouveau\n  bar (arched medallions, whiplash vines) over the 160x120 field.\n  Touch: hold lower left/right to run, tap high to jump.\n- Rules are pure and tested (src/game/coneCatch.ts). App gains a\n  general `minigame` overlay that hands { score, best } back to the\n  character for her closing line.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 13,
+    "plugins": 4,
+    "scenes": 4,
+    "content_files": 11,
+    "source_lines": 11010,
+    "commits": 18
+  },
+  "shots": [
+    {
+      "query": "at=47.56339,-122.386444",
+      "lat": 47.56339,
+      "lon": -122.386444,
+      "label": null,
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ],
+        "after": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ]
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "note": "stills lossless; moving loop half size"
+  },
+  "first_recorded_at": "2026-11-15T16:33:25.935Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:33:25.935Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736055333"
+}

@@ -1,0 +1,189 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "6f130974647be0c3230a724f6c92a734bf347343",
+  "parent": "01177b753995aa71c24562e69027d705a31c50d7",
+  "pr": 6,
+  "title": "Idea box: \"What would you love to add in the Garden in Sound?\" → GitHub issues",
+  "url": "https://github.com/gardeninsound/map/pull/6",
+  "merged_at": "2026-11-04T22:21:29Z",
+  "body": "The first half of the AI change-request flow from the hosting doc: visitors suggest, and each idea lands as a GitHub issue. No agent runs yet. That would be the `ai-build` label step later.\n\n## What it does\n- **✿ IDEA** in the HUD (just **✿** on touch) opens a box over the map: *\"What would you love to add in the Garden in Sound?\"* The world pauses, and typing never reaches the rabbit. Esc / {B} closes it, and Cmd/Ctrl+Enter sends.\n- The idea goes to a new Worker, **`wish/`**, deployed at `wish.gardeninsound.website` in the gardeninsound Cloudflare account. It checks, in order:\n  1. the page's origin,\n  2. the text (5–1000 characters),\n  3. 3 ideas a minute per address (only well-formed ones count),\n  4. a Cloudflare **Turnstile** token, to confirm a person sent it.\n- It then files a GitHub issue labelled **`suggestion`**: the idea is quoted, `@mentions` are defused, control characters are stripped, and the street the rabbit was on is added when known. The visitor's text is only ever data in an issue body.\n- The copy tells visitors ideas are **posted publicly, with no name attached**, since the repo is public.\n- If an ad blocker stops Turnstile from loading, the box says so rather than failing silently.\n\n## Tests\n- `wish/src/issue.test.ts`: the issue formatting (5 tests, run by the root `npm test`, now 242 total).\n- `cd wish && npm test`: the real Worker in local workerd against a fake GitHub. Covers CORS, refusing other origins, bad and short input, no captcha → no issue, a good idea → a labelled issue with mentions defused, and the rate limit.\n- In Chrome, locally (site + Worker + fake GitHub): open, type, captcha passes, send, see the thanks screen, an issue is filed, and the rabbit doesn't move while typing.\n- Against the live Worker: preflight from the map → 204, other origins → 403, fake captcha → 403.\n\n## Before merging\n- [ ] Add a `GITHUB_TOKEN` secret to the Worker: a fine-grained token for `gardeninsound/map` only, with **Issues: read and write** only. Until then, sends fail with \"The idea box is stuck right now.\"\n- [ ] Mike: rewrite the words in `src/content/ideas.ts` as he likes.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "959e4ef0cf5f5b52ae279a0e065b0dc52bad3348",
+      "message": "Idea box: \"What would you love to add in the Garden in Sound?\" → a GitHub issue\n\n✿ IDEA in the HUD opens a text box over the map (world paused, typing never reaches the\nrabbit). Ideas go to the new wish/ Worker (wish.gardeninsound.website), which checks the\npage's origin, a Cloudflare Turnstile token and 3 ideas a minute per address, then files a\nGitHub issue labelled `suggestion`, quoted and with @mentions defused. Copy says ideas are\npublic. Formatting is pure + unit-tested; wish/test.mjs runs the real Worker against a fake\nGitHub.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-04T21:59:47Z"
+    },
+    {
+      "sha": "3a7f98847901086236ca8429e27eb028eac32c7b",
+      "message": "Merge remote-tracking branch 'origin/main' into garden-wishes",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-04T22:11:57Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 9,
+      "deletions": 0
+    },
+    {
+      "path": "src/App.tsx",
+      "status": "M",
+      "additions": 14,
+      "deletions": 1
+    },
+    {
+      "path": "src/content/ideas.ts",
+      "status": "A",
+      "additions": 24,
+      "deletions": 0
+    },
+    {
+      "path": "src/styles.css",
+      "status": "M",
+      "additions": 40,
+      "deletions": 0
+    },
+    {
+      "path": "src/ui/IdeaBox.tsx",
+      "status": "A",
+      "additions": 235,
+      "deletions": 0
+    },
+    {
+      "path": "wish/package-lock.json",
+      "status": "A",
+      "additions": 1616,
+      "deletions": 0
+    },
+    {
+      "path": "wish/package.json",
+      "status": "A",
+      "additions": 17,
+      "deletions": 0
+    },
+    {
+      "path": "wish/src/index.ts",
+      "status": "A",
+      "additions": 88,
+      "deletions": 0
+    },
+    {
+      "path": "wish/src/issue.test.ts",
+      "status": "A",
+      "additions": 38,
+      "deletions": 0
+    },
+    {
+      "path": "wish/src/issue.ts",
+      "status": "A",
+      "additions": 52,
+      "deletions": 0
+    },
+    {
+      "path": "wish/test.mjs",
+      "status": "A",
+      "additions": 108,
+      "deletions": 0
+    },
+    {
+      "path": "wish/tsconfig.json",
+      "status": "A",
+      "additions": 23,
+      "deletions": 0
+    },
+    {
+      "path": "wish/wrangler.jsonc",
+      "status": "A",
+      "additions": 20,
+      "deletions": 0
+    }
+  ],
+  "additions": 2284,
+  "deletions": 1,
+  "areas": [
+    "ui",
+    "words & content",
+    "idea box",
+    "docs"
+  ],
+  "branch": "garden-wishes",
+  "opened_at": "2026-11-04T22:00:32Z",
+  "merged_by": "vlandham",
+  "summary": "The first half of the AI change-request flow from the hosting doc: visitors suggest, and each idea lands as a GitHub issue. No agent runs yet. That would be the `ai-build` label step later.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "requested_reviewers": [],
+  "reviews": [],
+  "labels": [],
+  "discussion": [],
+  "preview_url": null,
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 9,
+    "scenes": 10,
+    "content_files": 18,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 18237,
+    "commits": 44
+  },
+  "shots": [
+    {
+      "query": "at=47.5612,-122.3868",
+      "lat": 47.5612,
+      "lon": -122.3868,
+      "label": "the Junction, where everyone starts",
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ],
+        "after": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ]
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "note": "stills lossless; moving loop half size"
+  },
+  "first_recorded_at": "2026-11-15T16:33:25.935Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:33:25.935Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736055333"
+}

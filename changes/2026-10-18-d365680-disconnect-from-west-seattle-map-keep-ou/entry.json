@@ -1,0 +1,434 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "d365680a45da6af7ad3622eb6531ca8441098265",
+  "parent": "872376ffe72ce4d1fa1f1520bb1bf31e2fe844e4",
+  "pr": null,
+  "title": "Disconnect from west-seattle-map: keep our own copy of the city",
+  "url": "https://github.com/gardeninsound/map/commit/d365680a45da6af7ad3622eb6531ca8441098265",
+  "merged_at": "2026-10-18T20:57:33-07:00",
+  "body": "The city (v0.1.0) now lives in src/city/ and is maintained here; the\npackage dependency, the SSH deploy step and the shared sheet helper import\nare gone. west-seattle-map continues as its own, separate project.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "authors": [
+    {
+      "login": null,
+      "name": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "d365680a45da6af7ad3622eb6531ca8441098265",
+      "message": "Disconnect from west-seattle-map: keep our own copy of the city\n\nThe city (v0.1.0) now lives in src/city/ and is maintained here; the\npackage dependency, the SSH deploy step and the shared sheet helper import\nare gone. west-seattle-map continues as its own, separate project.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "at": "2026-10-18T20:57:33-07:00"
+    }
+  ],
+  "files": [
+    {
+      "path": ".github/workflows/deploy.yml",
+      "status": "M",
+      "additions": 0,
+      "deletions": 5
+    },
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 18,
+      "deletions": 14
+    },
+    {
+      "path": "README.md",
+      "status": "M",
+      "additions": 3,
+      "deletions": 3
+    },
+    {
+      "path": "package-lock.json",
+      "status": "M",
+      "additions": 1,
+      "deletions": 10
+    },
+    {
+      "path": "package.json",
+      "status": "M",
+      "additions": 1,
+      "deletions": 2
+    },
+    {
+      "path": "scripts/places.mjs",
+      "status": "M",
+      "additions": 2,
+      "deletions": 3
+    },
+    {
+      "path": "scripts/sheet.mjs",
+      "status": "A",
+      "additions": 80,
+      "deletions": 0
+    },
+    {
+      "path": "src/App.tsx",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "src/city/engine/CityGame.ts",
+      "status": "A",
+      "additions": 444,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/engine/input.ts",
+      "status": "A",
+      "additions": 100,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/engine/movement.test.ts",
+      "status": "A",
+      "additions": 68,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/engine/movement.ts",
+      "status": "A",
+      "additions": 66,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/engine/npcs.test.ts",
+      "status": "A",
+      "additions": 53,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/engine/npcs.ts",
+      "status": "A",
+      "additions": 129,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/index.ts",
+      "status": "A",
+      "additions": 37,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/render/landmarks.ts",
+      "status": "A",
+      "additions": 168,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/render/palette.ts",
+      "status": "A",
+      "additions": 30,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/render/sprites.test.ts",
+      "status": "A",
+      "additions": 9,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/render/sprites.ts",
+      "status": "A",
+      "additions": 227,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/render/tileArt.ts",
+      "status": "A",
+      "additions": 322,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/ui/Compass.test.ts",
+      "status": "A",
+      "additions": 23,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/ui/Compass.tsx",
+      "status": "A",
+      "additions": 78,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/ui/DialogBox.tsx",
+      "status": "A",
+      "additions": 97,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/ui/Hud.tsx",
+      "status": "A",
+      "additions": 137,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/ui/TouchPad.tsx",
+      "status": "A",
+      "additions": 49,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/ui/sfx.ts",
+      "status": "A",
+      "additions": 65,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/ui/ui.css",
+      "status": "A",
+      "additions": 199,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/world/landmarksData.json",
+      "status": "A",
+      "additions": 20,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/world/world.test.ts",
+      "status": "A",
+      "additions": 41,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/world/world.ts",
+      "status": "A",
+      "additions": 209,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/world/worldData.json",
+      "status": "A",
+      "additions": 1,
+      "deletions": 0
+    },
+    {
+      "path": "src/content/content.test.ts",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "src/content/neighbors.ts",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "src/experiences/WallTurns.tsx",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "src/experiences/cup/CupPaint.tsx",
+      "status": "M",
+      "additions": 2,
+      "deletions": 2
+    },
+    {
+      "path": "src/experiences/park/ParkWalk.tsx",
+      "status": "M",
+      "additions": 2,
+      "deletions": 2
+    },
+    {
+      "path": "src/game/busker.ts",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "src/game/crow.test.ts",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "src/game/crow.ts",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "src/game/plugins/artSpots.ts",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "src/game/plugins/busker.ts",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "src/game/plugins/crow.ts",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "src/game/sprites.ts",
+      "status": "M",
+      "additions": 2,
+      "deletions": 2
+    },
+    {
+      "path": "src/main.tsx",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "src/styles.css",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "src/ui/MikeDialog.tsx",
+      "status": "M",
+      "additions": 2,
+      "deletions": 2
+    },
+    {
+      "path": "src/ui/SpotsMenu.tsx",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "src/ui/TitleScreen.tsx",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "src/ui/sounds.ts",
+      "status": "M",
+      "additions": 2,
+      "deletions": 2
+    },
+    {
+      "path": "vite.config.ts",
+      "status": "M",
+      "additions": 0,
+      "deletions": 2
+    }
+  ],
+  "additions": 2701,
+  "deletions": 63,
+  "areas": [
+    "city",
+    "characters & map life",
+    "scenes & games",
+    "ui",
+    "words & content",
+    "ci",
+    "docs",
+    "tools"
+  ],
+  "summary": "The city (v0.1.0) now lives in src/city/ and is maintained here; the\npackage dependency, the SSH deploy step and the shared sheet helper import\nare gone. west-seattle-map continues as its own, separate project.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 11,
+    "plugins": 3,
+    "scenes": 3,
+    "content_files": 10,
+    "source_lines": 8333,
+    "commits": 15
+  },
+  "shots": [
+    {
+      "query": "at=47.5612,-122.3868",
+      "lat": 47.5612,
+      "lon": -122.3868,
+      "label": null,
+      "guessed": true,
+      "before": null,
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [
+          "build failed"
+        ],
+        "after": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ]
+      }
+    },
+    {
+      "query": "at=47.5795,-122.405",
+      "lat": 47.5795,
+      "lon": -122.405,
+      "label": null,
+      "guessed": true,
+      "before": null,
+      "after": "after-2.webp",
+      "moving": "moving-2.webp",
+      "problems": {
+        "before": [
+          "build failed"
+        ],
+        "after": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ]
+      }
+    },
+    {
+      "query": "at=47.5845,-122.3825",
+      "lat": 47.5845,
+      "lon": -122.3825,
+      "label": null,
+      "guessed": true,
+      "before": null,
+      "after": "after-3.webp",
+      "moving": "moving-3.webp",
+      "problems": {
+        "before": [
+          "build failed"
+        ],
+        "after": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ]
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "note": "stills lossless; moving loop half size"
+  },
+  "first_recorded_at": "2026-11-15T16:33:25.935Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:33:25.935Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736055333"
+}

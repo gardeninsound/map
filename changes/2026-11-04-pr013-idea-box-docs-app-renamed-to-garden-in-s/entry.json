@@ -1,0 +1,99 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "2ca571cf7b049c62a71e606f12fa72ca59572388",
+  "parent": "f2ccfdd44b3db70b281c5d54bf203c63dec82753",
+  "pr": 13,
+  "title": "Idea box docs: app renamed to Garden in Sound Wishes",
+  "url": "https://github.com/gardeninsound/map/pull/13",
+  "merged_at": "2026-11-04T22:51:38Z",
+  "body": "The GitHub App was renamed in its settings (same app, id 5618995). Ideas now show as `garden-in-sound-wishes[bot]`. This updates the name and link in CLAUDE.md and in comments in `wish/`. No code or config values change; the Worker signs in by app id, so nothing needs redeploying.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "2b4506fbd3aed4001616712411886ebf4a5e0723",
+      "message": "Idea box docs: the GitHub App is now Garden in Sound Wishes (garden-in-sound-wishes[bot])\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-04T22:50:28Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 2,
+      "deletions": 2
+    },
+    {
+      "path": "wish/src/githubApp.ts",
+      "status": "M",
+      "additions": 2,
+      "deletions": 2
+    },
+    {
+      "path": "wish/src/index.ts",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "wish/wrangler.jsonc",
+      "status": "M",
+      "additions": 2,
+      "deletions": 2
+    }
+  ],
+  "additions": 7,
+  "deletions": 7,
+  "areas": [
+    "idea box",
+    "docs"
+  ],
+  "branch": "app-rename",
+  "opened_at": "2026-11-04T22:50:32Z",
+  "merged_by": "vlandham",
+  "summary": "The GitHub App was renamed in its settings (same app, id 5618995). Ideas now show as `garden-in-sound-wishes[bot]`. This updates the name and link in CLAUDE.md and in comments in `wish/`. No code or config values change; the Worker signs in by app id, so nothing needs redeploying.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "requested_reviewers": [],
+  "reviews": [],
+  "labels": [],
+  "discussion": [],
+  "preview_url": null,
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 9,
+    "scenes": 10,
+    "content_files": 18,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 18294,
+    "commits": 48
+  },
+  "shots": [],
+  "first_recorded_at": "2026-11-15T16:33:25.935Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:33:25.935Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736055333"
+}

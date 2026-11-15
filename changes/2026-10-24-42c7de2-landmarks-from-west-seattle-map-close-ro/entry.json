@@ -1,0 +1,189 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "42c7de251c8581f2aa99ae4e40c090e0d504a014",
+  "parent": "18e4ad0fe026e6dc05e905fe3442321061a48eef",
+  "pr": null,
+  "title": "Landmarks from west-seattle-map, close road holes, npm run audit",
+  "url": "https://github.com/gardeninsound/map/commit/42c7de251c8581f2aa99ae4e40c090e0d504a014",
+  "merged_at": "2026-10-24T13:41:12-07:00",
+  "body": "Ported by hand from west-seattle-map (v0.3.0+):\n- Landmarks: Admiral Safeway, Shadowland, West Seattle Library, each\n  pulled flush with the street on its west. Map rebuilt from a fresh OSM\n  fetch (otherwise 55 tiles differ, 6 houses fewer).\n- Road painter fills small pockets walled in by asphalt (sidewalk scraps\n  where wide streets cross, e.g. Fauntleroy & Genesee). Fixed on the way:\n  the flood stopped early once a region was too big, leaving it half-seen,\n  so its remainder looked enclosed and got paved in pieces (more slivers,\n  not fewer); now every region floods fully, with bounds checks.\n- npm run audit (scripts/city/road-audit.mjs + src/city/render/audit.ts):\n  renders every chunk at ?audit, counts slivers/fragments (detailed places\n  skipped), writes screenshots/audit/. 38 sidewalk-bounded slivers remain.\n- Dev hook ?atTile=x,y alongside ?at=lat,lon.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "authors": [
+    {
+      "login": null,
+      "name": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "42c7de251c8581f2aa99ae4e40c090e0d504a014",
+      "message": "Landmarks from west-seattle-map, close road holes, npm run audit\n\nPorted by hand from west-seattle-map (v0.3.0+):\n- Landmarks: Admiral Safeway, Shadowland, West Seattle Library, each\n  pulled flush with the street on its west. Map rebuilt from a fresh OSM\n  fetch (otherwise 55 tiles differ, 6 houses fewer).\n- Road painter fills small pockets walled in by asphalt (sidewalk scraps\n  where wide streets cross, e.g. Fauntleroy & Genesee). Fixed on the way:\n  the flood stopped early once a region was too big, leaving it half-seen,\n  so its remainder looked enclosed and got paved in pieces (more slivers,\n  not fewer); now every region floods fully, with bounds checks.\n- npm run audit (scripts/city/road-audit.mjs + src/city/render/audit.ts):\n  renders every chunk at ?audit, counts slivers/fragments (detailed places\n  skipped), writes screenshots/audit/. 38 sidewalk-bounded slivers remain.\n- Dev hook ?atTile=x,y alongside ?at=lat,lon.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "at": "2026-10-24T13:41:12-07:00"
+    }
+  ],
+  "files": [
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 6,
+      "deletions": 2
+    },
+    {
+      "path": "content/landmarks.csv",
+      "status": "M",
+      "additions": 3,
+      "deletions": 0
+    },
+    {
+      "path": "package.json",
+      "status": "M",
+      "additions": 2,
+      "deletions": 1
+    },
+    {
+      "path": "scripts/city/road-audit.mjs",
+      "status": "A",
+      "additions": 33,
+      "deletions": 0
+    },
+    {
+      "path": "src/App.tsx",
+      "status": "M",
+      "additions": 13,
+      "deletions": 5
+    },
+    {
+      "path": "src/city/render/audit.ts",
+      "status": "A",
+      "additions": 64,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/render/landmarks.ts",
+      "status": "M",
+      "additions": 139,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/render/tileArt.ts",
+      "status": "M",
+      "additions": 43,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/world/landmarksData.json",
+      "status": "M",
+      "additions": 30,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/world/worldData.json",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    }
+  ],
+  "additions": 334,
+  "deletions": 9,
+  "areas": [
+    "city",
+    "map pipeline",
+    "docs"
+  ],
+  "summary": "Ported by hand from west-seattle-map (v0.3.0+):\n- Landmarks: Admiral Safeway, Shadowland, West Seattle Library, each\n  pulled flush with the street on its west. Map rebuilt from a fresh OSM\n  fetch (otherwise 55 tiles differ, 6 houses fewer).\n- Road painter fills small pockets walled in by asphalt (sidewalk scraps\n  where wide streets cross, e.g. Fauntleroy & Genesee). Fixed on the way:\n  the flood stopped early once a region was too big, leaving it half-seen,\n  so its remainder looked enclosed and got paved in pieces (more slivers,\n  not fewer); now every region floods fully, with bounds checks.\n- npm run audit (scripts/city/road-audit.mjs + src/city/render/audit.ts):\n  renders every chunk at ?audit, counts slivers/fragments (detailed places\n  skipped), writes screenshots/audit/. 38 sidewalk-bounded slivers remain.\n- Dev hook ?atTile=x,y alongside ?at=lat,lon.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 13,
+    "plugins": 4,
+    "scenes": 4,
+    "content_files": 11,
+    "source_lines": 11264,
+    "commits": 19
+  },
+  "shots": [
+    {
+      "query": "at=47.579985,-122.386027",
+      "lat": 47.579985,
+      "lon": -122.386027,
+      "label": null,
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ],
+        "after": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ]
+      }
+    },
+    {
+      "query": "at=47.562987,-122.386586",
+      "lat": 47.562987,
+      "lon": -122.386586,
+      "label": null,
+      "guessed": true,
+      "before": "before-2.webp",
+      "after": "after-2.webp",
+      "moving": "moving-2.webp",
+      "problems": {
+        "before": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ],
+        "after": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ]
+      }
+    },
+    {
+      "query": "at=47.582731,-122.384704",
+      "lat": 47.582731,
+      "lon": -122.384704,
+      "label": null,
+      "guessed": true,
+      "before": "before-3.webp",
+      "after": "after-3.webp",
+      "moving": "moving-3.webp",
+      "problems": {
+        "before": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ],
+        "after": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ]
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "note": "stills lossless; moving loop half size"
+  },
+  "first_recorded_at": "2026-11-15T16:33:25.935Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:33:25.935Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736055333"
+}

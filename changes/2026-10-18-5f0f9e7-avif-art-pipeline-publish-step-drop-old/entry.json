@@ -1,0 +1,1374 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "5f0f9e74ca607c175d1db53fb63cc5398620000a",
+  "parent": "15796d631ca18765ba664770036cd2a68b879b56",
+  "pr": null,
+  "title": "AVIF art pipeline + publish step; drop old WebPs",
+  "url": "https://github.com/gardeninsound/map/commit/5f0f9e74ca607c175d1db53fb63cc5398620000a",
+  "merged_at": "2026-10-18T19:06:05-07:00",
+  "body": "- process-images: AVIF stills (1200 px) and thumbnails (320 px) from the\n  originals, settings in ENCODE, stale outputs deleted, videos not re-encoded\n- art:publish: stage exactly the files the scenes show (slideshow picks,\n  park signs, SPOTS thumbnails) using the app's own selection code\n- All art URLs go through src/content/art.ts\n- Published art: 105 files / 5.3 MB (was 96 WebPs / 11.5 MB)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "authors": [
+    {
+      "login": null,
+      "name": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "5f0f9e74ca607c175d1db53fb63cc5398620000a",
+      "message": "AVIF art pipeline + publish step; drop old WebPs\n\n- process-images: AVIF stills (1200 px) and thumbnails (320 px) from the\n  originals, settings in ENCODE, stale outputs deleted, videos not re-encoded\n- art:publish: stage exactly the files the scenes show (slideshow picks,\n  park signs, SPOTS thumbnails) using the app's own selection code\n- All art URLs go through src/content/art.ts\n- Published art: 105 files / 5.3 MB (was 96 WebPs / 11.5 MB)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "at": "2026-10-18T19:06:05-07:00"
+    }
+  ],
+  "files": [
+    {
+      "path": ".gitignore",
+      "status": "M",
+      "additions": 2,
+      "deletions": 2
+    },
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 8,
+      "deletions": 2
+    },
+    {
+      "path": "README.md",
+      "status": "M",
+      "additions": 3,
+      "deletions": 4
+    },
+    {
+      "path": "data/art-meta.json",
+      "status": "M",
+      "additions": 1270,
+      "deletions": 952
+    },
+    {
+      "path": "package.json",
+      "status": "M",
+      "additions": 2,
+      "deletions": 1
+    },
+    {
+      "path": "public/art/bus-wall/img-4110-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4110-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4110.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4110.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4133-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4133-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4133.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4133.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4149-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4149-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4149.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4149.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4197-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4197-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4197.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4197.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4403-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4403-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4403.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4403.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4450-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4450-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4450.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4450.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4501-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4501-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4501.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4501.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4531-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4531-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4531.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4531.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4593-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4593-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4593.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4593.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4700-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4700-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4700.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4700.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4793-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4793-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4793.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4793.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4850-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4850-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4850.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4850.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4900-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4900-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4900.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4900.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4928-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4928-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4928.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4928.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4961-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4961-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4961.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4961.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4964-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4964-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4964.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4964.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5208-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5208-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5208.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5208.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5243-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5243-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5243.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5243.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5272-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5272-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5272.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5272.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5356-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5356-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5356.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5356.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5516-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5516-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5516.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5516.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5577-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5577-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5577.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5577.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5727-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5727-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5727.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5727.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-6758-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-6758-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-6758.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-6758.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/cup/img-3243-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/puppy-park/img-3524-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/puppy-park/img-3524.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/puppy-park/img-3554.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/puppy-park/img-3718.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/puppy-park/img-4872.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/puppy-park/img-5003.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/puppy-park/img-5020.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/puppy-park/img-5188.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4255-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4255-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4255.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4255.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4270-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4270-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4270.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4270.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4450-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4450-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4450.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4450.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4617-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4617-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4617.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4617.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4681-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4681-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4681.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4681.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4687-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4687-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4687.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4687.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4691-1-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4691-1-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4691-1.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4691-1.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4725-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4725-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4725.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4725.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4728-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4728-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4728.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4728.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4828-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4828-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4828.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4828.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4915-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4915-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4915.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4915.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4937-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4937-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4937.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4937.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5005-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5005-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5005.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5005.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5213-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5213-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5213.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5213.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5267-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5267-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5267.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5267.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5361-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5361-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5361.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5361.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5399-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5399-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5399.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5399.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5510-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5510-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5510.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5510.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5547-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5547-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5547.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5547.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5599-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5599-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5599.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5599.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5680-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5680-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5680.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5680.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5898-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5898-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5898.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5898.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5907-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5907-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5907.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5907.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-8756-t.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-8756-t.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-8756.avif",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-8756.webp",
+      "status": "D",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "scripts/process-images.mjs",
+      "status": "M",
+      "additions": 40,
+      "deletions": 14
+    },
+    {
+      "path": "scripts/publish-art.mjs",
+      "status": "A",
+      "additions": 63,
+      "deletions": 0
+    },
+    {
+      "path": "src/content/art.ts",
+      "status": "A",
+      "additions": 8,
+      "deletions": 0
+    },
+    {
+      "path": "src/content/artManifest.ts",
+      "status": "M",
+      "additions": 637,
+      "deletions": 634
+    },
+    {
+      "path": "src/experiences/WallTurns.tsx",
+      "status": "M",
+      "additions": 3,
+      "deletions": 3
+    },
+    {
+      "path": "src/experiences/park/ParkWalk.tsx",
+      "status": "M",
+      "additions": 2,
+      "deletions": 1
+    },
+    {
+      "path": "src/ui/SpotsMenu.tsx",
+      "status": "M",
+      "additions": 2,
+      "deletions": 1
+    }
+  ],
+  "additions": 2040,
+  "deletions": 1614,
+  "areas": [
+    "scenes & games",
+    "ui",
+    "words & content",
+    "art & sound",
+    "docs",
+    "tools"
+  ],
+  "summary": "- process-images: AVIF stills (1200 px) and thumbnails (320 px) from the\n  originals, settings in ENCODE, stale outputs deleted, videos not re-encoded\n- art:publish: stage exactly the files the scenes show (slideshow picks,\n  park signs, SPOTS thumbnails) using the app's own selection code\n- All art URLs go through src/content/art.ts\n- Published art: 105 files / 5.3 MB (was 96 WebPs / 11.5 MB)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 11,
+    "plugins": 0,
+    "scenes": 3,
+    "content_files": 11,
+    "source_lines": 7957,
+    "commits": 10
+  },
+  "shots": [
+    {
+      "query": "at=47.5612,-122.3868",
+      "lat": 47.5612,
+      "lon": -122.3868,
+      "label": "the Junction, where everyone starts",
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ],
+        "after": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ]
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "note": "stills lossless; moving loop half size"
+  },
+  "first_recorded_at": "2026-11-15T16:33:25.935Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:33:25.935Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736055333"
+}

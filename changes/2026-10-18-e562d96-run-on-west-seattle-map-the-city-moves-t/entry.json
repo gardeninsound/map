@@ -1,0 +1,410 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "e562d968977185fcfca5886dee0b4b069547f3fd",
+  "parent": "b43fcd3391b864c9914648d473bc1a2c4aa8c973",
+  "pr": null,
+  "title": "Run on west-seattle-map: the city moves to its own package",
+  "url": "https://github.com/gardeninsound/map/commit/e562d968977185fcfca5886dee0b4b069547f3fd",
+  "merged_at": "2026-10-18T19:54:20-07:00",
+  "body": "- Map pipeline, world, renderer, engine, neighbors, input, HUD, dialog,\n  touch pad and sounds now come from ../west-seattle-map (file: dep)\n- Art spots, busker and crow become CityPlugins (src/game/plugins/)\n- Mike / easel / crow sprites, Mike's dialog defaults and extra sounds\n  stay here; places sheet uses the shared sheet helpers\n- Deploy checks out both repos (read-only deploy key for the private one)\n- Esc now leaves Seven+ Stories even during its intro\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "authors": [
+    {
+      "login": null,
+      "name": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "e562d968977185fcfca5886dee0b4b069547f3fd",
+      "message": "Run on west-seattle-map: the city moves to its own package\n\n- Map pipeline, world, renderer, engine, neighbors, input, HUD, dialog,\n  touch pad and sounds now come from ../west-seattle-map (file: dep)\n- Art spots, busker and crow become CityPlugins (src/game/plugins/)\n- Mike / easel / crow sprites, Mike's dialog defaults and extra sounds\n  stay here; places sheet uses the shared sheet helpers\n- Deploy checks out both repos (read-only deploy key for the private one)\n- Esc now leaves Seven+ Stories even during its intro\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "at": "2026-10-18T19:54:20-07:00"
+    }
+  ],
+  "files": [
+    {
+      "path": ".github/workflows/deploy.yml",
+      "status": "M",
+      "additions": 17,
+      "deletions": 1
+    },
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 27,
+      "deletions": 44
+    },
+    {
+      "path": "README.md",
+      "status": "M",
+      "additions": 6,
+      "deletions": 0
+    },
+    {
+      "path": "content/landmarks.csv",
+      "status": "D",
+      "additions": 0,
+      "deletions": 3
+    },
+    {
+      "path": "package-lock.json",
+      "status": "M",
+      "additions": 28,
+      "deletions": 1
+    },
+    {
+      "path": "package.json",
+      "status": "M",
+      "additions": 2,
+      "deletions": 3
+    },
+    {
+      "path": "scripts/build-map.mjs",
+      "status": "D",
+      "additions": 0,
+      "deletions": 554
+    },
+    {
+      "path": "scripts/fetch-osm.mjs",
+      "status": "D",
+      "additions": 0,
+      "deletions": 53
+    },
+    {
+      "path": "scripts/map-config.mjs",
+      "status": "D",
+      "additions": 0,
+      "deletions": 46
+    },
+    {
+      "path": "scripts/places.mjs",
+      "status": "M",
+      "additions": 20,
+      "deletions": 118
+    },
+    {
+      "path": "scripts/review-map.mjs",
+      "status": "D",
+      "additions": 0,
+      "deletions": 42
+    },
+    {
+      "path": "src/App.tsx",
+      "status": "M",
+      "additions": 112,
+      "deletions": 69
+    },
+    {
+      "path": "src/content/content.test.ts",
+      "status": "M",
+      "additions": 1,
+      "deletions": 12
+    },
+    {
+      "path": "src/content/landmarksData.json",
+      "status": "D",
+      "additions": 0,
+      "deletions": 20
+    },
+    {
+      "path": "src/content/neighbors.ts",
+      "status": "M",
+      "additions": 1,
+      "deletions": 12
+    },
+    {
+      "path": "src/experiences/WallTurns.tsx",
+      "status": "M",
+      "additions": 3,
+      "deletions": 3
+    },
+    {
+      "path": "src/experiences/cup/CupPaint.tsx",
+      "status": "M",
+      "additions": 4,
+      "deletions": 4
+    },
+    {
+      "path": "src/experiences/park/ParkWalk.tsx",
+      "status": "M",
+      "additions": 5,
+      "deletions": 5
+    },
+    {
+      "path": "src/game/Game.ts",
+      "status": "D",
+      "additions": 0,
+      "deletions": 555
+    },
+    {
+      "path": "src/game/busker.ts",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "src/game/crow.test.ts",
+      "status": "M",
+      "additions": 3,
+      "deletions": 2
+    },
+    {
+      "path": "src/game/crow.ts",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "src/game/input.ts",
+      "status": "D",
+      "additions": 0,
+      "deletions": 100
+    },
+    {
+      "path": "src/game/movement.test.ts",
+      "status": "D",
+      "additions": 0,
+      "deletions": 68
+    },
+    {
+      "path": "src/game/movement.ts",
+      "status": "D",
+      "additions": 0,
+      "deletions": 66
+    },
+    {
+      "path": "src/game/npcs.test.ts",
+      "status": "D",
+      "additions": 0,
+      "deletions": 53
+    },
+    {
+      "path": "src/game/npcs.ts",
+      "status": "D",
+      "additions": 0,
+      "deletions": 101
+    },
+    {
+      "path": "src/game/plugins/artSpots.ts",
+      "status": "A",
+      "additions": 77,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/plugins/busker.ts",
+      "status": "A",
+      "additions": 101,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/plugins/crow.ts",
+      "status": "A",
+      "additions": 82,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/render/landmarks.ts",
+      "status": "D",
+      "additions": 0,
+      "deletions": 168
+    },
+    {
+      "path": "src/game/render/palette.ts",
+      "status": "D",
+      "additions": 0,
+      "deletions": 30
+    },
+    {
+      "path": "src/game/render/sprites.test.ts",
+      "status": "D",
+      "additions": 0,
+      "deletions": 9
+    },
+    {
+      "path": "src/game/render/sprites.ts",
+      "status": "D",
+      "additions": 0,
+      "deletions": 370
+    },
+    {
+      "path": "src/game/render/tileArt.ts",
+      "status": "D",
+      "additions": 0,
+      "deletions": 322
+    },
+    {
+      "path": "src/game/sprites.test.ts",
+      "status": "A",
+      "additions": 9,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/sprites.ts",
+      "status": "A",
+      "additions": 152,
+      "deletions": 0
+    },
+    {
+      "path": "src/main.tsx",
+      "status": "M",
+      "additions": 1,
+      "deletions": 0
+    },
+    {
+      "path": "src/styles.css",
+      "status": "M",
+      "additions": 1,
+      "deletions": 195
+    },
+    {
+      "path": "src/ui/Compass.test.ts",
+      "status": "D",
+      "additions": 0,
+      "deletions": 24
+    },
+    {
+      "path": "src/ui/Compass.tsx",
+      "status": "D",
+      "additions": 0,
+      "deletions": 69
+    },
+    {
+      "path": "src/ui/DialogBox.tsx",
+      "status": "D",
+      "additions": 0,
+      "deletions": 101
+    },
+    {
+      "path": "src/ui/Hud.tsx",
+      "status": "D",
+      "additions": 0,
+      "deletions": 109
+    },
+    {
+      "path": "src/ui/MikeDialog.tsx",
+      "status": "A",
+      "additions": 9,
+      "deletions": 0
+    },
+    {
+      "path": "src/ui/SpotsMenu.tsx",
+      "status": "M",
+      "additions": 4,
+      "deletions": 4
+    },
+    {
+      "path": "src/ui/TitleScreen.tsx",
+      "status": "M",
+      "additions": 2,
+      "deletions": 2
+    },
+    {
+      "path": "src/ui/TouchPad.tsx",
+      "status": "D",
+      "additions": 0,
+      "deletions": 49
+    },
+    {
+      "path": "src/ui/sfx.ts",
+      "status": "D",
+      "additions": 0,
+      "deletions": 68
+    },
+    {
+      "path": "src/ui/sounds.ts",
+      "status": "A",
+      "additions": 13,
+      "deletions": 0
+    },
+    {
+      "path": "src/world/world.ts",
+      "status": "D",
+      "additions": 0,
+      "deletions": 209
+    },
+    {
+      "path": "src/world/worldData.json",
+      "status": "D",
+      "additions": 0,
+      "deletions": 1
+    },
+    {
+      "path": "vite.config.ts",
+      "status": "M",
+      "additions": 2,
+      "deletions": 0
+    }
+  ],
+  "additions": 684,
+  "deletions": 3667,
+  "areas": [
+    "map pipeline",
+    "characters & map life",
+    "scenes & games",
+    "ui",
+    "words & content",
+    "ci",
+    "docs",
+    "tools"
+  ],
+  "summary": "- Map pipeline, world, renderer, engine, neighbors, input, HUD, dialog,\n  touch pad and sounds now come from ../west-seattle-map (file: dep)\n- Art spots, busker and crow become CityPlugins (src/game/plugins/)\n- Mike / easel / crow sprites, Mike's dialog defaults and extra sounds\n  stay here; places sheet uses the shared sheet helpers\n- Deploy checks out both repos (read-only deploy key for the private one)\n- Esc now leaves Seven+ Stories even during its intro\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 11,
+    "plugins": 3,
+    "scenes": 3,
+    "content_files": 10,
+    "source_lines": 5964,
+    "commits": 12
+  },
+  "shots": [
+    {
+      "query": "at=47.5613,-122.3868",
+      "lat": 47.5613,
+      "lon": -122.3868,
+      "label": null,
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": null,
+      "moving": null,
+      "problems": {
+        "before": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ],
+        "after": [
+          "build failed"
+        ]
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "note": "stills lossless; moving loop half size"
+  },
+  "first_recorded_at": "2026-11-15T16:33:25.935Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:33:25.935Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736055333"
+}

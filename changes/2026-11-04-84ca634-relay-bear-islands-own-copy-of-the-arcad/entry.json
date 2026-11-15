@@ -1,0 +1,120 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "84ca6344ff25929b46b82b882c41ae755cc1f386",
+  "parent": "2e01f7e6c5157c82ebd9cca3dbb0ae350ad8acb0",
+  "pr": null,
+  "title": "Relay: Bear Island's own copy of the arcade relay in relay/, allow-list gardeninsound.website only",
+  "url": "https://github.com/gardeninsound/map/commit/84ca6344ff25929b46b82b882c41ae755cc1f386",
+  "merged_at": "2026-11-04T13:33:50-08:00",
+  "body": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "authors": [
+    {
+      "login": null,
+      "name": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "84ca6344ff25929b46b82b882c41ae755cc1f386",
+      "message": "Relay: Bear Island's own copy of the arcade relay in relay/, allow-list gardeninsound.website only\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "at": "2026-11-04T13:33:48-08:00"
+    }
+  ],
+  "files": [
+    {
+      "path": ".gitignore",
+      "status": "M",
+      "additions": 1,
+      "deletions": 0
+    },
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 3,
+      "deletions": 2
+    },
+    {
+      "path": "relay/README.md",
+      "status": "A",
+      "additions": 25,
+      "deletions": 0
+    },
+    {
+      "path": "relay/package-lock.json",
+      "status": "A",
+      "additions": 1616,
+      "deletions": 0
+    },
+    {
+      "path": "relay/package.json",
+      "status": "A",
+      "additions": 17,
+      "deletions": 0
+    },
+    {
+      "path": "relay/src/index.ts",
+      "status": "A",
+      "additions": 158,
+      "deletions": 0
+    },
+    {
+      "path": "relay/test.mjs",
+      "status": "A",
+      "additions": 170,
+      "deletions": 0
+    },
+    {
+      "path": "relay/tsconfig.json",
+      "status": "A",
+      "additions": 14,
+      "deletions": 0
+    },
+    {
+      "path": "relay/wrangler.jsonc",
+      "status": "A",
+      "additions": 19,
+      "deletions": 0
+    }
+  ],
+  "additions": 2023,
+  "deletions": 2,
+  "areas": [
+    "relay",
+    "docs"
+  ],
+  "summary": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 9,
+    "scenes": 10,
+    "content_files": 17,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 17936,
+    "commits": 41
+  },
+  "shots": [],
+  "first_recorded_at": "2026-11-15T16:33:25.935Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:33:25.935Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736055333"
+}

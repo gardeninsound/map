@@ -1,0 +1,211 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "8b304cd72a313b7fb1b58e551ccffbb57e541f9e",
+  "parent": "238fcad452ef5d8c3fb6b9b0f87f22f28c4548d4",
+  "pr": null,
+  "title": "Merge main: gardeninsound/map at the root, live rabbits and emotes",
+  "url": "https://github.com/gardeninsound/map/commit/8b304cd72a313b7fb1b58e551ccffbb57e541f9e",
+  "merged_at": "2026-11-04T13:26:00-08:00",
+  "body": "Kept both sides in App.tsx: Luna Park and the live Visitors plugin.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "authors": [
+    {
+      "login": null,
+      "name": "mike"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "8b304cd72a313b7fb1b58e551ccffbb57e541f9e",
+      "message": "Merge main: gardeninsound/map at the root, live rabbits and emotes\n\nKept both sides in App.tsx: Luna Park and the live Visitors plugin.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "mike",
+      "at": "2026-11-04T13:26:00-08:00"
+    }
+  ],
+  "files": [
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 24,
+      "deletions": 2
+    },
+    {
+      "path": "README.md",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "public/CNAME",
+      "status": "M",
+      "additions": 1,
+      "deletions": 0
+    },
+    {
+      "path": "scripts/city/road-audit.mjs",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "src/App.tsx",
+      "status": "M",
+      "additions": 116,
+      "deletions": 6
+    },
+    {
+      "path": "src/city/engine/CityGame.ts",
+      "status": "M",
+      "additions": 9,
+      "deletions": 3
+    },
+    {
+      "path": "src/city/index.ts",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "src/city/render/sprites.ts",
+      "status": "M",
+      "additions": 7,
+      "deletions": 1
+    },
+    {
+      "path": "src/city/ui/Hud.tsx",
+      "status": "M",
+      "additions": 39,
+      "deletions": 8
+    },
+    {
+      "path": "src/city/ui/ui.css",
+      "status": "M",
+      "additions": 1,
+      "deletions": 0
+    },
+    {
+      "path": "src/content/emotes.ts",
+      "status": "M",
+      "additions": 46,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/plugins/visitors.ts",
+      "status": "M",
+      "additions": 361,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/tinyFont.test.ts",
+      "status": "M",
+      "additions": 22,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/tinyFont.ts",
+      "status": "M",
+      "additions": 65,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/visitors.test.ts",
+      "status": "M",
+      "additions": 103,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/visitors.ts",
+      "status": "M",
+      "additions": 179,
+      "deletions": 0
+    },
+    {
+      "path": "src/net/relay.ts",
+      "status": "M",
+      "additions": 117,
+      "deletions": 0
+    },
+    {
+      "path": "src/styles.css",
+      "status": "M",
+      "additions": 35,
+      "deletions": 0
+    },
+    {
+      "path": "vite.config.ts",
+      "status": "M",
+      "additions": 3,
+      "deletions": 2
+    }
+  ],
+  "additions": 1131,
+  "deletions": 25,
+  "areas": [
+    "city",
+    "map pipeline",
+    "characters & map life",
+    "words & content",
+    "relay",
+    "docs"
+  ],
+  "summary": "Kept both sides in App.tsx: Luna Park and the live Visitors plugin.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 9,
+    "scenes": 10,
+    "content_files": 17,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 17936,
+    "commits": 39
+  },
+  "shots": [
+    {
+      "query": "at=47.5612,-122.3868",
+      "lat": 47.5612,
+      "lon": -122.3868,
+      "label": "the Junction, where everyone starts",
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ],
+        "after": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ]
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "note": "stills lossless; moving loop half size"
+  },
+  "first_recorded_at": "2026-11-15T16:33:25.935Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:33:25.935Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736055333"
+}

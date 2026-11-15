@@ -1,0 +1,673 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "15796d631ca18765ba664770036cd2a68b879b56",
+  "parent": "84646d6a414cf1bf81f364ae6ab90695bab9b407",
+  "pr": null,
+  "title": "Publish the slideshow photos (24 stills each, ~11.5 MB)",
+  "url": "https://github.com/gardeninsound/map/commit/15796d631ca18765ba664770036cd2a68b879b56",
+  "merged_at": "2026-10-18T16:41:26-07:00",
+  "body": "Only the stills the gas-station wall and Rush Hour slideshows show, plus\nthumbnails, force-added past the public/art ignore so those scenes work\non the deployed site. The rest of the processed art stays out of git.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "authors": [
+    {
+      "login": null,
+      "name": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "15796d631ca18765ba664770036cd2a68b879b56",
+      "message": "Publish the slideshow photos (24 stills each, ~11.5 MB)\n\nOnly the stills the gas-station wall and Rush Hour slideshows show, plus\nthumbnails, force-added past the public/art ignore so those scenes work\non the deployed site. The rest of the processed art stays out of git.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "at": "2026-10-18T16:41:26-07:00"
+    }
+  ],
+  "files": [
+    {
+      "path": ".gitignore",
+      "status": "M",
+      "additions": 2,
+      "deletions": 1
+    },
+    {
+      "path": "public/art/bus-wall/img-4110-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4110.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4133-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4133.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4149-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4149.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4197-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4197.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4403-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4403.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4450-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4450.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4501-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4501.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4531-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4531.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4593-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4593.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4700-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4700.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4793-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4793.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4850-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4850.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4900-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4900.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4928-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4928.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4961-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4961.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4964-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-4964.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5208-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5208.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5243-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5243.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5272-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5272.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5356-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5356.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5516-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5516.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5577-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5577.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5727-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-5727.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-6758-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/bus-wall/img-6758.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4255-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4255.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4270-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4270.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4450-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4450.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4617-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4617.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4681-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4681.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4687-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4687.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4691-1-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4691-1.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4725-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4725.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4728-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4728.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4828-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4828.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4915-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4915.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4937-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-4937.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5005-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5005.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5213-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5213.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5267-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5267.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5361-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5361.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5399-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5399.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5510-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5510.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5547-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5547.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5599-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5599.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5680-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5680.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5898-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5898.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5907-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-5907.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-8756-t.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/rush-hour/img-8756.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    }
+  ],
+  "additions": 2,
+  "deletions": 1,
+  "areas": [
+    "art & sound"
+  ],
+  "summary": "Only the stills the gas-station wall and Rush Hour slideshows show, plus\nthumbnails, force-added past the public/art ignore so those scenes work\non the deployed site. The rest of the processed art stays out of git.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 11,
+    "plugins": 0,
+    "scenes": 3,
+    "content_files": 10,
+    "source_lines": 7944,
+    "commits": 9
+  },
+  "shots": [
+    {
+      "query": "at=47.5612,-122.3868",
+      "lat": 47.5612,
+      "lon": -122.3868,
+      "label": "the Junction, where everyone starts",
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ],
+        "after": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ]
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "note": "stills lossless; moving loop half size"
+  },
+  "first_recorded_at": "2026-11-15T16:33:25.935Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:33:25.935Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736055333"
+}

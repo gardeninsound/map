@@ -1,0 +1,111 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "92be624bc1a017022bdeb88882c50d905deac735",
+  "parent": "6f130974647be0c3230a724f6c92a734bf347343",
+  "pr": 9,
+  "title": "Idea box: ideas filed by the Garden in Sound bot, not a person",
+  "url": "https://github.com/gardeninsound/map/pull/9",
+  "merged_at": "2026-11-04T22:40:04Z",
+  "body": "Ideas from the ✿ IDEA box are filed by a GitHub App owned by the org, so they show as **`garden-in-sound[bot]`** instead of as Vince.\n\n## The app\n- **Garden in Sound** (github.com/apps/garden-in-sound, id 5618995), owned by `gardeninsound`, private to the org, no webhooks, permissions **Issues: write** only (plus the read-only metadata access GitHub always includes). Created through GitHub's manifest flow, so the private key went straight from GitHub to a local file and was never shown or pasted.\n- Installed on the org (installation 178720338). It's set to *all repositories*, and `map` is currently the only one. Narrow it in org settings if more repos arrive.\n\n## The Worker (`wish/`)\n- `src/githubApp.ts`: signs an RS256 JWT with the app key (WebCrypto) → trades it for an installation token → caches that token until 10 minutes before it expires.\n- `wrangler.jsonc`: `GITHUB_APP_ID` and `GITHUB_INSTALLATION_ID` vars. The secret is now `GITHUB_APP_KEY` (PKCS#8) instead of `GITHUB_TOKEN`.\n\n## Tests\n- Unit tests (4, in the root `npm test`, now 248 total): the JWT verifies against the public key; one-line keys parse and PKCS#1 keys are refused; the token is reused until near expiry; a refusal says why.\n- `cd wish && npm test`: the fake GitHub only accepts a correctly signed JWT from the right app and requires the installation token on the issue call. Checks the token is fetched once across ideas.\n- Real GitHub: the same code with the real key created issue #8, authored by **garden-in-sound[bot]** with the `suggestion` label, and then closed it.\n\n## After merge (Claude does this)\n1. Store `GITHUB_APP_KEY` on the Worker, `wrangler deploy` `wish/`, and check an idea lands as the bot.\n2. Delete the Worker's old `GITHUB_TOKEN` secret. Vince can then delete that personal token on GitHub.\n\nTouches CLAUDE.md (the idea-box notes), so it's a shared PR: needs Mike's OK.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "fc2a0f134c1178dd86eb32e6db90636a6ce0cd73",
+      "message": "Idea box: file ideas as the Garden in Sound GitHub App (garden-in-sound[bot])\n\nThe wish Worker now signs in as the org-owned GitHub App (Issues: write only) instead of a\npersonal token: an RS256 JWT from the app key (WebCrypto) → an installation token, cached until\n10 minutes before it expires. Unit tests cover the JWT, key parsing and token caching; the\nend-to-end test's fake GitHub only accepts a correctly signed JWT and checks the token is reused.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-04T22:34:22Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 5,
+      "deletions": 2
+    },
+    {
+      "path": "wish/src/githubApp.test.ts",
+      "status": "A",
+      "additions": 48,
+      "deletions": 0
+    },
+    {
+      "path": "wish/src/githubApp.ts",
+      "status": "A",
+      "additions": 61,
+      "deletions": 0
+    },
+    {
+      "path": "wish/src/index.ts",
+      "status": "M",
+      "additions": 16,
+      "deletions": 4
+    },
+    {
+      "path": "wish/test.mjs",
+      "status": "M",
+      "additions": 29,
+      "deletions": 5
+    },
+    {
+      "path": "wish/wrangler.jsonc",
+      "status": "M",
+      "additions": 8,
+      "deletions": 3
+    }
+  ],
+  "additions": 167,
+  "deletions": 14,
+  "areas": [
+    "idea box",
+    "docs"
+  ],
+  "branch": "ideas-bot",
+  "opened_at": "2026-11-04T22:34:26Z",
+  "merged_by": "vlandham",
+  "summary": "Ideas from the ✿ IDEA box are filed by a GitHub App owned by the org, so they show as **`garden-in-sound[bot]`** instead of as Vince.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "requested_reviewers": [],
+  "reviews": [],
+  "labels": [],
+  "discussion": [],
+  "preview_url": null,
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 9,
+    "scenes": 10,
+    "content_files": 18,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 18237,
+    "commits": 45
+  },
+  "shots": [],
+  "first_recorded_at": "2026-11-15T16:33:25.935Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:33:25.935Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736055333"
+}

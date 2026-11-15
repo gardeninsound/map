@@ -1,0 +1,142 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "84646d6a414cf1bf81f364ae6ab90695bab9b407",
+  "parent": "2376644aa5c21f0cf5254e2f4f80439f9a918fa4",
+  "pr": null,
+  "title": "Snack crow that flies between perches",
+  "url": "https://github.com/gardeninsound/map/commit/84646d6a414cf1bf81f364ae6ab90695bab9b407",
+  "merged_at": "2026-10-18T16:38:39-07:00",
+  "body": "- Perches outside Les Schwab on Alaska and asks the rabbit for snacks\n  (Share a carrot / Sorry, no snacks), replies, caws, then flies over the\n  rooftops to its next stop: Top Pot, Spud on Alki, Luna Park, then home\n- Back at Les Schwab it remembers how many times you shared\n- Stops and lines are data in src/content/crow.ts; flight state is pure\n  and tested in src/game/crow.ts\n- Talk overlay now takes choices and a `then` callback\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "authors": [
+    {
+      "login": null,
+      "name": "mike"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "84646d6a414cf1bf81f364ae6ab90695bab9b407",
+      "message": "Snack crow that flies between perches\n\n- Perches outside Les Schwab on Alaska and asks the rabbit for snacks\n  (Share a carrot / Sorry, no snacks), replies, caws, then flies over the\n  rooftops to its next stop: Top Pot, Spud on Alki, Luna Park, then home\n- Back at Les Schwab it remembers how many times you shared\n- Stops and lines are data in src/content/crow.ts; flight state is pure\n  and tested in src/game/crow.ts\n- Talk overlay now takes choices and a `then` callback\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "mike",
+      "at": "2026-10-18T16:37:32-07:00"
+    }
+  ],
+  "files": [
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 4,
+      "deletions": 0
+    },
+    {
+      "path": "src/App.tsx",
+      "status": "M",
+      "additions": 29,
+      "deletions": 4
+    },
+    {
+      "path": "src/content/crow.ts",
+      "status": "A",
+      "additions": 77,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/Game.ts",
+      "status": "M",
+      "additions": 72,
+      "deletions": 2
+    },
+    {
+      "path": "src/game/crow.test.ts",
+      "status": "A",
+      "additions": 48,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/crow.ts",
+      "status": "A",
+      "additions": 59,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/render/sprites.ts",
+      "status": "M",
+      "additions": 79,
+      "deletions": 1
+    },
+    {
+      "path": "src/ui/sfx.ts",
+      "status": "M",
+      "additions": 4,
+      "deletions": 0
+    }
+  ],
+  "additions": 372,
+  "deletions": 7,
+  "areas": [
+    "characters & map life",
+    "ui",
+    "words & content",
+    "docs"
+  ],
+  "summary": "- Perches outside Les Schwab on Alaska and asks the rabbit for snacks\n  (Share a carrot / Sorry, no snacks), replies, caws, then flies over the\n  rooftops to its next stop: Top Pot, Spud on Alki, Luna Park, then home\n- Back at Les Schwab it remembers how many times you shared\n- Stops and lines are data in src/content/crow.ts; flight state is pure\n  and tested in src/game/crow.ts\n- Talk overlay now takes choices and a `then` callback\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 11,
+    "plugins": 0,
+    "scenes": 3,
+    "content_files": 10,
+    "source_lines": 7944,
+    "commits": 8
+  },
+  "shots": [
+    {
+      "query": "at=47.5612,-122.3868",
+      "lat": 47.5612,
+      "lon": -122.3868,
+      "label": "the Junction, where everyone starts",
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ],
+        "after": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ]
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "note": "stills lossless; moving loop half size"
+  },
+  "first_recorded_at": "2026-11-15T16:33:25.935Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:33:25.935Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736055333"
+}

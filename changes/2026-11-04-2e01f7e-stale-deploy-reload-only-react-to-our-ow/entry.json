@@ -1,0 +1,69 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "2e01f7e6c5157c82ebd9cca3dbb0ae350ad8acb0",
+  "parent": "8b304cd72a313b7fb1b58e551ccffbb57e541f9e",
+  "pr": null,
+  "title": "Stale-deploy reload: only react to our own /assets/ files",
+  "url": "https://github.com/gardeninsound/map/commit/2e01f7e6c5157c82ebd9cca3dbb0ae350ad8acb0",
+  "merged_at": "2026-11-04T13:29:21-08:00",
+  "body": "Cloudflare injects its Web Analytics beacon; ad blockers (uBO Lite) block it, the\nscript-error listener took that for a stale deploy and reloaded, and main.tsx re-arms\nthe guard on every load — an endless reload loop. Third-party failures now don't count.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "authors": [
+    {
+      "login": null,
+      "name": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "2e01f7e6c5157c82ebd9cca3dbb0ae350ad8acb0",
+      "message": "Stale-deploy reload: only react to our own /assets/ files\n\nCloudflare injects its Web Analytics beacon; ad blockers (uBO Lite) block it, the\nscript-error listener took that for a stale deploy and reloaded, and main.tsx re-arms\nthe guard on every load — an endless reload loop. Third-party failures now don't count.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "at": "2026-11-04T13:23:21-08:00"
+    }
+  ],
+  "files": [
+    {
+      "path": "index.html",
+      "status": "M",
+      "additions": 12,
+      "deletions": 1
+    }
+  ],
+  "additions": 12,
+  "deletions": 1,
+  "areas": [],
+  "summary": "Cloudflare injects its Web Analytics beacon; ad blockers (uBO Lite) block it, the\nscript-error listener took that for a stale deploy and reloaded, and main.tsx re-arms\nthe guard on every load — an endless reload loop. Third-party failures now don't count.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 9,
+    "scenes": 10,
+    "content_files": 17,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 17936,
+    "commits": 40
+  },
+  "shots": [],
+  "first_recorded_at": "2026-11-15T16:33:25.935Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:33:25.935Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736055333"
+}

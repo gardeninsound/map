@@ -1,0 +1,152 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "f2ccfdd44b3db70b281c5d54bf203c63dec82753",
+  "parent": "3c68708bd1bb061d0207829b91321831f93f0d79",
+  "pr": 11,
+  "title": "Idea box: optional name in the issue, and Tab works through the form",
+  "url": "https://github.com/gardeninsound/map/pull/11",
+  "merged_at": "2026-11-04T22:48:00Z",
+  "body": "## What changes\n- **Optional name:** a \"Your name (optional)\" field under the idea. When filled in, the issue footer says *\"Sent from the map's idea box by **Sam from Delridge**\"*, and the thank-you says *\"Thank you, Sam from Delridge!\"*. Left blank, the idea stays anonymous as before.\n- **Keyboard:** the box is now a real `<form>`.\n  - Tab runs idea → name → captcha → SEND IDEA → CANCEL → ✕ and wraps round, so focus never lands on the map behind. Shift+Tab goes the other way. SEND is skipped while it's disabled.\n  - Enter in the name field sends. Enter in the idea still adds a new line, and Cmd/Ctrl+Enter sends from anywhere.\n  - The ✕ moved to the end of the tab order and is still drawn in the top corner.\n- **Worker:** takes `name` (one line, ≤ 60 characters, `@mentions` and Markdown defused). Over 60 is refused with a message.\n\n## Copy (in `src/content/ideas.ts`, Mike's to rewrite)\n- \"Ideas are posted publicly, with no name attached.\" → \"Ideas are posted publicly on GitHub.\" (a name can now be attached)\n- New: \"Your name (optional)\" · \"Shown with your idea. Leave it blank to stay anonymous.\" · placeholder \"e.g. Sam from Delridge\"\n\n## Tests\n- Unit: 2 new tests for name handling (250 total, all green). `cd wish && npm test` checks the name is credited.\n- Chrome against a local Worker and fake GitHub: Tab order recorded step by step, including the wrap both ways; Enter in the name field sent the idea; the thank-you and the issue footer showed the name.\n- `npm run build` and `npm run smoke` are green.\n\n## After merge\nDeploy `wish/` (the old Worker ignores `name`, so ideas just arrive without it until then).\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "18fcd7cc30a36f1a6d858e79362461118ebb500c",
+      "message": "Idea box: optional name, credited in the issue; Tab order wraps inside the box\n\nThe box is now a real form: idea → name → captcha → SEND → CANCEL → ✕, wrapping round so\nfocus never lands on the map behind; Enter in the name field sends. The Worker takes an\noptional one-line name (≤ 60, mentions and Markdown defused) and credits it in the issue\nfooter; \"Thank you, <name>!\" when given. Copy now says ideas are public on GitHub, name\noptional.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-04T22:45:33Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 2,
+      "deletions": 1
+    },
+    {
+      "path": "src/content/ideas.ts",
+      "status": "M",
+      "additions": 8,
+      "deletions": 1
+    },
+    {
+      "path": "src/styles.css",
+      "status": "M",
+      "additions": 13,
+      "deletions": 3
+    },
+    {
+      "path": "src/ui/IdeaBox.tsx",
+      "status": "M",
+      "additions": 65,
+      "deletions": 15
+    },
+    {
+      "path": "wish/src/index.ts",
+      "status": "M",
+      "additions": 2,
+      "deletions": 2
+    },
+    {
+      "path": "wish/src/issue.test.ts",
+      "status": "M",
+      "additions": 17,
+      "deletions": 2
+    },
+    {
+      "path": "wish/src/issue.ts",
+      "status": "M",
+      "additions": 12,
+      "deletions": 6
+    },
+    {
+      "path": "wish/test.mjs",
+      "status": "M",
+      "additions": 2,
+      "deletions": 1
+    }
+  ],
+  "additions": 121,
+  "deletions": 31,
+  "areas": [
+    "ui",
+    "words & content",
+    "idea box",
+    "docs"
+  ],
+  "branch": "idea-name",
+  "opened_at": "2026-11-04T22:45:36Z",
+  "merged_by": "vlandham",
+  "summary": null,
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "requested_reviewers": [],
+  "reviews": [],
+  "labels": [],
+  "discussion": [],
+  "preview_url": null,
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 9,
+    "scenes": 10,
+    "content_files": 18,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 18294,
+    "commits": 47
+  },
+  "shots": [
+    {
+      "query": "at=47.5612,-122.3868",
+      "lat": 47.5612,
+      "lon": -122.3868,
+      "label": "the Junction, where everyone starts",
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ],
+        "after": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ]
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "note": "stills lossless; moving loop half size"
+  },
+  "first_recorded_at": "2026-11-15T16:33:25.935Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:33:25.935Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736055333"
+}

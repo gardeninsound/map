@@ -1,0 +1,80 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "3c68708bd1bb061d0207829b91321831f93f0d79",
+  "parent": "92be624bc1a017022bdeb88882c50d905deac735",
+  "pr": 10,
+  "title": "Git workflow: who OKs shared PRs (Vince for technical, Mike for art and words)",
+  "url": "https://github.com/gardeninsound/map/pull/10",
+  "merged_at": "2026-11-04T22:45:45Z",
+  "body": "Clarifies rule 6 in CLAUDE.md. Shared PRs still wait for an OK, but who gives it depends on the change:\n\n- **Technical** (Workers, CI, GitHub/Cloudflare setup, dependencies, city engine, map pipeline, CLAUDE.md dev notes) → **Vince** as tech lead. If he opened or asked for it, that's the OK.\n- **Art and words** (what scenes show, Mike's lines and copy in `src/content/`, which spots and art appear) → **Mike**.\n\nAlso adds `wish/` (the idea-box Worker) to the shared list next to `relay/`.\n\nAsked for by Vince.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "3a401b4dc997e9194a0f9a4f5c7cf4afe66be6f2",
+      "message": "Git workflow: technical shared PRs need Vince's OK (tech lead), art and words need Mike's\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-04T22:42:24Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 7,
+      "deletions": 2
+    }
+  ],
+  "additions": 7,
+  "deletions": 2,
+  "areas": [
+    "docs"
+  ],
+  "branch": "tech-lead-rule",
+  "opened_at": "2026-11-04T22:42:27Z",
+  "merged_by": "vlandham",
+  "summary": "Clarifies rule 6 in CLAUDE.md. Shared PRs still wait for an OK, but who gives it depends on the change:\n\n- **Technical** (Workers, CI, GitHub/Cloudflare setup, dependencies, city engine, map pipeline, CLAUDE.md dev notes) → **Vince** as tech lead. If he opened or asked for it, that's the OK.\n- **Art and words** (what scenes show, Mike's lines and copy in `src/content/`, which spots and art appear) → **Mike**.\n\nAlso adds `wish/` (the idea-box Worker) to the shared list next to `relay/`.\n\nAsked for by Vince.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "requested_reviewers": [],
+  "reviews": [],
+  "labels": [],
+  "discussion": [],
+  "preview_url": null,
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 9,
+    "scenes": 10,
+    "content_files": 18,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 18237,
+    "commits": 46
+  },
+  "shots": [],
+  "first_recorded_at": "2026-11-15T16:33:25.935Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:33:25.935Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736055333"
+}

@@ -1,0 +1,331 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "238fcad452ef5d8c3fb6b9b0f87f22f28c4548d4",
+  "parent": "82bbc209aeeb33e5b946d67113394a46e49b895a",
+  "pr": null,
+  "title": "Duck Arcade: Duck on the Moon, Rabbit Zapper, new posters; Luna Park; game sound on",
+  "url": "https://github.com/gardeninsound/map/commit/238fcad452ef5d8c3fb6b9b0f87f22f28c4548d4",
+  "merged_at": "2026-11-04T13:22:16-08:00",
+  "body": "- Duck on the Moon: Pip's listening game on a paper-cut moon (three.js), sounds as MP3\n- Rabbit Zapper cabinet, four more pop-art posters on the arcade walls\n- Luna Park (1907-1913) on its pilings off Duwamish Head, with the Figure Eight ride\n- Mini games start with their sound on even when the map is muted (not saved)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "authors": [
+    {
+      "login": null,
+      "name": "mike"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "238fcad452ef5d8c3fb6b9b0f87f22f28c4548d4",
+      "message": "Duck Arcade: Duck on the Moon, Rabbit Zapper, new posters; Luna Park; game sound on\n\n- Duck on the Moon: Pip's listening game on a paper-cut moon (three.js), sounds as MP3\n- Rabbit Zapper cabinet, four more pop-art posters on the arcade walls\n- Luna Park (1907-1913) on its pilings off Duwamish Head, with the Figure Eight ride\n- Mini games start with their sound on even when the map is muted (not saved)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "mike",
+      "at": "2026-11-04T13:22:16-08:00"
+    }
+  ],
+  "files": [
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 11,
+      "deletions": 0
+    },
+    {
+      "path": "public/arcade/posters/poster-blue.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/arcade/posters/poster-bolt.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/arcade/posters/poster-green.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/arcade/posters/poster-guitar.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/arcade/posters/poster-pink.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/arcade/posters/poster-shag.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/arcade/posters/poster-stock.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/arcade/posters/poster-yellow.webp",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/duck-on-the-moon/rain.mp3",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/duck-on-the-moon/storm.mp3",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/duck-on-the-moon/wolves.mp3",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/rabbit-zapper.js",
+      "status": "A",
+      "additions": 960,
+      "deletions": 0
+    },
+    {
+      "path": "public/rabbit-zapper/background.jpg",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/rabbit-zapper/cabinet-front.png",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/rabbit-zapper/monster.png",
+      "status": "A",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "src/App.tsx",
+      "status": "M",
+      "additions": 47,
+      "deletions": 3
+    },
+    {
+      "path": "src/city/ui/sfx.ts",
+      "status": "M",
+      "additions": 10,
+      "deletions": 2
+    },
+    {
+      "path": "src/content/duckArcade.ts",
+      "status": "M",
+      "additions": 23,
+      "deletions": 0
+    },
+    {
+      "path": "src/content/duckOnTheMoon.ts",
+      "status": "A",
+      "additions": 66,
+      "deletions": 0
+    },
+    {
+      "path": "src/content/lunaPark.ts",
+      "status": "A",
+      "additions": 200,
+      "deletions": 0
+    },
+    {
+      "path": "src/content/recent.ts",
+      "status": "M",
+      "additions": 4,
+      "deletions": 0
+    },
+    {
+      "path": "src/experiences/arcade/ArcadeScene.ts",
+      "status": "M",
+      "additions": 53,
+      "deletions": 3
+    },
+    {
+      "path": "src/experiences/arcade/DuckArcade.tsx",
+      "status": "M",
+      "additions": 6,
+      "deletions": 0
+    },
+    {
+      "path": "src/experiences/arcade/DuckMoonScene.ts",
+      "status": "A",
+      "additions": 363,
+      "deletions": 0
+    },
+    {
+      "path": "src/experiences/arcade/DuckOnTheMoon.tsx",
+      "status": "A",
+      "additions": 196,
+      "deletions": 0
+    },
+    {
+      "path": "src/experiences/arcade/RabbitZapper.tsx",
+      "status": "A",
+      "additions": 133,
+      "deletions": 0
+    },
+    {
+      "path": "src/experiences/arcade/games.ts",
+      "status": "M",
+      "additions": 2,
+      "deletions": 0
+    },
+    {
+      "path": "src/experiences/luna/FigureEight.tsx",
+      "status": "A",
+      "additions": 85,
+      "deletions": 0
+    },
+    {
+      "path": "src/experiences/luna/FigureEightScene.ts",
+      "status": "A",
+      "additions": 549,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/lunaPark.test.ts",
+      "status": "A",
+      "additions": 75,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/plugins/lunaPark.ts",
+      "status": "A",
+      "additions": 781,
+      "deletions": 0
+    },
+    {
+      "path": "src/styles.css",
+      "status": "M",
+      "additions": 43,
+      "deletions": 0
+    }
+  ],
+  "additions": 3607,
+  "deletions": 8,
+  "areas": [
+    "city",
+    "characters & map life",
+    "scenes & games",
+    "words & content",
+    "art & sound",
+    "docs"
+  ],
+  "summary": "- Duck on the Moon: Pip's listening game on a paper-cut moon (three.js), sounds as MP3\n- Rabbit Zapper cabinet, four more pop-art posters on the arcade walls\n- Luna Park (1907-1913) on its pilings off Duwamish Head, with the Figure Eight ride\n- Mini games start with their sound on even when the map is muted (not saved)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 8,
+    "scenes": 10,
+    "content_files": 16,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 16890,
+    "commits": 25
+  },
+  "shots": [
+    {
+      "query": "at=arcade",
+      "lat": null,
+      "lon": null,
+      "label": "the Duck Arcade",
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ],
+        "after": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ]
+      }
+    },
+    {
+      "query": "at=47.5953,-122.3876",
+      "lat": 47.5953,
+      "lon": -122.3876,
+      "label": null,
+      "guessed": true,
+      "before": "before-2.webp",
+      "after": "after-2.webp",
+      "moving": "moving-2.webp",
+      "problems": {
+        "before": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ],
+        "after": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ]
+      }
+    },
+    {
+      "query": "at=47.59557,-122.38624",
+      "lat": 47.59557,
+      "lon": -122.38624,
+      "label": null,
+      "guessed": true,
+      "before": "before-3.webp",
+      "after": "after-3.webp",
+      "moving": "moving-3.webp",
+      "problems": {
+        "before": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ],
+        "after": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ]
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "note": "stills lossless; moving loop half size"
+  },
+  "first_recorded_at": "2026-11-15T16:33:25.935Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:33:25.935Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736055333"
+}

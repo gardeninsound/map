@@ -1,0 +1,514 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "82bbc209aeeb33e5b946d67113394a46e49b895a",
+  "parent": "42c7de251c8581f2aa99ae4e40c090e0d504a014",
+  "pr": null,
+  "title": "Merge chicken: Schmitz Park snuggle, Duck Arcade, Garden in Sound landmarks",
+  "url": "https://github.com/gardeninsound/map/commit/82bbc209aeeb33e5b946d67113394a46e49b895a",
+  "merged_at": "2026-10-26T08:10:44-07:00",
+  "body": "Landmarks conflict: keep chicken's Safeway and West Seattle Library drawings,\nadd main's Shadowland sign; landmarksData + worldData regenerated (npm run map).\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "authors": [
+    {
+      "login": null,
+      "name": "mike"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "82bbc209aeeb33e5b946d67113394a46e49b895a",
+      "message": "Merge chicken: Schmitz Park snuggle, Duck Arcade, Garden in Sound landmarks\n\nLandmarks conflict: keep chicken's Safeway and West Seattle Library drawings,\nadd main's Shadowland sign; landmarksData + worldData regenerated (npm run map).\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "mike",
+      "at": "2026-10-26T08:10:44-07:00"
+    }
+  ],
+  "files": [
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 8,
+      "deletions": 2
+    },
+    {
+      "path": "content/landmarks.csv",
+      "status": "M",
+      "additions": 25,
+      "deletions": 2
+    },
+    {
+      "path": "content/places.csv",
+      "status": "M",
+      "additions": 7,
+      "deletions": 5
+    },
+    {
+      "path": "data/art-meta.json",
+      "status": "M",
+      "additions": 9,
+      "deletions": 0
+    },
+    {
+      "path": "index.html",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "public/art/snuggle/snuggle-t.avif",
+      "status": "M",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/snuggle/snuggle.avif",
+      "status": "M",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/art/snuggle/snuggle.mp4",
+      "status": "M",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/duck-scroller-audio.js",
+      "status": "M",
+      "additions": 2,
+      "deletions": 0
+    },
+    {
+      "path": "public/duck-scroller.js",
+      "status": "M",
+      "additions": 378,
+      "deletions": 0
+    },
+    {
+      "path": "public/duck-scroller/background.jpg",
+      "status": "M",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/duck-scroller/credits.webp",
+      "status": "M",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/duck-scroller/duck_walk.webp",
+      "status": "M",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/duck-scroller/figures_idle.png",
+      "status": "M",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/duck-scroller/person_sheep.webp",
+      "status": "M",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/duck-scroller/pineapple.webp",
+      "status": "M",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/seal/seal-swim-small.gif",
+      "status": "M",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "public/seal/seal-swim-spritesheet_2.json",
+      "status": "M",
+      "additions": 8,
+      "deletions": 0
+    },
+    {
+      "path": "public/seal/seal-swim-spritesheet_2.png",
+      "status": "M",
+      "additions": null,
+      "deletions": null
+    },
+    {
+      "path": "scripts/city/build-map.mjs",
+      "status": "M",
+      "additions": 14,
+      "deletions": 4
+    },
+    {
+      "path": "scripts/city/fetch-detail.mjs",
+      "status": "M",
+      "additions": 3,
+      "deletions": 1
+    },
+    {
+      "path": "scripts/city/map-config.mjs",
+      "status": "M",
+      "additions": 5,
+      "deletions": 1
+    },
+    {
+      "path": "scripts/places.mjs",
+      "status": "M",
+      "additions": 1,
+      "deletions": 0
+    },
+    {
+      "path": "scripts/publish-art.mjs",
+      "status": "M",
+      "additions": 8,
+      "deletions": 3
+    },
+    {
+      "path": "src/App.tsx",
+      "status": "M",
+      "additions": 100,
+      "deletions": 5
+    },
+    {
+      "path": "src/city/engine/CityGame.ts",
+      "status": "M",
+      "additions": 3,
+      "deletions": 15
+    },
+    {
+      "path": "src/city/index.ts",
+      "status": "M",
+      "additions": 2,
+      "deletions": 2
+    },
+    {
+      "path": "src/city/render/facades.ts",
+      "status": "M",
+      "additions": 95,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/render/landmarks.ts",
+      "status": "M",
+      "additions": 952,
+      "deletions": 93
+    },
+    {
+      "path": "src/city/render/tileArt.ts",
+      "status": "M",
+      "additions": 3,
+      "deletions": 1
+    },
+    {
+      "path": "src/city/ui/Hud.tsx",
+      "status": "M",
+      "additions": 90,
+      "deletions": 4
+    },
+    {
+      "path": "src/city/ui/ui.css",
+      "status": "M",
+      "additions": 10,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/world/landmarksData.json",
+      "status": "M",
+      "additions": 233,
+      "deletions": 11
+    },
+    {
+      "path": "src/city/world/storefronts.ts",
+      "status": "M",
+      "additions": 4,
+      "deletions": 4
+    },
+    {
+      "path": "src/city/world/world.ts",
+      "status": "M",
+      "additions": 27,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/world/worldData.json",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "src/content/artManifest.ts",
+      "status": "M",
+      "additions": 10,
+      "deletions": 0
+    },
+    {
+      "path": "src/content/content.test.ts",
+      "status": "M",
+      "additions": 28,
+      "deletions": 1
+    },
+    {
+      "path": "src/content/duckArcade.ts",
+      "status": "M",
+      "additions": 83,
+      "deletions": 0
+    },
+    {
+      "path": "src/content/locations.ts",
+      "status": "M",
+      "additions": 12,
+      "deletions": 2
+    },
+    {
+      "path": "src/content/placesData.json",
+      "status": "M",
+      "additions": 42,
+      "deletions": 13
+    },
+    {
+      "path": "src/content/recent.ts",
+      "status": "M",
+      "additions": 31,
+      "deletions": 0
+    },
+    {
+      "path": "src/content/videos.ts",
+      "status": "M",
+      "additions": 16,
+      "deletions": 0
+    },
+    {
+      "path": "src/experiences/VideoScene.tsx",
+      "status": "M",
+      "additions": 103,
+      "deletions": 0
+    },
+    {
+      "path": "src/experiences/arcade/ArcadeScene.ts",
+      "status": "M",
+      "additions": 484,
+      "deletions": 0
+    },
+    {
+      "path": "src/experiences/arcade/DuckArcade.tsx",
+      "status": "M",
+      "additions": 197,
+      "deletions": 0
+    },
+    {
+      "path": "src/experiences/arcade/DuckScroller.tsx",
+      "status": "M",
+      "additions": 137,
+      "deletions": 0
+    },
+    {
+      "path": "src/experiences/arcade/games.ts",
+      "status": "M",
+      "additions": 17,
+      "deletions": 0
+    },
+    {
+      "path": "src/experiences/registry.ts",
+      "status": "M",
+      "additions": 2,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/fern.test.ts",
+      "status": "M",
+      "additions": 28,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/fern.ts",
+      "status": "M",
+      "additions": 72,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/lemonSpin.test.ts",
+      "status": "M",
+      "additions": 36,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/lemonSpin.ts",
+      "status": "M",
+      "additions": 109,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/plugins/arcadeDoor.ts",
+      "status": "M",
+      "additions": 51,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/plugins/artSpots.ts",
+      "status": "M",
+      "additions": 28,
+      "deletions": 26
+    },
+    {
+      "path": "src/game/plugins/bigCup.ts",
+      "status": "M",
+      "additions": 134,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/plugins/seal.ts",
+      "status": "M",
+      "additions": 100,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/sprites.ts",
+      "status": "M",
+      "additions": 16,
+      "deletions": 4
+    },
+    {
+      "path": "src/styles.css",
+      "status": "M",
+      "additions": 80,
+      "deletions": 1
+    },
+    {
+      "path": "src/ui/FlyingRabbits.tsx",
+      "status": "M",
+      "additions": 102,
+      "deletions": 0
+    },
+    {
+      "path": "src/ui/SpotsMenu.tsx",
+      "status": "M",
+      "additions": 3,
+      "deletions": 1
+    },
+    {
+      "path": "src/ui/TitleFerns.tsx",
+      "status": "M",
+      "additions": 117,
+      "deletions": 0
+    },
+    {
+      "path": "src/ui/TitleScreen.tsx",
+      "status": "M",
+      "additions": 11,
+      "deletions": 4
+    }
+  ],
+  "additions": 4038,
+  "deletions": 207,
+  "areas": [
+    "city",
+    "map pipeline",
+    "characters & map life",
+    "scenes & games",
+    "ui",
+    "words & content",
+    "art & sound",
+    "docs",
+    "tools"
+  ],
+  "summary": "Landmarks conflict: keep chicken's Safeway and West Seattle Library drawings,\nadd main's Shadowland sign; landmarksData + worldData regenerated (npm run map).\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": null,
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "present": false
+  },
+  "ideas": [],
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 7,
+    "scenes": 7,
+    "content_files": 14,
+    "arcade_cabinets_ready": 2,
+    "source_lines": 14305,
+    "commits": 24
+  },
+  "shots": [
+    {
+      "query": "at=arcade",
+      "lat": null,
+      "lon": null,
+      "label": "the Duck Arcade",
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ],
+        "after": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ]
+      }
+    },
+    {
+      "query": "at=47.558082,-122.401155",
+      "lat": 47.558082,
+      "lon": -122.401155,
+      "label": null,
+      "guessed": true,
+      "before": "before-2.webp",
+      "after": "after-2.webp",
+      "moving": "moving-2.webp",
+      "problems": {
+        "before": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ],
+        "after": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ]
+      }
+    },
+    {
+      "query": "at=47.580011,-122.378473",
+      "lat": 47.580011,
+      "lon": -122.378473,
+      "label": null,
+      "guessed": true,
+      "before": "before-3.webp",
+      "after": "after-3.webp",
+      "moving": "moving-3.webp",
+      "problems": {
+        "before": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ],
+        "after": [
+          "this build has no ?at= hook: the shot is its title screen"
+        ]
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "note": "stills lossless; moving loop half size"
+  },
+  "first_recorded_at": "2026-11-15T16:33:25.935Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T16:33:25.935Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736055333"
+}
