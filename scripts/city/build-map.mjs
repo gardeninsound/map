@@ -12,10 +12,11 @@
  * Usage: node scripts/city/build-map.mjs [--procedural]   (or `npm run map`, which geocodes the landmarks first)
  *   --procedural  ignore house footprints and let the renderer scatter houses instead (the old look)
  */
-import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, writeFileSync, mkdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 import { ALLEYS, DETAILED, HOUSES, MAP, ROADS } from './map-config.mjs';
+import { applySite, checkSite } from './sites.mjs';
 
 const ROOT = new URL('../..', import.meta.url);
 const PROCEDURAL = process.argv.includes('--procedural');
@@ -430,6 +431,15 @@ for (const lm of existsSync(LANDMARKS) ? JSON.parse(readFileSync(LANDMARKS)) : [
   landmarks.push({ id: lm.id, sprite: lm.sprite, name: lm.name, x: best.x, y: best.y, w: lm.w, h: lm.h, ...(lm.street ? { street: lm.street } : {}) });
 }
 
+// 3a. Sites (scripts/city/sites/*.json): places OSM doesn't have, drawn in from data every build
+// (sites.mjs). Before the houses, so a house never lands on one.
+const sitesDir = new URL('scripts/city/sites/', ROOT);
+const sites = readdirSync(sitesDir).filter((f) => f.endsWith('.json')).sort().map((f) => JSON.parse(readFileSync(new URL(f, sitesDir))));
+const siteErrors = sites.flatMap((s) => checkSite(s, TILE_M));
+if (siteErrors.length) throw new Error(siteErrors.join('\n'));
+const siteOut = sites.map((s) => applySite(s, { tiles, road, w: GW, h: GH, T, toX, toY, nameIdx }));
+sites.forEach((s, i) => console.log(`  site ${s.id}: ${siteOut[i].cells} tiles`));
+
 // 3b. Houses at their real footprints. Streets are drawn wider than life, so a front-row
 // house that would poke into the sidewalk is nudged straight back from the street
 // (up to HOUSES.maxPush tiles), and dropped if that bumps it into a neighbour.
@@ -607,7 +617,8 @@ if (dropped > 50) console.warn(`  unreachable road tiles dropped: ${[...droppedN
 // Road centrelines for the renderer, which paints asphalt / curb / sidewalk per pixel.
 const roadLines = ways
   .filter((r) => r.cells.some((i) => tiles[i] === T.ROAD))
-  .map((r) => ({ w: +r.wT.toFixed(2), ...(r.path ? { k: 1 } : {}), p: r.line.map(([x, y]) => [+x.toFixed(2), +y.toFixed(2)]) }));
+  .map((r) => ({ w: +r.wT.toFixed(2), ...(r.path ? { k: 1 } : {}), p: r.line.map(([x, y]) => [+x.toFixed(2), +y.toFixed(2)]) }))
+  .concat(siteOut.flatMap((s) => s.roadLines));
 
 // Pitches, the track, playgrounds, pools and bleachers inside detailed parks, as rings in
 // tile coords (holes after the outer ring); src/city/render/detailArt.ts paints them.
@@ -625,7 +636,8 @@ const parkFeatures = detailEls
   })
   // fields first (biggest first, so diamonds and courts land on top), the track's ring around
   // them, then pools, playgrounds and bleachers
-  .sort((a, b) => ['pitch', 'track', 'swimming_pool', 'playground', 'bleachers'].indexOf(a.k) - ['pitch', 'track', 'swimming_pool', 'playground', 'bleachers'].indexOf(b.k) || shoelace(b.rings[0]) - shoelace(a.rings[0]));
+  .sort((a, b) => ['pitch', 'track', 'swimming_pool', 'playground', 'bleachers'].indexOf(a.k) - ['pitch', 'track', 'swimming_pool', 'playground', 'bleachers'].indexOf(b.k) || shoelace(b.rings[0]) - shoelace(a.rings[0]))
+  .concat(siteOut.flatMap((s) => s.features)); // each site's in its own order, after OSM's
 
 // 5. Labels: named parks & schools at their area-weighted centre; `size` = area in tiles.
 // Pieces sharing a name (Lincoln Park is several polygons) merge into one label.
@@ -639,7 +651,9 @@ for (const el of tagged((t) => t.name && (['park', 'nature_reserve', 'golf_cours
   acc.n += n; acc.sx += sx; acc.sy += sy;
   byName.set(key, acc);
 }
-const labels = [...byName.values()].map((a) => ({ name: a.name, kind: a.kind, x: +(a.sx / a.n).toFixed(1), y: +(a.sy / a.n).toFixed(1), size: a.n }));
+const labels = [...byName.values()]
+  .map((a) => ({ name: a.name, kind: a.kind, x: +(a.sx / a.n).toFixed(1), y: +(a.sy / a.n).toFixed(1), size: a.n }))
+  .concat(siteOut.map((s) => s.label).filter(Boolean));
 
 // 6. Named storefronts, for "you're outside …" in the HUD.
 const shops = shopNodes

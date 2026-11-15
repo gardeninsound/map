@@ -33,6 +33,10 @@ see it through a sixth field on the visitors wire). A plugin can put the player 
 - detailed places (Hiawatha Playfield, West Seattle High School): lawn, walkable footpaths
   and parking lots (Tile.Parking), pitches/track/courts/pool, buildings from exact
   outlines (`render/detailArt.ts`)
-- West Seattle Stadium (35th Ave SW): OSM only has an unnamed, wooded park there, so it's hand-patched into
-  `worldData.json` (features/roadLine tagged `stadium`): lawn grounds, the walkable track and football field,
-  grandstands along 35th and a gate path between them in from the sidewalk
+- **sites** — places OSM doesn't have, drawn in by the map build from data (`scripts/city/sites/*.json`, applied by
+  `scripts/city/sites.mjs` after the landmarks and before the houses): an ASCII grid of cells anchored by lat/lon
+  (`l` lawn, `w` walkable + named, `W` walkable, `n` named), plus a label, paths and detail features in lat/lon. Never
+  hand-edit `worldData.json` (the next `npm run map` erases it); `scripts/city/sites.test.mjs` fails if the committed
+  map is missing a site. So far: **West Seattle Stadium** (35th Ave SW; OSM only has an unnamed wooded park): lawn
+  grounds, the walkable track and football field, grandstands along 35th and a gate path in from the sidewalk
+  (features/road line tagged `stadium`)
