@@ -11,11 +11,16 @@ import type { Target } from '../city';
 
 export type Choice = { label: string; next: Action };
 
+/** what a mini game hands back when you leave it */
+export type GameResult = { score: number; best: number };
+
 export type Action =
   /** a dialog: lines, optionally choices (each leads to another action), and what follows the last line */
   | { kind: 'talk'; speaker?: string; portrait?: string; lines: string[]; choices?: Choice[]; then?: Action }
   /** one of Luna Park's rides */
   | { kind: 'ride'; ride: 'figure8' | 'whirl' }
+  /** a character's mini game (App's minigame overlay); `then` gets the score, e.g. for a closing line */
+  | { kind: 'minigame'; game: 'cone-catch'; then?: (result: GameResult) => Action }
   /** back to the map */
   | { kind: 'close' }
   /** something to do that isn't an overlay */

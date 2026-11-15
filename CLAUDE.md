@@ -121,7 +121,7 @@ root file only for new commands, workflow, conventions or a new area.
   HUD. Import via `src/city/index.ts`. → `src/city/CLAUDE.md`
 - `src/game/` — the art layer on the map: `plugins/` (`CityPlugin`s: art spots, busker, crow,
   chicken, Ham, pegasus, dinos, Luna Park, other rabbits…) + their pure, tested rules + `sprites.ts`.
-  App.tsx wires the plugins into `CityGame` and handles `onInteract`. → `src/game/CLAUDE.md`
+  App.tsx wires the plugins into `CityGame`; what {A} does is each plugin's `act()` (convention 7). → `src/game/CLAUDE.md`
 - `src/experiences/` — one scene per spot, lazy-loaded via `registry.ts`; the Duck Arcade,
   Cone Catch, the Luna ride. → `src/experiences/CLAUDE.md`
 - `src/ui/` — React UI over the map: `MikeDialog`, title, spots menu, scene boundary, sounds,
@@ -149,6 +149,10 @@ root file only for new commands, workflow, conventions or a new area.
 5. Mike's lines are drafts adapted from the manual — his to rewrite.
 6. Never write "press A" in copy: KeyA is WASD-left. Use `{A}` / `{B}` tokens (DialogBox swaps in
    SPACE/ESC on keyboards, A/B on touch) or `buttonLabel()` in components.
+7. **What {A} does on a character or thing goes in its own plugin**: the plugin is an `Actor` and answers
+   `act(target)` with an `Action` (a dialog with choices, a ride…; `src/game/actions.ts`), tested with
+   `pick()`. Never add a branch to App.tsx's `onInteract`; `src/game/onInteract.test.ts` fails if you do.
+   The crow, chicken and Ham are still in App only until they're moved: don't copy them.
 
 Gotcha: fontsource packages with an `exports` map append `.css` themselves — import
 `@fontsource/big-shoulders-stencil-display/800`, not `…/800.css` (declared in `src/fonts.d.ts`).

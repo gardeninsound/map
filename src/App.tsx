@@ -207,6 +207,7 @@ export default function App() {
           ...(a.then ? { then: () => runAction(a.then!) } : {}),
         });
       } else if (a.kind === 'ride') setOverlay(a.ride === 'whirl' ? { kind: 'ride', ride: 'whirl' } : { kind: 'ride' });
+      else if (a.kind === 'minigame') setOverlay({ kind: 'minigame', then: (r) => (a.then ? runAction(a.then(r)) : setOverlay({ kind: 'none' })) });
       else if (a.kind === 'close') setOverlay({ kind: 'none' });
       else a.run();
     };
