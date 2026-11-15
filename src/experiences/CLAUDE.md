@@ -17,6 +17,8 @@ One scene per spot, lazy-loaded via `registry.ts`, wrapped in
   `src/game/CLAUDE.md`).
 - `luna/FigureEight.tsx` — the ride from Luna Park's Figure Eight sign (the park itself:
   `src/game/CLAUDE.md`).
+- `luna/GiantWhirl.tsx` — riding the Giant Whirl (idea box #41): its sign offers a whirl (App's `ride` overlay, `ride: 'whirl'`);
+  a first-person circle swing at dusk (`GiantWhirlScene.ts`), spin-up / swing-out / wind-down pure + tested in `luna/whirl.ts`.
 
 ## Duck Arcade (`arcade/`)
 
