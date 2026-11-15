@@ -152,7 +152,7 @@ root file only for new commands, workflow, conventions or a new area.
 7. **What {A} does on a character or thing goes in its own plugin**: the plugin is an `Actor` and answers
    `act(target)` with an `Action` (a dialog with choices, a ride…; `src/game/actions.ts`), tested with
    `pick()`. Never add a branch to App.tsx's `onInteract`; `src/game/onInteract.test.ts` fails if you do.
-   The crow, chicken and Ham are still in App only until they're moved: don't copy them.
+   Every character already works this way: copy any of them (ponies: a dialog; chicken: questions, then a game).
 
 Gotcha: fontsource packages with an `exports` map append `.css` themselves — import
 `@fontsource/big-shoulders-stencil-display/800`, not `…/800.css` (declared in `src/fonts.d.ts`).

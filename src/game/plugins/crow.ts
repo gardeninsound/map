@@ -1,21 +1,38 @@
-import type { CityGame, CityPlugin, DrawContext, Npc, Vec } from '../../city';
-import { CROW_NAME, crowStops } from '../../content/crow';
+import type { CityGame, CityPlugin, DrawContext, Npc, Target, Vec } from '../../city';
+import { CROW_NAME, crowChoices, crowGreeting, crowReply, crowStops } from '../../content/crow';
 import { sounds } from '../../ui/sounds';
 import { altitude, flyTick, newCrow, takeOff, type CrowState } from '../crow';
 import { buildCrow } from '../sprites';
+import { talk, type Action, type Actor } from '../actions';
 
 /**
  * The snack crow: perches outside Les Schwab, asks for snacks, then flies over the
  * rooftops to its next stop (see content/crow.ts). The app runs the conversation and
  * calls `flyAway`.
  */
-export class Crow implements CityPlugin {
+export class Crow implements CityPlugin, Actor {
+  private game!: CityGame;
   npc!: Npc;
   state!: CrowState;
   private perches: Vec[] = [];
   private sprites = buildCrow();
 
+  /** {A}: snacks? Either way it says its piece, then flies off to the next perch. */
+  act(t: Target): Action | null {
+    if (t.npc !== this.npc) return null;
+    const { stop, lap, snacks } = this.state;
+    const portrait = this.game.portraitOf(this.npc);
+    return talk(CROW_NAME, crowGreeting(stop, lap, snacks), {
+      portrait,
+      choices: crowChoices.map((c) => ({
+        label: c.label,
+        next: talk(CROW_NAME, crowReply(stop, c.snack), { portrait, then: { kind: 'do', run: () => this.flyAway(c.snack) } }),
+      })),
+    });
+  }
+
   attach(game: CityGame) {
+    this.game = game;
     const { world } = game;
     this.perches = crowStops.map((s) => {
       const shop = world.shops.find((x) => s.shop.test(x.name));

@@ -1,14 +1,14 @@
 // @vitest-environment node
 /**
  * Guard: what {A} does on something belongs in its plugin, as an `act()` returning an Action
- * (src/game/actions.ts), not as a new branch in App.tsx's onInteract. The branches still
- * there are listed below and are being moved out one by one; this test fails if one is added.
+ * (src/game/actions.ts), never as a branch in App.tsx's onInteract (which only runs the plugins'
+ * actions, and lets the city's plain neighbors say their lines). Fails if a branch comes back.
  */
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 
-/** still in App's onInteract, to move into their plugins' act() (shrink this list, never grow it) */
-const STILL_IN_APP = ['arcade', 'race', 'boat', 'rabbit', 'place', 'crow', 'chicken', 'ham'];
+/** branches allowed in App's onInteract: none (all moved into their plugins' act(), #72–#74) */
+const STILL_IN_APP: string[] = [];
 
 const HOW = `
   What {A} does goes in the plugin, not in App.tsx:
@@ -17,7 +17,8 @@ const HOW = `
        talk(speaker, lines, { portrait, choices: [{ label, next: <another Action> }], then }),
        { kind: 'ride', ride }, { kind: 'minigame', game, then: (r) => … }, close, or { kind: 'do', run() { … } }
     3. test it with pick(action, 'a choice label') (see src/game/actions.test.ts)
-  Examples: src/game/plugins/ponies.ts (a simple dialog), lunaPark.ts (choices → a ride).
+  Examples: src/game/plugins/ponies.ts (a simple dialog), lunaPark.ts (choices → a ride),
+  chicken.ts (questions, then a mini game), ham.ts (a choice that does something, then a reply).
   More in src/game/CLAUDE.md, "What {A} does is data".`;
 
 function branchesInOnInteract(): string[] {
@@ -26,7 +27,7 @@ function branchesInOnInteract(): string[] {
   expect(start, 'App.tsx should still have onInteract').toBeGreaterThan(0);
   const end = app.indexOf('\n        },', start);
   const body = app.slice(start, end);
-  return [...body.matchAll(/t\.kind === '([a-z]+)'|t\.npc === ([a-zA-Z]+)\.npc/g)].map((m) => m[1] ?? m[2]);
+  return [...body.matchAll(/t\.(?:kind|key) === ['`]([\w:-]+)['`]|t\.npc === ([a-zA-Z]+)\.npc|t\.data instanceof (\w+)/g)].map((m) => m[1] ?? m[2] ?? m[3]);
 }
 
 describe("App's onInteract", () => {

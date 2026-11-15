@@ -5,7 +5,7 @@
  * and a test can walk it: `pick(action, 'Yes!')` follows a choice.
  *
  * Kept small on purpose: what the overlays can show. `do` is the escape hatch for a side effect
- * that isn't an overlay (a crow flying off after its reply).
+ * that isn't an overlay (climbing into the rowboat; petting Ham, then his reply).
  */
 import type { Target } from '../city';
 
@@ -21,10 +21,16 @@ export type Action =
   | { kind: 'ride'; ride: 'figure8' | 'whirl' }
   /** a character's mini game (App's minigame overlay); `then` gets the score, e.g. for a closing line */
   | { kind: 'minigame'; game: 'cone-catch'; then?: (result: GameResult) => Action }
+  /** inside the Duck Arcade */
+  | { kind: 'arcade' }
+  /** an art spot's scene, by the spot's id */
+  | { kind: 'scene'; spot: string }
+  /** open (or close) the SAY picker, to emote at another rabbit */
+  | { kind: 'emotes' }
   /** back to the map */
   | { kind: 'close' }
-  /** something to do that isn't an overlay */
-  | { kind: 'do'; run(): void };
+  /** something to do that isn't an overlay, then optionally another action */
+  | { kind: 'do'; run(): void; then?: Action };
 
 /** a plugin that says what {A} does on its targets (null: not mine) */
 export interface Actor {

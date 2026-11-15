@@ -1,7 +1,8 @@
 import { hash, type CityGame, type CityPlugin, type DrawContext, type Target } from '../../city';
-import type { ArtLocation } from '../../content/locations';
+import { spotInvite, type ArtLocation } from '../../content/locations';
 import { SPIN_BASE, SPIN_FRAMES } from '../lemonSpin';
 import { buildHearts, buildLemons } from '../sprites';
+import { close, talk, type Action, type Actor } from '../actions';
 
 export interface PlacedLocation extends ArtLocation {
   /** tile coords of the lemon, beside the street */
@@ -14,7 +15,7 @@ export interface PlacedLocation extends ArtLocation {
  * coming soon) with a little heart bobbing above it, beating now and then; it sparkles until
  * you've been. Honors prefers-reduced-motion (a still lemon, a still heart). Walk up and press A — the app opens the spot.
  */
-export class ArtSpots implements CityPlugin {
+export class ArtSpots implements CityPlugin, Actor {
   places: PlacedLocation[] = [];
   readonly visited = new Set<string>();
   private lemons = buildLemons();
@@ -22,6 +23,20 @@ export class ArtSpots implements CityPlugin {
   private still = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
 
   constructor(private locations: ArtLocation[]) {}
+
+  /** {A} at a lemon: Mike's greeting, and the spot's scene if it has one */
+  act(t: Target): Action | null {
+    if (t.kind !== 'place') return null;
+    const loc = t.data as PlacedLocation;
+    this.visited.add(loc.id);
+    const choices = loc.experience
+      ? [
+          { label: spotInvite.yes, next: { kind: 'scene', spot: loc.id } as const },
+          { label: spotInvite.no, next: close },
+        ]
+      : undefined;
+    return talk(undefined, loc.greeting, choices ? { choices } : {});
+  }
 
   attach(game: CityGame) {
     this.places = this.locations.map((l) => {

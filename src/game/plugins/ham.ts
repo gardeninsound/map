@@ -1,16 +1,18 @@
-import type { CityGame, CityPlugin, DrawContext, Npc, Vec } from '../../city';
+import type { CityGame, CityPlugin, DrawContext, Npc, Target, Vec } from '../../city';
 import { rng } from '../../city';
-import { HAM_NAME, hamHome, hamLines } from '../../content/ham';
+import { HAM_NAME, hamHome, hamLines, hamPets } from '../../content/ham';
 import { hamTick, newHam, type HamState } from '../ham';
 import { buildHam, type HamSprites } from '../sprites';
 import { sounds } from '../../ui/sounds';
+import { talk, type Action, type Actor } from '../actions';
 
 /**
  * Ham the cat, around the hidden house on 45th Ave SW: saunters the street and the alley
  * behind (state in game/ham.ts), sits to look at a rabbit that comes close, and says one set
  * of lines per visit (content/ham.ts) — the App's plain neighbor talk does the talking.
  */
-export class Ham implements CityPlugin {
+export class Ham implements CityPlugin, Actor {
+  private game!: CityGame;
   npc!: Npc;
   state: HamState | null = null;
   home: Vec | null = null;
@@ -19,7 +21,21 @@ export class Ham implements CityPlugin {
   private visit = 0;
   private wasTalking = false;
 
+  /** {A}: Ham's lines, then he asks for pets (idea box #30) */
+  act(t: Target): Action | null {
+    if (t.npc !== this.npc) return null;
+    const portrait = this.game.portraitOf(this.npc);
+    return talk(HAM_NAME, [...this.npc.voice.lines, hamPets.ask], {
+      portrait,
+      choices: [
+        { label: hamPets.yes, next: { kind: 'do', run: () => this.pet(), then: talk(HAM_NAME, hamPets.after, { portrait }) } },
+        { label: hamPets.no, next: talk(HAM_NAME, hamPets.bye, { portrait }) },
+      ],
+    });
+  }
+
   attach(game: CityGame) {
+    this.game = game;
     const p = game.world.project(hamHome.lat, hamHome.lon);
     this.home = game.world.nearestWalkable(p.x, p.y);
     this.state = newHam(this.home);

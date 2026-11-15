@@ -1,17 +1,41 @@
-import type { CityGame, CityPlugin, DrawContext, Npc } from '../../city';
-import { CHICKEN_NAME, chickenHome } from '../../content/chicken';
+import type { CityGame, CityPlugin, DrawContext, Npc, Target } from '../../city';
+import { CHICKEN_NAME, chickenAfter, chickenHome, chickenInvite, chickenQuestions } from '../../content/chicken';
 import { buildChicken } from '../sprites';
+import { sounds } from '../../ui/sounds';
+import { talk, type Action, type Actor, type GameResult } from '../actions';
 
 /**
  * The chicken: stands on California outside Greentree Animal Hospital, pecks at the ground
  * and looks about. The app runs her two questions and the mini-game invitation
  * (content/chicken.ts) and opens Cone Catch.
  */
-export class Chicken implements CityPlugin {
+export class Chicken implements CityPlugin, Actor {
+  private game!: CityGame;
   npc!: Npc;
   private sprite = buildChicken();
 
+  /** {A}: two questions (two answers each, with her reply), then her mini game */
+  act(t: Target): Action | null {
+    if (t.npc !== this.npc) return null;
+    sounds.cluck();
+    const portrait = this.game.portraitOf(this.npc);
+    const say = (lines: string[], more = {}) => talk(CHICKEN_NAME, lines, { portrait, ...more });
+    const invite = say(chickenInvite.lines, {
+      choices: [
+        { label: chickenInvite.yes, next: { kind: 'minigame', game: 'cone-catch', then: (r: GameResult) => say(chickenAfter(r.score, r.best)) } },
+        { label: chickenInvite.no, next: say(chickenInvite.bye) },
+      ],
+    });
+    const ask = (i: number): Action => {
+      const q = chickenQuestions[i];
+      if (!q) return invite;
+      return say(q.lines, { choices: q.answers.map((a) => ({ label: a.label, next: say(a.reply, { then: ask(i + 1) }) })) });
+    };
+    return ask(0);
+  }
+
   attach(game: CityGame) {
+    this.game = game;
     const { world } = game;
     const shop = world.shops.find((s) => chickenHome.shop.test(s.name));
     const p = shop ?? world.project(chickenHome.lat, chickenHome.lon);

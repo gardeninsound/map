@@ -1,6 +1,7 @@
 import { TS, type CityGame, type CityPlugin, type Target } from '../../city';
 import { ARCADE_NAME } from '../../content/duckArcade';
 import { storefrontSlot } from '../storefrontSlot';
+import type { Action, Actor } from '../actions';
 
 /** The block face the arcade stands in, and its tenant there (content: city/world/storefronts.ts). */
 const FACE = 'junction-e-south';
@@ -13,8 +14,13 @@ const doorY = (sliceH: number) => 30 + (sliceH - 13 - 30) / 2;
  * {A} to go inside (the app opens the arcade interior). Found from the block face's layout,
  * so it follows the arcade if the storefront list changes.
  */
-export class ArcadeDoor implements CityPlugin {
+export class ArcadeDoor implements CityPlugin, Actor {
   door: { x: number; y: number } | null = null;
+
+  /** {A} at the door: inside */
+  act(t: Target): Action | null {
+    return t.kind === 'arcade' ? { kind: 'arcade' } : null;
+  }
 
   attach(game: CityGame) {
     const slot = storefrontSlot(game.world, FACE, TENANT);
