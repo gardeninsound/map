@@ -2,7 +2,22 @@
 
 Every change that went live on [gardeninsound.website](https://gardeninsound.website), newest first, with the wish that started it, what was made, who made it, and how the spot looked before and after. Written automatically by [`.github/workflows/story.yml`](https://github.com/gardeninsound/map/blob/main/.github/workflows/story.yml) when a change merges; the raw records are in `changes/` and `wishes/`, and `story.json` indexes them all.
 
-**78** changes · **12** wishes from visitors, **11** answered · **0** still waiting
+**79** changes · **12** wishes from visitors, **11** answered · **0** still waiting
+
+---
+
+### Nov 15, 2026 · What {A} does is data: six plugins answer act(), App runs it ([#72](https://github.com/gardeninsound/map/pull/72))
+
+The refactor the review settled on, instead of a kit of shared character behaviours: the duplication was in App's {A} handler, not in the characters.
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+| before · the Figure Eight's sign, now answered by its own plugin | after |
+|---|---|
+| <img src="changes/2026-11-15-pr072-what-a-does-is-data-six-plugins-answer-a/before-1.webp" width="400"> | <img src="changes/2026-11-15-pr072-what-a-does-is-data-six-plugins-answer-a/after-1.webp" width="400"> |
+
+<img src="changes/2026-11-15-pr072-what-a-does-is-data-six-plugins-answer-a/moving-1.webp" width="400" alt="moving">
+
+<sub>vlandham with Claude Code · 11 files, +245 −67 · characters & map life, tools · [record](changes/2026-11-15-pr072-what-a-does-is-data-six-plugins-answer-a/entry.json)</sub>
 
 ---
 

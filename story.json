@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-11-15T20:30:38.435Z",
+  "generated_at": "2026-11-15T22:00:03.826Z",
   "changes": [
     {
       "pr": null,
@@ -3928,6 +3928,54 @@
         "arcade_cabinets_ready": 4,
         "source_lines": 26610,
         "commits": 95
+      }
+    },
+    {
+      "pr": 72,
+      "sha": "366405dcc2bac4137601d95940b358ae86f69d87",
+      "title": "What {A} does is data: six plugins answer act(), App runs it",
+      "url": "https://github.com/gardeninsound/map/pull/72",
+      "merged_at": "2026-11-15T21:59:01Z",
+      "dir": "changes/2026-11-15-pr072-what-a-does-is-data-six-plugins-answer-a",
+      "ideas": [],
+      "summary": "Step 1 of moving characters' conversations out of `App.tsx`, which changed in 26 of the last 70 commits because every new character added a branch to its {A} handler.\n\n- **`src/game/actions.ts`**: an `Action`, a plain value for what {A} does: a `talk` (speaker, portrait, lines, `choices` that each lead to another action, `then`), a `ride`, `close`, or `do` for a side effect. Plus the `Actor` interface: a plugin answers `act(target)` for its own targets.\n- **App** asks the plugins first and runs what comes back (`runAction`), so the six branches are gone. `onInteract` went from 109 to 72 lines.\n- **Converted, with no behaviour change**: the garden sign, the maze's fairy ring, the boxing announcer, the ponies, the mermaids, and Luna Park's signs (the ride offer and Pat's sum).\n- **Tests**: conversations are now checked as data (`pick(action, 'Ride it')` → the ride), and the smoke test goes sign → \"Ride it\" → ride in a real browser. All six were checked through `?open=` too.\n\nNext steps (separate PRs): the crow, the chicken, Ham, art spots, the race, the rowboat and the arcade door; then the plugin list moves to `src/game/plugins/index.ts`.\n\n@exit320-stack: heads-up. A new character's conversation now goes in its own plugin as an `act()` (`src/game/CLAUDE.md` has the how), not in `App.tsx`.",
+      "story": {
+        "askedVsMade": null,
+        "mike": null,
+        "note": "The refactor the review settled on, instead of a kit of shared character behaviours: the duplication was in App's {A} handler, not in the characters.\n🤖 Generated with [Claude Code](https://claude.com/claude-code)"
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 11,
+      "additions": 245,
+      "deletions": 67,
+      "areas": [
+        "characters & map life",
+        "tools"
+      ],
+      "shots": [
+        {
+          "query": "open=luna:figure8",
+          "lat": null,
+          "lon": null,
+          "label": "the Figure Eight's sign, now answered by its own plugin",
+          "before": "changes/2026-11-15-pr072-what-a-does-is-data-six-plugins-answer-a/before-1.webp",
+          "after": "changes/2026-11-15-pr072-what-a-does-is-data-six-plugins-answer-a/after-1.webp",
+          "moving": "changes/2026-11-15-pr072-what-a-does-is-data-six-plugins-answer-a/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 21,
+        "scenes": 11,
+        "content_files": 27,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 26768,
+        "commits": 96
       }
     }
   ],

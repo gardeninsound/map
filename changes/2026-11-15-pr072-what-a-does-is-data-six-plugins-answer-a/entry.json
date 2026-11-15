@@ -1,0 +1,182 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "366405dcc2bac4137601d95940b358ae86f69d87",
+  "parent": "70e90c93d191b199e7a536e903d6d8cb87f00e89",
+  "pr": 72,
+  "title": "What {A} does is data: six plugins answer act(), App runs it",
+  "url": "https://github.com/gardeninsound/map/pull/72",
+  "merged_at": "2026-11-15T21:59:01Z",
+  "body": "Step 1 of moving characters' conversations out of `App.tsx`, which changed in 26 of the last 70 commits because every new character added a branch to its {A} handler.\n\n- **`src/game/actions.ts`**: an `Action`, a plain value for what {A} does: a `talk` (speaker, portrait, lines, `choices` that each lead to another action, `then`), a `ride`, `close`, or `do` for a side effect. Plus the `Actor` interface: a plugin answers `act(target)` for its own targets.\n- **App** asks the plugins first and runs what comes back (`runAction`), so the six branches are gone. `onInteract` went from 109 to 72 lines.\n- **Converted, with no behaviour change**: the garden sign, the maze's fairy ring, the boxing announcer, the ponies, the mermaids, and Luna Park's signs (the ride offer and Pat's sum).\n- **Tests**: conversations are now checked as data (`pick(action, 'Ride it')` → the ride), and the smoke test goes sign → \"Ride it\" → ride in a real browser. All six were checked through `?open=` too.\n\nNext steps (separate PRs): the crow, the chicken, Ham, art spots, the race, the rowboat and the arcade door; then the plugin list moves to `src/game/plugins/index.ts`.\n\n@exit320-stack: heads-up. A new character's conversation now goes in its own plugin as an `act()` (`src/game/CLAUDE.md` has the how), not in `App.tsx`.\n\n## Story\nIdea:\nWhere: open:luna:figure8 — the Figure Eight's sign, now answered by its own plugin\nAsked vs made:\nMike:\nNote: The refactor the review settled on, instead of a kit of shared character behaviours: the duplication was in App's {A} handler, not in the characters.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "46c3ac536cadd65c79a0d85e4d9aff4fe249d793",
+      "message": "What {A} does is data: six plugins answer act(), App runs it\n\nsrc/game/actions.ts: an Action (talk with lines, portrait, choices that\nlead to more actions, then; ride; close; do) and the Actor interface. A\nplugin answers act(target) for its own targets; App's runAction turns it\ninto the overlay. Moved out of App's onInteract into their plugins: the\ngarden sign, the maze's fairy ring, the boxing announcer, the ponies,\nthe mermaids and Luna Park's signs (with the ride offer and Pat's sum).\nonInteract 109 → 72 lines. Conversations are now tested as data\n(pick(action, label)); the smoke test goes sign → \"Ride it\" → ride.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-15T21:56:34Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "scripts/smoke.mjs",
+      "status": "M",
+      "additions": 14,
+      "deletions": 1
+    },
+    {
+      "path": "src/App.tsx",
+      "status": "M",
+      "additions": 29,
+      "deletions": 56
+    },
+    {
+      "path": "src/game/CLAUDE.md",
+      "status": "M",
+      "additions": 7,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/actions.test.ts",
+      "status": "A",
+      "additions": 67,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/actions.ts",
+      "status": "A",
+      "additions": 46,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/plugins/chickenBoxing.ts",
+      "status": "M",
+      "additions": 15,
+      "deletions": 2
+    },
+    {
+      "path": "src/game/plugins/forestMaze.ts",
+      "status": "M",
+      "additions": 8,
+      "deletions": 1
+    },
+    {
+      "path": "src/game/plugins/garden.ts",
+      "status": "M",
+      "additions": 10,
+      "deletions": 2
+    },
+    {
+      "path": "src/game/plugins/lunaPark.ts",
+      "status": "M",
+      "additions": 27,
+      "deletions": 2
+    },
+    {
+      "path": "src/game/plugins/mermaids.ts",
+      "status": "M",
+      "additions": 11,
+      "deletions": 2
+    },
+    {
+      "path": "src/game/plugins/ponies.ts",
+      "status": "M",
+      "additions": 11,
+      "deletions": 1
+    }
+  ],
+  "additions": 245,
+  "deletions": 67,
+  "areas": [
+    "characters & map life",
+    "tools"
+  ],
+  "branch": "a-press-as-data",
+  "opened_at": "2026-11-15T21:56:49Z",
+  "merged_by": "vlandham",
+  "summary": "Step 1 of moving characters' conversations out of `App.tsx`, which changed in 26 of the last 70 commits because every new character added a branch to its {A} handler.\n\n- **`src/game/actions.ts`**: an `Action`, a plain value for what {A} does: a `talk` (speaker, portrait, lines, `choices` that each lead to another action, `then`), a `ride`, `close`, or `do` for a side effect. Plus the `Actor` interface: a plugin answers `act(target)` for its own targets.\n- **App** asks the plugins first and runs what comes back (`runAction`), so the six branches are gone. `onInteract` went from 109 to 72 lines.\n- **Converted, with no behaviour change**: the garden sign, the maze's fairy ring, the boxing announcer, the ponies, the mermaids, and Luna Park's signs (the ride offer and Pat's sum).\n- **Tests**: conversations are now checked as data (`pick(action, 'Ride it')` → the ride), and the smoke test goes sign → \"Ride it\" → ride in a real browser. All six were checked through `?open=` too.\n\nNext steps (separate PRs): the crow, the chicken, Ham, art spots, the race, the rowboat and the arcade door; then the plugin list moves to `src/game/plugins/index.ts`.\n\n@exit320-stack: heads-up. A new character's conversation now goes in its own plugin as an `act()` (`src/game/CLAUDE.md` has the how), not in `App.tsx`.",
+  "story": {
+    "ideas": [],
+    "where": [
+      {
+        "query": "open=luna:figure8",
+        "label": "the Figure Eight's sign, now answered by its own plugin"
+      }
+    ],
+    "askedVsMade": null,
+    "mike": null,
+    "note": "The refactor the review settled on, instead of a kit of shared character behaviours: the duplication was in App's {A} handler, not in the characters.\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+    "shots": true,
+    "present": true
+  },
+  "ideas": [],
+  "requested_reviewers": [
+    "exit320-stack"
+  ],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-15T21:57:17Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-72-garden-preview.gardeninsound.workers.dev\n\nUpdated for 46c3ac5. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-72]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-72-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 21,
+    "scenes": 11,
+    "content_files": 27,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 26768,
+    "commits": 96
+  },
+  "shots": [
+    {
+      "query": "open=luna:figure8",
+      "lat": null,
+      "lon": null,
+      "label": "the Figure Eight's sign, now answered by its own plugin",
+      "guessed": false,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "production",
+      "after": "production"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+  },
+  "first_recorded_at": "2026-11-15T21:59:40.978Z",
+  "earlier": [],
+  "recorded_at": "2026-11-15T21:59:40.978Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43766670056"
+}
