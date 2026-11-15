@@ -25,6 +25,7 @@ import { ArtSpots, type PlacedLocation } from './game/plugins/artSpots';
 import { Busker } from './game/plugins/busker';
 import { Crow } from './game/plugins/crow';
 import { Squirrels } from './game/plugins/squirrels';
+import { Flock } from './game/plugins/flock';
 import { Chicken } from './game/plugins/chicken';
 import { Ham } from './game/plugins/ham';
 import { HAM_NAME, hamPets } from './content/ham';
@@ -72,7 +73,7 @@ type Overlay =
   /** inside the Duck Arcade */
   | { kind: 'arcade' }
   /** riding Luna Park's Great Figure Eight */
-  | { kind: 'ride' }
+  | { kind: 'ride'; ride?: 'whirl' }
   | { kind: 'spots' }
   /** the idea box: "What would you love to add?" → a GitHub issue */
   | { kind: 'idea' };
@@ -80,6 +81,7 @@ type Overlay =
 const ConeCatch = lazy(() => import('./experiences/minigames/ConeCatch'));
 const DuckArcade = lazy(() => import('./experiences/arcade/DuckArcade'));
 const FigureEight = lazy(() => import('./experiences/luna/FigureEight'));
+const GiantWhirl = lazy(() => import('./experiences/luna/GiantWhirl'));
 
 /** Overlays that take the whole screen: the map's HUD and touch pad hide under them. */
 const FULL_SCREEN: Overlay['kind'][] = ['scene', 'minigame', 'arcade', 'ride'];
@@ -161,6 +163,7 @@ export default function App() {
     const busker = new Busker();
     const crow = new Crow();
     const squirrels = new Squirrels();
+    const flock = new Flock();
     const chicken = new Chicken();
     const pegasus = new Pegasus();
     const dinos = new Dinos();
@@ -181,7 +184,7 @@ export default function App() {
     const g = new CityGame(canvas.current!, world, {
       start: world.project(START.lat, START.lon),
       voices: neighborVoices,
-      plugins: [art, new BigCup(art), dinos, new Seal(), arcadeDoor.current, luna, busker, crow, squirrels, chicken, pegasus, ham, race, rowboat, boxing, ...(live ? [live] : [])],
+      plugins: [art, new BigCup(art), dinos, new Seal(), arcadeDoor.current, luna, busker, crow, flock, squirrels, chicken, pegasus, ham, race, rowboat, boxing, ...(live ? [live] : [])],
       events: {
         onStreet: setStreet,
         onStorefront: setStorefront,
@@ -210,9 +213,9 @@ export default function App() {
               ...talk,
               lines: sign.lines,
               choices:
-                sign.id === 'figure8'
+                sign.id === 'figure8' || sign.id === 'whirl'
                   ? [
-                      { label: lunaRideInvite.yes, onPick: () => setOverlay({ kind: 'ride' }) },
+                      { label: lunaRideInvite.yes, onPick: () => setOverlay(sign.id === 'whirl' ? { kind: 'ride', ride: 'whirl' } : { kind: 'ride' }) },
                       { label: lunaRideInvite.no, onPick: () => setOverlay({ kind: 'none' }) },
                     ]
                   : ask
@@ -291,7 +294,7 @@ export default function App() {
         lines: raceResult(r.place, r.total, r.winner, r.seconds),
       });
     g.paused = true;
-    if (import.meta.env.DEV) Object.assign(window, { __game: g, __busker: busker, __crow: crow, __squirrels: squirrels, __chicken: chicken, __pegasus: pegasus, __ham: ham, __race: race, __rowboat: rowboat, __boxing: boxing, __dinos: dinos, __art: art, __luna: luna, __visitors: live }); // test hooks
+    if (import.meta.env.DEV) Object.assign(window, { __game: g, __art: art, __dinos: dinos, __luna: luna, __busker: busker, __crow: crow, __flock: flock, __squirrels: squirrels, __chicken: chicken, __pegasus: pegasus, __ham: ham, __race: race, __rowboat: rowboat, __boxing: boxing, __visitors: live }); // test hooks
     // Review hooks: ?at=lat,lon (or ?atTile=x,y, or ?at=arcade) skips the title and drops you there;
     // ?audit scans the whole map for road-drawing glitches (scripts/city/road-audit.mjs).
     const q = new URLSearchParams(location.search);
@@ -639,7 +642,7 @@ export default function App() {
       {overlay.kind === 'ride' && (
         <SceneBoundary onError={closeOverlay}>
           <Suspense fallback={<div className="scene scene-loading">Loading…</div>}>
-            <FigureEight onExit={closeOverlay} />
+            {overlay.ride === 'whirl' ? <GiantWhirl onExit={closeOverlay} /> : <FigureEight onExit={closeOverlay} />}
           </Suspense>
         </SceneBoundary>
       )}

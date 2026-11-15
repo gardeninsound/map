@@ -84,6 +84,10 @@ plugins into `CityGame` and handles `onInteract`.
 - `src/game/plugins/squirrels.ts` — **squirrels** (idea box #30): five always near you on the ground by park trees; a person (a
   neighbor NPC, not `custom`) within `SCARE` tiles sends one up the nearest tree, where only its tail shows till nobody's within
   `CLEAR` for `CALM` s. Rabbits don't scare them. Pure + tested in `src/game/squirrels.ts`; sprites in `src/game/squirrelSprites.ts`.
+- `src/game/plugins/flock.ts` — **crows and gulls** (idea box #43, #40): 7 crows on the streets and 6 gulls on the beach sand are
+  always somewhere near you, pecking; come within `STARTLE` tiles and one flaps off away from you and lands `FLEE` tiles off
+  (a caw / a gull's cry, `sounds.gull`); left `FAR` behind, it turns up again near you out of sight. Pure + tested in
+  `src/game/flock.ts`; the gull sprite (`buildGull`) in `sprites.ts`.
 
 ## Other people, live (`plugins/visitors.ts`)
 
