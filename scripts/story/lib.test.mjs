@@ -3,6 +3,8 @@ import { describe, expect, it } from 'vitest';
 import {
   areasOf,
   baseOf,
+  devOnlyAt,
+  shotsNeedRetry,
   changeDir,
   coordsFromPatches,
   ideaRefs,
@@ -140,6 +142,24 @@ describe('areasOf / coordsFromPatches / dirs', () => {
     expect(baseOf("  // set base: '/map/' — every asset URL…\n  base: '/',\n")).toBe('/');
     expect(baseOf("export default { base: '/bearisland-map/' }".replace('{ ', '{\n  '))).toBe('/bearisland-map/');
     expect(baseOf('')).toBe('/');
+  });
+
+  it('spots a ?at= hook that only worked in development', () => {
+    expect(devOnlyAt("const at = import.meta.env.DEV && new URLSearchParams(location.search).get('at');")).toBe(true);
+    expect(devOnlyAt("const at = q.get('at');")).toBe(false);
+    expect(devOnlyAt('')).toBe(false);
+  });
+
+  it('knows which records need their photos taken again', () => {
+    const ok = { query: 'at=1,2', after: 'a.webp', problems: { before: [], after: [] } };
+    expect(shotsNeedRetry({ shots: [ok] })).toBe(false);
+    expect(shotsNeedRetry({ shots: [{ ...ok, problems: { before: [], after: ['this build has no ?at= hook: the shot is its title screen'] } }] })).toBe(true);
+    expect(shotsNeedRetry({ shots: [{ ...ok, after: null }] })).toBe(true);
+    expect(shotsNeedRetry({ shots: [] })).toBe(false);
+    // its "before" is the first commit, which had no ?at= yet: a title there is all there can be
+    const firstBefore = { shots: [{ ...ok, problems: { before: ['this build has no ?at= hook: the shot is its title screen'], after: [] } }] };
+    expect(shotsNeedRetry(firstBefore, { before: false, after: true })).toBe(false);
+    expect(shotsNeedRetry(firstBefore, { before: true, after: true })).toBe(true);
   });
 
   it('finds the preview link', () => {
