@@ -81,6 +81,10 @@ plugins into `CityGame` and handles `onInteract`.
   `src/game/chickenBoxing.ts`: 3 rounds of punches on a beat, knockdowns with a count, rests in the corners), so every
   rabbit sees the same punch; feathers + a thud when one lands, the bell each round. Ringside {A}: the announcer
   (target kind `boxing`; names, colours, lines in `src/content/chickenBoxing.ts`). `__boxing` in dev.
+- `src/game/plugins/garden.ts` — **the seasonal garden at Dragonfly Garden** (Delridge; idea box #12): the park's trees cleared at
+  attach, gravel paths between soil beds, each bed a planting in flower this month by the real calendar (`inBloom`: coming up, full,
+  fading at the end of its run — pure + tested in `src/game/garden.ts`); a sign by the street ({A}, target `garden`) says what's out.
+  Plantings (months, shape, colour) and the sign in `src/content/garden.ts`.
 - `src/game/plugins/ponies.ts` — **pastel ponies in Lincoln Park's meadow** (idea box #36 asked for My Little Pony G1; those are
   Hasbro's, so this is Bear Island's own herd): five graze and trot within `LEASH` tiles of `PONY_MEADOW`, on lawn or trail; {A} (target
   `pony`) and one stands still to say hi. Pure + tested in `src/game/ponies.ts`; 20×16 sprites in `src/game/ponySprites.ts`; names,
