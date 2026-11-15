@@ -24,8 +24,11 @@ import { experiences } from './experiences/registry';
 import { ArtSpots, type PlacedLocation } from './game/plugins/artSpots';
 import { Busker } from './game/plugins/busker';
 import { Crow } from './game/plugins/crow';
+import { Squirrels } from './game/plugins/squirrels';
+import { Flock } from './game/plugins/flock';
 import { Chicken } from './game/plugins/chicken';
 import { Ham } from './game/plugins/ham';
+import { HAM_NAME, hamPets } from './content/ham';
 import { Pegasus } from './game/plugins/pegasus';
 import { BigCup } from './game/plugins/bigCup';
 import { Seal } from './game/plugins/seal';
@@ -36,6 +39,9 @@ import { Dinos } from './game/plugins/dinos';
 import { Rowboat } from './game/plugins/rowboat';
 import { Garden } from './game/plugins/garden';
 import { gardenSign, GARDEN_NAME } from './content/garden';
+import { Ponies, type MeadowPony } from './game/plugins/ponies';
+import { Mermaids, type PlacedMermaid } from './game/plugins/mermaids';
+import { mermaidChat } from './content/mermaids';
 import { ChickenBoxing } from './game/plugins/chickenBoxing';
 import { ANNOUNCER, ringside } from './content/chickenBoxing';
 import { buildChicken } from './game/sprites';
@@ -72,7 +78,7 @@ type Overlay =
   /** inside the Duck Arcade */
   | { kind: 'arcade' }
   /** riding Luna Park's Great Figure Eight */
-  | { kind: 'ride' }
+  | { kind: 'ride'; ride?: 'whirl' }
   | { kind: 'spots' }
   /** the idea box: "What would you love to add?" → a GitHub issue */
   | { kind: 'idea' };
@@ -80,6 +86,7 @@ type Overlay =
 const ConeCatch = lazy(() => import('./experiences/minigames/ConeCatch'));
 const DuckArcade = lazy(() => import('./experiences/arcade/DuckArcade'));
 const FigureEight = lazy(() => import('./experiences/luna/FigureEight'));
+const GiantWhirl = lazy(() => import('./experiences/luna/GiantWhirl'));
 
 /** Overlays that take the whole screen: the map's HUD and touch pad hide under them. */
 const FULL_SCREEN: Overlay['kind'][] = ['scene', 'minigame', 'arcade', 'ride'];
@@ -160,6 +167,8 @@ export default function App() {
     const art = new ArtSpots(locations);
     const busker = new Busker();
     const crow = new Crow();
+    const squirrels = new Squirrels();
+    const flock = new Flock();
     const chicken = new Chicken();
     const pegasus = new Pegasus();
     const dinos = new Dinos();
@@ -167,6 +176,8 @@ export default function App() {
     const race = new BikeRace();
     const rowboat = new Rowboat();
     const garden = new Garden();
+    const ponies = new Ponies();
+    const mermaids = new Mermaids(rowboat);
     const boxing = new ChickenBoxing();
     const luna = new LunaPark();
     // Everyone else on the island, live. `?solo` walks alone; `?relay=` points at another
@@ -181,7 +192,7 @@ export default function App() {
     const g = new CityGame(canvas.current!, world, {
       start: world.project(START.lat, START.lon),
       voices: neighborVoices,
-      plugins: [garden, art, new BigCup(art), dinos, new Seal(), arcadeDoor.current, luna, busker, crow, chicken, pegasus, ham, race, rowboat, boxing, ...(live ? [live] : [])],
+      plugins: [garden, art, new BigCup(art), dinos, new Seal(), arcadeDoor.current, luna, busker, crow, flock, squirrels, chicken, pegasus, ham, race, rowboat, mermaids, ponies, boxing, ...(live ? [live] : [])],
       events: {
         onStreet: setStreet,
         onStorefront: setStorefront,
@@ -205,6 +216,15 @@ export default function App() {
             // the seasonal garden's sign (idea box #12): what's out this month
             const out = garden.blooming().map((b) => b.plant.name);
             setOverlay({ kind: 'talk', speaker: GARDEN_NAME, lines: gardenSign(new Date().getMonth() + 1, out) });
+          } else if (t.kind === 'pony') {
+            // a pony in Lincoln Park's meadow (idea box #36): stops and says hi
+            const h = t.data as MeadowPony;
+            ponies.talking = h;
+            setOverlay({ kind: 'talk', speaker: h.pony.name, portrait: ponies.portrait(h), lines: h.pony.lines });
+          } else if (t.kind === 'mermaid') {
+            // a mermaid off Alki (idea box #37): her next catch phrase
+            const p = t.data as PlacedMermaid;
+            setOverlay({ kind: 'talk', speaker: p.m.name, portrait: mermaids.portrait(p), lines: mermaidChat(p.m, mermaids.nextPhrase(p)) });
           } else if (t.kind === 'luna') {
             // a sign at Luna Park; the Figure Eight's offers a ride, Pat answers a sum
             const sign = t.data as LunaSign;
@@ -214,9 +234,9 @@ export default function App() {
               ...talk,
               lines: sign.lines,
               choices:
-                sign.id === 'figure8'
+                sign.id === 'figure8' || sign.id === 'whirl'
                   ? [
-                      { label: lunaRideInvite.yes, onPick: () => setOverlay({ kind: 'ride' }) },
+                      { label: lunaRideInvite.yes, onPick: () => setOverlay(sign.id === 'whirl' ? { kind: 'ride', ride: 'whirl' } : { kind: 'ride' }) },
                       { label: lunaRideInvite.no, onPick: () => setOverlay({ kind: 'none' }) },
                     ]
                   : ask
@@ -269,6 +289,17 @@ export default function App() {
                 ],
               });
             ask(0);
+          } else if (t.npc === ham.npc) {
+            // Ham says the lines, then asks for pets (idea box #30)
+            const talk = { kind: 'talk', speaker: HAM_NAME, portrait: g.portraitOf(ham.npc) } as const;
+            setOverlay({
+              ...talk,
+              lines: [...t.npc.voice.lines, hamPets.ask],
+              choices: [
+                { label: hamPets.yes, onPick: () => { ham.pet(); setOverlay({ ...talk, lines: hamPets.after }); } },
+                { label: hamPets.no, onPick: () => setOverlay({ ...talk, lines: hamPets.bye }) },
+              ],
+            });
           } else if (t.npc) {
             setOverlay({ kind: 'talk', lines: t.npc.voice.lines, speaker: t.npc.voice.name, portrait: g.portraitOf(t.npc) });
           }
@@ -284,7 +315,7 @@ export default function App() {
         lines: raceResult(r.place, r.total, r.winner, r.seconds),
       });
     g.paused = true;
-    if (import.meta.env.DEV) Object.assign(window, { __game: g, __busker: busker, __crow: crow, __chicken: chicken, __pegasus: pegasus, __ham: ham, __race: race, __rowboat: rowboat, __garden: garden, __boxing: boxing, __dinos: dinos, __art: art, __luna: luna, __visitors: live }); // test hooks
+    if (import.meta.env.DEV) Object.assign(window, { __game: g, __garden: garden, __art: art, __dinos: dinos, __luna: luna, __busker: busker, __crow: crow, __flock: flock, __squirrels: squirrels, __chicken: chicken, __pegasus: pegasus, __ham: ham, __race: race, __rowboat: rowboat, __mermaids: mermaids, __ponies: ponies, __boxing: boxing, __visitors: live }); // test hooks
     // Review hooks: ?at=lat,lon (or ?atTile=x,y, or ?at=arcade) skips the title and drops you there;
     // ?audit scans the whole map for road-drawing glitches (scripts/city/road-audit.mjs).
     const q = new URLSearchParams(location.search);
@@ -632,7 +663,7 @@ export default function App() {
       {overlay.kind === 'ride' && (
         <SceneBoundary onError={closeOverlay}>
           <Suspense fallback={<div className="scene scene-loading">Loading…</div>}>
-            <FigureEight onExit={closeOverlay} />
+            {overlay.ride === 'whirl' ? <GiantWhirl onExit={closeOverlay} /> : <FigureEight onExit={closeOverlay} />}
           </Suspense>
         </SceneBoundary>
       )}

@@ -1651,6 +1651,79 @@ function alkiPavilion(ctx: Ctx, w: number, h: number) {
   }
 }
 
+/**
+ * Hope Lutheran Church, 4456 42nd Ave SW at SW Oregon St (the Junction), on this corner since
+ * 1919; the present church is mid-century (a 1948 building is listed for it). We found no
+ * photo-quality description, so this is an interpretation of its OSM outline — a long nave
+ * running north from Oregon, set back from 42nd — as a white church with a steep roof, a
+ * bell tower with its cross on the street side, an arched door and a round window in the
+ * south gable. (Idea box #44: "Can you add Hope Lutheran?")
+ */
+function hopeLutheran(ctx: Ctx, w: number, h: number) {
+  const white = '#f3efe4', shade = '#d8d1c2', roof = '#5b4a5e', roofLight = '#75627a', roofDark = '#463848';
+  const gold = '#e8c25a', door = '#7a3a2a';
+  lawn(ctx, w, h);
+  px(ctx, 'rgba(0,0,0,0.2)', 4, h - 6, w - 6, 3);
+  // the nave's long roof, running back (north) from the gable: two slopes and the ridge
+  const gx0 = 12, gx1 = w - 3, gm = Math.round((gx0 + gx1) / 2);
+  px(ctx, INK, gx0 - 1, 9, gx1 - gx0 + 2, h - 50);
+  px(ctx, roofLight, gx0, 10, gm - gx0, h - 52);
+  px(ctx, roof, gm, 10, gx1 - gm, h - 52);
+  for (let y = 13; y < h - 42; y += 3) {
+    px(ctx, roofDark, gx0, y, gm - gx0, 1);
+    px(ctx, roofDark, gm, y, gx1 - gm, 1);
+  }
+  px(ctx, INK, gm, 10, 1, h - 52);
+  // the south gable: a steep triangle of roof edge over the white front wall
+  const top = h - 46, eave = h - 30;
+  for (let y = top; y <= eave; y++) {
+    const half = Math.round(((y - top) / (eave - top)) * ((gx1 - gx0) / 2 + 1));
+    px(ctx, INK, gm - half - 1, y, half * 2 + 3, 1);
+    px(ctx, y - top < 2 ? white : shade, gm - half + 1, y, Math.max(0, half * 2 - 1), 1);
+  }
+  // a little cross on the gable's peak
+  px(ctx, gold, gm, top - 6, 1, 6);
+  px(ctx, gold, gm - 2, top - 4, 5, 1);
+  // the round window in the gable
+  px(ctx, INK, gm - 3, eave - 10, 7, 7);
+  px(ctx, '#3b4a8b', gm - 2, eave - 9, 5, 5);
+  px(ctx, '#e84a5f', gm - 1, eave - 8, 3, 3);
+  px(ctx, gold, gm, eave - 7, 1, 1);
+  // the front wall: white, the arched door, tall windows either side
+  px(ctx, INK, gx0 - 1, eave, gx1 - gx0 + 2, h - eave - 6);
+  px(ctx, white, gx0, eave + 1, gx1 - gx0, h - eave - 8);
+  px(ctx, INK, gm - 4, eave + 4, 9, h - eave - 10);
+  px(ctx, door, gm - 3, eave + 6, 7, h - eave - 12);
+  px(ctx, door, gm - 2, eave + 5, 5, 1);
+  px(ctx, INK, gm, eave + 6, 1, h - eave - 12);
+  px(ctx, gold, gm - 1, eave + 12, 1, 1);
+  px(ctx, gold, gm + 1, eave + 12, 1, 1);
+  for (const wx of [gx0 + 3, gx1 - 6]) {
+    px(ctx, INK, wx - 1, eave + 4, 5, 12);
+    px(ctx, '#5a7ab0', wx, eave + 5, 3, 10);
+    px(ctx, '#e8c25a', wx + 1, eave + 7, 1, 2);
+  }
+  // steps down to the walk
+  px(ctx, '#bfb8ad', gm - 6, h - 6, 13, 2);
+  px(ctx, '#a8a197', gm - 7, h - 4, 15, 2);
+  // the bell tower on the street side: a white shaft, the open belfry with its bell, a spire and the cross
+  const tx0 = 1, tx1 = 12;
+  px(ctx, INK, tx0 - 1, 12, tx1 - tx0 + 2, h - 17);
+  px(ctx, white, tx0, 13, tx1 - tx0, h - 19);
+  px(ctx, shade, tx1 - 3, 13, 3, h - 19);
+  px(ctx, INK, tx0 + 2, 17, tx1 - tx0 - 4, 9);
+  px(ctx, gold, tx0 + 4, 20, 3, 4);
+  px(ctx, gold, tx0 + 5, 19, 1, 1);
+  for (let y = 30; y < h - 12; y += 12) px(ctx, '#5a7ab0', tx0 + 4, y, 3, 6);
+  for (let y = 4; y <= 12; y++) {
+    const half = Math.round(((y - 4) / 8) * ((tx1 - tx0) / 2));
+    px(ctx, INK, tx0 + 5 - half - 1, y, half * 2 + 2, 1);
+    px(ctx, roofLight, tx0 + 5 - half, y, half * 2, 1);
+  }
+  px(ctx, gold, tx0 + 5, 0, 1, 5);
+  px(ctx, gold, tx0 + 3, 1, 5, 1);
+}
+
 const SPRITES: Record<string, (ctx: Ctx, w: number, h: number, id: string) => void> = {
   becu,
   circa,
@@ -1681,6 +1754,7 @@ const SPRITES: Record<string, (ctx: Ctx, w: number, h: number, id: string) => vo
   'gas-station-76': gasStation76,
   'dakota-place': dakotaPlace,
   'alki-pavilion': alkiPavilion,
+  'hope-lutheran': hopeLutheran,
   // a whole block face of shops; the landmark id picks the face in content/storefronts.ts
   storefronts: (ctx, w, h, id) => drawBlockFace(ctx, id, w, h),
 };

@@ -16,3 +16,12 @@ export const hamLines: string[][] = [
   ['Mew!', "(There's a leaf stuck to Ham's tail. Ham does not want to talk about it.)"],
   ['(Ham is watching a crow. The crow is watching Ham.)', '…mrrp.'],
 ];
+
+/** After the lines, Ham asks for pets (idea box #30). */
+export const hamPets = {
+  ask: '(Ham bumps a round head against your paw. Ham would like pets.)',
+  yes: 'Pet Ham',
+  no: 'Not now',
+  after: ['Prrrrrrrrrr.', '(Ham leans all the way into it, eyes shut. Best rabbit on 45th.)'],
+  bye: ['…mrrp.', '(Ham sits down to wait. Ham can wait all day.)'],
+};
