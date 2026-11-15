@@ -6,7 +6,6 @@ import {
   CityGame,
   Compass,
   createWorld,
-  facingFor,
   input,
   isTouch,
   Minimap,
@@ -19,8 +18,6 @@ import {
   type Target,
 } from './city';
 import { START, locations, welcome } from './content/locations';
-import { CROW_NAME, crowChoices, crowGreeting, crowReply } from './content/crow';
-import { CHICKEN_NAME, chickenAfter, chickenInvite, chickenQuestions } from './content/chicken';
 import { neighborVoices } from './content/neighbors';
 import { experiences } from './experiences/registry';
 import { ArtSpots, type PlacedLocation } from './game/plugins/artSpots';
@@ -30,7 +27,6 @@ import { Squirrels } from './game/plugins/squirrels';
 import { Flock } from './game/plugins/flock';
 import { Chicken } from './game/plugins/chicken';
 import { Ham } from './game/plugins/ham';
-import { HAM_NAME, hamPets } from './content/ham';
 import { Pegasus } from './game/plugins/pegasus';
 import { BigCup } from './game/plugins/bigCup';
 import { Seal } from './game/plugins/seal';
@@ -66,7 +62,6 @@ type Overlay =
   | {
       kind: 'talk';
       lines: string[];
-      loc?: PlacedLocation;
       speaker?: string;
       portrait?: string;
       firstVisit?: boolean;
@@ -208,8 +203,16 @@ export default function App() {
         });
       } else if (a.kind === 'ride') setOverlay(a.ride === 'whirl' ? { kind: 'ride', ride: 'whirl' } : { kind: 'ride' });
       else if (a.kind === 'minigame') setOverlay({ kind: 'minigame', then: (r) => (a.then ? runAction(a.then(r)) : setOverlay({ kind: 'none' })) });
+      else if (a.kind === 'arcade') setOverlay({ kind: 'arcade' });
+      else if (a.kind === 'scene') {
+        const loc = art.places.find((l) => l.id === a.spot);
+        setOverlay(loc ? { kind: 'scene', loc } : { kind: 'none' });
+      } else if (a.kind === 'emotes') setSayOpen((o) => !o);
       else if (a.kind === 'close') setOverlay({ kind: 'none' });
-      else a.run();
+      else {
+        a.run();
+        if (a.then) runAction(a.then);
+      }
     };
     const g = new CityGame(canvas.current!, world, {
       start: world.project(START.lat, START.lon),
@@ -221,74 +224,13 @@ export default function App() {
         onNearby: setNearby,
         onInteract: (t) => {
           sounds.confirm();
-          // a plugin that says what {A} does on its own targets (src/game/actions.ts)
+          // what {A} does is the plugin's own act() (src/game/actions.ts); the city's plain
+          // neighbors, which belong to no plugin, just say their lines
           for (const p of actors) {
             const a = p.act(t);
             if (a) return runAction(a);
           }
-          if (t.kind === 'arcade') {
-            setOverlay({ kind: 'arcade' });
-          } else if (t.kind === 'race') {
-            // the bike race's start line: onto the grid for the countdown
-            race.join(g);
-          } else if (t.kind === 'boat') {
-            // the rowboat at the end of 58th: climb in, or back out onto the shore
-            rowboat.interact(g);
-          } else if (t.kind === 'rabbit' && live) {
-            // Another player close by: face them and open (or close) the SAY picker.
-            g.player.facing = facingFor({ x: t.x - g.player.pos.x, y: t.y - g.player.pos.y }, g.player.facing);
-            setSayOpen((o) => !o);
-          } else if (t.kind === 'place') {
-            const loc = t.data as PlacedLocation;
-            art.visited.add(loc.id);
-            setOverlay({ kind: 'talk', lines: loc.greeting, loc });
-          } else if (t.npc === crow.npc) {
-            // Snacks? Either way it says its piece, then flies off to the next perch.
-            const { stop, lap, snacks } = crow.state;
-            const talk = { kind: 'talk', speaker: CROW_NAME, portrait: g.portraitOf(crow.npc) } as const;
-            setOverlay({
-              ...talk,
-              lines: crowGreeting(stop, lap, snacks),
-              choices: crowChoices.map((c) => ({
-                label: c.label,
-                onPick: () => setOverlay({ ...talk, lines: crowReply(stop, c.snack), then: () => crow.flyAway(c.snack) }),
-              })),
-            });
-          } else if (t.npc === chicken.npc) {
-            // Two questions (two answers each, with her reply), then the mini-game invitation.
-            sounds.cluck();
-            const talk = { kind: 'talk', speaker: CHICKEN_NAME, portrait: g.portraitOf(chicken.npc) } as const;
-            const ask = (i: number) => {
-              const q = chickenQuestions[i];
-              if (!q) return invite();
-              setOverlay({
-                ...talk,
-                lines: q.lines,
-                choices: q.answers.map((a) => ({ label: a.label, onPick: () => setOverlay({ ...talk, lines: a.reply, then: () => ask(i + 1) }) })),
-              });
-            };
-            const invite = () =>
-              setOverlay({
-                ...talk,
-                lines: chickenInvite.lines,
-                choices: [
-                  { label: chickenInvite.yes, onPick: () => setOverlay({ kind: 'minigame', then: (r) => setOverlay({ ...talk, lines: chickenAfter(r.score, r.best) }) }) },
-                  { label: chickenInvite.no, onPick: () => setOverlay({ ...talk, lines: chickenInvite.bye }) },
-                ],
-              });
-            ask(0);
-          } else if (t.npc === ham.npc) {
-            // Ham says the lines, then asks for pets (idea box #30)
-            const talk = { kind: 'talk', speaker: HAM_NAME, portrait: g.portraitOf(ham.npc) } as const;
-            setOverlay({
-              ...talk,
-              lines: [...t.npc.voice.lines, hamPets.ask],
-              choices: [
-                { label: hamPets.yes, onPick: () => { ham.pet(); setOverlay({ ...talk, lines: hamPets.after }); } },
-                { label: hamPets.no, onPick: () => setOverlay({ ...talk, lines: hamPets.bye }) },
-              ],
-            });
-          } else if (t.npc) {
+          if (t.npc) {
             setOverlay({ kind: 'talk', lines: t.npc.voice.lines, speaker: t.npc.voice.name, portrait: g.portraitOf(t.npc) });
           }
         },
@@ -480,7 +422,6 @@ export default function App() {
   const landmarkPlaces = useMemo(() => (game ? mapLandmarks(game.world.landmarks) : []), [game]);
 
   const Scene = overlay.kind === 'scene' && overlay.loc.experience ? experiences[overlay.loc.experience] : null;
-  const talkLoc = overlay.kind === 'talk' ? overlay.loc : undefined;
 
   return (
     <main className="app">
@@ -639,15 +580,7 @@ export default function App() {
               closeOverlay();
               overlay.then?.();
             }}
-            choices={
-              overlay.choices ??
-              (talkLoc?.experience
-                ? [
-                    { label: "Let's see it", onPick: () => setOverlay({ kind: 'scene', loc: talkLoc }) },
-                    { label: 'Maybe later', onPick: closeOverlay },
-                  ]
-                : undefined)
-            }
+            choices={overlay.choices}
           />
         </div>
       )}

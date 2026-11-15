@@ -55,6 +55,9 @@ export const locations: ArtLocation[] = places.map((p) => ({ ...p, colors: COLOR
  */
 export const welcome = ['Go check it out, sunshine!'];
 
+/** after Mike's greeting at a spot with a scene: go in, or not yet */
+export const spotInvite = { yes: "Let's see it", no: 'Maybe later' };
+
 /** the earlier, longer welcome */
 export const welcomeLong = [
   "Welcome to Garden in Sound! I'm Mike. For ten years I've been putting things up around West Seattle.",

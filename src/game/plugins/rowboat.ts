@@ -3,6 +3,7 @@ import { rowboatWords } from '../../content/rowboat';
 import { sounds } from '../../ui/sounds';
 import { BOAT_HOME, BOAT_SPEED, canRow, DOCK_STREET, layDock, shoreNear, streetEnd } from '../rowboat';
 import { buildRowboat, type RowboatSprites } from '../sprites';
+import type { Action, Actor } from '../actions';
 
 /** the dock laid on each map, so a second game on the same map (React's dev double start) reuses it */
 const laid = new WeakMap<object, { tiles: Vec[]; mooring: Vec } | null>();
@@ -16,7 +17,8 @@ const PLANK = '#a77d52', PLANK_DARK = '#7d5a39', POST = '#5a3f28';
  * dock, or anywhere ground you can walk on is right beside you, and {A} climbs out; the boat
  * stays where you left it until you wander far off, then it's back at the dock.
  */
-export class Rowboat implements CityPlugin {
+export class Rowboat implements CityPlugin, Actor {
+  private game!: CityGame;
   /** the dock's tiles (walkable once attached) */
   dock: Vec[] = [];
   /** where it ties up at the dock */
@@ -28,7 +30,13 @@ export class Rowboat implements CityPlugin {
   private vehicle: Vehicle | null = null;
   private lastStroke = -1;
 
+  /** {A} at the boat: climb in, or back out onto the shore */
+  act(t: Target): Action | null {
+    return t.kind === 'boat' ? { kind: 'do', run: () => this.interact(this.game) } : null;
+  }
+
   attach(game: CityGame) {
+    this.game = game;
     const w = game.world;
     if (laid.has(w)) {
       const dock = laid.get(w);

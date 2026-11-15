@@ -1,7 +1,8 @@
-import { buildBikeRabbit, buildRabbit, drawStanding, gridToCanvas, INK, tone, type CityGame, type CityPlugin, type DrawContext, type Grid, type Target, type Walker } from '../../city';
+import { buildBikeRabbit, buildRabbit, drawStanding, facingFor, gridToCanvas, INK, tone, type CityGame, type CityPlugin, type DrawContext, type Grid, type Target, type Walker } from '../../city';
 import { dress, lookFrom, LOOK_SCARVES } from '../look';
 import type { MapMarker } from '../../city';
 import { EMOTES } from '../../content/emotes';
+import type { Action, Actor } from '../actions';
 import { joinRelay, type RelayRoom } from '../../net/relay';
 import { drawTiny, TINY_H, tinyWidth } from '../tinyFont';
 import {
@@ -65,7 +66,7 @@ export interface RabbitInfo {
  * mouse move, click or tap fades it too, thirty leaves. Coming back rejoins as the same rabbit. The
  * relay also drops connections that go silent (a laptop that slept), see relay/.
  */
-export class Visitors implements CityPlugin {
+export class Visitors implements CityPlugin, Actor {
   readonly visitors = new Map<string, Visitor>();
   /** called when the set of other rabbits changes (for the HUD) */
   onChange: (() => void) | null = null;
@@ -108,6 +109,14 @@ export class Visitors implements CityPlugin {
   /** here, away (faded) or gone (out of the room) — for the HUD and tests */
   get presence(): Presence {
     return this.state;
+  }
+
+  /** {A} by another rabbit: face them and open (or close) the SAY picker */
+  act(t: Target): Action | null {
+    if (t.kind !== 'rabbit' || !this.game) return null;
+    const p = this.game.player;
+    p.facing = facingFor({ x: t.x - p.pos.x, y: t.y - p.pos.y }, p.facing);
+    return { kind: 'emotes' };
   }
 
   attach(game: CityGame) {

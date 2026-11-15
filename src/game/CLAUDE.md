@@ -6,11 +6,12 @@ plugins into `CityGame`; what {A} does is the plugin's own `act()` (below).
 
 **What {A} does is data** (`src/game/actions.ts`): a plugin that's an `Actor` answers `act(target)` for its own targets
 with an `Action` (a `talk` with lines, portrait, `choices` that each lead to another action, and `then`; a `ride`; a
-`minigame` whose `then` gets the score; `close`; or `do` for a side effect), and App's `runAction` shows it. **A new character's conversation goes in its plugin**,
-not in App.tsx, and its test walks it with `pick(action, 'label')` (`src/game/actions.test.ts`). Converted so far: the
-garden sign, the maze's fairy ring, the boxing announcer, the ponies, the mermaids, Luna Park's signs. Still in App's
-`onInteract`, to be moved (**don't copy them**): the arcade door, the race, the rowboat, other rabbits, art spots, the crow,
-the chicken, Ham. `src/game/onInteract.test.ts` fails on any new branch there; its message says how to do it instead.
+`minigame` whose `then` gets the score; `arcade`; an art spot's `scene`; `emotes` (the SAY picker); `close`; or `do` for a
+side effect, then optionally another action), and App's `runAction` shows it. **A new character's conversation goes in its plugin**,
+not in App.tsx, and its test walks it with `pick(action, 'label')` (`src/game/actions.test.ts`). Every plugin works this
+way (the crow, chicken, Ham, art spots, arcade door, race, rowboat, other rabbits, garden, maze, boxing, ponies, mermaids,
+Luna Park); App's `onInteract` only runs their actions and lets the city's plain neighbors say their lines.
+`src/game/onInteract.test.ts` fails on any branch added there; its message says how to do it instead.
 
 - `src/game/plugins/` — the app's `CityPlugin`s: `artSpots.ts` (spinning lemons with a beating heart above, from `src/game/lemonSpin.ts`;
   "unvisited" beacons; targets of kind `place` carrying the `PlacedLocation`), `busker.ts`,
@@ -28,14 +29,14 @@ the chicken, Ham. `src/game/onInteract.test.ts` fails on any new branch there; i
 - `src/game/crow.ts` — the snack crow (pure flight state, tested). Starts outside Les Schwab on
   Alaska; asks for snacks (choice → reply), then flies to the next perch in
   `src/content/crow.ts` (storefront regex + lat/lon fallback, lines per stop) and loops home,
-  remembering how often you shared. (Its conversation is still in App's `onInteract`, to move into `act()`.)
+  remembering how often you shared (its conversation: `Crow.act()`).
 - `src/game/plugins/chicken.ts` — the chicken on California outside Greentree Animal Hospital: two questions with two answers
   each and her reply to each, then "Want to play my mini game?" (all lines in `src/content/chicken.ts`).
   Yes opens **Cone Catch** (catch falling ice cream cones; missed ones burst into flames on the grass —
   running into a burning fire or taking a rock costs one of three lives, {A} jumps the fires; lives sit in
   a 24 px Art Nouveau bar over the 160×120 field;
   `src/experiences/minigames/ConeCatch.tsx`, rules pure + tested in
-  `src/game/coneCatch.ts`; best score in localStorage) via the App's `minigame` overlay, whose `then`
+  `src/game/coneCatch.ts`; best score in localStorage) via a `minigame` action (`Chicken.act()`), whose `then`
   gets `{ score, best }` back for her closing line. A new character mini game: same overlay, its own component.
 - **The hidden house + Ham** (1918 45th Ave SW, Admiral): a nameless landmark (`craftsman-45th` in
   `content/landmarks.csv`, drawn in `render/landmarks.ts`) — no name, so it's never on the map's place
@@ -43,7 +44,7 @@ the chicken, Ham. `src/game/onInteract.test.ts` fails on any new branch there; i
   concrete lanes, named "Alley"). Ham the cat (`src/game/plugins/ham.ts`, a Scottish Fold) wanders the
   street and alley within `HAM.leash` tiles of home, sits to look at a rabbit nearby, and says one set
   of lines per visit through the plain neighbor talk (words in `src/content/ham.ts`; movement pure +
-  tested in `src/game/ham.ts`). After the lines Ham asks for pets (idea box #30): `hamPets` choices (still in App, to move into `act()`), `Ham.pet()`
+  tested in `src/game/ham.ts`). After the lines Ham asks for pets (idea box #30): `hamPets` choices in `Ham.act()`, `Ham.pet()`
   floats hearts and purrs (`sounds.purr`). `__ham` in dev.
 - `src/game/plugins/rowboat.ts` — **the rowboat at the end of 58th Ave SW** on Alki: at attach a 2-wide wooden dock is
   laid from where 58th meets Alki Ave west across the park and sand to the water (tiles turned walkable, street sign

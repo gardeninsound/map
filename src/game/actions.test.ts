@@ -6,6 +6,15 @@ import { isActor, pick, talk } from './actions';
 import { Garden } from './plugins/garden';
 import { LunaPark } from './plugins/lunaPark';
 import { Ponies } from './plugins/ponies';
+import { Crow } from './plugins/crow';
+import { Chicken } from './plugins/chicken';
+import { Ham } from './plugins/ham';
+import { ArtSpots } from './plugins/artSpots';
+import { crowChoices } from '../content/crow';
+import { chickenInvite, chickenQuestions } from '../content/chicken';
+import { hamPets } from '../content/ham';
+import { locations, spotInvite } from '../content/locations';
+import type { Action } from './actions';
 
 // jsdom has no canvas: portraits draw into a context that does nothing
 beforeAll(() => {
@@ -15,7 +24,9 @@ beforeAll(() => {
 });
 
 const world = createWorld();
-const game = { world } as CityGame;
+const game = { world, npcs: [], portraitOf: () => 'portrait', besideRoad: (p: { x: number; y: number }) => p } as unknown as CityGame;
+/** follow `then` past a line, as dismissing the last line does */
+const then = (a: Action | null) => (a?.kind === 'talk' ? a.then : undefined);
 const target = (kind: string, data?: unknown): Target => ({ key: kind, kind, x: 0, y: 0, label: { name: kind, verb: 'a' }, data });
 
 describe('what {A} does, as data', () => {
@@ -67,6 +78,62 @@ describe('what {A} does, as data', () => {
     });
     const game = pick(a, 'Yes!');
     expect(game.kind === 'minigame' && game.then?.({ score: 12, best: 20 })).toMatchObject({ lines: ['12 cones!'] });
+  });
+
+  it('the crow: a snack or not, its reply, then it flies off', () => {
+    const crow = new Crow();
+    crow.attach(game);
+    const npcTarget = { ...target('npc'), npc: crow.npc };
+    const a = crow.act(npcTarget);
+    expect(a).toMatchObject({ kind: 'talk', speaker: 'A crow', portrait: 'portrait' });
+    const reply = pick(a, crowChoices[0].label);
+    const fly = then(reply);
+    expect(fly?.kind).toBe('do');
+    const flew: boolean[] = [];
+    crow.flyAway = (shared: boolean) => void flew.push(shared);
+    if (fly?.kind === 'do') fly.run();
+    expect(flew).toEqual([true]);
+    expect(crow.act(target('npc'))).toBeNull(); // someone else's neighbor
+  });
+
+  it('the chicken: two questions, then her game, and a line about your score', () => {
+    const chicken = new Chicken();
+    chicken.attach(game);
+    let a: Action | null | undefined = chicken.act({ ...target('npc'), npc: chicken.npc });
+    for (const q of chickenQuestions) {
+      expect(a).toMatchObject({ kind: 'talk', lines: q.lines });
+      a = then(pick(a!, q.answers[0].label));
+    }
+    expect(a).toMatchObject({ lines: chickenInvite.lines });
+    const game2 = pick(a!, chickenInvite.yes);
+    expect(game2).toMatchObject({ kind: 'minigame', game: 'cone-catch' });
+    expect(game2.kind === 'minigame' && game2.then?.({ score: 1, best: 3 })).toMatchObject({ lines: [expect.stringMatching(/^1 cone!/), expect.any(String)] });
+    expect(pick(a!, chickenInvite.no)).toMatchObject({ lines: chickenInvite.bye });
+  });
+
+  it('Ham: his lines and a request; petting does it, then he answers', () => {
+    const ham = new Ham();
+    ham.attach(game);
+    const a = ham.act({ ...target('npc'), npc: ham.npc });
+    expect(a?.kind === 'talk' && a.lines.at(-1)).toBe(hamPets.ask);
+    const pet = pick(a, hamPets.yes);
+    let petted = 0;
+    ham.pet = () => void petted++;
+    if (pet.kind === 'do') pet.run();
+    expect(petted).toBe(1);
+    expect(pet.kind === 'do' && pet.then).toMatchObject({ lines: hamPets.after });
+  });
+
+  it("an art spot: Mike's greeting, then its scene if it has one", () => {
+    const spots = new ArtSpots(locations);
+    spots.attach(game);
+    const withScene = spots.places.find((l) => l.experience)!;
+    const a = spots.act(target('place', withScene));
+    expect(a).toMatchObject({ kind: 'talk', lines: withScene.greeting });
+    expect(pick(a, spotInvite.yes)).toEqual({ kind: 'scene', spot: withScene.id });
+    expect(spots.visited.has(withScene.id)).toBe(true);
+    const soon = spots.places.find((l) => !l.experience);
+    if (soon) expect(spots.act(target('place', soon))).not.toHaveProperty('choices');
   });
 
   it('pick() refuses a choice that is not there', () => {

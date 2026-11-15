@@ -3,6 +3,7 @@ import { ordinal, RACE_FINISH, RACE_START, RACE_STREET, raceAnimals, raceBanners
 import { sounds } from '../../ui/sounds';
 import { buildCourse, COUNTDOWN, courseAt, lineUp, OFF_COURSE, placeOf, progressOf, RACE_SPEED, ride, type Course, type Racer } from '../bikeRace';
 import { buildAnimalBike } from '../sprites';
+import type { Action, Actor } from '../actions';
 
 type Phase = 'idle' | 'countdown' | 'racing' | 'after';
 
@@ -28,7 +29,8 @@ const YOU_START = 0.4;
  * (`onFinish`, the App opens the dialog). Ride off the course and you've left the race. Once
  * you're well away, the animals are back on the start line for the next one.
  */
-export class BikeRace implements CityPlugin {
+export class BikeRace implements CityPlugin, Actor {
+  private game!: CityGame;
   course: Course | null = null;
   phase: Phase = 'idle';
   racers: Racer[] = [];
@@ -42,7 +44,13 @@ export class BikeRace implements CityPlugin {
   private vehicle: Vehicle | null = null;
   private lastBeep = 99;
 
+  /** {A} at the start line: onto the grid for the countdown */
+  act(t: Target): Action | null {
+    return t.kind === 'race' ? { kind: 'do', run: () => this.join(this.game) } : null;
+  }
+
   attach(game: CityGame) {
+    this.game = game;
     const w = game.world;
     this.course = buildCourse(w, w.project(RACE_START.lat, RACE_START.lon), w.project(RACE_FINISH.lat, RACE_FINISH.lon), RACE_STREET);
     this.racers = lineUp(raceAnimals.length, this.rand);
