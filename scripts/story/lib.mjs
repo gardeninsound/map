@@ -172,6 +172,26 @@ export function coordsFromPatches(patches, max = 3) {
 /** the `base` a commit's vite.config.ts builds for (the setting, not a comment that mentions one) */
 export const baseOf = (config) => /^\s*base:\s*['"]([^'"]+)['"]/m.exec(config)?.[1] ?? '/';
 
+/**
+ * True when a commit's App.tsx only honours `?at=` in development (`import.meta.env.DEV && …get('at')`,
+ * as it did until early November): a production build of it would always show the title screen,
+ * so the recorder builds it in development mode to reach the place.
+ */
+export const devOnlyAt = (app) => /import\.meta\.env\.DEV\s*&&[^\n]*get\(\s*['"]at['"]\s*\)/.test(app ?? '');
+
+/**
+ * A record whose photos should be taken again: a missing photo, a failure, or a title screen where
+ * a place was wanted. `canReach` says whether each side's build has a ?at= hook at all (a commit
+ * from before it existed can only show its title, so that's not worth retrying).
+ */
+export function shotsNeedRetry(entry, canReach = { before: true, after: true }) {
+  const bad = (problems, side) =>
+    (problems ?? []).some((p) => /build failed|shot failed/.test(p) || (canReach[side] && /no \?at= hook/.test(p)));
+  return (entry.shots ?? []).some(
+    (s) => (s.query !== 'title' && !s.after && canReach.after) || bad(s.problems?.before, 'before') || bad(s.problems?.after, 'after'),
+  );
+}
+
 /** a short folder-safe slug from a title */
 export function slug(s, max = 40) {
   return (

@@ -9,7 +9,8 @@
  *   node scripts/story/record.mjs --out .story --wishes --chronicle  # just the wishes + README
  *   node scripts/story/record.mjs --out .story --portraits           # this week's photo of every spot
  *   add --no-shots to skip building and photographing (facts only, fast). A --redo keeps the
- *   earlier photos when the places are the same; --reshoot takes them again.
+ *   earlier photos when the places are the same; --reshoot takes them again. --retry-shots
+ *   re-records (with new photos) every change whose photos failed or fell back to the title screen.
  *
  * Needs `gh` signed in (GH_TOKEN in Actions) and full git history (fetch-depth: 0).
  */
@@ -22,6 +23,8 @@ import {
   SCHEMA,
   areasOf,
   baseOf,
+  devOnlyAt,
+  shotsNeedRetry,
   changeDir,
   coordsFromPatches,
   ideaRefs,
@@ -47,6 +50,7 @@ const { values: opt } = parseArgs({
     limit: { type: 'string', default: '5' },
     redo: { type: 'boolean', default: false },
     reshoot: { type: 'boolean', default: false },
+    'retry-shots': { type: 'boolean', default: false },
     shots: { type: 'boolean', default: true },
     'no-shots': { type: 'boolean', default: false },
     wishes: { type: 'boolean', default: false },
@@ -109,10 +113,14 @@ function loadWishes() {
 
 const BUILDS = join(tmpdir(), 'story-builds');
 const built = new Map();
+/** how each build was made: 'production', or 'development' when its ?at= only worked there */
+const buildMode = new Map();
 function buildAt(sha) {
   if (built.has(sha)) return built.get(sha);
   const dir = join(BUILDS, sha);
   let dist = null;
+  const mode = devOnlyAt(tryGit('show', `${sha}:src/App.tsx`)) ? 'development' : 'production';
+  buildMode.set(sha, mode);
   try {
     if (!existsSync(join(dir, 'dist', 'index.html'))) {
       rmSync(dir, { recursive: true, force: true });
@@ -120,9 +128,10 @@ function buildAt(sha) {
       git('worktree', 'add', '--detach', '--force', dir, sha);
       log(`build ${sha.slice(0, 7)}: npm ci`);
       sh('npm', ['ci', '--include=dev', '--no-audit', '--no-fund', '--prefer-offline'], { cwd: dir, stdio: 'pipe', env: CLEAN_ENV });
-      log(`build ${sha.slice(0, 7)}: vite build`);
-      // no tsc: this commit already passed its checks; we only need the pictures
-      sh('npx', ['vite', 'build', '--logLevel', 'error'], { cwd: dir, stdio: 'pipe', env: CLEAN_ENV });
+      log(`build ${sha.slice(0, 7)}: vite build (${mode})`);
+      // no tsc: this commit already passed its checks; we only need the pictures.
+      // NODE_ENV=development makes import.meta.env.DEV true, for the early dev-only ?at= hook.
+      sh('npx', ['vite', 'build', '--logLevel', 'error'], { cwd: dir, stdio: 'pipe', env: mode === 'development' ? { ...CLEAN_ENV, NODE_ENV: 'development' } : CLEAN_ENV });
     }
     dist = join(dir, 'dist');
   } catch (e) {
@@ -302,7 +311,8 @@ async function recordChange(sha, recorded) {
   e.shots = places.map((p) => ({ query: p.query, lat: p.lat ?? null, lon: p.lon ?? null, label: p.label ?? null, guessed: !e.story.where.length }));
   const samePlaces =
     prev?.shots?.length === places.length && prev.shots.every((s, i) => s.query === places[i].query && (s.after || !SHOTS));
-  if (samePlaces && !opt.reshoot) {
+  // keep the photos on a re-record, unless asked for new ones (and never drop them for --no-shots)
+  if (samePlaces && (!SHOTS || (!opt.reshoot && !opt['retry-shots']))) {
     // a re-record (the description was edited): the photos still show the same places
     e.shots = prev.shots.map((s, i) => ({ ...s, label: e.shots[i].label, guessed: e.shots[i].guessed }));
     if (prev.camera) e.camera = prev.camera;
@@ -316,7 +326,12 @@ async function recordChange(sha, recorded) {
       s.moving = after[i]?.moving ?? null;
       s.problems = { before: before[i]?.problems ?? [], after: after[i]?.problems ?? [] };
     });
-    e.camera = { viewport: (await import('./shoot.mjs')).VIEWPORT, zoom: 3, note: 'stills lossless; moving loop half size' };
+    e.camera = {
+      viewport: (await import('./shoot.mjs')).VIEWPORT,
+      zoom: 3,
+      build: { before: parent ? (buildMode.get(parent) ?? null) : null, after: buildMode.get(sha) ?? null },
+      note: "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else.",
+    };
   }
   // a re-record never loses what was there: earlier descriptions are kept, oldest first
   e.first_recorded_at = prev?.first_recorded_at ?? prev?.recorded_at ?? NOW;
@@ -389,8 +404,17 @@ try {
     const all = git('rev-list', '--first-parent', '--reverse', opt.branch).split('\n').filter(Boolean);
     todo.push(...all.filter((s) => !recorded.has(s)).slice(0, Number(opt.limit)));
   }
+  if (opt['retry-shots']) {
+    // (a build from before ?at= existed can only ever show its title screen: no point retrying it)
+    const hasAt = (sha) => /get\(\s*['"]at['"]\s*\)/.test(tryGit('show', `${sha}:src/App.tsx`) ?? '');
+    const reach = (e) => ({ before: !!e.parent && hasAt(e.parent), after: hasAt(e.sha) });
+    const retry = entries.filter(({ entry }) => shotsNeedRetry(entry, reach(entry))).sort((a, b) => a.entry.merged_at.localeCompare(b.entry.merged_at)).map(({ entry }) => entry.sha);
+    log(`retry shots: ${retry.length} change(s)`);
+    todo.push(...retry.slice(0, Number(opt.limit)));
+  }
+  const redo = opt.redo || opt['retry-shots'];
   for (const sha of [...new Set(todo)]) {
-    if (recorded.has(sha) && !opt.redo) {
+    if (recorded.has(sha) && !redo) {
       log(`already recorded ${sha.slice(0, 7)} (--redo to redo)`);
       continue;
     }

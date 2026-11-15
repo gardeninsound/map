@@ -33,6 +33,10 @@ on:
         description: With redo, take its photos again too.
         type: boolean
         default: false
+      retry_shots:
+        description: Take photos again wherever they failed or fell back to the title screen (up to `limit`).
+        type: boolean
+        default: false
       portraits:
         description: Also photograph every spot today.
         type: boolean
@@ -91,6 +95,7 @@ jobs:
           LIMIT: ${{ inputs.limit || '5' }}
           REDO: ${{ inputs.redo || (github.event_name == 'pull_request' && github.event.pull_request.number) || '' }}
           RESHOOT: ${{ inputs.reshoot }}
+          RETRY_SHOTS: ${{ inputs.retry_shots }}
           PORTRAITS: ${{ inputs.portraits }}
         run: |
           args=(--out .story --wishes --chronicle)
@@ -103,6 +108,7 @@ jobs:
               args+=(--redo)
               [ "$RESHOOT" = true ] && args+=(--reshoot)
             fi
+            [ "$RETRY_SHOTS" = true ] && args+=(--retry-shots)
             if [ "$PORTRAITS" = true ] || { [ "$EVENT" = schedule ] && [ "$(date -u +%u)" = 1 ]; }; then
               args+=(--portraits)
             fi

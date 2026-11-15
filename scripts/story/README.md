@@ -51,8 +51,10 @@ Commits that went to `main` before PRs existed (Oct 18 – Nov 4) are recorded f
 
 Every change after the first is built twice, at its own commit and the one before, and both
 builds are photographed through the site's review hooks (`?solo&at=…`). The photos show
-exactly what a visitor would have seen at the time. Builds from before `?at=` existed show
-their title screen, and the record says so.
+what a visitor would have seen at the time. Until early November `?at=` only worked in
+development builds, so commits like that are built in development mode, the one way to reach a
+place on them (`camera.build` in the record says which). The very first commit had no `?at=`
+yet, so it shows its title screen, and the record says so.
 
 ## The human part
 
@@ -79,13 +81,15 @@ It runs itself (`.github/workflows/story.yml`). By hand:
 git worktree add .story origin/story                        # once: the branch, beside your checkout
 npm run story -- --out .story --missing --limit 5           # catch up
 npm run story -- --out .story --pr 64 --redo [--reshoot]    # one change again
+npm run story -- --out .story --retry-shots --limit 100     # new photos wherever they failed
 npm run story -- --out .story --wishes --chronicle          # wishes + README only, no builds
 npm run story -- --out .story --portraits                   # every spot, today
 node scripts/story/shoot.mjs --dist dist --at arcade        # just the camera, on your build
 ```
 
 Then commit and push `.story` to `story`. In Actions, **Run workflow** on *Story* does the same:
-a `limit` of ~100 backfills everything, and `redo` takes a PR number or sha.
+a `limit` of ~100 backfills everything, `redo` takes a PR number or sha, and `retry_shots`
+takes new photos wherever they failed or fell back to the title screen.
 
 ## Files
 
