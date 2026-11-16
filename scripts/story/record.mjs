@@ -338,7 +338,7 @@ async function recordChange(sha, recorded) {
     guessed: e.where_from === 'guessed',
   }));
   const samePlaces =
-    prev?.shots?.length === places.length && prev.shots.every((s, i) => s.query === places[i].query && (s.after || !SHOTS));
+    !!prev && !placesMoved(prev.shots, places) && prev.shots.every((s) => s.after || !SHOTS);
   // keep the photos on a re-record, unless asked for new ones (and never drop them for --no-shots)
   const keep = samePlaces && (!SHOTS || (!opt.reshoot && !opt['retry-shots']));
   if (keep) {

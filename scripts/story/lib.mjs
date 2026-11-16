@@ -141,9 +141,9 @@ export function curatedFor(curated, { pr, sha }) {
   return (pr != null && curated?.[String(pr)]) || curated?.[sha?.slice(0, 7)] || null;
 }
 
-/** a record photographed somewhere other than where it should be now (its places were curated since) */
+/** a record photographed somewhere other than where it should be now (its places, or where to stand for them, were curated since) */
 export const placesMoved = (shots, places) =>
-  (shots ?? []).length !== places.length || places.some((p, i) => shots[i].query !== p.query);
+  (shots ?? []).length !== places.length || places.some((p, i) => shots[i].query !== p.query || (shots[i].way ?? null) !== (p.way ?? null));
 
 // ---------------------------------------------------------------------------------------------
 // Facts we can read without anyone writing them down

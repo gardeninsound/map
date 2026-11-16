@@ -293,6 +293,10 @@ describe('places inside things, on any build', () => {
     const places = ['open:garden'].map(parseWhere);
     expect(placesMoved([{ query: 'at=47.5,-122.3' }], places)).toBe(true);
     expect(placesMoved([{ query: 'open=garden' }], places)).toBe(false);
+    // the same place, a new spot to stand on: taken again
+    const standing = ['open:ham @ 47.58605, -122.389'].map(parseWhere);
+    expect(placesMoved([{ query: 'open=ham', way: 'at=47.5859,-122.389' }], standing)).toBe(true);
+    expect(placesMoved([{ query: 'open=ham', way: 'at=47.58605,-122.389' }], standing)).toBe(false);
   });
 
   it('every curated line reads as a place', () => {
