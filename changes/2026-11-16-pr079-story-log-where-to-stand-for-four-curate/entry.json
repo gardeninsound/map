@@ -1,0 +1,115 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "d20633f7c9443c2cae204b97a4187860d58b54d8",
+  "parent": "034fe0415353306b62f0a9973ca2c8428d98c3f9",
+  "pr": 79,
+  "title": "Story log: where to stand for four curated places",
+  "url": "https://github.com/gardeninsound/map/pull/79",
+  "merged_at": "2026-11-16T14:36:15Z",
+  "body": "Follow-up to #77. After the big retake, 18 of the 22 curated changes had an \"after\" photo inside the thing. Four didn't:\n- **23a878f and 5f0f9e7 (Oct 18 scenes):** the map was laid out differently then, so the rabbit stood at today's lemon and a neighbor answered instead. They now stand where those builds put the lemons, which I read from each build's dev hooks.\n- **#31 and #62 (Ham):** he was about two tiles away, just out of reach. They now stand a tile further north.\n\nI tested all four on their real builds, and each one gets in.\n\n`placesMoved` (and a redo's same-places check) now also compares where to stand, so changing a ` @ lat, lon` retakes that photo. Before, it only noticed a changed place. The push run's `--curated` will retake these four.\n\n473 tests pass, including a new one for the standing-spot rule.\n\n## Story\n\nIdea: Get the last four curated story photos inside.\nWhere: none\nTags: story-log\nAsked vs made: A follow-up to the inside-photos work. Fixed where to stand for four places, and made a new standing spot trigger a retake.\nMike:\nNote:\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "c5133678723d3b1f5402ffc0bbc374b51921d579",
+      "message": "Story log: where to stand for four curated places; a new standing spot counts as moved\n\nThe two Oct 18 scenes stood where their lemons were back then (the map was laid out differently),\nand Ham is reached from a tile further north. placesMoved (and a redo's \"same places\") now also\ncompares where to stand, so editing a ` @ lat, lon` retakes the photo.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-16T14:33:11Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "scripts/story/curated.json",
+      "status": "M",
+      "additions": 4,
+      "deletions": 4
+    },
+    {
+      "path": "scripts/story/lib.mjs",
+      "status": "M",
+      "additions": 2,
+      "deletions": 2
+    },
+    {
+      "path": "scripts/story/lib.test.mjs",
+      "status": "M",
+      "additions": 4,
+      "deletions": 0
+    },
+    {
+      "path": "scripts/story/record.mjs",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    }
+  ],
+  "additions": 11,
+  "deletions": 7,
+  "areas": [
+    "tools"
+  ],
+  "branch": "story-curated-fixes",
+  "opened_at": "2026-11-16T14:33:15Z",
+  "merged_by": "vlandham",
+  "summary": "Follow-up to #77. After the big retake, 18 of the 22 curated changes had an \"after\" photo inside the thing. Four didn't:\n- **23a878f and 5f0f9e7 (Oct 18 scenes):** the map was laid out differently then, so the rabbit stood at today's lemon and a neighbor answered instead. They now stand where those builds put the lemons, which I read from each build's dev hooks.\n- **#31 and #62 (Ham):** he was about two tiles away, just out of reach. They now stand a tile further north.\n\nI tested all four on their real builds, and each one gets in.\n\n`placesMoved` (and a redo's same-places check) now also compares where to stand, so changing a ` @ lat, lon` retakes that photo. Before, it only noticed a changed place. The push run's `--curated` will retake these four.\n\n473 tests pass, including a new one for the standing-spot rule.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": "A follow-up to the inside-photos work. Fixed where to stand for four places, and made a new standing spot trigger a retake.",
+    "mike": null,
+    "note": "🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+    "shots": true,
+    "tags": [
+      [
+        "+",
+        "story-log"
+      ]
+    ],
+    "present": true
+  },
+  "ideas": [],
+  "requested_reviewers": [],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-16T14:33:39Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-79-garden-preview.gardeninsound.workers.dev\n\nUpdated for c513367. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-79]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-79-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 22,
+    "scenes": 11,
+    "content_files": 27,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 27128,
+    "commits": 103
+  },
+  "tags": [
+    "story-log"
+  ],
+  "where_from": "guessed",
+  "shots": [],
+  "first_recorded_at": "2026-11-16T14:37:13.256Z",
+  "earlier": [],
+  "recorded_at": "2026-11-16T14:37:13.256Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43887456635"
+}

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-11-16T14:29:33.736Z",
+  "generated_at": "2026-11-16T14:40:31.331Z",
   "changes": [
     {
       "pr": null,
@@ -244,8 +244,8 @@
       "shots": [
         {
           "query": "open=scene:puppy-park",
-          "lat": 47.560036,
-          "lon": -122.383105,
+          "lat": 47.560796,
+          "lon": -122.382945,
           "label": "Seven+ Stories, the walk",
           "before": "changes/2026-10-18-23a878f-compass-first-visit-arrow-octilinear-roa/before-1.webp",
           "after": "changes/2026-10-18-23a878f-compass-first-visit-arrow-octilinear-roa/after-1.webp",
@@ -575,8 +575,8 @@
       "shots": [
         {
           "query": "open=scene:gas-station-wall",
-          "lat": 47.56808,
-          "lon": -122.386923,
+          "lat": 47.568178,
+          "lon": -122.387099,
           "label": "a slideshow, now in AVIF",
           "before": "changes/2026-10-18-5f0f9e7-avif-art-pipeline-publish-step-drop-old/before-1.webp",
           "after": "changes/2026-10-18-5f0f9e7-avif-art-pipeline-publish-step-drop-old/after-1.webp",
@@ -2482,7 +2482,7 @@
       "shots": [
         {
           "query": "open=ham",
-          "lat": 47.5859,
+          "lat": 47.58605,
           "lon": -122.389015,
           "label": "Ham the cat",
           "before": "changes/2026-11-04-pr031-a-hidden-house-on-45th-a-walkable-alley/before-1.webp",
@@ -3794,7 +3794,7 @@
       "shots": [
         {
           "query": "open=ham",
-          "lat": 47.5859,
+          "lat": 47.58605,
           "lon": -122.389015,
           "label": "Ham asks for pets",
           "before": "changes/2026-11-14-pr062-squirrels-that-hide-from-people-ham-asks/before-1.webp",
@@ -4721,6 +4721,46 @@
         "arcade_cabinets_ready": 4,
         "source_lines": 27128,
         "commits": 102
+      }
+    },
+    {
+      "pr": 79,
+      "sha": "d20633f7c9443c2cae204b97a4187860d58b54d8",
+      "title": "Story log: where to stand for four curated places",
+      "url": "https://github.com/gardeninsound/map/pull/79",
+      "merged_at": "2026-11-16T14:36:15Z",
+      "dir": "changes/2026-11-16-pr079-story-log-where-to-stand-for-four-curate",
+      "ideas": [],
+      "summary": "Follow-up to #77. After the big retake, 18 of the 22 curated changes had an \"after\" photo inside the thing. Four didn't:\n- **23a878f and 5f0f9e7 (Oct 18 scenes):** the map was laid out differently then, so the rabbit stood at today's lemon and a neighbor answered instead. They now stand where those builds put the lemons, which I read from each build's dev hooks.\n- **#31 and #62 (Ham):** he was about two tiles away, just out of reach. They now stand a tile further north.\n\nI tested all four on their real builds, and each one gets in.\n\n`placesMoved` (and a redo's same-places check) now also compares where to stand, so changing a ` @ lat, lon` retakes that photo. Before, it only noticed a changed place. The push run's `--curated` will retake these four.\n\n473 tests pass, including a new one for the standing-spot rule.",
+      "story": {
+        "askedVsMade": "A follow-up to the inside-photos work. Fixed where to stand for four places, and made a new standing spot trigger a retake.",
+        "mike": null,
+        "note": "🤖 Generated with [Claude Code](https://claude.com/claude-code)"
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 4,
+      "additions": 11,
+      "deletions": 7,
+      "areas": [
+        "tools"
+      ],
+      "tags": [
+        "story-log"
+      ],
+      "shots": [],
+      "census": {
+        "spots": 15,
+        "plugins": 22,
+        "scenes": 11,
+        "content_files": 27,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 27128,
+        "commits": 103
       }
     }
   ],

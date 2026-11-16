@@ -1351,10 +1351,10 @@
   "shots": [
     {
       "query": "open=scene:gas-station-wall",
-      "way": "at=47.568080,-122.386923",
+      "way": "at=47.568178,-122.387099",
       "goal": ".scene",
-      "lat": 47.56808,
-      "lon": -122.386923,
+      "lat": 47.568178,
+      "lon": -122.387099,
       "label": "a slideshow, now in AVIF",
       "guessed": false,
       "before": "before-1.webp",
@@ -1388,6 +1388,6 @@
   },
   "first_recorded_at": "2026-11-15T16:33:25.935Z",
   "earlier": [],
-  "recorded_at": "2026-11-16T14:12:37.469Z",
-  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43883229945"
+  "recorded_at": "2026-11-16T14:37:13.256Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43887456635"
 }

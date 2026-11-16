@@ -160,9 +160,9 @@
   "shots": [
     {
       "query": "open=ham",
-      "way": "at=47.585900,-122.389015",
+      "way": "at=47.586050,-122.389015",
       "goal": ".dialog",
-      "lat": 47.5859,
+      "lat": 47.58605,
       "lon": -122.389015,
       "label": "Ham asks for pets",
       "guessed": false,
@@ -170,12 +170,8 @@
       "after": "after-1.webp",
       "moving": "moving-1.webp",
       "problems": {
-        "before": [
-          "nothing opened: no .dialog on screen (on a \"before\" photo, usually because it wasn't there yet)"
-        ],
-        "after": [
-          "nothing opened: no .dialog on screen (on a \"before\" photo, usually because it wasn't there yet)"
-        ]
+        "before": [],
+        "after": []
       },
       "via": {
         "before": "way",
@@ -197,6 +193,6 @@
   },
   "first_recorded_at": "2026-11-15T16:43:39.483Z",
   "earlier": [],
-  "recorded_at": "2026-11-16T14:17:23.147Z",
-  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43883255866"
+  "recorded_at": "2026-11-16T14:37:13.256Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43887456635"
 }
