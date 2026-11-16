@@ -57,7 +57,10 @@ export function parseStory(body) {
     const field = FIELDS[k];
     const val = v.trim();
     if (field === 'ideas') out.ideas = [...new Set([...val.matchAll(/#(\d+)/g)].map((x) => Number(x[1])))];
-    else if (field === 'where') out.where = val.split(/\n|;/).map(parseWhere).filter(Boolean);
+    else if (field === 'where') {
+      out.where = val.split(/\n|;/).map(parseWhere).filter(Boolean);
+      out.whereSaid = val.length > 0; // `Where: none` says it on purpose
+    }
     else if (field === 'tags') out.tags = parseTags(val);
     else if (field === 'shots') out.shots = !/^(no|none|off|skip|false)\b/i.test(val);
     else out[field] = val && !/^(-|none|n\/a)$/i.test(val) ? val : null;
@@ -540,4 +543,66 @@ export function renderIndex(entries, wishes) {
         answered_by: (w.answered_by ?? []).map((a) => ({ pr: a.pr, sha: a.sha, merged_at: a.merged_at })),
       })),
   };
+}
+
+// ---------------------------------------------------------------------------------------------
+// The preview comment on a PR (.github/workflows/preview-comment.yml → preview-comment.mjs)
+
+/** whose area a path is in (root CLAUDE.md, Git workflow 6) */
+export function areaOwner(path) {
+  if (/^src\/city\/|^src\/App\.tsx$|^relay\/|^wish\/|^\.github\/|^package(-lock)?\.json$|^scripts\/city\//.test(path)) return 'Jim';
+  if (/^src\/content\/|^content\/places\.csv$|^public\/art\//.test(path)) return 'Mike';
+  return null;
+}
+
+const ago = (from, now) => {
+  const d = Math.max(0, Math.round((Date.parse(now) - Date.parse(from)) / 86_400_000));
+  return d === 0 ? 'today' : d === 1 ? 'yesterday' : `${d} days ago`;
+};
+
+/**
+ * The comment the preview workflow keeps on a PR: the preview's link, links straight to each
+ * `Where:` place, the wishes it answers in the visitor's words, its tags and size, whose area it
+ * touches, and what the Story section is missing. Pure: preview-comment.mjs gathers the facts.
+ */
+export function renderPreviewComment({ url, pr, sha, author, title = '', body = '', files = [], wishes = [], now = new Date().toISOString() }) {
+  const story = parseStory(body);
+  const L = [`**Preview** · updated for ${sha.slice(0, 7)} (ready when the Preview check is green)`, url, ''];
+
+  const places = story.where.filter((p) => p.query !== 'title');
+  if (places.length) {
+    L.push('**Go straight to it**');
+    for (const p of places) L.push(`- [${p.label ?? p.query}](${url}/?solo&${p.query})`);
+    L.push('');
+  }
+
+  if (wishes.length) {
+    L.push(`**Answers ${wishes.length > 1 ? `${wishes.length} wishes` : 'a wish'}**`);
+    for (const w of wishes) {
+      const text = (w.text || w.title || '').replace(/\s+/g, ' ').trim();
+      const who = [w.name ? `**${w.name}**` : 'a visitor', w.street ? `on ${w.street}` : null].filter(Boolean).join(' ');
+      L.push(`> ${text.length > 240 ? `${text.slice(0, 239)}…` : text}`, `> — ${who} ([#${w.issue}](${w.url}), ${ago(w.asked_at, now)})`, '');
+    }
+  }
+
+  const tags = tagsOf({ files, title, ideas: wishes, story });
+  const add = files.reduce((n, f) => n + (f.additions ?? 0), 0);
+  const del = files.reduce((n, f) => n + (f.deletions ?? 0), 0);
+  const facts = [tags.length ? tags.join(' · ') : null, `${files.length} file${files.length === 1 ? '' : 's'}, +${add} −${del}`];
+  const me = personOf(author);
+  const other = me === 'Jim' ? 'Mike' : me === 'Mike' ? 'Jim' : null;
+  const theirs = other ? files.map((f) => f.path).filter((p) => areaOwner(p) === other) : [];
+  if (theirs.length) facts.push(`touches ${other}'s area (${theirs.slice(0, 3).map((p) => `\`${p}\``).join(', ')}${theirs.length > 3 ? ` and ${theirs.length - 3} more` : ''})`);
+  L.push(facts.filter(Boolean).join(' · '), '');
+
+  // what the story log will miss
+  const visible = files.some((f) => !isTest(f.path) && /^src\/(?!story\/)|^public\/|^content\/|^scripts\/city\//.test(f.path));
+  const nudges = [];
+  if (!story.present) nudges.push('No `## Story` section: the story log will only have the title (template: `.github/pull_request_template.md`).');
+  else if (visible && story.shots && !story.whereSaid) nudges.push('No `Where:` line, so the story log will guess where to photograph (the Junction if the diff has no coordinates). `open:<something>` goes inside a scene or dialog.');
+  if (story.present && !story.ideas.length && /idea box|wish/i.test(title)) nudges.push('The title mentions a wish but `Idea:` names none (e.g. `Idea: #36`).');
+  if (nudges.length) L.push(...nudges.map((n) => `> [!NOTE]\n> ${n}`), '');
+
+  L.push(`<sub>A full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked \`[preview pr-${pr}]\`). Edit the description and this comment follows.</sub>`);
+  return L.join('\n');
 }

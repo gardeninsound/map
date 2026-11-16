@@ -61,7 +61,9 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
 - `npm run story -- --out .story …` — the story log by hand (it runs itself in `.github/workflows/story.yml`):
   every change to `main` with its wish, words and before/after photos, every idea-box wish, weekly
   spot portraits → the **`story` branch** (never main). → `scripts/story/README.md`
-- PR previews: every same-repo PR gets `https://pr-<N>-garden-preview.gardeninsound.workers.dev`, commented on the PR
+- PR previews: every same-repo PR gets `https://pr-<N>-garden-preview.gardeninsound.workers.dev`, commented on the PR by
+  `preview-comment.yml` (links straight to each `Where:`, the wishes it answers, tags, whose area it touches, what the Story
+  section is missing; follows description edits; words in `renderPreviewComment`, `scripts/story/lib.mjs`)
   (`.github/workflows/preview.yml` → `preview/`, a files-only Worker; `wrangler versions upload --preview-alias pr-<N>`;
   secret `CLOUDFLARE_API_TOKEN`). Previews use the real relay and idea box (issues titled `[preview pr-<N>]`). On close,
   `preview-cleanup.yml` re-uploads the alias with `preview/closed/` and marks its deployments inactive.

@@ -1,0 +1,39 @@
+name: Preview comment
+
+# The comment on each PR with its preview: links straight to each `Where:` place, the wishes it
+# answers, its tags and size, whose area it touches, and what the Story section is missing.
+# Written by scripts/story/preview-comment.mjs (words: renderPreviewComment in lib.mjs). It runs on
+# description edits too, without rebuilding the preview (that's preview.yml).
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+    branches: [main]
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: read
+
+concurrency:
+  group: preview-comment-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  comment:
+    # same-repo PRs only, like the preview itself
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - name: Comment
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          node scripts/story/preview-comment.mjs --pr "$PR" > comment.md
+          gh pr comment "$PR" --repo "$GITHUB_REPOSITORY" --edit-last --create-if-none --body-file comment.md
