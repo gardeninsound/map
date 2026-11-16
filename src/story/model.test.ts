@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { anchorOf, applyFilter, DEFAULT_SRC, groupByMonth, growth, srcFrom, stats, waitDays, waitingWishes, type StoryChange, type StoryIndex } from './model';
+import { anchorOf, applyFilter, tagCounts, withTag, DEFAULT_SRC, groupByMonth, growth, srcFrom, stats, waitDays, waitingWishes, type StoryChange, type StoryIndex } from './model';
 
 const change = (over: Partial<StoryChange>): StoryChange => ({
   pr: null,
@@ -81,5 +81,14 @@ describe('story page model', () => {
   it('anchors by PR, or by commit for the early days', () => {
     expect(anchorOf({ pr: 64, sha: 'c' })).toBe('pr-64');
     expect(anchorOf({ pr: null, sha: '8066597aaaa' })).toBe('c-8066597');
+  });
+});
+
+describe('tags', () => {
+  const cs = [change({ sha: '1', tags: ['map', 'wish'] }), change({ sha: '2', tags: ['map'] }), change({ sha: '3' })];
+  it('counts each tag, most first, and filters by one', () => {
+    expect(tagCounts(cs)).toEqual([{ tag: 'map', n: 2 }, { tag: 'wish', n: 1 }]);
+    expect(withTag(cs, 'wish').map((c) => c.sha)).toEqual(['1']);
+    expect(withTag(cs, null)).toBe(cs);
   });
 });

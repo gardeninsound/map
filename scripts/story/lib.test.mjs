@@ -1,6 +1,14 @@
 // @vitest-environment node
+import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import {
+  curatedFor,
+  openGoal,
+  squeeze,
+  parseTags,
+  placesMoved,
+  tagsOf,
+  TAGS,
   areasOf,
   baseOf,
   devOnlyAt,
@@ -73,8 +81,8 @@ describe('parseWhere', () => {
     expect(parseWhere('arcade')).toEqual({ query: 'at=arcade', label: 'the Duck Arcade' });
     expect(parseWhere('tile 120, 340')).toEqual({ query: 'atTile=120,340', label: null });
     expect(parseWhere('none')).toBeNull();
-    expect(parseWhere('open:arcade:duck-on-the-moon')).toEqual({ query: 'open=arcade:duck-on-the-moon', label: 'arcade:duck-on-the-moon' });
-    expect(parseWhere('?open=garden&time=2026-04-15 — tulips')).toEqual({ query: 'open=garden&time=2026-04-15', label: 'tulips' });
+    expect(parseWhere('open:arcade:duck-on-the-moon')).toMatchObject({ query: 'open=arcade:duck-on-the-moon', label: 'arcade:duck-on-the-moon' });
+    expect(parseWhere('?open=garden&time=2026-04-15 — tulips')).toMatchObject({ query: 'open=garden&time=2026-04-15', label: 'tulips' });
     expect(parseWhere('somewhere nice')).toBeNull();
   });
 });
@@ -246,5 +254,90 @@ describe('chronicle', () => {
     expect(c.authors).toEqual(['exit320-stack']);
     expect(c.files).toBe(2);
     expect(idx.wishes[0].text).toBe('a ferry');
+  });
+});
+
+describe('places inside things, on any build', () => {
+  it('an open place says what is on screen once in, and where to stand on an older build', () => {
+    expect(parseWhere('open:scene:rush-hour @ 47.563618, -122.386460 — Rush Hour')).toEqual({
+      query: 'open=scene:rush-hour',
+      label: 'Rush Hour',
+      goal: '.scene',
+      way: 'at=47.563618,-122.386460',
+      lat: 47.563618,
+      lon: -122.38646,
+    });
+    // the time comes along on the way in; the arcade has its own way in
+    expect(parseWhere('?open=garden&time=2026-04-15 @ 47.5667, -122.3680').way).toBe('at=47.5667,-122.3680&time=2026-04-15');
+    expect(parseWhere('open:arcade:quack-hero')).toMatchObject({ way: 'at=arcade', goal: '.arcade-scene' });
+    expect(parseWhere('open:crow')).toMatchObject({ query: 'open=crow', goal: '.dialog' });
+    expect(parseWhere('open:crow').way).toBeUndefined();
+    expect(parseWhere('47.56, -122.38').goal).toBeUndefined();
+  });
+
+  it('says a problem seen every frame once, with a count', () => {
+    expect(squeeze(['a', 'b', 'a', 'a'])).toEqual(['a (×3)', 'b']);
+  });
+
+  it('knows what each kind of link opens', () => {
+    expect(['scene:x', 'arcade', 'ride:whirl', 'minigame:cone-catch', 'chicken', 'idea'].map(openGoal)).toEqual([
+      '.scene', '.arcade-scene', '.luna-ride', '.minigame-canvas', '.dialog', null,
+    ]);
+  });
+
+  it('curated places: by PR, else by the commit; moved when the queries differ', () => {
+    const cur = { 65: { where: ['open:garden'] }, '8066597': { where: ['title'] } };
+    expect(curatedFor(cur, { pr: 65, sha: 'abc' })).toBe(cur[65]);
+    expect(curatedFor(cur, { pr: null, sha: '8066597aaaa' })).toBe(cur['8066597']);
+    expect(curatedFor(cur, { pr: 3, sha: 'fff' })).toBeNull();
+    const places = ['open:garden'].map(parseWhere);
+    expect(placesMoved([{ query: 'at=47.5,-122.3' }], places)).toBe(true);
+    expect(placesMoved([{ query: 'open=garden' }], places)).toBe(false);
+  });
+
+  it('every curated line reads as a place', () => {
+    const cur = JSON.parse(readFileSync(new URL('./curated.json', import.meta.url), 'utf8'));
+    for (const [key, c] of Object.entries(cur)) {
+      if (key === '_') continue;
+      expect(key, 'a PR number or a 7-character commit').toMatch(/^(\d{1,5}|[0-9a-f]{7})$/);
+      for (const w of c.where ?? []) {
+        const p = parseWhere(w);
+        expect(p, w).not.toBeNull();
+        if (p.query.includes('open=') && !p.query.includes('open=arcade')) expect(p.way, `${w}: needs " @ lat, lon" for the old builds`).toBeTruthy();
+      }
+      for (const [, t] of parseTags(c.tags ?? [])) expect(TAGS, `${key}: unknown tag ${t}`).toContain(t);
+    }
+  });
+});
+
+describe('tags', () => {
+  const f = (path, n = 5) => ({ path, additions: n, deletions: 0 });
+  it('come from what a change touched', () => {
+    expect(tagsOf({ files: [f('src/game/plugins/crow.ts'), f('src/content/crow.ts'), f('src/game/crow.test.ts')] })).toEqual(['character', 'words']);
+    expect(tagsOf({ files: [f('src/experiences/arcade/DuckArcade.tsx')], ideas: [{ issue: 3 }] })).toEqual(['wish', 'arcade']);
+    expect(tagsOf({ files: [f('src/ui/IdeaBox.tsx')] })).toEqual(['ui', 'idea-box']);
+    expect(tagsOf({ files: [f('scripts/story/record.mjs'), f('.github/workflows/story.yml')] })).toEqual(['story-log', 'infra']);
+    expect(tagsOf({ files: [f('src/city/render/trees.ts')] })).toEqual(['map']);
+  });
+
+  it("code: the engine and wiring, and App.tsx only when it's a big change", () => {
+    expect(tagsOf({ files: [f('src/App.tsx', 10)] })).toEqual([]);
+    expect(tagsOf({ files: [f('src/App.tsx', 90)] })).toEqual(['code']);
+    expect(tagsOf({ files: [f('src/game/actions.ts')] })).toEqual(['code']);
+  });
+
+  it('agent: how agents work (scripts/ai, a CLAUDE.md rewrite or a notes-only change, the guards, the title)', () => {
+    expect(tagsOf({ files: [f('scripts/ai/run.mjs')] })).toEqual(['agent']);
+    expect(tagsOf({ files: [f('CLAUDE.md', 3)] })).toEqual(['agent', 'docs']);
+    expect(tagsOf({ files: [f('CLAUDE.md', 3), f('src/game/plugins/ham.ts')] })).toEqual(['character']);
+    expect(tagsOf({ files: [f('src/game/onInteract.test.ts')] })).toEqual(['agent']);
+    expect(tagsOf({ files: [], title: 'Make sure every Claude puts {A} in the plugin' })).toEqual(['agent']);
+  });
+
+  it("the PR's Tags: line and curated tags add and take away", () => {
+    const story = parseStory('## Story\nTags: sound, -character, festival');
+    expect(story.tags).toEqual([['+', 'sound'], ['-', 'character'], ['+', 'festival']]);
+    expect(tagsOf({ files: [f('src/game/plugins/busker.ts')], story })).toEqual(['sound', 'festival']);
+    expect(tagsOf({ files: [f('src/game/plugins/ham.ts')] }, ['-character', 'ui'])).toEqual(['ui']);
   });
 });

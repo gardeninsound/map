@@ -17,6 +17,8 @@ import {
   type StoryChange,
   type StoryIndex,
   type StoryShot,
+  tagCounts,
+  withTag,
 } from './model';
 
 type Load = { state: 'loading' } | { state: 'empty' } | { state: 'error'; message: string } | { state: 'ok'; idx: StoryIndex };
@@ -24,6 +26,7 @@ type Load = { state: 'loading' } | { state: 'empty' } | { state: 'error'; messag
 export function StoryPage({ src }: { src: string }) {
   const [load, setLoad] = useState<Load>({ state: 'loading' });
   const [filter, setFilter] = useState<Filter>('all');
+  const [tag, setTag] = useState<string | null>(null);
 
   useEffect(() => {
     let live = true;
@@ -58,7 +61,7 @@ export function StoryPage({ src }: { src: string }) {
       {load.state === 'loading' && <p className="story-note">Unrolling the log…</p>}
       {load.state === 'empty' && <p className="story-note">The story log hasn't started yet. It begins with the next change to the map.</p>}
       {load.state === 'error' && <p className="story-note">Couldn't read the story log ({load.message}). Try again in a minute.</p>}
-      {load.state === 'ok' && <Story idx={load.idx} src={src} filter={filter} setFilter={setFilter} />}
+      {load.state === 'ok' && <Story idx={load.idx} src={src} filter={filter} setFilter={setFilter} tag={tag} setTag={setTag} />}
       <footer className="story-foot">
         Written automatically as the map changes, from the project's{' '}
         <a href="https://github.com/gardeninsound/map/tree/story">story branch</a>. <a href={import.meta.env.BASE_URL}>Back to the map →</a>
@@ -67,10 +70,16 @@ export function StoryPage({ src }: { src: string }) {
   );
 }
 
-function Story({ idx, src, filter, setFilter }: { idx: StoryIndex; src: string; filter: Filter; setFilter: (f: Filter) => void }) {
+type StoryProps = { idx: StoryIndex; src: string; filter: Filter; setFilter: (f: Filter) => void; tag: string | null; setTag: (t: string | null) => void };
+function Story({ idx, src, filter, setFilter, tag, setTag }: StoryProps) {
   const s = useMemo(() => stats(idx), [idx]);
   const series = useMemo(() => growth(idx), [idx]);
-  const months = useMemo(() => groupByMonth(applyFilter(idx.changes, filter)), [idx, filter]);
+  const months = useMemo(() => groupByMonth(withTag(applyFilter(idx.changes, filter), tag)), [idx, filter, tag]);
+  const tags = useMemo(() => tagCounts(idx.changes), [idx]);
+  const pickTag = (t: string) => {
+    setTag(t === tag ? null : t);
+    document.querySelector('.story-filters')?.scrollIntoView({ block: 'start' });
+  };
   const waiting = useMemo(() => waitingWishes(idx), [idx]);
   const FILTERS: [Filter, string][] = [
     ['all', `Everything · ${idx.changes.length}`],
@@ -102,6 +111,15 @@ function Story({ idx, src, filter, setFilter }: { idx: StoryIndex; src: string; 
           </button>
         ))}
       </nav>
+      {tags.length > 0 && (
+        <nav className="story-tags" aria-label="Tags">
+          {tags.map(({ tag: t, n }) => (
+            <button key={t} className={t === tag ? 'on' : ''} aria-pressed={t === tag} onClick={() => pickTag(t)}>
+              {t} <span>{n}</span>
+            </button>
+          ))}
+        </nav>
+      )}
 
       <main className="story-log">
         {months.map((m) => (
@@ -111,7 +129,7 @@ function Story({ idx, src, filter, setFilter }: { idx: StoryIndex; src: string; 
               <div key={d.day} className="story-day">
                 <h3 className="story-daylabel">{d.label}</h3>
                 {d.changes.map((c) => (
-                  <Change key={c.sha} c={c} src={src} />
+                  <Change key={c.sha} c={c} src={src} tag={tag} onTag={pickTag} />
                 ))}
               </div>
             ))}
@@ -190,7 +208,7 @@ function Spark({ series }: { series: Series }) {
   );
 }
 
-function Change({ c, src }: { c: StoryChange; src: string }) {
+function Change({ c, src, tag, onTag }: { c: StoryChange; src: string; tag: string | null; onTag: (t: string) => void }) {
   const [more, setMore] = useState(false);
   const words = c.story.note ?? c.summary;
   const long = (words?.length ?? 0) > 280;
@@ -235,10 +253,19 @@ function Change({ c, src }: { c: StoryChange; src: string }) {
       {c.shots.filter((s) => s.after).map((s, i) => (
         <Shot key={i} shot={s} src={src} />
       ))}
+      {(c.tags?.length ?? 0) > 0 && (
+        <p className="story-change-tags">
+          {c.tags!.map((t) => (
+            <button key={t} className={t === tag ? 'on' : ''} onClick={() => onTag(t)} title={t === tag ? 'show everything' : `show every ${t} change`}>
+              {t}
+            </button>
+          ))}
+        </p>
+      )}
       <p className="story-meta">
         {c.authors.join(', ') || 'someone'}
         {c.tools.length ? ` with ${c.tools.join(', ')}` : ''} · {c.files} files, +{c.additions} −{c.deletions}
-        {c.areas.length ? ` · ${c.areas.join(', ')}` : ''} · <a href={c.url}>{c.pr ? `#${c.pr}` : c.sha.slice(0, 7)}</a> ·{' '}
+        {!c.tags?.length && c.areas.length ? ` · ${c.areas.join(', ')}` : ''} · <a href={c.url}>{c.pr ? `#${c.pr}` : c.sha.slice(0, 7)}</a> ·{' '}
         <a href={`${src}${c.dir}/entry.json`}>record</a>
       </p>
     </article>

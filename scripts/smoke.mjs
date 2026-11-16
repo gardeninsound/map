@@ -177,8 +177,13 @@ try {
             merged_at: '2026-11-15T00:24:24Z', dir: 'changes/x',
             ideas: [{ issue: 36, url: 'u', text: 'add my little ponys', name: null, street: '47th Ave SW', asked_at: '2026-11-05T04:44:46Z' }],
             summary: 'Five pastel ponies.', story: { askedVsMade: null, mike: null, note: null },
-            authors: ['exit320-stack'], tools: [], files: 7, additions: 274, deletions: 2, areas: [], shots: [],
+            authors: ['exit320-stack'], tools: [], files: 7, additions: 274, deletions: 2, areas: [], tags: ['wish', 'character'], shots: [],
             census: { spots: 15, plugins: 20, scenes: 11 },
+          },
+          {
+            pr: 65, sha: 'def5678', title: 'A new road', url: 'https://github.com/gardeninsound/map/pull/65',
+            merged_at: '2026-11-16T00:24:24Z', dir: 'changes/y', ideas: [], summary: 'A road.', story: { askedVsMade: null, mike: null, note: null },
+            authors: ['vlandham'], tools: [], files: 2, additions: 20, deletions: 2, areas: [], tags: ['map'], shots: [], census: null,
           },
         ],
         wishes: [{ issue: 36, url: 'u', asked_at: '2026-11-05T04:44:46Z', text: 'add my little ponys', name: null, street: null, state: 'closed', answered_by: [{ pr: 64, sha: 'abc1234', merged_at: '2026-11-15T00:24:24Z' }] }],
@@ -187,6 +192,12 @@ try {
   );
   await page.goto(`${base}story/?src=/__story/`);
   await page.locator('#pr-64 .story-wish', { hasText: 'add my little ponys' }).waitFor({ timeout: 10_000 });
+  // a tag shows only its changes; again shows everything
+  await page.locator('.story-tags button', { hasText: 'map' }).click();
+  await page.locator('#pr-64').waitFor({ state: 'detached', timeout: 5_000 });
+  await page.locator('#pr-65').waitFor({ timeout: 5_000 });
+  await page.locator('#pr-65 .story-change-tags button', { hasText: 'map' }).click();
+  await page.locator('#pr-64').waitFor({ timeout: 5_000 });
   assertClean();
 
   console.log(`smoke ok: boots, arcade, ${titles.length} cabinets, the bear, ?open= links, a sign's ride, the snack crow, /story/`);
