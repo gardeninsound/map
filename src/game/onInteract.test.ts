@@ -19,7 +19,9 @@ const HOW = `
     3. test it with pick(action, 'a choice label') (see src/game/actions.test.ts)
   Examples: src/game/plugins/ponies.ts (a simple dialog), lunaPark.ts (choices → a ride),
   chicken.ts (questions, then a mini game), ham.ts (a choice that does something, then a reply).
-  More in src/game/CLAUDE.md, "What {A} does is data".`;
+  Needs something no Action shows yet (a new mini game, a new kind of screen)? Add it to Action in
+  src/game/actions.ts and one case to App's runAction (allowed: only onInteract is guarded).
+  More in src/game/CLAUDE.md, "What {A} does is data" and "Something new on screen".`;
 
 function branchesInOnInteract(): string[] {
   const app = readFileSync(new URL('../App.tsx', import.meta.url), 'utf8');

@@ -5,7 +5,9 @@
  * and a test can walk it: `pick(action, 'Yes!')` follows a choice.
  *
  * Kept small on purpose: what the overlays can show. `do` is the escape hatch for a side effect
- * that isn't an overlay (climbing into the rowboat; petting Ham, then his reply).
+ * that isn't an overlay (climbing into the rowboat; petting Ham, then his reply), never for opening
+ * a screen. Something new to show (another mini game, a new kind of screen): add it here, plus one
+ * case in App's `runAction` (src/game/CLAUDE.md, "Something new on screen").
  */
 import type { Target } from '../city';
 
