@@ -10,7 +10,11 @@ Idea:
 Where:
 <!-- where to point the camera, one per line or split by ";":
      47.5310, -122.3960 — the meadow  ·  arcade  ·  open:garden (inside a scene or a
-     character's dialog: any ?open= link)  ·  tile 120, 340  ·  title  ·  none -->
+     character's dialog: any ?open= link, e.g. ?open=garden&time=2026-04-15 for a season)  ·
+     tile 120, 340  ·  title  ·  none -->
+Tags:
+<!-- optional: the log tags each change from what it touched (map, character, ui, code, agent…);
+     add your own or take one away: sound, festival, -code -->
 Asked vs made:
 <!-- if this isn't quite what the visitor asked for: how, and why -->
 Mike:

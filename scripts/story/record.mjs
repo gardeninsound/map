@@ -8,6 +8,8 @@
  *   node scripts/story/record.mjs --out .story --pr 64 --redo        # the same, by PR number
  *   node scripts/story/record.mjs --out .story --wishes --chronicle  # just the wishes + README
  *   node scripts/story/record.mjs --out .story --portraits           # this week's photo of every spot
+ *   node scripts/story/record.mjs --out .story --curated --limit 40  # retake every change whose places
+ *                                                                   # were curated since (curated.json)
  *   add --no-shots to skip building and photographing (facts only, fast). A --redo keeps the
  *   earlier photos when the places are the same; --reshoot takes them again. --retry-shots
  *   re-records (with new photos) every change whose photos failed or fell back to the title screen.
@@ -27,6 +29,9 @@ import {
   shotsNeedRetry,
   changeDir,
   coordsFromPatches,
+  curatedFor,
+  placesMoved,
+  tagsOf,
   ideaRefs,
   isRealWish,
   makers,
@@ -56,6 +61,7 @@ const { values: opt } = parseArgs({
     wishes: { type: 'boolean', default: false },
     chronicle: { type: 'boolean', default: false },
     portraits: { type: 'boolean', default: false },
+    curated: { type: 'boolean', default: false },
     branch: { type: 'string', default: 'origin/main' },
   },
 });
@@ -90,6 +96,8 @@ const REPO = process.env.GITHUB_REPOSITORY || sh('gh', ['repo', 'view', '--json'
 const readJson = (p) => JSON.parse(readFileSync(p, 'utf8'));
 const writeJson = (p, v) => writeFileSync(p, JSON.stringify(v, null, 2) + '\n');
 const log = (...a) => console.log('·', ...a);
+/** hand-picked places and tags for changes from before their PR could say (README: "Curated") */
+const CURATED = JSON.parse(readFileSync(new URL('./curated.json', import.meta.url), 'utf8'));
 
 mkdirSync(join(OUT, 'changes'), { recursive: true });
 mkdirSync(join(OUT, 'wishes'), { recursive: true });
@@ -159,6 +167,15 @@ async function getCamera() {
   }
   return camera;
 }
+/** what a commit's site understands: ?open= links and the game clock (both #71), ?at=arcade */
+const featuresOf = (sha) => {
+  const app = tryGit('show', `${sha}:src/App.tsx`) ?? '';
+  return {
+    open: /openFromSearch/.test(app),
+    clock: /clockFromSearch/.test(tryGit('show', `${sha}:src/main.tsx`) ?? ''),
+    arcadeAt: /(\bat|get\(\s*['"]at['"]\s*\))\s*===\s*['"]arcade['"]/.test(app),
+  };
+};
 async function photograph(sha, places, outDir, prefix, moving, time = null) {
   const dist = buildAt(sha);
   if (!dist) return places.map(() => ({ still: null, moving: null, problems: ['build failed'] }));
@@ -166,7 +183,7 @@ async function photograph(sha, places, outDir, prefix, moving, time = null) {
   const base = baseOf(tryGit('show', `${sha}:vite.config.ts`) ?? '');
   const server = await cam.serve(dist, base);
   try {
-    return await cam.shoot(cam.browser, server.url, places, outDir, { prefix, moving, time });
+    return await cam.shoot(cam.browser, server.url, places, outDir, { prefix, moving, time, features: featuresOf(sha) });
   } finally {
     await server.close();
   }
@@ -181,8 +198,9 @@ const START = (() => {
 })();
 const VISIBLE = new Set(['city', 'map pipeline', 'characters & map life', 'scenes & games', 'ui', 'words & content', 'art & sound']);
 
-/** Where to point the camera: what the PR said, else coordinates the diff adds, else the start. */
-function placesFor(story, files, patch, areas) {
+/** Where to point the camera: curated places, else what the PR said, else coordinates the diff adds, else the start. */
+function placesFor(story, files, patch, areas, curated) {
+  if (curated?.where) return curated.where.map(parseWhere).filter(Boolean);
   if (!story.shots) return [];
   if (story.where.length) return story.where;
   if (!areas.some((a) => VISIBLE.has(a))) return [];
@@ -307,17 +325,31 @@ async function recordChange(sha, recorded) {
   if (old && old !== dir) renameSync(join(OUT, old), abs);
   mkdirSync(abs, { recursive: true });
 
-  const places = placesFor(e.story, files, patch, areas);
-  e.shots = places.map((p) => ({ query: p.query, lat: p.lat ?? null, lon: p.lon ?? null, label: p.label ?? null, guessed: !e.story.where.length }));
+  const curated = curatedFor(CURATED, { pr: prNum, sha });
+  e.tags = tagsOf(e, curated?.tags);
+  const places = placesFor(e.story, files, patch, areas, curated);
+  e.where_from = curated?.where ? 'curated' : e.story.where.length ? 'pr' : 'guessed';
+  e.shots = places.map((p) => ({
+    query: p.query,
+    ...(p.way ? { way: p.way, goal: p.goal } : {}),
+    lat: p.lat ?? null,
+    lon: p.lon ?? null,
+    label: p.label ?? null,
+    guessed: e.where_from === 'guessed',
+  }));
   const samePlaces =
     prev?.shots?.length === places.length && prev.shots.every((s, i) => s.query === places[i].query && (s.after || !SHOTS));
   // keep the photos on a re-record, unless asked for new ones (and never drop them for --no-shots)
-  if (samePlaces && (!SHOTS || (!opt.reshoot && !opt['retry-shots']))) {
+  const keep = samePlaces && (!SHOTS || (!opt.reshoot && !opt['retry-shots']));
+  if (keep) {
     // a re-record (the description was edited): the photos still show the same places
     e.shots = prev.shots.map((s, i) => ({ ...s, label: e.shots[i].label, guessed: e.shots[i].guessed }));
     if (prev.camera) e.camera = prev.camera;
-  } else if (SHOTS && places.length) {
+  } else if (SHOTS) {
+    // new places: the old photos go (and a change curated to show nothing keeps none)
     for (const f of readdirSync(abs)) if (/^(before|after|moving)-\d+\.webp$/.test(f)) rmSync(join(abs, f));
+  }
+  if (!keep && SHOTS && places.length) {
     // both at the moment it merged, so before and after differ only by the change
     const before = parent ? await photograph(parent, places, abs, 'before', false, e.merged_at) : [];
     const after = await photograph(sha, places, abs, 'after', true, e.merged_at);
@@ -326,12 +358,13 @@ async function recordChange(sha, recorded) {
       s.after = after[i]?.still ?? null;
       s.moving = after[i]?.moving ?? null;
       s.problems = { before: before[i]?.problems ?? [], after: after[i]?.problems ?? [] };
+      s.via = { before: before[i]?.via ?? 'link', after: after[i]?.via ?? 'link' };
     });
     e.camera = {
       viewport: (await import('./shoot.mjs')).VIEWPORT,
       zoom: 3,
       build: { before: parent ? (buildMode.get(parent) ?? null) : null, after: buildMode.get(sha) ?? null },
-      note: "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else.",
+      note: "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else. via 'way': a build from before ?open= links, walked in by pressing {A} at the place's `way`.",
     };
   }
   // a re-record never loses what was there: earlier descriptions are kept, oldest first
@@ -413,7 +446,19 @@ try {
     log(`retry shots: ${retry.length} change(s)`);
     todo.push(...retry.slice(0, Number(opt.limit)));
   }
-  const redo = opt.redo || opt['retry-shots'];
+  if (opt.curated) {
+    // a change whose places were curated since it was photographed: take its photos again
+    const moved = entries
+      .filter(({ entry: e }) => {
+        const c = curatedFor(CURATED, e);
+        return c?.where && placesMoved(e.shots, c.where.map(parseWhere).filter(Boolean));
+      })
+      .sort((a, b) => a.entry.merged_at.localeCompare(b.entry.merged_at))
+      .map(({ entry }) => entry.sha);
+    log(`curated places: ${moved.length} change(s) to photograph again`);
+    todo.push(...moved.slice(0, Number(opt.limit)));
+  }
+  const redo = opt.redo || opt['retry-shots'] || opt.curated;
   for (const sha of [...new Set(todo)]) {
     if (recorded.has(sha) && !redo) {
       log(`already recorded ${sha.slice(0, 7)} (--redo to redo)`);
@@ -432,6 +477,14 @@ try {
   entries = loadEntries();
   if (opt.wishes) syncWishes(entries);
   if (opt.chronicle) {
+    // tags follow the current rules and curated.json, for every change, old ones too
+    for (const { dir, entry: e } of entries) {
+      const tags = tagsOf(e, curatedFor(CURATED, e)?.tags);
+      if (JSON.stringify(tags) !== JSON.stringify(e.tags)) {
+        e.tags = tags;
+        writeJson(join(OUT, dir, 'entry.json'), e);
+      }
+    }
     const wishes = loadWishes();
     writeFileSync(join(OUT, 'README.md'), renderChronicle(entries, wishes, REPO));
     writeJson(join(OUT, 'story.json'), renderIndex(entries, wishes));

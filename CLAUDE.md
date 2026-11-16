@@ -79,7 +79,7 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
 4. **Small commits**, each with `npm test` + `npm run build` green (and `npm run smoke` for anything
    you can see or hear).
 5. **Open a PR into `main`** with a **`## Story` section** in its description (the template's
-   `Idea:` / `Where:` / `Asked vs made:` / `Mike:` / `Note:` lines; `--fill` skips the template, so
+   `Idea:` / `Where:` / `Tags:` / `Asked vs made:` / `Mike:` / `Note:` lines; `--fill` skips the template, so
    write the body). The story log keeps it with the change and photographs each `Where` before
    and after (`scripts/story/README.md`). Claude fills in `Idea`, `Where` and `Asked vs made` from
    the work, and leaves `Mike:` empty unless Mike said the words himself. The **Check** workflow

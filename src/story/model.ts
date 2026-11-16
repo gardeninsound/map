@@ -30,6 +30,8 @@ export type StoryChange = {
   additions: number;
   deletions: number;
   areas: string[];
+  /** what kind of change (scripts/story/lib.mjs `tagsOf`); missing in logs written before tags */
+  tags?: string[];
   shots: StoryShot[];
   census: Census | null;
 };
@@ -74,6 +76,16 @@ export function applyFilter(changes: StoryChange[], filter: Filter): StoryChange
   if (filter === 'pictures') return changes.filter((c) => c.shots.some((s) => s.after));
   return changes;
 }
+
+/** each tag with how many changes have it, most first (ties in the log's own order) */
+export function tagCounts(changes: StoryChange[]): { tag: string; n: number }[] {
+  const n = new Map<string, number>();
+  for (const c of changes) for (const t of c.tags ?? []) n.set(t, (n.get(t) ?? 0) + 1);
+  return [...n].map(([tag, k]) => ({ tag, n: k })).sort((a, b) => b.n - a.n);
+}
+
+/** the changes with this tag (all of them for null) */
+export const withTag = (changes: StoryChange[], tag: string | null) => (tag ? changes.filter((c) => c.tags?.includes(tag)) : changes);
 
 export type Day = { day: string; label: string; changes: StoryChange[] };
 export type Month = { month: string; label: string; days: Day[] };

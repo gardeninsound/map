@@ -22,6 +22,8 @@ const FIELDS = {
   note: 'note',
   notes: 'note',
   shots: 'shots',
+  tags: 'tags',
+  tag: 'tags',
 };
 
 /**
@@ -29,7 +31,7 @@ const FIELDS = {
  * until the next key). HTML comments (the template's hints) are dropped.
  */
 export function parseStory(body) {
-  const out = { ideas: [], where: [], askedVsMade: null, mike: null, note: null, shots: true, present: false };
+  const out = { ideas: [], where: [], askedVsMade: null, mike: null, note: null, shots: true, tags: [], present: false };
   if (!body) return out;
   const text = body.replace(/<!--[\s\S]*?-->/g, '').replace(/\r\n?/g, '\n');
   const m = /^#{1,3}\s*story\s*$/im.exec(text);
@@ -56,6 +58,7 @@ export function parseStory(body) {
     const val = v.trim();
     if (field === 'ideas') out.ideas = [...new Set([...val.matchAll(/#(\d+)/g)].map((x) => Number(x[1])))];
     else if (field === 'where') out.where = val.split(/\n|;/).map(parseWhere).filter(Boolean);
+    else if (field === 'tags') out.tags = parseTags(val);
     else if (field === 'shots') out.shots = !/^(no|none|off|skip|false)\b/i.test(val);
     else out[field] = val && !/^(-|none|n\/a)$/i.test(val) ? val : null;
   }
@@ -68,11 +71,31 @@ export function parseStory(body) {
  *   `title` (the title screen) · `open:garden` (a ?open= link: inside a scene, a character's
  *   dialog) · `?open=garden&time=2026-04-15` (any query, as is). Anything after `—` or `(` is a
  *   caption. `none` → null.
+ *
+ * An `open` place can add ` @ lat, lon`, where to stand and press {A} on a build from before the
+ * ?open= links (#71): `open:scene:rush-hour @ 47.56373, -122.386654`. Its `way` is that query, and
+ * `goal` is what's on screen once you're in (a scene, the arcade, a dialog…), for either path.
  */
 export function parseWhere(s) {
   if (!s) return null;
-  const [spot, ...cap] = s.split(/\s+(?:—|--|\()\s*/);
+  const [spot0, ...cap] = s.split(/\s+(?:—|--|\()\s*/);
   const caption = cap.join(' ').replace(/\)\s*$/, '').trim() || null;
+  const [spot, standAt] = spot0.split(/\s+@\s*/);
+  const place = placeOf(spot, caption);
+  if (!place) return null;
+  const open = /(?:^|&)open=([^&]+)/.exec(place.query)?.[1];
+  if (open) {
+    place.goal = openGoal(open);
+    const time = /(?:^|&)(time=[^&]+)/.exec(place.query)?.[1];
+    const ll = standAt && /^(-?\d{1,3}\.\d+)\s*,\s*(-?\d{1,3}\.\d+)\s*$/.exec(standAt.trim());
+    const at = /^arcade\b/.test(decodeURIComponent(open)) ? 'at=arcade' : ll ? `at=${ll[1]},${ll[2]}` : null;
+    if (at) place.way = [at, time].filter(Boolean).join('&');
+    if (ll && place.lat == null) Object.assign(place, { lat: Number(ll[1]), lon: Number(ll[2]) });
+  }
+  return place;
+}
+
+function placeOf(spot, caption) {
   const t = spot.trim().toLowerCase().replace(/[`*]/g, '');
   if (!t || /^(none|-|n\/a|nowhere)$/.test(t)) return null;
   if (t === 'arcade') return { query: 'at=arcade', label: caption ?? 'the Duck Arcade' };
@@ -88,6 +111,39 @@ export function parseWhere(s) {
   if (ll) return { query: `at=${ll[1]},${ll[2]}`, lat: Number(ll[1]), lon: Number(ll[2]), label: caption };
   return null;
 }
+
+/** the Duck Arcade's door, for builds from before `?at=arcade` worked (they read it as a number) */
+export const ARCADE_DOOR = 'at=47.560470,-122.386619';
+
+/** the same problem seen over and over (a page error every frame) once, with how many times */
+export function squeeze(problems) {
+  const n = new Map();
+  for (const p of problems) n.set(p, (n.get(p) ?? 0) + 1);
+  return [...n].map(([p, k]) => (k > 1 ? `${p} (×${k})` : p));
+}
+
+/** what's on screen once a ?open= value has opened (a selector the camera waits for) */
+export function openGoal(value) {
+  const head = decodeURIComponent(value).toLowerCase().split(':')[0];
+  if (head === 'scene') return '.scene';
+  if (head === 'arcade') return '.arcade-scene';
+  if (head === 'ride') return '.luna-ride';
+  if (head === 'minigame') return '.minigame-canvas';
+  if (head === 'idea' || head === 'spots') return null;
+  return '.dialog';
+}
+
+/**
+ * Hand-picked places for changes recorded before their PR could say (scripts/story/curated.json,
+ * by PR number or the commit's first 7): they win over the PR's `Where:` and the guess.
+ */
+export function curatedFor(curated, { pr, sha }) {
+  return (pr != null && curated?.[String(pr)]) || curated?.[sha?.slice(0, 7)] || null;
+}
+
+/** a record photographed somewhere other than where it should be now (its places were curated since) */
+export const placesMoved = (shots, places) =>
+  (shots ?? []).length !== places.length || places.some((p, i) => shots[i].query !== p.query);
 
 // ---------------------------------------------------------------------------------------------
 // Facts we can read without anyone writing them down
@@ -152,6 +208,70 @@ export function areasOf(paths) {
   const hit = new Set();
   for (const p of paths) for (const [re, name] of AREAS) if (re.test(p)) { hit.add(name); break; }
   return AREAS.map(([, n]) => n).filter((n, i, a) => hit.has(n) && a.indexOf(n) === i);
+}
+
+// ---------------------------------------------------------------------------------------------
+// Tags: what kind of change it was, to sort the log by (README: "Tags")
+
+/** every tag, in the order they're listed */
+export const TAGS = ['wish', 'map', 'character', 'scene', 'arcade', 'art', 'sound', 'words', 'ui', 'multiplayer', 'idea-box', 'code', 'agent', 'story-log', 'infra', 'docs'];
+
+const big = (f) => (f.additions ?? 0) + (f.deletions ?? 0) >= 15;
+const isTest = (p) => /\.test\.[cm]?[jt]sx?$/.test(p);
+/** tag ← a file it touched (tests only count for `agent`, below) */
+const TAG_FILES = [
+  // (before the city moved to src/city/, its map and drawing lived in scripts/ and src/game/)
+  ['map', (p) => /^scripts\/city\/|^scripts\/(build-map|map-config|review-map|fetch-|landmarks)|^content\/landmarks\.csv|^src\/(city\/)?(world|render)\/|^src\/game\/(world|render)\//.test(p)],
+  ['character', (p) => /^src\/game\/(?!actions\.ts|look\.ts|plugins\/index\.ts|plugins\/visitors\.ts|world\/|render\/)/.test(p) || /^src\/content\/(crow|chicken|ham|ponies|mermaids|pegasus|dinos|lunaPark|garden|busker|bikeRace|chickenBoxing|neighbors)\b/.test(p)],
+  ['scene', (p) => /^src\/experiences\/(?!arcade\/)/.test(p)],
+  ['arcade', (p) => /^src\/experiences\/arcade\/|^public\/arcade\/|duckArcade|arcadeBear/.test(p)],
+  ['art', (p) => /^public\/(art|sprites)\/|^data\/source\/|artManifest|^scripts\/(images|art-publish|make-)/.test(p)],
+  ['sound', (p) => !/^scripts\/ai\//.test(p) && /^public\/(audio|music|sounds)\/|\.(mp3|ogg|wav)$|sounds?\.ts$|music|busker/i.test(p)],
+  ['words', (p) => /^src\/content\/(?!artManifest|placesData)|^content\/places\.csv/.test(p)],
+  ['ui', (p) => /^src\/ui\/(?!sounds\.ts)|^src\/[^/]+\.css$|^src\/city\/(hud|ui)\//.test(p)],
+  ['multiplayer', (p) => /^relay\/|^src\/net\/|plugins\/visitors\.ts/.test(p)],
+  ['idea-box', (p) => /^wish\/|IdeaBox/.test(p)],
+  ['code', (p, f) => /^src\/city\/engine\/|^src\/game\/actions\.ts|^src\/game\/plugins\/index\.ts|^vite\.config|^tsconfig|^index\.html$/.test(p) || (/^src\/(App|main)\.tsx$/.test(p) && (f.additions ?? 0) + (f.deletions ?? 0) >= 60)],
+  ['agent', (p) => /^scripts\/ai\/|^\.claude\//.test(p)],
+  ['story-log', (p) => /^scripts\/story\/|^src\/story\/|^story\//.test(p)],
+  ['infra', (p) => /^\.github\/|^preview\//.test(p)],
+  ['docs', (p) => /^docs\/|(^|\/)README\.md$/.test(p)],
+];
+
+/** `ui, +sound, -code` → [['+','ui'], ['+','sound'], ['-','code']] (a Story `Tags:` line, curated tags) */
+export function parseTags(s) {
+  const list = Array.isArray(s) ? s : String(s ?? '').split(/[,\s]+/);
+  return list
+    .map((t) => /^([+-]?)#?([a-z][a-z-]*)$/.exec(String(t).trim().toLowerCase()))
+    .filter(Boolean)
+    .map((m) => [m[1] || '+', m[2]]);
+}
+
+/**
+ * A change's tags, from what it touched: the files (see TAG_FILES), whether it answered a wish,
+ * and changes to how agents work (scripts/ai, a CLAUDE.md rewritten rather than given a line, the
+ * guards that tell Claude where things go, a title about Claude or agents). Then the PR's own
+ * `Tags:` line and curated tags add (`sound`) or take away (`-code`).
+ */
+export function tagsOf({ files = [], title = '', ideas = [], story = {} }, curated = []) {
+  const on = new Set();
+  if (ideas.length) on.add('wish');
+  for (const f of files) {
+    const p = f.path;
+    if (/(^|\/)CLAUDE\.md$/.test(p) && big(f)) on.add('agent').add('docs');
+    if (/onInteract\.test\.ts$/.test(p)) on.add('agent');
+    if (isTest(p)) continue;
+    for (const [tag, hit] of TAG_FILES) if (hit(p, f)) on.add(tag);
+  }
+  if (/\b(claude|agents?|ai helper|free models?)\b/i.test(title)) on.add('agent');
+  // only notes changed: docs, and a CLAUDE.md is what every Claude reads before working
+  const md = files.filter((f) => !isTest(f.path));
+  if (md.length && md.every((f) => /\.md$/.test(f.path))) {
+    on.add('docs');
+    if (md.some((f) => /(^|\/)CLAUDE\.md$/.test(f.path))) on.add('agent');
+  }
+  for (const [sign, tag] of [...(story.tags ?? []), ...parseTags(curated)]) sign === '-' ? on.delete(tag) : on.add(tag);
+  return [...TAGS.filter((t) => on.has(t)), ...[...on].filter((t) => !TAGS.includes(t)).sort()];
 }
 
 /**
@@ -391,6 +511,7 @@ export function renderIndex(entries, wishes) {
         additions: e.additions ?? 0,
         deletions: e.deletions ?? 0,
         areas: e.areas ?? [],
+        tags: e.tags ?? [],
         shots: (e.shots ?? []).map((s) => ({
           query: s.query,
           lat: s.lat ?? null,

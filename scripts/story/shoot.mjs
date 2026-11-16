@@ -10,7 +10,7 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
-import { parseWhere } from './lib.mjs';
+import { ARCADE_DOOR, parseWhere, squeeze } from './lib.mjs';
 
 /** zoomFor(1280, 768) is 3: every native pixel is a 3×3 block */
 export const VIEWPORT = { width: 1280, height: 768 };
@@ -46,9 +46,15 @@ export async function launch() {
 
 /**
  * Photographs each place on the site at `url`. Returns one result per place:
- * `{ still, moving, problems }` (file names inside `outDir`, page errors seen while there).
+ * `{ still, moving, problems, via }` (file names inside `outDir`, page errors seen while there, and
+ * `via: 'way'` when it walked in by hand).
+ *
+ * `features` says what this build understands (record.mjs reads it from the commit): without
+ * ?open= links (`open: false`) a place with a `way` stands there and presses {A} until its `goal`
+ * is on screen; without the game clock (`clock: false`) a place's `time=` is faked in the browser;
+ * without `?at=arcade` (`arcadeAt: false`) the camera stands at the arcade door's coordinates instead.
  */
-export async function shoot(browser, url, places, outDir, { prefix, moving = false, settleMs = 3500, time = null } = {}) {
+export async function shoot(browser, url, places, outDir, { prefix, moving = false, settleMs = 3500, time = null, features = { open: true, clock: true } } = {}) {
   const sharp = (await import('sharp')).default;
   mkdirSync(outDir, { recursive: true });
   const results = [];
@@ -61,10 +67,29 @@ export async function shoot(browser, url, places, outDir, { prefix, moving = fal
     try {
       // seed=1 and the moment of the change (src/city/clock.ts): the same chance every time, and the
       // garden in the month it was; builds from before the clock simply ignore them
-      const pin = `&seed=1${time && !/(^|&)time=/.test(place.query) ? `&time=${encodeURIComponent(time)}` : ''}`;
-      await page.goto(`${url}?solo${pin}${place.query === 'title' ? '' : `&${place.query}`}`, { waitUntil: 'load' });
+      const opens = /(^|&)open=/.test(place.query);
+      const byHand = opens && !features.open;
+      if (byHand && !place.way) problems.push('this build has no ?open= links and the place gives no way in (`@ lat, lon`)');
+      let query = byHand && place.way ? place.way : place.query;
+      if (features.arcadeAt === false) query = query.replace(/(^|&)at=arcade(?=&|$)/, `$1${ARCADE_DOOR}`);
+      if (byHand && place.way) res.via = 'way';
+      // a build from before the clock: its Date says the time the place asks for
+      const asked = /(?:^|&)time=([^&]+)/.exec(query)?.[1];
+      if (asked && !features.clock) await page.clock.setFixedTime(new Date(decodeURIComponent(asked)));
+      const pin = `&seed=1${time && !/(^|&)time=/.test(query) ? `&time=${encodeURIComponent(time)}` : ''}`;
+      await page.goto(`${url}?solo${pin}${query === 'title' ? '' : `&${query}`}`, { waitUntil: 'load' });
       await page.locator('canvas').first().waitFor({ timeout: 15_000 });
       await page.waitForTimeout(settleMs);
+      if (place.goal && opens) {
+        const goal = page.locator(place.goal).first();
+        // walking in: {A} (Space) through the greeting and the first choice ("Let's see it", "Ride it", "Yes!")
+        for (let k = 0; byHand && place.way && k < 14 && !(await goal.isVisible()); k++) {
+          await page.keyboard.press('Space');
+          await page.waitForTimeout(700);
+        }
+        if (await goal.waitFor({ timeout: 6000 }).then(() => true, () => false)) await page.waitForTimeout(1500);
+        else problems.push(`nothing opened: no ${place.goal} on screen (on a "before" photo, usually because it wasn't there yet)`);
+      }
       if (place.query !== 'title' && (await page.locator('.title-start').count()))
         problems.push('this build has no ?at= hook: the shot is its title screen');
       await page.evaluate(() => (document.activeElement instanceof HTMLElement ? document.activeElement.blur() : undefined));
@@ -92,6 +117,7 @@ export async function shoot(browser, url, places, outDir, { prefix, moving = fal
     } finally {
       await page.close();
     }
+    res.problems = squeeze(problems);
     results.push(res);
   }
   return results;
@@ -100,13 +126,13 @@ export async function shoot(browser, url, places, outDir, { prefix, moving = fal
 // CLI
 if (import.meta.url === `file://${process.argv[1]}`) {
   const { values } = parseArgs({
-    options: { dist: { type: 'string', default: 'dist' }, at: { type: 'string', multiple: true }, out: { type: 'string', default: 'screenshots/story' }, moving: { type: 'boolean', default: true } },
+    options: { old: { type: 'boolean', default: false }, dist: { type: 'string', default: 'dist' }, at: { type: 'string', multiple: true }, out: { type: 'string', default: 'screenshots/story' }, moving: { type: 'boolean', default: true } },
   });
   const places = (values.at ?? ['title']).map(parseWhere).filter(Boolean);
   const server = await serve(values.dist);
   const browser = await launch();
   try {
-    const r = await shoot(browser, server.url, places, values.out, { prefix: 'shot', moving: values.moving });
+    const r = await shoot(browser, server.url, places, values.out, { prefix: 'shot', moving: values.moving, features: values.old ? { open: false, clock: false } : undefined });
     writeFileSync(join(values.out, 'shots.json'), JSON.stringify(r, null, 2));
     console.log(JSON.stringify(r, null, 2));
   } finally {
