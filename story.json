@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-11-16T14:40:31.331Z",
+  "generated_at": "2026-11-16T18:49:52.298Z",
   "changes": [
     {
       "pr": null,
@@ -4761,6 +4761,48 @@
         "arcade_cabinets_ready": 4,
         "source_lines": 27128,
         "commits": 103
+      }
+    },
+    {
+      "pr": 80,
+      "sha": "68c11f36838e99c51dc67151339d8b07e0687a33",
+      "title": "Story log: seeded chance on old builds, four tries to walk in",
+      "url": "https://github.com/gardeninsound/map/pull/80",
+      "merged_at": "2026-11-16T18:49:15Z",
+      "dir": "changes/2026-11-16-pr080-story-log-seeded-chance-on-old-builds-fo",
+      "ideas": [],
+      "summary": "The last curated photo (5f0f9e7, the Oct 18 slideshow) worked locally but missed in CI. A neighbor, Bill, had wandered in front of the lemon, so pressing {A} talked to him. Builds from before `?seed=` move their neighbors at random, so this changed from run to run.\n\n- On a build without the game clock, the camera now seeds `Math.random` before the page's own scripts run. That makes old-build photos repeatable too.\n- Walking in gets up to four tries, each with a new seed. The record says `got in on try N` when it took more than one.\n\nTested on the real 5f0f9e7 build: it got in on try 2 and on try 3 across two runs. Ham on #62 got in first time. 473 tests pass.",
+      "story": {
+        "askedVsMade": "A follow-up to the inside-photos work, so the last curated change gets its photo.",
+        "mike": null,
+        "note": "🤖 Generated with [Claude Code](https://claude.com/claude-code)"
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 2,
+      "additions": 52,
+      "deletions": 24,
+      "areas": [
+        "docs",
+        "tools"
+      ],
+      "tags": [
+        "story-log",
+        "docs"
+      ],
+      "shots": [],
+      "census": {
+        "spots": 15,
+        "plugins": 22,
+        "scenes": 11,
+        "content_files": 27,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 27128,
+        "commits": 104
       }
     }
   ],

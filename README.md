@@ -2,7 +2,17 @@
 
 Every change that went live on [gardeninsound.website](https://gardeninsound.website), newest first, with the wish that started it, what was made, who made it, and how the spot looked before and after. Written automatically by [`.github/workflows/story.yml`](https://github.com/gardeninsound/map/blob/main/.github/workflows/story.yml) when a change merges; the raw records are in `changes/` and `wishes/`, and `story.json` indexes them all.
 
-**86** changes · **12** wishes from visitors, **11** answered · **0** still waiting
+**87** changes · **12** wishes from visitors, **11** answered · **0** still waiting
+
+---
+
+### Nov 16, 2026 · Story log: seeded chance on old builds, four tries to walk in ([#80](https://github.com/gardeninsound/map/pull/80))
+
+**Asked vs made:** A follow-up to the inside-photos work, so the last curated change gets its photo.
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+<sub>vlandham with Claude Code · 2 files, +52 −24 · docs, tools · [record](changes/2026-11-16-pr080-story-log-seeded-chance-on-old-builds-fo/entry.json)</sub>
 
 ---
 
