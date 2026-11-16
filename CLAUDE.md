@@ -121,7 +121,7 @@ root file only for new commands, workflow, conventions or a new area.
   HUD. Import via `src/city/index.ts`. → `src/city/CLAUDE.md`
 - `src/game/` — the art layer on the map: `plugins/` (`CityPlugin`s: art spots, busker, crow,
   chicken, Ham, pegasus, dinos, Luna Park, other rabbits…) + their pure, tested rules + `sprites.ts`.
-  App.tsx wires the plugins into `CityGame`; what {A} does is each plugin's `act()` (convention 7). → `src/game/CLAUDE.md`
+  The plugin list is `src/game/plugins/index.ts` (each by id; a new one is a line there, not in App.tsx); what {A} does is each plugin's `act()` (convention 7). → `src/game/CLAUDE.md`
 - `src/experiences/` — one scene per spot, lazy-loaded via `registry.ts`; the Duck Arcade,
   Cone Catch, the Luna ride. → `src/experiences/CLAUDE.md`
 - `src/ui/` — React UI over the map: `MikeDialog`, title, spots menu, scene boundary, sounds,
@@ -153,6 +153,7 @@ root file only for new commands, workflow, conventions or a new area.
    `act(target)` with an `Action` (a dialog with choices, a ride…; `src/game/actions.ts`), tested with
    `pick()`. Never add a branch to App.tsx's `onInteract`; `src/game/onInteract.test.ts` fails if you do.
    Every character already works this way: copy any of them (ponies: a dialog; chicken: questions, then a game).
+   A new plugin is one line in `createIsland` (`src/game/plugins/index.ts`); App.tsx never imports one (the same test checks).
 
 Gotcha: fontsource packages with an `exports` map append `.css` themselves — import
 `@fontsource/big-shoulders-stencil-display/800`, not `…/800.css` (declared in `src/fonts.d.ts`).
@@ -162,7 +163,7 @@ Gotcha: fontsource packages with an `exports` map append `.css` themselves — i
 Unit tests cover content invariants (every spot has art and sits by a walkable street), the
 slideshows, busker songs, crow flight, sprites, and the city's own tests in `src/city/`. For visuals, drive real Chrome: `playwright-core` from `~/code/games/arcade/node_modules`
 with `channel: 'chrome'`; save shots under `screenshots/` (gitignored). In dev, `window.__game` is
-the live `CityGame`, plus `__art`, `__busker`, `__crow` (the plugins) for scripted checks;
+the live `CityGame`, plus `__<id>` for each plugin (`__art`, `__busker`, `__crow`…; ids in `src/game/plugins/index.ts`) for scripted checks;
 `?at=lat,lon`, `?atTile=x,y` or `?at=arcade` (beside the Duck Arcade door) skips the title and drops you there — on the live site too.
 `?open=…` goes further, into a scene, a cabinet, a ride or a character's dialog (`src/ui/CLAUDE.md`); `?time=…` and `?seed=…` pin
 the game's clock and chance (`src/city/CLAUDE.md`) for screenshots that repeat.

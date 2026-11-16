@@ -42,3 +42,11 @@ describe("App's onInteract", () => {
     expect(gone, `No longer in App's onInteract: ${gone.join(', ')}. Remove from STILL_IN_APP in this test.`).toEqual([]);
   });
 });
+
+describe('App and the plugins', () => {
+  it('App.tsx makes no plugin itself: a new one is a line in createIsland (src/game/plugins/index.ts)', () => {
+    const app = readFileSync(new URL('../App.tsx', import.meta.url), 'utf8');
+    const made = [...app.matchAll(/^import \{[^}]*\} from '\.\/game\/plugins\/(\w+)';/gm)].map((m) => m[1]);
+    expect(made, `App.tsx imports plugin(s) ${made.join(', ')}: add them to createIsland in src/game/plugins/index.ts instead (an import type is fine)`).toEqual([]);
+  });
+});

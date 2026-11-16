@@ -153,6 +153,17 @@ try {
   await settle(1000);
   assertClean();
 
+  // a plugin's id (src/game/plugins/index.ts): ?open=crow is the snack crow (it offers a carrot), not a street crow
+  check('?open=crow → the snack crow');
+  await page.goto(`${base}?solo&open=crow`);
+  await page.locator('.dialog').waitFor({ timeout: 15_000 });
+  for (let i = 0; i < 10 && !(await page.locator('.dialog button', { hasText: 'Share a carrot' }).count()); i++) {
+    await page.keyboard.press('Space');
+    await page.waitForTimeout(300);
+  }
+  await page.locator('.dialog button', { hasText: 'Share a carrot' }).waitFor({ timeout: 5_000 });
+  assertClean();
+
   // /story/ (the story log page): fed a one-change log, so it doesn't depend on the story branch
   check('/story/ page');
   await page.route((u) => u.pathname.startsWith('/__story/'), (route) =>
@@ -178,7 +189,7 @@ try {
   await page.locator('#pr-64 .story-wish', { hasText: 'add my little ponys' }).waitFor({ timeout: 10_000 });
   assertClean();
 
-  console.log(`smoke ok: boots, arcade, ${titles.length} cabinets, the bear, ?open= links, a sign's ride, /story/`);
+  console.log(`smoke ok: boots, arcade, ${titles.length} cabinets, the bear, ?open= links, a sign's ride, the snack crow, /story/`);
 } catch (e) {
   mkdirSync('screenshots/smoke', { recursive: true });
   await page.screenshot({ path: 'screenshots/smoke/failure.png' }).catch(() => {});

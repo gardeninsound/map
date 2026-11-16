@@ -16,6 +16,7 @@ first, then `src/styles.css` (title, scenes, spots).
   drawn at `CityGame.scale`; flight + timing pure and tested in `src/game/pelican.ts`, words in
   `src/content/pelican.ts`, 24-wide sprite in `sprites.ts`. Opening anything ends its visit.
 - `LookPicker.tsx` — the ◆ LOOK panel: fur, scarf and hat for your rabbit (rules in `src/game/look.ts`), each hat previewed on your rabbit.
-- **`?open=` links** (`openLink.ts`, pure + tested; App acts on them through the same paths {A} takes): `?open=garden` /
-  `boat` / `sundrop` (any target by kind, key or name: walks up and presses {A}), `scene:<spot id>`, `arcade`,
+- **`?open=` links** (`openLink.ts`, pure + tested; App acts on them through the same paths {A} takes): `?open=crow` /
+  `garden` / `sundrop` (walks up and presses {A}: a plugin's id from `src/game/plugins/index.ts` → that plugin's own target, else
+  any target by kind, key or name), `scene:<spot id>`, `arcade`,
   `arcade:<cabinet id>`, `ride:figure8|whirl`, `minigame:cone-catch`, `idea`, `spots`. The smoke test tries one of each kind.

@@ -17,33 +17,13 @@ import {
   type PlacedLandmark,
   type Target,
 } from './city';
-import { START, locations, welcome } from './content/locations';
+import { START, welcome } from './content/locations';
 import { neighborVoices } from './content/neighbors';
 import { experiences } from './experiences/registry';
-import { ArtSpots, type PlacedLocation } from './game/plugins/artSpots';
-import { Busker } from './game/plugins/busker';
-import { Crow } from './game/plugins/crow';
-import { Squirrels } from './game/plugins/squirrels';
-import { Flock } from './game/plugins/flock';
-import { Chicken } from './game/plugins/chicken';
-import { Ham } from './game/plugins/ham';
-import { Pegasus } from './game/plugins/pegasus';
-import { BigCup } from './game/plugins/bigCup';
-import { Seal } from './game/plugins/seal';
-import { ArcadeDoor } from './game/plugins/arcadeDoor';
-import { BikeRace } from './game/plugins/bikeRace';
+import type { ArtSpots, PlacedLocation } from './game/plugins/artSpots';
 import { raceResult } from './content/bikeRace';
-import { Dinos } from './game/plugins/dinos';
-import { Rowboat } from './game/plugins/rowboat';
 import { LookPicker } from './ui/LookPicker';
 import { dress, loadLook, lookCode, LOOK_SCARVES, saveLook } from './game/look';
-import { ForestMaze } from './game/plugins/forestMaze';
-import { Garden } from './game/plugins/garden';
-import { Ponies } from './game/plugins/ponies';
-import { Mermaids } from './game/plugins/mermaids';
-import { ChickenBoxing } from './game/plugins/chickenBoxing';
-import { LunaPark } from './game/plugins/lunaPark';
-import { Visitors } from './game/plugins/visitors';
 import { EMOTES } from './content/emotes';
 import type { MiniGameResult } from './experiences/minigames/ConeCatch';
 import { DialogBox } from './ui/MikeDialog';
@@ -56,6 +36,8 @@ import { TitleScreen } from './ui/TitleScreen';
 import { sounds } from './ui/sounds';
 import { findTarget, openFromSearch } from './ui/openLink';
 import { isActor, type Action } from './game/actions';
+import { createIsland, devHooks, pluginById, pluginList, targetsOf, type Island } from './game/plugins';
+import type { Visitors } from './game/plugins/visitors';
 
 type Overlay =
   | { kind: 'none' }
@@ -156,38 +138,23 @@ export default function App() {
   const [mapOpen, setMapOpen] = useState(false);
   const [muted, setMuted] = useState(sounds.isMuted());
   const touch = isTouch();
-  const arcadeDoor = useRef(new ArcadeDoor());
+  const [island, setIsland] = useState<Island | null>(null);
 
   useEffect(() => bindKeyboard(), []);
 
   useEffect(() => {
-    const art = new ArtSpots(locations);
-    const busker = new Busker();
-    const crow = new Crow();
-    const squirrels = new Squirrels();
-    const flock = new Flock();
-    const chicken = new Chicken();
-    const pegasus = new Pegasus();
-    const dinos = new Dinos();
-    const ham = new Ham();
-    const race = new BikeRace();
-    const rowboat = new Rowboat();
-    const maze = new ForestMaze();
-    const garden = new Garden();
-    const ponies = new Ponies();
-    const mermaids = new Mermaids(rowboat);
-    const boxing = new ChickenBoxing();
-    const luna = new LunaPark();
     // Everyone else on the island, live. `?solo` walks alone; `?relay=` points at another
     // relay; in dev, `?island=<name>` uses a private room so tests don't walk onto the real one.
     const params = new URLSearchParams(location.search);
-    const island = (import.meta.env.DEV && params.get('island')) || undefined;
+    const room = (import.meta.env.DEV && params.get('island')) || undefined;
     // dev: `?presence=N` → a hidden tab leaves after N s, idle fades after 2N and leaves after 4N
     const fast = import.meta.env.DEV ? Number(params.get('presence')) : 0;
     const timings = fast > 0 ? { hiddenGone: fast, idleAway: 2 * fast, idleGone: 4 * fast } : undefined;
-    const live = params.has('solo') ? null : new Visitors(params.get('relay') ?? undefined, island, timings);
+    // everyone and everything on the island, by id (src/game/plugins/index.ts): App names none of them
+    const isle = createIsland({ visitors: params.has('solo') ? null : [params.get('relay') ?? undefined, room, timings] });
+    const { art, race, visitors: live } = isle;
     if (live) live.onChange = () => setRabbitTick((n) => n + 1);
-    const plugins = [garden, art, new BigCup(art), dinos, new Seal(), arcadeDoor.current, luna, busker, crow, flock, squirrels, chicken, pegasus, ham, race, rowboat, mermaids, ponies, maze, boxing, ...(live ? [live] : [])];
+    const plugins = pluginList(isle);
     /** plugins that say what {A} does on their targets */
     const actors = plugins.filter(isActor);
     /** an Action (src/game/actions.ts) → the overlay that shows it */
@@ -245,7 +212,7 @@ export default function App() {
         lines: raceResult(r.place, r.total, r.winner, r.seconds),
       });
     g.paused = true;
-    if (import.meta.env.DEV) Object.assign(window, { __game: g, __garden: garden, __art: art, __dinos: dinos, __luna: luna, __busker: busker, __crow: crow, __flock: flock, __squirrels: squirrels, __chicken: chicken, __pegasus: pegasus, __ham: ham, __race: race, __rowboat: rowboat, __mermaids: mermaids, __ponies: ponies, __maze: maze, __boxing: boxing, __visitors: live }); // test hooks
+    if (import.meta.env.DEV) Object.assign(window, { __game: g, ...devHooks(isle) }); // test hooks: window.__<plugin id>
     // Review hooks: ?at=lat,lon (or ?atTile=x,y, or ?at=arcade) skips the title and drops you there;
     // ?audit scans the whole map for road-drawing glitches (scripts/city/road-audit.mjs).
     const q = new URLSearchParams(location.search);
@@ -254,7 +221,7 @@ export default function App() {
     const at = q.get('at');
     const atTile = q.get('atTile');
     if (at === 'arcade') {
-      const door = arcadeDoor.current.door;
+      const door = isle.arcadeDoor.door;
       if (door) g.teleport(door);
       setStarted(true);
     } else if (at || atTile) {
@@ -273,6 +240,7 @@ export default function App() {
     document.fonts.load('8px "Press Start 2P"').finally(() => g.start());
     setGame(g);
     setSpots(art);
+    setIsland(isle);
     setVisitors(live);
     return () => {
       g.stop();
@@ -396,7 +364,9 @@ export default function App() {
     const t = setTimeout(() => {
       input.clear();
       if (link.kind === 'target') {
-        const target = findTarget(game.allTargets(), link.name);
+        // a plugin's id first (?open=crow: the crow's own target), else any target by kind, key or name
+        const owner = island && pluginById(island, link.name);
+        const target = (owner && targetsOf(owner, game)[0]) || findTarget(game.allTargets(), link.name);
         if (target) game.interactWith(target);
         else console.warn(`?open=${link.name}: nothing by that name on the map`);
       } else if (link.kind === 'scene') {
@@ -404,7 +374,7 @@ export default function App() {
         if (loc) travel(loc, true);
         else console.warn(`?open=scene:${link.id}: no such spot`);
       } else if (link.kind === 'arcade') {
-        const door = arcadeDoor.current.door;
+        const door = island?.arcadeDoor.door;
         if (door) game.teleport(door);
         setOverlay(link.game ? { kind: 'arcade', game: link.game } : { kind: 'arcade' });
       } else if (link.kind === 'ride') {
@@ -416,7 +386,7 @@ export default function App() {
       }
     }, 400);
     return () => clearTimeout(t);
-  }, [game, spots, travel]);
+  }, [game, spots, island, travel]);
 
   const openSpots = spots?.open ?? [];
   const landmarkPlaces = useMemo(() => (game ? mapLandmarks(game.world.landmarks) : []), [game]);

@@ -2,8 +2,9 @@
  * `?open=`: a link that opens something on the map, for reviews and the story log's camera.
  * Pure (openLink.test.ts); App acts on it through the same paths a visitor's {A} takes.
  *
- *   ?open=garden              walk up to it and press {A}: any target by its kind (when there's one
- *   ?open=crow                of that kind), its key, or its name ("crow" finds "the snack crow")
+ *   ?open=crow                walk up to it and press {A}: a plugin's id (src/game/plugins/index.ts:
+ *   ?open=garden              the crow's own snack crow), else any target by its kind (when there's
+ *   ?open=sundrop             one of that kind), its key, or its name
  *   ?open=scene:rush-hour     an art spot's scene, as "Let's see it" opens it
  *   ?open=arcade              inside the Duck Arcade (its intro)
  *   ?open=arcade:quack-hero   straight into a cabinet's game
