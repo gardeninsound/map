@@ -13,6 +13,16 @@ side effect, then optionally another action), and App's `runAction` shows it. **
 not in App.tsx, and its test walks it with `pick(action, 'label')` (`src/game/actions.test.ts`). Every plugin works this
 way (the crow, chicken, Ham, art spots, arcade door, race, rowboat, other rabbits, garden, maze, boxing, ponies, mermaids,
 Luna Park); App's `onInteract` only runs their actions and lets the city's plain neighbors say their lines.
+
+**Something new on screen** (a second mini game, a new ride, a kind of screen no Action shows yet): grow `Action`, don't
+work around it. That's allowed in App.tsx, since the guard only blocks branches in `onInteract`. Three steps:
+1. In `src/game/actions.ts`, add the new value or kind to `Action` (a mini game: its id in `minigame`'s `game`; a ride:
+   `ride`'s union; else a new `{ kind: '…' }`).
+2. In App.tsx, have `runAction` show it: one case there, plus the overlay that renders it (a lazy-loaded component in
+   `src/experiences/`, like ConeCatch).
+3. Have the plugin return it from `act()`, test it with `pick()`, and if it should be reachable by link, add it to
+   `src/ui/openLink.ts` (`?open=minigame:<id>`). The smoke test opens a link of each kind.
+Don't use `do` to open a screen by reaching into React state. `do` is for side effects on the map (climbing into the boat).
 `src/game/onInteract.test.ts` fails on any branch added there; its message says how to do it instead.
 
 - `src/game/plugins/` — the app's `CityPlugin`s: `artSpots.ts` (spinning lemons with a beating heart above, from `src/game/lemonSpin.ts`;
