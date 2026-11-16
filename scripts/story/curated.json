@@ -1,9 +1,9 @@
 {
   "_": "Hand-picked places (and tags) for changes recorded before their PR could say where to look. Keyed by PR number, or the commit's first 7 for the early commits. `where` lines are the Story section's Where: lines, and win over the PR's own; ` @ lat, lon` is where to stand and press {A} on a build from before the ?open= links. `tags` add (`sound`) or take away (`-code`). See scripts/story/README.md, \"Curated\". After an edit, `--curated` takes those photos again.",
   "2376644": { "where": ["open:scene:rush-hour @ 47.563618, -122.386460 — Rush Hour, the boards"] },
-  "23a878f": { "where": ["open:scene:puppy-park @ 47.560036, -122.383105 — Seven+ Stories, the walk", "47.560466, -122.382939 — the compass and the arrow"] },
+  "23a878f": { "where": ["open:scene:puppy-park @ 47.560796, -122.382945 — Seven+ Stories, the walk", "47.560466, -122.382939 — the compass and the arrow"] },
   "84646d6": { "where": ["open:crow @ 47.560796, -122.380549 — the snack crow"] },
-  "5f0f9e7": { "where": ["open:scene:gas-station-wall @ 47.568080, -122.386923 — a slideshow, now in AVIF"] },
+  "5f0f9e7": { "where": ["open:scene:gas-station-wall @ 47.568178, -122.387099 — a slideshow, now in AVIF"] },
   "18e4ad0": { "where": ["open:chicken @ 47.563293, -122.386619 — the chicken by the vet", "open:minigame:cone-catch @ 47.563293, -122.386619 — Cone Catch"] },
   "82bbc20": { "where": ["open:arcade — inside the Duck Arcade", "open:scene:snuggle @ 47.577297, -122.402593 — A Good Snuggle", "47.580011, -122.378473 — Garden in Sound land"] },
   "238fcad": { "where": ["open:arcade:duck-on-the-moon — Duck on the Moon", "47.5953, -122.3876 — Luna Park"] },
@@ -13,12 +13,12 @@
   "25": { "where": ["47.561664, -122.386939 — Pegasus Books, where the pegasus walks out"] },
   "27": { "where": ["open:arcade — the Duck Arcade floor, where the bear comes by"] },
   "28": { "where": ["open:arcade — the misty forest canopy overhead"] },
-  "31": { "where": ["open:ham @ 47.585900, -122.389015 — Ham the cat", "47.586143, -122.388734 — the hidden house on 45th"] },
+  "31": { "where": ["open:ham @ 47.586050, -122.389015 — Ham the cat", "47.586143, -122.388734 — the hidden house on 45th"] },
   "50": { "where": ["open:arcade — the arcade floor, Paddles at Dawn playing"] },
   "51": { "where": ["open:arcade:quack-hero — the deer at Quack Hero"] },
   "58": { "where": ["open:boxing @ 47.562262, -122.374890 — the announcer at chicken boxing"] },
   "61": { "where": ["open:ride:whirl @ 47.595860, -122.387578 — riding the Giant Whirl"] },
-  "62": { "where": ["open:ham @ 47.585900, -122.389015 — Ham asks for pets"] },
+  "62": { "where": ["open:ham @ 47.586050, -122.389015 — Ham asks for pets"] },
   "64": { "where": ["open:sundrop @ 47.533281, -122.394291 — Sundrop and the herd"] },
   "65": { "where": ["?open=garden&time=2026-11-14T17:00:00-08:00 @ 47.566712, -122.368058 — the garden in November, when it was planted", "?open=garden&time=2026-04-15T12:00:00-07:00 @ 47.566712, -122.368058 — the same garden in April"] }
 }
