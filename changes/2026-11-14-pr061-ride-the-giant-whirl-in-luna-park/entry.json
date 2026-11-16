@@ -83,6 +83,7 @@
     "mike": null,
     "note": null,
     "shots": true,
+    "tags": [],
     "present": false
   },
   "ideas": [
@@ -129,19 +130,34 @@
     "source_lines": 23965,
     "commits": 84
   },
+  "tags": [
+    "wish",
+    "character",
+    "scene",
+    "words"
+  ],
+  "where_from": "curated",
   "shots": [
     {
-      "query": "at=47.5612,-122.3868",
-      "lat": 47.5612,
-      "lon": -122.3868,
-      "label": "the Junction, where everyone starts",
-      "guessed": true,
+      "query": "open=ride:whirl",
+      "way": "at=47.595860,-122.387578",
+      "goal": ".luna-ride",
+      "lat": 47.59586,
+      "lon": -122.387578,
+      "label": "riding the Giant Whirl",
+      "guessed": false,
       "before": "before-1.webp",
       "after": "after-1.webp",
       "moving": "moving-1.webp",
       "problems": {
-        "before": [],
+        "before": [
+          "nothing opened: no .luna-ride on screen (on a \"before\" photo, usually because it wasn't there yet)"
+        ],
         "after": []
+      },
+      "via": {
+        "before": "way",
+        "after": "way"
       }
     }
   ],
@@ -155,16 +171,10 @@
       "before": "production",
       "after": "production"
     },
-    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else. via 'way': a build from before ?open= links, walked in by pressing {A} at the place's `way`."
   },
   "first_recorded_at": "2026-11-15T16:43:39.483Z",
   "earlier": [],
-  "recorded_at": "2026-11-15T16:43:39.483Z",
-  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736942138",
-  "tags": [
-    "wish",
-    "character",
-    "scene",
-    "words"
-  ]
+  "recorded_at": "2026-11-16T14:17:23.147Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43883255866"
 }

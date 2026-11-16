@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-11-16T14:16:50.590Z",
+  "generated_at": "2026-11-16T14:28:33.686Z",
   "changes": [
     {
       "pr": null,
@@ -1191,19 +1191,19 @@
       ],
       "shots": [
         {
-          "query": "at=arcade",
+          "query": "open=arcade",
           "lat": null,
           "lon": null,
-          "label": "the Duck Arcade",
+          "label": "inside the Duck Arcade",
           "before": "changes/2026-10-26-82bbc20-merge-chicken-schmitz-park-snuggle-duck/before-1.webp",
           "after": "changes/2026-10-26-82bbc20-merge-chicken-schmitz-park-snuggle-duck/after-1.webp",
           "moving": "changes/2026-10-26-82bbc20-merge-chicken-schmitz-park-snuggle-duck/moving-1.webp"
         },
         {
-          "query": "at=47.558082,-122.401155",
-          "lat": 47.558082,
-          "lon": -122.401155,
-          "label": null,
+          "query": "open=scene:snuggle",
+          "lat": 47.577297,
+          "lon": -122.402593,
+          "label": "A Good Snuggle",
           "before": "changes/2026-10-26-82bbc20-merge-chicken-schmitz-park-snuggle-duck/before-2.webp",
           "after": "changes/2026-10-26-82bbc20-merge-chicken-schmitz-park-snuggle-duck/after-2.webp",
           "moving": "changes/2026-10-26-82bbc20-merge-chicken-schmitz-park-snuggle-duck/moving-2.webp"
@@ -1212,7 +1212,7 @@
           "query": "at=47.580011,-122.378473",
           "lat": 47.580011,
           "lon": -122.378473,
-          "label": null,
+          "label": "Garden in Sound land",
           "before": "changes/2026-10-26-82bbc20-merge-chicken-schmitz-park-snuggle-duck/before-3.webp",
           "after": "changes/2026-10-26-82bbc20-merge-chicken-schmitz-park-snuggle-duck/after-3.webp",
           "moving": "changes/2026-10-26-82bbc20-merge-chicken-schmitz-park-snuggle-duck/moving-3.webp"
@@ -1269,10 +1269,10 @@
       ],
       "shots": [
         {
-          "query": "at=arcade",
+          "query": "open=arcade:duck-on-the-moon",
           "lat": null,
           "lon": null,
-          "label": "the Duck Arcade",
+          "label": "Duck on the Moon",
           "before": "changes/2026-11-04-238fcad-duck-arcade-duck-on-the-moon-rabbit-zapp/before-1.webp",
           "after": "changes/2026-11-04-238fcad-duck-arcade-duck-on-the-moon-rabbit-zapp/after-1.webp",
           "moving": "changes/2026-11-04-238fcad-duck-arcade-duck-on-the-moon-rabbit-zapp/moving-1.webp"
@@ -1281,19 +1281,10 @@
           "query": "at=47.5953,-122.3876",
           "lat": 47.5953,
           "lon": -122.3876,
-          "label": null,
+          "label": "Luna Park",
           "before": "changes/2026-11-04-238fcad-duck-arcade-duck-on-the-moon-rabbit-zapp/before-2.webp",
           "after": "changes/2026-11-04-238fcad-duck-arcade-duck-on-the-moon-rabbit-zapp/after-2.webp",
           "moving": "changes/2026-11-04-238fcad-duck-arcade-duck-on-the-moon-rabbit-zapp/moving-2.webp"
-        },
-        {
-          "query": "at=47.59557,-122.38624",
-          "lat": 47.59557,
-          "lon": -122.38624,
-          "label": null,
-          "before": "changes/2026-11-04-238fcad-duck-arcade-duck-on-the-moon-rabbit-zapp/before-3.webp",
-          "after": "changes/2026-11-04-238fcad-duck-arcade-duck-on-the-moon-rabbit-zapp/after-3.webp",
-          "moving": "changes/2026-11-04-238fcad-duck-arcade-duck-on-the-moon-rabbit-zapp/moving-3.webp"
         }
       ],
       "census": {
@@ -1524,17 +1515,7 @@
         "infra",
         "docs"
       ],
-      "shots": [
-        {
-          "query": "at=arcade",
-          "lat": null,
-          "lon": null,
-          "label": "the Duck Arcade",
-          "before": "changes/2026-11-04-pr005-git-workflow-prs-auto-merge-check-with-s/before-1.webp",
-          "after": "changes/2026-11-04-pr005-git-workflow-prs-auto-merge-check-with-s/after-1.webp",
-          "moving": "changes/2026-11-04-pr005-git-workflow-prs-auto-merge-check-with-s/moving-1.webp"
-        }
-      ],
+      "shots": [],
       "census": {
         "spots": 15,
         "plugins": 9,
@@ -2040,10 +2021,10 @@
       ],
       "shots": [
         {
-          "query": "at=47.5612,-122.3868",
-          "lat": 47.5612,
-          "lon": -122.3868,
-          "label": "the Junction, where everyone starts",
+          "query": "open=scene:gas-station-wall",
+          "lat": 47.56808,
+          "lon": -122.386923,
+          "label": "The Wall That Kept Turning",
           "before": "changes/2026-11-04-pr019-wall-that-kept-turning-hand-picked-photo/before-1.webp",
           "after": "changes/2026-11-04-pr019-wall-that-kept-turning-hand-picked-photo/after-1.webp",
           "moving": "changes/2026-11-04-pr019-wall-that-kept-turning-hand-picked-photo/moving-1.webp"
@@ -2178,10 +2159,10 @@
       ],
       "shots": [
         {
-          "query": "at=47.5612,-122.3868",
-          "lat": 47.5612,
-          "lon": -122.3868,
-          "label": "the Junction, where everyone starts",
+          "query": "title",
+          "lat": null,
+          "lon": null,
+          "label": "the title screen, spelled right",
           "before": "changes/2026-11-04-pr024-title-screen-galapagos-not-galarpagos/before-1.webp",
           "after": "changes/2026-11-04-pr024-title-screen-galapagos-not-galarpagos/after-1.webp",
           "moving": "changes/2026-11-04-pr024-title-screen-galapagos-not-galarpagos/moving-1.webp"
@@ -2233,22 +2214,13 @@
       ],
       "shots": [
         {
-          "query": "at=arcade",
-          "lat": null,
-          "lon": null,
-          "label": "the Duck Arcade",
-          "before": "changes/2026-11-04-pr025-a-pegasus-walks-out-of-pegasus-books-say/before-1.webp",
-          "after": "changes/2026-11-04-pr025-a-pegasus-walks-out-of-pegasus-books-say/after-1.webp",
-          "moving": "changes/2026-11-04-pr025-a-pegasus-walks-out-of-pegasus-books-say/moving-1.webp"
-        },
-        {
           "query": "at=47.561664,-122.386939",
           "lat": 47.561664,
           "lon": -122.386939,
-          "label": null,
-          "before": "changes/2026-11-04-pr025-a-pegasus-walks-out-of-pegasus-books-say/before-2.webp",
-          "after": "changes/2026-11-04-pr025-a-pegasus-walks-out-of-pegasus-books-say/after-2.webp",
-          "moving": "changes/2026-11-04-pr025-a-pegasus-walks-out-of-pegasus-books-say/moving-2.webp"
+          "label": "Pegasus Books, where the pegasus walks out",
+          "before": "changes/2026-11-04-pr025-a-pegasus-walks-out-of-pegasus-books-say/before-1.webp",
+          "after": "changes/2026-11-04-pr025-a-pegasus-walks-out-of-pegasus-books-say/after-1.webp",
+          "moving": "changes/2026-11-04-pr025-a-pegasus-walks-out-of-pegasus-books-say/moving-1.webp"
         }
       ],
       "census": {
@@ -2356,10 +2328,10 @@
       ],
       "shots": [
         {
-          "query": "at=arcade",
+          "query": "open=arcade",
           "lat": null,
           "lon": null,
-          "label": "the Duck Arcade",
+          "label": "the Duck Arcade floor, where the bear comes by",
           "before": "changes/2026-11-04-pr027-duck-arcade-a-bear-with-a-bag-of-licoric/before-1.webp",
           "after": "changes/2026-11-04-pr027-duck-arcade-a-bear-with-a-bag-of-licoric/after-1.webp",
           "moving": "changes/2026-11-04-pr027-duck-arcade-a-bear-with-a-bag-of-licoric/moving-1.webp"
@@ -2409,10 +2381,10 @@
       ],
       "shots": [
         {
-          "query": "at=arcade",
+          "query": "open=arcade",
           "lat": null,
           "lon": null,
-          "label": "the Duck Arcade",
+          "label": "the misty forest canopy overhead",
           "before": "changes/2026-11-04-pr028-duck-arcade-misty-forest-canopy-on-the-c/before-1.webp",
           "after": "changes/2026-11-04-pr028-duck-arcade-misty-forest-canopy-on-the-c/after-1.webp",
           "moving": "changes/2026-11-04-pr028-duck-arcade-misty-forest-canopy-on-the-c/moving-1.webp"
@@ -2509,13 +2481,22 @@
       ],
       "shots": [
         {
-          "query": "at=47.586143,-122.388734",
-          "lat": 47.586143,
-          "lon": -122.388734,
-          "label": null,
+          "query": "open=ham",
+          "lat": 47.5859,
+          "lon": -122.389015,
+          "label": "Ham the cat",
           "before": "changes/2026-11-04-pr031-a-hidden-house-on-45th-a-walkable-alley/before-1.webp",
           "after": "changes/2026-11-04-pr031-a-hidden-house-on-45th-a-walkable-alley/after-1.webp",
           "moving": "changes/2026-11-04-pr031-a-hidden-house-on-45th-a-walkable-alley/moving-1.webp"
+        },
+        {
+          "query": "at=47.586143,-122.388734",
+          "lat": 47.586143,
+          "lon": -122.388734,
+          "label": "the hidden house on 45th",
+          "before": "changes/2026-11-04-pr031-a-hidden-house-on-45th-a-walkable-alley/before-2.webp",
+          "after": "changes/2026-11-04-pr031-a-hidden-house-on-45th-a-walkable-alley/after-2.webp",
+          "moving": "changes/2026-11-04-pr031-a-hidden-house-on-45th-a-walkable-alley/moving-2.webp"
         }
       ],
       "census": {
@@ -3116,10 +3097,10 @@
       ],
       "shots": [
         {
-          "query": "at=arcade",
+          "query": "open=arcade:quack-hero",
           "lat": null,
           "lon": null,
-          "label": "the Duck Arcade",
+          "label": "the deer at Quack Hero",
           "before": "changes/2026-11-14-pr051-duck-arcade-a-deer-plays-quack-hero-bobb/before-1.webp",
           "after": "changes/2026-11-14-pr051-duck-arcade-a-deer-plays-quack-hero-bobb/after-1.webp",
           "moving": "changes/2026-11-14-pr051-duck-arcade-a-deer-plays-quack-hero-bobb/moving-1.webp"
@@ -3171,10 +3152,10 @@
       ],
       "shots": [
         {
-          "query": "at=arcade",
+          "query": "open=arcade",
           "lat": null,
           "lon": null,
-          "label": "the Duck Arcade",
+          "label": "the arcade floor, Paddles at Dawn playing",
           "before": "changes/2026-11-14-pr050-duck-arcade-paddles-at-dawn-loops-quietl/before-1.webp",
           "after": "changes/2026-11-14-pr050-duck-arcade-paddles-at-dawn-loops-quietl/after-1.webp",
           "moving": "changes/2026-11-14-pr050-duck-arcade-paddles-at-dawn-loops-quietl/moving-1.webp"
@@ -3385,10 +3366,10 @@
       ],
       "shots": [
         {
-          "query": "at=47.56274,-122.37489",
-          "lat": 47.56274,
+          "query": "open=boxing",
+          "lat": 47.562262,
           "lon": -122.37489,
-          "label": null,
+          "label": "the announcer at chicken boxing",
           "before": "changes/2026-11-14-pr058-giant-chickens-boxing-in-west-seattle-st/before-1.webp",
           "after": "changes/2026-11-14-pr058-giant-chickens-boxing-in-west-seattle-st/after-1.webp",
           "moving": "changes/2026-11-14-pr058-giant-chickens-boxing-in-west-seattle-st/moving-1.webp"
@@ -3687,10 +3668,10 @@
       ],
       "shots": [
         {
-          "query": "at=47.5612,-122.3868",
-          "lat": 47.5612,
-          "lon": -122.3868,
-          "label": "the Junction, where everyone starts",
+          "query": "open=ride:whirl",
+          "lat": 47.59586,
+          "lon": -122.387578,
+          "label": "riding the Giant Whirl",
           "before": "changes/2026-11-14-pr061-ride-the-giant-whirl-in-luna-park/before-1.webp",
           "after": "changes/2026-11-14-pr061-ride-the-giant-whirl-in-luna-park/after-1.webp",
           "moving": "changes/2026-11-14-pr061-ride-the-giant-whirl-in-luna-park/moving-1.webp"
@@ -3812,10 +3793,10 @@
       ],
       "shots": [
         {
-          "query": "at=47.5612,-122.3868",
-          "lat": 47.5612,
-          "lon": -122.3868,
-          "label": "the Junction, where everyone starts",
+          "query": "open=ham",
+          "lat": 47.5859,
+          "lon": -122.389015,
+          "label": "Ham asks for pets",
           "before": "changes/2026-11-14-pr062-squirrels-that-hide-from-people-ham-asks/before-1.webp",
           "after": "changes/2026-11-14-pr062-squirrels-that-hide-from-people-ham-asks/after-1.webp",
           "moving": "changes/2026-11-14-pr062-squirrels-that-hide-from-people-ham-asks/moving-1.webp"
@@ -3945,10 +3926,10 @@
       ],
       "shots": [
         {
-          "query": "at=47.53339,-122.39469",
-          "lat": 47.53339,
-          "lon": -122.39469,
-          "label": null,
+          "query": "open=sundrop",
+          "lat": 47.533281,
+          "lon": -122.394291,
+          "label": "Sundrop and the herd",
           "before": "changes/2026-11-14-pr064-pastel-ponies-in-lincoln-parks-meadow/before-1.webp",
           "after": "changes/2026-11-14-pr064-pastel-ponies-in-lincoln-parks-meadow/after-1.webp",
           "moving": "changes/2026-11-14-pr064-pastel-ponies-in-lincoln-parks-meadow/moving-1.webp"
@@ -4007,13 +3988,22 @@
       ],
       "shots": [
         {
-          "query": "at=47.56628,-122.36807",
-          "lat": 47.56628,
-          "lon": -122.36807,
-          "label": null,
+          "query": "open=garden&time=2026-11-14T17:00:00-08:00",
+          "lat": 47.566712,
+          "lon": -122.368058,
+          "label": "the garden in November, when it was planted",
           "before": "changes/2026-11-14-pr065-a-seasonal-flower-garden-at-dragonfly-ga/before-1.webp",
           "after": "changes/2026-11-14-pr065-a-seasonal-flower-garden-at-dragonfly-ga/after-1.webp",
           "moving": "changes/2026-11-14-pr065-a-seasonal-flower-garden-at-dragonfly-ga/moving-1.webp"
+        },
+        {
+          "query": "open=garden&time=2026-04-15T12:00:00-07:00",
+          "lat": 47.566712,
+          "lon": -122.368058,
+          "label": "the same garden in April",
+          "before": "changes/2026-11-14-pr065-a-seasonal-flower-garden-at-dragonfly-ga/before-2.webp",
+          "after": "changes/2026-11-14-pr065-a-seasonal-flower-garden-at-dragonfly-ga/after-2.webp",
+          "moving": "changes/2026-11-14-pr065-a-seasonal-flower-garden-at-dragonfly-ga/moving-2.webp"
         }
       ],
       "census": {

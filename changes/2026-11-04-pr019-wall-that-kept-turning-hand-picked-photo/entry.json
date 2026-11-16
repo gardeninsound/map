@@ -234,6 +234,7 @@
     "mike": null,
     "note": null,
     "shots": true,
+    "tags": [],
     "present": false
   },
   "ideas": [],
@@ -260,19 +261,31 @@
     "source_lines": 18678,
     "commits": 54
   },
+  "tags": [
+    "art",
+    "words",
+    "docs"
+  ],
+  "where_from": "curated",
   "shots": [
     {
-      "query": "at=47.5612,-122.3868",
-      "lat": 47.5612,
-      "lon": -122.3868,
-      "label": "the Junction, where everyone starts",
-      "guessed": true,
+      "query": "open=scene:gas-station-wall",
+      "way": "at=47.568080,-122.386923",
+      "goal": ".scene",
+      "lat": 47.56808,
+      "lon": -122.386923,
+      "label": "The Wall That Kept Turning",
+      "guessed": false,
       "before": "before-1.webp",
       "after": "after-1.webp",
       "moving": "moving-1.webp",
       "problems": {
         "before": [],
         "after": []
+      },
+      "via": {
+        "before": "way",
+        "after": "way"
       }
     }
   ],
@@ -286,15 +299,10 @@
       "before": "development",
       "after": "development"
     },
-    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else. via 'way': a build from before ?open= links, walked in by pressing {A} at the place's `way`."
   },
   "first_recorded_at": "2026-11-15T16:43:39.483Z",
   "earlier": [],
-  "recorded_at": "2026-11-15T16:43:39.483Z",
-  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736942138",
-  "tags": [
-    "art",
-    "words",
-    "docs"
-  ]
+  "recorded_at": "2026-11-16T14:17:23.147Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43883255866"
 }

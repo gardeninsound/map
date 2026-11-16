@@ -205,11 +205,17 @@ in summer, dahlias, asters, mums and pumpkins in fall, kale in winter. Plants
 come up, flower and fade across their months. A sign by the street says
 what's out. Pure + tested.
 
-| before | after |
+| before · the garden in November, when it was planted | after |
 |---|---|
 | <img src="changes/2026-11-14-pr065-a-seasonal-flower-garden-at-dragonfly-ga/before-1.webp" width="400"> | <img src="changes/2026-11-14-pr065-a-seasonal-flower-garden-at-dragonfly-ga/after-1.webp" width="400"> |
 
 <img src="changes/2026-11-14-pr065-a-seasonal-flower-garden-at-dragonfly-ga/moving-1.webp" width="400" alt="moving">
+
+| before · the same garden in April | after |
+|---|---|
+| <img src="changes/2026-11-14-pr065-a-seasonal-flower-garden-at-dragonfly-ga/before-2.webp" width="400"> | <img src="changes/2026-11-14-pr065-a-seasonal-flower-garden-at-dragonfly-ga/after-2.webp" width="400"> |
+
+<img src="changes/2026-11-14-pr065-a-seasonal-flower-garden-at-dragonfly-ga/moving-2.webp" width="400" alt="moving">
 
 <sub>exit320-stack with Claude Code · 6 files, +315 −2 · characters & map life, words & content · [record](changes/2026-11-14-pr065-a-seasonal-flower-garden-at-dragonfly-ga/entry.json)</sub>
 
@@ -226,7 +232,7 @@ this is Bear Island's own herd: five pastel ponies with their own names graze
 and trot about the meadow and its trails. Walk up and one stops to say hi.
 Wandering pure + tested.
 
-| before | after |
+| before · Sundrop and the herd | after |
 |---|---|
 | <img src="changes/2026-11-14-pr064-pastel-ponies-in-lincoln-parks-meadow/before-1.webp" width="400"> | <img src="changes/2026-11-14-pr064-pastel-ponies-in-lincoln-parks-meadow/after-1.webp" width="400"> |
 
@@ -274,7 +280,7 @@ by, one dashes up the nearest tree and hides, tail hanging out of the
 leaves, till the coast is clear. Rabbits don't scare them. Ham now asks for
 pets after the lines: pet, and Ham purrs with hearts floating up.
 
-| before · the Junction, where everyone starts | after |
+| before · Ham asks for pets | after |
 |---|---|
 | <img src="changes/2026-11-14-pr062-squirrels-that-hide-from-people-ham-asks/before-1.webp" width="400"> | <img src="changes/2026-11-14-pr062-squirrels-that-hide-from-people-ham-asks/after-1.webp" width="400"> |
 
@@ -320,7 +326,7 @@ over the boardwalk and the bay, a long whirl at full speed, then it winds
 down. Drag to look round; reduced motion watches from the boardwalk. Motion
 pure + tested.
 
-| before · the Junction, where everyone starts | after |
+| before · riding the Giant Whirl | after |
 |---|---|
 | <img src="changes/2026-11-14-pr061-ride-the-giant-whirl-in-luna-park/before-1.webp" width="400"> | <img src="changes/2026-11-14-pr061-ride-the-giant-whirl-in-luna-park/after-1.webp" width="400"> |
 
@@ -439,7 +445,7 @@ grounds, walkable track and football field, grandstands along 35th with a gate
 path between them from the sidewalk, and the name in the HUD.
 Stacked on #57 (West Seattle Stadium access) — merge that first; this PR's diff includes it until then.
 
-| before | after |
+| before · the announcer at chicken boxing | after |
 |---|---|
 | <img src="changes/2026-11-14-pr058-giant-chickens-boxing-in-west-seattle-st/before-1.webp" width="400"> | <img src="changes/2026-11-14-pr058-giant-chickens-boxing-in-west-seattle-st/after-1.webp" width="400"> |
 
@@ -508,7 +514,7 @@ plays (each has its own sound) and picks up again after; silent when the map is
 muted. File and volume: ARCADE_MUSIC in content/duckArcade.ts; in the
 published-files test.
 
-| before · the Duck Arcade | after |
+| before · the arcade floor, Paddles at Dawn playing | after |
 |---|---|
 | <img src="changes/2026-11-14-pr050-duck-arcade-paddles-at-dawn-loops-quietl/before-1.webp" width="400"> | <img src="changes/2026-11-14-pr050-duck-arcade-paddles-at-dawn-loops-quietl/after-1.webp" width="400"> |
 
@@ -528,7 +534,7 @@ You and the bear walk round it; the bear coming over no longer stops other
 cabinets' screens. DEER_GAME in content/duckArcade.ts; a test checks its
 cabinet and the bear's both stand in the room.
 
-| before · the Duck Arcade | after |
+| before · the deer at Quack Hero | after |
 |---|---|
 | <img src="changes/2026-11-14-pr051-duck-arcade-a-deer-plays-quack-hero-bobb/before-1.webp" width="400"> | <img src="changes/2026-11-14-pr051-duck-arcade-a-deer-plays-quack-hero-bobb/after-1.webp" width="400"> |
 
@@ -735,11 +741,17 @@ Once a session, 10 seconds after you're on the map (waiting if a dialog or scene
 
 Not set to auto-merge: holding for a look at the preview first.
 
-| before | after |
+| before · Ham the cat | after |
 |---|---|
 | <img src="changes/2026-11-04-pr031-a-hidden-house-on-45th-a-walkable-alley/before-1.webp" width="400"> | <img src="changes/2026-11-04-pr031-a-hidden-house-on-45th-a-walkable-alley/after-1.webp" width="400"> |
 
 <img src="changes/2026-11-04-pr031-a-hidden-house-on-45th-a-walkable-alley/moving-1.webp" width="400" alt="moving">
+
+| before · the hidden house on 45th | after |
+|---|---|
+| <img src="changes/2026-11-04-pr031-a-hidden-house-on-45th-a-walkable-alley/before-2.webp" width="400"> | <img src="changes/2026-11-04-pr031-a-hidden-house-on-45th-a-walkable-alley/after-2.webp" width="400"> |
+
+<img src="changes/2026-11-04-pr031-a-hidden-house-on-45th-a-walkable-alley/moving-2.webp" width="400" alt="moving">
 
 <sub>vlandham with Claude Code · 15 files, +472 −6 · city, map pipeline, characters & map life, ui, words & content, docs · [record](changes/2026-11-04-pr031-a-hidden-house-on-45th-a-walkable-alley/entry.json)</sub>
 
@@ -767,7 +779,7 @@ Mike's looking-up-through-misty-firs GIF on the Duck Arcade's ceiling, as a loop
 - Unlit and a touch dimmed, so the panels still read as the light. It holds its first frame for reduced motion.
 - **Jim, heads-up:** one CLAUDE.md line.
 
-| before · the Duck Arcade | after |
+| before · the misty forest canopy overhead | after |
 |---|---|
 | <img src="changes/2026-11-04-pr028-duck-arcade-misty-forest-canopy-on-the-c/before-1.webp" width="400"> | <img src="changes/2026-11-04-pr028-duck-arcade-misty-forest-canopy-on-the-c/after-1.webp" width="400"> |
 
@@ -786,7 +798,7 @@ After the first game of a visit to the Duck Arcade, a low-poly bear is right bes
 - The smoke test now clicks the licorice for real after the first cabinet (`window.__arcade.bagOnScreen()`) and checks the bear doesn't come back after later games.
 - **Jim, heads-up:** a short CLAUDE.md note.
 
-| before · the Duck Arcade | after |
+| before · the Duck Arcade floor, where the bear comes by | after |
 |---|---|
 | <img src="changes/2026-11-04-pr027-duck-arcade-a-bear-with-a-bag-of-licoric/before-1.webp" width="400"> | <img src="changes/2026-11-04-pr027-duck-arcade-a-bear-with-a-bag-of-licoric/after-1.webp" width="400"> |
 
@@ -825,17 +837,11 @@ A pegasus lives in Pegasus Books (Junction, California side). Walk within 4 tile
 - `src/game/storefrontSlot.ts`: finding a shop's slice of a Junction block face, now shared with the arcade door.
 - **Jim, heads-up:** one line in `App.tsx` adds the plugin (plus a `__pegasus` dev hook), and a Where-things-live entry in CLAUDE.md. RECENT's top entry lands at the bookstore.
 
-| before · the Duck Arcade | after |
+| before · Pegasus Books, where the pegasus walks out | after |
 |---|---|
 | <img src="changes/2026-11-04-pr025-a-pegasus-walks-out-of-pegasus-books-say/before-1.webp" width="400"> | <img src="changes/2026-11-04-pr025-a-pegasus-walks-out-of-pegasus-books-say/after-1.webp" width="400"> |
 
 <img src="changes/2026-11-04-pr025-a-pegasus-walks-out-of-pegasus-books-say/moving-1.webp" width="400" alt="moving">
-
-| before | after |
-|---|---|
-| <img src="changes/2026-11-04-pr025-a-pegasus-walks-out-of-pegasus-books-say/before-2.webp" width="400"> | <img src="changes/2026-11-04-pr025-a-pegasus-walks-out-of-pegasus-books-say/after-2.webp" width="400"> |
-
-<img src="changes/2026-11-04-pr025-a-pegasus-walks-out-of-pegasus-books-say/moving-2.webp" width="400" alt="moving">
 
 <sub>exit320-stack with Claude Code · 11 files, +394 −20 · characters & map life, ui, words & content, docs · [record](changes/2026-11-04-pr025-a-pegasus-walks-out-of-pegasus-books-say/entry.json)</sub>
 
@@ -845,7 +851,7 @@ A pegasus lives in Pegasus Books (Junction, California side). Walk within 4 tile
 
 Fixes the typo on the title screen: "Galarpagos" → "Galapagos West Seattle".
 
-| before · the Junction, where everyone starts | after |
+| before · the title screen, spelled right | after |
 |---|---|
 | <img src="changes/2026-11-04-pr024-title-screen-galapagos-not-galarpagos/before-1.webp" width="400"> | <img src="changes/2026-11-04-pr024-title-screen-galapagos-not-galarpagos/after-1.webp" width="400"> |
 
@@ -887,7 +893,7 @@ Also adds `docs/art-pipeline.md`: encoding settings, picking a scene's photos, p
 
 Mike approved the photo changes.
 
-| before · the Junction, where everyone starts | after |
+| before · The Wall That Kept Turning | after |
 |---|---|
 | <img src="changes/2026-11-04-pr019-wall-that-kept-turning-hand-picked-photo/before-1.webp" width="400"> | <img src="changes/2026-11-04-pr019-wall-that-kept-turning-hand-picked-photo/after-1.webp" width="400"> |
 
@@ -1035,12 +1041,6 @@ New standard for working in this repo, for both of us and for Claude sessions. N
 
 After merge: protect `main` (require PRs + a green Check), so auto-merge has something to wait on.
 
-| before · the Duck Arcade | after |
-|---|---|
-| <img src="changes/2026-11-04-pr005-git-workflow-prs-auto-merge-check-with-s/before-1.webp" width="400"> | <img src="changes/2026-11-04-pr005-git-workflow-prs-auto-merge-check-with-s/after-1.webp" width="400"> |
-
-<img src="changes/2026-11-04-pr005-git-workflow-prs-auto-merge-check-with-s/moving-1.webp" width="400" alt="moving">
-
 <sub>exit320-stack with Claude Code · 10 files, +316 −35 · scenes & games, words & content, ci, docs, tools · [record](changes/2026-11-04-pr005-git-workflow-prs-auto-merge-check-with-s/entry.json)</sub>
 
 ---
@@ -1098,23 +1098,17 @@ Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
 Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
-| before · the Duck Arcade | after |
+| before · Duck on the Moon | after |
 |---|---|
 | <img src="changes/2026-11-04-238fcad-duck-arcade-duck-on-the-moon-rabbit-zapp/before-1.webp" width="400"> | <img src="changes/2026-11-04-238fcad-duck-arcade-duck-on-the-moon-rabbit-zapp/after-1.webp" width="400"> |
 
 <img src="changes/2026-11-04-238fcad-duck-arcade-duck-on-the-moon-rabbit-zapp/moving-1.webp" width="400" alt="moving">
 
-| before | after |
+| before · Luna Park | after |
 |---|---|
 | <img src="changes/2026-11-04-238fcad-duck-arcade-duck-on-the-moon-rabbit-zapp/before-2.webp" width="400"> | <img src="changes/2026-11-04-238fcad-duck-arcade-duck-on-the-moon-rabbit-zapp/after-2.webp" width="400"> |
 
 <img src="changes/2026-11-04-238fcad-duck-arcade-duck-on-the-moon-rabbit-zapp/moving-2.webp" width="400" alt="moving">
-
-| before | after |
-|---|---|
-| <img src="changes/2026-11-04-238fcad-duck-arcade-duck-on-the-moon-rabbit-zapp/before-3.webp" width="400"> | <img src="changes/2026-11-04-238fcad-duck-arcade-duck-on-the-moon-rabbit-zapp/after-3.webp" width="400"> |
-
-<img src="changes/2026-11-04-238fcad-duck-arcade-duck-on-the-moon-rabbit-zapp/moving-3.webp" width="400" alt="moving">
 
 <sub>mike with Claude Code · 33 files, +3607 −8 · city, characters & map life, scenes & games, words & content, art & sound, docs · [record](changes/2026-11-04-238fcad-duck-arcade-duck-on-the-moon-rabbit-zapp/entry.json)</sub>
 
@@ -1127,19 +1121,19 @@ add main's Shadowland sign; landmarksData + worldData regenerated (npm run map).
 
 Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
-| before · the Duck Arcade | after |
+| before · inside the Duck Arcade | after |
 |---|---|
 | <img src="changes/2026-10-26-82bbc20-merge-chicken-schmitz-park-snuggle-duck/before-1.webp" width="400"> | <img src="changes/2026-10-26-82bbc20-merge-chicken-schmitz-park-snuggle-duck/after-1.webp" width="400"> |
 
 <img src="changes/2026-10-26-82bbc20-merge-chicken-schmitz-park-snuggle-duck/moving-1.webp" width="400" alt="moving">
 
-| before | after |
+| before · A Good Snuggle | after |
 |---|---|
 | <img src="changes/2026-10-26-82bbc20-merge-chicken-schmitz-park-snuggle-duck/before-2.webp" width="400"> | <img src="changes/2026-10-26-82bbc20-merge-chicken-schmitz-park-snuggle-duck/after-2.webp" width="400"> |
 
 <img src="changes/2026-10-26-82bbc20-merge-chicken-schmitz-park-snuggle-duck/moving-2.webp" width="400" alt="moving">
 
-| before | after |
+| before · Garden in Sound land | after |
 |---|---|
 | <img src="changes/2026-10-26-82bbc20-merge-chicken-schmitz-park-snuggle-duck/before-3.webp" width="400"> | <img src="changes/2026-10-26-82bbc20-merge-chicken-schmitz-park-snuggle-duck/after-3.webp" width="400"> |
 

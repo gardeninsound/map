@@ -97,6 +97,7 @@
     "mike": null,
     "note": null,
     "shots": true,
+    "tags": [],
     "present": false
   },
   "ideas": [],
@@ -132,19 +133,31 @@
     "source_lines": 22398,
     "commits": 79
   },
+  "tags": [
+    "character",
+    "sound",
+    "words"
+  ],
+  "where_from": "curated",
   "shots": [
     {
-      "query": "at=47.56274,-122.37489",
-      "lat": 47.56274,
+      "query": "open=boxing",
+      "way": "at=47.562262,-122.374890",
+      "goal": ".dialog",
+      "lat": 47.562262,
       "lon": -122.37489,
-      "label": null,
-      "guessed": true,
+      "label": "the announcer at chicken boxing",
+      "guessed": false,
       "before": "before-1.webp",
       "after": "after-1.webp",
       "moving": "moving-1.webp",
       "problems": {
         "before": [],
         "after": []
+      },
+      "via": {
+        "before": "way",
+        "after": "way"
       }
     }
   ],
@@ -158,15 +171,10 @@
       "before": "production",
       "after": "production"
     },
-    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else. via 'way': a build from before ?open= links, walked in by pressing {A} at the place's `way`."
   },
   "first_recorded_at": "2026-11-15T16:43:39.483Z",
   "earlier": [],
-  "recorded_at": "2026-11-15T16:43:39.483Z",
-  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736942138",
-  "tags": [
-    "character",
-    "sound",
-    "words"
-  ]
+  "recorded_at": "2026-11-16T14:17:23.147Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43883255866"
 }
