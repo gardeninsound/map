@@ -2,7 +2,15 @@
 
 Every change that went live on [gardeninsound.website](https://gardeninsound.website), newest first, with the wish that started it, what was made, who made it, and how the spot looked before and after. Written automatically by [`.github/workflows/story.yml`](https://github.com/gardeninsound/map/blob/main/.github/workflows/story.yml) when a change merges; the raw records are in `changes/` and `wishes/`, and `story.json` indexes them all.
 
-**88** changes · **12** wishes from visitors, **11** answered · **0** still waiting
+**89** changes · **12** wishes from visitors, **11** answered · **0** still waiting
+
+---
+
+### Nov 16, 2026 · No Claude Code footer in PRs; the story log names Jim and Mike ([#82](https://github.com/gardeninsound/map/pull/82))
+
+**Asked vs made:** Asked to drop the Claude Code footer from PRs, strip it from the story page and file, and show Mike and Jim instead of their usernames. Did exactly that.
+
+<sub>Jim · 8 files, +35 −17 · docs, tools · [record](changes/2026-11-16-pr082-no-claude-code-footer-in-prs-the-story-l/entry.json)</sub>
 
 ---
 
@@ -12,7 +20,7 @@ Every change that went live on [gardeninsound.website](https://gardeninsound.web
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
 
-<sub>vlandham with Claude Code · 1 files, +1 −1 · tools · [record](changes/2026-11-16-pr081-story-log-stand-beside-the-food-mart-lem/entry.json)</sub>
+<sub>Jim · 1 files, +1 −1 · tools · [record](changes/2026-11-16-pr081-story-log-stand-beside-the-food-mart-lem/entry.json)</sub>
 
 ---
 
@@ -22,7 +30,7 @@ Every change that went live on [gardeninsound.website](https://gardeninsound.web
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
 
-<sub>vlandham with Claude Code · 2 files, +52 −24 · docs, tools · [record](changes/2026-11-16-pr080-story-log-seeded-chance-on-old-builds-fo/entry.json)</sub>
+<sub>Jim · 2 files, +52 −24 · docs, tools · [record](changes/2026-11-16-pr080-story-log-seeded-chance-on-old-builds-fo/entry.json)</sub>
 
 ---
 
@@ -32,7 +40,7 @@ Every change that went live on [gardeninsound.website](https://gardeninsound.web
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
 
-<sub>vlandham with Claude Code · 4 files, +11 −7 · tools · [record](changes/2026-11-16-pr079-story-log-where-to-stand-for-four-curate/entry.json)</sub>
+<sub>Jim · 4 files, +11 −7 · tools · [record](changes/2026-11-16-pr079-story-log-where-to-stand-for-four-curate/entry.json)</sub>
 
 ---
 
@@ -48,7 +56,7 @@ Every change that went live on [gardeninsound.website](https://gardeninsound.web
 
 <img src="changes/2026-11-16-pr078-say-how-to-add-something-new-on-screen-g/moving-1.webp" width="400" alt="moving">
 
-<sub>vlandham with Claude Code · 3 files, +16 −2 · characters & map life · [record](changes/2026-11-16-pr078-say-how-to-add-something-new-on-screen-g/entry.json)</sub>
+<sub>Jim · 3 files, +16 −2 · characters & map life · [record](changes/2026-11-16-pr078-say-how-to-add-something-new-on-screen-g/entry.json)</sub>
 
 ---
 
@@ -59,7 +67,7 @@ Every change that went live on [gardeninsound.website](https://gardeninsound.web
 Pelican changes are still shot from the street. The pelican only arrives minutes in, and faking timers would freeze the game.
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
 
-<sub>vlandham with Claude Code · 14 files, +452 −31 · ci, docs, tools · [record](changes/2026-11-16-pr077-story-log-photos-inside-scenes-cabinets/entry.json)</sub>
+<sub>Jim · 14 files, +452 −31 · ci, docs, tools · [record](changes/2026-11-16-pr077-story-log-photos-inside-scenes-cabinets/entry.json)</sub>
 
 ---
 
@@ -75,7 +83,7 @@ Pelican changes are still shot from the street. The pelican only arrives minutes
 
 <img src="changes/2026-11-15-pr076-busker-a-new-song-rainy-day-promenade/moving-1.webp" width="400" alt="moving">
 
-<sub>vlandham with Claude Code · 1 files, +14 −0 · characters & map life · [record](changes/2026-11-15-pr076-busker-a-new-song-rainy-day-promenade/entry.json)</sub>
+<sub>Jim · 1 files, +14 −0 · characters & map life · [record](changes/2026-11-15-pr076-busker-a-new-song-rainy-day-promenade/entry.json)</sub>
 
 ---
 
@@ -92,7 +100,7 @@ Nothing on the island looks different. The crow link now finds the snack crow.
 
 <img src="changes/2026-11-15-pr075-what-a-does-is-data-step-3-the-plugin-li/moving-1.webp" width="400" alt="moving">
 
-<sub>vlandham with Claude Code · 9 files, +197 −58 · characters & map life, ui, docs, tools · [record](changes/2026-11-15-pr075-what-a-does-is-data-step-3-the-plugin-li/entry.json)</sub>
+<sub>Jim · 9 files, +197 −58 · characters & map life, ui, docs, tools · [record](changes/2026-11-15-pr075-what-a-does-is-data-step-3-the-plugin-li/entry.json)</sub>
 
 ---
 
@@ -107,7 +115,7 @@ App.tsx's {A} handler, once 109 lines and touched by nearly every new character,
 
 <img src="changes/2026-11-15-pr074-what-a-does-is-data-step-2-every-plugin/moving-1.webp" width="400" alt="moving">
 
-<sub>vlandham with Claude Code · 15 files, +229 −115 · characters & map life, words & content, docs · [record](changes/2026-11-15-pr074-what-a-does-is-data-step-2-every-plugin/entry.json)</sub>
+<sub>Jim · 15 files, +229 −115 · characters & map life, words & content, docs · [record](changes/2026-11-15-pr074-what-a-does-is-data-step-2-every-plugin/entry.json)</sub>
 
 ---
 
@@ -122,7 +130,7 @@ Two people each working with their own Claude: the instructions get them most of
 
 <img src="changes/2026-11-15-pr073-make-sure-every-claude-puts-a-in-the-plu/moving-1.webp" width="400" alt="moving">
 
-<sub>vlandham with Claude Code · 6 files, +70 −8 · characters & map life, docs · [record](changes/2026-11-15-pr073-make-sure-every-claude-puts-a-in-the-plu/entry.json)</sub>
+<sub>Jim · 6 files, +70 −8 · characters & map life, docs · [record](changes/2026-11-15-pr073-make-sure-every-claude-puts-a-in-the-plu/entry.json)</sub>
 
 ---
 
@@ -137,7 +145,7 @@ The refactor the review settled on, instead of a kit of shared character behavio
 
 <img src="changes/2026-11-15-pr072-what-a-does-is-data-six-plugins-answer-a/moving-1.webp" width="400" alt="moving">
 
-<sub>vlandham with Claude Code · 11 files, +245 −67 · characters & map life, tools · [record](changes/2026-11-15-pr072-what-a-does-is-data-six-plugins-answer-a/entry.json)</sub>
+<sub>Jim · 11 files, +245 −67 · characters & map life, tools · [record](changes/2026-11-15-pr072-what-a-does-is-data-six-plugins-answer-a/entry.json)</sub>
 
 ---
 
@@ -152,7 +160,7 @@ Part of a review of how time, scenes, structures and characters work. The garden
 
 <img src="changes/2026-11-15-pr071-one-clock-for-the-game-time-seed-and-ope/moving-1.webp" width="400" alt="moving">
 
-<sub>vlandham with Claude Code · 25 files, +361 −67 · city, characters & map life, scenes & games, ui, ci, docs, tools · [record](changes/2026-11-15-pr071-one-clock-for-the-game-time-seed-and-ope/entry.json)</sub>
+<sub>Jim · 25 files, +361 −67 · city, characters & map life, scenes & games, ui, ci, docs, tools · [record](changes/2026-11-15-pr071-one-clock-for-the-game-time-seed-and-ope/entry.json)</sub>
 
 ---
 
@@ -167,7 +175,7 @@ Found while reviewing how custom structures are built. The stadium would have va
 
 <img src="changes/2026-11-15-pr070-map-build-sites-from-data-so-the-stadium/moving-1.webp" width="400" alt="moving">
 
-<sub>vlandham with Claude Code · 6 files, +625 −8 · city, map pipeline, docs · [record](changes/2026-11-15-pr070-map-build-sites-from-data-so-the-stadium/entry.json)</sub>
+<sub>Jim · 6 files, +625 −8 · city, map pipeline, docs · [record](changes/2026-11-15-pr070-map-build-sites-from-data-so-the-stadium/entry.json)</sub>
 
 ---
 
@@ -176,7 +184,7 @@ Found while reviewing how custom structures are built. The stadium would have va
 Found when the first page of the log was nothing but intro screens. The site used to keep its "drop me here" link to developers only.
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
 
-<sub>vlandham with Claude Code · 5 files, +84 −10 · ci, docs, tools · [record](changes/2026-11-15-pr069-story-log-early-builds-reach-their-place/entry.json)</sub>
+<sub>Jim · 5 files, +84 −10 · ci, docs, tools · [record](changes/2026-11-15-pr069-story-log-early-builds-reach-their-place/entry.json)</sub>
 
 ---
 
@@ -185,7 +193,7 @@ Found when the first page of the log was nothing but intro screens. The site use
 The log's first entry is the change that starts the log. The recorder was tried locally on 12 real changes; a regex that read the build's base path from a comment cost the recent ones their photos until fixed.
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
 
-<sub>vlandham with Claude Code · 18 files, +2122 −5 · ci, docs, tools · [record](changes/2026-11-15-pr068-story-log-every-change-wish-and-spot-rec/entry.json)</sub>
+<sub>Jim · 18 files, +2122 −5 · ci, docs, tools · [record](changes/2026-11-15-pr068-story-log-every-change-wish-and-spot-rec/entry.json)</sub>
 
 ---
 
@@ -212,7 +220,7 @@ setPlayerSprites to swap yours in. Pure + tested.
 
 <img src="changes/2026-11-14-pr067-pick-your-rabbits-look-fur-scarf-and-a-h/moving-1.webp" width="400" alt="moving">
 
-<sub>exit320-stack with Claude Code · 11 files, +305 −13 · city, characters & map life, ui · [record](changes/2026-11-14-pr067-pick-your-rabbits-look-fur-scarf-and-a-h/entry.json)</sub>
+<sub>Mike · 11 files, +305 −13 · city, characters & map life, ui · [record](changes/2026-11-14-pr067-pick-your-rabbits-look-fur-scarf-and-a-h/entry.json)</sub>
 
 ---
 
@@ -234,7 +242,7 @@ the street by the way in. Maze pure + tested.
 
 <img src="changes/2026-11-14-pr066-a-forest-maze-in-schmitz-preserve-you-ca/moving-1.webp" width="400" alt="moving">
 
-<sub>exit320-stack with Claude Code · 6 files, +323 −2 · characters & map life, words & content · [record](changes/2026-11-14-pr066-a-forest-maze-in-schmitz-preserve-you-ca/entry.json)</sub>
+<sub>Mike · 6 files, +323 −2 · characters & map life, words & content · [record](changes/2026-11-14-pr066-a-forest-maze-in-schmitz-preserve-you-ca/entry.json)</sub>
 
 ---
 
@@ -263,7 +271,7 @@ what's out. Pure + tested.
 
 <img src="changes/2026-11-14-pr065-a-seasonal-flower-garden-at-dragonfly-ga/moving-2.webp" width="400" alt="moving">
 
-<sub>exit320-stack with Claude Code · 6 files, +315 −2 · characters & map life, words & content · [record](changes/2026-11-14-pr065-a-seasonal-flower-garden-at-dragonfly-ga/entry.json)</sub>
+<sub>Mike · 6 files, +315 −2 · characters & map life, words & content · [record](changes/2026-11-14-pr065-a-seasonal-flower-garden-at-dragonfly-ga/entry.json)</sub>
 
 ---
 
@@ -284,7 +292,7 @@ Wandering pure + tested.
 
 <img src="changes/2026-11-14-pr064-pastel-ponies-in-lincoln-parks-meadow/moving-1.webp" width="400" alt="moving">
 
-<sub>exit320-stack with Claude Code · 7 files, +274 −2 · characters & map life, words & content · [record](changes/2026-11-14-pr064-pastel-ponies-in-lincoln-parks-meadow/entry.json)</sub>
+<sub>Mike · 7 files, +274 −2 · characters & map life, words & content · [record](changes/2026-11-14-pr064-pastel-ponies-in-lincoln-parks-meadow/entry.json)</sub>
 
 ---
 
@@ -311,7 +319,7 @@ chats. Rocks and calls pure + tested.
 
 <img src="changes/2026-11-14-pr063-mermaids-off-alki-with-catch-phrases/moving-2.webp" width="400" alt="moving">
 
-<sub>exit320-stack with Claude Code · 7 files, +290 −2 · characters & map life, words & content · [record](changes/2026-11-14-pr063-mermaids-off-alki-with-catch-phrases/entry.json)</sub>
+<sub>Mike · 7 files, +290 −2 · characters & map life, words & content · [record](changes/2026-11-14-pr063-mermaids-off-alki-with-catch-phrases/entry.json)</sub>
 
 ---
 
@@ -332,7 +340,7 @@ pets after the lines: pet, and Ham purrs with hearts floating up.
 
 <img src="changes/2026-11-14-pr062-squirrels-that-hide-from-people-ham-asks/moving-1.webp" width="400" alt="moving">
 
-<sub>exit320-stack with Claude Code · 9 files, +355 −3 · characters & map life, ui, words & content · [record](changes/2026-11-14-pr062-squirrels-that-hide-from-people-ham-asks/entry.json)</sub>
+<sub>Mike · 9 files, +355 −3 · characters & map life, ui, words & content · [record](changes/2026-11-14-pr062-squirrels-that-hide-from-people-ham-asks/entry.json)</sub>
 
 ---
 
@@ -356,7 +364,7 @@ Map data: only its footprint tiles (civic → landmark) and landmark entry.
 
 <img src="changes/2026-11-14-pr060-hope-lutheran-church-at-42nd-oregon/moving-1.webp" width="400" alt="moving">
 
-<sub>exit320-stack with Claude Code · 5 files, +88 −2 · city, map pipeline · [record](changes/2026-11-14-pr060-hope-lutheran-church-at-42nd-oregon/entry.json)</sub>
+<sub>Mike · 5 files, +88 −2 · city, map pipeline · [record](changes/2026-11-14-pr060-hope-lutheran-church-at-42nd-oregon/entry.json)</sub>
 
 ---
 
@@ -378,7 +386,7 @@ pure + tested.
 
 <img src="changes/2026-11-14-pr061-ride-the-giant-whirl-in-luna-park/moving-1.webp" width="400" alt="moving">
 
-<sub>exit320-stack with Claude Code · 7 files, +467 −4 · scenes & games, words & content · [record](changes/2026-11-14-pr061-ride-the-giant-whirl-in-luna-park/entry.json)</sub>
+<sub>Mike · 7 files, +467 −4 · scenes & games, words & content · [record](changes/2026-11-14-pr061-ride-the-giant-whirl-in-luna-park/entry.json)</sub>
 
 ---
 
@@ -403,7 +411,7 @@ Rules pure + tested in game/flock.ts; new gull sprite.
 
 <img src="changes/2026-11-14-pr059-crows-on-the-streets-gulls-on-the-beach/moving-1.webp" width="400" alt="moving">
 
-<sub>exit320-stack with Claude Code · 7 files, +281 −2 · characters & map life, ui · [record](changes/2026-11-14-pr059-crows-on-the-streets-gulls-on-the-beach/entry.json)</sub>
+<sub>Mike · 7 files, +281 −2 · characters & map life, ui · [record](changes/2026-11-14-pr059-crows-on-the-streets-gulls-on-the-beach/entry.json)</sub>
 
 ---
 
@@ -427,7 +435,7 @@ The newest 40 fine chunks are kept; the road audit reads the 1× chunk.
 
 <img src="changes/2026-11-14-pr055-finer-trees-and-shoreline-half-size-pixe/moving-1.webp" width="400" alt="moving">
 
-<sub>exit320-stack with Claude Code · 6 files, +318 −23 · city · [record](changes/2026-11-14-pr055-finer-trees-and-shoreline-half-size-pixe/entry.json)</sub>
+<sub>Mike · 6 files, +318 −23 · city · [record](changes/2026-11-14-pr055-finer-trees-and-shoreline-half-size-pixe/entry.json)</sub>
 
 ---
 
@@ -457,7 +465,7 @@ riding, so other rabbits see your bike in the race.
 
 <img src="changes/2026-11-14-pr056-the-admiral-to-alaska-bike-race-animals/moving-2.webp" width="400" alt="moving">
 
-<sub>exit320-stack with Claude Code · 10 files, +618 −5 · city, characters & map life, ui, words & content · [record](changes/2026-11-14-pr056-the-admiral-to-alaska-bike-race-animals/entry.json)</sub>
+<sub>Mike · 10 files, +618 −5 · city, characters & map life, ui, words & content · [record](changes/2026-11-14-pr056-the-admiral-to-alaska-bike-race-animals/entry.json)</sub>
 
 ---
 
@@ -474,7 +482,7 @@ still walk west; they're silent now.
 
 <img src="changes/2026-11-14-pr053-dinosaurs-no-more-sound-the-stray-thanks/moving-1.webp" width="400" alt="moving">
 
-<sub>exit320-stack with Claude Code · 6 files, +4 −66 · characters & map life, words & content, art & sound · [record](changes/2026-11-14-pr053-dinosaurs-no-more-sound-the-stray-thanks/entry.json)</sub>
+<sub>Mike · 6 files, +4 −66 · characters & map life, words & content, art & sound · [record](changes/2026-11-14-pr053-dinosaurs-no-more-sound-the-stray-thanks/entry.json)</sub>
 
 ---
 
@@ -497,7 +505,7 @@ Stacked on #57 (West Seattle Stadium access) — merge that first; this PR's dif
 
 <img src="changes/2026-11-14-pr058-giant-chickens-boxing-in-west-seattle-st/moving-1.webp" width="400" alt="moving">
 
-<sub>exit320-stack with Claude Code · 8 files, +629 −2 · characters & map life, ui, words & content · [record](changes/2026-11-14-pr058-giant-chickens-boxing-in-west-seattle-st/entry.json)</sub>
+<sub>Mike · 8 files, +629 −2 · characters & map life, ui, words & content · [record](changes/2026-11-14-pr058-giant-chickens-boxing-in-west-seattle-st/entry.json)</sub>
 
 ---
 
@@ -513,7 +521,7 @@ path between them from the sidewalk, and the name in the HUD.
 
 <img src="changes/2026-11-14-pr057-west-seattle-stadium-a-way-in-off-35th-a/moving-1.webp" width="400" alt="moving">
 
-<sub>exit320-stack with Claude Code · 2 files, +4 −1 · city · [record](changes/2026-11-14-pr057-west-seattle-stadium-a-way-in-off-35th-a/entry.json)</sub>
+<sub>Mike · 2 files, +4 −1 · city · [record](changes/2026-11-14-pr057-west-seattle-stadium-a-way-in-off-35th-a/entry.json)</sub>
 
 ---
 
@@ -532,7 +540,7 @@ warmer paper; the title screen gets an autumn dusk. The 3D rooms are unchanged.
 
 <img src="changes/2026-11-14-pr054-fall-colours-with-some-hot-pink/moving-1.webp" width="400" alt="moving">
 
-<sub>exit320-stack with Claude Code · 9 files, +66 −61 · city, characters & map life, scenes & games · [record](changes/2026-11-14-pr054-fall-colours-with-some-hot-pink/entry.json)</sub>
+<sub>Mike · 9 files, +66 −61 · city, characters & map life, scenes & games · [record](changes/2026-11-14-pr054-fall-colours-with-some-hot-pink/entry.json)</sub>
 
 ---
 
@@ -548,7 +556,7 @@ that press is the pelican's alone, so it doesn't also talk to anyone nearby.
 
 <img src="changes/2026-11-14-pr052-pelican-comes-after-5-minutes-tap-space/moving-1.webp" width="400" alt="moving">
 
-<sub>exit320-stack with Claude Code · 5 files, +49 −8 · characters & map life, ui, words & content · [record](changes/2026-11-14-pr052-pelican-comes-after-5-minutes-tap-space/entry.json)</sub>
+<sub>Mike · 5 files, +49 −8 · characters & map life, ui, words & content · [record](changes/2026-11-14-pr052-pelican-comes-after-5-minutes-tap-space/entry.json)</sub>
 
 ---
 
@@ -566,7 +574,7 @@ published-files test.
 
 <img src="changes/2026-11-14-pr050-duck-arcade-paddles-at-dawn-loops-quietl/moving-1.webp" width="400" alt="moving">
 
-<sub>exit320-stack with Claude Code · 5 files, +27 −2 · scenes & games, words & content, art & sound · [record](changes/2026-11-14-pr050-duck-arcade-paddles-at-dawn-loops-quietl/entry.json)</sub>
+<sub>Mike · 5 files, +27 −2 · scenes & games, words & content, art & sound · [record](changes/2026-11-14-pr050-duck-arcade-paddles-at-dawn-loops-quietl/entry.json)</sub>
 
 ---
 
@@ -586,7 +594,7 @@ cabinet and the bear's both stand in the room.
 
 <img src="changes/2026-11-14-pr051-duck-arcade-a-deer-plays-quack-hero-bobb/moving-1.webp" width="400" alt="moving">
 
-<sub>exit320-stack with Claude Code · 5 files, +206 −10 · scenes & games, words & content · [record](changes/2026-11-14-pr051-duck-arcade-a-deer-plays-quack-hero-bobb/entry.json)</sub>
+<sub>Mike · 5 files, +206 −10 · scenes & games, words & content · [record](changes/2026-11-14-pr051-duck-arcade-a-deer-plays-quack-hero-bobb/entry.json)</sub>
 
 ---
 
@@ -608,7 +616,7 @@ Sources: [Paul Dorpat, Now & Then](https://pauldorpat.com/2011/07/16/seattle-now
 
 <img src="changes/2026-11-08-pr048-the-original-alki-bathhouse-the-1911-bat/moving-1.webp" width="400" alt="moving">
 
-<sub>exit320-stack with Claude Code · 5 files, +97 −2 · city, map pipeline · [record](changes/2026-11-08-pr048-the-original-alki-bathhouse-the-1911-bat/entry.json)</sub>
+<sub>Mike · 5 files, +97 −2 · city, map pipeline · [record](changes/2026-11-08-pr048-the-original-alki-bathhouse-the-1911-bat/entry.json)</sub>
 
 ---
 
@@ -622,7 +630,7 @@ Dinosaurs are a rarer sight: two near you instead of six (`DINO_COUNT` 6 → 2).
 
 <img src="changes/2026-11-08-pr049-dinosaurs-two-near-you-instead-of-six/moving-1.webp" width="400" alt="moving">
 
-<sub>exit320-stack with Claude Code · 2 files, +2 −2 · characters & map life · [record](changes/2026-11-08-pr049-dinosaurs-two-near-you-instead-of-six/entry.json)</sub>
+<sub>Mike · 2 files, +2 −2 · characters & map life · [record](changes/2026-11-08-pr049-dinosaurs-two-near-you-instead-of-six/entry.json)</sub>
 
 ---
 
@@ -643,7 +651,7 @@ A rowboat at the end of 58th Ave SW on Alki: climb in and paddle around Puget So
 
 <img src="changes/2026-11-08-pr047-a-rowboat-at-the-end-of-58th-on-alki-cli/moving-1.webp" width="400" alt="moving">
 
-<sub>exit320-stack with Claude Code · 11 files, +461 −11 · city, characters & map life, ui, words & content · [record](changes/2026-11-08-pr047-a-rowboat-at-the-end-of-58th-on-alki-cli/entry.json)</sub>
+<sub>Mike · 11 files, +461 −11 · city, characters & map life, ui, words & content · [record](changes/2026-11-08-pr047-a-rowboat-at-the-end-of-58th-on-alki-cli/entry.json)</sub>
 
 ---
 
@@ -664,7 +672,7 @@ Sources: [Seattle Parks](https://seattle.gov/parks/parks/dakota-place-park), [th
 
 <img src="changes/2026-11-08-pr046-dakota-place-park-in-8-bit-the-old-brick/moving-1.webp" width="400" alt="moving">
 
-<sub>exit320-stack with Claude Code · 5 files, +110 −2 · city, map pipeline · [record](changes/2026-11-08-pr046-dakota-place-park-in-8-bit-the-old-brick/entry.json)</sub>
+<sub>Mike · 5 files, +110 −2 · city, map pipeline · [record](changes/2026-11-08-pr046-dakota-place-park-in-8-bit-the-old-brick/entry.json)</sub>
 
 ---
 
@@ -678,7 +686,7 @@ The pelican now comes 2 minutes after you join (it was 10 seconds), still waitin
 
 <img src="changes/2026-11-08-pr045-pelican-comes-2-minutes-after-you-join-n/moving-1.webp" width="400" alt="moving">
 
-<sub>exit320-stack with Claude Code · 3 files, +3 −3 · characters & map life, ui, words & content · [record](changes/2026-11-08-pr045-pelican-comes-2-minutes-after-you-join-n/entry.json)</sub>
+<sub>Mike · 3 files, +3 −3 · characters & map life, ui, words & content · [record](changes/2026-11-08-pr045-pelican-comes-2-minutes-after-you-join-n/entry.json)</sub>
 
 ---
 
@@ -696,7 +704,7 @@ The root CLAUDE.md was turning into a changelog: almost every PR edited its "Whe
 
 <img src="changes/2026-11-04-pr039-claudemd-becomes-an-index-each-areas-not/moving-1.webp" width="400" alt="moving">
 
-<sub>vlandham with Claude Code · 8 files, +204 −148 · city, characters & map life, scenes & games, ui, idea box, docs, tools · [record](changes/2026-11-04-pr039-claudemd-becomes-an-index-each-areas-not/entry.json)</sub>
+<sub>Jim · 8 files, +204 −148 · city, characters & map life, scenes & games, ui, idea box, docs, tools · [record](changes/2026-11-04-pr039-claudemd-becomes-an-index-each-areas-not/entry.json)</sub>
 
 ---
 
@@ -722,7 +730,7 @@ Mike's walking toy dinosaur GIF, plodding west along the east–west streets, wi
 
 <img src="changes/2026-11-04-pr035-toy-dinosaurs-plod-west-along-the-eastwe/moving-2.webp" width="400" alt="moving">
 
-<sub>exit320-stack with Claude Code · 10 files, +393 −2 · characters & map life, words & content, art & sound, docs, tools · [record](changes/2026-11-04-pr035-toy-dinosaurs-plod-west-along-the-eastwe/entry.json)</sub>
+<sub>Mike · 10 files, +393 −2 · characters & map life, words & content, art & sound, docs, tools · [record](changes/2026-11-04-pr035-toy-dinosaurs-plod-west-along-the-eastwe/entry.json)</sub>
 
 ---
 
@@ -736,7 +744,7 @@ An experiment: can a **free** AI model turn a visitor's idea (an issue labelled 
 
 <img src="changes/2026-11-04-pr020-ai-helper-free-models-turn-idea-box-sugg/moving-1.webp" width="400" alt="moving">
 
-<sub>vlandham with Claude Code, the free-model helper (scripts/ai) · 13 files, +932 −2 · characters & map life, words & content, docs, tools · [record](changes/2026-11-04-pr020-ai-helper-free-models-turn-idea-box-sugg/entry.json)</sub>
+<sub>Jim · 13 files, +932 −2 · characters & map life, words & content, docs, tools · [record](changes/2026-11-04-pr020-ai-helper-free-models-turn-idea-box-sugg/entry.json)</sub>
 
 ---
 
@@ -755,7 +763,7 @@ Takes the RECENT button off the HUD (Mike's call). Also removes what only it use
 
 <img src="changes/2026-11-04-pr033-take-the-recent-button-off-the-hud/moving-1.webp" width="400" alt="moving">
 
-<sub>exit320-stack with Claude Code · 5 files, +19 −101 · words & content, docs, tools · [record](changes/2026-11-04-pr033-take-the-recent-button-off-the-hud/entry.json)</sub>
+<sub>Mike · 5 files, +19 −101 · words & content, docs, tools · [record](changes/2026-11-04-pr033-take-the-recent-button-off-the-hud/entry.json)</sub>
 
 ---
 
@@ -774,7 +782,7 @@ Once a session, 10 seconds after you're on the map (waiting if a dialog or scene
 
 <img src="changes/2026-11-04-pr032-a-pelican-points-out-the-idea-box-10-s-a/moving-1.webp" width="400" alt="moving">
 
-<sub>exit320-stack with Claude Code · 10 files, +400 −0 · city, characters & map life, ui, words & content, docs · [record](changes/2026-11-04-pr032-a-pelican-points-out-the-idea-box-10-s-a/entry.json)</sub>
+<sub>Mike · 10 files, +400 −0 · city, characters & map life, ui, words & content, docs · [record](changes/2026-11-04-pr032-a-pelican-points-out-the-idea-box-10-s-a/entry.json)</sub>
 
 ---
 
@@ -799,7 +807,7 @@ Not set to auto-merge: holding for a look at the preview first.
 
 <img src="changes/2026-11-04-pr031-a-hidden-house-on-45th-a-walkable-alley/moving-2.webp" width="400" alt="moving">
 
-<sub>vlandham with Claude Code · 15 files, +472 −6 · city, map pipeline, characters & map life, ui, words & content, docs · [record](changes/2026-11-04-pr031-a-hidden-house-on-45th-a-walkable-alley/entry.json)</sub>
+<sub>Jim · 15 files, +472 −6 · city, map pipeline, characters & map life, ui, words & content, docs · [record](changes/2026-11-04-pr031-a-hidden-house-on-45th-a-walkable-alley/entry.json)</sub>
 
 ---
 
@@ -813,7 +821,7 @@ When a PR closes (merged or not), its preview stops being a live copy of the sit
 - **Why:** old previews stayed online forever, joining the real relay with old code and able to file real ideas. Cloudflare has no command to delete a preview alias; uploading over one replaces it. It also keeps at most 1,000 aliases per Worker.
 - It shares the `preview-&lt;N&gt;` concurrency group with the Preview workflow without cancelling it, so a last upload finishes before the preview is closed.
 
-<sub>vlandham with Claude Code · 5 files, +92 −1 · ci, docs · [record](changes/2026-11-04-pr029-previews-when-a-pr-closes-its-preview-be/entry.json)</sub>
+<sub>Jim · 5 files, +92 −1 · ci, docs · [record](changes/2026-11-04-pr029-previews-when-a-pr-closes-its-preview-be/entry.json)</sub>
 
 ---
 
@@ -831,7 +839,7 @@ Mike's looking-up-through-misty-firs GIF on the Duck Arcade's ceiling, as a loop
 
 <img src="changes/2026-11-04-pr028-duck-arcade-misty-forest-canopy-on-the-c/moving-1.webp" width="400" alt="moving">
 
-<sub>exit320-stack with Claude Code · 5 files, +41 −3 · scenes & games, words & content, art & sound, docs · [record](changes/2026-11-04-pr028-duck-arcade-misty-forest-canopy-on-the-c/entry.json)</sub>
+<sub>Mike · 5 files, +41 −3 · scenes & games, words & content, art & sound, docs · [record](changes/2026-11-04-pr028-duck-arcade-misty-forest-canopy-on-the-c/entry.json)</sub>
 
 ---
 
@@ -850,7 +858,7 @@ After the first game of a visit to the Duck Arcade, a low-poly bear is right bes
 
 <img src="changes/2026-11-04-pr027-duck-arcade-a-bear-with-a-bag-of-licoric/moving-1.webp" width="400" alt="moving">
 
-<sub>exit320-stack with Claude Code · 10 files, +750 −18 · characters & map life, scenes & games, ui, words & content, docs, tools · [record](changes/2026-11-04-pr027-duck-arcade-a-bear-with-a-bag-of-licoric/entry.json)</sub>
+<sub>Mike · 10 files, +750 −18 · characters & map life, scenes & games, ui, words & content, docs, tools · [record](changes/2026-11-04-pr027-duck-arcade-a-bear-with-a-bag-of-licoric/entry.json)</sub>
 
 ---
 
@@ -870,7 +878,7 @@ Holding Shift (already RUN speed) now shows the rabbit on a red bicycle, pedalli
 
 <img src="changes/2026-11-04-pr026-hold-shift-and-the-rabbit-rides-a-bicycl/moving-1.webp" width="400" alt="moving">
 
-<sub>exit320-stack with Claude Code · 8 files, +132 −26 · city, characters & map life, docs · [record](changes/2026-11-04-pr026-hold-shift-and-the-rabbit-rides-a-bicycl/entry.json)</sub>
+<sub>Mike · 8 files, +132 −26 · city, characters & map life, docs · [record](changes/2026-11-04-pr026-hold-shift-and-the-rabbit-rides-a-bicycl/entry.json)</sub>
 
 ---
 
@@ -889,7 +897,7 @@ A pegasus lives in Pegasus Books (Junction, California side). Walk within 4 tile
 
 <img src="changes/2026-11-04-pr025-a-pegasus-walks-out-of-pegasus-books-say/moving-1.webp" width="400" alt="moving">
 
-<sub>exit320-stack with Claude Code · 11 files, +394 −20 · characters & map life, ui, words & content, docs · [record](changes/2026-11-04-pr025-a-pegasus-walks-out-of-pegasus-books-say/entry.json)</sub>
+<sub>Mike · 11 files, +394 −20 · characters & map life, ui, words & content, docs · [record](changes/2026-11-04-pr025-a-pegasus-walks-out-of-pegasus-books-say/entry.json)</sub>
 
 ---
 
@@ -903,7 +911,7 @@ Fixes the typo on the title screen: "Galarpagos" → "Galapagos West Seattle".
 
 <img src="changes/2026-11-04-pr024-title-screen-galapagos-not-galarpagos/moving-1.webp" width="400" alt="moving">
 
-<sub>exit320-stack with Claude Code · 1 files, +1 −1 · ui · [record](changes/2026-11-04-pr024-title-screen-galapagos-not-galarpagos/entry.json)</sub>
+<sub>Mike · 1 files, +1 −1 · ui · [record](changes/2026-11-04-pr024-title-screen-galapagos-not-galarpagos/entry.json)</sub>
 
 ---
 
@@ -915,7 +923,7 @@ The docs now suggest an account API token (owned by the Cloudflare account, not 
 
 This PR is its own test: it should get the button.
 
-<sub>vlandham with Claude Code · 3 files, +12 −4 · ci, docs · [record](changes/2026-11-04-pr023-previews-a-view-deployment-button-on-eac/entry.json)</sub>
+<sub>Jim · 3 files, +12 −4 · ci, docs · [record](changes/2026-11-04-pr023-previews-a-view-deployment-button-on-eac/entry.json)</sub>
 
 ---
 
@@ -927,7 +935,7 @@ Every pull request from a branch in this repo gets a link to its own copy of the
 
 The live site is untouched: it still deploys from `main` to GitHub Pages.
 
-<sub>vlandham with Claude Code · 12 files, +1762 −15 · relay, idea box, ci, docs · [record](changes/2026-11-04-pr021-pr-previews-on-cloudflare-every-pr-gets/entry.json)</sub>
+<sub>Jim · 12 files, +1762 −15 · relay, idea box, ci, docs · [record](changes/2026-11-04-pr021-pr-previews-on-cloudflare-every-pr-gets/entry.json)</sub>
 
 ---
 
@@ -945,7 +953,7 @@ Mike approved the photo changes.
 
 <img src="changes/2026-11-04-pr019-wall-that-kept-turning-hand-picked-photo/moving-1.webp" width="400" alt="moving">
 
-<sub>vlandham with Claude Code · 32 files, +78 −2 · words & content, art & sound, docs · [record](changes/2026-11-04-pr019-wall-that-kept-turning-hand-picked-photo/entry.json)</sub>
+<sub>Jim · 32 files, +78 −2 · words & content, art & sound, docs · [record](changes/2026-11-04-pr019-wall-that-kept-turning-hand-picked-photo/entry.json)</sub>
 
 ---
 
@@ -960,7 +968,7 @@ The Check (size guard, tests, build, smoke) still blocks anything that fails.
 
 This one changes the review rule itself, so it waits for Jim's OK under the current rule; merging it turns the new rule on.
 
-<sub>exit320-stack with Claude Code · 2 files, +13 −12 · docs · [record](changes/2026-11-04-pr018-git-workflow-every-pr-auto-merges-on-a-g/entry.json)</sub>
+<sub>Mike · 2 files, +13 −12 · docs · [record](changes/2026-11-04-pr018-git-workflow-every-pr-auto-merges-on-a-g/entry.json)</sub>
 
 ---
 
@@ -972,7 +980,7 @@ Left out on purpose, since the repo is public: open security to-dos, personal ac
 
 Docs only; touches no shared paths.
 
-<sub>vlandham with Claude Code · 3 files, +158 −0 · docs · [record](changes/2026-11-04-pr017-docs-how-garden-in-sound-is-hosted-docsh/entry.json)</sub>
+<sub>Jim · 3 files, +158 −0 · docs · [record](changes/2026-11-04-pr017-docs-how-garden-in-sound-is-hosted-docsh/entry.json)</sub>
 
 ---
 
@@ -980,7 +988,7 @@ Docs only; touches no shared paths.
 
 Claude wrote the wrong name ("Vince") into the shared-PR rule in #10. This fixes the three mentions. No other changes.
 
-<sub>vlandham with Claude Code · 1 files, +3 −3 · docs · [record](changes/2026-11-04-pr016-claudemd-the-tech-lead-is-jim/entry.json)</sub>
+<sub>Jim · 1 files, +3 −3 · docs · [record](changes/2026-11-04-pr016-claudemd-the-tech-lead-is-jim/entry.json)</sub>
 
 ---
 
@@ -994,7 +1002,7 @@ Answers "does a rabbit go away when someone stops looking?" Before this PR: only
 
 <img src="changes/2026-11-04-pr015-presence-rabbits-fade-when-away-leave-wh/moving-1.webp" width="400" alt="moving">
 
-<sub>vlandham with Claude Code · 8 files, +273 −13 · characters & map life, relay, docs · [record](changes/2026-11-04-pr015-presence-rabbits-fade-when-away-leave-wh/entry.json)</sub>
+<sub>Jim · 8 files, +273 −13 · characters & map life, relay, docs · [record](changes/2026-11-04-pr015-presence-rabbits-fade-when-away-leave-wh/entry.json)</sub>
 
 ---
 
@@ -1006,7 +1014,7 @@ Answers "does a rabbit go away when someone stops looking?" Before this PR: only
 
 <img src="changes/2026-11-04-pr014-busker-a-calm-song-and-a-funky-groove-in/moving-1.webp" width="400" alt="moving">
 
-<sub>vlandham with Claude Code · 4 files, +230 −35 · characters & map life, docs · [record](changes/2026-11-04-pr014-busker-a-calm-song-and-a-funky-groove-in/entry.json)</sub>
+<sub>Jim · 4 files, +230 −35 · characters & map life, docs · [record](changes/2026-11-04-pr014-busker-a-calm-song-and-a-funky-groove-in/entry.json)</sub>
 
 ---
 
@@ -1014,7 +1022,7 @@ Answers "does a rabbit go away when someone stops looking?" Before this PR: only
 
 The GitHub App was renamed in its settings (same app, id 5618995). Ideas now show as `garden-in-sound-wishes[bot]`. This updates the name and link in CLAUDE.md and in comments in `wish/`. No code or config values change; the Worker signs in by app id, so nothing needs redeploying.
 
-<sub>vlandham with Claude Code · 4 files, +7 −7 · idea box, docs · [record](changes/2026-11-04-pr013-idea-box-docs-app-renamed-to-garden-in-s/entry.json)</sub>
+<sub>Jim · 4 files, +7 −7 · idea box, docs · [record](changes/2026-11-04-pr013-idea-box-docs-app-renamed-to-garden-in-s/entry.json)</sub>
 
 ---
 
@@ -1026,7 +1034,7 @@ The GitHub App was renamed in its settings (same app, id 5618995). Ideas now sho
 
 <img src="changes/2026-11-04-pr011-idea-box-optional-name-in-the-issue-and/moving-1.webp" width="400" alt="moving">
 
-<sub>vlandham with Claude Code · 8 files, +121 −31 · ui, words & content, idea box, docs · [record](changes/2026-11-04-pr011-idea-box-optional-name-in-the-issue-and/entry.json)</sub>
+<sub>Jim · 8 files, +121 −31 · ui, words & content, idea box, docs · [record](changes/2026-11-04-pr011-idea-box-optional-name-in-the-issue-and/entry.json)</sub>
 
 ---
 
@@ -1041,7 +1049,7 @@ Also adds `wish/` (the idea-box Worker) to the shared list next to `relay/`.
 
 Asked for by Vince.
 
-<sub>vlandham with Claude Code · 1 files, +7 −2 · docs · [record](changes/2026-11-04-pr010-git-workflow-who-oks-shared-prs-vince-fo/entry.json)</sub>
+<sub>Jim · 1 files, +7 −2 · docs · [record](changes/2026-11-04-pr010-git-workflow-who-oks-shared-prs-vince-fo/entry.json)</sub>
 
 ---
 
@@ -1049,7 +1057,7 @@ Asked for by Vince.
 
 Ideas from the ✿ IDEA box are filed by a GitHub App owned by the org, so they show as **`garden-in-sound[bot]`** instead of as Vince.
 
-<sub>vlandham with Claude Code · 6 files, +167 −14 · idea box, docs · [record](changes/2026-11-04-pr009-idea-box-ideas-filed-by-the-garden-in-so/entry.json)</sub>
+<sub>Jim · 6 files, +167 −14 · idea box, docs · [record](changes/2026-11-04-pr009-idea-box-ideas-filed-by-the-garden-in-so/entry.json)</sub>
 
 ---
 
@@ -1063,7 +1071,7 @@ The first half of the AI change-request flow from the hosting doc: visitors sugg
 
 <img src="changes/2026-11-04-pr006-idea-box-what-would-you-love-to-add-in-t/moving-1.webp" width="400" alt="moving">
 
-<sub>vlandham with Claude Code · 13 files, +2284 −1 · ui, words & content, idea box, docs · [record](changes/2026-11-04-pr006-idea-box-what-would-you-love-to-add-in-t/entry.json)</sub>
+<sub>Jim · 13 files, +2284 −1 · ui, words & content, idea box, docs · [record](changes/2026-11-04-pr006-idea-box-what-would-you-love-to-add-in-t/entry.json)</sub>
 
 ---
 
@@ -1087,7 +1095,7 @@ New standard for working in this repo, for both of us and for Claude sessions. N
 
 After merge: protect `main` (require PRs + a green Check), so auto-merge has something to wait on.
 
-<sub>exit320-stack with Claude Code · 10 files, +316 −35 · scenes & games, words & content, ci, docs, tools · [record](changes/2026-11-04-pr005-git-workflow-prs-auto-merge-check-with-s/entry.json)</sub>
+<sub>Mike · 10 files, +316 −35 · scenes & games, words & content, ci, docs, tools · [record](changes/2026-11-04-pr005-git-workflow-prs-auto-merge-check-with-s/entry.json)</sub>
 
 ---
 
@@ -1095,7 +1103,7 @@ After merge: protect `main` (require PRs + a green Check), so auto-merge has som
 
 Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
-<sub>vlandham with Claude Code · 2 files, +7 −3 · relay · [record](changes/2026-11-04-bf6cb45-relay-deployed-to-the-gardeninsound-clou/entry.json)</sub>
+<sub>Jim · 2 files, +7 −3 · relay · [record](changes/2026-11-04-bf6cb45-relay-deployed-to-the-gardeninsound-clou/entry.json)</sub>
 
 ---
 
@@ -1103,7 +1111,7 @@ Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
 Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
-<sub>vlandham with Claude Code · 9 files, +2023 −2 · relay, docs · [record](changes/2026-11-04-84ca634-relay-bear-islands-own-copy-of-the-arcad/entry.json)</sub>
+<sub>Jim · 9 files, +2023 −2 · relay, docs · [record](changes/2026-11-04-84ca634-relay-bear-islands-own-copy-of-the-arcad/entry.json)</sub>
 
 ---
 
@@ -1115,7 +1123,7 @@ the guard on every load — an endless reload loop. Third-party failures now don
 
 Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
-<sub>vlandham with Claude Code · 1 files, +12 −1 ·  · [record](changes/2026-11-04-2e01f7e-stale-deploy-reload-only-react-to-our-ow/entry.json)</sub>
+<sub>Jim · 1 files, +12 −1 ·  · [record](changes/2026-11-04-2e01f7e-stale-deploy-reload-only-react-to-our-ow/entry.json)</sub>
 
 ---
 
@@ -1131,7 +1139,7 @@ Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
 <img src="changes/2026-11-04-8b304cd-merge-main-gardeninsoundmap-at-the-root/moving-1.webp" width="400" alt="moving">
 
-<sub>mike with Claude Code · 19 files, +1131 −25 · city, map pipeline, characters & map life, words & content, relay, docs · [record](changes/2026-11-04-8b304cd-merge-main-gardeninsoundmap-at-the-root/entry.json)</sub>
+<sub>Mike · 19 files, +1131 −25 · city, map pipeline, characters & map life, words & content, relay, docs · [record](changes/2026-11-04-8b304cd-merge-main-gardeninsoundmap-at-the-root/entry.json)</sub>
 
 ---
 
@@ -1156,7 +1164,7 @@ Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
 <img src="changes/2026-11-04-238fcad-duck-arcade-duck-on-the-moon-rabbit-zapp/moving-2.webp" width="400" alt="moving">
 
-<sub>mike with Claude Code · 33 files, +3607 −8 · city, characters & map life, scenes & games, words & content, art & sound, docs · [record](changes/2026-11-04-238fcad-duck-arcade-duck-on-the-moon-rabbit-zapp/entry.json)</sub>
+<sub>Mike · 33 files, +3607 −8 · city, characters & map life, scenes & games, words & content, art & sound, docs · [record](changes/2026-11-04-238fcad-duck-arcade-duck-on-the-moon-rabbit-zapp/entry.json)</sub>
 
 ---
 
@@ -1185,7 +1193,7 @@ Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
 <img src="changes/2026-10-26-82bbc20-merge-chicken-schmitz-park-snuggle-duck/moving-3.webp" width="400" alt="moving">
 
-<sub>mike with Claude Code · 63 files, +4038 −207 · city, map pipeline, characters & map life, scenes & games, ui, words & content, art & sound, docs, tools · [record](changes/2026-10-26-82bbc20-merge-chicken-schmitz-park-snuggle-duck/entry.json)</sub>
+<sub>Mike · 63 files, +4038 −207 · city, map pipeline, characters & map life, scenes & games, ui, words & content, art & sound, docs, tools · [record](changes/2026-10-26-82bbc20-merge-chicken-schmitz-park-snuggle-duck/entry.json)</sub>
 
 ---
 
@@ -1225,7 +1233,7 @@ Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
 <img src="changes/2026-10-24-42c7de2-landmarks-from-west-seattle-map-close-ro/moving-3.webp" width="400" alt="moving">
 
-<sub>vlandham with Claude Code · 10 files, +334 −9 · city, map pipeline, docs · [record](changes/2026-10-24-42c7de2-landmarks-from-west-seattle-map-close-ro/entry.json)</sub>
+<sub>Jim · 10 files, +334 −9 · city, map pipeline, docs · [record](changes/2026-10-24-42c7de2-landmarks-from-west-seattle-map-close-ro/entry.json)</sub>
 
 ---
 
@@ -1259,7 +1267,7 @@ Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
 <img src="changes/2026-10-19-18e4ad0-a-chicken-by-the-vet-on-california-and-h/moving-2.webp" width="400" alt="moving">
 
-<sub>mike with Claude Code · 10 files, +880 −7 · characters & map life, scenes & games, ui, words & content, docs · [record](changes/2026-10-19-18e4ad0-a-chicken-by-the-vet-on-california-and-h/entry.json)</sub>
+<sub>Mike · 10 files, +880 −7 · characters & map life, scenes & games, ui, words & content, docs · [record](changes/2026-10-19-18e4ad0-a-chicken-by-the-vet-on-california-and-h/entry.json)</sub>
 
 ---
 
@@ -1280,7 +1288,7 @@ Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
 <img src="changes/2026-10-19-4d725a6-dialog-choices-arrow-keys-move-the-highl/moving-1.webp" width="400" alt="moving">
 
-<sub>mike with Claude Code · 3 files, +101 −9 · city · [record](changes/2026-10-19-4d725a6-dialog-choices-arrow-keys-move-the-highl/entry.json)</sub>
+<sub>Mike · 3 files, +101 −9 · city · [record](changes/2026-10-19-4d725a6-dialog-choices-arrow-keys-move-the-highl/entry.json)</sub>
 
 ---
 
@@ -1329,7 +1337,7 @@ Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
 <img src="changes/2026-10-19-1135777-port-the-real-scale-city-onto-srccity-br/moving-3.webp" width="400" alt="moving">
 
-<sub>mike with Claude Code · 34 files, +2991 −146 · city, map pipeline, characters & map life, ui, words & content, docs, tools · [record](changes/2026-10-19-1135777-port-the-real-scale-city-onto-srccity-br/entry.json)</sub>
+<sub>Mike · 34 files, +2991 −146 · city, map pipeline, characters & map life, ui, words & content, docs, tools · [record](changes/2026-10-19-1135777-port-the-real-scale-city-onto-srccity-br/entry.json)</sub>
 
 ---
 
@@ -1353,7 +1361,7 @@ Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
 <img src="changes/2026-10-18-d365680-disconnect-from-west-seattle-map-keep-ou/moving-3.webp" width="400" alt="moving">
 
-<sub>vlandham with Claude Code · 50 files, +2701 −63 · city, characters & map life, scenes & games, ui, words & content, ci, docs, tools · [record](changes/2026-10-18-d365680-disconnect-from-west-seattle-map-keep-ou/entry.json)</sub>
+<sub>Jim · 50 files, +2701 −63 · city, characters & map life, scenes & games, ui, words & content, ci, docs, tools · [record](changes/2026-10-18-d365680-disconnect-from-west-seattle-map-keep-ou/entry.json)</sub>
 
 ---
 
@@ -1364,7 +1372,7 @@ installs the private dependency over SSH with the read-only deploy key.
 
 Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
-<sub>vlandham with Claude Code · 6 files, +25 −54 · ci, docs · [record](changes/2026-10-18-872376f-pin-west-seattle-map-to-v010-instead-of/entry.json)</sub>
+<sub>Jim · 6 files, +25 −54 · ci, docs · [record](changes/2026-10-18-872376f-pin-west-seattle-map-to-v010-instead-of/entry.json)</sub>
 
 ---
 
@@ -1372,7 +1380,7 @@ Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
 Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
-<sub>vlandham with Claude Code · 4 files, +214 −3 · ui · [record](changes/2026-10-18-58cbd60-mike-is-the-default-speaker-again-even-w/entry.json)</sub>
+<sub>Jim · 4 files, +214 −3 · ui · [record](changes/2026-10-18-58cbd60-mike-is-the-default-speaker-again-even-w/entry.json)</sub>
 
 ---
 
@@ -1388,7 +1396,7 @@ Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
 Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
-<sub>vlandham with Claude Code · 52 files, +684 −3667 · map pipeline, characters & map life, scenes & games, ui, words & content, ci, docs, tools · [record](changes/2026-10-18-e562d96-run-on-west-seattle-map-the-city-moves-t/entry.json)</sub>
+<sub>Jim · 52 files, +684 −3667 · map pipeline, characters & map life, scenes & games, ui, words & content, ci, docs, tools · [record](changes/2026-10-18-e562d96-run-on-west-seattle-map-the-city-moves-t/entry.json)</sub>
 
 ---
 
@@ -1406,7 +1414,7 @@ Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
 <img src="changes/2026-10-18-b43fcd3-recover-from-stale-cached-pages-after-a/moving-1.webp" width="400" alt="moving">
 
-<sub>vlandham with Claude Code · 3 files, +33 −0 · ui · [record](changes/2026-10-18-b43fcd3-recover-from-stale-cached-pages-after-a/entry.json)</sub>
+<sub>Jim · 3 files, +33 −0 · ui · [record](changes/2026-10-18-b43fcd3-recover-from-stale-cached-pages-after-a/entry.json)</sub>
 
 ---
 
@@ -1427,7 +1435,7 @@ Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
 <img src="changes/2026-10-18-5f0f9e7-avif-art-pipeline-publish-step-drop-old/moving-1.webp" width="400" alt="moving">
 
-<sub>vlandham with Claude Code · 213 files, +2040 −1614 · scenes & games, ui, words & content, art & sound, docs, tools · [record](changes/2026-10-18-5f0f9e7-avif-art-pipeline-publish-step-drop-old/entry.json)</sub>
+<sub>Jim · 213 files, +2040 −1614 · scenes & games, ui, words & content, art & sound, docs, tools · [record](changes/2026-10-18-5f0f9e7-avif-art-pipeline-publish-step-drop-old/entry.json)</sub>
 
 ---
 
@@ -1445,7 +1453,7 @@ Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
 <img src="changes/2026-10-18-15796d6-publish-the-slideshow-photos-24-stills-e/moving-1.webp" width="400" alt="moving">
 
-<sub>vlandham with Claude Code · 97 files, +2 −1 · art & sound · [record](changes/2026-10-18-15796d6-publish-the-slideshow-photos-24-stills-e/entry.json)</sub>
+<sub>Jim · 97 files, +2 −1 · art & sound · [record](changes/2026-10-18-15796d6-publish-the-slideshow-photos-24-stills-e/entry.json)</sub>
 
 ---
 
@@ -1467,7 +1475,7 @@ Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
 <img src="changes/2026-10-18-84646d6-snack-crow-that-flies-between-perches/moving-1.webp" width="400" alt="moving">
 
-<sub>mike with Claude Code · 8 files, +372 −7 · characters & map life, ui, words & content, docs · [record](changes/2026-10-18-84646d6-snack-crow-that-flies-between-perches/entry.json)</sub>
+<sub>Mike · 8 files, +372 −7 · characters & map life, ui, words & content, docs · [record](changes/2026-10-18-84646d6-snack-crow-that-flies-between-perches/entry.json)</sub>
 
 ---
 
@@ -1485,7 +1493,7 @@ Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
 <img src="changes/2026-10-18-2376644-photo-slideshows-24-stills-each-rush-hou/moving-1.webp" width="400" alt="moving">
 
-<sub>vlandham with Claude Code · 6 files, +116 −22 · scenes & games, words & content · [record](changes/2026-10-18-2376644-photo-slideshows-24-stills-each-rush-hou/entry.json)</sub>
+<sub>Jim · 6 files, +116 −22 · scenes & games, words & content · [record](changes/2026-10-18-2376644-photo-slideshows-24-stills-each-rush-hou/entry.json)</sub>
 
 ---
 
@@ -1506,7 +1514,7 @@ Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
 <img src="changes/2026-10-18-ce54cb8-paint-roads-per-pixel-from-centrelines-r/moving-1.webp" width="400" alt="moving">
 
-<sub>vlandham with Claude Code · 5 files, +178 −170 · characters & map life, docs, tools · [record](changes/2026-10-18-ce54cb8-paint-roads-per-pixel-from-centrelines-r/entry.json)</sub>
+<sub>Jim · 5 files, +178 −170 · characters & map life, docs, tools · [record](changes/2026-10-18-ce54cb8-paint-roads-per-pixel-from-centrelines-r/entry.json)</sub>
 
 ---
 
@@ -1526,7 +1534,7 @@ Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
 <img src="changes/2026-10-18-64e2728-junction-busker-with-distance-faded-chip/moving-1.webp" width="400" alt="moving">
 
-<sub>vlandham with Claude Code · 9 files, +329 −3 · characters & map life, ui, words & content, docs · [record](changes/2026-10-18-64e2728-junction-busker-with-distance-faded-chip/entry.json)</sub>
+<sub>Jim · 9 files, +329 −3 · characters & map life, ui, words & content, docs · [record](changes/2026-10-18-64e2728-junction-busker-with-distance-faded-chip/entry.json)</sub>
 
 ---
 
@@ -1552,7 +1560,7 @@ Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
 <img src="changes/2026-10-18-23a878f-compass-first-visit-arrow-octilinear-roa/moving-2.webp" width="400" alt="moving">
 
-<sub>vlandham with Claude Code · 18 files, +960 −34 · characters & map life, scenes & games, ui, words & content, docs, tools · [record](changes/2026-10-18-23a878f-compass-first-visit-arrow-octilinear-roa/entry.json)</sub>
+<sub>Jim · 18 files, +960 −34 · characters & map life, scenes & games, ui, words & content, docs, tools · [record](changes/2026-10-18-23a878f-compass-first-visit-arrow-octilinear-roa/entry.json)</sub>
 
 ---
 
@@ -1573,7 +1581,7 @@ Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
 <img src="changes/2026-10-18-14bb1a4-wider-straighter-roads-with-clean-inters/moving-1.webp" width="400" alt="moving">
 
-<sub>vlandham with Claude Code · 6 files, +198 −23 · characters & map life, docs, tools · [record](changes/2026-10-18-14bb1a4-wider-straighter-roads-with-clean-inters/entry.json)</sub>
+<sub>Jim · 6 files, +198 −23 · characters & map life, docs, tools · [record](changes/2026-10-18-14bb1a4-wider-straighter-roads-with-clean-inters/entry.json)</sub>
 
 ---
 
@@ -1602,7 +1610,7 @@ Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
 <img src="changes/2026-10-18-23e2785-map-cleanup-landmarks-and-art-spot-short/moving-2.webp" width="400" alt="moving">
 
-<sub>vlandham with Claude Code · 24 files, +704 −85 · map pipeline, characters & map life, ui, words & content, docs, tools · [record](changes/2026-10-18-23e2785-map-cleanup-landmarks-and-art-spot-short/entry.json)</sub>
+<sub>Jim · 24 files, +704 −85 · map pipeline, characters & map life, ui, words & content, docs, tools · [record](changes/2026-10-18-23e2785-map-cleanup-landmarks-and-art-spot-short/entry.json)</sub>
 
 ---
 
@@ -1629,4 +1637,4 @@ Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
 <img src="changes/2026-10-18-8066597-bear-island-map-pixel-west-seattle-overw/moving-3.webp" width="400" alt="moving">
 
-<sub>vlandham with Claude Code · 57 files, +12643 −0 · characters & map life, scenes & games, ui, words & content, art & sound, ci, docs, tools · [record](changes/2026-10-18-8066597-bear-island-map-pixel-west-seattle-overw/entry.json)</sub>
+<sub>Jim · 57 files, +12643 −0 · characters & map life, scenes & games, ui, words & content, art & sound, ci, docs, tools · [record](changes/2026-10-18-8066597-bear-island-map-pixel-west-seattle-overw/entry.json)</sub>

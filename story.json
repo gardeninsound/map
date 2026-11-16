@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-11-16T20:34:56.663Z",
+  "generated_at": "2026-11-16T22:08:09.022Z",
   "changes": [
     {
       "pr": null,
@@ -17,10 +17,7 @@
         "note": null
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 57,
       "additions": 12643,
@@ -100,10 +97,7 @@
         "note": null
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 24,
       "additions": 704,
@@ -167,10 +161,7 @@
         "note": null
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 6,
       "additions": 198,
@@ -218,10 +209,7 @@
         "note": null
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 18,
       "additions": 960,
@@ -285,10 +273,7 @@
         "note": null
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 9,
       "additions": 329,
@@ -341,10 +326,7 @@
         "note": null
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 5,
       "additions": 178,
@@ -394,10 +376,7 @@
         "note": null
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 6,
       "additions": 116,
@@ -445,10 +424,7 @@
         "note": null
       },
       "authors": [
-        "mike"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 8,
       "additions": 372,
@@ -500,10 +476,7 @@
         "note": null
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 97,
       "additions": 2,
@@ -549,10 +522,7 @@
         "note": null
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 213,
       "additions": 2040,
@@ -607,10 +577,7 @@
         "note": null
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 3,
       "additions": 33,
@@ -657,10 +624,7 @@
         "note": null
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 52,
       "additions": 684,
@@ -722,10 +686,7 @@
         "note": null
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 4,
       "additions": 214,
@@ -771,10 +732,7 @@
         "note": null
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 6,
       "additions": 25,
@@ -813,10 +771,7 @@
         "note": null
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 50,
       "additions": 2701,
@@ -896,10 +851,7 @@
         "note": null
       },
       "authors": [
-        "mike"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 34,
       "additions": 2991,
@@ -976,10 +928,7 @@
         "note": null
       },
       "authors": [
-        "mike"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 3,
       "additions": 101,
@@ -1025,10 +974,7 @@
         "note": null
       },
       "authors": [
-        "mike"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 10,
       "additions": 880,
@@ -1091,10 +1037,7 @@
         "note": null
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 10,
       "additions": 334,
@@ -1160,10 +1103,7 @@
         "note": null
       },
       "authors": [
-        "mike"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 63,
       "additions": 4038,
@@ -1243,10 +1183,7 @@
         "note": null
       },
       "authors": [
-        "mike"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 33,
       "additions": 3607,
@@ -1312,10 +1249,7 @@
         "note": null
       },
       "authors": [
-        "mike"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 19,
       "additions": 1131,
@@ -1374,10 +1308,7 @@
         "note": null
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 1,
       "additions": 12,
@@ -1412,10 +1343,7 @@
         "note": null
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 9,
       "additions": 2023,
@@ -1454,10 +1382,7 @@
         "note": null
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 2,
       "additions": 7,
@@ -1494,10 +1419,7 @@
         "note": null
       },
       "authors": [
-        "exit320-stack"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 10,
       "additions": 316,
@@ -1541,10 +1463,7 @@
         "note": null
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 13,
       "additions": 2284,
@@ -1596,10 +1515,7 @@
         "note": null
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 6,
       "additions": 167,
@@ -1637,10 +1553,7 @@
         "note": null
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 1,
       "additions": 7,
@@ -1678,10 +1591,7 @@
         "note": null
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 8,
       "additions": 121,
@@ -1733,10 +1643,7 @@
         "note": null
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 4,
       "additions": 7,
@@ -1774,10 +1681,7 @@
         "note": null
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 4,
       "additions": 230,
@@ -1826,10 +1730,7 @@
         "note": null
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 8,
       "additions": 273,
@@ -1879,10 +1780,7 @@
         "note": null
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 1,
       "additions": 3,
@@ -1920,10 +1818,7 @@
         "note": null
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 3,
       "additions": 158,
@@ -1960,10 +1855,7 @@
         "note": null
       },
       "authors": [
-        "exit320-stack"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 2,
       "additions": 13,
@@ -2001,10 +1893,7 @@
         "note": null
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 32,
       "additions": 78,
@@ -2055,10 +1944,7 @@
         "note": null
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 12,
       "additions": 1762,
@@ -2101,10 +1987,7 @@
         "note": null
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 3,
       "additions": 12,
@@ -2143,10 +2026,7 @@
         "note": null
       },
       "authors": [
-        "exit320-stack"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 1,
       "additions": 1,
@@ -2193,10 +2073,7 @@
         "note": null
       },
       "authors": [
-        "exit320-stack"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 11,
       "additions": 394,
@@ -2248,10 +2125,7 @@
         "note": null
       },
       "authors": [
-        "exit320-stack"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 8,
       "additions": 132,
@@ -2303,10 +2177,7 @@
         "note": null
       },
       "authors": [
-        "exit320-stack"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 10,
       "additions": 750,
@@ -2362,10 +2233,7 @@
         "note": null
       },
       "authors": [
-        "exit320-stack"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 5,
       "additions": 41,
@@ -2415,10 +2283,7 @@
         "note": null
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 5,
       "additions": 92,
@@ -2457,10 +2322,7 @@
         "note": null
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 15,
       "additions": 472,
@@ -2524,10 +2386,7 @@
         "note": null
       },
       "authors": [
-        "exit320-stack"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 10,
       "additions": 400,
@@ -2582,10 +2441,7 @@
         "note": null
       },
       "authors": [
-        "exit320-stack"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 5,
       "additions": 19,
@@ -2635,11 +2491,7 @@
         "note": null
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code",
-        "the free-model helper (scripts/ai)"
+        "Jim"
       ],
       "files": 13,
       "additions": 932,
@@ -2690,10 +2542,7 @@
         "note": null
       },
       "authors": [
-        "exit320-stack"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 10,
       "additions": 393,
@@ -2755,10 +2604,7 @@
         "note": null
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 8,
       "additions": 204,
@@ -2816,10 +2662,7 @@
         "note": null
       },
       "authors": [
-        "exit320-stack"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 3,
       "additions": 3,
@@ -2870,10 +2713,7 @@
         "note": null
       },
       "authors": [
-        "exit320-stack"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 5,
       "additions": 110,
@@ -2921,10 +2761,7 @@
         "note": null
       },
       "authors": [
-        "exit320-stack"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 11,
       "additions": 461,
@@ -2977,10 +2814,7 @@
         "note": null
       },
       "authors": [
-        "exit320-stack"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 2,
       "additions": 2,
@@ -3027,10 +2861,7 @@
         "note": null
       },
       "authors": [
-        "exit320-stack"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 5,
       "additions": 97,
@@ -3078,10 +2909,7 @@
         "note": null
       },
       "authors": [
-        "exit320-stack"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 5,
       "additions": 206,
@@ -3131,10 +2959,7 @@
         "note": null
       },
       "authors": [
-        "exit320-stack"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 5,
       "additions": 27,
@@ -3186,10 +3011,7 @@
         "note": null
       },
       "authors": [
-        "exit320-stack"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 5,
       "additions": 49,
@@ -3240,10 +3062,7 @@
         "note": null
       },
       "authors": [
-        "exit320-stack"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 9,
       "additions": 66,
@@ -3296,10 +3115,7 @@
         "note": null
       },
       "authors": [
-        "exit320-stack"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 2,
       "additions": 4,
@@ -3346,10 +3162,7 @@
         "note": null
       },
       "authors": [
-        "exit320-stack"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 8,
       "additions": 629,
@@ -3400,10 +3213,7 @@
         "note": null
       },
       "authors": [
-        "exit320-stack"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 6,
       "additions": 4,
@@ -3453,10 +3263,7 @@
         "note": null
       },
       "authors": [
-        "exit320-stack"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 10,
       "additions": 618,
@@ -3518,10 +3325,7 @@
         "note": null
       },
       "authors": [
-        "exit320-stack"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 6,
       "additions": 318,
@@ -3586,10 +3390,7 @@
         "note": null
       },
       "authors": [
-        "exit320-stack"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 7,
       "additions": 281,
@@ -3648,10 +3449,7 @@
         "note": null
       },
       "authors": [
-        "exit320-stack"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 7,
       "additions": 467,
@@ -3711,10 +3509,7 @@
         "note": null
       },
       "authors": [
-        "exit320-stack"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 5,
       "additions": 88,
@@ -3772,10 +3567,7 @@
         "note": null
       },
       "authors": [
-        "exit320-stack"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 9,
       "additions": 355,
@@ -3836,10 +3628,7 @@
         "note": null
       },
       "authors": [
-        "exit320-stack"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 7,
       "additions": 290,
@@ -3907,10 +3696,7 @@
         "note": null
       },
       "authors": [
-        "exit320-stack"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 7,
       "additions": 274,
@@ -3969,10 +3755,7 @@
         "note": null
       },
       "authors": [
-        "exit320-stack"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 6,
       "additions": 315,
@@ -4040,10 +3823,7 @@
         "note": null
       },
       "authors": [
-        "exit320-stack"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 6,
       "additions": 323,
@@ -4110,10 +3890,7 @@
         "note": null
       },
       "authors": [
-        "exit320-stack"
-      ],
-      "tools": [
-        "Claude Code"
+        "Mike"
       ],
       "files": 11,
       "additions": 305,
@@ -4166,10 +3943,7 @@
         "note": "The log's first entry is the change that starts the log. The recorder was tried locally on 12 real changes; a regex that read the build's base path from a comment cost the recent ones their photos until fixed.\n🤖 Generated with [Claude Code](https://claude.com/claude-code)"
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 18,
       "additions": 2122,
@@ -4212,10 +3986,7 @@
         "note": "Found when the first page of the log was nothing but intro screens. The site used to keep its \"drop me here\" link to developers only.\n🤖 Generated with [Claude Code](https://claude.com/claude-code)"
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 5,
       "additions": 84,
@@ -4256,10 +4027,7 @@
         "note": "Found while reviewing how custom structures are built. The stadium would have vanished on the next map rebuild.\n🤖 Generated with [Claude Code](https://claude.com/claude-code)"
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 6,
       "additions": 625,
@@ -4308,10 +4076,7 @@
         "note": "Part of a review of how time, scenes, structures and characters work. The garden by month was the first thing it made possible to show.\n🤖 Generated with [Claude Code](https://claude.com/claude-code)"
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 25,
       "additions": 361,
@@ -4372,10 +4137,7 @@
         "note": "The refactor the review settled on, instead of a kit of shared character behaviours: the duplication was in App's {A} handler, not in the characters.\n🤖 Generated with [Claude Code](https://claude.com/claude-code)"
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 11,
       "additions": 245,
@@ -4424,10 +4186,7 @@
         "note": "Two people each working with their own Claude: the instructions get them most of the way, the test catches the rest.\n🤖 Generated with [Claude Code](https://claude.com/claude-code)"
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 6,
       "additions": 70,
@@ -4478,10 +4237,7 @@
         "note": "App.tsx's {A} handler, once 109 lines and touched by nearly every new character, is down to 11.\n🤖 Generated with [Claude Code](https://claude.com/claude-code)"
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 15,
       "additions": 229,
@@ -4535,10 +4291,7 @@
         "note": "Nothing on the island looks different. The crow link now finds the snack crow.\n🤖 Generated with [Claude Code](https://claude.com/claude-code)"
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 9,
       "additions": 197,
@@ -4591,10 +4344,7 @@
         "note": "🤖 Generated with [Claude Code](https://claude.com/claude-code)"
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 1,
       "additions": 14,
@@ -4642,10 +4392,7 @@
         "note": "Pelican changes are still shot from the street. The pelican only arrives minutes in, and faking timers would freeze the game.\n🤖 Generated with [Claude Code](https://claude.com/claude-code)"
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 14,
       "additions": 452,
@@ -4686,10 +4433,7 @@
         "note": "🤖 Generated with [Claude Code](https://claude.com/claude-code)"
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 3,
       "additions": 16,
@@ -4738,10 +4482,7 @@
         "note": "🤖 Generated with [Claude Code](https://claude.com/claude-code)"
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 4,
       "additions": 11,
@@ -4778,10 +4519,7 @@
         "note": "🤖 Generated with [Claude Code](https://claude.com/claude-code)"
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 2,
       "additions": 52,
@@ -4820,10 +4558,7 @@
         "note": "🤖 Generated with [Claude Code](https://claude.com/claude-code)"
       },
       "authors": [
-        "vlandham"
-      ],
-      "tools": [
-        "Claude Code"
+        "Jim"
       ],
       "files": 1,
       "additions": 1,
@@ -4843,6 +4578,46 @@
         "arcade_cabinets_ready": 4,
         "source_lines": 27128,
         "commits": 105
+      }
+    },
+    {
+      "pr": 82,
+      "sha": "d03574d6c6459e27a963177ed6892c420d6ebf76",
+      "title": "No Claude Code footer in PRs; the story log names Jim and Mike",
+      "url": "https://github.com/gardeninsound/map/pull/82",
+      "merged_at": "2026-11-16T22:06:44Z",
+      "dir": "changes/2026-11-16-pr082-no-claude-code-footer-in-prs-the-story-l",
+      "ideas": [],
+      "summary": "- **Story log:** the chronicle (the story branch's README) and the /story/ page show people by name: `vlandham` and Jim's git name become Jim, and `exit320-stack` and `mike` become Mike (`PEOPLE` in `scripts/story/lib.mjs`). They no longer show \"with Claude Code\". `story.json` drops its `tools` field. Each change's full record (`entry.json`) still keeps `made_with`.\n\nThe next story run rewrites the chronicle and `story.json` for every change. 474 tests pass, and the build and smoke test pass.",
+      "story": {
+        "askedVsMade": "Asked to drop the Claude Code footer from PRs, strip it from the story page and file, and show Mike and Jim instead of their usernames. Did exactly that.",
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "Jim"
+      ],
+      "files": 8,
+      "additions": 35,
+      "deletions": 17,
+      "areas": [
+        "docs",
+        "tools"
+      ],
+      "tags": [
+        "agent",
+        "story-log",
+        "docs"
+      ],
+      "shots": [],
+      "census": {
+        "spots": 15,
+        "plugins": 22,
+        "scenes": 11,
+        "content_files": 27,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 27127,
+        "commits": 106
       }
     }
   ],

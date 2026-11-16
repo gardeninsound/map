@@ -1,0 +1,146 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "d03574d6c6459e27a963177ed6892c420d6ebf76",
+  "parent": "5de5843b88966c77d386f3e61107babd8631f1d9",
+  "pr": 82,
+  "title": "No Claude Code footer in PRs; the story log names Jim and Mike",
+  "url": "https://github.com/gardeninsound/map/pull/82",
+  "merged_at": "2026-11-16T22:06:44Z",
+  "body": "- **CLAUDE.md:** a rule in the git workflow says PR titles and descriptions have no \"Generated with Claude Code\" footer and no \"made with Claude Code\" credit.\n- **Story log:** the chronicle (the story branch's README) and the /story/ page show people by name: `vlandham` and Jim's git name become Jim, and `exit320-stack` and `mike` become Mike (`PEOPLE` in `scripts/story/lib.mjs`). They no longer show \"with Claude Code\". `story.json` drops its `tools` field. Each change's full record (`entry.json`) still keeps `made_with`.\n\nThe next story run rewrites the chronicle and `story.json` for every change. 474 tests pass, and the build and smoke test pass.\n\n## Story\n\nIdea: Credit the people, not the tool.\nWhere: none\nTags: story-log, agent\nAsked vs made: Asked to drop the Claude Code footer from PRs, strip it from the story page and file, and show Mike and Jim instead of their usernames. Did exactly that.\nMike:\nNote:",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "cc9ef2b3cec1caf449bca5669a58a138a94555ef",
+      "message": "No \"Generated with Claude Code\" in PRs; the story log names Jim and Mike\n\nCLAUDE.md: PR titles and descriptions carry no Claude Code footer or credit. The chronicle and\n/story/ page show people by name (vlandham → Jim, exit320-stack → Mike, and their git names) and\nno \"with Claude Code\"; made_with stays in entry.json only.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-16T22:04:37Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 2,
+      "deletions": 1
+    },
+    {
+      "path": "scripts/smoke.mjs",
+      "status": "M",
+      "additions": 2,
+      "deletions": 2
+    },
+    {
+      "path": "scripts/story/README.md",
+      "status": "M",
+      "additions": 5,
+      "deletions": 3
+    },
+    {
+      "path": "scripts/story/lib.mjs",
+      "status": "M",
+      "additions": 10,
+      "deletions": 6
+    },
+    {
+      "path": "scripts/story/lib.test.mjs",
+      "status": "M",
+      "additions": 14,
+      "deletions": 2
+    },
+    {
+      "path": "src/story/StoryPage.tsx",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "src/story/model.test.ts",
+      "status": "M",
+      "additions": 0,
+      "deletions": 1
+    },
+    {
+      "path": "src/story/model.ts",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    }
+  ],
+  "additions": 35,
+  "deletions": 17,
+  "areas": [
+    "docs",
+    "tools"
+  ],
+  "branch": "story-names-no-footer",
+  "opened_at": "2026-11-16T22:04:41Z",
+  "merged_by": "vlandham",
+  "summary": "- **Story log:** the chronicle (the story branch's README) and the /story/ page show people by name: `vlandham` and Jim's git name become Jim, and `exit320-stack` and `mike` become Mike (`PEOPLE` in `scripts/story/lib.mjs`). They no longer show \"with Claude Code\". `story.json` drops its `tools` field. Each change's full record (`entry.json`) still keeps `made_with`.\n\nThe next story run rewrites the chronicle and `story.json` for every change. 474 tests pass, and the build and smoke test pass.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": "Asked to drop the Claude Code footer from PRs, strip it from the story page and file, and show Mike and Jim instead of their usernames. Did exactly that.",
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "tags": [
+      [
+        "+",
+        "story-log"
+      ],
+      [
+        "+",
+        "agent"
+      ]
+    ],
+    "present": true
+  },
+  "ideas": [],
+  "requested_reviewers": [],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-16T22:05:09Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-82-garden-preview.gardeninsound.workers.dev\n\nUpdated for cc9ef2b. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-82]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-82-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 22,
+    "scenes": 11,
+    "content_files": 27,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 27127,
+    "commits": 106
+  },
+  "tags": [
+    "agent",
+    "story-log",
+    "docs"
+  ],
+  "where_from": "guessed",
+  "shots": [],
+  "first_recorded_at": "2026-11-16T22:08:02.258Z",
+  "earlier": [],
+  "recorded_at": "2026-11-16T22:08:02.258Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43966812243"
+}
