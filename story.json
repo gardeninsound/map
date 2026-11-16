@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-11-16T22:08:09.022Z",
+  "generated_at": "2026-11-16T22:19:38.000Z",
   "changes": [
     {
       "pr": null,
@@ -4618,6 +4618,46 @@
         "arcade_cabinets_ready": 4,
         "source_lines": 27127,
         "commits": 106
+      }
+    },
+    {
+      "pr": 83,
+      "sha": "655d1ccaec3b411bc0fbca7fab5a03fefa4b4b85",
+      "title": "A preview comment that says what to look at",
+      "url": "https://github.com/gardeninsound/map/pull/83",
+      "merged_at": "2026-11-16T22:19:04Z",
+      "dir": "changes/2026-11-16-pr083-a-preview-comment-that-says-what-to-look",
+      "ideas": [],
+      "summary": "The comment on each PR now gives more than the preview link:\n- **Go straight to it:** a link into the preview for each `Where:` line, landing inside the scene, dialog, ride or season.\n- **Answers a wish:** the visitor's own words, their name and street, and how long ago they asked.\n- **Tags and size:** the tags the story log will give the change, the file count and +/−, and a note when it touches the other person's area, naming the files.\n- **Nudges:** a note when there's no `## Story` section, when a change you can see has no `Where:` line (`Where: none` counts as saying so), or when the title mentions a wish but `Idea:` names none.\n\nA new workflow, `preview-comment.yml`, writes the comment. It runs when a PR is opened or pushed to, and also when the description is edited, without rebuilding the preview. `preview.yml` no longer comments. The words come from `renderPreviewComment` in `scripts/story/lib.mjs` (tested), and `scripts/story/preview-comment.mjs` gathers the facts with plain Node, no install.\n\nTried against real PRs: #65 shows Jimmy's garden wish and a nudge about the missing Story section, #71 links to the garden in April, and #82 lists just its tags. This PR's own comment comes from the new workflow.\n\nMike: heads-up. The comment on your PRs will look different, and it will point out a missing `Where:`.\n\n477 tests pass.",
+      "story": {
+        "askedVsMade": "Asked what the preview comment could say. Built the four cheap ideas (links, the wish, tags and areas, nudges) and held back before/after photos for later.",
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "Jim"
+      ],
+      "files": 6,
+      "additions": 190,
+      "deletions": 14,
+      "areas": [
+        "ci",
+        "docs",
+        "tools"
+      ],
+      "tags": [
+        "story-log",
+        "infra"
+      ],
+      "shots": [],
+      "census": {
+        "spots": 15,
+        "plugins": 22,
+        "scenes": 11,
+        "content_files": 27,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 27127,
+        "commits": 107
       }
     }
   ],

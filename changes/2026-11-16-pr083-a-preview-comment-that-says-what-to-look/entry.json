@@ -1,0 +1,137 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "655d1ccaec3b411bc0fbca7fab5a03fefa4b4b85",
+  "parent": "d03574d6c6459e27a963177ed6892c420d6ebf76",
+  "pr": 83,
+  "title": "A preview comment that says what to look at",
+  "url": "https://github.com/gardeninsound/map/pull/83",
+  "merged_at": "2026-11-16T22:19:04Z",
+  "body": "The comment on each PR now gives more than the preview link:\n- **Go straight to it:** a link into the preview for each `Where:` line, landing inside the scene, dialog, ride or season.\n- **Answers a wish:** the visitor's own words, their name and street, and how long ago they asked.\n- **Tags and size:** the tags the story log will give the change, the file count and +/−, and a note when it touches the other person's area, naming the files.\n- **Nudges:** a note when there's no `## Story` section, when a change you can see has no `Where:` line (`Where: none` counts as saying so), or when the title mentions a wish but `Idea:` names none.\n\nA new workflow, `preview-comment.yml`, writes the comment. It runs when a PR is opened or pushed to, and also when the description is edited, without rebuilding the preview. `preview.yml` no longer comments. The words come from `renderPreviewComment` in `scripts/story/lib.mjs` (tested), and `scripts/story/preview-comment.mjs` gathers the facts with plain Node, no install.\n\nTried against real PRs: #65 shows Jimmy's garden wish and a nudge about the missing Story section, #71 links to the garden in April, and #82 lists just its tags. This PR's own comment comes from the new workflow.\n\nMike: heads-up. The comment on your PRs will look different, and it will point out a missing `Where:`.\n\n477 tests pass.\n\n## Story\n\nIdea: Make the preview comment useful.\nWhere: none\nTags: infra, story-log\nAsked vs made: Asked what the preview comment could say. Built the four cheap ideas (links, the wish, tags and areas, nudges) and held back before/after photos for later.\nMike:\nNote:",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "f3b1025db285fa9a8ac63a61cc78c6dcf6995850",
+      "message": "A preview comment that says what to look at: links to each Where, the wish, tags, nudges\n\npreview-comment.yml (on open, push and description edits; no rebuild) keeps the PR's comment:\nthe preview link, links straight to each Where: place, the wishes it answers in the visitor's\nwords, its tags and size, whose area it touches, and what the Story section is missing.\nWords in renderPreviewComment (lib.mjs, tested); preview.yml no longer comments.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-16T22:17:10Z"
+    }
+  ],
+  "files": [
+    {
+      "path": ".github/workflows/preview-comment.yml",
+      "status": "A",
+      "additions": 39,
+      "deletions": 0
+    },
+    {
+      "path": ".github/workflows/preview.yml",
+      "status": "M",
+      "additions": 1,
+      "deletions": 12
+    },
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 3,
+      "deletions": 1
+    },
+    {
+      "path": "scripts/story/lib.mjs",
+      "status": "M",
+      "additions": 66,
+      "deletions": 1
+    },
+    {
+      "path": "scripts/story/lib.test.mjs",
+      "status": "M",
+      "additions": 37,
+      "deletions": 0
+    },
+    {
+      "path": "scripts/story/preview-comment.mjs",
+      "status": "A",
+      "additions": 44,
+      "deletions": 0
+    }
+  ],
+  "additions": 190,
+  "deletions": 14,
+  "areas": [
+    "ci",
+    "docs",
+    "tools"
+  ],
+  "branch": "preview-comment",
+  "opened_at": "2026-11-16T22:17:13Z",
+  "merged_by": "vlandham",
+  "summary": "The comment on each PR now gives more than the preview link:\n- **Go straight to it:** a link into the preview for each `Where:` line, landing inside the scene, dialog, ride or season.\n- **Answers a wish:** the visitor's own words, their name and street, and how long ago they asked.\n- **Tags and size:** the tags the story log will give the change, the file count and +/−, and a note when it touches the other person's area, naming the files.\n- **Nudges:** a note when there's no `## Story` section, when a change you can see has no `Where:` line (`Where: none` counts as saying so), or when the title mentions a wish but `Idea:` names none.\n\nA new workflow, `preview-comment.yml`, writes the comment. It runs when a PR is opened or pushed to, and also when the description is edited, without rebuilding the preview. `preview.yml` no longer comments. The words come from `renderPreviewComment` in `scripts/story/lib.mjs` (tested), and `scripts/story/preview-comment.mjs` gathers the facts with plain Node, no install.\n\nTried against real PRs: #65 shows Jimmy's garden wish and a nudge about the missing Story section, #71 links to the garden in April, and #82 lists just its tags. This PR's own comment comes from the new workflow.\n\nMike: heads-up. The comment on your PRs will look different, and it will point out a missing `Where:`.\n\n477 tests pass.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": "Asked what the preview comment could say. Built the four cheap ideas (links, the wish, tags and areas, nudges) and held back before/after photos for later.",
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "tags": [
+      [
+        "+",
+        "infra"
+      ],
+      [
+        "+",
+        "story-log"
+      ]
+    ],
+    "present": true,
+    "whereSaid": true
+  },
+  "ideas": [],
+  "requested_reviewers": [
+    "exit320-stack"
+  ],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-16T22:17:25Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview** · updated for f3b1025 (ready when the Preview check is green)\nhttps://pr-83-garden-preview.gardeninsound.workers.dev\n\nstory-log · infra · 6 files, +190 −14\n\n<sub>A full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-83]`). Edit the description and this comment follows.</sub>\n",
+      "bot": true
+    }
+  ],
+  "preview_url": null,
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 22,
+    "scenes": 11,
+    "content_files": 27,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 27127,
+    "commits": 107
+  },
+  "tags": [
+    "story-log",
+    "infra"
+  ],
+  "where_from": "guessed",
+  "shots": [],
+  "first_recorded_at": "2026-11-16T22:19:35.307Z",
+  "earlier": [],
+  "recorded_at": "2026-11-16T22:19:35.307Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43968879652"
+}
