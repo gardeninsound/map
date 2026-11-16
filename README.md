@@ -2,7 +2,24 @@
 
 Every change that went live on [gardeninsound.website](https://gardeninsound.website), newest first, with the wish that started it, what was made, who made it, and how the spot looked before and after. Written automatically by [`.github/workflows/story.yml`](https://github.com/gardeninsound/map/blob/main/.github/workflows/story.yml) when a change merges; the raw records are in `changes/` and `wishes/`, and `story.json` indexes them all.
 
-**81** changes · **12** wishes from visitors, **11** answered · **0** still waiting
+**82** changes · **12** wishes from visitors, **11** answered · **0** still waiting
+
+---
+
+### Nov 15, 2026 · What {A} does is data, step 3: the plugin list by id, out of App.tsx ([#75](https://github.com/gardeninsound/map/pull/75))
+
+**Asked vs made:** Asked for step 3 of the refactor. Made the plugin list by id, fixed `?open=crow`, and added a guard.
+
+Nothing on the island looks different. The crow link now finds the snack crow.
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+| before · crow | after |
+|---|---|
+| <img src="changes/2026-11-15-pr075-what-a-does-is-data-step-3-the-plugin-li/before-1.webp" width="400"> | <img src="changes/2026-11-15-pr075-what-a-does-is-data-step-3-the-plugin-li/after-1.webp" width="400"> |
+
+<img src="changes/2026-11-15-pr075-what-a-does-is-data-step-3-the-plugin-li/moving-1.webp" width="400" alt="moving">
+
+<sub>vlandham with Claude Code · 9 files, +197 −58 · characters & map life, ui, docs, tools · [record](changes/2026-11-15-pr075-what-a-does-is-data-step-3-the-plugin-li/entry.json)</sub>
 
 ---
 

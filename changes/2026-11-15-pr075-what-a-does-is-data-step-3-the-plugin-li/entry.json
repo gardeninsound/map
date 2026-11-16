@@ -1,0 +1,172 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "4d30ae0f439bbf86e6594994857575c3834596ac",
+  "parent": "c61664f3d40a5d93c93c3dd3b8ea8649a422a0d5",
+  "pr": 75,
+  "title": "What {A} does is data, step 3: the plugin list by id, out of App.tsx",
+  "url": "https://github.com/gardeninsound/map/pull/75",
+  "merged_at": "2026-11-16T00:02:12Z",
+  "body": "Step 3 of the refactor (after #72–#74). Every plugin is now listed once, by a stable id, in `src/game/plugins/index.ts` (`createIsland`), in draw and {A} order. App.tsx hands `pluginList(island)` to `CityGame` and names no plugin itself, so **a new character is one line there and doesn't touch App.tsx**.\n\n- **Ids are names:** `?open=crow` now opens the snack crow (that plugin's own target, via `targetsOf`) instead of whichever street crow matched by name. Dev hooks are generated as `window.__<id>`; all the old names (`__race`, `__maze`, `__boxing`…) are kept, plus `__cup`, `__seal`, `__arcadeDoor`.\n- **Guard:** `src/game/onInteract.test.ts` now also fails if App.tsx imports a plugin (an `import type` is fine), and says where to add it. Checked that it fails when it should.\n- **Docs:** CLAUDE.md (convention 7, where things live, Verifying), `src/game/CLAUDE.md`, `src/ui/CLAUDE.md`, `openLink.ts`.\n- App.tsx: 642 → 612 lines.\n\nVerified: 463 tests (new `src/game/plugins/index.test.ts`: order, ids, `?solo`, every plugin that has targets is an Actor, the snack crow and not a street crow). Build and smoke pass, and smoke has a new check that `?open=crow` offers \"Share a carrot\". The dev hooks were checked in Chrome.\n\nMike: heads-up only. Nothing you'd see changes. If you add a character, it goes in `createIsland`.\n\n## Story\n\nIdea: Finish the \"what {A} does is data\" refactor: every character is listed by name in one place, so adding one never touches the app's wiring.\nWhere: open:crow\nAsked vs made: Asked for step 3 of the refactor. Made the plugin list by id, fixed `?open=crow`, and added a guard.\nMike:\nNote: Nothing on the island looks different. The crow link now finds the snack crow.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "9ad9f7fffe63b4a198f58e5e5041602553647001",
+      "message": "What {A} does is data, step 3: the plugin list by id, out of App.tsx\n\nsrc/game/plugins/index.ts (createIsland) lists every plugin by a stable id, in draw and {A}\norder. App hands pluginList(island) to CityGame and names no plugin itself, so a new character\nis one line there. The id is its name in links (?open=crow → the snack crow, via targetsOf, not\na street crow) and in dev (window.__<id>, generated). A guard fails if App.tsx imports a plugin.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-16T00:00:15Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 3,
+      "deletions": 2
+    },
+    {
+      "path": "scripts/smoke.mjs",
+      "status": "M",
+      "additions": 12,
+      "deletions": 1
+    },
+    {
+      "path": "src/App.tsx",
+      "status": "M",
+      "additions": 18,
+      "deletions": 48
+    },
+    {
+      "path": "src/game/CLAUDE.md",
+      "status": "M",
+      "additions": 5,
+      "deletions": 3
+    },
+    {
+      "path": "src/game/onInteract.test.ts",
+      "status": "M",
+      "additions": 8,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/plugins/index.test.ts",
+      "status": "A",
+      "additions": 54,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/plugins/index.ts",
+      "status": "A",
+      "additions": 91,
+      "deletions": 0
+    },
+    {
+      "path": "src/ui/CLAUDE.md",
+      "status": "M",
+      "additions": 3,
+      "deletions": 2
+    },
+    {
+      "path": "src/ui/openLink.ts",
+      "status": "M",
+      "additions": 3,
+      "deletions": 2
+    }
+  ],
+  "additions": 197,
+  "deletions": 58,
+  "areas": [
+    "characters & map life",
+    "ui",
+    "docs",
+    "tools"
+  ],
+  "branch": "plugin-list",
+  "opened_at": "2026-11-16T00:00:19Z",
+  "merged_by": "vlandham",
+  "summary": "Step 3 of the refactor (after #72–#74). Every plugin is now listed once, by a stable id, in `src/game/plugins/index.ts` (`createIsland`), in draw and {A} order. App.tsx hands `pluginList(island)` to `CityGame` and names no plugin itself, so **a new character is one line there and doesn't touch App.tsx**.\n\n- **Ids are names:** `?open=crow` now opens the snack crow (that plugin's own target, via `targetsOf`) instead of whichever street crow matched by name. Dev hooks are generated as `window.__<id>`; all the old names (`__race`, `__maze`, `__boxing`…) are kept, plus `__cup`, `__seal`, `__arcadeDoor`.\n- **Guard:** `src/game/onInteract.test.ts` now also fails if App.tsx imports a plugin (an `import type` is fine), and says where to add it. Checked that it fails when it should.\n- **Docs:** CLAUDE.md (convention 7, where things live, Verifying), `src/game/CLAUDE.md`, `src/ui/CLAUDE.md`, `openLink.ts`.\n- App.tsx: 642 → 612 lines.\n\nVerified: 463 tests (new `src/game/plugins/index.test.ts`: order, ids, `?solo`, every plugin that has targets is an Actor, the snack crow and not a street crow). Build and smoke pass, and smoke has a new check that `?open=crow` offers \"Share a carrot\". The dev hooks were checked in Chrome.\n\nMike: heads-up only. Nothing you'd see changes. If you add a character, it goes in `createIsland`.",
+  "story": {
+    "ideas": [],
+    "where": [
+      {
+        "query": "open=crow",
+        "label": "crow"
+      }
+    ],
+    "askedVsMade": "Asked for step 3 of the refactor. Made the plugin list by id, fixed `?open=crow`, and added a guard.",
+    "mike": null,
+    "note": "Nothing on the island looks different. The crow link now finds the snack crow.\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+    "shots": true,
+    "present": true
+  },
+  "ideas": [],
+  "requested_reviewers": [
+    "exit320-stack"
+  ],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-16T00:00:44Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-75-garden-preview.gardeninsound.workers.dev\n\nUpdated for 9ad9f7f. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-75]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-75-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 22,
+    "scenes": 11,
+    "content_files": 27,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 27062,
+    "commits": 99
+  },
+  "shots": [
+    {
+      "query": "open=crow",
+      "lat": null,
+      "lon": null,
+      "label": "crow",
+      "guessed": false,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "production",
+      "after": "production"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+  },
+  "first_recorded_at": "2026-11-16T00:02:41.701Z",
+  "earlier": [],
+  "recorded_at": "2026-11-16T00:02:41.701Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43778000832"
+}

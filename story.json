@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-11-15T22:14:50.065Z",
+  "generated_at": "2026-11-16T00:03:05.911Z",
   "changes": [
     {
       "pr": null,
@@ -4073,6 +4073,56 @@
         "arcade_cabinets_ready": 4,
         "source_lines": 26938,
         "commits": 98
+      }
+    },
+    {
+      "pr": 75,
+      "sha": "4d30ae0f439bbf86e6594994857575c3834596ac",
+      "title": "What {A} does is data, step 3: the plugin list by id, out of App.tsx",
+      "url": "https://github.com/gardeninsound/map/pull/75",
+      "merged_at": "2026-11-16T00:02:12Z",
+      "dir": "changes/2026-11-15-pr075-what-a-does-is-data-step-3-the-plugin-li",
+      "ideas": [],
+      "summary": "Step 3 of the refactor (after #72–#74). Every plugin is now listed once, by a stable id, in `src/game/plugins/index.ts` (`createIsland`), in draw and {A} order. App.tsx hands `pluginList(island)` to `CityGame` and names no plugin itself, so **a new character is one line there and doesn't touch App.tsx**.\n\n- **Ids are names:** `?open=crow` now opens the snack crow (that plugin's own target, via `targetsOf`) instead of whichever street crow matched by name. Dev hooks are generated as `window.__<id>`; all the old names (`__race`, `__maze`, `__boxing`…) are kept, plus `__cup`, `__seal`, `__arcadeDoor`.\n- **Guard:** `src/game/onInteract.test.ts` now also fails if App.tsx imports a plugin (an `import type` is fine), and says where to add it. Checked that it fails when it should.\n- **Docs:** CLAUDE.md (convention 7, where things live, Verifying), `src/game/CLAUDE.md`, `src/ui/CLAUDE.md`, `openLink.ts`.\n- App.tsx: 642 → 612 lines.\n\nVerified: 463 tests (new `src/game/plugins/index.test.ts`: order, ids, `?solo`, every plugin that has targets is an Actor, the snack crow and not a street crow). Build and smoke pass, and smoke has a new check that `?open=crow` offers \"Share a carrot\". The dev hooks were checked in Chrome.\n\nMike: heads-up only. Nothing you'd see changes. If you add a character, it goes in `createIsland`.",
+      "story": {
+        "askedVsMade": "Asked for step 3 of the refactor. Made the plugin list by id, fixed `?open=crow`, and added a guard.",
+        "mike": null,
+        "note": "Nothing on the island looks different. The crow link now finds the snack crow.\n🤖 Generated with [Claude Code](https://claude.com/claude-code)"
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 9,
+      "additions": 197,
+      "deletions": 58,
+      "areas": [
+        "characters & map life",
+        "ui",
+        "docs",
+        "tools"
+      ],
+      "shots": [
+        {
+          "query": "open=crow",
+          "lat": null,
+          "lon": null,
+          "label": "crow",
+          "before": "changes/2026-11-15-pr075-what-a-does-is-data-step-3-the-plugin-li/before-1.webp",
+          "after": "changes/2026-11-15-pr075-what-a-does-is-data-step-3-the-plugin-li/after-1.webp",
+          "moving": "changes/2026-11-15-pr075-what-a-does-is-data-step-3-the-plugin-li/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 22,
+        "scenes": 11,
+        "content_files": 27,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 27062,
+        "commits": 99
       }
     }
   ],
