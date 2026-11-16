@@ -2,7 +2,18 @@
 
 Every change that went live on [gardeninsound.website](https://gardeninsound.website), newest first, with the wish that started it, what was made, who made it, and how the spot looked before and after. Written automatically by [`.github/workflows/story.yml`](https://github.com/gardeninsound/map/blob/main/.github/workflows/story.yml) when a change merges; the raw records are in `changes/` and `wishes/`, and `story.json` indexes them all.
 
-**83** changes · **12** wishes from visitors, **11** answered · **0** still waiting
+**84** changes · **12** wishes from visitors, **11** answered · **0** still waiting
+
+---
+
+### Nov 16, 2026 · Story log: photos inside scenes, cabinets, dialogs and seasons; tags on every change ([#77](https://github.com/gardeninsound/map/pull/77))
+
+**Asked vs made:** Asked to update the screenshots for changes inside places or tied to time, and to tag changes (ui, agent, code…). Made a way in for old builds, a curated list for 22 early changes, and 16 automatic tags with a filter on /story/.
+
+Pelican changes are still shot from the street. The pelican only arrives minutes in, and faking timers would freeze the game.
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+<sub>vlandham with Claude Code · 14 files, +452 −31 · ci, docs, tools · [record](changes/2026-11-16-pr077-story-log-photos-inside-scenes-cabinets/entry.json)</sub>
 
 ---
 
@@ -1196,11 +1207,17 @@ Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
 Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
-| before | after |
+| before · the chicken by the vet | after |
 |---|---|
 | <img src="changes/2026-10-19-18e4ad0-a-chicken-by-the-vet-on-california-and-h/before-1.webp" width="400"> | <img src="changes/2026-10-19-18e4ad0-a-chicken-by-the-vet-on-california-and-h/after-1.webp" width="400"> |
 
 <img src="changes/2026-10-19-18e4ad0-a-chicken-by-the-vet-on-california-and-h/moving-1.webp" width="400" alt="moving">
+
+| before · Cone Catch | after |
+|---|---|
+| <img src="changes/2026-10-19-18e4ad0-a-chicken-by-the-vet-on-california-and-h/before-2.webp" width="400"> | <img src="changes/2026-10-19-18e4ad0-a-chicken-by-the-vet-on-california-and-h/after-2.webp" width="400"> |
+
+<img src="changes/2026-10-19-18e4ad0-a-chicken-by-the-vet-on-california-and-h/moving-2.webp" width="400" alt="moving">
 
 <sub>mike with Claude Code · 10 files, +880 −7 · characters & map life, scenes & games, ui, words & content, docs · [record](changes/2026-10-19-18e4ad0-a-chicken-by-the-vet-on-california-and-h/entry.json)</sub>
 
@@ -1364,7 +1381,7 @@ Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
 Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
-| before · the Junction, where everyone starts | after |
+| before · a slideshow, now in AVIF | after |
 |---|---|
 | <img src="changes/2026-10-18-5f0f9e7-avif-art-pipeline-publish-step-drop-old/before-1.webp" width="400"> | <img src="changes/2026-10-18-5f0f9e7-avif-art-pipeline-publish-step-drop-old/after-1.webp" width="400"> |
 
@@ -1404,7 +1421,7 @@ Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
 Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
-| before · the Junction, where everyone starts | after |
+| before · the snack crow | after |
 |---|---|
 | <img src="changes/2026-10-18-84646d6-snack-crow-that-flies-between-perches/before-1.webp" width="400"> | <img src="changes/2026-10-18-84646d6-snack-crow-that-flies-between-perches/after-1.webp" width="400"> |
 
@@ -1422,7 +1439,7 @@ Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
 Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
-| before | after |
+| before · Rush Hour, the boards | after |
 |---|---|
 | <img src="changes/2026-10-18-2376644-photo-slideshows-24-stills-each-rush-hou/before-1.webp" width="400"> | <img src="changes/2026-10-18-2376644-photo-slideshows-24-stills-each-rush-hou/after-1.webp" width="400"> |
 
@@ -1483,11 +1500,17 @@ Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
 Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 
-| before | after |
+| before · Seven+ Stories, the walk | after |
 |---|---|
 | <img src="changes/2026-10-18-23a878f-compass-first-visit-arrow-octilinear-roa/before-1.webp" width="400"> | <img src="changes/2026-10-18-23a878f-compass-first-visit-arrow-octilinear-roa/after-1.webp" width="400"> |
 
 <img src="changes/2026-10-18-23a878f-compass-first-visit-arrow-octilinear-roa/moving-1.webp" width="400" alt="moving">
+
+| before · the compass and the arrow | after |
+|---|---|
+| <img src="changes/2026-10-18-23a878f-compass-first-visit-arrow-octilinear-roa/before-2.webp" width="400"> | <img src="changes/2026-10-18-23a878f-compass-first-visit-arrow-octilinear-roa/after-2.webp" width="400"> |
+
+<img src="changes/2026-10-18-23a878f-compass-first-visit-arrow-octilinear-roa/moving-2.webp" width="400" alt="moving">
 
 <sub>vlandham with Claude Code · 18 files, +960 −34 · characters & map life, scenes & games, ui, words & content, docs, tools · [record](changes/2026-10-18-23a878f-compass-first-visit-arrow-octilinear-roa/entry.json)</sub>
 

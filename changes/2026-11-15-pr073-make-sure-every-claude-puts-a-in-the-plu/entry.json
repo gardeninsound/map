@@ -143,5 +143,11 @@
   "first_recorded_at": "2026-11-15T22:06:37.161Z",
   "earlier": [],
   "recorded_at": "2026-11-15T22:06:37.161Z",
-  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43767333582"
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43767333582",
+  "tags": [
+    "character",
+    "code",
+    "agent",
+    "docs"
+  ]
 }

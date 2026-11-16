@@ -178,5 +178,9 @@
   "first_recorded_at": "2026-11-15T21:59:40.978Z",
   "earlier": [],
   "recorded_at": "2026-11-15T21:59:40.978Z",
-  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43766670056"
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43766670056",
+  "tags": [
+    "character",
+    "code"
+  ]
 }

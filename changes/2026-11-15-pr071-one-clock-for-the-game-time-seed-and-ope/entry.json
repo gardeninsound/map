@@ -269,5 +269,16 @@
   "first_recorded_at": "2026-11-15T20:30:15.636Z",
   "earlier": [],
   "recorded_at": "2026-11-15T20:30:15.636Z",
-  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43758387689"
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43758387689",
+  "tags": [
+    "character",
+    "scene",
+    "arcade",
+    "sound",
+    "ui",
+    "code",
+    "story-log",
+    "infra",
+    "docs"
+  ]
 }

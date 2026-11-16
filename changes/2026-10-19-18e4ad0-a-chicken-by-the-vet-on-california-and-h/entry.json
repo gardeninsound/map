@@ -101,6 +101,7 @@
     "mike": null,
     "note": null,
     "shots": true,
+    "tags": [],
     "present": false
   },
   "ideas": [],
@@ -120,19 +121,57 @@
     "source_lines": 11010,
     "commits": 18
   },
+  "tags": [
+    "character",
+    "scene",
+    "sound",
+    "words",
+    "ui"
+  ],
+  "where_from": "curated",
   "shots": [
     {
-      "query": "at=47.56339,-122.386444",
-      "lat": 47.56339,
-      "lon": -122.386444,
-      "label": null,
-      "guessed": true,
+      "query": "open=chicken",
+      "way": "at=47.563293,-122.386619",
+      "goal": ".dialog",
+      "lat": 47.563293,
+      "lon": -122.386619,
+      "label": "the chicken by the vet",
+      "guessed": false,
       "before": "before-1.webp",
       "after": "after-1.webp",
       "moving": "moving-1.webp",
       "problems": {
-        "before": [],
+        "before": [
+          "nothing opened: no .dialog on screen (on a \"before\" photo, usually because it wasn't there yet)"
+        ],
         "after": []
+      },
+      "via": {
+        "before": "way",
+        "after": "way"
+      }
+    },
+    {
+      "query": "open=minigame:cone-catch",
+      "way": "at=47.563293,-122.386619",
+      "goal": ".minigame-canvas",
+      "lat": 47.563293,
+      "lon": -122.386619,
+      "label": "Cone Catch",
+      "guessed": false,
+      "before": "before-2.webp",
+      "after": "after-2.webp",
+      "moving": "moving-2.webp",
+      "problems": {
+        "before": [
+          "nothing opened: no .minigame-canvas on screen (on a \"before\" photo, usually because it wasn't there yet)"
+        ],
+        "after": []
+      },
+      "via": {
+        "before": "way",
+        "after": "way"
       }
     }
   ],
@@ -146,10 +185,10 @@
       "before": "development",
       "after": "development"
     },
-    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else. via 'way': a build from before ?open= links, walked in by pressing {A} at the place's `way`."
   },
   "first_recorded_at": "2026-11-15T16:33:25.935Z",
   "earlier": [],
-  "recorded_at": "2026-11-15T16:43:39.483Z",
-  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736942138"
+  "recorded_at": "2026-11-16T14:12:37.469Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43883229945"
 }

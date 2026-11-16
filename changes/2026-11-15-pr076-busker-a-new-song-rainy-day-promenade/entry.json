@@ -117,5 +117,9 @@
   "first_recorded_at": "2026-11-16T00:27:53.213Z",
   "earlier": [],
   "recorded_at": "2026-11-16T00:27:53.213Z",
-  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43780468805"
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43780468805",
+  "tags": [
+    "character",
+    "sound"
+  ]
 }

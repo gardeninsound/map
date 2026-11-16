@@ -88,6 +88,7 @@
     "mike": null,
     "note": null,
     "shots": true,
+    "tags": [],
     "present": false
   },
   "ideas": [],
@@ -107,19 +108,32 @@
     "source_lines": 7944,
     "commits": 8
   },
+  "tags": [
+    "map",
+    "character",
+    "words",
+    "ui"
+  ],
+  "where_from": "curated",
   "shots": [
     {
-      "query": "at=47.5612,-122.3868",
-      "lat": 47.5612,
-      "lon": -122.3868,
-      "label": "the Junction, where everyone starts",
-      "guessed": true,
+      "query": "open=crow",
+      "way": "at=47.560796,-122.380549",
+      "goal": ".dialog",
+      "lat": 47.560796,
+      "lon": -122.380549,
+      "label": "the snack crow",
+      "guessed": false,
       "before": "before-1.webp",
       "after": "after-1.webp",
       "moving": "moving-1.webp",
       "problems": {
         "before": [],
         "after": []
+      },
+      "via": {
+        "before": "way",
+        "after": "way"
       }
     }
   ],
@@ -133,10 +147,10 @@
       "before": "development",
       "after": "development"
     },
-    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else. via 'way': a build from before ?open= links, walked in by pressing {A} at the place's `way`."
   },
   "first_recorded_at": "2026-11-15T16:33:25.935Z",
   "earlier": [],
-  "recorded_at": "2026-11-15T16:43:39.483Z",
-  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736942138"
+  "recorded_at": "2026-11-16T14:12:37.469Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43883229945"
 }

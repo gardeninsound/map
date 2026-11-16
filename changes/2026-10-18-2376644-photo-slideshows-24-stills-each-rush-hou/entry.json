@@ -74,6 +74,7 @@
     "mike": null,
     "note": null,
     "shots": true,
+    "tags": [],
     "present": false
   },
   "ideas": [],
@@ -93,19 +94,34 @@
     "source_lines": 7583,
     "commits": 7
   },
+  "tags": [
+    "scene",
+    "words"
+  ],
+  "where_from": "curated",
   "shots": [
     {
-      "query": "at=47.563730,-122.386654",
-      "lat": 47.56373,
-      "lon": -122.386654,
-      "label": null,
-      "guessed": true,
+      "query": "open=scene:rush-hour",
+      "way": "at=47.563618,-122.386460",
+      "goal": ".scene",
+      "lat": 47.563618,
+      "lon": -122.38646,
+      "label": "Rush Hour, the boards",
+      "guessed": false,
       "before": "before-1.webp",
       "after": "after-1.webp",
       "moving": "moving-1.webp",
       "problems": {
-        "before": [],
-        "after": []
+        "before": [
+          "nothing opened: no .scene on screen (on a \"before\" photo, usually because it wasn't there yet)"
+        ],
+        "after": [
+          "console: Failed to load resource: the server responded with a status of 404 (Not Found) (×24)"
+        ]
+      },
+      "via": {
+        "before": "way",
+        "after": "way"
       }
     }
   ],
@@ -119,10 +135,10 @@
       "before": "development",
       "after": "development"
     },
-    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else. via 'way': a build from before ?open= links, walked in by pressing {A} at the place's `way`."
   },
   "first_recorded_at": "2026-11-15T16:33:25.935Z",
   "earlier": [],
-  "recorded_at": "2026-11-15T16:43:39.483Z",
-  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43736942138"
+  "recorded_at": "2026-11-16T14:12:37.469Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43883229945"
 }

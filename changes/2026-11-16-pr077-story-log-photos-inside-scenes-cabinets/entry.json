@@ -1,0 +1,181 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "d85947a1ea9a264fc4e2a278eaa1b9a780831d0e",
+  "parent": "fd54fe9d6fcaddee5d6c59d8197abadefb45d23d",
+  "pr": 77,
+  "title": "Story log: photos inside scenes, cabinets, dialogs and seasons; tags on every change",
+  "url": "https://github.com/gardeninsound/map/pull/77",
+  "merged_at": "2026-11-16T14:11:56Z",
+  "body": "Two additions to the story log.\n\n**1. Photos from inside things, on any build.** `?open=` and `?time=` only exist since #71, so older changes were photographed from the street. Now:\n- An `open` place can say where to stand: `open:scene:rush-hour @ 47.5636, -122.3865`. On a build without `?open=` links, the camera stands there with `?at=` and presses {A} until the scene, dialog, ride or mini game is on screen, taking the first choice each time (\"Let's see it\", \"Ride it\", \"Yes!\").\n- On a build without the game clock, a place's `time=` is faked in the browser with Playwright's clock. That means the garden can be shown in April on the commit that planted it.\n- On builds from before `?at=arcade` worked, the camera starts from the arcade door's coordinates. Those builds used to drop the rabbit nowhere.\n- `scripts/story/curated.json` picks places for 22 early changes: inside the Duck Arcade and its cabinets, Rush Hour, Seven+ Stories, the chicken and Cone Catch, the snack crow, Ham, chicken boxing, the Giant Whirl, Sundrop, the garden in November and in April, and the corrected title screen. Curated places win over the guess. `--curated` (always on in the workflow, up to `limit` a run) retakes their photos.\n- Each shot records `via: link | way`. Repeated page errors are collapsed into one line with a count.\n\nTested on real old builds: #65 (garden in November and April), #61 (riding the Whirl), 18e4ad0 (chicken dialog plus Cone Catch), 238fcad (inside the arcade on Nov 4), 2376644 (Rush Hour), 84646d6 (crow), #58 (boxing), #27 (arcade floor). Every \"after\" photo got in. The \"before\" photos say `nothing opened` where the thing didn't exist yet.\n\n**2. Tags.** Every change is tagged from what it touched: `wish`, `map`, `character`, `scene`, `arcade`, `art`, `sound`, `words`, `ui`, `multiplayer`, `idea-box`, `code`, `agent`, `story-log`, `infra` and `docs`.\n- `code` means the engine and wiring. `agent` means how agents build the island: `scripts/ai`, `CLAUDE.md` rewrites, the guards, and titles about Claude.\n- Tags are worked out again for every change on every run, so the old log gets them too.\n- A PR's new `Tags:` line, in the template, adds or removes tags (`sound, festival, -code`), and so does `curated.json`.\n- The /story/ page has a tag row that filters the log, and tags are shown on each change.\n\nMike: heads-up. The PR template has an optional `Tags:` line now.\n\nChecks: 473 tests (new ones cover parseWhere ways in, openGoal, curated lookups, a validity check of `curated.json`, the tag rules, and the page's tag filter). Build and smoke pass, and smoke now clicks a tag on the story page.\n\n## Story\n\nIdea: Show what changed inside scenes and at different times, and sort the log with tags.\nWhere: none\nTags: story-log\nAsked vs made: Asked to update the screenshots for changes inside places or tied to time, and to tag changes (ui, agent, code…). Made a way in for old builds, a curated list for 22 early changes, and 16 automatic tags with a filter on /story/.\nMike:\nNote: Pelican changes are still shot from the street. The pelican only arrives minutes in, and faking timers would freeze the game.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "0c855bb0385e8522ff377e56d70eaa4ab6987b38",
+      "message": "Story log: photos inside scenes, cabinets, dialogs and seasons on any build; tags on every change\n\nThe camera can get inside on builds from before ?open= and ?time= (#71): an open place says\nwhere to stand (`open:scene:rush-hour @ lat, lon`), and on an old build the camera goes there and\npresses {A} until the scene, dialog, ride or game is on screen. A place's time= is faked in the\nbrowser on builds without the game clock, and builds without ?at=arcade start from the door.\nscripts/story/curated.json picks places for 22 early changes (inside the arcade, Rush Hour, the\nchicken and Cone Catch, the Giant Whirl, the garden in November and April…); --curated (always\non in the workflow) retakes them.\n\nTags: every change is tagged from what it touched (wish, map, character, scene, arcade, art,\nsound, words, ui, multiplayer, idea-box, code, agent, story-log, infra, docs), re-derived on every\nrun; a PR's Tags: line and curated.json add or remove. The /story/ page filters by tag.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-16T14:09:31Z"
+    }
+  ],
+  "files": [
+    {
+      "path": ".github/pull_request_template.md",
+      "status": "M",
+      "additions": 5,
+      "deletions": 1
+    },
+    {
+      "path": ".github/workflows/story.yml",
+      "status": "M",
+      "additions": 2,
+      "deletions": 1
+    },
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "scripts/smoke.mjs",
+      "status": "M",
+      "additions": 12,
+      "deletions": 1
+    },
+    {
+      "path": "scripts/story/README.md",
+      "status": "M",
+      "additions": 29,
+      "deletions": 0
+    },
+    {
+      "path": "scripts/story/curated.json",
+      "status": "A",
+      "additions": 24,
+      "deletions": 0
+    },
+    {
+      "path": "scripts/story/lib.mjs",
+      "status": "M",
+      "additions": 123,
+      "deletions": 2
+    },
+    {
+      "path": "scripts/story/lib.test.mjs",
+      "status": "M",
+      "additions": 95,
+      "deletions": 2
+    },
+    {
+      "path": "scripts/story/record.mjs",
+      "status": "M",
+      "additions": 62,
+      "deletions": 9
+    },
+    {
+      "path": "scripts/story/shoot.mjs",
+      "status": "M",
+      "additions": 33,
+      "deletions": 7
+    },
+    {
+      "path": "src/story/StoryPage.tsx",
+      "status": "M",
+      "additions": 33,
+      "deletions": 6
+    },
+    {
+      "path": "src/story/model.test.ts",
+      "status": "M",
+      "additions": 10,
+      "deletions": 1
+    },
+    {
+      "path": "src/story/model.ts",
+      "status": "M",
+      "additions": 12,
+      "deletions": 0
+    },
+    {
+      "path": "src/story/story.css",
+      "status": "M",
+      "additions": 11,
+      "deletions": 0
+    }
+  ],
+  "additions": 452,
+  "deletions": 31,
+  "areas": [
+    "ci",
+    "docs",
+    "tools"
+  ],
+  "branch": "story-inside-and-tags",
+  "opened_at": "2026-11-16T14:09:34Z",
+  "merged_by": "vlandham",
+  "summary": "Two additions to the story log.\n\n**1. Photos from inside things, on any build.** `?open=` and `?time=` only exist since #71, so older changes were photographed from the street. Now:\n- An `open` place can say where to stand: `open:scene:rush-hour @ 47.5636, -122.3865`. On a build without `?open=` links, the camera stands there with `?at=` and presses {A} until the scene, dialog, ride or mini game is on screen, taking the first choice each time (\"Let's see it\", \"Ride it\", \"Yes!\").\n- On a build without the game clock, a place's `time=` is faked in the browser with Playwright's clock. That means the garden can be shown in April on the commit that planted it.\n- On builds from before `?at=arcade` worked, the camera starts from the arcade door's coordinates. Those builds used to drop the rabbit nowhere.\n- `scripts/story/curated.json` picks places for 22 early changes: inside the Duck Arcade and its cabinets, Rush Hour, Seven+ Stories, the chicken and Cone Catch, the snack crow, Ham, chicken boxing, the Giant Whirl, Sundrop, the garden in November and in April, and the corrected title screen. Curated places win over the guess. `--curated` (always on in the workflow, up to `limit` a run) retakes their photos.\n- Each shot records `via: link | way`. Repeated page errors are collapsed into one line with a count.\n\nTested on real old builds: #65 (garden in November and April), #61 (riding the Whirl), 18e4ad0 (chicken dialog plus Cone Catch), 238fcad (inside the arcade on Nov 4), 2376644 (Rush Hour), 84646d6 (crow), #58 (boxing), #27 (arcade floor). Every \"after\" photo got in. The \"before\" photos say `nothing opened` where the thing didn't exist yet.\n\n**2. Tags.** Every change is tagged from what it touched: `wish`, `map`, `character`, `scene`, `arcade`, `art`, `sound`, `words`, `ui`, `multiplayer`, `idea-box`, `code`, `agent`, `story-log`, `infra` and `docs`.\n- `code` means the engine and wiring. `agent` means how agents build the island: `scripts/ai`, `CLAUDE.md` rewrites, the guards, and titles about Claude.\n- Tags are worked out again for every change on every run, so the old log gets them too.\n- A PR's new `Tags:` line, in the template, adds or removes tags (`sound, festival, -code`), and so does `curated.json`.\n- The /story/ page has a tag row that filters the log, and tags are shown on each change.\n\nMike: heads-up. The PR template has an optional `Tags:` line now.\n\nChecks: 473 tests (new ones cover parseWhere ways in, openGoal, curated lookups, a validity check of `curated.json`, the tag rules, and the page's tag filter). Build and smoke pass, and smoke now clicks a tag on the story page.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": "Asked to update the screenshots for changes inside places or tied to time, and to tag changes (ui, agent, code…). Made a way in for old builds, a curated list for 22 early changes, and 16 automatic tags with a filter on /story/.",
+    "mike": null,
+    "note": "Pelican changes are still shot from the street. The pelican only arrives minutes in, and faking timers would freeze the game.\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+    "shots": true,
+    "tags": [
+      [
+        "+",
+        "story-log"
+      ]
+    ],
+    "present": true
+  },
+  "ideas": [],
+  "requested_reviewers": [
+    "exit320-stack"
+  ],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-16T14:10:10Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-77-garden-preview.gardeninsound.workers.dev\n\nUpdated for 0c855bb. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-77]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-77-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 22,
+    "scenes": 11,
+    "content_files": 27,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 27124,
+    "commits": 101
+  },
+  "tags": [
+    "story-log",
+    "infra",
+    "docs"
+  ],
+  "where_from": "guessed",
+  "shots": [],
+  "first_recorded_at": "2026-11-16T14:12:37.469Z",
+  "earlier": [],
+  "recorded_at": "2026-11-16T14:12:37.469Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43883229945"
+}

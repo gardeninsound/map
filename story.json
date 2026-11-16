@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-11-16T00:28:17.069Z",
+  "generated_at": "2026-11-16T14:16:50.590Z",
   "changes": [
     {
       "pr": null,
@@ -34,6 +34,18 @@
         "ci",
         "docs",
         "tools"
+      ],
+      "tags": [
+        "map",
+        "character",
+        "scene",
+        "art",
+        "words",
+        "ui",
+        "code",
+        "agent",
+        "infra",
+        "docs"
       ],
       "shots": [
         {
@@ -104,6 +116,13 @@
         "docs",
         "tools"
       ],
+      "tags": [
+        "map",
+        "character",
+        "words",
+        "ui",
+        "code"
+      ],
       "shots": [
         {
           "query": "at=47.568236,-122.387332",
@@ -161,6 +180,9 @@
         "docs",
         "tools"
       ],
+      "tags": [
+        "map"
+      ],
       "shots": [
         {
           "query": "at=47.5612,-122.3868",
@@ -212,15 +234,31 @@
         "docs",
         "tools"
       ],
+      "tags": [
+        "map",
+        "character",
+        "scene",
+        "words",
+        "ui"
+      ],
       "shots": [
+        {
+          "query": "open=scene:puppy-park",
+          "lat": 47.560036,
+          "lon": -122.383105,
+          "label": "Seven+ Stories, the walk",
+          "before": "changes/2026-10-18-23a878f-compass-first-visit-arrow-octilinear-roa/before-1.webp",
+          "after": "changes/2026-10-18-23a878f-compass-first-visit-arrow-octilinear-roa/after-1.webp",
+          "moving": "changes/2026-10-18-23a878f-compass-first-visit-arrow-octilinear-roa/moving-1.webp"
+        },
         {
           "query": "at=47.560466,-122.382939",
           "lat": 47.560466,
           "lon": -122.382939,
-          "label": null,
-          "before": "changes/2026-10-18-23a878f-compass-first-visit-arrow-octilinear-roa/before-1.webp",
-          "after": "changes/2026-10-18-23a878f-compass-first-visit-arrow-octilinear-roa/after-1.webp",
-          "moving": "changes/2026-10-18-23a878f-compass-first-visit-arrow-octilinear-roa/moving-1.webp"
+          "label": "the compass and the arrow",
+          "before": "changes/2026-10-18-23a878f-compass-first-visit-arrow-octilinear-roa/before-2.webp",
+          "after": "changes/2026-10-18-23a878f-compass-first-visit-arrow-octilinear-roa/after-2.webp",
+          "moving": "changes/2026-10-18-23a878f-compass-first-visit-arrow-octilinear-roa/moving-2.webp"
         }
       ],
       "census": {
@@ -260,6 +298,13 @@
         "ui",
         "words & content",
         "docs"
+      ],
+      "tags": [
+        "map",
+        "character",
+        "sound",
+        "words",
+        "ui"
       ],
       "shots": [
         {
@@ -309,6 +354,11 @@
         "docs",
         "tools"
       ],
+      "tags": [
+        "map",
+        "agent",
+        "docs"
+      ],
       "shots": [
         {
           "query": "at=47.5612,-122.3868",
@@ -356,12 +406,16 @@
         "scenes & games",
         "words & content"
       ],
+      "tags": [
+        "scene",
+        "words"
+      ],
       "shots": [
         {
-          "query": "at=47.563730,-122.386654",
-          "lat": 47.56373,
-          "lon": -122.386654,
-          "label": null,
+          "query": "open=scene:rush-hour",
+          "lat": 47.563618,
+          "lon": -122.38646,
+          "label": "Rush Hour, the boards",
           "before": "changes/2026-10-18-2376644-photo-slideshows-24-stills-each-rush-hou/before-1.webp",
           "after": "changes/2026-10-18-2376644-photo-slideshows-24-stills-each-rush-hou/after-1.webp",
           "moving": "changes/2026-10-18-2376644-photo-slideshows-24-stills-each-rush-hou/moving-1.webp"
@@ -405,12 +459,18 @@
         "words & content",
         "docs"
       ],
+      "tags": [
+        "map",
+        "character",
+        "words",
+        "ui"
+      ],
       "shots": [
         {
-          "query": "at=47.5612,-122.3868",
-          "lat": 47.5612,
-          "lon": -122.3868,
-          "label": "the Junction, where everyone starts",
+          "query": "open=crow",
+          "lat": 47.560796,
+          "lon": -122.380549,
+          "label": "the snack crow",
           "before": "changes/2026-10-18-84646d6-snack-crow-that-flies-between-perches/before-1.webp",
           "after": "changes/2026-10-18-84646d6-snack-crow-that-flies-between-perches/after-1.webp",
           "moving": "changes/2026-10-18-84646d6-snack-crow-that-flies-between-perches/moving-1.webp"
@@ -450,6 +510,9 @@
       "deletions": 1,
       "areas": [
         "art & sound"
+      ],
+      "tags": [
+        "art"
       ],
       "shots": [
         {
@@ -502,12 +565,19 @@
         "docs",
         "tools"
       ],
+      "tags": [
+        "scene",
+        "art",
+        "words",
+        "ui",
+        "docs"
+      ],
       "shots": [
         {
-          "query": "at=47.5612,-122.3868",
-          "lat": 47.5612,
-          "lon": -122.3868,
-          "label": "the Junction, where everyone starts",
+          "query": "open=scene:gas-station-wall",
+          "lat": 47.56808,
+          "lon": -122.386923,
+          "label": "a slideshow, now in AVIF",
           "before": "changes/2026-10-18-5f0f9e7-avif-art-pipeline-publish-step-drop-old/before-1.webp",
           "after": "changes/2026-10-18-5f0f9e7-avif-art-pipeline-publish-step-drop-old/after-1.webp",
           "moving": "changes/2026-10-18-5f0f9e7-avif-art-pipeline-publish-step-drop-old/moving-1.webp"
@@ -547,6 +617,10 @@
       "deletions": 0,
       "areas": [
         "ui"
+      ],
+      "tags": [
+        "ui",
+        "code"
       ],
       "shots": [
         {
@@ -601,6 +675,18 @@
         "docs",
         "tools"
       ],
+      "tags": [
+        "map",
+        "character",
+        "scene",
+        "sound",
+        "words",
+        "ui",
+        "code",
+        "agent",
+        "infra",
+        "docs"
+      ],
       "shots": [
         {
           "query": "at=47.5613,-122.3868",
@@ -645,6 +731,9 @@
       "additions": 214,
       "deletions": 3,
       "areas": [
+        "ui"
+      ],
+      "tags": [
         "ui"
       ],
       "shots": [
@@ -694,6 +783,11 @@
         "ci",
         "docs"
       ],
+      "tags": [
+        "code",
+        "infra",
+        "docs"
+      ],
       "shots": [],
       "census": {
         "spots": 11,
@@ -736,6 +830,18 @@
         "ci",
         "docs",
         "tools"
+      ],
+      "tags": [
+        "map",
+        "character",
+        "scene",
+        "sound",
+        "words",
+        "ui",
+        "code",
+        "agent",
+        "infra",
+        "docs"
       ],
       "shots": [
         {
@@ -807,6 +913,16 @@
         "docs",
         "tools"
       ],
+      "tags": [
+        "map",
+        "character",
+        "art",
+        "words",
+        "ui",
+        "code",
+        "agent",
+        "docs"
+      ],
       "shots": [
         {
           "query": "at=47.568236,-122.387332",
@@ -871,6 +987,9 @@
       "areas": [
         "city"
       ],
+      "tags": [
+        "ui"
+      ],
       "shots": [
         {
           "query": "at=47.5612,-122.3868",
@@ -921,15 +1040,31 @@
         "words & content",
         "docs"
       ],
+      "tags": [
+        "character",
+        "scene",
+        "sound",
+        "words",
+        "ui"
+      ],
       "shots": [
         {
-          "query": "at=47.56339,-122.386444",
-          "lat": 47.56339,
-          "lon": -122.386444,
-          "label": null,
+          "query": "open=chicken",
+          "lat": 47.563293,
+          "lon": -122.386619,
+          "label": "the chicken by the vet",
           "before": "changes/2026-10-19-18e4ad0-a-chicken-by-the-vet-on-california-and-h/before-1.webp",
           "after": "changes/2026-10-19-18e4ad0-a-chicken-by-the-vet-on-california-and-h/after-1.webp",
           "moving": "changes/2026-10-19-18e4ad0-a-chicken-by-the-vet-on-california-and-h/moving-1.webp"
+        },
+        {
+          "query": "open=minigame:cone-catch",
+          "lat": 47.563293,
+          "lon": -122.386619,
+          "label": "Cone Catch",
+          "before": "changes/2026-10-19-18e4ad0-a-chicken-by-the-vet-on-california-and-h/before-2.webp",
+          "after": "changes/2026-10-19-18e4ad0-a-chicken-by-the-vet-on-california-and-h/after-2.webp",
+          "moving": "changes/2026-10-19-18e4ad0-a-chicken-by-the-vet-on-california-and-h/moving-2.webp"
         }
       ],
       "census": {
@@ -968,6 +1103,9 @@
         "city",
         "map pipeline",
         "docs"
+      ],
+      "tags": [
+        "map"
       ],
       "shots": [
         {
@@ -1041,6 +1179,16 @@
         "docs",
         "tools"
       ],
+      "tags": [
+        "map",
+        "character",
+        "scene",
+        "arcade",
+        "art",
+        "words",
+        "ui",
+        "code"
+      ],
       "shots": [
         {
           "query": "at=arcade",
@@ -1110,6 +1258,14 @@
         "words & content",
         "art & sound",
         "docs"
+      ],
+      "tags": [
+        "character",
+        "scene",
+        "arcade",
+        "sound",
+        "words",
+        "ui"
       ],
       "shots": [
         {
@@ -1181,6 +1337,16 @@
         "relay",
         "docs"
       ],
+      "tags": [
+        "map",
+        "character",
+        "words",
+        "ui",
+        "multiplayer",
+        "code",
+        "agent",
+        "docs"
+      ],
       "shots": [
         {
           "query": "at=47.5612,-122.3868",
@@ -1226,6 +1392,9 @@
       "additions": 12,
       "deletions": 1,
       "areas": [],
+      "tags": [
+        "code"
+      ],
       "shots": [],
       "census": {
         "spots": 15,
@@ -1264,6 +1433,10 @@
         "relay",
         "docs"
       ],
+      "tags": [
+        "multiplayer",
+        "docs"
+      ],
       "shots": [],
       "census": {
         "spots": 15,
@@ -1300,6 +1473,9 @@
       "deletions": 3,
       "areas": [
         "relay"
+      ],
+      "tags": [
+        "multiplayer"
       ],
       "shots": [],
       "census": {
@@ -1341,6 +1517,12 @@
         "ci",
         "docs",
         "tools"
+      ],
+      "tags": [
+        "arcade",
+        "agent",
+        "infra",
+        "docs"
       ],
       "shots": [
         {
@@ -1392,6 +1574,11 @@
         "idea box",
         "docs"
       ],
+      "tags": [
+        "words",
+        "ui",
+        "idea-box"
+      ],
       "shots": [
         {
           "query": "at=47.5612,-122.3868",
@@ -1440,6 +1627,9 @@
         "idea box",
         "docs"
       ],
+      "tags": [
+        "idea-box"
+      ],
       "shots": [],
       "census": {
         "spots": 15,
@@ -1475,6 +1665,10 @@
       "additions": 7,
       "deletions": 2,
       "areas": [
+        "docs"
+      ],
+      "tags": [
+        "agent",
         "docs"
       ],
       "shots": [],
@@ -1516,6 +1710,11 @@
         "words & content",
         "idea box",
         "docs"
+      ],
+      "tags": [
+        "words",
+        "ui",
+        "idea-box"
       ],
       "shots": [
         {
@@ -1565,6 +1764,9 @@
         "idea box",
         "docs"
       ],
+      "tags": [
+        "idea-box"
+      ],
       "shots": [],
       "census": {
         "spots": 15,
@@ -1602,6 +1804,10 @@
       "areas": [
         "characters & map life",
         "docs"
+      ],
+      "tags": [
+        "character",
+        "sound"
       ],
       "shots": [
         {
@@ -1652,6 +1858,10 @@
         "relay",
         "docs"
       ],
+      "tags": [
+        "character",
+        "multiplayer"
+      ],
       "shots": [
         {
           "query": "at=47.5612,-122.3868",
@@ -1699,6 +1909,10 @@
       "areas": [
         "docs"
       ],
+      "tags": [
+        "agent",
+        "docs"
+      ],
       "shots": [],
       "census": {
         "spots": 15,
@@ -1734,6 +1948,9 @@
       "additions": 158,
       "deletions": 0,
       "areas": [
+        "docs"
+      ],
+      "tags": [
         "docs"
       ],
       "shots": [],
@@ -1773,6 +1990,10 @@
       "areas": [
         "docs"
       ],
+      "tags": [
+        "agent",
+        "docs"
+      ],
       "shots": [],
       "census": {
         "spots": 15,
@@ -1810,6 +2031,11 @@
       "areas": [
         "words & content",
         "art & sound",
+        "docs"
+      ],
+      "tags": [
+        "art",
+        "words",
         "docs"
       ],
       "shots": [
@@ -1862,6 +2088,12 @@
         "ci",
         "docs"
       ],
+      "tags": [
+        "multiplayer",
+        "idea-box",
+        "infra",
+        "docs"
+      ],
       "shots": [],
       "census": {
         "spots": 15,
@@ -1900,6 +2132,10 @@
         "ci",
         "docs"
       ],
+      "tags": [
+        "infra",
+        "docs"
+      ],
       "shots": [],
       "census": {
         "spots": 15,
@@ -1935,6 +2171,9 @@
       "additions": 1,
       "deletions": 1,
       "areas": [
+        "ui"
+      ],
+      "tags": [
         "ui"
       ],
       "shots": [
@@ -1986,6 +2225,11 @@
         "ui",
         "words & content",
         "docs"
+      ],
+      "tags": [
+        "character",
+        "sound",
+        "words"
       ],
       "shots": [
         {
@@ -2045,6 +2289,12 @@
         "characters & map life",
         "docs"
       ],
+      "tags": [
+        "map",
+        "character",
+        "multiplayer",
+        "code"
+      ],
       "shots": [
         {
           "query": "at=47.5612,-122.3868",
@@ -2097,6 +2347,13 @@
         "docs",
         "tools"
       ],
+      "tags": [
+        "character",
+        "arcade",
+        "sound",
+        "words",
+        "ui"
+      ],
       "shots": [
         {
           "query": "at=arcade",
@@ -2147,6 +2404,9 @@
         "art & sound",
         "docs"
       ],
+      "tags": [
+        "arcade"
+      ],
       "shots": [
         {
           "query": "at=arcade",
@@ -2195,6 +2455,10 @@
         "ci",
         "docs"
       ],
+      "tags": [
+        "infra",
+        "docs"
+      ],
       "shots": [],
       "census": {
         "spots": 15,
@@ -2236,6 +2500,12 @@
         "ui",
         "words & content",
         "docs"
+      ],
+      "tags": [
+        "map",
+        "character",
+        "sound",
+        "words"
       ],
       "shots": [
         {
@@ -2288,6 +2558,13 @@
         "words & content",
         "docs"
       ],
+      "tags": [
+        "character",
+        "sound",
+        "words",
+        "ui",
+        "code"
+      ],
       "shots": [
         {
           "query": "at=47.5612,-122.3868",
@@ -2336,6 +2613,10 @@
         "words & content",
         "docs",
         "tools"
+      ],
+      "tags": [
+        "words",
+        "ui"
       ],
       "shots": [
         {
@@ -2388,6 +2669,10 @@
         "docs",
         "tools"
       ],
+      "tags": [
+        "agent",
+        "docs"
+      ],
       "shots": [
         {
           "query": "at=47.5612,-122.3868",
@@ -2438,6 +2723,11 @@
         "art & sound",
         "docs",
         "tools"
+      ],
+      "tags": [
+        "character",
+        "art",
+        "sound"
       ],
       "shots": [
         {
@@ -2501,6 +2791,14 @@
         "docs",
         "tools"
       ],
+      "tags": [
+        "character",
+        "scene",
+        "ui",
+        "idea-box",
+        "agent",
+        "docs"
+      ],
       "shots": [
         {
           "query": "at=47.5612,-122.3868",
@@ -2550,6 +2848,11 @@
         "ui",
         "words & content"
       ],
+      "tags": [
+        "character",
+        "words",
+        "ui"
+      ],
       "shots": [
         {
           "query": "at=47.5612,-122.3868",
@@ -2597,6 +2900,9 @@
       "areas": [
         "city",
         "map pipeline"
+      ],
+      "tags": [
+        "map"
       ],
       "shots": [
         {
@@ -2648,6 +2954,12 @@
         "ui",
         "words & content"
       ],
+      "tags": [
+        "character",
+        "sound",
+        "words",
+        "code"
+      ],
       "shots": [
         {
           "query": "at=47.5612,-122.3868",
@@ -2694,6 +3006,9 @@
       "deletions": 2,
       "areas": [
         "characters & map life"
+      ],
+      "tags": [
+        "character"
       ],
       "shots": [
         {
@@ -2743,6 +3058,9 @@
         "city",
         "map pipeline"
       ],
+      "tags": [
+        "map"
+      ],
       "shots": [
         {
           "query": "at=47.579695,-122.409640",
@@ -2790,6 +3108,11 @@
       "areas": [
         "scenes & games",
         "words & content"
+      ],
+      "tags": [
+        "scene",
+        "arcade",
+        "words"
       ],
       "shots": [
         {
@@ -2840,6 +3163,12 @@
         "words & content",
         "art & sound"
       ],
+      "tags": [
+        "scene",
+        "arcade",
+        "sound",
+        "words"
+      ],
       "shots": [
         {
           "query": "at=arcade",
@@ -2888,6 +3217,11 @@
         "characters & map life",
         "ui",
         "words & content"
+      ],
+      "tags": [
+        "character",
+        "words",
+        "ui"
       ],
       "shots": [
         {
@@ -2938,6 +3272,13 @@
         "characters & map life",
         "scenes & games"
       ],
+      "tags": [
+        "map",
+        "character",
+        "scene",
+        "ui",
+        "code"
+      ],
       "shots": [
         {
           "query": "at=47.5612,-122.3868",
@@ -2984,6 +3325,9 @@
       "deletions": 1,
       "areas": [
         "city"
+      ],
+      "tags": [
+        "map"
       ],
       "shots": [
         {
@@ -3034,6 +3378,11 @@
         "ui",
         "words & content"
       ],
+      "tags": [
+        "character",
+        "sound",
+        "words"
+      ],
       "shots": [
         {
           "query": "at=47.56274,-122.37489",
@@ -3082,6 +3431,10 @@
         "characters & map life",
         "words & content",
         "art & sound"
+      ],
+      "tags": [
+        "character",
+        "sound"
       ],
       "shots": [
         {
@@ -3132,6 +3485,12 @@
         "characters & map life",
         "ui",
         "words & content"
+      ],
+      "tags": [
+        "character",
+        "sound",
+        "words",
+        "code"
       ],
       "shots": [
         {
@@ -3188,6 +3547,10 @@
       "deletions": 23,
       "areas": [
         "city"
+      ],
+      "tags": [
+        "map",
+        "code"
       ],
       "shots": [
         {
@@ -3254,6 +3617,11 @@
         "characters & map life",
         "ui"
       ],
+      "tags": [
+        "wish",
+        "character",
+        "sound"
+      ],
       "shots": [
         {
           "query": "at=47.5612,-122.3868",
@@ -3311,6 +3679,12 @@
         "scenes & games",
         "words & content"
       ],
+      "tags": [
+        "wish",
+        "character",
+        "scene",
+        "words"
+      ],
       "shots": [
         {
           "query": "at=47.5612,-122.3868",
@@ -3367,6 +3741,10 @@
       "areas": [
         "city",
         "map pipeline"
+      ],
+      "tags": [
+        "wish",
+        "map"
       ],
       "shots": [
         {
@@ -3426,6 +3804,12 @@
         "ui",
         "words & content"
       ],
+      "tags": [
+        "wish",
+        "character",
+        "sound",
+        "words"
+      ],
       "shots": [
         {
           "query": "at=47.5612,-122.3868",
@@ -3482,6 +3866,11 @@
       "areas": [
         "characters & map life",
         "words & content"
+      ],
+      "tags": [
+        "wish",
+        "character",
+        "words"
       ],
       "shots": [
         {
@@ -3549,6 +3938,11 @@
         "characters & map life",
         "words & content"
       ],
+      "tags": [
+        "wish",
+        "character",
+        "words"
+      ],
       "shots": [
         {
           "query": "at=47.53339,-122.39469",
@@ -3606,6 +4000,11 @@
         "characters & map life",
         "words & content"
       ],
+      "tags": [
+        "wish",
+        "character",
+        "words"
+      ],
       "shots": [
         {
           "query": "at=47.56628,-122.36807",
@@ -3662,6 +4061,11 @@
       "areas": [
         "characters & map life",
         "words & content"
+      ],
+      "tags": [
+        "wish",
+        "character",
+        "words"
       ],
       "shots": [
         {
@@ -3729,6 +4133,13 @@
         "characters & map life",
         "ui"
       ],
+      "tags": [
+        "wish",
+        "character",
+        "ui",
+        "multiplayer",
+        "code"
+      ],
       "shots": [
         {
           "query": "at=47.5612,-122.3868",
@@ -3778,6 +4189,13 @@
         "docs",
         "tools"
       ],
+      "tags": [
+        "code",
+        "agent",
+        "story-log",
+        "infra",
+        "docs"
+      ],
       "shots": [],
       "census": {
         "spots": 15,
@@ -3817,6 +4235,11 @@
         "docs",
         "tools"
       ],
+      "tags": [
+        "story-log",
+        "infra",
+        "docs"
+      ],
       "shots": [],
       "census": {
         "spots": 15,
@@ -3855,6 +4278,9 @@
         "city",
         "map pipeline",
         "docs"
+      ],
+      "tags": [
+        "map"
       ],
       "shots": [
         {
@@ -3909,6 +4335,17 @@
         "docs",
         "tools"
       ],
+      "tags": [
+        "character",
+        "scene",
+        "arcade",
+        "sound",
+        "ui",
+        "code",
+        "story-log",
+        "infra",
+        "docs"
+      ],
       "shots": [
         {
           "query": "open=garden&time=2026-04-15",
@@ -3956,6 +4393,10 @@
       "areas": [
         "characters & map life",
         "tools"
+      ],
+      "tags": [
+        "character",
+        "code"
       ],
       "shots": [
         {
@@ -4005,6 +4446,12 @@
         "characters & map life",
         "docs"
       ],
+      "tags": [
+        "character",
+        "code",
+        "agent",
+        "docs"
+      ],
       "shots": [
         {
           "query": "at=47.5612,-122.3868",
@@ -4052,6 +4499,14 @@
       "areas": [
         "characters & map life",
         "words & content",
+        "docs"
+      ],
+      "tags": [
+        "character",
+        "words",
+        "multiplayer",
+        "code",
+        "agent",
         "docs"
       ],
       "shots": [
@@ -4104,6 +4559,12 @@
         "docs",
         "tools"
       ],
+      "tags": [
+        "character",
+        "ui",
+        "code",
+        "agent"
+      ],
       "shots": [
         {
           "query": "open=crow",
@@ -4151,6 +4612,10 @@
       "areas": [
         "characters & map life"
       ],
+      "tags": [
+        "character",
+        "sound"
+      ],
       "shots": [
         {
           "query": "open=busker",
@@ -4170,6 +4635,50 @@
         "arcade_cabinets_ready": 4,
         "source_lines": 27076,
         "commits": 100
+      }
+    },
+    {
+      "pr": 77,
+      "sha": "d85947a1ea9a264fc4e2a278eaa1b9a780831d0e",
+      "title": "Story log: photos inside scenes, cabinets, dialogs and seasons; tags on every change",
+      "url": "https://github.com/gardeninsound/map/pull/77",
+      "merged_at": "2026-11-16T14:11:56Z",
+      "dir": "changes/2026-11-16-pr077-story-log-photos-inside-scenes-cabinets",
+      "ideas": [],
+      "summary": "Two additions to the story log.\n\n**1. Photos from inside things, on any build.** `?open=` and `?time=` only exist since #71, so older changes were photographed from the street. Now:\n- An `open` place can say where to stand: `open:scene:rush-hour @ 47.5636, -122.3865`. On a build without `?open=` links, the camera stands there with `?at=` and presses {A} until the scene, dialog, ride or mini game is on screen, taking the first choice each time (\"Let's see it\", \"Ride it\", \"Yes!\").\n- On a build without the game clock, a place's `time=` is faked in the browser with Playwright's clock. That means the garden can be shown in April on the commit that planted it.\n- On builds from before `?at=arcade` worked, the camera starts from the arcade door's coordinates. Those builds used to drop the rabbit nowhere.\n- `scripts/story/curated.json` picks places for 22 early changes: inside the Duck Arcade and its cabinets, Rush Hour, Seven+ Stories, the chicken and Cone Catch, the snack crow, Ham, chicken boxing, the Giant Whirl, Sundrop, the garden in November and in April, and the corrected title screen. Curated places win over the guess. `--curated` (always on in the workflow, up to `limit` a run) retakes their photos.\n- Each shot records `via: link | way`. Repeated page errors are collapsed into one line with a count.\n\nTested on real old builds: #65 (garden in November and April), #61 (riding the Whirl), 18e4ad0 (chicken dialog plus Cone Catch), 238fcad (inside the arcade on Nov 4), 2376644 (Rush Hour), 84646d6 (crow), #58 (boxing), #27 (arcade floor). Every \"after\" photo got in. The \"before\" photos say `nothing opened` where the thing didn't exist yet.\n\n**2. Tags.** Every change is tagged from what it touched: `wish`, `map`, `character`, `scene`, `arcade`, `art`, `sound`, `words`, `ui`, `multiplayer`, `idea-box`, `code`, `agent`, `story-log`, `infra` and `docs`.\n- `code` means the engine and wiring. `agent` means how agents build the island: `scripts/ai`, `CLAUDE.md` rewrites, the guards, and titles about Claude.\n- Tags are worked out again for every change on every run, so the old log gets them too.\n- A PR's new `Tags:` line, in the template, adds or removes tags (`sound, festival, -code`), and so does `curated.json`.\n- The /story/ page has a tag row that filters the log, and tags are shown on each change.\n\nMike: heads-up. The PR template has an optional `Tags:` line now.\n\nChecks: 473 tests (new ones cover parseWhere ways in, openGoal, curated lookups, a validity check of `curated.json`, the tag rules, and the page's tag filter). Build and smoke pass, and smoke now clicks a tag on the story page.",
+      "story": {
+        "askedVsMade": "Asked to update the screenshots for changes inside places or tied to time, and to tag changes (ui, agent, code…). Made a way in for old builds, a curated list for 22 early changes, and 16 automatic tags with a filter on /story/.",
+        "mike": null,
+        "note": "Pelican changes are still shot from the street. The pelican only arrives minutes in, and faking timers would freeze the game.\n🤖 Generated with [Claude Code](https://claude.com/claude-code)"
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 14,
+      "additions": 452,
+      "deletions": 31,
+      "areas": [
+        "ci",
+        "docs",
+        "tools"
+      ],
+      "tags": [
+        "story-log",
+        "infra",
+        "docs"
+      ],
+      "shots": [],
+      "census": {
+        "spots": 15,
+        "plugins": 22,
+        "scenes": 11,
+        "content_files": 27,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 27124,
+        "commits": 101
       }
     }
   ],
