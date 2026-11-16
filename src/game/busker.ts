@@ -120,6 +120,20 @@ export const SONGS: Song[] = [
       'A5:.5 G5:.5 E5:.5 G5:.5 F5:1.5 R:.5',
     bass: ['F2', 'C3', 'Bb2', 'F2', 'F2', 'Bb2', 'C3', 'F2'],
   },
+  {
+    // gentle, rainy C major
+    name: 'Rainy Day Promenade',
+    bpm: 80,
+    lead:
+      'C5:1 D5:1 E5:2 ' +
+      'D5:1 C5:1 A4:2 ' +
+      'F5:1 E5:1 D5:1 C5:1 ' +
+      'B4:2 C5:2',
+    bass: ['C3', 'A2', 'F2', 'G2'],
+    wave: 'triangle',
+    gain: 0.7,
+    sparkle: 0,
+  },
 ];
 
 const NOTE: Record<string, number> = { C: 0, 'C#': 1, D: 2, 'D#': 3, Eb: 3, E: 4, F: 5, 'F#': 6, G: 7, 'G#': 8, Ab: 8, A: 9, 'A#': 10, Bb: 10, B: 11 };
