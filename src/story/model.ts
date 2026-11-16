@@ -24,8 +24,8 @@ export type StoryChange = {
   ideas: StoryIdea[];
   summary: string | null;
   story: { askedVsMade: string | null; mike: string | null; note: string | null };
+  /** who made it, by name (Jim, Mike) */
   authors: string[];
-  tools: string[];
   files: number;
   additions: number;
   deletions: number;

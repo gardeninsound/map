@@ -12,7 +12,6 @@ const change = (over: Partial<StoryChange>): StoryChange => ({
   summary: null,
   story: { askedVsMade: null, mike: null, note: null },
   authors: [],
-  tools: [],
   files: 1,
   additions: 1,
   deletions: 0,
