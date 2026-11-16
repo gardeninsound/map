@@ -1362,10 +1362,10 @@
       "moving": "moving-1.webp",
       "problems": {
         "before": [
-          "nothing opened: no .scene on screen (on a \"before\" photo, usually because it wasn't there yet)"
+          "got in on try 2"
         ],
         "after": [
-          "nothing opened: no .scene on screen (on a \"before\" photo, usually because it wasn't there yet)"
+          "nothing opened: no .scene on screen in 4 tries (on a \"before\" photo, usually because it wasn't there yet)"
         ]
       },
       "via": {
@@ -1388,6 +1388,6 @@
   },
   "first_recorded_at": "2026-11-15T16:33:25.935Z",
   "earlier": [],
-  "recorded_at": "2026-11-16T14:37:13.256Z",
-  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43887456635"
+  "recorded_at": "2026-11-16T18:50:22.998Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43932869265"
 }
