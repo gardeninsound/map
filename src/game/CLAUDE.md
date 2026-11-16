@@ -1,8 +1,10 @@
 # src/game — the art layer on the map: plugins and characters
 
 The app's `CityPlugin`s live in `plugins/`; their pure, tested rules sit beside them in `src/game/`
-(`<name>.ts` + `<name>.test.ts`); their words live in `src/content/<name>.ts`. App.tsx wires the
-plugins into `CityGame`; what {A} does is the plugin's own `act()` (below).
+(`<name>.ts` + `<name>.test.ts`); their words live in `src/content/<name>.ts`. **The list of plugins is
+`plugins/index.ts`** (`createIsland`: each one by a stable id, in draw and {A} order): a new plugin is a line there, never a
+change to App.tsx, which only hands `pluginList(island)` to `CityGame`. The id is its name in links (`?open=crow` → that
+plugin's own target, via `targetsOf`) and in dev (`window.__<id>`). What {A} does is the plugin's own `act()` (below).
 
 **What {A} does is data** (`src/game/actions.ts`): a plugin that's an `Actor` answers `act(target)` for its own targets
 with an `Action` (a `talk` with lines, portrait, `choices` that each lead to another action, and `then`; a `ride`; a
@@ -15,7 +17,7 @@ Luna Park); App's `onInteract` only runs their actions and lets the city's plain
 
 - `src/game/plugins/` — the app's `CityPlugin`s: `artSpots.ts` (spinning lemons with a beating heart above, from `src/game/lemonSpin.ts`;
   "unvisited" beacons; targets of kind `place` carrying the `PlacedLocation`), `busker.ts`,
-  `crow.ts`. App.tsx wires them into `CityGame`; each answers {A} on its own targets with `act()`.
+  `crow.ts`. Listed by id in `plugins/index.ts`; each answers {A} on its own targets with `act()`.
 - `src/game/sprites.ts` — Mike, the lemons (`src/game/lemon.ts`), the crow (same grid format as the city's sprites).
 - First visit: after Mike's welcome the city's hint arrow flashes 4× toward the nearest open
   spot (remembered in localStorage). The city's `Compass` points at `ArtSpots.open`.
