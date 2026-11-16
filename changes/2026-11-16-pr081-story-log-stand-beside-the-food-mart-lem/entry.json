@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "5de5843b88966c77d386f3e61107babd8631f1d9",
+  "parent": "68c11f36838e99c51dc67151339d8b07e0687a33",
+  "pr": 81,
+  "title": "Story log: stand beside the Food Mart lemon for 5f0f9e7",
+  "url": "https://github.com/gardeninsound/map/pull/81",
+  "merged_at": "2026-11-16T18:58:09Z",
+  "body": "The last curated photo (5f0f9e7) still missed in CI after four tries. Bill, a neighbor who stands right by the Food Mart lemon, was nearer to the spot below the lemon than the lemon was, so {A} always talked to him. Locally it had only worked by luck.\n\nIt now stands one tile east of the lemon, read from that build's own dev hooks. With CI's Chromium it got in first time, three runs out of three. The push run's `--curated` will retake it because the standing spot changed.\n\n## Story\n\nIdea: The last curated story photo.\nWhere: none\nTags: story-log\nAsked vs made: A follow-up to the inside-photos work.\nMike:\nNote:\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "18f7bb73526eed6c819d67c18cd5b06490bb8eab",
+      "message": "Story log: stand beside the Food Mart lemon on 5f0f9e7, not below it\n\nBill stands between the lemon and the spot below it, and he's nearer, so {A} talked to him every\ntime in CI. From the east side the lemon is nearest.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-16T18:54:36Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "scripts/story/curated.json",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    }
+  ],
+  "additions": 1,
+  "deletions": 1,
+  "areas": [
+    "tools"
+  ],
+  "branch": "story-food-mart-spot",
+  "opened_at": "2026-11-16T18:54:40Z",
+  "merged_by": "vlandham",
+  "summary": "The last curated photo (5f0f9e7) still missed in CI after four tries. Bill, a neighbor who stands right by the Food Mart lemon, was nearer to the spot below the lemon than the lemon was, so {A} always talked to him. Locally it had only worked by luck.\n\nIt now stands one tile east of the lemon, read from that build's own dev hooks. With CI's Chromium it got in first time, three runs out of three. The push run's `--curated` will retake it because the standing spot changed.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": "A follow-up to the inside-photos work.",
+    "mike": null,
+    "note": "🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+    "shots": true,
+    "tags": [
+      [
+        "+",
+        "story-log"
+      ]
+    ],
+    "present": true
+  },
+  "ideas": [],
+  "requested_reviewers": [],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-16T18:55:12Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-81-garden-preview.gardeninsound.workers.dev\n\nUpdated for 18f7bb7. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-81]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-81-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 22,
+    "scenes": 11,
+    "content_files": 27,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 27128,
+    "commits": 105
+  },
+  "tags": [
+    "story-log"
+  ],
+  "where_from": "guessed",
+  "shots": [],
+  "first_recorded_at": "2026-11-16T18:58:37.972Z",
+  "earlier": [],
+  "recorded_at": "2026-11-16T18:58:37.972Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43934379057"
+}

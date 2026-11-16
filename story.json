@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-11-16T18:52:25.788Z",
+  "generated_at": "2026-11-16T18:59:11.212Z",
   "changes": [
     {
       "pr": null,
@@ -575,8 +575,8 @@
       "shots": [
         {
           "query": "open=scene:gas-station-wall",
-          "lat": 47.568178,
-          "lon": -122.387099,
+          "lat": 47.568286,
+          "lon": -122.386939,
           "label": "a slideshow, now in AVIF",
           "before": "changes/2026-10-18-5f0f9e7-avif-art-pipeline-publish-step-drop-old/before-1.webp",
           "after": "changes/2026-10-18-5f0f9e7-avif-art-pipeline-publish-step-drop-old/after-1.webp",
@@ -4803,6 +4803,46 @@
         "arcade_cabinets_ready": 4,
         "source_lines": 27128,
         "commits": 104
+      }
+    },
+    {
+      "pr": 81,
+      "sha": "5de5843b88966c77d386f3e61107babd8631f1d9",
+      "title": "Story log: stand beside the Food Mart lemon for 5f0f9e7",
+      "url": "https://github.com/gardeninsound/map/pull/81",
+      "merged_at": "2026-11-16T18:58:09Z",
+      "dir": "changes/2026-11-16-pr081-story-log-stand-beside-the-food-mart-lem",
+      "ideas": [],
+      "summary": "The last curated photo (5f0f9e7) still missed in CI after four tries. Bill, a neighbor who stands right by the Food Mart lemon, was nearer to the spot below the lemon than the lemon was, so {A} always talked to him. Locally it had only worked by luck.\n\nIt now stands one tile east of the lemon, read from that build's own dev hooks. With CI's Chromium it got in first time, three runs out of three. The push run's `--curated` will retake it because the standing spot changed.",
+      "story": {
+        "askedVsMade": "A follow-up to the inside-photos work.",
+        "mike": null,
+        "note": "🤖 Generated with [Claude Code](https://claude.com/claude-code)"
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 1,
+      "additions": 1,
+      "deletions": 1,
+      "areas": [
+        "tools"
+      ],
+      "tags": [
+        "story-log"
+      ],
+      "shots": [],
+      "census": {
+        "spots": 15,
+        "plugins": 22,
+        "scenes": 11,
+        "content_files": 27,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 27128,
+        "commits": 105
       }
     }
   ],

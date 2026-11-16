@@ -1351,22 +1351,18 @@
   "shots": [
     {
       "query": "open=scene:gas-station-wall",
-      "way": "at=47.568178,-122.387099",
+      "way": "at=47.568286,-122.386939",
       "goal": ".scene",
-      "lat": 47.568178,
-      "lon": -122.387099,
+      "lat": 47.568286,
+      "lon": -122.386939,
       "label": "a slideshow, now in AVIF",
       "guessed": false,
       "before": "before-1.webp",
       "after": "after-1.webp",
       "moving": "moving-1.webp",
       "problems": {
-        "before": [
-          "got in on try 2"
-        ],
-        "after": [
-          "nothing opened: no .scene on screen in 4 tries (on a \"before\" photo, usually because it wasn't there yet)"
-        ]
+        "before": [],
+        "after": []
       },
       "via": {
         "before": "way",
@@ -1388,6 +1384,6 @@
   },
   "first_recorded_at": "2026-11-15T16:33:25.935Z",
   "earlier": [],
-  "recorded_at": "2026-11-16T18:50:22.998Z",
-  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43932869265"
+  "recorded_at": "2026-11-16T18:58:37.972Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43934379057"
 }
