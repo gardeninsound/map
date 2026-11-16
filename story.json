@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-11-16T14:28:33.686Z",
+  "generated_at": "2026-11-16T14:29:33.736Z",
   "changes": [
     {
       "pr": null,
@@ -4669,6 +4669,58 @@
         "arcade_cabinets_ready": 4,
         "source_lines": 27124,
         "commits": 101
+      }
+    },
+    {
+      "pr": 78,
+      "sha": "034fe0415353306b62f0a9973ca2c8428d98c3f9",
+      "title": "Say how to add something new on screen: grow Action, one case in runAction",
+      "url": "https://github.com/gardeninsound/map/pull/78",
+      "merged_at": "2026-11-16T14:18:29Z",
+      "dir": "changes/2026-11-16-pr078-say-how-to-add-something-new-on-screen-g",
+      "ideas": [],
+      "summary": "Closes a gap in the \"what {A} does is data\" rules. Nothing said what to do when a character needs something no `Action` can show yet, like a second mini game or a new kind of screen. An agent following the guard might have pushed it into `do` by reaching into React state, or decided it was blocked.\n\nNow three places give the same answer: `src/game/CLAUDE.md` (a new section, \"Something new on screen\"), the comment at the top of `src/game/actions.ts`, and the guard's failure message. The answer:\n1. Add the new value or kind to `Action`.\n2. Add one case to App's `runAction`, plus its overlay. This is allowed, because the guard only blocks branches in `onInteract`.\n3. Return it from the plugin's `act()`, test it with `pick()`, and optionally add a `?open=` link.\n\nDocs and comments only, no behaviour change. 473 tests pass and the type check is clean.\n\nMike: heads-up. This is guidance your Claude will read when a character needs a new screen.",
+      "story": {
+        "askedVsMade": "Asked to close the gap found while reviewing whether Mike's agents can work with the new setup. Made a short section in the docs and a line in the guard's message.",
+        "mike": null,
+        "note": "🤖 Generated with [Claude Code](https://claude.com/claude-code)"
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 3,
+      "additions": 16,
+      "deletions": 2,
+      "areas": [
+        "characters & map life"
+      ],
+      "tags": [
+        "character",
+        "code",
+        "agent"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5612,-122.3868",
+          "lat": 47.5612,
+          "lon": -122.3868,
+          "label": "the Junction, where everyone starts",
+          "before": "changes/2026-11-16-pr078-say-how-to-add-something-new-on-screen-g/before-1.webp",
+          "after": "changes/2026-11-16-pr078-say-how-to-add-something-new-on-screen-g/after-1.webp",
+          "moving": "changes/2026-11-16-pr078-say-how-to-add-something-new-on-screen-g/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 22,
+        "scenes": 11,
+        "content_files": 27,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 27128,
+        "commits": 102
       }
     }
   ],

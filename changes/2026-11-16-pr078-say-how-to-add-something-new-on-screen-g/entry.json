@@ -1,0 +1,144 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "034fe0415353306b62f0a9973ca2c8428d98c3f9",
+  "parent": "d85947a1ea9a264fc4e2a278eaa1b9a780831d0e",
+  "pr": 78,
+  "title": "Say how to add something new on screen: grow Action, one case in runAction",
+  "url": "https://github.com/gardeninsound/map/pull/78",
+  "merged_at": "2026-11-16T14:18:29Z",
+  "body": "Closes a gap in the \"what {A} does is data\" rules. Nothing said what to do when a character needs something no `Action` can show yet, like a second mini game or a new kind of screen. An agent following the guard might have pushed it into `do` by reaching into React state, or decided it was blocked.\n\nNow three places give the same answer: `src/game/CLAUDE.md` (a new section, \"Something new on screen\"), the comment at the top of `src/game/actions.ts`, and the guard's failure message. The answer:\n1. Add the new value or kind to `Action`.\n2. Add one case to App's `runAction`, plus its overlay. This is allowed, because the guard only blocks branches in `onInteract`.\n3. Return it from the plugin's `act()`, test it with `pick()`, and optionally add a `?open=` link.\n\nDocs and comments only, no behaviour change. 473 tests pass and the type check is clean.\n\nMike: heads-up. This is guidance your Claude will read when a character needs a new screen.\n\n## Story\n\nIdea: Make sure every agent knows how to add a new kind of screen without breaking the pattern.\nWhere: none\nTags: agent\nAsked vs made: Asked to close the gap found while reviewing whether Mike's agents can work with the new setup. Made a short section in the docs and a line in the guard's message.\nMike:\nNote:\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "31fb5d5ab591b3697a3692933c7545f01bb1c026",
+      "message": "Say how to add something new on screen: grow Action, one case in runAction\n\nsrc/game/CLAUDE.md, actions.ts and the guard's message now say what to do when a character needs\nsomething no Action shows yet (a second mini game, a new kind of screen): add it to Action and one\ncase to App's runAction (allowed; only onInteract is guarded), never `do` reaching into React.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-16T14:16:24Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "src/game/CLAUDE.md",
+      "status": "M",
+      "additions": 10,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/actions.ts",
+      "status": "M",
+      "additions": 3,
+      "deletions": 1
+    },
+    {
+      "path": "src/game/onInteract.test.ts",
+      "status": "M",
+      "additions": 3,
+      "deletions": 1
+    }
+  ],
+  "additions": 16,
+  "deletions": 2,
+  "areas": [
+    "characters & map life"
+  ],
+  "branch": "action-kinds-doc",
+  "opened_at": "2026-11-16T14:16:28Z",
+  "merged_by": "vlandham",
+  "summary": "Closes a gap in the \"what {A} does is data\" rules. Nothing said what to do when a character needs something no `Action` can show yet, like a second mini game or a new kind of screen. An agent following the guard might have pushed it into `do` by reaching into React state, or decided it was blocked.\n\nNow three places give the same answer: `src/game/CLAUDE.md` (a new section, \"Something new on screen\"), the comment at the top of `src/game/actions.ts`, and the guard's failure message. The answer:\n1. Add the new value or kind to `Action`.\n2. Add one case to App's `runAction`, plus its overlay. This is allowed, because the guard only blocks branches in `onInteract`.\n3. Return it from the plugin's `act()`, test it with `pick()`, and optionally add a `?open=` link.\n\nDocs and comments only, no behaviour change. 473 tests pass and the type check is clean.\n\nMike: heads-up. This is guidance your Claude will read when a character needs a new screen.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": "Asked to close the gap found while reviewing whether Mike's agents can work with the new setup. Made a short section in the docs and a line in the guard's message.",
+    "mike": null,
+    "note": "🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+    "shots": true,
+    "tags": [
+      [
+        "+",
+        "agent"
+      ]
+    ],
+    "present": true
+  },
+  "ideas": [],
+  "requested_reviewers": [
+    "exit320-stack"
+  ],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-16T14:16:53Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-78-garden-preview.gardeninsound.workers.dev\n\nUpdated for 31fb5d5. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-78]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-78-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 22,
+    "scenes": 11,
+    "content_files": 27,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 27128,
+    "commits": 102
+  },
+  "tags": [
+    "character",
+    "code",
+    "agent"
+  ],
+  "where_from": "guessed",
+  "shots": [
+    {
+      "query": "at=47.5612,-122.3868",
+      "lat": 47.5612,
+      "lon": -122.3868,
+      "label": "the Junction, where everyone starts",
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      },
+      "via": {
+        "before": "link",
+        "after": "link"
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "production",
+      "after": "production"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else. via 'way': a build from before ?open= links, walked in by pressing {A} at the place's `way`."
+  },
+  "first_recorded_at": "2026-11-16T14:29:12.046Z",
+  "earlier": [],
+  "recorded_at": "2026-11-16T14:29:12.046Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43884358202"
+}

@@ -2,7 +2,23 @@
 
 Every change that went live on [gardeninsound.website](https://gardeninsound.website), newest first, with the wish that started it, what was made, who made it, and how the spot looked before and after. Written automatically by [`.github/workflows/story.yml`](https://github.com/gardeninsound/map/blob/main/.github/workflows/story.yml) when a change merges; the raw records are in `changes/` and `wishes/`, and `story.json` indexes them all.
 
-**84** changes · **12** wishes from visitors, **11** answered · **0** still waiting
+**85** changes · **12** wishes from visitors, **11** answered · **0** still waiting
+
+---
+
+### Nov 16, 2026 · Say how to add something new on screen: grow Action, one case in runAction ([#78](https://github.com/gardeninsound/map/pull/78))
+
+**Asked vs made:** Asked to close the gap found while reviewing whether Mike's agents can work with the new setup. Made a short section in the docs and a line in the guard's message.
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+| before · the Junction, where everyone starts | after |
+|---|---|
+| <img src="changes/2026-11-16-pr078-say-how-to-add-something-new-on-screen-g/before-1.webp" width="400"> | <img src="changes/2026-11-16-pr078-say-how-to-add-something-new-on-screen-g/after-1.webp" width="400"> |
+
+<img src="changes/2026-11-16-pr078-say-how-to-add-something-new-on-screen-g/moving-1.webp" width="400" alt="moving">
+
+<sub>vlandham with Claude Code · 3 files, +16 −2 · characters & map life · [record](changes/2026-11-16-pr078-say-how-to-add-something-new-on-screen-g/entry.json)</sub>
 
 ---
 
