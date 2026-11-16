@@ -70,7 +70,9 @@ until what the link opens is on screen (the dialog, the scene behind "Let's see 
 Catch: the first choice each time). `open:arcade…` walks into the Duck Arcade by itself (on a build from
 before `?at=arcade`, from the door's coordinates). On a build
 without the game clock, a place's `time=` is faked in the browser (Playwright's clock), so the garden
-can be photographed in April on the commit that planted it. Each shot records `via` (`link` or
+can be photographed in April on the commit that planted it. An old build has no `?seed=`, so the camera seeds its
+`Math.random` itself, and walking in gets four tries with a new seed each (a wandering neighbor can stand
+in front of the lemon and answer instead). Each shot records `via` (`link` or
 `way`) and any `nothing opened` problem (on a *before* photo that usually means it wasn't built yet).
 
 ## Tags

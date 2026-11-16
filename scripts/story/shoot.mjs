@@ -44,6 +44,18 @@ export async function launch() {
   });
 }
 
+/** runs in the page before its own scripts: Math.random from a seed (mulberry32), for builds with no ?seed= */
+function seedRandom(seed) {
+  let a = seed >>> 0;
+  Math.random = () => {
+    a = (a + 0x6d2b79f5) >>> 0;
+    let t = a;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
 /**
  * Photographs each place on the site at `url`. Returns one result per place:
  * `{ still, moving, problems, via }` (file names inside `outDir`, page errors seen while there, and
@@ -53,42 +65,56 @@ export async function launch() {
  * ?open= links (`open: false`) a place with a `way` stands there and presses {A} until its `goal`
  * is on screen; without the game clock (`clock: false`) a place's `time=` is faked in the browser;
  * without `?at=arcade` (`arcadeAt: false`) the camera stands at the arcade door's coordinates instead.
+ * Walking in gets four tries, each with its own seed on a build without one (a neighbor may be in the way).
  */
 export async function shoot(browser, url, places, outDir, { prefix, moving = false, settleMs = 3500, time = null, features = { open: true, clock: true } } = {}) {
   const sharp = (await import('sharp')).default;
   mkdirSync(outDir, { recursive: true });
   const results = [];
   for (const [i, place] of places.entries()) {
-    const page = await browser.newPage({ viewport: VIEWPORT });
-    const problems = [];
-    page.on('pageerror', (e) => problems.push(`page error: ${e.message}`));
-    page.on('console', (m) => m.type() === 'error' && problems.push(`console: ${m.text()}`));
+    const opens = /(^|&)open=/.test(place.query);
+    const byHand = opens && !features.open;
+    let query = byHand && place.way ? place.way : place.query;
+    if (features.arcadeAt === false) query = query.replace(/(^|&)at=arcade(?=&|$)/, `$1${ARCADE_DOOR}`);
+    // a build from before the clock: its Date says the time the place asks for, and its chance is
+    // seeded here (it had no ?seed=), a different seed each try in case a neighbor stood in the way
+    const asked = /(?:^|&)time=([^&]+)/.exec(query)?.[1];
+    // seed=1 and the moment of the change (src/city/clock.ts): the same chance every time, and the
+    // garden in the month it was; builds from before the clock simply ignore them
+    const pin = `&seed=1${time && !/(^|&)time=/.test(query) ? `&time=${encodeURIComponent(time)}` : ''}`;
+    const tries = byHand && place.way && place.goal ? 4 : 1;
+
+    let page = null;
+    let problems = [];
     const res = { still: null, moving: null, problems };
     try {
-      // seed=1 and the moment of the change (src/city/clock.ts): the same chance every time, and the
-      // garden in the month it was; builds from before the clock simply ignore them
-      const opens = /(^|&)open=/.test(place.query);
-      const byHand = opens && !features.open;
-      if (byHand && !place.way) problems.push('this build has no ?open= links and the place gives no way in (`@ lat, lon`)');
-      let query = byHand && place.way ? place.way : place.query;
-      if (features.arcadeAt === false) query = query.replace(/(^|&)at=arcade(?=&|$)/, `$1${ARCADE_DOOR}`);
-      if (byHand && place.way) res.via = 'way';
-      // a build from before the clock: its Date says the time the place asks for
-      const asked = /(?:^|&)time=([^&]+)/.exec(query)?.[1];
-      if (asked && !features.clock) await page.clock.setFixedTime(new Date(decodeURIComponent(asked)));
-      const pin = `&seed=1${time && !/(^|&)time=/.test(query) ? `&time=${encodeURIComponent(time)}` : ''}`;
-      await page.goto(`${url}?solo${pin}${query === 'title' ? '' : `&${query}`}`, { waitUntil: 'load' });
-      await page.locator('canvas').first().waitFor({ timeout: 15_000 });
-      await page.waitForTimeout(settleMs);
-      if (place.goal && opens) {
+      for (let attempt = 1; attempt <= tries; attempt++) {
+        if (page) await page.close();
+        page = await browser.newPage({ viewport: VIEWPORT });
+        const seen = (problems = []);
+        page.on('pageerror', (e) => seen.push(`page error: ${e.message}`));
+        page.on('console', (m) => m.type() === 'error' && seen.push(`console: ${m.text()}`));
+        if (byHand && !place.way) problems.push('this build has no ?open= links and the place gives no way in (`@ lat, lon`)');
+        if (byHand && place.way) res.via = 'way';
+        if (!features.clock) await page.addInitScript(seedRandom, attempt);
+        if (asked && !features.clock) await page.clock.setFixedTime(new Date(decodeURIComponent(asked)));
+        await page.goto(`${url}?solo${pin}${query === 'title' ? '' : `&${query}`}`, { waitUntil: 'load' });
+        await page.locator('canvas').first().waitFor({ timeout: 15_000 });
+        await page.waitForTimeout(settleMs);
+        if (!place.goal || !opens) break;
         const goal = page.locator(place.goal).first();
         // walking in: {A} (Space) through the greeting and the first choice ("Let's see it", "Ride it", "Yes!")
         for (let k = 0; byHand && place.way && k < 14 && !(await goal.isVisible()); k++) {
           await page.keyboard.press('Space');
           await page.waitForTimeout(700);
         }
-        if (await goal.waitFor({ timeout: 6000 }).then(() => true, () => false)) await page.waitForTimeout(1500);
-        else problems.push(`nothing opened: no ${place.goal} on screen (on a "before" photo, usually because it wasn't there yet)`);
+        if (await goal.waitFor({ timeout: 6000 }).then(() => true, () => false)) {
+          if (attempt > 1) problems.push(`got in on try ${attempt}`);
+          await page.waitForTimeout(1500);
+          break;
+        }
+        if (attempt === tries)
+          problems.push(`nothing opened: no ${place.goal} on screen${tries > 1 ? ` in ${tries} tries` : ''} (on a "before" photo, usually because it wasn't there yet)`);
       }
       if (place.query !== 'title' && (await page.locator('.title-start').count()))
         problems.push('this build has no ?at= hook: the shot is its title screen');
@@ -115,7 +141,7 @@ export async function shoot(browser, url, places, outDir, { prefix, moving = fal
     } catch (e) {
       problems.push(`shot failed: ${e.message.split('\n')[0]}`);
     } finally {
-      await page.close();
+      await page?.close();
     }
     res.problems = squeeze(problems);
     results.push(res);
