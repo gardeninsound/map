@@ -1,0 +1,121 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "fd54fe9d6fcaddee5d6c59d8197abadefb45d23d",
+  "parent": "4d30ae0f439bbf86e6594994857575c3834596ac",
+  "pr": 76,
+  "title": "Busker: a new song, Rainy Day Promenade",
+  "url": "https://github.com/gardeninsound/map/pull/76",
+  "merged_at": "2026-11-16T00:27:22Z",
+  "body": "Jim's new busker song: a gentle C-major tune at 80 bpm on a soft triangle wave, quieter (`gain: 0.7`) and with no sparkle. It joins the busker's rotation in `SONGS`.\n\nMike: heads-up, since the music is part of the art.\n\nVerified: 463 tests pass (the busker song checks cover the new entry), and the build and smoke test pass.\n\n## Story\n\nIdea: A rainy-day song for the busker.\nWhere: open:busker\nAsked vs made: Jim wrote the song and asked for it to be committed.\nMike:\nNote:\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "7282c7ee432bb49a9a30e4b18d2a95d47ff22997",
+      "message": "Busker: a new song, Rainy Day Promenade\n\nA gentle C-major tune at 80 bpm on a soft triangle wave, no sparkle.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-16T00:23:41Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "src/game/busker.ts",
+      "status": "M",
+      "additions": 14,
+      "deletions": 0
+    }
+  ],
+  "additions": 14,
+  "deletions": 0,
+  "areas": [
+    "characters & map life"
+  ],
+  "branch": "busker-rainy-day",
+  "opened_at": "2026-11-16T00:23:45Z",
+  "merged_by": "vlandham",
+  "summary": "Jim's new busker song: a gentle C-major tune at 80 bpm on a soft triangle wave, quieter (`gain: 0.7`) and with no sparkle. It joins the busker's rotation in `SONGS`.\n\nMike: heads-up, since the music is part of the art.\n\nVerified: 463 tests pass (the busker song checks cover the new entry), and the build and smoke test pass.",
+  "story": {
+    "ideas": [],
+    "where": [
+      {
+        "query": "open=busker",
+        "label": "busker"
+      }
+    ],
+    "askedVsMade": "Jim wrote the song and asked for it to be committed.",
+    "mike": null,
+    "note": "🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+    "shots": true,
+    "present": true
+  },
+  "ideas": [],
+  "requested_reviewers": [
+    "exit320-stack"
+  ],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-16T00:24:11Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview:** https://pr-76-garden-preview.gardeninsound.workers.dev\n\nUpdated for 7282c7e. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-76]`).",
+      "bot": true
+    }
+  ],
+  "preview_url": "https://pr-76-garden-preview.gardeninsound.workers.dev",
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 22,
+    "scenes": 11,
+    "content_files": 27,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 27076,
+    "commits": 100
+  },
+  "shots": [
+    {
+      "query": "open=busker",
+      "lat": null,
+      "lon": null,
+      "label": "busker",
+      "guessed": false,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "production",
+      "after": "production"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else."
+  },
+  "first_recorded_at": "2026-11-16T00:27:53.213Z",
+  "earlier": [],
+  "recorded_at": "2026-11-16T00:27:53.213Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/43780468805"
+}

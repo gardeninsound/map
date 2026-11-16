@@ -2,7 +2,23 @@
 
 Every change that went live on [gardeninsound.website](https://gardeninsound.website), newest first, with the wish that started it, what was made, who made it, and how the spot looked before and after. Written automatically by [`.github/workflows/story.yml`](https://github.com/gardeninsound/map/blob/main/.github/workflows/story.yml) when a change merges; the raw records are in `changes/` and `wishes/`, and `story.json` indexes them all.
 
-**82** changes · **12** wishes from visitors, **11** answered · **0** still waiting
+**83** changes · **12** wishes from visitors, **11** answered · **0** still waiting
+
+---
+
+### Nov 15, 2026 · Busker: a new song, Rainy Day Promenade ([#76](https://github.com/gardeninsound/map/pull/76))
+
+**Asked vs made:** Jim wrote the song and asked for it to be committed.
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+| before · busker | after |
+|---|---|
+| <img src="changes/2026-11-15-pr076-busker-a-new-song-rainy-day-promenade/before-1.webp" width="400"> | <img src="changes/2026-11-15-pr076-busker-a-new-song-rainy-day-promenade/after-1.webp" width="400"> |
+
+<img src="changes/2026-11-15-pr076-busker-a-new-song-rainy-day-promenade/moving-1.webp" width="400" alt="moving">
+
+<sub>vlandham with Claude Code · 1 files, +14 −0 · characters & map life · [record](changes/2026-11-15-pr076-busker-a-new-song-rainy-day-promenade/entry.json)</sub>
 
 ---
 

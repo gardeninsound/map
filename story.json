@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-11-16T00:03:05.911Z",
+  "generated_at": "2026-11-16T00:28:17.069Z",
   "changes": [
     {
       "pr": null,
@@ -4123,6 +4123,53 @@
         "arcade_cabinets_ready": 4,
         "source_lines": 27062,
         "commits": 99
+      }
+    },
+    {
+      "pr": 76,
+      "sha": "fd54fe9d6fcaddee5d6c59d8197abadefb45d23d",
+      "title": "Busker: a new song, Rainy Day Promenade",
+      "url": "https://github.com/gardeninsound/map/pull/76",
+      "merged_at": "2026-11-16T00:27:22Z",
+      "dir": "changes/2026-11-15-pr076-busker-a-new-song-rainy-day-promenade",
+      "ideas": [],
+      "summary": "Jim's new busker song: a gentle C-major tune at 80 bpm on a soft triangle wave, quieter (`gain: 0.7`) and with no sparkle. It joins the busker's rotation in `SONGS`.\n\nMike: heads-up, since the music is part of the art.\n\nVerified: 463 tests pass (the busker song checks cover the new entry), and the build and smoke test pass.",
+      "story": {
+        "askedVsMade": "Jim wrote the song and asked for it to be committed.",
+        "mike": null,
+        "note": "🤖 Generated with [Claude Code](https://claude.com/claude-code)"
+      },
+      "authors": [
+        "vlandham"
+      ],
+      "tools": [
+        "Claude Code"
+      ],
+      "files": 1,
+      "additions": 14,
+      "deletions": 0,
+      "areas": [
+        "characters & map life"
+      ],
+      "shots": [
+        {
+          "query": "open=busker",
+          "lat": null,
+          "lon": null,
+          "label": "busker",
+          "before": "changes/2026-11-15-pr076-busker-a-new-song-rainy-day-promenade/before-1.webp",
+          "after": "changes/2026-11-15-pr076-busker-a-new-song-rainy-day-promenade/after-1.webp",
+          "moving": "changes/2026-11-15-pr076-busker-a-new-song-rainy-day-promenade/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 22,
+        "scenes": 11,
+        "content_files": 27,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 27076,
+        "commits": 100
       }
     }
   ],
