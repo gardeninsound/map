@@ -264,7 +264,7 @@ function Change({ c, src, tag, onTag }: { c: StoryChange; src: string; tag: stri
       )}
       <p className="story-meta">
         {c.authors.join(', ') || 'someone'}
-        {c.tools.length ? ` with ${c.tools.join(', ')}` : ''} · {c.files} files, +{c.additions} −{c.deletions}
+        {' · '}{c.files} files, +{c.additions} −{c.deletions}
         {!c.tags?.length && c.areas.length ? ` · ${c.areas.join(', ')}` : ''} · <a href={c.url}>{c.pr ? `#${c.pr}` : c.sha.slice(0, 7)}</a> ·{' '}
         <a href={`${src}${c.dir}/entry.json`}>record</a>
       </p>

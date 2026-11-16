@@ -6,6 +6,8 @@ import {
   openGoal,
   squeeze,
   parseTags,
+  peopleOf,
+  personOf,
   placesMoved,
   tagsOf,
   TAGS,
@@ -239,7 +241,9 @@ describe('chronicle', () => {
     expect(md).toContain('live 10 days later');
     expect(md).toContain('**Mike:** I always wanted horses');
     expect(md).toContain(`<img src="${dir}/before-1.webp"`);
-    expect(md).toContain('exit320-stack with Claude Code');
+    // people by name, and no tool credits
+    expect(md).toContain('<sub>Mike · 2 files');
+    expect(md).not.toMatch(/claude code|exit320-stack/i);
     expect(md).toContain('## Wishes still waiting');
     expect(md).toContain('“a ferry”');
   });
@@ -251,7 +255,8 @@ describe('chronicle', () => {
     expect(c.shots[0]).toMatchObject({ before: `${dir}/before-1.webp`, after: `${dir}/after-1.webp`, moving: `${dir}/moving-1.webp`, label: 'the meadow' });
     expect(c.ideas[0]).toMatchObject({ issue: 36, text: 'add my little ponys (g1)', street: '47th Ave SW' });
     expect(c.story.mike).toBe('I always wanted horses in that meadow.');
-    expect(c.authors).toEqual(['exit320-stack']);
+    expect(c.authors).toEqual(['Mike']);
+    expect(c).not.toHaveProperty('tools');
     expect(c.files).toBe(2);
     expect(idx.wishes[0].text).toBe('a ferry');
   });
@@ -343,5 +348,12 @@ describe('tags', () => {
     expect(story.tags).toEqual([['+', 'sound'], ['-', 'character'], ['+', 'festival']]);
     expect(tagsOf({ files: [f('src/game/plugins/busker.ts')], story })).toEqual(['sound', 'festival']);
     expect(tagsOf({ files: [f('src/game/plugins/ham.ts')] }, ['-character', 'ui'])).toEqual(['ui']);
+  });
+});
+
+describe('people', () => {
+  it('names Jim and Mike from their logins and git names, others as they are', () => {
+    expect(['vlandham', 'Jim Vallandingham', 'exit320-stack', 'mike', 'someone-else'].map(personOf)).toEqual(['Jim', 'Jim', 'Mike', 'Mike', 'someone-else']);
+    expect(peopleOf([{ login: 'vlandham' }, { name: 'Jim Vallandingham' }, { login: 'exit320-stack' }])).toEqual(['Jim', 'Mike']);
   });
 });

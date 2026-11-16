@@ -82,7 +82,8 @@ Sibling projects: `../bearisland` (first attempt, scrollytelling) and `../bearis
    `Idea:` / `Where:` / `Tags:` / `Asked vs made:` / `Mike:` / `Note:` lines; `--fill` skips the template, so
    write the body). The story log keeps it with the change and photographs each `Where` before
    and after (`scripts/story/README.md`). Claude fills in `Idea`, `Where` and `Asked vs made` from
-   the work, and leaves `Mike:` empty unless Mike said the words himself. The **Check** workflow
+   the work, and leaves `Mike:` empty unless Mike said the words himself. **No "Generated with Claude Code" line
+   (🤖 footer) or "made with Claude Code" credit in PR titles or descriptions**: the PR is Jim's or Mike's. The **Check** workflow
    (`.github/workflows/ci.yml`) runs the size guard, tests, build and smoke test; `main` requires it to pass.
 6. **Every PR auto-merges**: `gh pr merge --auto --squash --delete-branch` — GitHub merges (= deploys)
    the moment Check is green and never if it fails; fix on the branch and it goes in. Nobody waits for

@@ -175,7 +175,13 @@ export function parseWish(body = '') {
   return { text, name, street, preview, fromIdeaBox: /idea box/.test(footer) };
 }
 
-/** Who helped make it: Co-Authored-By trailers, and the tools that leave a mark. */
+/** the people behind the GitHub logins and git names, as the log names them */
+const PEOPLE = { vlandham: 'Jim', 'jim vallandingham': 'Jim', jim: 'Jim', 'exit320-stack': 'Mike', mike: 'Mike' };
+export const personOf = (who) => (who ? (PEOPLE[String(who).toLowerCase()] ?? who) : null);
+/** a change's makers, by name, once each */
+export const peopleOf = (authors = []) => [...new Set(authors.map((a) => personOf(a.login ?? a.name)).filter(Boolean))];
+
+/** Who helped make it: Co-Authored-By trailers, and the tools that leave a mark (kept in entry.json; not shown). */
 export function makers(prBody = '', commits = []) {
   const coauthors = new Set();
   const tools = new Set();
@@ -468,9 +474,8 @@ export function renderChronicle(entries, wishes, repo) {
       } else if (s.after) L.push(`<img src="${dir}/${s.after}" width="600">${cap ? `<br><sub>${cap.slice(3)}</sub>` : ''}`, '');
       if (s.moving) L.push(`<img src="${dir}/${s.moving}" width="400" alt="moving">`, '');
     }
-    const by = [...new Set(e.authors.map((a) => a.login ?? a.name))].join(', ');
-    const tools = e.made_with?.tools?.length ? ` with ${e.made_with.tools.join(', ')}` : '';
-    L.push(`<sub>${by}${tools} · ${e.files.length} files, +${e.additions} −${e.deletions} · ${e.areas.join(', ')} · [record](${dir}/entry.json)</sub>`, '');
+    const by = peopleOf(e.authors).join(', ');
+    L.push(`<sub>${by} · ${e.files.length} files, +${e.additions} −${e.deletions} · ${e.areas.join(', ')} · [record](${dir}/entry.json)</sub>`, '');
   }
 
   if (open.length) {
@@ -505,8 +510,7 @@ export function renderIndex(entries, wishes) {
         ideas: (e.ideas ?? []).map((w) => ({ issue: w.issue, url: w.url, text: w.text || w.title, name: w.name ?? null, street: w.street ?? null, asked_at: w.asked_at ?? null })),
         summary: e.summary ?? null,
         story: { askedVsMade: e.story?.askedVsMade ?? null, mike: e.story?.mike ?? null, note: e.story?.note ?? null },
-        authors: [...new Set((e.authors ?? []).map((a) => a.login ?? a.name).filter(Boolean))],
-        tools: e.made_with?.tools ?? [],
+        authors: peopleOf(e.authors),
         files: e.files?.length ?? 0,
         additions: e.additions ?? 0,
         deletions: e.deletions ?? 0,

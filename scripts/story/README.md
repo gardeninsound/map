@@ -3,8 +3,8 @@
 The Garden in Sound grows in public: a visitor sends a wish from the idea box, and a few days
 later it's somewhere in West Seattle. The story log keeps the whole record of that, written
 automatically, so the project can tell its own story later. That record is: what was wished
-for, in the visitor's words; what was made and why it differs; who made it and with which
-tools; and how the place looked before and after.
+for, in the visitor's words; what was made and why it differs; who made it; and how the place
+looked before and after.
 
 **Read it:** at [gardeninsound.website/story/](https://gardeninsound.website/story/) (not linked
 from the map yet), which shows the log with growth charts, a before/after wipe for each place,
@@ -32,7 +32,9 @@ Each change's `entry.json` (schema 1) holds:
   made*, *Mike*, *Note*)
 - **who and how**: `authors`, `made_with` (co-authors and tools such as Claude Code, Aider and
   the free-model helper), the PR's own `commits` from before the squash, `reviews`,
-  `discussion`, `opened_at` → `merged_at`, `days_open`, `preview_url`
+  `discussion`, `opened_at` → `merged_at`, `days_open`, `preview_url`. The chronicle and the page
+  name people (`vlandham` → Jim, `exit320-stack` → Mike: `PEOPLE` in `lib.mjs`) and don't show tool
+  credits; `made_with` stays in the record only
 - **how it looked**: `shots`, one per place, each with `before-N.webp` (the commit before),
   `after-N.webp` (lossless, so the pixels are exact) and `moving-N.webp` (a few seconds of
   the living map, looped), plus any page errors seen while shooting
