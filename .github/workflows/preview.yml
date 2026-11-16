@@ -10,7 +10,6 @@ on:
 
 permissions:
   contents: read
-  pull-requests: write # the comment with the link
   deployments: write # the "View deployment" button
 
 concurrency:
@@ -52,14 +51,4 @@ jobs:
           npx wrangler versions upload
           --preview-alias "pr-${{ github.event.pull_request.number }}"
           --message "PR #${{ github.event.pull_request.number }} at ${GITHUB_SHA::7}"
-
-      - name: Comment the link
-        env:
-          GH_TOKEN: ${{ github.token }}
-          PR: ${{ github.event.pull_request.number }}
-          SHA: ${{ github.event.pull_request.head.sha }}
-        run: |
-          body="**Preview:** $URL
-
-          Updated for ${SHA::7}. It's a full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked \`[preview pr-$PR]\`)."
-          gh pr comment "$PR" --repo "$GITHUB_REPOSITORY" --edit-last --create-if-none --body "$body"
+      # the comment with the link (and much more) is preview-comment.yml

@@ -6,6 +6,8 @@ import {
   openGoal,
   squeeze,
   parseTags,
+  areaOwner,
+  renderPreviewComment,
   peopleOf,
   personOf,
   placesMoved,
@@ -355,5 +357,40 @@ describe('people', () => {
   it('names Jim and Mike from their logins and git names, others as they are', () => {
     expect(['vlandham', 'Jim Vallandingham', 'exit320-stack', 'mike', 'someone-else'].map(personOf)).toEqual(['Jim', 'Jim', 'Mike', 'Mike', 'someone-else']);
     expect(peopleOf([{ login: 'vlandham' }, { name: 'Jim Vallandingham' }, { login: 'exit320-stack' }])).toEqual(['Jim', 'Mike']);
+  });
+});
+
+describe('the preview comment', () => {
+  const base = { url: 'https://pr-9-x.dev', pr: 9, sha: 'abcdef1234', now: '2026-11-15T00:00:00Z' };
+  it('links straight to each place, quotes the wish, and lists tags, size and the other area', () => {
+    const md = renderPreviewComment({
+      ...base,
+      author: 'exit320-stack',
+      title: 'Ponies (idea box #36)',
+      body: '## Story\nIdea: #36\nWhere: open:sundrop — Sundrop; 47.53, -122.39 — the meadow',
+      files: [{ path: 'src/game/plugins/ponies.ts', additions: 40, deletions: 0 }, { path: 'src/App.tsx', additions: 3, deletions: 1 }],
+      wishes: [{ issue: 36, url: 'u36', text: 'add my little ponys', name: null, street: '47th Ave SW', asked_at: '2026-11-05T00:00:00Z' }],
+    });
+    expect(md).toContain('updated for abcdef1');
+    expect(md).toContain('- [Sundrop](https://pr-9-x.dev/?solo&open=sundrop)');
+    expect(md).toContain('- [the meadow](https://pr-9-x.dev/?solo&at=47.53,-122.39)');
+    expect(md).toContain('> add my little ponys\n> — a visitor on 47th Ave SW ([#36](u36), 10 days ago)');
+    expect(md).toContain('wish · character · 2 files, +43 −1');
+    expect(md).toContain("touches Jim's area (`src/App.tsx`)");
+    expect(md).not.toContain('[!NOTE]');
+  });
+
+  it('nudges about a missing Story section, Where line or Idea', () => {
+    const f = [{ path: 'src/game/plugins/ham.ts', additions: 5, deletions: 0 }];
+    expect(renderPreviewComment({ ...base, author: 'vlandham', body: 'Ham.', files: f })).toContain('No `## Story` section');
+    expect(renderPreviewComment({ ...base, author: 'vlandham', body: '## Story\nNote: hi', files: f })).toContain('No `Where:` line');
+    expect(renderPreviewComment({ ...base, author: 'vlandham', body: '## Story\nWhere: none', files: f })).not.toContain('[!NOTE]');
+    expect(renderPreviewComment({ ...base, author: 'vlandham', title: 'A wish come true', body: '## Story\nWhere: none', files: f })).toContain('`Idea:` names none');
+    // docs only: nothing to photograph, no Where needed
+    expect(renderPreviewComment({ ...base, author: 'vlandham', body: '## Story\nNote: x', files: [{ path: 'CLAUDE.md', additions: 1, deletions: 0 }] })).not.toContain('[!NOTE]');
+  });
+
+  it("knows whose area a file is in", () => {
+    expect(['src/city/engine/CityGame.ts', 'src/content/crow.ts', 'src/game/plugins/crow.ts'].map(areaOwner)).toEqual(['Jim', 'Mike', null]);
   });
 });
