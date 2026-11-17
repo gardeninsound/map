@@ -44,3 +44,5 @@ with a bag of licorice (`bearLines` in `content/duckArcade.ts`); click/tap the b
 rabbit says "Thanks!" (`sounds.thanks`, the browser's speech pitched up), then it walks off and plays Avocado
 Drop (`BEAR_GAME`, the floor cabinet by the doors) for the rest of the visit. Where it stands and walks is pure +
 tested: `src/game/arcadeBear.ts`. The smoke test takes a licorice (`window.__arcade.bagOnScreen()`).
+
+A game's best score or count: `storedNumber(KEY)` / `store(KEY, n)` from `src/city` (`stored.ts`), never `localStorage` by hand.

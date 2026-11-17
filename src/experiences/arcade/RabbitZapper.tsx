@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { input, isTouch, sfx, withButtons } from '../../city';
 import type { ArcadeGameProps } from './games';
+import { store, storedNumber } from '../../city/stored';
 
 /** The kit's handle (public/rabbit-zapper.js, converted from "Rabbit Zapper.html"). */
 interface RabbitZapperGame {
@@ -40,13 +41,7 @@ const loadKit = () =>
   });
 
 const WINS_KEY = 'bearisland-rabbit-zapper-wins';
-const readWins = () => {
-  try {
-    return Number(localStorage.getItem(WINS_KEY)) || 0;
-  } catch {
-    return 0;
-  }
-};
+const readWins = () => storedNumber(WINS_KEY);
 
 /**
  * Rabbit Zapper: monsters creep in from both sides; the rabbit zaps them with eye lasers.
@@ -86,11 +81,7 @@ export default function RabbitZapper({ onExit }: ArcadeGameProps) {
             won.current = name === 'win';
             if (name !== 'win') return;
             wins.current += 1;
-            try {
-              localStorage.setItem(WINS_KEY, String(wins.current));
-            } catch {
-              /* private mode */
-            }
+            store(WINS_KEY, wins.current);
           },
         });
       })

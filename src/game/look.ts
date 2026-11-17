@@ -5,6 +5,7 @@
  * The choosing and the code are pure + tested; `dress()` paints a sprite set.
  */
 import type { Grid, Walker } from '../city';
+import { store, storedNumber } from '../city/stored';
 
 export interface Fur {
   name: string;
@@ -60,18 +61,10 @@ export function lookFrom(code: unknown): Look | null {
 
 const KEY = 'bearisland.look';
 export function loadLook(): Look {
-  try {
-    return lookFrom(Number(localStorage.getItem(KEY))) ?? DEFAULT_LOOK;
-  } catch {
-    return DEFAULT_LOOK;
-  }
+  return lookFrom(storedNumber(KEY)) ?? DEFAULT_LOOK;
 }
 export function saveLook(l: Look) {
-  try {
-    localStorage.setItem(KEY, String(lookCode(l)));
-  } catch {
-    // private window: it just isn't remembered
-  }
+  store(KEY, lookCode(l)); // private window: it just isn't remembered
 }
 
 /**

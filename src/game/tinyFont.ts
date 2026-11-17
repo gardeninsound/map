@@ -63,3 +63,22 @@ export const tinyCovers = (text: string) => [...text.toUpperCase()].every((c) =>
 
 /** For tests: every glyph is 5 rows of 3. */
 export const tinyGlyphs = () => Object.values(GLYPHS);
+
+/**
+ * A white speech bubble in the tiny font, its tail pointing down at (x, y): what the pegasus
+ * and the mermaids say over their heads. (Other rabbits' emote bubbles stack and lift, so they
+ * draw their own, in plugins/visitors.ts.)
+ */
+export function drawSpeech(ctx: CanvasRenderingContext2D, x: number, y: number, text: string, ink: string) {
+  const w = tinyWidth(text) + 6;
+  const h = TINY_H + 4;
+  const l = Math.round(x - w / 2);
+  const top = Math.round(y - h - 3);
+  ctx.fillStyle = ink;
+  ctx.fillRect(l - 1, top - 1, w + 2, h + 2);
+  ctx.fillRect(Math.round(x) - 2, top + h, 4, 3);
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(l, top, w, h);
+  ctx.fillRect(Math.round(x) - 1, top + h, 2, 2);
+  drawTiny(ctx, text, l + 3, top + 2, ink);
+}

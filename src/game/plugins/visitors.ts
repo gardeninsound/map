@@ -26,6 +26,7 @@ import {
   type RateLimit,
   type Visitor,
 } from '../visitors';
+import { store, storedFlag } from '../../city/stored';
 
 const APP_ID = 'bearisland';
 const ROOM = 'island';
@@ -91,13 +92,7 @@ export class Visitors implements CityPlugin, Actor {
   private lastInput = performance.now();
   private presenceTimer = 0;
   private unlisten: (() => void) | null = null;
-  private _hidden = (() => {
-    try {
-      return localStorage.getItem(HIDE_KEY) === '1';
-    } catch {
-      return false;
-    }
-  })();
+  private _hidden = storedFlag(HIDE_KEY);
 
   constructor(
     private readonly relayUrl?: string,
@@ -134,11 +129,7 @@ export class Visitors implements CityPlugin, Actor {
   }
   set hidden(h: boolean) {
     this._hidden = h;
-    try {
-      localStorage.setItem(HIDE_KEY, h ? '1' : '0');
-    } catch {
-      /* private mode: forgotten next visit */
-    }
+    store(HIDE_KEY, h);
     this.onChange?.();
   }
 

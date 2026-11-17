@@ -10,7 +10,7 @@
  *
  * With neither, it's the real clock and real chance. The parsing is pure (clock.test.ts).
  */
-import { rng } from './engine/npcs';
+import { nameHash, rng } from './random';
 
 export type ClockSettings = { at: number | null; seed: number | null };
 
@@ -29,8 +29,6 @@ export function clockFromSearch(search: string): ClockSettings {
   return { at, seed };
 }
 
-/** a small stable number for a name, to give each user of the dice its own stream */
-const nameHash = (s: string) => [...s].reduce((h, c) => Math.imul(h ^ c.charCodeAt(0), 16777619) >>> 0, 2166136261);
 
 let offset = 0;
 let seed: number | null = null;

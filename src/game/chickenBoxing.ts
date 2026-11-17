@@ -50,17 +50,9 @@ export interface Bout {
   impactAt: number | null;
 }
 
-/** a repeatable 0..1 from integers */
-export function hash(...n: number[]): number {
-  let h = 2166136261;
-  for (const v of n) {
-    h ^= v | 0;
-    h = Math.imul(h, 16777619);
-    h ^= h >>> 13;
-    h = Math.imul(h, 2246822507);
-  }
-  return ((h ^ (h >>> 16)) >>> 0) / 4294967296;
-}
+/** a repeatable 0..1 from integers (src/city/random.ts) */
+import { intsHash as hash } from '../city/random';
+export { hash };
 
 /** the knockdown in a round, if there is one: when it lands and who goes down */
 export function knockdownOf(bout: number, round: number): { at: number; who: 0 | 1 } | null {

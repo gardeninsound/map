@@ -57,15 +57,11 @@ export function srcFrom(search: string): string {
   return s.endsWith('/') ? s : `${s}/`;
 }
 
-const TZ = 'America/Los_Angeles';
-/** the West Seattle calendar day, YYYY-MM-DD */
-export const seattleDay = (iso: string) => new Date(iso).toLocaleDateString('en-CA', { timeZone: TZ });
-export const dayLabel = (iso: string) => new Date(iso).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', timeZone: TZ });
-export const dateLabel = (iso: string) => new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: TZ });
+// dates, shared with the recorder (scripts/story/lib.mjs)
+import { dateLabel, dayLabel, seattleDay, waitDays } from './dates.mjs';
+export { dateLabel, dayLabel, seattleDay, waitDays };
 const monthLabel = (day: string) => new Date(`${day}T12:00:00Z`).toLocaleDateString('en-US', { month: 'long', year: 'numeric', timeZone: 'UTC' });
 
-/** whole days from a wish to the change that answered it */
-export const waitDays = (asked: string, live: string) => Math.max(0, Math.round((Date.parse(live) - Date.parse(asked)) / 86_400_000));
 
 /** an anchor for a change: #pr-64, or #c-8066597 for the early commits */
 export const anchorOf = (c: Pick<StoryChange, 'pr' | 'sha'>) => (c.pr ? `pr-${c.pr}` : `c-${c.sha.slice(0, 7)}`);

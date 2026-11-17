@@ -14,18 +14,18 @@ export const CHUNK = 32; // tiles per chunk side
  * their pixels are half the size of everything else's.
  */
 export const RES = 2;
-/** chunks kept drawn; older ones are dropped and redrawn if you come back (each is RES² bigger) */
-const KEEP_CHUNKS = 40;
+/**
+ * chunks kept drawn; older ones are dropped and redrawn if you come back. Each is ~4 MB of canvas
+ * (1024² at RES 2) and phones cap canvas memory (iOS Safari ~256–384 MB in all), so 16 (~64 MB):
+ * at most 4 are on screen at once, and riding back the way you came stays drawn.
+ */
+const KEEP_CHUNKS = 16;
 /** px: a park trail's half-width (the walkable corridor round it stays lawn) */
 const TRAIL_R = 2;
 
-/** Deterministic 0..1 hash per tile, so decoration is stable across reloads. */
-export function hash(x: number, y: number, seed = 0): number {
-  let h = (x * 374761393 + y * 668265263 + seed * 2147483647) | 0;
-  h = Math.imul(h ^ (h >>> 13), 1274126177);
-  h ^= h >>> 16;
-  return (h >>> 0) / 4294967296;
-}
+/** Deterministic 0..1 hash per tile, so decoration is stable across reloads (../random.ts). */
+import { tileHash as hash } from '../random';
+export { hash };
 
 type Ctx = CanvasRenderingContext2D;
 const px = (ctx: Ctx, color: string, x: number, y: number, w = 1, h = 1) => {

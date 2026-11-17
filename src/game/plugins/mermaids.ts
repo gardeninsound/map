@@ -2,7 +2,7 @@ import { INK, Tile, type CityGame, type CityPlugin, type DrawContext, type Targe
 import { mermaidChat, mermaidLabel, mermaids, type Mermaid } from '../../content/mermaids';
 import { bubbleText, callingAt, rockNear, SEE } from '../mermaids';
 import { buildMermaid } from '../mermaidSprites';
-import { drawTiny, TINY_H, tinyWidth } from '../tinyFont';
+import { drawSpeech } from '../tinyFont';
 import type { Rowboat } from './rowboat';
 import { talk, type Action, type Actor } from '../actions';
 
@@ -90,24 +90,9 @@ export class Mermaids implements CityPlugin, Actor {
           ctx.fillRect(s.x - r, s.y + 1, 2 * r, 1);
           ctx.fillRect(s.x - r + 3, s.y + 3, 2 * r - 6, 1);
           ctx.drawImage(frames[flick]!, s.x - 8, s.y - 14);
-          if (phrase) this.bubble(ctx, s.x - 1, s.y - 15, bubbleText(phrase));
+          if (phrase) drawSpeech(ctx, s.x - 1, s.y - 15, bubbleText(phrase), INK);
         },
       });
     });
-  }
-
-  /** a speech bubble whose tail points down at (x, y), as the pegasus's */
-  private bubble(ctx: CanvasRenderingContext2D, x: number, y: number, text: string) {
-    const w = tinyWidth(text) + 6;
-    const h = TINY_H + 4;
-    const l = Math.round(x - w / 2);
-    const top = Math.round(y - h - 3);
-    ctx.fillStyle = INK;
-    ctx.fillRect(l - 1, top - 1, w + 2, h + 2);
-    ctx.fillRect(Math.round(x) - 2, top + h, 4, 3);
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(l, top, w, h);
-    ctx.fillRect(Math.round(x) - 1, top + h, 2, 2);
-    drawTiny(ctx, text, l + 3, top + 2, INK);
   }
 }

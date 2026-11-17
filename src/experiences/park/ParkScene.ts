@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { lehmer } from '../../city/random';
 import type { ArtAsset } from '../../content/types';
 import type { ParkSign } from '../../content/puppyPark';
 
@@ -31,10 +32,7 @@ function canvasTexture(w: number, h: number, paint: (g: CanvasRenderingContext2D
 }
 
 /** Deterministic noise so the field looks the same every visit. */
-function rand(seed: number) {
-  let s = seed;
-  return () => ((s = (s * 16807) % 2147483647) / 2147483647);
-}
+const rand = lehmer;
 
 export interface ParkEvents {
   /** the sign you're close to and facing, or null */

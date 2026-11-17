@@ -1,6 +1,7 @@
 import { distanceField, Tile, type World } from '../world/world';
 import { facingFor, fits, step, type Facing, type Vec } from './movement';
 import { buildPerson, type Walker } from '../render/sprites';
+import { rng } from '../random';
 
 export interface NeighborVoice {
   name: string;
@@ -50,17 +51,8 @@ export interface Npc {
   sprite: Walker;
 }
 
-/** Tiny seeded PRNG so a given seed always produces the same crowd. */
-export function rng(seed: number) {
-  let s = seed >>> 0;
-  return () => {
-    s = (s + 0x6d2b79f5) >>> 0;
-    let t = s;
-    t = Math.imul(t ^ (t >>> 15), t | 1);
-    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
+/** the seeded stream (in ../random.ts; re-exported for the city's index) */
+export { rng };
 
 /**
  * One wander tick. Neighbors stroll in straight lines, pause now and then, and at

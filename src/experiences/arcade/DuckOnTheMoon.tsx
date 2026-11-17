@@ -3,18 +3,13 @@ import { input, isTouch, sfx, withButtons } from '../../city';
 import { moonSounds, moonStories, moonText as T, type MoonSound } from '../../content/duckOnTheMoon';
 import { DuckMoonScene } from './DuckMoonScene';
 import type { ArcadeGameProps } from './games';
+import { store, storedNumber } from '../../city/stored';
 
 const reducedMotion = () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
 const SOUNDS = `${import.meta.env.BASE_URL}duck-on-the-moon/`;
 
 const BEST_KEY = 'bearisland-duck-moon-best';
-const readBest = () => {
-  try {
-    return Number(localStorage.getItem(BEST_KEY)) || 0;
-  } catch {
-    return 0;
-  }
-};
+const readBest = () => storedNumber(BEST_KEY);
 
 interface Card {
   speaker: string;
@@ -51,11 +46,7 @@ export default function DuckOnTheMoon({ onExit }: ArcadeGameProps) {
     input.clear();
     const score = found.current.size;
     const best = Math.max(score, readBest());
-    try {
-      localStorage.setItem(BEST_KEY, String(best));
-    } catch {
-      /* private mode */
-    }
+    store(BEST_KEY, best);
     exit.current({ score, best });
   };
 
