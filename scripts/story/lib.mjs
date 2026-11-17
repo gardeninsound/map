@@ -6,6 +6,9 @@
  * Shapes (schema 1) are documented in scripts/story/README.md.
  */
 
+// dates, shared with the /story/ page
+import { dateLabel, daysBetween, seattleDay, waitDays } from '../../src/story/dates.mjs';
+
 export const SCHEMA = 1;
 
 // ---------------------------------------------------------------------------------------------
@@ -351,7 +354,7 @@ export const changeDir = ({ pr, sha, at, title }) =>
   `changes/${seattleDay(at)}-${pr ? `pr${String(pr).padStart(3, '0')}` : sha.slice(0, 7)}-${slug(title)}`;
 
 /** the calendar day in West Seattle (YYYY-MM-DD): a change merged at 5 pm is that day's, not tomorrow's UTC */
-export const seattleDay = (iso) => new Date(iso).toLocaleDateString('en-CA', { timeZone: 'America/Los_Angeles' });
+export { seattleDay };
 
 /** the PR number of a change folder, or null */
 export const prOfDir = (dir) => {
@@ -430,13 +433,12 @@ export const isRealWish = (issue) =>
   !/\btest(ing)?\b/i.test(issue.title.slice(0, 30));
 
 /** whole days between two ISO times */
-export const daysBetween = (a, b) => Math.round((Date.parse(b) - Date.parse(a)) / 86_400_000);
+export { daysBetween };
 
 // ---------------------------------------------------------------------------------------------
 // The readable chronicle: the story branch's README.md
 
-const fmtDate = (iso) =>
-  new Date(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'America/Los_Angeles' });
+const fmtDate = dateLabel;
 const quote = (s) => s.split('\n').map((l) => `> ${l}`).join('\n');
 const esc = (s) => s.replace(/[<>]/g, (c) => (c === '<' ? '&lt;' : '&gt;'));
 
@@ -556,7 +558,7 @@ export function areaOwner(path) {
 }
 
 const ago = (from, now) => {
-  const d = Math.max(0, Math.round((Date.parse(now) - Date.parse(from)) / 86_400_000));
+  const d = waitDays(from, now);
   return d === 0 ? 'today' : d === 1 ? 'yesterday' : `${d} days ago`;
 };
 
