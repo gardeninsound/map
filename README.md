@@ -2,7 +2,23 @@
 
 Every change that went live on [gardeninsound.website](https://gardeninsound.website), newest first, with the wish that started it, what was made, who made it, and how the spot looked before and after. Written automatically by [`.github/workflows/story.yml`](https://github.com/gardeninsound/map/blob/main/.github/workflows/story.yml) when a change merges; the raw records are in `changes/` and `wishes/`, and `story.json` indexes them all.
 
-**90** changes · **12** wishes from visitors, **11** answered · **0** still waiting
+**91** changes · **12** wishes from visitors, **11** answered · **0** still waiting
+
+---
+
+### Nov 17, 2026 · One home each for random numbers, storage, the speech bubble and story dates; fewer kept chunks ([#84](https://github.com/gardeninsound/map/pull/84))
+
+**Asked vs made:** Asked to do review items 1, 2, 3, 6, 7 and 9 together. Made them as described, with no change in how things look.
+
+The next PRs share the arcade cabinets' setup and the 3D scenes' setup.
+
+| before · the Duck Arcade | after |
+|---|---|
+| <img src="changes/2026-11-17-pr084-one-home-each-for-random-numbers-storage/before-1.webp" width="400"> | <img src="changes/2026-11-17-pr084-one-home-each-for-random-numbers-storage/after-1.webp" width="400"> |
+
+<img src="changes/2026-11-17-pr084-one-home-each-for-random-numbers-storage/moving-1.webp" width="400" alt="moving">
+
+<sub>Jim · 29 files, +240 −195 · city, characters & map life, scenes & games, tools · [record](changes/2026-11-17-pr084-one-home-each-for-random-numbers-storage/entry.json)</sub>
 
 ---
 

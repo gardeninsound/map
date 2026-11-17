@@ -1,0 +1,316 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "ac31a2a3fc397da52cb186cb9bb3db65e98ca5db",
+  "parent": "655d1ccaec3b411bc0fbca7fab5a03fefa4b4b85",
+  "pr": 84,
+  "title": "One home each for random numbers, storage, the speech bubble and story dates; fewer kept chunks",
+  "url": "https://github.com/gardeninsound/map/pull/84",
+  "merged_at": "2026-11-17T14:41:53Z",
+  "body": "First PR from the code review. Nothing should look or play differently.\n\n- **Chunk memory (phones):** the map keeps at most 16 drawn chunks instead of 40, so at most about 64 MB of canvas instead of about 160 MB. iPhone Safari drops canvases past roughly 256–384 MB in total. At most 4 chunks are ever on screen.\n- **`src/city/random.ts`:** the six seeded random streams and hashes (`rng`, `lehmer`, `tileHash`, `intsHash`, `stringHash`, `nameHash`) now live in one module. They used to be spread across npcs, tileArt, chickenBoxing, visitors, ParkScene and the clock. Their formulas are unchanged, and `random.test.ts` pins their values from before the move, so houses, trees, fields and scarves stay the same.\n- **`src/city/stored.ts`:** browser storage that never throws. It replaces eight hand-written try/catch copies in Cone Catch, the three arcade cabinets, the mute switch, your rabbit's look, the hint arrow and \"hide other rabbits\".\n- **`drawSpeech()` in `tinyFont.ts`:** the pegasus's and the mermaids' identical speech bubble, now written once. I checked the mermaid's bubble in Chrome. Other rabbits' emote bubbles stack and lift, so they keep their own.\n- **`src/story/dates.mjs`:** the story page and the recorder share `seattleDay`, `dateLabel`, `dayLabel`, `daysBetween` and `waitDays`. Before, each had its own copy.\n- **Race result:** it now goes through `runAction(talk(…))` like every other dialog, instead of building the overlay by hand in App.tsx.\n- **Docs:** the area notes say to use these helpers, so agents won't write new copies.\n\nMike: heads-up. The arcade cabinets and Cone Catch now save their best scores with `storedNumber` / `store`.\n\n481 tests pass, and the build and smoke test pass. The preview comment script still works.\n\n## Story\n\nIdea: Tidy up what the code review found: copies of the same helpers, and chunk memory on phones.\nWhere: none\nTags: code\nAsked vs made: Asked to do review items 1, 2, 3, 6, 7 and 9 together. Made them as described, with no change in how things look.\nMike:\nNote: The next PRs share the arcade cabinets' setup and the 3D scenes' setup.",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "ca7c719129d005f1dbd2149b5e87c5bbeabefd09",
+      "message": "One home each for random numbers, browser storage, the speech bubble and story dates; fewer kept chunks\n\n- src/city/random.ts: the six seeded streams and hashes, formulas unchanged (pinned by a test).\n- src/city/stored.ts: localStorage that never throws; the four games, the mute switch, the look,\n  the hint and \"hide other rabbits\" use it instead of eight copies of try/catch.\n- tinyFont.drawSpeech: the pegasus's and mermaids' identical bubble, once.\n- src/story/dates.mjs: the story page and the recorder share their dates.\n- The race result goes through runAction like every other dialog.\n- KEEP_CHUNKS 40 → 16 (~160 MB → ~64 MB of canvas at most; phones cap canvas memory).\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-17T14:39:29Z"
+    },
+    {
+      "sha": "f1a5866f9464ff9e6d8a95b90d34a198c4a0b34d",
+      "message": "Story recorder: use the shared dates (src/story/dates.mjs)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-17T14:39:44Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "scripts/story/lib.mjs",
+      "status": "M",
+      "additions": 7,
+      "deletions": 5
+    },
+    {
+      "path": "src/App.tsx",
+      "status": "M",
+      "additions": 5,
+      "deletions": 21
+    },
+    {
+      "path": "src/city/CLAUDE.md",
+      "status": "M",
+      "additions": 4,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/clock.ts",
+      "status": "M",
+      "additions": 1,
+      "deletions": 3
+    },
+    {
+      "path": "src/city/engine/npcs.ts",
+      "status": "M",
+      "additions": 3,
+      "deletions": 11
+    },
+    {
+      "path": "src/city/index.ts",
+      "status": "M",
+      "additions": 2,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/random.test.ts",
+      "status": "A",
+      "additions": 19,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/random.ts",
+      "status": "A",
+      "additions": 54,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/render/tileArt.ts",
+      "status": "M",
+      "additions": 9,
+      "deletions": 9
+    },
+    {
+      "path": "src/city/stored.test.ts",
+      "status": "A",
+      "additions": 28,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/stored.ts",
+      "status": "A",
+      "additions": 28,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/ui/sfx.ts",
+      "status": "M",
+      "additions": 3,
+      "deletions": 12
+    },
+    {
+      "path": "src/experiences/CLAUDE.md",
+      "status": "M",
+      "additions": 2,
+      "deletions": 0
+    },
+    {
+      "path": "src/experiences/arcade/DuckOnTheMoon.tsx",
+      "status": "M",
+      "additions": 3,
+      "deletions": 12
+    },
+    {
+      "path": "src/experiences/arcade/DuckScroller.tsx",
+      "status": "M",
+      "additions": 3,
+      "deletions": 12
+    },
+    {
+      "path": "src/experiences/arcade/RabbitZapper.tsx",
+      "status": "M",
+      "additions": 3,
+      "deletions": 12
+    },
+    {
+      "path": "src/experiences/minigames/ConeCatch.tsx",
+      "status": "M",
+      "additions": 3,
+      "deletions": 14
+    },
+    {
+      "path": "src/experiences/park/ParkScene.ts",
+      "status": "M",
+      "additions": 2,
+      "deletions": 4
+    },
+    {
+      "path": "src/game/CLAUDE.md",
+      "status": "M",
+      "additions": 2,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/chickenBoxing.ts",
+      "status": "M",
+      "additions": 3,
+      "deletions": 11
+    },
+    {
+      "path": "src/game/look.ts",
+      "status": "M",
+      "additions": 3,
+      "deletions": 10
+    },
+    {
+      "path": "src/game/plugins/mermaids.ts",
+      "status": "M",
+      "additions": 2,
+      "deletions": 17
+    },
+    {
+      "path": "src/game/plugins/pegasus.ts",
+      "status": "M",
+      "additions": 2,
+      "deletions": 17
+    },
+    {
+      "path": "src/game/plugins/visitors.ts",
+      "status": "M",
+      "additions": 3,
+      "deletions": 12
+    },
+    {
+      "path": "src/game/tinyFont.ts",
+      "status": "M",
+      "additions": 19,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/visitors.ts",
+      "status": "M",
+      "additions": 2,
+      "deletions": 6
+    },
+    {
+      "path": "src/story/dates.d.mts",
+      "status": "A",
+      "additions": 5,
+      "deletions": 0
+    },
+    {
+      "path": "src/story/dates.mjs",
+      "status": "A",
+      "additions": 17,
+      "deletions": 0
+    },
+    {
+      "path": "src/story/model.ts",
+      "status": "M",
+      "additions": 3,
+      "deletions": 7
+    }
+  ],
+  "additions": 240,
+  "deletions": 195,
+  "areas": [
+    "city",
+    "characters & map life",
+    "scenes & games",
+    "tools"
+  ],
+  "branch": "consolidate-helpers",
+  "opened_at": "2026-11-17T14:39:33Z",
+  "merged_by": "vlandham",
+  "summary": "First PR from the code review. Nothing should look or play differently.\n\n- **Chunk memory (phones):** the map keeps at most 16 drawn chunks instead of 40, so at most about 64 MB of canvas instead of about 160 MB. iPhone Safari drops canvases past roughly 256–384 MB in total. At most 4 chunks are ever on screen.\n- **`src/city/random.ts`:** the six seeded random streams and hashes (`rng`, `lehmer`, `tileHash`, `intsHash`, `stringHash`, `nameHash`) now live in one module. They used to be spread across npcs, tileArt, chickenBoxing, visitors, ParkScene and the clock. Their formulas are unchanged, and `random.test.ts` pins their values from before the move, so houses, trees, fields and scarves stay the same.\n- **`src/city/stored.ts`:** browser storage that never throws. It replaces eight hand-written try/catch copies in Cone Catch, the three arcade cabinets, the mute switch, your rabbit's look, the hint arrow and \"hide other rabbits\".\n- **`drawSpeech()` in `tinyFont.ts`:** the pegasus's and the mermaids' identical speech bubble, now written once. I checked the mermaid's bubble in Chrome. Other rabbits' emote bubbles stack and lift, so they keep their own.\n- **`src/story/dates.mjs`:** the story page and the recorder share `seattleDay`, `dateLabel`, `dayLabel`, `daysBetween` and `waitDays`. Before, each had its own copy.\n- **Race result:** it now goes through `runAction(talk(…))` like every other dialog, instead of building the overlay by hand in App.tsx.\n- **Docs:** the area notes say to use these helpers, so agents won't write new copies.\n\nMike: heads-up. The arcade cabinets and Cone Catch now save their best scores with `storedNumber` / `store`.\n\n481 tests pass, and the build and smoke test pass. The preview comment script still works.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": "Asked to do review items 1, 2, 3, 6, 7 and 9 together. Made them as described, with no change in how things look.",
+    "mike": null,
+    "note": "The next PRs share the arcade cabinets' setup and the 3D scenes' setup.",
+    "shots": true,
+    "tags": [
+      [
+        "+",
+        "code"
+      ]
+    ],
+    "present": true,
+    "whereSaid": true
+  },
+  "ideas": [],
+  "requested_reviewers": [
+    "exit320-stack"
+  ],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-17T14:39:44Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview** · updated for f1a5866 (ready when the Preview check is green)\nhttps://pr-84-garden-preview.gardeninsound.workers.dev\n\nmap · character · scene · arcade · ui · multiplayer · code · story-log · 29 files, +240 −195\n\n<sub>A full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-84]`). Edit the description and this comment follows.</sub>\n",
+      "bot": true
+    }
+  ],
+  "preview_url": null,
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 22,
+    "scenes": 11,
+    "content_files": 27,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 27140,
+    "commits": 108
+  },
+  "tags": [
+    "map",
+    "character",
+    "scene",
+    "arcade",
+    "ui",
+    "multiplayer",
+    "code",
+    "story-log"
+  ],
+  "where_from": "guessed",
+  "shots": [
+    {
+      "query": "at=arcade",
+      "lat": null,
+      "lon": null,
+      "label": "the Duck Arcade",
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      },
+      "via": {
+        "before": "link",
+        "after": "link"
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "production",
+      "after": "production"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else. via 'way': a build from before ?open= links, walked in by pressing {A} at the place's `way`."
+  },
+  "first_recorded_at": "2026-11-17T14:42:23.984Z",
+  "earlier": [],
+  "recorded_at": "2026-11-17T14:42:23.984Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/44105952784"
+}

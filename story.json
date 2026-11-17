@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-11-16T22:19:38.000Z",
+  "generated_at": "2026-11-17T14:42:48.245Z",
   "changes": [
     {
       "pr": null,
@@ -4658,6 +4658,63 @@
         "arcade_cabinets_ready": 4,
         "source_lines": 27127,
         "commits": 107
+      }
+    },
+    {
+      "pr": 84,
+      "sha": "ac31a2a3fc397da52cb186cb9bb3db65e98ca5db",
+      "title": "One home each for random numbers, storage, the speech bubble and story dates; fewer kept chunks",
+      "url": "https://github.com/gardeninsound/map/pull/84",
+      "merged_at": "2026-11-17T14:41:53Z",
+      "dir": "changes/2026-11-17-pr084-one-home-each-for-random-numbers-storage",
+      "ideas": [],
+      "summary": "First PR from the code review. Nothing should look or play differently.\n\n- **Chunk memory (phones):** the map keeps at most 16 drawn chunks instead of 40, so at most about 64 MB of canvas instead of about 160 MB. iPhone Safari drops canvases past roughly 256–384 MB in total. At most 4 chunks are ever on screen.\n- **`src/city/random.ts`:** the six seeded random streams and hashes (`rng`, `lehmer`, `tileHash`, `intsHash`, `stringHash`, `nameHash`) now live in one module. They used to be spread across npcs, tileArt, chickenBoxing, visitors, ParkScene and the clock. Their formulas are unchanged, and `random.test.ts` pins their values from before the move, so houses, trees, fields and scarves stay the same.\n- **`src/city/stored.ts`:** browser storage that never throws. It replaces eight hand-written try/catch copies in Cone Catch, the three arcade cabinets, the mute switch, your rabbit's look, the hint arrow and \"hide other rabbits\".\n- **`drawSpeech()` in `tinyFont.ts`:** the pegasus's and the mermaids' identical speech bubble, now written once. I checked the mermaid's bubble in Chrome. Other rabbits' emote bubbles stack and lift, so they keep their own.\n- **`src/story/dates.mjs`:** the story page and the recorder share `seattleDay`, `dateLabel`, `dayLabel`, `daysBetween` and `waitDays`. Before, each had its own copy.\n- **Race result:** it now goes through `runAction(talk(…))` like every other dialog, instead of building the overlay by hand in App.tsx.\n- **Docs:** the area notes say to use these helpers, so agents won't write new copies.\n\nMike: heads-up. The arcade cabinets and Cone Catch now save their best scores with `storedNumber` / `store`.\n\n481 tests pass, and the build and smoke test pass. The preview comment script still works.",
+      "story": {
+        "askedVsMade": "Asked to do review items 1, 2, 3, 6, 7 and 9 together. Made them as described, with no change in how things look.",
+        "mike": null,
+        "note": "The next PRs share the arcade cabinets' setup and the 3D scenes' setup."
+      },
+      "authors": [
+        "Jim"
+      ],
+      "files": 29,
+      "additions": 240,
+      "deletions": 195,
+      "areas": [
+        "city",
+        "characters & map life",
+        "scenes & games",
+        "tools"
+      ],
+      "tags": [
+        "map",
+        "character",
+        "scene",
+        "arcade",
+        "ui",
+        "multiplayer",
+        "code",
+        "story-log"
+      ],
+      "shots": [
+        {
+          "query": "at=arcade",
+          "lat": null,
+          "lon": null,
+          "label": "the Duck Arcade",
+          "before": "changes/2026-11-17-pr084-one-home-each-for-random-numbers-storage/before-1.webp",
+          "after": "changes/2026-11-17-pr084-one-home-each-for-random-numbers-storage/after-1.webp",
+          "moving": "changes/2026-11-17-pr084-one-home-each-for-random-numbers-storage/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 22,
+        "scenes": 11,
+        "content_files": 27,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 27140,
+        "commits": 108
       }
     }
   ],
