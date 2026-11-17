@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { PixelScene } from '../pixelScene';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import type { MoonSound } from '../../content/duckOnTheMoon';
 
@@ -28,10 +29,7 @@ const SOUNDS: [MoonSound, number, number, string][] = [
  * (umbrella, wolves in space suits, a plasma dome) and `arrive` fires. Drag orbits, wheel
  * zooms, arrows orbit too.
  */
-export class DuckMoonScene {
-  private renderer = new THREE.WebGLRenderer({ antialias: true });
-  private scene = new THREE.Scene();
-  private camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
+export class DuckMoonScene extends PixelScene {
   private controls: OrbitControls;
   private ray = new THREE.Raycaster();
   private pointer = new THREE.Vector2();
@@ -47,19 +45,15 @@ export class DuckMoonScene {
   private plasma: THREE.Line[] = [];
   private electrode!: THREE.Mesh;
   private walk: { from: THREE.Vector3; end: THREE.Vector3; start: number; duration: number; kind: MoonSound } | null = null;
-  private raf = 0;
-  private disposed = false;
 
   constructor(
-    private host: HTMLElement,
+    host: HTMLElement,
     private events: DuckMoonEvents,
     private reduced: boolean,
   ) {
+    // smooth: Duck on the Moon keeps its own soft, antialiased look
+    super(host, new THREE.PerspectiveCamera(38, 1, 0.1, 100), { smooth: true, className: 'duck-moon-canvas' });
     const r = this.renderer;
-    r.setPixelRatio(Math.min(devicePixelRatio, 2));
-    r.outputColorSpace = THREE.SRGBColorSpace;
-    host.appendChild(r.domElement);
-    r.domElement.className = 'duck-moon-canvas';
 
     const s = this.scene;
     s.background = new THREE.Color('#25243b');
@@ -80,12 +74,10 @@ export class DuckMoonScene {
     this.controls.enableDamping = !reduced;
 
     const el = r.domElement;
-    el.addEventListener('pointerdown', this.onDown);
-    el.addEventListener('pointerup', this.onUp);
-    el.addEventListener('pointermove', this.onMove);
-    window.addEventListener('resize', this.resize);
-    this.resize();
-    this.raf = requestAnimationFrame(this.loop);
+    this.listen(el, 'pointerdown', this.onDown);
+    this.listen(el, 'pointerup', this.onUp);
+    this.listen(el, 'pointermove', this.onMove);
+    this.start();
   }
 
   private add<T extends THREE.Object3D>(o: T, parent: THREE.Object3D = this.scene) {
@@ -273,17 +265,8 @@ export class DuckMoonScene {
     this.events.hover(over);
   };
 
-  private resize = () => {
-    const w = this.host.clientWidth;
-    const h = this.host.clientHeight;
-    this.renderer.setSize(w, h, false);
-    this.camera.aspect = w / h;
-    this.camera.updateProjectionMatrix();
-  };
 
-  private loop = (t: number) => {
-    if (this.disposed) return;
-    this.raf = requestAnimationFrame(this.loop);
+  protected frame(_dt: number, t: number) {
     const d = this.events.dir();
     if (d.x || d.y) {
       const off = this.camera.position.clone().sub(this.controls.target);
@@ -343,21 +326,9 @@ export class DuckMoonScene {
         o.userData.orb.position.y = 0.7 + Math.sin(t * 0.002 + i) * 0.12;
         o.userData.halo.rotation.z = t * 0.0003;
       });
-    this.renderer.render(this.scene, this.camera);
-  };
+  }
 
-  dispose() {
-    this.disposed = true;
-    cancelAnimationFrame(this.raf);
-    window.removeEventListener('resize', this.resize);
+  protected teardown() {
     this.controls.dispose();
-    this.renderer.dispose();
-    this.scene.traverse((o) => {
-      if (o instanceof THREE.Mesh || o instanceof THREE.Line) {
-        o.geometry.dispose();
-        (o.material as THREE.Material).dispose();
-      }
-    });
-    this.renderer.domElement.remove();
   }
 }

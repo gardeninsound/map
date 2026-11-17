@@ -1,8 +1,7 @@
 import * as THREE from 'three';
+import { Glance, PixelScene } from '../pixelScene';
 import { ARM, HUB, MAST, RIDE, seatAt, spinAt, swingOut } from './whirl';
 
-/** Render at 1/PIXEL resolution and scale up crisp, like the Figure Eight. */
-const PIXEL = 3;
 const DECK = 4;
 const ARMS = 12;
 /** which car you're in */
@@ -22,44 +21,29 @@ export interface WhirlEvents {
  * up and flings you out over the boardwalk and the bay; drag to look round. Reduced motion
  * watches from the boardwalk. Motion is pure + tested in whirl.ts.
  */
-export class GiantWhirlScene {
-  private renderer: THREE.WebGLRenderer;
-  private scene = new THREE.Scene();
-  private camera = new THREE.PerspectiveCamera(72, 1, 0.1, 6000);
+export class GiantWhirlScene extends PixelScene {
   private top = new THREE.Group();
   private cars: { arm: THREE.Group; car: THREE.Group }[] = [];
   private t = 0;
   private turn = 0;
   private done = false;
-  private look = { yaw: 0, pitch: 0 };
-  private dragging: { x: number; y: number } | null = null;
-  private raf = 0;
-  private last = 0;
-  private disposed = false;
+  private glance = new Glance();
+  private dragging: { readonly active: boolean };
 
   constructor(
-    private host: HTMLElement,
+    host: HTMLElement,
     private events: WhirlEvents,
     private watch: boolean,
   ) {
-    this.renderer = new THREE.WebGLRenderer({ antialias: false });
-    this.renderer.setPixelRatio(1);
-    this.renderer.outputColorSpace = THREE.SRGBColorSpace;
-    const el = this.renderer.domElement;
-    el.className = 'park-canvas';
-    host.appendChild(el);
+    super(host, new THREE.PerspectiveCamera(72, 1, 0.1, 6000));
     this.buildWorld();
     this.buildWhirl();
     if (watch) {
       this.camera.position.set(-26, DECK + 1.7, 22);
       this.camera.lookAt(0, DECK + 9, 0);
     }
-    el.addEventListener('pointerdown', this.onDown);
-    window.addEventListener('pointermove', this.onMove);
-    window.addEventListener('pointerup', this.onUp);
-    window.addEventListener('resize', this.resize);
-    this.resize();
-    this.raf = requestAnimationFrame(this.loop);
+    this.dragging = this.drag({ onDrag: (dx, dy) => this.glance.turn(dx, dy) });
+    this.start();
   }
 
   restart() {
@@ -222,14 +206,10 @@ export class GiantWhirlScene {
     const target = this.camera.position.clone().add(ahead.multiplyScalar(10)).add(out.multiplyScalar(4)).add(new THREE.Vector3(0, -0.6, 0));
     this.camera.lookAt(target);
     this.camera.rotateZ(-th * 0.22);
-    this.camera.rotateY(this.look.yaw);
-    this.camera.rotateX(this.look.pitch);
+    this.glance.apply(this.camera);
   }
 
-  private loop = (time: number) => {
-    if (this.disposed) return;
-    const dt = Math.min(0.05, (time - (this.last || time)) / 1000);
-    this.last = time;
+  protected frame(dt: number) {
     this.t += dt;
     this.turn += spinAt(this.t) * dt;
     if (!this.done && this.t >= RIDE + 0.5) {
@@ -237,48 +217,6 @@ export class GiantWhirlScene {
       this.events.onFinished();
     }
     this.pose();
-    if (!this.dragging) {
-      this.look.yaw *= 1 - Math.min(1, dt * 1.5);
-      this.look.pitch *= 1 - Math.min(1, dt * 1.5);
-    }
-    this.renderer.render(this.scene, this.camera);
-    this.raf = requestAnimationFrame(this.loop);
-  };
-
-  private onDown = (e: PointerEvent) => {
-    this.dragging = { x: e.clientX, y: e.clientY };
-  };
-  private onMove = (e: PointerEvent) => {
-    if (!this.dragging) return;
-    this.look.yaw = THREE.MathUtils.clamp(this.look.yaw - (e.clientX - this.dragging.x) * 0.006, -2.4, 2.4);
-    this.look.pitch = THREE.MathUtils.clamp(this.look.pitch - (e.clientY - this.dragging.y) * 0.004, -0.9, 0.7);
-    this.dragging = { x: e.clientX, y: e.clientY };
-  };
-  private onUp = () => {
-    this.dragging = null;
-  };
-
-  private resize = () => {
-    const w = this.host.clientWidth, h = this.host.clientHeight;
-    this.renderer.setSize(Math.ceil(w / PIXEL), Math.ceil(h / PIXEL), false);
-    this.camera.aspect = w / h;
-    this.camera.updateProjectionMatrix();
-  };
-
-  dispose() {
-    this.disposed = true;
-    cancelAnimationFrame(this.raf);
-    this.renderer.domElement.removeEventListener('pointerdown', this.onDown);
-    window.removeEventListener('pointermove', this.onMove);
-    window.removeEventListener('pointerup', this.onUp);
-    window.removeEventListener('resize', this.resize);
-    this.scene.traverse((o) => {
-      if (o instanceof THREE.Mesh) {
-        o.geometry.dispose();
-        (Array.isArray(o.material) ? o.material : [o.material]).forEach((m) => m.dispose());
-      }
-    });
-    this.renderer.dispose();
-    this.renderer.domElement.remove();
+    if (!this.dragging.active) this.glance.settle(dt);
   }
 }

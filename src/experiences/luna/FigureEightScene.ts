@@ -1,7 +1,6 @@
 import * as THREE from 'three';
+import { Glance, PixelScene } from '../pixelScene';
 
-/** Render at 1/PIXEL resolution and scale up crisp, like the park and the arcade. */
-const PIXEL = 3;
 const G = 9.8;
 /** the deck of the pier, metres above the water */
 const DECK = 4;
@@ -54,10 +53,7 @@ export interface FigureEightEvents {
  * The rest of the park stands where it does on the map; Elliott Bay all round, the Olympics
  * to the west, Queen Anne and the young city across the water, Rainier far to the southeast.
  */
-export class FigureEightScene {
-  private renderer: THREE.WebGLRenderer;
-  private scene = new THREE.Scene();
-  private camera = new THREE.PerspectiveCamera(70, 1, 0.1, 6000);
+export class FigureEightScene extends PixelScene {
   private curve: THREE.CatmullRomCurve3;
   private length: number;
   /** where the lift hill tops out, as a fraction of the track's length */
@@ -68,23 +64,15 @@ export class FigureEightScene {
   private wait = 1.4;
   private done = false;
   private clackT = 0;
-  private look = { yaw: 0, pitch: 0 };
-  private dragging: { x: number; y: number } | null = null;
-  private raf = 0;
-  private last = 0;
-  private disposed = false;
+  private glance = new Glance();
+  private dragging: { readonly active: boolean };
 
   constructor(
-    private host: HTMLElement,
+    host: HTMLElement,
     private events: FigureEightEvents,
     private watch: boolean,
   ) {
-    this.renderer = new THREE.WebGLRenderer({ antialias: false });
-    this.renderer.setPixelRatio(1);
-    this.renderer.outputColorSpace = THREE.SRGBColorSpace;
-    const el = this.renderer.domElement;
-    el.className = 'park-canvas';
-    host.appendChild(el);
+    super(host, new THREE.PerspectiveCamera(70, 1, 0.1, 6000));
 
     const pts = Array.from({ length: 160 }, (_, i) => trackPoint(i / 160));
     this.curve = new THREE.CatmullRomCurve3(pts, true, 'centripetal');
@@ -103,12 +91,8 @@ export class FigureEightScene {
       this.camera.lookAt(0, 22, 0);
     }
 
-    el.addEventListener('pointerdown', this.onDown);
-    window.addEventListener('pointermove', this.onMove);
-    window.addEventListener('pointerup', this.onUp);
-    window.addEventListener('resize', this.resize);
-    this.resize();
-    this.raf = requestAnimationFrame(this.loop);
+    this.dragging = this.drag({ onDrag: (dx, dy) => this.glance.turn(dx, dy) });
+    this.start();
   }
 
   /** Back to the station and round again. */
@@ -484,66 +468,17 @@ export class FigureEightScene {
     const t2 = this.curve.getTangentAt((u + 4 / this.length) % 1);
     const turn = t.x * t2.z - t.z * t2.x;
     this.camera.rotateZ(THREE.MathUtils.clamp(turn * 4, -0.22, 0.22));
-    this.camera.rotateY(this.look.yaw);
-    this.camera.rotateX(this.look.pitch);
+    this.glance.apply(this.camera);
   }
 
-  private loop = (time: number) => {
-    if (this.disposed) return;
-    const dt = Math.min(0.05, (time - (this.last || time)) / 1000);
-    this.last = time;
+  protected frame(dt: number) {
     this.step(dt);
     this.placeTrain();
     this.placeCamera();
     // let go and your gaze drifts back to the track ahead
-    if (!this.dragging) {
-      this.look.yaw *= 1 - Math.min(1, dt * 1.5);
-      this.look.pitch *= 1 - Math.min(1, dt * 1.5);
-    }
-    this.renderer.render(this.scene, this.camera);
-    this.raf = requestAnimationFrame(this.loop);
-  };
+    if (!this.dragging.active) this.glance.settle(dt);
+  }
 
   // ---------- looking round ----------
 
-  private onDown = (e: PointerEvent) => {
-    this.dragging = { x: e.clientX, y: e.clientY };
-  };
-  private onMove = (e: PointerEvent) => {
-    if (!this.dragging) return;
-    this.look.yaw = THREE.MathUtils.clamp(this.look.yaw - (e.clientX - this.dragging.x) * 0.006, -2.4, 2.4);
-    this.look.pitch = THREE.MathUtils.clamp(this.look.pitch - (e.clientY - this.dragging.y) * 0.004, -0.9, 0.7);
-    this.dragging = { x: e.clientX, y: e.clientY };
-  };
-  private onUp = () => {
-    this.dragging = null;
-  };
-
-  private resize = () => {
-    const w = this.host.clientWidth;
-    const h = this.host.clientHeight;
-    this.renderer.setSize(Math.ceil(w / PIXEL), Math.ceil(h / PIXEL), false);
-    this.camera.aspect = w / h;
-    this.camera.updateProjectionMatrix();
-  };
-
-  dispose() {
-    this.disposed = true;
-    cancelAnimationFrame(this.raf);
-    this.renderer.domElement.removeEventListener('pointerdown', this.onDown);
-    window.removeEventListener('pointermove', this.onMove);
-    window.removeEventListener('pointerup', this.onUp);
-    window.removeEventListener('resize', this.resize);
-    this.scene.traverse((o) => {
-      if (o instanceof THREE.Mesh || o instanceof THREE.Points || o instanceof THREE.InstancedMesh) {
-        o.geometry.dispose();
-        (Array.isArray(o.material) ? o.material : [o.material]).forEach((m) => {
-          (m as THREE.MeshBasicMaterial).map?.dispose();
-          m.dispose();
-        });
-      }
-    });
-    this.renderer.dispose();
-    this.renderer.domElement.remove();
-  }
 }

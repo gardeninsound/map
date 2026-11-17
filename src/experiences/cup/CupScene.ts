@@ -1,9 +1,8 @@
 import * as THREE from 'three';
+import { PixelScene } from '../pixelScene';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { CupPainter, TEX_H, TEX_W } from './cupTexture';
 
-/** Render at 1/PIXEL resolution and scale up crisp, to match the pixel map. */
-const PIXEL = 3;
 
 // The mug, in metres-ish. It hangs open-end-down from an L-shaped pole, tilted, like the real one.
 const CUP = { rTop: 1.45, rBottom: 1.62, h: 3.3, y: 6.4 };
@@ -39,36 +38,27 @@ export interface CupSceneEvents {
   onPaint(coverage: number): void;
 }
 
-export class CupScene {
+export class CupScene extends PixelScene {
   readonly painter = new CupPainter({
     rx: BRUSH_M * (TEX_W / (2 * Math.PI * ((CUP.rTop + CUP.rBottom) / 2))),
     ry: BRUSH_M * (TEX_H / CUP.h),
   });
-  private renderer: THREE.WebGLRenderer;
-  private scene = new THREE.Scene();
-  private camera = new THREE.PerspectiveCamera(50, 1, 0.1, 200);
   private controls: OrbitControls;
   private texture: THREE.CanvasTexture;
   private body: THREE.Mesh;
   private ray = new THREE.Raycaster();
   private pointer = new THREE.Vector2();
   private painting = false;
-  private raf = 0;
   private lastCoverageAt = 0;
-  private disposed = false;
   private orbit = { left: 0, up: 0 };
 
   constructor(
-    private host: HTMLElement,
+    host: HTMLElement,
     private events: CupSceneEvents,
     rabbit: HTMLCanvasElement,
   ) {
-    this.renderer = new THREE.WebGLRenderer({ antialias: false });
-    this.renderer.setPixelRatio(1);
-    this.renderer.outputColorSpace = THREE.SRGBColorSpace;
-    const el = this.renderer.domElement;
-    el.className = 'cup-canvas';
-    host.appendChild(el);
+    super(host, new THREE.PerspectiveCamera(50, 1, 0.1, 200), { className: 'cup-canvas' });
+    const el = this.canvas;
 
     this.texture = new THREE.CanvasTexture(this.painter.display);
     this.texture.colorSpace = THREE.SRGBColorSpace;
@@ -79,7 +69,8 @@ export class CupScene {
 
     this.camera.position.set(3, 1.6, 13);
     // Registered before OrbitControls so a drag that starts on the cup can claim the pointer.
-    el.addEventListener('pointerdown', this.onDown);
+    // before OrbitControls, so a stroke on the cup can keep it from orbiting
+    this.listen(el, 'pointerdown', this.onDown);
     this.controls = new OrbitControls(this.camera, el);
     this.controls.target.set(0, 4.3, 0);
     this.controls.enablePan = false;
@@ -90,11 +81,9 @@ export class CupScene {
     this.controls.maxPolarAngle = Math.PI * 0.53; // eye level-ish, never under the sidewalk
     this.controls.update();
 
-    el.addEventListener('pointermove', this.onMove);
-    window.addEventListener('pointerup', this.onUp);
-    window.addEventListener('resize', this.resize);
-    this.resize();
-    this.loop();
+    this.listen(el, 'pointermove', this.onMove);
+    this.listen(window, 'pointerup', this.onUp);
+    this.start();
   }
 
   private buildWorld(rabbit: HTMLCanvasElement) {
@@ -340,16 +329,7 @@ export class CupScene {
     }
   }
 
-  private resize = () => {
-    const w = this.host.clientWidth;
-    const h = this.host.clientHeight;
-    this.renderer.setSize(Math.ceil(w / PIXEL), Math.ceil(h / PIXEL), false);
-    this.camera.aspect = w / h;
-    this.camera.updateProjectionMatrix();
-  };
-
-  private loop = () => {
-    if (this.disposed) return;
+  protected frame() {
     if (this.orbit.left || this.orbit.up) {
       // Keyboard orbit: rotate the camera around the target.
       const off = this.camera.position.clone().sub(this.controls.target);
@@ -360,28 +340,10 @@ export class CupScene {
     }
     this.controls.update();
     this.fadeShop();
-    this.renderer.render(this.scene, this.camera);
-    this.raf = requestAnimationFrame(this.loop);
-  };
+  }
 
-  dispose() {
-    this.disposed = true;
-    cancelAnimationFrame(this.raf);
-    window.removeEventListener('pointerup', this.onUp);
-    window.removeEventListener('resize', this.resize);
+  protected teardown() {
     this.controls.dispose();
-    this.renderer.dispose();
     this.texture.dispose();
-    this.scene.traverse((o) => {
-      if (o instanceof THREE.Mesh || o instanceof THREE.Sprite) {
-        o.geometry.dispose();
-        const mats = Array.isArray(o.material) ? o.material : [o.material];
-        mats.forEach((m) => {
-          (m as THREE.MeshLambertMaterial).map?.dispose();
-          m.dispose();
-        });
-      }
-    });
-    this.renderer.domElement.remove();
   }
 }

@@ -1,10 +1,9 @@
 import * as THREE from 'three';
 import { lehmer } from '../../city/random';
+import { PixelScene } from '../pixelScene';
 import type { ArtAsset } from '../../content/types';
 import type { ParkSign } from '../../content/puppyPark';
 
-/** Render at 1/PIXEL resolution and scale up crisp, like the cup and the map. */
-const PIXEL = 3;
 const EYE = 1.6; // metres
 const WALK = 3.2; // m/s
 const RUN = 6;
@@ -39,45 +38,36 @@ export interface ParkEvents {
   onNear(index: number | null): void;
 }
 
-export class ParkScene {
-  private renderer: THREE.WebGLRenderer;
-  private scene = new THREE.Scene();
-  private camera = new THREE.PerspectiveCamera(62, 1, 0.1, 300);
+export class ParkScene extends PixelScene {
   private pos = new THREE.Vector3(0, EYE, 17.5);
   private yaw = 0; // 0 = looking north (−z), into the lot
   private pitch = 0.05;
   private move = { forward: 0, turn: 0, run: false };
-  private dragging: { x: number; y: number } | null = null;
   private signSpots: { x: number; z: number; normal: THREE.Vector3 }[] = [];
   private near: number | null = null;
-  private raf = 0;
-  private last = 0;
-  private disposed = false;
   paused = false;
 
   constructor(
-    private host: HTMLElement,
+    host: HTMLElement,
     private events: ParkEvents,
     signs: ParkSign[],
     assets: Record<string, ArtAsset>,
     artUrl: (id: string) => string,
   ) {
-    this.renderer = new THREE.WebGLRenderer({ antialias: false });
-    this.renderer.setPixelRatio(1);
-    this.renderer.outputColorSpace = THREE.SRGBColorSpace;
-    const el = this.renderer.domElement;
-    el.className = 'park-canvas';
-    host.appendChild(el);
+    super(host, new THREE.PerspectiveCamera(62, 1, 0.1, 300));
 
     this.buildWorld();
     signs.forEach((s) => this.buildSign(s, assets[s.asset], artUrl(s.asset)));
 
-    el.addEventListener('pointerdown', this.onDown);
-    window.addEventListener('pointermove', this.onMove);
-    window.addEventListener('pointerup', this.onUp);
-    window.addEventListener('resize', this.resize);
-    this.resize();
-    this.raf = requestAnimationFrame(this.loop);
+    // drag to look round
+    this.drag({
+      capture: true,
+      onDrag: (dx, dy) => {
+        this.yaw += dx * 0.005;
+        this.pitch = THREE.MathUtils.clamp(this.pitch - dy * 0.004, -0.9, 0.9);
+      },
+    });
+    this.start();
   }
 
   /** forward −1..1, turn −1..1 (arrow keys / D-pad), polled by the React side each frame */
@@ -246,21 +236,6 @@ export class ParkScene {
     this.signSpots.push({ x: sign.x, z: sign.z, normal: new THREE.Vector3(Math.sin(yaw), 0, Math.cos(yaw)) });
   }
 
-  private onDown = (e: PointerEvent) => {
-    this.dragging = { x: e.clientX, y: e.clientY };
-    this.renderer.domElement.setPointerCapture(e.pointerId);
-  };
-
-  private onMove = (e: PointerEvent) => {
-    if (!this.dragging) return;
-    this.yaw += (e.clientX - this.dragging.x) * 0.005;
-    this.pitch = THREE.MathUtils.clamp(this.pitch - (e.clientY - this.dragging.y) * 0.004, -0.9, 0.9);
-    this.dragging = { x: e.clientX, y: e.clientY };
-  };
-
-  private onUp = () => {
-    this.dragging = null;
-  };
 
   private update(dt: number) {
     if (this.paused) return;
@@ -297,43 +272,11 @@ export class ParkScene {
     }
   }
 
-  private resize = () => {
-    const w = this.host.clientWidth;
-    const h = this.host.clientHeight;
-    this.renderer.setSize(Math.ceil(w / PIXEL), Math.ceil(h / PIXEL), false);
-    this.camera.aspect = w / h;
-    this.camera.updateProjectionMatrix();
-  };
-
-  private loop = (t: number) => {
-    if (this.disposed) return;
-    const dt = Math.min(0.05, (t - (this.last || t)) / 1000);
-    this.last = t;
+  protected frame(dt: number, t: number) {
     this.update(dt);
     // gentle head bob while walking
     const bob = this.move.forward ? Math.sin(t / 140) * 0.03 : 0;
     this.camera.position.set(this.pos.x, EYE + bob, this.pos.z);
     this.camera.rotation.set(this.pitch, -this.yaw, 0, 'YXZ');
-    this.renderer.render(this.scene, this.camera);
-    this.raf = requestAnimationFrame(this.loop);
-  };
-
-  dispose() {
-    this.disposed = true;
-    cancelAnimationFrame(this.raf);
-    window.removeEventListener('pointermove', this.onMove);
-    window.removeEventListener('pointerup', this.onUp);
-    window.removeEventListener('resize', this.resize);
-    this.scene.traverse((o) => {
-      if (o instanceof THREE.Mesh) {
-        o.geometry.dispose();
-        (Array.isArray(o.material) ? o.material : [o.material]).forEach((m) => {
-          (m as THREE.MeshLambertMaterial).map?.dispose();
-          m.dispose();
-        });
-      }
-    });
-    this.renderer.dispose();
-    this.renderer.domElement.remove();
   }
 }
