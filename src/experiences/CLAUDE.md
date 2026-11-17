@@ -20,6 +20,11 @@ One scene per spot, lazy-loaded via `registry.ts`, wrapped in
 - `luna/GiantWhirl.tsx` — riding the Giant Whirl (idea box #41): its sign offers a whirl (App's `ride` overlay, `ride: 'whirl'`);
   a first-person circle swing at dusk (`GiantWhirlScene.ts`), spin-up / swing-out / wind-down pure + tested in `luna/whirl.ts`.
 
+**A new three.js scene** extends `PixelScene` (`src/experiences/pixelScene.ts`): it makes the renderer (1/3 size and scaled up
+for the pixel look, or `smooth`), fits it on resize, runs the loop (`frame(dt, time)`; the base renders), tracks drags
+(`this.drag({ onDrag, onEnd })`), keeps listeners (`this.listen`) and frees everything on `dispose()` (`teardown()` for extras).
+Every scene uses it (arcade, Duck on the Moon, cup, park, both rides); the rides' drag-to-glance is `Glance`.
+
 ## Duck Arcade (`arcade/`)
 
 In Junction 47's storefront slot, `render/facades.ts`: `src/game/plugins/arcadeDoor.ts`

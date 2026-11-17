@@ -1,11 +1,10 @@
 import * as THREE from 'three';
+import { PixelScene } from '../pixelScene';
 import { BEAR_GAME, DEER_GAME, type ArcadeGame } from '../../content/duckArcade';
 import { besideYou, easeAngle, lookYaw, route, yawTo, type Obstacle, type Spot } from '../../game/arcadeBear';
 import { ArcadeBear } from './ArcadeBear';
 import { ArcadeDeer } from './ArcadeDeer';
 
-/** Render at 1/PIXEL resolution and scale up crisp, like the park and the map. */
-const PIXEL = 3;
 const EYE = 1.55; // metres
 const WALK = 2.8; // m/s
 const RUN = 4.5;
@@ -178,15 +177,11 @@ interface Cabinet {
  * a giant rubber duck on a plinth, and a cabinet per game around the walls. Face a cabinet
  * up close and the React side offers to play it.
  */
-export class ArcadeScene {
-  private renderer: THREE.WebGLRenderer;
-  private scene = new THREE.Scene();
-  private camera = new THREE.PerspectiveCamera(64, 1, 0.1, 100);
+export class ArcadeScene extends PixelScene {
   private pos = new THREE.Vector3(0, EYE, 3.2);
   private yaw = 0; // 0 = looking toward the back wall (−z)
   private pitch = -0.02;
   private move = { forward: 0, turn: 0, run: false };
-  private dragging: { x: number; y: number } | null = null;
   private cabinets: Cabinet[] = [];
   private duck = new THREE.Group();
   private bear = new ArcadeBear();
@@ -195,26 +190,17 @@ export class ArcadeScene {
    * walks off to its game ('follow', until it starts playing or you move) */
   private watchBear: false | 'talk' | 'follow' = false;
   private raycaster = new THREE.Raycaster();
-  private downAt: { x: number; y: number } | null = null;
   private near: number | null = null;
-  private raf = 0;
-  private last = 0;
   private lastBlink = -1;
-  private disposed = false;
   private sky: HTMLVideoElement | null = null;
   paused = false;
 
   constructor(
-    private host: HTMLElement,
+    host: HTMLElement,
     private events: ArcadeEvents,
     games: ArcadeGame[],
   ) {
-    this.renderer = new THREE.WebGLRenderer({ antialias: false });
-    this.renderer.setPixelRatio(1);
-    this.renderer.outputColorSpace = THREE.SRGBColorSpace;
-    const el = this.renderer.domElement;
-    el.className = 'park-canvas';
-    host.appendChild(el);
+    super(host, new THREE.PerspectiveCamera(64, 1, 0.1, 100));
 
     this.buildRoom();
     games.slice(0, SLOTS.length).forEach((g, i) => this.buildCabinet(g, SLOTS[i]));
@@ -228,12 +214,24 @@ export class ArcadeScene {
       this.scene.add(this.deer.group);
     }
 
-    el.addEventListener('pointerdown', this.onDown);
-    window.addEventListener('pointermove', this.onMove);
-    window.addEventListener('pointerup', this.onUp);
-    window.addEventListener('resize', this.resize);
-    this.resize();
-    this.raf = requestAnimationFrame(this.loop);
+    // drag to look round (in the middle of offering, looking round is the bear's job);
+    // a click, not a drag, on the bag takes a licorice
+    const look = this.drag({
+      capture: true,
+      onDrag: (dx, dy) => {
+        if (this.watchBear) return;
+        this.yaw += dx * 0.005;
+        this.pitch = THREE.MathUtils.clamp(this.pitch - dy * 0.004, -0.8, 0.8);
+      },
+      onEnd: (moved, e) => {
+        if (moved < 8 && this.overBag(e.clientX, e.clientY)) this.events.onLicorice?.();
+      },
+    });
+    // hovering: a hand over the bear's licorice
+    this.listen(this.canvas, 'pointermove', (e) => {
+      if (!look.active) this.canvas.style.cursor = this.overBag(e.clientX, e.clientY) ? 'pointer' : '';
+    });
+    this.start();
   }
 
   /** forward −1..1, turn −1..1 (arrow keys / D-pad), polled by the React side each frame */
@@ -603,12 +601,6 @@ export class ArcadeScene {
     return list;
   }
 
-  private onDown = (e: PointerEvent) => {
-    this.dragging = { x: e.clientX, y: e.clientY };
-    this.downAt = { x: e.clientX, y: e.clientY };
-    this.renderer.domElement.setPointerCapture(e.pointerId);
-  };
-
   /** is the screen point over the bear's licorice? */
   private overBag(clientX: number, clientY: number) {
     if (!this.bear.offering) return false;
@@ -618,26 +610,6 @@ export class ArcadeScene {
     return this.raycaster.intersectObject(this.bear.bagTarget, true).length > 0;
   }
 
-  private onMove = (e: PointerEvent) => {
-    if (!this.dragging) {
-      if (e.target === this.renderer.domElement) this.renderer.domElement.style.cursor = this.overBag(e.clientX, e.clientY) ? 'pointer' : '';
-      return;
-    }
-    // in the middle of offering, looking around is the bear's job
-    if (this.watchBear) return;
-    this.yaw += (e.clientX - this.dragging.x) * 0.005;
-    this.pitch = THREE.MathUtils.clamp(this.pitch - (e.clientY - this.dragging.y) * 0.004, -0.8, 0.8);
-    this.dragging = { x: e.clientX, y: e.clientY };
-  };
-
-  private onUp = (e: PointerEvent) => {
-    this.dragging = null;
-    const d = this.downAt;
-    this.downAt = null;
-    // a click (not a drag) on the bag takes a licorice
-    if (d && Math.hypot(e.clientX - d.x, e.clientY - d.y) < 8 && this.overBag(e.clientX, e.clientY)) this.events.onLicorice?.();
-  };
-
   private blocked(x: number, z: number) {
     if (Math.hypot(x - this.duck.position.x, z - this.duck.position.z) < 1.4) return true;
     if (this.bear.shown && Math.hypot(x - this.bear.pos.x, z - this.bear.pos.z) < 0.7) return true;
@@ -645,8 +617,8 @@ export class ArcadeScene {
     return this.cabinets.some((c) => Math.hypot(c.x - x, c.z - z) < 0.95);
   }
 
-  private update(dt: number) {
-    this.bear.update(dt, this.last / 1000);
+  private update(dt: number, t: number) {
+    this.bear.update(dt, t / 1000);
     // walking or turning yourself: stop following it off
     if (this.watchBear === 'follow' && !this.paused && (this.move.forward || this.move.turn)) this.watchBear = false;
     if (this.watchBear && this.bear.shown) {
@@ -684,19 +656,8 @@ export class ArcadeScene {
     }
   }
 
-  private resize = () => {
-    const w = this.host.clientWidth;
-    const h = this.host.clientHeight;
-    this.renderer.setSize(Math.ceil(w / PIXEL), Math.ceil(h / PIXEL), false);
-    this.camera.aspect = w / h;
-    this.camera.updateProjectionMatrix();
-  };
-
-  private loop = (t: number) => {
-    if (this.disposed) return;
-    const dt = Math.min(0.05, (t - (this.last || t)) / 1000);
-    this.last = t;
-    this.update(dt);
+  protected frame(dt: number, t: number) {
+    this.update(dt, t);
     // screens: redraw ~6 times a second (the paddling duck), blink twice a second
     const tick = Math.floor(t / 160);
     if (tick !== this.lastBlink) {
@@ -709,31 +670,13 @@ export class ArcadeScene {
     const bob = this.move.forward && !this.paused ? Math.sin(t / 140) * 0.025 : 0;
     this.camera.position.set(this.pos.x, EYE + bob, this.pos.z);
     this.camera.rotation.set(this.pitch, -this.yaw, 0, 'YXZ');
-    this.renderer.render(this.scene, this.camera);
-    this.raf = requestAnimationFrame(this.loop);
-  };
+  }
 
-  dispose() {
-    this.disposed = true;
-    cancelAnimationFrame(this.raf);
+  protected teardown() {
     if (this.sky) {
       this.sky.pause();
       this.sky.replaceChildren();
       this.sky.load();
     }
-    window.removeEventListener('pointermove', this.onMove);
-    window.removeEventListener('pointerup', this.onUp);
-    window.removeEventListener('resize', this.resize);
-    this.scene.traverse((o) => {
-      if (o instanceof THREE.Mesh) {
-        o.geometry.dispose();
-        (Array.isArray(o.material) ? o.material : [o.material]).forEach((m) => {
-          (m as THREE.MeshBasicMaterial).map?.dispose();
-          m.dispose();
-        });
-      }
-    });
-    this.renderer.dispose();
-    this.renderer.domElement.remove();
   }
 }
