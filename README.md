@@ -2,7 +2,21 @@
 
 Every change that went live on [gardeninsound.website](https://gardeninsound.website), newest first, with the wish that started it, what was made, who made it, and how the spot looked before and after. Written automatically by [`.github/workflows/story.yml`](https://github.com/gardeninsound/map/blob/main/.github/workflows/story.yml) when a change merges; the raw records are in `changes/` and `wishes/`, and `story.json` indexes them all.
 
-**91** changes · **12** wishes from visitors, **11** answered · **0** still waiting
+**92** changes · **12** wishes from visitors, **11** answered · **0** still waiting
+
+---
+
+### Nov 17, 2026 · Arcade games share one shell: useCabinet, BackButton, loadScripts ([#85](https://github.com/gardeninsound/map/pull/85))
+
+**Asked vs made:** Asked for review item 4. Made the shared shell, with no change in how the games play.
+
+| before · Duck on the Moon, through the shared shell | after |
+|---|---|
+| <img src="changes/2026-11-17-pr085-arcade-games-share-one-shell-usecabinet/before-1.webp" width="400"> | <img src="changes/2026-11-17-pr085-arcade-games-share-one-shell-usecabinet/after-1.webp" width="400"> |
+
+<img src="changes/2026-11-17-pr085-arcade-games-share-one-shell-usecabinet/moving-1.webp" width="400" alt="moving">
+
+<sub>Jim · 7 files, +200 −147 · scenes & games · [record](changes/2026-11-17-pr085-arcade-games-share-one-shell-usecabinet/entry.json)</sub>
 
 ---
 
