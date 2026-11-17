@@ -5,7 +5,7 @@ import { sounds } from '../../ui/sounds';
 import { altitude, newPegasus, pegasusTick, type PegasusState } from '../pegasus';
 import { buildPegasus, type PegasusSprites } from '../sprites';
 import { storefrontSlot } from '../storefrontSlot';
-import { drawTiny, TINY_H, tinyWidth } from '../tinyFont';
+import { drawSpeech } from '../tinyFont';
 
 /** px it climbs to by the end of its flight */
 const CEILING = 90;
@@ -78,23 +78,8 @@ export class Pegasus implements CityPlugin {
         }
         ctx.drawImage(img, p.x - 12, p.y - 19 - alt);
         ctx.restore();
-        if (s.phase === 'hello') this.bubble(ctx, p.x, p.y - 21, pegasusHellos[s.visits % pegasusHellos.length]!);
+        if (s.phase === 'hello') drawSpeech(ctx, p.x, p.y - 21, pegasusHellos[s.visits % pegasusHellos.length]!, INK);
       },
     });
-  }
-
-  /** a speech bubble whose tail points down at (x, y) */
-  private bubble(ctx: CanvasRenderingContext2D, x: number, y: number, text: string) {
-    const w = tinyWidth(text) + 6;
-    const h = TINY_H + 4;
-    const l = Math.round(x - w / 2);
-    const top = Math.round(y - h - 3);
-    ctx.fillStyle = INK;
-    ctx.fillRect(l - 1, top - 1, w + 2, h + 2);
-    ctx.fillRect(Math.round(x) - 2, top + h, 4, 3);
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(l, top, w, h);
-    ctx.fillRect(Math.round(x) - 1, top + h, 2, 2);
-    drawTiny(ctx, text, l + 3, top + 2, INK);
   }
 }

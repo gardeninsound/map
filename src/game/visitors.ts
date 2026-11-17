@@ -1,4 +1,4 @@
-import type { Facing, Vec } from '../city';
+import { stringHash, type Facing, type Vec } from '../city';
 import { EMOTES, PLACE_NAMES, SCARF_NAMES } from '../content/emotes';
 
 /**
@@ -115,11 +115,7 @@ export function scarfFor(id: string): string {
   return SCARVES[hash(id) % SCARVES.length]!;
 }
 
-function hash(id: string, seed = 0): number {
-  let h = seed;
-  for (const c of id) h = (h * 31 + c.charCodeAt(0)) >>> 0;
-  return h;
-}
+const hash = stringHash;
 
 /** Your own rabbit's scarf (the city's rabbit), for your own name. */
 export const MY_SCARF = '#2ec4b6';

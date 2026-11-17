@@ -18,6 +18,8 @@ export type { CityGameEvents, CityGameOptions, CityPlugin, DrawContext, DrawItem
 export { facingFor, fits, step, FOOT } from './engine/movement';
 export type { Facing, Vec } from './engine/movement';
 export { cityVoices, NPC_PALETTES, rng, spawnNpcs, wander } from './engine/npcs';
+export { intsHash, lehmer, nameHash, stringHash, tileHash } from './random';
+export { store, stored, storedFlag, storedNumber } from './stored';
 export { clockFromSearch, clockPinned, dice, now, setClock, today } from './clock';
 export type { ClockSettings } from './clock';
 export type { NeighborVoice, Npc } from './engine/npcs';

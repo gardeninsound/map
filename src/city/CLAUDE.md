@@ -45,3 +45,7 @@ see it through a sixth field on the visitors wire). A plugin can put the player 
   `Math.random()`. `?time=2026-03-15T19:30` (local; a date alone is noon) starts the clock there, `?seed=7` makes chance
   repeat; `main.tsx` sets it before anything is built. Network timing (the relay) and animation frames stay real.
   `CityGame.allTargets()` / `interactWith(target)`: everything you could press {A} on, and pressing it from a link.
+- **random.ts**: every seeded stream and hash (`rng`, `lehmer`, `tileHash`, `intsHash`, `stringHash`, `nameHash`), each formula
+  pinned by `random.test.ts` because it decides how the island looks. Use these (or `dice()` for chance), never a new copy.
+- **stored.ts**: what the browser remembers (`stored`, `storedNumber`, `storedFlag`, `store`), never throwing in a private
+  window. Best scores, the mute switch, your look all use it; don't call `localStorage` directly.

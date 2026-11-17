@@ -35,9 +35,10 @@ import { PELICAN_AFTER } from './game/pelican';
 import { TitleScreen } from './ui/TitleScreen';
 import { sounds } from './ui/sounds';
 import { findTarget, openFromSearch } from './ui/openLink';
-import { isActor, type Action } from './game/actions';
+import { isActor, talk, type Action } from './game/actions';
 import { createIsland, devHooks, pluginById, pluginList, targetsOf, type Island } from './game/plugins';
 import type { Visitors } from './game/plugins/visitors';
+import { store, storedFlag } from './city/stored';
 
 type Overlay =
   | { kind: 'none' }
@@ -96,20 +97,8 @@ function mapLandmarks(landmarks: PlacedLandmark[]): MapPlace[] {
 
 /** Remember (per browser) that the first-visit direction arrow has been shown. */
 const HINT_KEY = 'bearisland-direction-hint';
-const hintSeen = () => {
-  try {
-    return localStorage.getItem(HINT_KEY) === '1';
-  } catch {
-    return false;
-  }
-};
-const markHintSeen = () => {
-  try {
-    localStorage.setItem(HINT_KEY, '1');
-  } catch {
-    /* private mode: they'll just see it again next time */
-  }
-};
+const hintSeen = () => storedFlag(HINT_KEY);
+const markHintSeen = () => store(HINT_KEY, true); // private mode: they'll just see it again next time
 
 export default function App() {
   const world = useMemo(() => createWorld(), []);
@@ -205,12 +194,7 @@ export default function App() {
     });
     // when you cross the line, the winner says how you did
     race.onFinish = (r) =>
-      setOverlay({
-        kind: 'talk',
-        speaker: r.winnerKind === 'rabbit' ? 'The race marshal' : r.winner,
-        portrait: race.portraitOf(r.winnerKind),
-        lines: raceResult(r.place, r.total, r.winner, r.seconds),
-      });
+      runAction(talk(r.winnerKind === 'rabbit' ? 'The race marshal' : r.winner, raceResult(r.place, r.total, r.winner, r.seconds), { portrait: race.portraitOf(r.winnerKind) }));
     g.paused = true;
     if (import.meta.env.DEV) Object.assign(window, { __game: g, ...devHooks(isle) }); // test hooks: window.__<plugin id>
     // Review hooks: ?at=lat,lon (or ?atTile=x,y, or ?at=arcade) skips the title and drops you there;

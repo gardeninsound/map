@@ -1,14 +1,9 @@
+import { store, storedFlag } from '../stored';
 /** Tiny square-wave bleeps. Lazily creates the AudioContext on first use (after a gesture).
  * Apps make their own sounds with `tone`. */
 const MUTE_KEY = 'west-seattle-map-muted';
 let ctx: AudioContext | null = null;
-let muted = (() => {
-  try {
-    return localStorage.getItem(MUTE_KEY) === '1';
-  } catch {
-    return false;
-  }
-})();
+let muted = storedFlag(MUTE_KEY);
 
 /** a mini game is open: it plays its sound even if the map is muted (see `sfx.gameSound`) */
 let gameOpen = false;
@@ -64,10 +59,6 @@ export const sfx = {
   },
   setMuted(m: boolean) {
     muted = m;
-    try {
-      localStorage.setItem(MUTE_KEY, m ? '1' : '0');
-    } catch {
-      /* private mode */
-    }
+    store(MUTE_KEY, m);
   },
 };

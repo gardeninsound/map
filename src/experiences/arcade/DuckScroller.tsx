@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { input, isTouch, sfx, withButtons } from '../../city';
 import type { ArcadeGameProps } from './games';
+import { store, storedNumber } from '../../city/stored';
 
 /** The kit's handle (public/duck-scroller.js, from the Duck Scroller Kit artifact). */
 interface DuckScrollerGame {
@@ -44,13 +45,7 @@ const loadKit = () =>
   });
 
 const FOUND_KEY = 'bearisland-duck-scroller-found';
-const readFound = () => {
-  try {
-    return Number(localStorage.getItem(FOUND_KEY)) || 0;
-  } catch {
-    return 0;
-  }
-};
+const readFound = () => storedNumber(FOUND_KEY);
 
 /**
  * Duck Scroller: a painted side scroller (the Duck Scroller Kit, mounted as-is). Walk the duck
@@ -84,11 +79,7 @@ export default function DuckScroller({ onExit }: ArcadeGameProps) {
             if (name === 'pineappleDone' && !found.current) {
               found.current = true;
               best.current += 1;
-              try {
-                localStorage.setItem(FOUND_KEY, String(best.current));
-              } catch {
-                /* private mode */
-              }
+              store(FOUND_KEY, best.current);
             } else if (name === 'finished') setFinished(true);
             else if (name === 'error') setFailed(true);
           },

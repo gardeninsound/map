@@ -3,6 +3,7 @@ import { dice, INK, PAL, gridToCanvas, input, isTouch, pixelText, withButtons, t
 import { FIELD, FIRE_LIFE, ROUND, jump, newRound, step, type ConeCatchState } from '../../game/coneCatch';
 import { buildChicken } from '../../game/sprites';
 import { sounds } from '../../ui/sounds';
+import { store, storedNumber } from '../../city/stored';
 
 export interface MiniGameResult {
   score: number;
@@ -10,20 +11,8 @@ export interface MiniGameResult {
 }
 
 const BEST_KEY = 'bearisland-cone-catch-best';
-const readBest = () => {
-  try {
-    return Number(localStorage.getItem(BEST_KEY)) || 0;
-  } catch {
-    return 0;
-  }
-};
-const saveBest = (n: number) => {
-  try {
-    localStorage.setItem(BEST_KEY, String(n));
-  } catch {
-    /* private mode: the best lasts the session */
-  }
-};
+const readBest = () => storedNumber(BEST_KEY);
+const saveBest = (n: number) => store(BEST_KEY, n); // private mode: the best lasts the session
 
 type Phase = 'title' | 'play' | 'over';
 

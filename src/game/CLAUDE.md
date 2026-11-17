@@ -28,6 +28,8 @@ Don't use `do` to open a screen by reaching into React state. `do` is for side e
 - `src/game/plugins/` — the app's `CityPlugin`s: `artSpots.ts` (spinning lemons with a beating heart above, from `src/game/lemonSpin.ts`;
   "unvisited" beacons; targets of kind `place` carrying the `PlacedLocation`), `busker.ts`,
   `crow.ts`. Listed by id in `plugins/index.ts`; each answers {A} on its own targets with `act()`.
+- `src/game/tinyFont.ts` — the 3×5 pixel font for bubbles and name tags; `drawSpeech()` is the white speech bubble over a
+  character's head (pegasus, mermaids). Use it rather than drawing another.
 - `src/game/sprites.ts` — Mike, the lemons (`src/game/lemon.ts`), the crow (same grid format as the city's sprites).
 - First visit: after Mike's welcome the city's hint arrow flashes 4× toward the nearest open
   spot (remembered in localStorage). The city's `Compass` points at `ArtSpots.open`.
