@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { input, isTouch, sfx, withButtons } from '../../city';
+import { sfx, withButtons } from '../../city';
+import { BackButton, loadScripts, useCabinet } from '../cabinet';
 import type { ArcadeGameProps } from './games';
 import { store, storedNumber } from '../../city/stored';
 
@@ -22,27 +23,8 @@ declare global {
 }
 
 const KIT = import.meta.env.BASE_URL;
-
-/** Plain scripts in public/ (audio first, it only sets a global), loaded once on first play. */
-let loading: Promise<void> | null = null;
-const loadKit = () =>
-  (loading ??= ['duck-scroller-audio.js', 'duck-scroller.js'].reduce<Promise<void>>(
-    (prev, file) =>
-      prev.then(
-        () =>
-          new Promise((ok, fail) => {
-            const s = document.createElement('script');
-            s.src = KIT + file;
-            s.onload = () => ok();
-            s.onerror = () => fail(new Error(`could not load ${file}`));
-            document.head.appendChild(s);
-          }),
-      ),
-    Promise.resolve(),
-  )).catch((e) => {
-    loading = null;
-    throw e;
-  });
+/** plain scripts in public/ (audio first, it only sets a global), loaded once on first play */
+const loadKit = () => loadScripts('duck-scroller-audio.js', 'duck-scroller.js');
 
 const FOUND_KEY = 'bearisland-duck-scroller-found';
 const readFound = () => storedNumber(FOUND_KEY);
@@ -59,13 +41,19 @@ export default function DuckScroller({ onExit }: ArcadeGameProps) {
   const best = useRef(readFound());
   const [finished, setFinished] = useState(false);
   const [failed, setFailed] = useState(false);
-  const exit = useRef(onExit);
-  exit.current = onExit;
-
-  const leave = () => {
-    input.clear();
-    exit.current({ score: found.current ? 1 : 0, best: best.current });
-  };
+  const finishedRef = useRef(finished);
+  finishedRef.current = finished;
+  // {A} plays again once the credits are up, {B} goes back to the arcade floor
+  const leave = useCabinet({
+    onExit,
+    result: () => ({ score: found.current ? 1 : 0, best: best.current }),
+    onA: () => {
+      if (game.current && finishedRef.current) {
+        game.current.restart();
+        setFinished(false);
+      }
+    },
+  });
 
   useEffect(() => {
     let gone = false;
@@ -95,34 +83,13 @@ export default function DuckScroller({ onExit }: ArcadeGameProps) {
     };
   }, []);
 
-  // A plays again once the credits are up, B goes back to the arcade floor
-  useEffect(
-    () =>
-      input.on((b) => {
-        if (b === 'a') {
-          input.consume('a');
-          if (game.current && finishedRef.current) {
-            game.current.restart();
-            setFinished(false);
-          }
-        } else if (b === 'b') {
-          input.consume('b');
-          leave();
-        }
-      }),
-    [],
-  );
-  const finishedRef = useRef(finished);
-  finishedRef.current = finished;
 
   return (
     <div className="scene duck-scroller-scene">
       <div ref={slot} className="duck-scroller-slot" aria-label="Duck Scroller: walk the duck right to find the pineapple" />
       {failed && <p className="duck-scroller-note">The duck got lost on the way in. Try again in a moment.</p>}
       {finished && <p className="duck-scroller-note">{withButtons('{A} play again')}</p>}
-      <button className="minigame-back" onClick={leave}>
-        {isTouch() ? '◀ BACK' : withButtons('{B} BACK')}
-      </button>
+      <BackButton onClick={leave} />
     </div>
   );
 }

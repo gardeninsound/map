@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { input, isTouch, sfx, withButtons } from '../../city';
+import { isTouch, sfx } from '../../city';
+import { BackButton, loadScripts, useCabinet } from '../cabinet';
 import type { ArcadeGameProps } from './games';
 import { store, storedNumber } from '../../city/stored';
 
@@ -25,20 +26,8 @@ declare global {
 }
 
 const KIT = import.meta.env.BASE_URL;
-
-/** A plain script in public/, loaded once on first play. */
-let loading: Promise<void> | null = null;
-const loadKit = () =>
-  (loading ??= new Promise<void>((ok, fail) => {
-    const s = document.createElement('script');
-    s.src = `${KIT}rabbit-zapper.js`;
-    s.onload = () => ok();
-    s.onerror = () => fail(new Error('could not load rabbit-zapper.js'));
-    document.head.appendChild(s);
-  })).catch((e) => {
-    loading = null;
-    throw e;
-  });
+/** a plain script in public/, loaded once on first play */
+const loadKit = () => loadScripts('rabbit-zapper.js');
 
 const WINS_KEY = 'bearisland-rabbit-zapper-wins';
 const readWins = () => storedNumber(WINS_KEY);
@@ -56,13 +45,8 @@ export default function RabbitZapper({ onExit }: ArcadeGameProps) {
   const won = useRef(false);
   const wins = useRef(readWins());
   const [failed, setFailed] = useState(false);
-  const exit = useRef(onExit);
-  exit.current = onExit;
-
-  const leave = () => {
-    input.clear();
-    exit.current({ score: won.current ? 1 : 0, best: wins.current });
-  };
+  // {B} goes back to the arcade floor; {A} (Space) is the kit's own start key, so it's only kept from the map
+  const leave = useCabinet({ onExit, result: () => ({ score: won.current ? 1 : 0, best: wins.current }) });
 
   useEffect(() => {
     let gone = false;
@@ -92,18 +76,6 @@ export default function RabbitZapper({ onExit }: ArcadeGameProps) {
     };
   }, []);
 
-  // B goes back to the arcade floor; A (Space) is the kit's own start key, so just swallow it here
-  useEffect(
-    () =>
-      input.on((b) => {
-        if (b === 'a') input.consume('a');
-        else if (b === 'b') {
-          input.consume('b');
-          leave();
-        }
-      }),
-    [],
-  );
 
   return (
     <div className="scene rabbit-zapper-scene">
@@ -116,9 +88,7 @@ export default function RabbitZapper({ onExit }: ArcadeGameProps) {
         {failed ? 'The rabbit got lost on the way in. Try again in a moment.' : isTouch() ? 'Tap a monster to zap it.' : 'Click a monster, or ← → to zap that side.'}
       </p>
       <p ref={live} className="sr-only" aria-live="polite" />
-      <button className="minigame-back" onClick={leave}>
-        {isTouch() ? '◀ BACK' : withButtons('{B} BACK')}
-      </button>
+      <BackButton onClick={leave} />
     </div>
   );
 }

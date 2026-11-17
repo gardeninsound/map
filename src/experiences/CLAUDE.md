@@ -45,4 +45,7 @@ rabbit says "Thanks!" (`sounds.thanks`, the browser's speech pitched up), then i
 Drop (`BEAR_GAME`, the floor cabinet by the doors) for the rest of the visit. Where it stands and walks is pure +
 tested: `src/game/arcadeBear.ts`. The smoke test takes a licorice (`window.__arcade.bagOnScreen()`).
 
-A game's best score or count: `storedNumber(KEY)` / `store(KEY, n)` from `src/city` (`stored.ts`), never `localStorage` by hand.
+**A new game** (a cabinet, a character's mini game) uses `src/experiences/cabinet.tsx`: `useCabinet({ onExit, result, onA })`
+({A} to the game, {B} leaves with the result; returns `leave`), `<BackButton onClick={leave} />`, and `loadScripts(...)` for a
+kit's plain scripts in public/. Its best score or count: `storedNumber(KEY)` / `store(KEY, n)` from `src/city` (`stored.ts`),
+never `localStorage` by hand. Examples: Cone Catch (its own game loop), Duck Scroller and Rabbit Zapper (kits).

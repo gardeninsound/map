@@ -3,6 +3,7 @@ import { input, isTouch, sfx, withButtons } from '../../city';
 import { moonSounds, moonStories, moonText as T, type MoonSound } from '../../content/duckOnTheMoon';
 import { DuckMoonScene } from './DuckMoonScene';
 import type { ArcadeGameProps } from './games';
+import { BackButton, useCabinet } from '../cabinet';
 import { store, storedNumber } from '../../city/stored';
 
 const reducedMotion = () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
@@ -33,22 +34,27 @@ export default function DuckOnTheMoon({ onExit }: ArcadeGameProps) {
   const [intro, setIntro] = useState(true);
   const [card, setCard] = useState<Card | null>(null);
   const [hover, setHover] = useState(false);
-  const exit = useRef(onExit);
-  exit.current = onExit;
-
   const stop = () => {
     audio.current?.pause();
     audio.current = null;
   };
 
-  const leave = () => {
-    stop();
-    input.clear();
-    const score = found.current.size;
-    const best = Math.max(score, readBest());
-    store(BEST_KEY, best);
-    exit.current({ score, best });
-  };
+  // {A} starts, then reads the next card, or (no card up) walks Pip to the next sound; {B} leaves
+  const leave = useCabinet({
+    onExit,
+    beforeLeave: stop,
+    result: () => {
+      const score = found.current.size;
+      const best = Math.max(score, readBest());
+      store(BEST_KEY, best);
+      return { score, best };
+    },
+    onA: () => {
+      if (intro) begin();
+      else if (card) card.next();
+      else nextSound();
+    },
+  });
 
   const arrive = (kind: MoonSound) => {
     const s = moonStories[kind];
@@ -114,24 +120,6 @@ export default function DuckOnTheMoon({ onExit }: ArcadeGameProps) {
     scene.current?.walkTo(unheard ?? moonSounds[round.current++ % moonSounds.length]);
   };
 
-  const keys = useRef({ intro, card, begin, nextSound });
-  keys.current = { intro, card, begin, nextSound };
-  useEffect(
-    () =>
-      input.on((b) => {
-        if (b === 'a') {
-          input.consume('a');
-          const k = keys.current;
-          if (k.intro) k.begin();
-          else if (k.card) k.card.next();
-          else k.nextSound();
-        } else if (b === 'b') {
-          input.consume('b');
-          leave();
-        }
-      }),
-    [],
-  );
 
   return (
     <div className="scene duck-moon-scene">
@@ -179,9 +167,7 @@ export default function DuckOnTheMoon({ onExit }: ArcadeGameProps) {
           </div>
         </div>
       )}
-      <button className="minigame-back duck-moon-back" onClick={leave}>
-        {isTouch() ? '◀ BACK' : withButtons('{B} BACK')}
-      </button>
+      <BackButton onClick={leave} className="duck-moon-back" />
     </div>
   );
 }
