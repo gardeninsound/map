@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-11-17T14:54:46.756Z",
+  "generated_at": "2026-11-17T15:03:19.032Z",
   "changes": [
     {
       "pr": null,
@@ -4813,6 +4813,56 @@
         "arcade_cabinets_ready": 4,
         "source_lines": 27088,
         "commits": 110
+      }
+    },
+    {
+      "pr": 87,
+      "sha": "79a9da2caa4dc897cbc29ea23a581bd761753a94",
+      "title": "Plugins change the map through one helper: walkway, solid, oncePerWorld",
+      "url": "https://github.com/gardeninsound/map/pull/87",
+      "merged_at": "2026-11-17T15:02:13Z",
+      "dir": "changes/2026-11-17-pr087-plugins-change-the-map-through-one-helpe",
+      "ideas": [],
+      "summary": "Last item from the code review (item 8). Five plugins change map tiles when they start: the rowboat's dock, the forest maze, Luna Park, the garden and the boxing ring. Each wrote `world.tiles` by hand, with two copies of a once-per-map guard and edge checks in only one place. Luna Park also added its street name again on React's dev double start: `world.names` had \"Luna Park\" twice.\n\nNow they all use `src/city/world/edit.ts` (tested):\n- `walkway(world, name, cells)`: walkable ground under a street sign. The name is added once, so running it again reuses it.\n- `solid(world, cells, { only })`: ground nobody walks through, optionally only over one kind of tile (the garden only clears park).\n- `cellsIn(x, y, w, h)` and `oncePerWorld(world, key, make)`. The second replaces the rowboat's and the maze's own WeakMaps.\n- All of them skip cells off the map.\n\n`createIsland` now notes where plugin order matters: the garden comes before the squirrels, and the rowboat before the mermaids. `src/city/CLAUDE.md` tells new plugins to use the helper and never write `world.tiles` by hand.\n\n**The map comes out identical.** I fingerprinted the finished map in a dev build on this branch and on `main`, and both have the same tile hash and the same street name on every tile (711748511). The only difference is 304 names instead of 305: no duplicate \"Luna Park\".\n\n489 tests pass, and the build and smoke test pass.",
+      "story": {
+        "askedVsMade": "Asked to look closer at review item 8 and then build the helper. Made it, moved all five plugins onto it, and fixed Luna Park's duplicate street name.",
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "Jim"
+      ],
+      "files": 10,
+      "additions": 136,
+      "deletions": 57,
+      "areas": [
+        "city",
+        "characters & map life"
+      ],
+      "tags": [
+        "map",
+        "character",
+        "code"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5612,-122.3868",
+          "lat": 47.5612,
+          "lon": -122.3868,
+          "label": "the Junction, where everyone starts",
+          "before": "changes/2026-11-17-pr087-plugins-change-the-map-through-one-helpe/before-1.webp",
+          "after": "changes/2026-11-17-pr087-plugins-change-the-map-through-one-helpe/after-1.webp",
+          "moving": "changes/2026-11-17-pr087-plugins-change-the-map-through-one-helpe/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 22,
+        "scenes": 12,
+        "content_files": 27,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 27163,
+        "commits": 111
       }
     }
   ],

@@ -2,7 +2,21 @@
 
 Every change that went live on [gardeninsound.website](https://gardeninsound.website), newest first, with the wish that started it, what was made, who made it, and how the spot looked before and after. Written automatically by [`.github/workflows/story.yml`](https://github.com/gardeninsound/map/blob/main/.github/workflows/story.yml) when a change merges; the raw records are in `changes/` and `wishes/`, and `story.json` indexes them all.
 
-**93** changes · **12** wishes from visitors, **11** answered · **0** still waiting
+**94** changes · **12** wishes from visitors, **11** answered · **0** still waiting
+
+---
+
+### Nov 17, 2026 · Plugins change the map through one helper: walkway, solid, oncePerWorld ([#87](https://github.com/gardeninsound/map/pull/87))
+
+**Asked vs made:** Asked to look closer at review item 8 and then build the helper. Made it, moved all five plugins onto it, and fixed Luna Park's duplicate street name.
+
+| before · the Junction, where everyone starts | after |
+|---|---|
+| <img src="changes/2026-11-17-pr087-plugins-change-the-map-through-one-helpe/before-1.webp" width="400"> | <img src="changes/2026-11-17-pr087-plugins-change-the-map-through-one-helpe/after-1.webp" width="400"> |
+
+<img src="changes/2026-11-17-pr087-plugins-change-the-map-through-one-helpe/moving-1.webp" width="400" alt="moving">
+
+<sub>Jim · 10 files, +136 −57 · city, characters & map life · [record](changes/2026-11-17-pr087-plugins-change-the-map-through-one-helpe/entry.json)</sub>
 
 ---
 

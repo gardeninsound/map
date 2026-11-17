@@ -1,0 +1,190 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "79a9da2caa4dc897cbc29ea23a581bd761753a94",
+  "parent": "0bb084699342e68fc63d7f1d6010ab7511ed87fc",
+  "pr": 87,
+  "title": "Plugins change the map through one helper: walkway, solid, oncePerWorld",
+  "url": "https://github.com/gardeninsound/map/pull/87",
+  "merged_at": "2026-11-17T15:02:13Z",
+  "body": "Last item from the code review (item 8). Five plugins change map tiles when they start: the rowboat's dock, the forest maze, Luna Park, the garden and the boxing ring. Each wrote `world.tiles` by hand, with two copies of a once-per-map guard and edge checks in only one place. Luna Park also added its street name again on React's dev double start: `world.names` had \"Luna Park\" twice.\n\nNow they all use `src/city/world/edit.ts` (tested):\n- `walkway(world, name, cells)`: walkable ground under a street sign. The name is added once, so running it again reuses it.\n- `solid(world, cells, { only })`: ground nobody walks through, optionally only over one kind of tile (the garden only clears park).\n- `cellsIn(x, y, w, h)` and `oncePerWorld(world, key, make)`. The second replaces the rowboat's and the maze's own WeakMaps.\n- All of them skip cells off the map.\n\n`createIsland` now notes where plugin order matters: the garden comes before the squirrels, and the rowboat before the mermaids. `src/city/CLAUDE.md` tells new plugins to use the helper and never write `world.tiles` by hand.\n\n**The map comes out identical.** I fingerprinted the finished map in a dev build on this branch and on `main`, and both have the same tile hash and the same street name on every tile (711748511). The only difference is 304 names instead of 305: no duplicate \"Luna Park\".\n\n489 tests pass, and the build and smoke test pass.\n\n## Story\n\nIdea: One way for a character to change the map.\nWhere: none\nTags: code, map\nAsked vs made: Asked to look closer at review item 8 and then build the helper. Made it, moved all five plugins onto it, and fixed Luna Park's duplicate street name.\nMike:\nNote:",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "c48b3128d3c66412fc2236ee03c4cad1cca87f64",
+      "message": "Plugins change the map through one helper: walkway, solid, oncePerWorld\n\nThe rowboat's dock, the forest maze, Luna Park, the garden and the boxing ring each wrote\nworld.tiles by hand, with two copies of a once-per-map guard and edge checks in only one place;\nLuna Park added its street name again on React's dev double start. Now src/city/world/edit.ts\n(tested): walkway (named walkable ground, the name added once), solid, cellsIn, oncePerWorld; all\nskip cells off the map. The finished map is identical (same tiles and street names, checked in a\ndev build), minus the duplicate name. createIsland notes where plugin order matters.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-17T15:00:17Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "src/city/CLAUDE.md",
+      "status": "M",
+      "additions": 4,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/index.ts",
+      "status": "M",
+      "additions": 1,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/world/edit.test.ts",
+      "status": "A",
+      "additions": 38,
+      "deletions": 0
+    },
+    {
+      "path": "src/city/world/edit.ts",
+      "status": "A",
+      "additions": 53,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/plugins/chickenBoxing.ts",
+      "status": "M",
+      "additions": 4,
+      "deletions": 2
+    },
+    {
+      "path": "src/game/plugins/forestMaze.ts",
+      "status": "M",
+      "additions": 13,
+      "deletions": 21
+    },
+    {
+      "path": "src/game/plugins/garden.ts",
+      "status": "M",
+      "additions": 2,
+      "deletions": 2
+    },
+    {
+      "path": "src/game/plugins/index.ts",
+      "status": "M",
+      "additions": 6,
+      "deletions": 1
+    },
+    {
+      "path": "src/game/plugins/lunaPark.ts",
+      "status": "M",
+      "additions": 6,
+      "deletions": 13
+    },
+    {
+      "path": "src/game/plugins/rowboat.ts",
+      "status": "M",
+      "additions": 9,
+      "deletions": 18
+    }
+  ],
+  "additions": 136,
+  "deletions": 57,
+  "areas": [
+    "city",
+    "characters & map life"
+  ],
+  "branch": "world-edits",
+  "opened_at": "2026-11-17T15:00:21Z",
+  "merged_by": "vlandham",
+  "summary": "Last item from the code review (item 8). Five plugins change map tiles when they start: the rowboat's dock, the forest maze, Luna Park, the garden and the boxing ring. Each wrote `world.tiles` by hand, with two copies of a once-per-map guard and edge checks in only one place. Luna Park also added its street name again on React's dev double start: `world.names` had \"Luna Park\" twice.\n\nNow they all use `src/city/world/edit.ts` (tested):\n- `walkway(world, name, cells)`: walkable ground under a street sign. The name is added once, so running it again reuses it.\n- `solid(world, cells, { only })`: ground nobody walks through, optionally only over one kind of tile (the garden only clears park).\n- `cellsIn(x, y, w, h)` and `oncePerWorld(world, key, make)`. The second replaces the rowboat's and the maze's own WeakMaps.\n- All of them skip cells off the map.\n\n`createIsland` now notes where plugin order matters: the garden comes before the squirrels, and the rowboat before the mermaids. `src/city/CLAUDE.md` tells new plugins to use the helper and never write `world.tiles` by hand.\n\n**The map comes out identical.** I fingerprinted the finished map in a dev build on this branch and on `main`, and both have the same tile hash and the same street name on every tile (711748511). The only difference is 304 names instead of 305: no duplicate \"Luna Park\".\n\n489 tests pass, and the build and smoke test pass.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": "Asked to look closer at review item 8 and then build the helper. Made it, moved all five plugins onto it, and fixed Luna Park's duplicate street name.",
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "tags": [
+      [
+        "+",
+        "code"
+      ],
+      [
+        "+",
+        "map"
+      ]
+    ],
+    "present": true,
+    "whereSaid": true
+  },
+  "ideas": [],
+  "requested_reviewers": [],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-17T15:00:46Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview** · updated for c48b312 (ready when the Preview check is green)\nhttps://pr-87-garden-preview.gardeninsound.workers.dev\n\nmap · character · code · 10 files, +136 −57\n\n<sub>A full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-87]`). Edit the description and this comment follows.</sub>\n",
+      "bot": true
+    }
+  ],
+  "preview_url": null,
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 22,
+    "scenes": 12,
+    "content_files": 27,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 27163,
+    "commits": 111
+  },
+  "tags": [
+    "map",
+    "character",
+    "code"
+  ],
+  "where_from": "guessed",
+  "shots": [
+    {
+      "query": "at=47.5612,-122.3868",
+      "lat": 47.5612,
+      "lon": -122.3868,
+      "label": "the Junction, where everyone starts",
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      },
+      "via": {
+        "before": "link",
+        "after": "link"
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "production",
+      "after": "production"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else. via 'way': a build from before ?open= links, walked in by pressing {A} at the place's `way`."
+  },
+  "first_recorded_at": "2026-11-17T15:02:53.601Z",
+  "earlier": [],
+  "recorded_at": "2026-11-17T15:02:53.601Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/44109712209"
+}
