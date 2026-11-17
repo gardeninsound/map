@@ -35,7 +35,12 @@ export type IslandOptions = {
   visitors: ConstructorParameters<typeof Visitors> | null;
 };
 
-/** Every plugin, by id. Add a new one here (in the order it should draw and answer {A}). */
+/**
+ * Every plugin, by id. Add a new one here, in the order it should draw and answer {A}. It's also
+ * the order they change the map when they start (src/city/world/edit.ts), which matters where one
+ * uses another's ground: the garden clears its trees before the squirrels look for park trees to
+ * hide in, and the mermaids come after the rowboat (Marina sits by its dock).
+ */
 export function createIsland({ visitors }: IslandOptions) {
   const art = new ArtSpots(locations);
   const rowboat = new Rowboat();

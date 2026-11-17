@@ -1,4 +1,4 @@
-import { dice, now, Tile, tone, type CityGame, type CityPlugin, type DrawContext, type Target, type Vec } from '../../city';
+import { dice, now, solid, tone, type CityGame, type CityPlugin, type DrawContext, type Target, type Vec } from '../../city';
 import { ANNOUNCER, boxers, boxingWatch, ringside, RING_AT } from '../../content/chickenBoxing';
 import { sounds } from '../../ui/sounds';
 import { boutAt, type Bout } from '../chickenBoxing';
@@ -47,11 +47,13 @@ export class ChickenBoxing implements CityPlugin, Actor {
     const w = game.world;
     this.ring = w.project(RING_AT.lat, RING_AT.lon);
     // the ring's tiles: solid
+    const ring: Vec[] = [];
     for (let y = Math.floor(this.ring.y - RING / 2); y <= this.ring.y + RING / 2; y++) {
       for (let x = Math.floor(this.ring.x - RING / 2); x <= this.ring.x + RING / 2; x++) {
-        if (Math.abs(x + 0.5 - this.ring.x) < RING / 2 && Math.abs(y + 0.5 - this.ring.y) < RING / 2) w.tiles[x + y * w.w] = Tile.Landmark;
+        if (Math.abs(x + 0.5 - this.ring.x) < RING / 2 && Math.abs(y + 0.5 - this.ring.y) < RING / 2) ring.push({ x, y });
       }
     }
+    solid(w, ring);
   }
 
   /** {A} ringside: the announcer on the bout so far */
