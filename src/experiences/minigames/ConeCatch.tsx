@@ -4,6 +4,7 @@ import { FIELD, FIRE_LIFE, ROUND, jump, newRound, step, type ConeCatchState } fr
 import { buildChicken } from '../../game/sprites';
 import { sounds } from '../../ui/sounds';
 import { store, storedNumber } from '../../city/stored';
+import { BackButton, useCabinet } from '../cabinet';
 
 export interface MiniGameResult {
   score: number;
@@ -37,9 +38,6 @@ export default function ConeCatch({ onExit }: { onExit(result: MiniGameResult): 
   const best = useRef(readBest());
   const facing = useRef<'left' | 'right'>('right');
   const [zoom, setZoom] = useState(3);
-  const exit = useRef(onExit);
-  exit.current = onExit;
-
   // integer zoom that fits the screen, with room for the back button
   useEffect(() => {
     const fit = () => setZoom(Math.max(2, Math.floor(Math.min(window.innerWidth / VIEW.w, (window.innerHeight - 64) / VIEW.h))));
@@ -54,30 +52,16 @@ export default function ConeCatch({ onExit }: { onExit(result: MiniGameResult): 
     sounds.cluck();
     setPhase('play');
   };
-  const leave = () => {
-    input.clear();
-    exit.current({ score: state.current.score, best: best.current });
-  };
-
   const hop = () => {
     if (jump(state.current)) sounds.hop();
   };
+  // buttons: {A} starts / jumps / restarts, {B} leaves
+  const leave = useCabinet({
+    onExit,
+    result: () => ({ score: state.current.score, best: best.current }),
+    onA: () => (phaseRef.current === 'play' ? hop() : begin()),
+  });
 
-  // buttons: A starts / jumps / restarts, B leaves
-  useEffect(
-    () =>
-      input.on((b) => {
-        if (b === 'a') {
-          input.consume('a');
-          if (phaseRef.current === 'play') hop();
-          else begin();
-        } else if (b === 'b') {
-          input.consume('b');
-          leave();
-        }
-      }),
-    [],
-  );
 
   // the loop: step the rules while playing (fires burn on after), draw every frame
   useEffect(() => {
@@ -137,9 +121,7 @@ export default function ConeCatch({ onExit }: { onExit(result: MiniGameResult): 
         style={{ width: VIEW.w * zoom, height: VIEW.h * zoom }}
         aria-label="Cone Catch: run left and right to catch falling ice cream cones before they hit the ground, jump over the fires, and dodge the rocks"
       />
-      <button className="minigame-back" onClick={leave} onPointerDown={(e) => e.stopPropagation()}>
-        {isTouch() ? '◀ BACK' : withButtons('{B} BACK')}
-      </button>
+      <BackButton onClick={leave} />
     </div>
   );
 }
