@@ -1,4 +1,4 @@
-import { INK, PAL, Tile, TS, pixelText, type CityGame, type CityPlugin, type DrawContext, type Target, type Vec } from '../../city';
+import { cellsIn, INK, PAL, solid, TS, pixelText, walkway, type CityGame, type CityPlugin, type DrawContext, type Target, type Vec } from '../../city';
 import { LUNA_BRIDGE, LUNA_ORIGIN, LUNA_PIER, lunaRideInvite, lunaRides, lunaWagon, type LunaRide, type LunaSign, type TileRect } from '../../content/lunaPark';
 import { close, talk, type Action, type Actor } from '../actions';
 
@@ -57,17 +57,9 @@ export class LunaPark implements CityPlugin, Actor {
     const o = w.project(LUNA_ORIGIN.lat, LUNA_ORIGIN.lon);
     this.origin = { x: Math.floor(o.x), y: Math.floor(o.y) };
     // the boardwalk and bridge become ground you can walk on, named for the street sign
-    w.names.push('Luna Park');
-    const name = w.names.length;
-    const open = (r: TileRect) => this.each(r, (x, y) => {
-      if (x < 0 || y < 0 || x >= w.w || y >= w.h) return;
-      w.tiles[x + y * w.w] = Tile.Road;
-      w.roads[x + y * w.w] = name;
-    });
-    open(LUNA_PIER);
-    open(LUNA_BRIDGE);
+    walkway(w, 'Luna Park', [...this.cells(LUNA_PIER), ...this.cells(LUNA_BRIDGE)]);
     // rides, buildings and the gate's towers stand in the way
-    for (const r of lunaRides) for (const b of r.blocks) this.each(b, (x, y) => (w.tiles[x + y * w.w] = Tile.Landmark));
+    for (const r of lunaRides) for (const b of r.blocks) solid(w, this.cells(b));
     let at = 0;
     this.route = lunaWagon.route.map((p, i, all) => {
       if (i) at += Math.hypot(p.x - all[i - 1].x, p.y - all[i - 1].y);
@@ -89,8 +81,9 @@ export class LunaPark implements CityPlugin, Actor {
   }
 
   /** every tile of a rect relative to the origin */
-  private each(r: TileRect, f: (x: number, y: number) => void) {
-    for (let y = r.y; y < r.y + r.h; y++) for (let x = r.x; x < r.x + r.w; x++) f(this.origin.x + x, this.origin.y + y);
+  /** a layout rectangle's map cells (layout tiles count from the Head's tip) */
+  private cells(r: TileRect) {
+    return cellsIn(this.origin.x + r.x, this.origin.y + r.y, r.w, r.h);
   }
 
   /** a rect's top-left corner in tile coords */

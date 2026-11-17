@@ -1,12 +1,10 @@
-import { buildRabbit, Tile, TS, type CityGame, type CityPlugin, type DrawContext, type Target, type Vec, type Vehicle } from '../../city';
+import { buildRabbit, oncePerWorld, TS, walkway, type CityGame, type CityPlugin, type DrawContext, type Target, type Vec, type Vehicle } from '../../city';
 import { rowboatWords } from '../../content/rowboat';
 import { sounds } from '../../ui/sounds';
 import { BOAT_HOME, BOAT_SPEED, canRow, DOCK_STREET, layDock, shoreNear, streetEnd } from '../rowboat';
 import { buildRowboat, type RowboatSprites } from '../sprites';
 import type { Action, Actor } from '../actions';
 
-/** the dock laid on each map, so a second game on the same map (React's dev double start) reuses it */
-const laid = new WeakMap<object, { tiles: Vec[]; mooring: Vec } | null>();
 
 const PLANK = '#a77d52', PLANK_DARK = '#7d5a39', POST = '#5a3f28';
 
@@ -38,24 +36,17 @@ export class Rowboat implements CityPlugin, Actor {
   attach(game: CityGame) {
     this.game = game;
     const w = game.world;
-    if (laid.has(w)) {
-      const dock = laid.get(w);
-      if (dock) [this.dock, this.mooring, this.boat] = [dock.tiles, dock.mooring, dock.mooring];
-      return;
-    }
-    const end = streetEnd(w, DOCK_STREET);
-    const dock = (end && layDock(w, end)) || null;
-    laid.set(w, dock);
+    // laid once per map: a second game on the same map (React's dev double start) finds it there
+    const dock = oncePerWorld(w, 'rowboat-dock', () => {
+      const end = streetEnd(w, DOCK_STREET);
+      const d = (end && layDock(w, end)) || null;
+      // the planks become ground you can walk on, with their own street sign
+      if (d) walkway(w, rowboatWords.dock, d.tiles);
+      return d;
+    });
     if (!dock) return;
     this.dock = dock.tiles;
     this.mooring = this.boat = dock.mooring;
-    // the planks become ground you can walk on, with their own street sign
-    w.names.push(rowboatWords.dock);
-    const name = w.names.length;
-    for (const t of dock.tiles) {
-      w.tiles[t.x + t.y * w.w] = Tile.Road;
-      w.roads[t.x + t.y * w.w] = name;
-    }
   }
 
   private spritesFor() {

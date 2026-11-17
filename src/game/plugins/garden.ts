@@ -1,4 +1,4 @@
-import { INK, Tile, today, type CityGame, type CityPlugin, type DrawContext, type Target, type Vec } from '../../city';
+import { cellsIn, INK, solid, Tile, today, type CityGame, type CityPlugin, type DrawContext, type Target, type Vec } from '../../city';
 import { GARDEN_BOX, GARDEN_NAME, gardenSign, type Shape } from '../../content/garden';
 import { talk, type Action, type Actor } from '../actions';
 
@@ -97,7 +97,7 @@ export class Garden implements CityPlugin, Actor {
     const x0 = Math.ceil(a.x), y0 = Math.ceil(a.y), x1 = Math.floor(b.x), y1 = Math.floor(b.y);
     this.box = { x: x0, y: y0, w: x1 - x0, h: y1 - y0 };
     // clear the trees: open ground the beds sit on
-    for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) if (w.tileAt(x, y) === Tile.Park) w.tiles[x + y * w.w] = Tile.Landmark;
+    solid(w, cellsIn(x0, y0, x1 - x0, y1 - y0), { only: Tile.Park });
     // the sign on the street side (west), halfway down
     const mid = { x: x0 - 0.5, y: y0 + (y1 - y0) / 2 };
     this.sign = w.isWalkable(mid.x - 1, mid.y) ? { x: x0 - 0.3, y: mid.y } : w.nearestWalkable(mid.x, mid.y);

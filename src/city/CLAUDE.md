@@ -47,5 +47,9 @@ see it through a sixth field on the visitors wire). A plugin can put the player 
   `CityGame.allTargets()` / `interactWith(target)`: everything you could press {A} on, and pressing it from a link.
 - **random.ts**: every seeded stream and hash (`rng`, `lehmer`, `tileHash`, `intsHash`, `stringHash`, `nameHash`), each formula
   pinned by `random.test.ts` because it decides how the island looks. Use these (or `dice()` for chance), never a new copy.
+- **world/edit.ts**: a plugin changing the map when it starts: `walkway(world, name, cells)` (walkable ground under a street
+  sign, the name added once), `solid(world, cells, { only })`, `cellsIn(x, y, w, h)`, `oncePerWorld(world, key, make)` for work
+  that must happen once per map (React's dev double start makes two games on one map). All skip cells off the map. Used by the
+  rowboat's dock, the forest maze, Luna Park, the garden and the boxing ring; never write `world.tiles` by hand.
 - **stored.ts**: what the browser remembers (`stored`, `storedNumber`, `storedFlag`, `store`), never throwing in a private
   window. Best scores, the mute switch, your look all use it; don't call `localStorage` directly.

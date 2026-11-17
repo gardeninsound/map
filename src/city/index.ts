@@ -11,6 +11,7 @@
  * the React HUD pieces from ./ui. Styles: ./ui/ui.css; fonts: "Press Start 2P", "Pixelify Sans".
  */
 export { createWorld, distanceField, isBuilding, isWalkableTile, markerSpot, Tile } from './world/world';
+export { cellsIn, oncePerWorld, solid, walkway } from './world/edit';
 export type { DrawnBuilding, MapLabel, ParkFeature, PlacedLandmark, RoadLine, Storefront, TileCode, World } from './world/world';
 
 export { CityGame, zoomFor } from './engine/CityGame';

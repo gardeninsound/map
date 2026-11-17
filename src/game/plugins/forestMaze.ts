@@ -1,12 +1,10 @@
-import { hash, input, Tile, withButtons, type CityGame, type CityPlugin, type DrawContext, type Target, type Vec } from '../../city';
+import { hash, input, oncePerWorld, Tile, walkway, withButtons, type CityGame, type CityPlugin, type DrawContext, type Target, type Vec } from '../../city';
 import { MAZE_CELLS, MAZE_NAME, MAZE_NW, MAZE_SEED, mazeHint, mazeMiddle } from '../../content/forestMaze';
 import { sounds } from '../../ui/sounds';
 import { makeMaze, type Maze } from '../maze';
 import { talk, type Action, type Actor } from '../actions';
 
 
-/** the maze laid on each map, so React's dev double start doesn't carve it twice */
-const laid = new WeakMap<object, { x0: number; y0: number; out: Vec } | null>();
 
 /**
  * The forest maze in Schmitz Preserve (idea box #42; the maze pure + tested in game/maze.ts,
@@ -27,28 +25,22 @@ export class ForestMaze implements CityPlugin, Actor {
   attach(game: CityGame) {
     const w = game.world;
     const m = this.maze;
-    if (!laid.has(w)) {
+    // carved once per map (React's dev double start reuses it), only where it's all forest
+    const l = oncePerWorld(w, 'forest-maze', () => {
       const nw = w.project(MAZE_NW.lat, MAZE_NW.lon);
       const x0 = Math.round(nw.x), y0 = Math.round(nw.y);
       let all = true;
       for (let y = 0; y < m.size && all; y++) for (let x = 0; x < m.size && all; x++) all = w.tileAt(x0 + x, y0 + y) === Tile.Park;
-      if (!all) laid.set(w, null);
-      else {
-        w.names.push(MAZE_NAME);
-        const name = w.names.length; // street ids are 1-based
-        const path = (x: number, y: number) => {
-          w.tiles[x + y * w.w] = Tile.Road;
-          w.roads[x + y * w.w] = name;
-        };
-        for (let y = 0; y < m.size; y++) for (let x = 0; x < m.size; x++) if (m.open[x + y * m.size]) path(x0 + x, y0 + y);
-        // the path in from the street to the door
-        const dy = y0 + m.door;
-        let x = x0 - 1;
-        while (x > x0 - 10 && !w.isWalkable(x + 0.5, dy + 0.5)) path(x--, dy);
-        laid.set(w, { x0, y0, out: { x: x + 0.5, y: dy + 0.5 } });
-      }
-    }
-    const l = laid.get(w);
+      if (!all) return null;
+      const paths: Vec[] = [];
+      for (let y = 0; y < m.size; y++) for (let x = 0; x < m.size; x++) if (m.open[x + y * m.size]) paths.push({ x: x0 + x, y: y0 + y });
+      walkway(w, MAZE_NAME, paths);
+      // the path in from the street to the door
+      const dy = y0 + m.door;
+      let x = x0 - 1;
+      while (x > x0 - 10 && !w.isWalkable(x + 0.5, dy + 0.5)) walkway(w, MAZE_NAME, [{ x: x--, y: dy }]);
+      return { x0, y0, out: { x: x + 0.5, y: dy + 0.5 } };
+    });
     if (!l) return;
     [this.x0, this.y0, this.out, this.ok] = [l.x0, l.y0, l.out, true];
     input.on((b) => {
