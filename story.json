@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-11-17T14:48:56.409Z",
+  "generated_at": "2026-11-17T14:54:46.756Z",
   "changes": [
     {
       "pr": null,
@@ -4764,6 +4764,55 @@
         "arcade_cabinets_ready": 4,
         "source_lines": 27190,
         "commits": 109
+      }
+    },
+    {
+      "pr": 86,
+      "sha": "0bb084699342e68fc63d7f1d6010ab7511ed87fc",
+      "title": "Every three.js scene extends PixelScene: one renderer setup, loop, drag and dispose",
+      "url": "https://github.com/gardeninsound/map/pull/86",
+      "merged_at": "2026-11-17T14:53:45Z",
+      "dir": "changes/2026-11-17-pr086-every-threejs-scene-extends-pixelscene-o",
+      "ideas": [],
+      "summary": "Third PR from the code review (item 5). The six three.js scenes (the Duck Arcade, Duck on the Moon, the cup, the park and both Luna rides) each repeated the same setup and teardown. That code now lives once in `src/experiences/pixelScene.ts`:\n- **`PixelScene` base class:** sets up the renderer (1/3 size for the pixel look, or `smooth` for Duck on the Moon), fits it on resize, and runs the frame loop with a capped `dt` (`frame(dt, time)`; the base renders after). It also tracks drags (`this.drag({ onDrag, onEnd, capture })`), keeps listeners (`this.listen`), and frees everything on `dispose()`. Extra cleanup goes in `teardown()`: the orbit controls, the cup's paint texture, the arcade's ceiling video.\n- **`disposeTree`:** frees every geometry, material and texture. The scenes' own cleanups had drifted apart: some only freed `map` textures, some skipped lines or sprites, and the cup and arcade left a canvas listener behind.\n- **`Glance`:** the Luna rides' identical \"drag to glance, then drift back\", written once.\n\nThe arcade keeps its own details on top: no looking round while the bear offers, a click (not a drag) on the bag takes a licorice, and a hand cursor over the bag.\n\nThat's 9 files, +301 −398. `src/experiences/CLAUDE.md` now points new scenes at the base class.\n\nChecks:\n- New tests cover `Glance` (limits, drift back) and `disposeTree` (meshes with material arrays, lines, points, sprites, every texture). 486 tests pass.\n- The build passes, and the smoke test passes (the arcade, every cabinet, the bear's licorice, a ride).\n- In Chrome, each of the six scenes renders at the right size (320×200 for 960×600; Duck on the Moon at full size), dragging turns the view, leaving works, and no errors are logged. I compared screenshots of all six with before.\n\nMike: heads-up. A new 3D scene starts from `PixelScene`.",
+      "story": {
+        "askedVsMade": "Asked for review item 5. Made the shared base class, with no change in how the scenes look or feel.",
+        "mike": null,
+        "note": "Each scene also frees all of its textures and listeners when you leave now."
+      },
+      "authors": [
+        "Jim"
+      ],
+      "files": 9,
+      "additions": 301,
+      "deletions": 398,
+      "areas": [
+        "scenes & games"
+      ],
+      "tags": [
+        "scene",
+        "arcade",
+        "code"
+      ],
+      "shots": [
+        {
+          "query": "open=ride:whirl",
+          "lat": null,
+          "lon": null,
+          "label": "the Giant Whirl, on the shared scene base",
+          "before": "changes/2026-11-17-pr086-every-threejs-scene-extends-pixelscene-o/before-1.webp",
+          "after": "changes/2026-11-17-pr086-every-threejs-scene-extends-pixelscene-o/after-1.webp",
+          "moving": "changes/2026-11-17-pr086-every-threejs-scene-extends-pixelscene-o/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 22,
+        "scenes": 12,
+        "content_files": 27,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 27088,
+        "commits": 110
       }
     }
   ],

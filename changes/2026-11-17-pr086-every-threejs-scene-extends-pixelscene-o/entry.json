@@ -1,0 +1,191 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "0bb084699342e68fc63d7f1d6010ab7511ed87fc",
+  "parent": "9e12ca09ab00f333b7cc48070fbe6aa5df2fb800",
+  "pr": 86,
+  "title": "Every three.js scene extends PixelScene: one renderer setup, loop, drag and dispose",
+  "url": "https://github.com/gardeninsound/map/pull/86",
+  "merged_at": "2026-11-17T14:53:45Z",
+  "body": "Third PR from the code review (item 5). The six three.js scenes (the Duck Arcade, Duck on the Moon, the cup, the park and both Luna rides) each repeated the same setup and teardown. That code now lives once in `src/experiences/pixelScene.ts`:\n- **`PixelScene` base class:** sets up the renderer (1/3 size for the pixel look, or `smooth` for Duck on the Moon), fits it on resize, and runs the frame loop with a capped `dt` (`frame(dt, time)`; the base renders after). It also tracks drags (`this.drag({ onDrag, onEnd, capture })`), keeps listeners (`this.listen`), and frees everything on `dispose()`. Extra cleanup goes in `teardown()`: the orbit controls, the cup's paint texture, the arcade's ceiling video.\n- **`disposeTree`:** frees every geometry, material and texture. The scenes' own cleanups had drifted apart: some only freed `map` textures, some skipped lines or sprites, and the cup and arcade left a canvas listener behind.\n- **`Glance`:** the Luna rides' identical \"drag to glance, then drift back\", written once.\n\nThe arcade keeps its own details on top: no looking round while the bear offers, a click (not a drag) on the bag takes a licorice, and a hand cursor over the bag.\n\nThat's 9 files, +301 −398. `src/experiences/CLAUDE.md` now points new scenes at the base class.\n\nChecks:\n- New tests cover `Glance` (limits, drift back) and `disposeTree` (meshes with material arrays, lines, points, sprites, every texture). 486 tests pass.\n- The build passes, and the smoke test passes (the arcade, every cabinet, the bear's licorice, a ride).\n- In Chrome, each of the six scenes renders at the right size (320×200 for 960×600; Duck on the Moon at full size), dragging turns the view, leaving works, and no errors are logged. I compared screenshots of all six with before.\n\nMike: heads-up. A new 3D scene starts from `PixelScene`.\n\n## Story\n\nIdea: The 3D scenes share one way to start, draw and clean up.\nWhere: open:ride:whirl — the Giant Whirl, on the shared scene base\nTags: code, scene\nAsked vs made: Asked for review item 5. Made the shared base class, with no change in how the scenes look or feel.\nMike:\nNote: Each scene also frees all of its textures and listeners when you leave now.",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "1b9046072fdd2e3af017aa7a3e83bdc49f1ddc67",
+      "message": "Every three.js scene extends PixelScene: one renderer setup, loop, drag and dispose\n\nThe arcade, Duck on the Moon, the cup, the park and both Luna rides each repeated the renderer\nsetup, resize, frame loop, drag tracking and dispose (which had drifted: some skipped textures\nor listeners). Now src/experiences/pixelScene.ts: PixelScene, disposeTree (geometries,\nmaterials, every texture), and Glance for the rides' look-round. −~250 lines in the scenes.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-17T14:51:39Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "src/experiences/CLAUDE.md",
+      "status": "M",
+      "additions": 5,
+      "deletions": 0
+    },
+    {
+      "path": "src/experiences/arcade/ArcadeScene.ts",
+      "status": "M",
+      "additions": 28,
+      "deletions": 85
+    },
+    {
+      "path": "src/experiences/arcade/DuckMoonScene.ts",
+      "status": "M",
+      "additions": 12,
+      "deletions": 41
+    },
+    {
+      "path": "src/experiences/cup/CupScene.ts",
+      "status": "M",
+      "additions": 13,
+      "deletions": 51
+    },
+    {
+      "path": "src/experiences/luna/FigureEightScene.ts",
+      "status": "M",
+      "additions": 12,
+      "deletions": 77
+    },
+    {
+      "path": "src/experiences/luna/GiantWhirlScene.ts",
+      "status": "M",
+      "additions": 11,
+      "deletions": 73
+    },
+    {
+      "path": "src/experiences/park/ParkScene.ts",
+      "status": "M",
+      "additions": 14,
+      "deletions": 71
+    },
+    {
+      "path": "src/experiences/pixelScene.test.ts",
+      "status": "A",
+      "additions": 34,
+      "deletions": 0
+    },
+    {
+      "path": "src/experiences/pixelScene.ts",
+      "status": "A",
+      "additions": 172,
+      "deletions": 0
+    }
+  ],
+  "additions": 301,
+  "deletions": 398,
+  "areas": [
+    "scenes & games"
+  ],
+  "branch": "pixel-scene",
+  "opened_at": "2026-11-17T14:51:55Z",
+  "merged_by": "vlandham",
+  "summary": "Third PR from the code review (item 5). The six three.js scenes (the Duck Arcade, Duck on the Moon, the cup, the park and both Luna rides) each repeated the same setup and teardown. That code now lives once in `src/experiences/pixelScene.ts`:\n- **`PixelScene` base class:** sets up the renderer (1/3 size for the pixel look, or `smooth` for Duck on the Moon), fits it on resize, and runs the frame loop with a capped `dt` (`frame(dt, time)`; the base renders after). It also tracks drags (`this.drag({ onDrag, onEnd, capture })`), keeps listeners (`this.listen`), and frees everything on `dispose()`. Extra cleanup goes in `teardown()`: the orbit controls, the cup's paint texture, the arcade's ceiling video.\n- **`disposeTree`:** frees every geometry, material and texture. The scenes' own cleanups had drifted apart: some only freed `map` textures, some skipped lines or sprites, and the cup and arcade left a canvas listener behind.\n- **`Glance`:** the Luna rides' identical \"drag to glance, then drift back\", written once.\n\nThe arcade keeps its own details on top: no looking round while the bear offers, a click (not a drag) on the bag takes a licorice, and a hand cursor over the bag.\n\nThat's 9 files, +301 −398. `src/experiences/CLAUDE.md` now points new scenes at the base class.\n\nChecks:\n- New tests cover `Glance` (limits, drift back) and `disposeTree` (meshes with material arrays, lines, points, sprites, every texture). 486 tests pass.\n- The build passes, and the smoke test passes (the arcade, every cabinet, the bear's licorice, a ride).\n- In Chrome, each of the six scenes renders at the right size (320×200 for 960×600; Duck on the Moon at full size), dragging turns the view, leaving works, and no errors are logged. I compared screenshots of all six with before.\n\nMike: heads-up. A new 3D scene starts from `PixelScene`.",
+  "story": {
+    "ideas": [],
+    "where": [
+      {
+        "query": "open=ride:whirl",
+        "label": "the Giant Whirl, on the shared scene base",
+        "goal": ".luna-ride"
+      }
+    ],
+    "askedVsMade": "Asked for review item 5. Made the shared base class, with no change in how the scenes look or feel.",
+    "mike": null,
+    "note": "Each scene also frees all of its textures and listeners when you leave now.",
+    "shots": true,
+    "tags": [
+      [
+        "+",
+        "code"
+      ],
+      [
+        "+",
+        "scene"
+      ]
+    ],
+    "present": true,
+    "whereSaid": true
+  },
+  "ideas": [],
+  "requested_reviewers": [
+    "exit320-stack"
+  ],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-17T14:52:07Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview** · updated for 1b90460 (ready when the Preview check is green)\nhttps://pr-86-garden-preview.gardeninsound.workers.dev\n\n**Go straight to it**\n- [the Giant Whirl, on the shared scene base](https://pr-86-garden-preview.gardeninsound.workers.dev/?solo&open=ride:whirl)\n\nscene · arcade · code · 9 files, +301 −398\n\n<sub>A full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-86]`). Edit the description and this comment follows.</sub>\n",
+      "bot": true
+    }
+  ],
+  "preview_url": null,
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 22,
+    "scenes": 12,
+    "content_files": 27,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 27088,
+    "commits": 110
+  },
+  "tags": [
+    "scene",
+    "arcade",
+    "code"
+  ],
+  "where_from": "pr",
+  "shots": [
+    {
+      "query": "open=ride:whirl",
+      "lat": null,
+      "lon": null,
+      "label": "the Giant Whirl, on the shared scene base",
+      "guessed": false,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      },
+      "via": {
+        "before": "link",
+        "after": "link"
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "production",
+      "after": "production"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else. via 'way': a build from before ?open= links, walked in by pressing {A} at the place's `way`."
+  },
+  "first_recorded_at": "2026-11-17T14:54:16.409Z",
+  "earlier": [],
+  "recorded_at": "2026-11-17T14:54:16.409Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/44108136543"
+}
