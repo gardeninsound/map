@@ -1,6 +1,6 @@
 import { rng, Tile, type CityGame, type CityPlugin, type DrawContext } from '../../city';
 import { sounds } from '../../ui/sounds';
-import { altitude, newBird, spotNear, stepBird, type Bird } from '../flock';
+import { altitude, ARRIVE, CROWS, GULLS, newBird, spotNear, stepBird, type Bird } from '../flock';
 import { buildCrow, buildGull, type CrowSprites } from '../sprites';
 
 interface Kind {
@@ -16,8 +16,8 @@ interface Kind {
 const HEAR = 9;
 
 /**
- * Crows on the streets and gulls on the beaches (rules pure + tested in game/flock.ts): a few
- * of each always somewhere near you, pecking about; walk up and they flap off and land a way
+ * Crows on the streets and gulls on the beaches (rules pure + tested in game/flock.ts): three
+ * of each always somewhere near you, landing around the edge of the view so you come upon them; walk up and they flap off and land a way
  * away, with a caw or a gull's cry. (The snack crow on Alaska is its own plugin, crow.ts.)
  */
 export class Flock implements CityPlugin {
@@ -28,20 +28,20 @@ export class Flock implements CityPlugin {
   attach(game: CityGame) {
     const w = game.world;
     this.kinds = [
-      { name: 'crow', count: 7, suits: (x, y) => w.isWalkable(x, y), sprites: buildCrow(), birds: [] },
-      { name: 'gull', count: 6, suits: (x, y) => w.tileAt(Math.floor(x), Math.floor(y)) === Tile.Beach, sprites: buildGull(), birds: [] },
+      { name: 'crow', count: CROWS, suits: (x, y) => w.isWalkable(x, y), sprites: buildCrow(), birds: [] },
+      { name: 'gull', count: GULLS, suits: (x, y) => w.tileAt(Math.floor(x), Math.floor(y)) === Tile.Beach, sprites: buildGull(), birds: [] },
     ];
   }
 
   update(dt: number, game: CityGame) {
     const you = game.player.pos;
-    // the first of each kind turn up near you, in view (after that they follow you about, out of sight)
+    // they land around the edge of the view (`ARRIVE`), so you walk into them instead of finding them all around you
     this.fill -= dt;
     if (this.fill <= 0) {
       this.fill = 1;
       for (const k of this.kinds) {
         if (k.birds.length >= k.count) continue;
-        const p = spotNear(you, 3, 12, k.suits, this.rand);
+        const p = spotNear(you, ARRIVE[0], ARRIVE[1], k.suits, this.rand);
         if (p) k.birds.push(newBird(p, this.rand));
       }
     }

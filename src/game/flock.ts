@@ -1,11 +1,14 @@
 /**
  * Birds about the island (pure, tested): crows on the streets and gulls on the beaches.
- * A handful of each are always somewhere near you, pecking about; come too close and one
+ * A few of each (`CROWS`, `GULLS`) are always somewhere near you, pecking about; come too close and one
  * takes off and lands a way off, away from you. Left far behind, a bird turns up again
  * near you, out of sight. The plugin (plugins/flock.ts) draws them.
  */
 import type { Vec } from '../city';
 
+/** how many of each are about at once: few enough that they don't crowd the screen */
+export const CROWS = 3;
+export const GULLS = 3;
 /** you're this close (tiles) and it's off */
 export const STARTLE = 2.6;
 /** it lands this far from where it took off */
@@ -14,6 +17,8 @@ export const FLEE = [7, 13] as const;
 export const FLY_SPEED = 9;
 /** further than this from you and it's moved somewhere near you, out of view */
 export const FAR = 30;
+/** where the first ones land as you go: around the edge of the view (it's ~8 tiles to the top, ~14 to the side) */
+export const ARRIVE = [8, 16] as const;
 /** where a bird turns up: this far from you (just off screen) */
 export const SPAWN = [13, 22] as const;
 
