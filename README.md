@@ -2,7 +2,7 @@
 
 Every change that went live on [gardeninsound.website](https://gardeninsound.website), newest first, with the wish that started it, what was made, who made it, and how the spot looked before and after. Written automatically by [`.github/workflows/story.yml`](https://github.com/gardeninsound/map/blob/main/.github/workflows/story.yml) when a change merges; the raw records are in `changes/` and `wishes/`, and `story.json` indexes them all.
 
-**96** changes · **12** wishes from visitors, **11** answered · **0** still waiting
+**96** changes · **13** wishes from visitors, **11** answered · **1** still waiting
 
 ---
 
@@ -1730,3 +1730,9 @@ Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;
 <img src="changes/2026-10-18-8066597-bear-island-map-pixel-west-seattle-overw/moving-3.webp" width="400" alt="moving">
 
 <sub>Jim · 57 files, +12643 −0 · characters & map life, scenes & games, ui, words & content, art & sound, ci, docs, tools · [record](changes/2026-10-18-8066597-bear-island-map-pixel-west-seattle-overw/entry.json)</sub>
+
+---
+
+## Wishes still waiting
+
+- Nov 18, 2026: “add more custimization for the bunny (and mayby also the bike) and alsomake it so that you can explore forests (no paths and make them more like a maze.)” — YOUR SON!!!!! ([#90](https://github.com/gardeninsound/map/issues/90))

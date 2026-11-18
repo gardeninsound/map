@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-11-18T21:10:52.574Z",
+  "generated_at": "2026-11-18T23:41:18.836Z",
   "changes": [
     {
       "pr": null,
@@ -5139,6 +5139,16 @@
           "merged_at": "2026-11-15T00:13:18Z"
         }
       ]
+    },
+    {
+      "issue": 90,
+      "url": "https://github.com/gardeninsound/map/issues/90",
+      "asked_at": "2026-11-18T23:40:59Z",
+      "text": "add more custimization for the bunny (and mayby also the bike) and alsomake it so that you can explore forests (no paths and make them more like a maze.)",
+      "name": "YOUR SON!!!!!",
+      "street": "35th Ave SW",
+      "state": "open",
+      "answered_by": []
     }
   ]
 }
