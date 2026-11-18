@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-11-18T19:52:02.914Z",
+  "generated_at": "2026-11-18T21:10:52.574Z",
   "changes": [
     {
       "pr": null,
@@ -4911,6 +4911,45 @@
         "arcade_cabinets_ready": 4,
         "source_lines": 27201,
         "commits": 112
+      }
+    },
+    {
+      "pr": 89,
+      "sha": "03cbbadc3c160524b65e52f5f313bde17bd8de73",
+      "title": "Story page: grab the before/after line and drag it",
+      "url": "https://github.com/gardeninsound/map/pull/89",
+      "merged_at": "2026-11-18T21:10:13Z",
+      "dir": "changes/2026-11-18-pr089-story-page-grab-the-beforeafter-line-and",
+      "ideas": [],
+      "summary": "On the story page, the line in a before/after photo is now what you drag. Before this, it only marked the spot and you moved it with the slider under the photo.\n\n- Grab the knob on the line, or press anywhere on the photo, and drag left or right. The drag keeps going if your pointer leaves the photo.\n- On a phone, a sideways swipe drags the line and an up-down swipe still scrolls the page.\n- Keyboard: tab to the line, then the arrows move it 5% (Shift for 1%), and Home/End go to the ends. Screen readers see it as a slider.\n- The slider under the photo is gone. Small \"before\" and \"after\" labels sit in the photo's bottom corners and fade when the line covers them.\n\nChecked in Chrome on the live story log: mouse drag, a drag past the edge (stops at 100), a click (jumps to 20%), the arrow keys, End, and a touch swipe on a phone-sized screen (50 → 14). No page errors. The position math is pure and tested (`wipeAt`, `wipeKey` in `src/story/model.ts`).",
+      "story": {
+        "askedVsMade": "Asked whether a plugin or a simple implementation could do it. Built it ourselves with pointer events and no new dependency, plus keyboard and touch support. The slider under the photo was removed since the line does its job now.",
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "Jim"
+      ],
+      "files": 5,
+      "additions": 112,
+      "deletions": 20,
+      "areas": [
+        "docs"
+      ],
+      "tags": [
+        "ui",
+        "story-log",
+        "docs"
+      ],
+      "shots": [],
+      "census": {
+        "spots": 15,
+        "plugins": 22,
+        "scenes": 12,
+        "content_files": 27,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 27274,
+        "commits": 113
       }
     }
   ],

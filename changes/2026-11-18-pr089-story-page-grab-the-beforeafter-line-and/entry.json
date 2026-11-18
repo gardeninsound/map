@@ -1,0 +1,128 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "03cbbadc3c160524b65e52f5f313bde17bd8de73",
+  "parent": "7d642df09cfc89ff75b32ead8adf15ba37684788",
+  "pr": 89,
+  "title": "Story page: grab the before/after line and drag it",
+  "url": "https://github.com/gardeninsound/map/pull/89",
+  "merged_at": "2026-11-18T21:10:13Z",
+  "body": "On the story page, the line in a before/after photo is now what you drag. Before this, it only marked the spot and you moved it with the slider under the photo.\n\n- Grab the knob on the line, or press anywhere on the photo, and drag left or right. The drag keeps going if your pointer leaves the photo.\n- On a phone, a sideways swipe drags the line and an up-down swipe still scrolls the page.\n- Keyboard: tab to the line, then the arrows move it 5% (Shift for 1%), and Home/End go to the ends. Screen readers see it as a slider.\n- The slider under the photo is gone. Small \"before\" and \"after\" labels sit in the photo's bottom corners and fade when the line covers them.\n\nChecked in Chrome on the live story log: mouse drag, a drag past the edge (stops at 100), a click (jumps to 20%), the arrow keys, End, and a touch swipe on a phone-sized screen (50 → 14). No page errors. The position math is pure and tested (`wipeAt`, `wipeKey` in `src/story/model.ts`).\n\n## Story\n\nIdea: The before/after scrubber on the story page should let you grab the line itself and drag it.\nWhere: /story/ — any change with before/after photos\nTags: story-log, ui\nAsked vs made: Asked whether a plugin or a simple implementation could do it. Built it ourselves with pointer events and no new dependency, plus keyboard and touch support. The slider under the photo was removed since the line does its job now.\nMike:\nNote:\n",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "b190d250baabb80fdb74026826b99f65b5bda89f",
+      "message": "Story page: grab the before/after line and drag it\n\nThe line in the photo is now the control: grab its knob, or press anywhere on the\nphoto, and drag left or right (pointer capture, so the drag keeps going off the photo).\nOn a phone a sideways swipe drags it and an up-down swipe still scrolls. With focus,\nthe arrows move it 5% (Shift 1%), Home/End to the ends. The slider under the photo is\ngone; \"before\" and \"after\" labels sit in the photo's bottom corners.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-18T21:08:18Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "scripts/story/README.md",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "src/story/StoryPage.tsx",
+      "status": "M",
+      "additions": 55,
+      "deletions": 14
+    },
+    {
+      "path": "src/story/model.test.ts",
+      "status": "M",
+      "additions": 20,
+      "deletions": 1
+    },
+    {
+      "path": "src/story/model.ts",
+      "status": "M",
+      "additions": 13,
+      "deletions": 0
+    },
+    {
+      "path": "src/story/story.css",
+      "status": "M",
+      "additions": 23,
+      "deletions": 4
+    }
+  ],
+  "additions": 112,
+  "deletions": 20,
+  "areas": [
+    "docs"
+  ],
+  "branch": "story-wipe-drag",
+  "opened_at": "2026-11-18T21:08:22Z",
+  "merged_by": "vlandham",
+  "summary": "On the story page, the line in a before/after photo is now what you drag. Before this, it only marked the spot and you moved it with the slider under the photo.\n\n- Grab the knob on the line, or press anywhere on the photo, and drag left or right. The drag keeps going if your pointer leaves the photo.\n- On a phone, a sideways swipe drags the line and an up-down swipe still scrolls the page.\n- Keyboard: tab to the line, then the arrows move it 5% (Shift for 1%), and Home/End go to the ends. Screen readers see it as a slider.\n- The slider under the photo is gone. Small \"before\" and \"after\" labels sit in the photo's bottom corners and fade when the line covers them.\n\nChecked in Chrome on the live story log: mouse drag, a drag past the edge (stops at 100), a click (jumps to 20%), the arrow keys, End, and a touch swipe on a phone-sized screen (50 → 14). No page errors. The position math is pure and tested (`wipeAt`, `wipeKey` in `src/story/model.ts`).",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": "Asked whether a plugin or a simple implementation could do it. Built it ourselves with pointer events and no new dependency, plus keyboard and touch support. The slider under the photo was removed since the line does its job now.",
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "tags": [
+      [
+        "+",
+        "story-log"
+      ],
+      [
+        "+",
+        "ui"
+      ]
+    ],
+    "present": true,
+    "whereSaid": true
+  },
+  "ideas": [],
+  "requested_reviewers": [],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-18T21:08:34Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview** · updated for b190d25 (ready when the Preview check is green)\nhttps://pr-89-garden-preview.gardeninsound.workers.dev\n\nui · story-log · docs · 5 files, +112 −20\n\n<sub>A full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-89]`). Edit the description and this comment follows.</sub>\n",
+      "bot": true
+    }
+  ],
+  "preview_url": null,
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 22,
+    "scenes": 12,
+    "content_files": 27,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 27274,
+    "commits": 113
+  },
+  "tags": [
+    "ui",
+    "story-log",
+    "docs"
+  ],
+  "where_from": "guessed",
+  "shots": [],
+  "first_recorded_at": "2026-11-18T21:10:49.600Z",
+  "earlier": [],
+  "recorded_at": "2026-11-18T21:10:49.600Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/44398648028"
+}

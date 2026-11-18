@@ -2,7 +2,15 @@
 
 Every change that went live on [gardeninsound.website](https://gardeninsound.website), newest first, with the wish that started it, what was made, who made it, and how the spot looked before and after. Written automatically by [`.github/workflows/story.yml`](https://github.com/gardeninsound/map/blob/main/.github/workflows/story.yml) when a change merges; the raw records are in `changes/` and `wishes/`, and `story.json` indexes them all.
 
-**95** changes · **12** wishes from visitors, **11** answered · **0** still waiting
+**96** changes · **12** wishes from visitors, **11** answered · **0** still waiting
+
+---
+
+### Nov 18, 2026 · Story page: grab the before/after line and drag it ([#89](https://github.com/gardeninsound/map/pull/89))
+
+**Asked vs made:** Asked whether a plugin or a simple implementation could do it. Built it ourselves with pointer events and no new dependency, plus keyboard and touch support. The slider under the photo was removed since the line does its job now.
+
+<sub>Jim · 5 files, +112 −20 · docs · [record](changes/2026-11-18-pr089-story-page-grab-the-beforeafter-line-and/entry.json)</sub>
 
 ---
 
