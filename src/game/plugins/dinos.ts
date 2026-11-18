@@ -1,22 +1,22 @@
 import { dice, type CityGame, type CityPlugin, type DrawContext } from '../../city';
-import { DINO_COUNT, spawnSpot, stepDino, type Dino } from '../dinos';
+import { BETWEEN, FIRST, RETRY, sightingSpot, stepDino, waitFor, type Dino } from '../dinos';
 import { DINO_SHEET } from '../dinoSheet';
 
 /**
- * Toy dinosaurs plodding west along the east–west streets (walking in game/dinos.ts, sprite
- * from Mike's GIF via scripts/make-dino.mjs). Scenery: nothing to talk to.
+ * A toy dinosaur now and then, plodding west across the screen on an east–west street (when
+ * and where in game/dinos.ts, sprite from Mike's GIF via scripts/make-dino.mjs). One at a
+ * time, every few minutes. Scenery: nothing to talk to.
  */
 export class Dinos implements CityPlugin {
+  /** the one out now, if any (a list so the draw and dev checks stay simple) */
   dinos: Dino[] = [];
   private rand = dice('dinos'); // ?seed= makes it repeatable (city/clock.ts)
   private sheet: HTMLImageElement | null = null;
+  /** seconds until the next one turns up */
+  private wait = 0;
 
-  attach(game: CityGame) {
-    const you = game.player.pos;
-    for (let i = 0; i < DINO_COUNT; i++) {
-      const spot = spawnSpot(game.world, you, this.rand);
-      if (spot) this.dinos.push({ pos: spot, phase: this.rand() * 5 });
-    }
+  attach() {
+    this.wait = waitFor(FIRST, this.rand);
     if (typeof Image !== 'undefined') {
       this.sheet = new Image();
       this.sheet.src = `${import.meta.env.BASE_URL}${DINO_SHEET.file}`;
@@ -25,7 +25,18 @@ export class Dinos implements CityPlugin {
 
   update(dt: number, game: CityGame) {
     if (game.paused) return;
-    for (const d of this.dinos) stepDino(d, dt, game.world, game.player.pos, this.rand);
+    const you = game.player.pos;
+    this.dinos = this.dinos.filter((d) => stepDino(d, dt, game.world, you));
+    if (this.dinos.length) return;
+    this.wait -= dt;
+    if (this.wait > 0) return;
+    const spot = sightingSpot(game.world, you, this.rand);
+    if (!spot) {
+      this.wait = RETRY;
+      return;
+    }
+    this.dinos.push({ pos: spot, phase: this.rand() * 5 });
+    this.wait = waitFor(BETWEEN, this.rand);
   }
 
   draw(d: DrawContext) {

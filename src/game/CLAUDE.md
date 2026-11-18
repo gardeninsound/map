@@ -82,8 +82,9 @@ Don't use `do` to open a screen by reaching into React state. `do` is for side e
   you're `HOME` tiles away. Pure + tested in `src/game/pegasus.ts`; 24×20 sprite built from parts in
   `sprites.ts`. A shop's slice of a Junction block face: `src/game/storefrontSlot.ts` (also the arcade door).
 - `src/game/plugins/dinos.ts` — **toy dinosaurs** (from Mike's GIF) plodding west along the east–west streets
-  ("SW … St"): `DINO_COUNT` (2) are always somewhere near you; each walks west until its street ends or it's `FAR` behind,
-  then turns up on another east–west street nearby, out of sight. They're silent. Pure + tested: `src/game/dinos.ts`. Sprite:
+  ("SW … St"): a sighting, not a crowd: one at a time, the first 30–90 s into a visit (`FIRST`), then 2–5 min after the last
+  one left (`BETWEEN`); it turns up just off the east edge of the screen on a street in view and walks west across it until
+  its street ends or it's `FAR` behind. They're silent. Pure + tested: `src/game/dinos.ts`. Sprite:
   `node scripts/make-dino.mjs <dino.gif>` keys out the green backdrop, keeps a soft shadow, inks an outline →
   `public/sprites/dino-walk.png` + `src/game/dinoSheet.ts` (the GIF isn't kept: 5.8 MB).
 - `src/game/plugins/arcadeDoor.ts` — the Duck Arcade's door target (the arcade itself:
@@ -125,10 +126,10 @@ Don't use `do` to open a screen by reaching into React state. `do` is for side e
   rowboat dock (walk up; needs `Rowboat`, so it's listed after it), Coral and Pearl along the beach (row up). Within `SEE` tiles they
   call catch phrases in tiny-font bubbles (`callingAt`, punctuation dropped by `bubbleText`); {A} (target `mermaid`) and one chats.
   Rocks + calls pure + tested in `src/game/mermaids.ts`; sprite in `src/game/mermaidSprites.ts`; names/phrases in `src/content/mermaids.ts`.
-- `src/game/plugins/squirrels.ts` — **squirrels** (idea box #30): five always near you on the ground by park trees; a person (a
+- `src/game/plugins/squirrels.ts` — **squirrels** (idea box #30): two always near you on the ground by park trees; a person (a
   neighbor NPC, not `custom`) within `SCARE` tiles sends one up the nearest tree, where only its tail shows till nobody's within
   `CLEAR` for `CALM` s. Rabbits don't scare them. Pure + tested in `src/game/squirrels.ts`; sprites in `src/game/squirrelSprites.ts`.
-- `src/game/plugins/flock.ts` — **crows and gulls** (idea box #43, #40): 7 crows on the streets and 6 gulls on the beach sand are
+- `src/game/plugins/flock.ts` — **crows and gulls** (idea box #43, #40): 3 crows on the streets and 3 gulls on the beach sand (`CROWS`, `GULLS`; they land around the edge of the view, `ARRIVE`) are
   always somewhere near you, pecking; come within `STARTLE` tiles and one flaps off away from you and lands `FLEE` tiles off
   (a caw / a gull's cry, `sounds.gull`); left `FAR` behind, it turns up again near you out of sight. Pure + tested in
   `src/game/flock.ts`; the gull sprite (`buildGull`) in `sprites.ts`.

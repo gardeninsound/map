@@ -1,19 +1,24 @@
 /**
- * Toy dinosaurs walking west along West Seattle's east–west streets (pure, tested). A few are
- * always somewhere near you: each walks west along its "SW … St" until the street ends or
- * it's far behind you, then turns up on another east–west street nearby, out of sight.
- * Tiles as on the map (x east, y south). Drawn by plugins/dinos.ts.
+ * Toy dinosaurs walking west along West Seattle's east–west streets (pure, tested). A sighting
+ * now and then, not a crowd: every few minutes one turns up just off the east edge of the
+ * screen on a "SW … St" in view, walks west across it, and is gone when its street ends or
+ * it's well behind you. Tiles as on the map (x east, y south). Drawn by plugins/dinos.ts.
  */
 import type { Vec } from '../city';
 
-/** how many are out at once */
-export const DINO_COUNT = 2;
+/** seconds before the first sighting of a visit, then between one leaving and the next */
+export const FIRST = { min: 30, max: 90 };
+export const BETWEEN = { min: 120, max: 300 };
+/** no street to walk in view right now: look again this many seconds later */
+export const RETRY = 5;
 /** tiles a second: an unhurried plod (the rabbit walks 8) */
 export const DINO_SPEED = 1.6;
-/** a new one turns up this far from you: past the edge of the screen, not too far to meet */
-export const SPAWN = { min: 18, max: 50 };
-/** this far away and it's gone: it turns up somewhere nearer */
-export const FAR = 70;
+/** it turns up this many tiles east of you (the screen is ~14 tiles either side on a laptop) */
+export const EAST = { min: 16, max: 24 };
+/** on a street this many rows above or below you, so it crosses the screen */
+export const ROWS = 6;
+/** this far away and it's gone */
+export const FAR = 40;
 /** the street must run on at least this far either side (tiles) to count as east–west here */
 const RUN = 5;
 
@@ -51,13 +56,17 @@ export function eastWestSpot(world: Streets, x: number, y: number): Vec | null {
   return { x, y: (top + bottom) / 2 + 0.25 };
 }
 
-/** A spot on an east–west street, SPAWN tiles from `around` (null if it can't find one). */
-export function spawnSpot(world: Streets, around: Vec, rand: () => number): Vec | null {
-  for (let tries = 0; tries < 300; tries++) {
-    const a = rand() * Math.PI * 2;
-    const r = SPAWN.min + rand() * (SPAWN.max - SPAWN.min);
-    const x = Math.floor(around.x + Math.cos(a) * r) + 0.5;
-    const y = Math.floor(around.y + Math.sin(a) * r) + 0.5;
+/** Seconds until the next sighting, between `w.min` and `w.max`. */
+export const waitFor = (w: { min: number; max: number }, rand: () => number) => w.min + rand() * (w.max - w.min);
+
+/**
+ * A spot just off the east edge of the screen on an east–west street in view, so the dino
+ * walks west across it (null if there's no such street near you).
+ */
+export function sightingSpot(world: Streets, you: Vec, rand: () => number): Vec | null {
+  for (let tries = 0; tries < 200; tries++) {
+    const x = Math.floor(you.x + EAST.min + rand() * (EAST.max - EAST.min)) + 0.5;
+    const y = Math.floor(you.y - ROWS + rand() * ROWS * 2) + 0.5;
     if (x < 1 || y < 1 || x > world.w - 2 || y > world.h - 2) continue;
     const spot = eastWestSpot(world, x, y);
     if (spot) return spot;
@@ -66,18 +75,14 @@ export function spawnSpot(world: Streets, around: Vec, rand: () => number): Vec 
 }
 
 /**
- * Walk west for `dt` seconds. At the end of the street (no road ahead), or once far behind
- * you, it turns up on another east–west street near you instead. Returns true if it moved there.
+ * Walk west for `dt` seconds. Returns false once it's done: at the end of the street (no road
+ * ahead) or `FAR` from you.
  */
-export function stepDino(d: Dino, dt: number, world: Streets, you: Vec, rand: () => number): boolean {
+export function stepDino(d: Dino, dt: number, world: Streets, you: Vec): boolean {
   const next = d.pos.x - DINO_SPEED * dt;
-  const far = Math.hypot(d.pos.x - you.x, d.pos.y - you.y) > FAR;
+  if (Math.hypot(d.pos.x - you.x, d.pos.y - you.y) > FAR) return false;
   // its nose is about a tile and a half ahead of its middle
-  if (!far && world.isWalkable(next - 1.5, d.pos.y)) {
-    d.pos = { x: next, y: d.pos.y };
-    return false;
-  }
-  const spot = spawnSpot(world, you, rand);
-  if (spot) d.pos = spot;
+  if (!world.isWalkable(next - 1.5, d.pos.y)) return false;
+  d.pos = { x: next, y: d.pos.y };
   return true;
 }

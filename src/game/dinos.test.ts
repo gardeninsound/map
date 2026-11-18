@@ -1,5 +1,5 @@
 import { createWorld } from '../city';
-import { DINO_SPEED, eastWestSpot, FAR, isEastWestName, spawnSpot, stepDino, type Dino } from './dinos';
+import { BETWEEN, DINO_SPEED, EAST, eastWestSpot, FAR, FIRST, isEastWestName, ROWS, sightingSpot, stepDino, waitFor, type Dino } from './dinos';
 
 const world = createWorld();
 let seed = 7;
@@ -14,14 +14,32 @@ describe('dinosaurs on the east–west streets', () => {
     expect(isEastWestName(null)).toBe(false);
   });
 
-  it('turns up on an east–west street with road to walk west along', () => {
+  it('turns up just off the east edge of the screen, on an east–west street in view', () => {
     for (let i = 0; i < 20; i++) {
-      const p = spawnSpot(world, junction, rand)!;
+      const p = sightingSpot(world, junction, rand)!;
       expect(p).not.toBeNull();
       expect(world.isWalkable(p.x, p.y)).toBe(true);
       expect(world.streetAt(p.x, p.y)).toMatch(/\bSt\b/);
       expect(world.isWalkable(p.x - 4, p.y)).toBe(true);
+      expect(p.x - junction.x).toBeGreaterThanOrEqual(EAST.min);
+      expect(p.x - junction.x).toBeLessThanOrEqual(EAST.max + 1);
+      expect(Math.abs(p.y - junction.y)).toBeLessThanOrEqual(ROWS + 1);
     }
+  });
+
+  it('is a sighting now and then: a minute or so in, then minutes apart', () => {
+    for (let i = 0; i < 50; i++) {
+      const first = waitFor(FIRST, rand);
+      const next = waitFor(BETWEEN, rand);
+      expect(first).toBeGreaterThanOrEqual(30);
+      expect(first).toBeLessThanOrEqual(90);
+      expect(next).toBeGreaterThanOrEqual(120);
+      expect(next).toBeLessThanOrEqual(300);
+    }
+  });
+
+  it('finds no street out in the water', () => {
+    expect(sightingSpot(world, { x: 2, y: 2 }, rand)).toBeNull();
   });
 
   it('is never on an avenue', () => {
@@ -30,22 +48,20 @@ describe('dinosaurs on the east–west streets', () => {
     expect(eastWestSpot(world, ave.x, ave.y)).toBeNull();
   });
 
-  it('always walks west, and starts over near you when the street ends', () => {
-    const p = spawnSpot(world, junction, rand)!;
-    const d: Dino = { pos: p, phase: 0 };
-    let moved = 0;
-    for (let i = 0; i < 2000; i++) {
-      const was = { ...d.pos };
-      const jumped = stepDino(d, 0.1, world, junction, rand);
-      if (jumped) {
-        moved++;
-        expect(Math.hypot(d.pos.x - junction.x, d.pos.y - junction.y)).toBeLessThan(FAR);
-        continue;
+  it('walks west across the screen, then is gone when the street ends or it is far behind', () => {
+    for (let n = 0; n < 10; n++) {
+      const d: Dino = { pos: sightingSpot(world, junction, rand)!, phase: 0 };
+      let steps = 0;
+      for (;;) {
+        const was = { ...d.pos };
+        if (!stepDino(d, 0.1, world, junction)) break;
+        steps++;
+        expect(d.pos.x).toBeCloseTo(was.x - DINO_SPEED * 0.1);
+        expect(d.pos.y).toBe(was.y);
+        expect(world.isWalkable(d.pos.x, d.pos.y)).toBe(true);
+        expect(Math.hypot(d.pos.x - junction.x, d.pos.y - junction.y)).toBeLessThanOrEqual(FAR + 1);
+        expect(steps).toBeLessThan(1000); // FAR + EAST tiles at most
       }
-      expect(d.pos.x).toBeCloseTo(was.x - DINO_SPEED * 0.1);
-      expect(d.pos.y).toBe(was.y);
-      expect(world.isWalkable(d.pos.x, d.pos.y)).toBe(true);
     }
-    expect(moved).toBeGreaterThan(0); // 320 tiles of walking: some street ran out
   });
 });

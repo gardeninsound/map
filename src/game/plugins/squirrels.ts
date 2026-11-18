@@ -2,10 +2,11 @@ import { hash, rng, Tile, type CityGame, type CityPlugin, type DrawContext } fro
 import { forageSpot, newSquirrel, stepSquirrel, type Ground, type Squirrel } from '../squirrels';
 import { buildSquirrel } from '../squirrelSprites';
 
-const COUNT = 5;
+/** few enough that a park doesn't look overrun */
+const COUNT = 2;
 
 /**
- * Squirrels (idea box #30; rules pure + tested in game/squirrels.ts): five always somewhere
+ * Squirrels (idea box #30; rules pure + tested in game/squirrels.ts): two always somewhere
  * near you, scampering on the ground near trees. When one of the neighbors (a person) walks
  * close, it dashes up the nearest tree and hides — just its tail hanging out of the leaves —
  * till the coast is clear. Rabbits are fine: walk right up.
