@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { anchorOf, applyFilter, tagCounts, withTag, DEFAULT_SRC, groupByMonth, growth, srcFrom, stats, waitDays, waitingWishes, type StoryChange, type StoryIndex } from './model';
+import { anchorOf, wipeAt, wipeKey, applyFilter, tagCounts, withTag, DEFAULT_SRC, groupByMonth, growth, srcFrom, stats, waitDays, waitingWishes, type StoryChange, type StoryIndex } from './model';
 
 const change = (over: Partial<StoryChange>): StoryChange => ({
   pr: null,
@@ -89,5 +89,24 @@ describe('tags', () => {
     expect(tagCounts(cs)).toEqual([{ tag: 'map', n: 2 }, { tag: 'wish', n: 1 }]);
     expect(withTag(cs, 'wish').map((c) => c.sha)).toEqual(['1']);
     expect(withTag(cs, null)).toBe(cs);
+  });
+});
+
+describe('the before/after line', () => {
+  it('follows the pointer across the frame, kept inside it', () => {
+    expect(wipeAt(150, 100, 200)).toBe(25);
+    expect(wipeAt(50, 100, 200)).toBe(0);
+    expect(wipeAt(400, 100, 200)).toBe(100);
+    expect(wipeAt(10, 0, 0)).toBe(50);
+  });
+
+  it('moves with the arrow keys, finer with Shift, and jumps to the ends', () => {
+    expect(wipeKey(50, 'ArrowLeft')).toBe(45);
+    expect(wipeKey(50, 'ArrowRight', true)).toBe(51);
+    expect(wipeKey(2, 'ArrowLeft')).toBe(0);
+    expect(wipeKey(98, 'ArrowUp')).toBe(100);
+    expect(wipeKey(40, 'Home')).toBe(0);
+    expect(wipeKey(40, 'End')).toBe(100);
+    expect(wipeKey(40, 'a')).toBeNull();
   });
 });

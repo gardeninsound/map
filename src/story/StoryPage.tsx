@@ -2,7 +2,7 @@
  * /story/: how the island grew. Reads the story log (scripts/story/) straight from the story
  * branch, so it's current without a deploy. Not linked from the map yet.
  */
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   anchorOf,
   applyFilter,
@@ -12,6 +12,8 @@ import {
   stats,
   waitDays,
   waitingWishes,
+  wipeAt,
+  wipeKey,
   type Filter,
   type Series,
   type StoryChange,
@@ -272,36 +274,75 @@ function Change({ c, src, tag, onTag }: { c: StoryChange; src: string; tag: stri
   );
 }
 
-/** before/after: drag to wipe between them; or watch the place move */
+/** before/after: grab the line (or press anywhere on the photo) and drag to wipe between them; or watch the place move */
 function Shot({ shot, src }: { shot: StoryShot; src: string }) {
   const [pos, setPos] = useState(50);
   const [moving, setMoving] = useState(false);
-  const range = useRef<HTMLInputElement>(null);
+  const [dragging, setDragging] = useState(false);
   const url = (p: string) => `${src}${p}`;
   const alt = shot.label ? `the map at ${shot.label}` : 'the map';
+  const wipe = !!shot.before && !(moving && shot.moving);
+  const follow = (e: React.PointerEvent<HTMLDivElement>) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    setPos(wipeAt(e.clientX, r.left, r.width));
+  };
+  const drag = wipe
+    ? {
+        onPointerDown: (e: React.PointerEvent<HTMLDivElement>) => {
+          if (e.button !== 0) return;
+          e.currentTarget.setPointerCapture(e.pointerId);
+          setDragging(true);
+          follow(e);
+        },
+        onPointerMove: (e: React.PointerEvent<HTMLDivElement>) => dragging && follow(e),
+        onPointerUp: () => setDragging(false),
+        onPointerCancel: () => setDragging(false),
+      }
+    : {};
   return (
     <figure className="story-shot">
-      <div className="story-frame">
+      <div className={`story-frame${wipe ? ' wipe' : ''}${dragging ? ' dragging' : ''}`} {...drag}>
         {moving && shot.moving ? (
           <img src={url(shot.moving)} alt={`${alt}, moving`} />
         ) : (
           <>
-            <img src={url(shot.after!)} alt={`${alt}, after`} loading="lazy" />
+            <img src={url(shot.after!)} alt={`${alt}, after`} loading="lazy" draggable={false} />
             {shot.before && (
-              <img className="before" src={url(shot.before)} alt={`${alt}, before`} loading="lazy" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }} />
+              <img className="before" src={url(shot.before)} alt={`${alt}, before`} loading="lazy" draggable={false} style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }} />
             )}
-            {shot.before && <span className="story-wipe" style={{ left: `${pos}%` }} aria-hidden />}
+          </>
+        )}
+        {wipe && (
+          <>
+            <span className="story-tag before" style={{ opacity: pos > 12 ? 1 : 0 }} aria-hidden>
+              before
+            </span>
+            <span className="story-tag after" style={{ opacity: pos < 88 ? 1 : 0 }} aria-hidden>
+              after
+            </span>
+            <span
+              className="story-wipe"
+              style={{ left: `${pos}%` }}
+              role="slider"
+              tabIndex={0}
+              aria-label="wipe from before to after"
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-valuenow={Math.round(pos)}
+              aria-valuetext={`${Math.round(pos)}% before`}
+              onKeyDown={(e) => {
+                const next = wipeKey(pos, e.key, e.shiftKey);
+                if (next === null) return;
+                e.preventDefault();
+                setPos(next);
+              }}
+            >
+              <span className="story-knob" />
+            </span>
           </>
         )}
       </div>
       <figcaption>
-        {shot.before && !moving && (
-          <label className="story-range">
-            <span>before</span>
-            <input ref={range} type="range" min={0} max={100} value={pos} onChange={(e) => setPos(Number(e.target.value))} aria-label="wipe from before to after" />
-            <span>after</span>
-          </label>
-        )}
         {shot.label && <span className="story-place">{shot.label}</span>}
         {shot.moving && (
           <button className="story-more" onClick={() => setMoving(!moving)}>

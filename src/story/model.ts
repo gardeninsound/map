@@ -64,6 +64,19 @@ const monthLabel = (day: string) => new Date(`${day}T12:00:00Z`).toLocaleDateStr
 
 
 /** an anchor for a change: #pr-64, or #c-8066597 for the early commits */
+/** Where the before/after line sits (0–100 %) for a pointer at `x` over a frame from `left`, `width` wide. */
+export const wipeAt = (x: number, left: number, width: number) => (width > 0 ? Math.min(100, Math.max(0, ((x - left) / width) * 100)) : 50);
+
+/** The line after a key: arrows move it 5 % (Shift: 1 %), Home/End to the ends; null for any other key. */
+export function wipeKey(pos: number, key: string, fine = false): number | null {
+  const step = fine ? 1 : 5;
+  if (key === 'ArrowLeft' || key === 'ArrowDown') return Math.max(0, pos - step);
+  if (key === 'ArrowRight' || key === 'ArrowUp') return Math.min(100, pos + step);
+  if (key === 'Home') return 0;
+  if (key === 'End') return 100;
+  return null;
+}
+
 export const anchorOf = (c: Pick<StoryChange, 'pr' | 'sha'>) => (c.pr ? `pr-${c.pr}` : `c-${c.sha.slice(0, 7)}`);
 
 export type Filter = 'all' | 'wishes' | 'pictures';
