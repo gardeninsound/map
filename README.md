@@ -2,7 +2,23 @@
 
 Every change that went live on [gardeninsound.website](https://gardeninsound.website), newest first, with the wish that started it, what was made, who made it, and how the spot looked before and after. Written automatically by [`.github/workflows/story.yml`](https://github.com/gardeninsound/map/blob/main/.github/workflows/story.yml) when a change merges; the raw records are in `changes/` and `wishes/`, and `story.json` indexes them all.
 
-**94** changes · **12** wishes from visitors, **11** answered · **0** still waiting
+**95** changes · **12** wishes from visitors, **11** answered · **0** still waiting
+
+---
+
+### Nov 18, 2026 · Fewer critters on screen: 3 crows, 3 gulls, 2 squirrels, a dinosaur now and then ([#88](https://github.com/gardeninsound/map/pull/88))
+
+**Asked vs made:** Asked to tone it down. Crows 7 → 3, gulls 6 → 3, squirrels 5 → 2, and the dinosaurs became an occasional sighting that crosses the screen instead of two that always follow you around.
+
+Counts are constants at the top of each file (`flock.ts`, `dinos.ts`, `plugins/squirrels.ts`), easy to nudge.
+
+| before · the Junction, fewer crows and a dinosaur crossing Alaska now and then | after |
+|---|---|
+| <img src="changes/2026-11-18-pr088-fewer-critters-on-screen-3-crows-3-gulls/before-1.webp" width="400"> | <img src="changes/2026-11-18-pr088-fewer-critters-on-screen-3-crows-3-gulls/after-1.webp" width="400"> |
+
+<img src="changes/2026-11-18-pr088-fewer-critters-on-screen-3-crows-3-gulls/moving-1.webp" width="400" alt="moving">
+
+<sub>Jim · 7 files, +108 −69 · characters & map life · [record](changes/2026-11-18-pr088-fewer-critters-on-screen-3-crows-3-gulls/entry.json)</sub>
 
 ---
 

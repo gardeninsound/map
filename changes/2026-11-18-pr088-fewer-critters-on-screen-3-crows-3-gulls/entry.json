@@ -1,0 +1,179 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "7d642df09cfc89ff75b32ead8adf15ba37684788",
+  "parent": "79a9da2caa4dc897cbc29ea23a581bd761753a94",
+  "pr": 88,
+  "title": "Fewer critters on screen: 3 crows, 3 gulls, 2 squirrels, a dinosaur now and then",
+  "url": "https://github.com/gardeninsound/map/pull/88",
+  "merged_at": "2026-11-18T19:50:56Z",
+  "body": "People said there were too many things on screen, too many crows and too many dinosaurs. Standing still anywhere, 6 of the 7 crows were in view, and 4–5 of the 5 squirrels near trees.\n\nOn screen, averaged over 20 s standing at each spot:\n\n| | before | after |\n|---|---|---|\n| crows | 6 of 7 | 2–3 |\n| gulls at Alki | 5 of 6 | 2–3 |\n| squirrels near trees | 4–5 | 2 |\n\n- **Crows and gulls**: 3 of each (`CROWS`, `GULLS` in `src/game/flock.ts`), landing around the edge of the view (`ARRIVE`, 8–16 tiles) instead of right beside you.\n- **Squirrels**: 2.\n- **Dinosaurs**: no longer two always near you. One at a time, 30–90 s into a visit, then 2–5 minutes after the last one left. It turns up just off the east edge of the screen on an east–west street in view and walks west across it, then it's gone. Checked in Chrome: one crossed Alaska at the Junction from 18 tiles east to 17 tiles west in about 23 s.\n\nMike: the dinosaur is your GIF, so this is a heads-up. The timings are `FIRST` and `BETWEEN` at the top of `src/game/dinos.ts` if you want them more or less often.\n\n## Story\n\nIdea: Folks reported too much on screen, too many crows and too many dinosaurs.\nWhere: 47.5612, -122.3868 — the Junction, fewer crows and a dinosaur crossing Alaska now and then\nTags: map, character\nAsked vs made: Asked to tone it down. Crows 7 → 3, gulls 6 → 3, squirrels 5 → 2, and the dinosaurs became an occasional sighting that crosses the screen instead of two that always follow you around.\nMike:\nNote: Counts are constants at the top of each file (`flock.ts`, `dinos.ts`, `plugins/squirrels.ts`), easy to nudge.\n\n",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "462fe33781eddc3e35c3d979afc7c3f7e1db9b1a",
+      "message": "Fewer critters on screen: 3 crows, 3 gulls, 2 squirrels, a dinosaur now and then\n\nStanding still, 6 of the 7 crows and 4-5 of the 5 squirrels were on screen everywhere.\nCrows and gulls go to 3 each and land around the edge of the view; squirrels go to 2.\nThe dinosaurs become a sighting: one at a time, 30-90 s into a visit then 2-5 min apart,\nturning up just east of the screen on a street in view and walking west across it.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-18T19:49:12Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "src/game/CLAUDE.md",
+      "status": "M",
+      "additions": 5,
+      "deletions": 4
+    },
+    {
+      "path": "src/game/dinos.test.ts",
+      "status": "M",
+      "additions": 34,
+      "deletions": 18
+    },
+    {
+      "path": "src/game/dinos.ts",
+      "status": "M",
+      "additions": 32,
+      "deletions": 27
+    },
+    {
+      "path": "src/game/flock.ts",
+      "status": "M",
+      "additions": 6,
+      "deletions": 1
+    },
+    {
+      "path": "src/game/plugins/dinos.ts",
+      "status": "M",
+      "additions": 21,
+      "deletions": 10
+    },
+    {
+      "path": "src/game/plugins/flock.ts",
+      "status": "M",
+      "additions": 7,
+      "deletions": 7
+    },
+    {
+      "path": "src/game/plugins/squirrels.ts",
+      "status": "M",
+      "additions": 3,
+      "deletions": 2
+    }
+  ],
+  "additions": 108,
+  "deletions": 69,
+  "areas": [
+    "characters & map life"
+  ],
+  "branch": "fewer-critters",
+  "opened_at": "2026-11-18T19:49:24Z",
+  "merged_by": "vlandham",
+  "summary": "People said there were too many things on screen, too many crows and too many dinosaurs. Standing still anywhere, 6 of the 7 crows were in view, and 4–5 of the 5 squirrels near trees.\n\nOn screen, averaged over 20 s standing at each spot:\n\n| | before | after |\n|---|---|---|\n| crows | 6 of 7 | 2–3 |\n| gulls at Alki | 5 of 6 | 2–3 |\n| squirrels near trees | 4–5 | 2 |\n\n- **Crows and gulls**: 3 of each (`CROWS`, `GULLS` in `src/game/flock.ts`), landing around the edge of the view (`ARRIVE`, 8–16 tiles) instead of right beside you.\n- **Squirrels**: 2.\n- **Dinosaurs**: no longer two always near you. One at a time, 30–90 s into a visit, then 2–5 minutes after the last one left. It turns up just off the east edge of the screen on an east–west street in view and walks west across it, then it's gone. Checked in Chrome: one crossed Alaska at the Junction from 18 tiles east to 17 tiles west in about 23 s.\n\nMike: the dinosaur is your GIF, so this is a heads-up. The timings are `FIRST` and `BETWEEN` at the top of `src/game/dinos.ts` if you want them more or less often.",
+  "story": {
+    "ideas": [],
+    "where": [
+      {
+        "query": "at=47.5612,-122.3868",
+        "lat": 47.5612,
+        "lon": -122.3868,
+        "label": "the Junction, fewer crows and a dinosaur crossing Alaska now and then"
+      }
+    ],
+    "askedVsMade": "Asked to tone it down. Crows 7 → 3, gulls 6 → 3, squirrels 5 → 2, and the dinosaurs became an occasional sighting that crosses the screen instead of two that always follow you around.",
+    "mike": null,
+    "note": "Counts are constants at the top of each file (`flock.ts`, `dinos.ts`, `plugins/squirrels.ts`), easy to nudge.",
+    "shots": true,
+    "tags": [
+      [
+        "+",
+        "map"
+      ],
+      [
+        "+",
+        "character"
+      ]
+    ],
+    "present": true,
+    "whereSaid": true
+  },
+  "ideas": [],
+  "requested_reviewers": [
+    "exit320-stack"
+  ],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-18T19:49:48Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview** · updated for 462fe33 (ready when the Preview check is green)\nhttps://pr-88-garden-preview.gardeninsound.workers.dev\n\n**Go straight to it**\n- [the Junction, fewer crows and a dinosaur crossing Alaska now and then](https://pr-88-garden-preview.gardeninsound.workers.dev/?solo&at=47.5612,-122.3868)\n\nmap · character · 7 files, +108 −69\n\n<sub>A full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-88]`). Edit the description and this comment follows.</sub>\n",
+      "bot": true
+    }
+  ],
+  "preview_url": null,
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 22,
+    "scenes": 12,
+    "content_files": 27,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 27201,
+    "commits": 112
+  },
+  "tags": [
+    "map",
+    "character"
+  ],
+  "where_from": "pr",
+  "shots": [
+    {
+      "query": "at=47.5612,-122.3868",
+      "lat": 47.5612,
+      "lon": -122.3868,
+      "label": "the Junction, fewer crows and a dinosaur crossing Alaska now and then",
+      "guessed": false,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      },
+      "via": {
+        "before": "link",
+        "after": "link"
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "production",
+      "after": "production"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else. via 'way': a build from before ?open= links, walked in by pressing {A} at the place's `way`."
+  },
+  "first_recorded_at": "2026-11-18T19:51:38.641Z",
+  "earlier": [],
+  "recorded_at": "2026-11-18T19:51:38.641Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/44384687357"
+}

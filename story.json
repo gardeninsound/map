@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-11-18T18:59:00.404Z",
+  "generated_at": "2026-11-18T19:52:02.914Z",
   "changes": [
     {
       "pr": null,
@@ -4863,6 +4863,54 @@
         "arcade_cabinets_ready": 4,
         "source_lines": 27163,
         "commits": 111
+      }
+    },
+    {
+      "pr": 88,
+      "sha": "7d642df09cfc89ff75b32ead8adf15ba37684788",
+      "title": "Fewer critters on screen: 3 crows, 3 gulls, 2 squirrels, a dinosaur now and then",
+      "url": "https://github.com/gardeninsound/map/pull/88",
+      "merged_at": "2026-11-18T19:50:56Z",
+      "dir": "changes/2026-11-18-pr088-fewer-critters-on-screen-3-crows-3-gulls",
+      "ideas": [],
+      "summary": "People said there were too many things on screen, too many crows and too many dinosaurs. Standing still anywhere, 6 of the 7 crows were in view, and 4–5 of the 5 squirrels near trees.\n\nOn screen, averaged over 20 s standing at each spot:\n\n| | before | after |\n|---|---|---|\n| crows | 6 of 7 | 2–3 |\n| gulls at Alki | 5 of 6 | 2–3 |\n| squirrels near trees | 4–5 | 2 |\n\n- **Crows and gulls**: 3 of each (`CROWS`, `GULLS` in `src/game/flock.ts`), landing around the edge of the view (`ARRIVE`, 8–16 tiles) instead of right beside you.\n- **Squirrels**: 2.\n- **Dinosaurs**: no longer two always near you. One at a time, 30–90 s into a visit, then 2–5 minutes after the last one left. It turns up just off the east edge of the screen on an east–west street in view and walks west across it, then it's gone. Checked in Chrome: one crossed Alaska at the Junction from 18 tiles east to 17 tiles west in about 23 s.\n\nMike: the dinosaur is your GIF, so this is a heads-up. The timings are `FIRST` and `BETWEEN` at the top of `src/game/dinos.ts` if you want them more or less often.",
+      "story": {
+        "askedVsMade": "Asked to tone it down. Crows 7 → 3, gulls 6 → 3, squirrels 5 → 2, and the dinosaurs became an occasional sighting that crosses the screen instead of two that always follow you around.",
+        "mike": null,
+        "note": "Counts are constants at the top of each file (`flock.ts`, `dinos.ts`, `plugins/squirrels.ts`), easy to nudge."
+      },
+      "authors": [
+        "Jim"
+      ],
+      "files": 7,
+      "additions": 108,
+      "deletions": 69,
+      "areas": [
+        "characters & map life"
+      ],
+      "tags": [
+        "map",
+        "character"
+      ],
+      "shots": [
+        {
+          "query": "at=47.5612,-122.3868",
+          "lat": 47.5612,
+          "lon": -122.3868,
+          "label": "the Junction, fewer crows and a dinosaur crossing Alaska now and then",
+          "before": "changes/2026-11-18-pr088-fewer-critters-on-screen-3-crows-3-gulls/before-1.webp",
+          "after": "changes/2026-11-18-pr088-fewer-critters-on-screen-3-crows-3-gulls/after-1.webp",
+          "moving": "changes/2026-11-18-pr088-fewer-critters-on-screen-3-crows-3-gulls/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 22,
+        "scenes": 12,
+        "content_files": 27,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 27201,
+        "commits": 112
       }
     }
   ],
