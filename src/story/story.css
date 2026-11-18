@@ -112,11 +112,30 @@ a:hover { color: var(--pink); }
 .story-frame { position: relative; line-height: 0; box-shadow: 0 0 0 3px var(--ink); background: var(--ink); }
 .story-frame img { width: 100%; height: auto; image-rendering: pixelated; display: block; }
 .story-frame img.before { position: absolute; inset: 0; }
-.story-wipe { position: absolute; top: 0; bottom: 0; width: 3px; margin-left: -1px; background: #fff; box-shadow: 0 0 0 1px var(--ink); pointer-events: none; }
+/* the before/after line: grab it (or press anywhere on the photo) and drag; arrows when it has focus */
+.story-frame.wipe { cursor: ew-resize; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+.story-wipe { position: absolute; top: 0; bottom: 0; width: 3px; margin-left: -1px; background: #fff; box-shadow: 0 0 0 1px var(--ink); outline: none; }
+.story-wipe::before { content: ''; position: absolute; top: 0; bottom: 0; left: -14px; right: -14px; } /* a wider grab area */
+.story-knob {
+  position: absolute; top: 50%; left: 50%; width: 30px; height: 30px; transform: translate(-50%, -50%);
+  background: #fff; border: 3px solid var(--ink); border-radius: 50%; box-shadow: 0 2px 0 var(--ink);
+  transition: transform 0.1s;
+}
+.story-knob::before, .story-knob::after {
+  content: ''; position: absolute; top: 50%; margin-top: -5px; border: 5px solid transparent;
+}
+.story-knob::before { left: 1px; border-right-color: var(--ink); }
+.story-knob::after { right: 1px; border-left-color: var(--ink); }
+.story-frame.wipe:hover .story-knob, .story-frame.dragging .story-knob { transform: translate(-50%, -50%) scale(1.12); }
+.story-wipe:focus-visible .story-knob { border-color: var(--pink); }
+.story-tag {
+  position: absolute; bottom: 8px; padding: 4px 6px; font-family: var(--pixel); font-size: 9px; line-height: 1;
+  color: #fff; background: rgba(59, 31, 43, 0.75); pointer-events: none; transition: opacity 0.15s;
+}
+.story-tag.before { left: 8px; }
+.story-tag.after { right: 8px; }
+@media (prefers-reduced-motion: reduce) { .story-knob, .story-tag { transition: none; } }
 .story-shot figcaption { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin-top: 10px; font-size: 15px; }
-.story-range { display: flex; align-items: center; gap: 8px; flex: 1 1 260px; }
-.story-range span { font-family: var(--pixel); font-size: 9px; }
-.story-range input { flex: 1; accent-color: var(--pink); }
 .story-place { opacity: 0.8; }
 .story-visit { margin-left: auto; }
 

@@ -7,7 +7,7 @@ for, in the visitor's words; what was made and why it differs; who made it; and 
 looked before and after.
 
 **Read it:** at [gardeninsound.website/story/](https://gardeninsound.website/story/) (not linked
-from the map yet), which shows the log with growth charts, a before/after wipe for each place,
+from the map yet), which shows the log with growth charts, a before/after wipe for each place (grab the line or press the photo and drag; arrows when it has focus; `wipeAt` / `wipeKey` in `src/story/model.ts`),
 and the wishes still waiting. It reads `story.json` straight from the branch, so it's current
 without a deploy (`src/story/`). The [`story` branch](https://github.com/gardeninsound/map/tree/story)'s
 README holds the same chronicle in plain Markdown.
