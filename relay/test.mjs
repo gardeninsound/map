@@ -194,10 +194,53 @@ async function sweep() {
   console.log(' silent sockets are swept (everyone hears them leave); pinging ones stay ✓');
 }
 
+/** Counts: visits (once per rabbit per day), the peak, opened things, and the guards on /count. */
+async function counts() {
+  const HTTP = BASE.replace('ws:', 'http:');
+  // a fresh app each run: wrangler dev keeps Durable Object storage between runs
+  const app = `stats${Date.now().toString(36)}`;
+  const get = async () => (await fetch(`${HTTP}/stats/${app}/isle`)).json();
+  const count = (key, origin = ORIGIN) => fetch(`${HTTP}/count/${app}`, { method: 'POST', body: key, headers: origin ? { Origin: origin } : {} });
+
+  let s = await get();
+  assert(s.now === 0 && s.days.length === 0, `expected nothing yet, got ${JSON.stringify(s)}`);
+  const a = client('isle', 'visit1', { app });
+  await a.next((m) => m.k === 'peers', 'peer list');
+  const b = client('isle', 'visit2', { app });
+  await b.next((m) => m.k === 'peers', 'peer list');
+  // b steps out and back in (away, then back): the same rabbit, not a second visit
+  b.ws.close();
+  await a.next((m) => m.k === 'leave', 'B leaving');
+  const b2 = client('isle', 'visit2', { app });
+  await b2.next((m) => m.k === 'peers', 'peer list');
+  s = await get();
+  assert(s.now === 2, `expected 2 online, got ${s.now}`);
+  assert(s.days.length === 1 && s.days[0].day === s.today, `expected today only, got ${JSON.stringify(s.days)}`);
+  assert(s.days[0].visits === 2 && s.days[0].peak === 2, `expected 2 visits and a peak of 2, got ${JSON.stringify(s.days[0])}`);
+  console.log(' visits: once per rabbit per day, stepping out and back in included; the peak ✓');
+
+  for (const key of ['scene:gas-station-wall', 'scene:gas-station-wall', 'crow']) assert((await count(key)).status === 204, `count ${key}`);
+  assert((await count('Bad Key!')).status === 400, 'a bad key is refused');
+  assert((await count('crow', 'https://evil.example')).status === 403, 'another site is refused');
+  assert((await count('crow', null)).status === 403, 'no origin is refused');
+  assert((await fetch(`${HTTP}/count/${app}`)).status === 405, 'only POST counts');
+  const res = await fetch(`${HTTP}/stats/${app}/isle`);
+  assert(res.headers.get('access-control-allow-origin') === '*', 'stats are readable from any page');
+  s = await res.json();
+  assert(JSON.stringify(s.days[0].opened) === JSON.stringify({ 'scene:gas-station-wall': 2, crow: 1 }), `opened: ${JSON.stringify(s.days[0].opened)}`);
+  console.log(' opened things counted by key, most first; bad keys, other sites and GETs refused ✓');
+
+  for (const w of [a, b2]) w.ws.close();
+  await sleep(200);
+  assert((await get()).now === 0, 'nobody online after they leave');
+  console.log(' online now drops when they leave ✓');
+}
+
 let failed = false;
 let wrangler = await startWrangler();
 try {
   await run();
+  await counts();
   wrangler.kill();
   wrangler = await startWrangler(PORT + 1, { STALE_MS: 2000, SWEEP_MS: 1000 });
   await sweep();

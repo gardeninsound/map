@@ -36,7 +36,8 @@ import { TitleScreen } from './ui/TitleScreen';
 import { sounds } from './ui/sounds';
 import { findTarget, openFromSearch } from './ui/openLink';
 import { isActor, talk, type Action } from './game/actions';
-import { createIsland, devHooks, pluginById, pluginList, targetsOf, type Island } from './game/plugins';
+import { createIsland, devHooks, pluginById, pluginIds, pluginList, targetsOf, type Island } from './game/plugins';
+import { count, countKey, overlayKey } from './net/counts';
 import type { Visitors } from './game/plugins/visitors';
 import { store, storedFlag } from './city/stored';
 
@@ -122,6 +123,11 @@ export default function App() {
   const [storefront, setStorefront] = useState<string | null>(null);
   const [nearby, setNearby] = useState<Target | null>(null);
   const [overlay, setOverlay] = useState<Overlay>({ kind: 'none' });
+  // what people open, counted (src/net/counts.ts), however they got there: {A}, SPOTS, a link
+  useEffect(() => {
+    const key = overlayKey(overlay);
+    if (key) count(key);
+  }, [overlay]);
   const overlayKind = useRef<Overlay['kind']>('none');
   overlayKind.current = overlay.kind;
   const [mapOpen, setMapOpen] = useState(false);
@@ -146,6 +152,7 @@ export default function App() {
     const plugins = pluginList(isle);
     /** plugins that say what {A} does on their targets */
     const actors = plugins.filter(isActor);
+    const ids = pluginIds(isle);
     /** an Action (src/game/actions.ts) → the overlay that shows it */
     const runAction = (a: Action): void => {
       if (a.kind === 'talk') {
@@ -184,9 +191,13 @@ export default function App() {
           // neighbors, which belong to no plugin, just say their lines
           for (const p of actors) {
             const a = p.act(t);
-            if (a) return runAction(a);
+            if (a) {
+              count(countKey(t, ids.get(p) ?? null));
+              return runAction(a);
+            }
           }
           if (t.npc) {
+            count(countKey(t, null));
             setOverlay({ kind: 'talk', lines: t.npc.voice.lines, speaker: t.npc.voice.name, portrait: g.portraitOf(t.npc) });
           }
         },
