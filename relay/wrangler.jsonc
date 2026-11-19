@@ -31,6 +31,6 @@
     // (`npx wrangler secret put CF_API_TOKEN`); these say where to look. README, "Traffic".
     "CF_ACCOUNT_ID": "7de05f51e1fe91fd717fe174fcfba85d",
     "CF_ZONE_ID": "fadb4ced3ff41dd38c5b5d3428794121",
-    "CF_SITE_TAG": ""
+    "CF_SITE_TAG": "334c714183db4a4086aab2bc0a1ed5d8"
   }
 }
