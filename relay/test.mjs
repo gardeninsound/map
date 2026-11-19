@@ -202,22 +202,30 @@ async function counts() {
   const get = async () => (await fetch(`${HTTP}/stats/${app}/isle`)).json();
   const count = (key, origin = ORIGIN) => fetch(`${HTTP}/count/${app}`, { method: 'POST', body: key, headers: origin ? { Origin: origin } : {} });
 
+  // a rabbit from dev (or a preview, or a test) is in the room but isn't a visit
+  const dev = client('isle', 'visit0', { app });
+  await dev.next((m) => m.k === 'peers', 'peer list');
   let s = await get();
+  assert(s.now === 1 && s.days.length === 0, `expected a dev rabbit online but no visit, got ${JSON.stringify(s)}`);
+  dev.ws.close();
+  await sleep(200);
+  s = await get();
   assert(s.now === 0 && s.days.length === 0, `expected nothing yet, got ${JSON.stringify(s)}`);
-  const a = client('isle', 'visit1', { app });
+  const live = { app, origin: 'https://gardeninsound.website' };
+  const a = client('isle', 'visit1', live);
   await a.next((m) => m.k === 'peers', 'peer list');
-  const b = client('isle', 'visit2', { app });
+  const b = client('isle', 'visit2', live);
   await b.next((m) => m.k === 'peers', 'peer list');
   // b steps out and back in (away, then back): the same rabbit, not a second visit
   b.ws.close();
   await a.next((m) => m.k === 'leave', 'B leaving');
-  const b2 = client('isle', 'visit2', { app });
+  const b2 = client('isle', 'visit2', live);
   await b2.next((m) => m.k === 'peers', 'peer list');
   s = await get();
   assert(s.now === 2, `expected 2 online, got ${s.now}`);
   assert(s.days.length === 1 && s.days[0].day === s.today, `expected today only, got ${JSON.stringify(s.days)}`);
   assert(s.days[0].visits === 2 && s.days[0].peak === 2, `expected 2 visits and a peak of 2, got ${JSON.stringify(s.days[0])}`);
-  console.log(' visits: once per rabbit per day, stepping out and back in included; the peak ✓');
+  console.log(' visits: live-site rabbits only, once per rabbit per day, stepping out and back in included; the peak ✓');
 
   for (const key of ['scene:gas-station-wall', 'scene:gas-station-wall', 'crow']) assert((await count(key)).status === 204, `count ${key}`);
   assert((await count('Bad Key!')).status === 400, 'a bad key is refused');

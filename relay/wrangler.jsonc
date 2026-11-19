@@ -24,6 +24,8 @@
   "vars": {
     // Comma-separated page origins allowed to connect; `*` is a wildcard.
     "ALLOWED_ORIGINS": "https://gardeninsound.website,https://www.gardeninsound.website,https://*-garden-preview.gardeninsound.workers.dev,http://localhost:*,http://127.0.0.1:*",
+    // Pages whose rabbits count as visits (src/stats.ts): the live site only, not previews, dev or tests.
+    "COUNT_ORIGINS": "https://gardeninsound.website,https://www.gardeninsound.website",
     "MAX_PEERS": "64"
   }
 }
