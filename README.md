@@ -2,7 +2,17 @@
 
 Every change that went live on [gardeninsound.website](https://gardeninsound.website), newest first, with the wish that started it, what was made, who made it, and how the spot looked before and after. Written automatically by [`.github/workflows/story.yml`](https://github.com/gardeninsound/map/blob/main/.github/workflows/story.yml) when a change merges; the raw records are in `changes/` and `wishes/`, and `story.json` indexes them all.
 
-**102** changes · **13** wishes from visitors, **11** answered · **1** still waiting
+**103** changes · **13** wishes from visitors, **11** answered · **1** still waiting
+
+---
+
+### Nov 19, 2026 · Admin: Mike and Jim only (Cloudflare Access) ([#97](https://github.com/gardeninsound/map/pull/97))
+
+**Asked vs made:** As asked. The data behind the page is locked too, not just the page, and the relay checks the login itself as a second lock.
+
+Needs the Access application set up in the Cloudflare dashboard; then ACCESS_TEAM and ACCESS_AUD go in wrangler.jsonc.
+
+<sub>Jim · 10 files, +216 −40 · relay, docs · [record](changes/2026-11-19-pr097-admin-mike-and-jim-only-cloudflare-acces/entry.json)</sub>
 
 ---
 

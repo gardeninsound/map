@@ -1,0 +1,155 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "9dce200ca3ca77c26aadf08ed153847536c7e488",
+  "parent": "6ae3e26b1e90b7a3ff2606d986354c40c16e4ab6",
+  "pr": 97,
+  "title": "Admin: Mike and Jim only (Cloudflare Access)",
+  "url": "https://github.com/gardeninsound/map/pull/97",
+  "merged_at": "2026-11-19T16:04:32Z",
+  "body": "Locks `/admin/` and its numbers to Mike and Jim.\n\n- **The page:** Cloudflare Access puts a login in front of `gardeninsound.website/admin/`. You type your email, and if it's on the list Cloudflare emails a one-time code. This part is set up in the dashboard, not in code (relay/README.md, \"Admin access\").\n- **The numbers:** the relay no longer serves the public `/stats` and `/traffic`. The admin page reads them from `gardeninsound.website/admin/api/…`, a route of the relay on the site's own zone, so the same login covers them. The relay also checks each request's signed Access token itself (`relay/src/access.ts`: signed by the team's key, for this application, not expired), so the numbers stay locked even if the Access policy were loosened by mistake. Until `ACCESS_TEAM` and `ACCESS_AUD` are set, it answers \"locked\".\n- The game's count pings (`POST /count`) work as before.\n\n**Checked:**\n- Unit tests sign real tokens with a test key: a good one gets in; a wrong application, wrong team, expired token, unknown key or someone else's key does not.\n- A test fails if `ACCESS_DEV` (the local-only bypass) ever appears in `wrangler.jsonc`.\n- `relay/npm test`: the numbers work with the local bypass. Without it, they're locked, a made-up token is refused, and the old public addresses return 404.\n- The smoke test still runs the admin page on made-up data.\n\n## Story\n\nIdea: Restrict the admin page to Mike and Jim.\nWhere: none\nTags: behind-the-scenes\nAsked vs made: As asked. The data behind the page is locked too, not just the page, and the relay checks the login itself as a second lock.\nMike:\nNote: Needs the Access application set up in the Cloudflare dashboard; then ACCESS_TEAM and ACCESS_AUD go in wrangler.jsonc.\n",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "98b734c404536f86f9490bcd9e87941ed5954556",
+      "message": "Admin: Mike and Jim only (Cloudflare Access), numbers behind the same login\n\nThe admin page's numbers move from the relay's public /stats and /traffic to\ngardeninsound.website/admin/api/* (a route of the relay Worker on the site's\nzone), so the Cloudflare Access login on /admin/ covers them. The relay checks\neach request's signed Access token again (relay/src/access.ts: the team's key,\nthis application, not expired) and answers \"locked\" until Access is set up.\nThe game's POST /count stays open.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-19T16:02:37Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "relay/README.md",
+      "status": "M",
+      "additions": 26,
+      "deletions": 4
+    },
+    {
+      "path": "relay/src/access.test.ts",
+      "status": "A",
+      "additions": 52,
+      "deletions": 0
+    },
+    {
+      "path": "relay/src/access.ts",
+      "status": "A",
+      "additions": 64,
+      "deletions": 0
+    },
+    {
+      "path": "relay/src/index.ts",
+      "status": "M",
+      "additions": 38,
+      "deletions": 17
+    },
+    {
+      "path": "relay/test.mjs",
+      "status": "M",
+      "additions": 17,
+      "deletions": 10
+    },
+    {
+      "path": "relay/wrangler.jsonc",
+      "status": "M",
+      "additions": 10,
+      "deletions": 2
+    },
+    {
+      "path": "src/admin/AdminPage.tsx",
+      "status": "M",
+      "additions": 2,
+      "deletions": 1
+    },
+    {
+      "path": "src/admin/model.test.ts",
+      "status": "M",
+      "additions": 2,
+      "deletions": 2
+    },
+    {
+      "path": "src/admin/model.ts",
+      "status": "M",
+      "additions": 4,
+      "deletions": 3
+    }
+  ],
+  "additions": 216,
+  "deletions": 40,
+  "areas": [
+    "relay",
+    "docs"
+  ],
+  "branch": "admin-access",
+  "opened_at": "2026-11-19T16:02:41Z",
+  "merged_by": "vlandham",
+  "summary": "Locks `/admin/` and its numbers to Mike and Jim.\n\n- **The page:** Cloudflare Access puts a login in front of `gardeninsound.website/admin/`. You type your email, and if it's on the list Cloudflare emails a one-time code. This part is set up in the dashboard, not in code (relay/README.md, \"Admin access\").\n- **The numbers:** the relay no longer serves the public `/stats` and `/traffic`. The admin page reads them from `gardeninsound.website/admin/api/…`, a route of the relay on the site's own zone, so the same login covers them. The relay also checks each request's signed Access token itself (`relay/src/access.ts`: signed by the team's key, for this application, not expired), so the numbers stay locked even if the Access policy were loosened by mistake. Until `ACCESS_TEAM` and `ACCESS_AUD` are set, it answers \"locked\".\n- The game's count pings (`POST /count`) work as before.\n\n**Checked:**\n- Unit tests sign real tokens with a test key: a good one gets in; a wrong application, wrong team, expired token, unknown key or someone else's key does not.\n- A test fails if `ACCESS_DEV` (the local-only bypass) ever appears in `wrangler.jsonc`.\n- `relay/npm test`: the numbers work with the local bypass. Without it, they're locked, a made-up token is refused, and the old public addresses return 404.\n- The smoke test still runs the admin page on made-up data.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": "As asked. The data behind the page is locked too, not just the page, and the relay checks the login itself as a second lock.",
+    "mike": null,
+    "note": "Needs the Access application set up in the Cloudflare dashboard; then ACCESS_TEAM and ACCESS_AUD go in wrangler.jsonc.",
+    "shots": true,
+    "tags": [
+      [
+        "+",
+        "behind-the-scenes"
+      ]
+    ],
+    "present": true,
+    "whereSaid": true
+  },
+  "ideas": [],
+  "requested_reviewers": [],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-19T16:02:58Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview** · updated for 98b734c (ready when the Preview check is green)\nhttps://pr-97-garden-preview.gardeninsound.workers.dev\n\nmultiplayer · docs · behind-the-scenes · 10 files, +216 −40\n\n<sub>A full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-97]`). Edit the description and this comment follows.</sub>\n",
+      "bot": true
+    }
+  ],
+  "preview_url": null,
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 22,
+    "scenes": 12,
+    "content_files": 27,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 28089,
+    "commits": 120
+  },
+  "tags": [
+    "multiplayer",
+    "docs",
+    "behind-the-scenes"
+  ],
+  "where_from": "guessed",
+  "shots": [],
+  "first_recorded_at": "2026-11-19T16:04:59.220Z",
+  "earlier": [],
+  "recorded_at": "2026-11-19T16:04:59.220Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/44561972685"
+}

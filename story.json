@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-11-19T15:18:41.541Z",
+  "generated_at": "2026-11-19T16:05:02.233Z",
   "changes": [
     {
       "pr": null,
@@ -5243,6 +5243,46 @@
         "arcade_cabinets_ready": 4,
         "source_lines": 28087,
         "commits": 119
+      }
+    },
+    {
+      "pr": 97,
+      "sha": "9dce200ca3ca77c26aadf08ed153847536c7e488",
+      "title": "Admin: Mike and Jim only (Cloudflare Access)",
+      "url": "https://github.com/gardeninsound/map/pull/97",
+      "merged_at": "2026-11-19T16:04:32Z",
+      "dir": "changes/2026-11-19-pr097-admin-mike-and-jim-only-cloudflare-acces",
+      "ideas": [],
+      "summary": "Locks `/admin/` and its numbers to Mike and Jim.\n\n- **The page:** Cloudflare Access puts a login in front of `gardeninsound.website/admin/`. You type your email, and if it's on the list Cloudflare emails a one-time code. This part is set up in the dashboard, not in code (relay/README.md, \"Admin access\").\n- **The numbers:** the relay no longer serves the public `/stats` and `/traffic`. The admin page reads them from `gardeninsound.website/admin/api/…`, a route of the relay on the site's own zone, so the same login covers them. The relay also checks each request's signed Access token itself (`relay/src/access.ts`: signed by the team's key, for this application, not expired), so the numbers stay locked even if the Access policy were loosened by mistake. Until `ACCESS_TEAM` and `ACCESS_AUD` are set, it answers \"locked\".\n- The game's count pings (`POST /count`) work as before.\n\n**Checked:**\n- Unit tests sign real tokens with a test key: a good one gets in; a wrong application, wrong team, expired token, unknown key or someone else's key does not.\n- A test fails if `ACCESS_DEV` (the local-only bypass) ever appears in `wrangler.jsonc`.\n- `relay/npm test`: the numbers work with the local bypass. Without it, they're locked, a made-up token is refused, and the old public addresses return 404.\n- The smoke test still runs the admin page on made-up data.",
+      "story": {
+        "askedVsMade": "As asked. The data behind the page is locked too, not just the page, and the relay checks the login itself as a second lock.",
+        "mike": null,
+        "note": "Needs the Access application set up in the Cloudflare dashboard; then ACCESS_TEAM and ACCESS_AUD go in wrangler.jsonc."
+      },
+      "authors": [
+        "Jim"
+      ],
+      "files": 10,
+      "additions": 216,
+      "deletions": 40,
+      "areas": [
+        "relay",
+        "docs"
+      ],
+      "tags": [
+        "multiplayer",
+        "docs",
+        "behind-the-scenes"
+      ],
+      "shots": [],
+      "census": {
+        "spots": 15,
+        "plugins": 22,
+        "scenes": 12,
+        "content_files": 27,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 28089,
+        "commits": 120
       }
     }
   ],
