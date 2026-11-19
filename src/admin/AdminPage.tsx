@@ -28,6 +28,7 @@ const names: Names = { places: locations, games: arcadeGames };
 
 async function json<T>(url: string): Promise<T> {
   const r = await fetch(url, { cache: 'no-cache' });
+  if (r.status === 401) throw new Error(((await r.json().catch(() => null)) as { error?: string } | null)?.error ?? 'not signed in');
   if (!r.ok) throw new Error(r.status === 403 ? 'GitHub says to slow down; try again in a while' : `HTTP ${r.status}`);
   return (await r.json()) as T;
 }
@@ -112,7 +113,7 @@ export function AdminPage({ stats, traffic, github }: { stats: string; traffic: 
       </section>
 
       <footer className="story-foot">
-        Counts are anonymous, per day, from the live site (relay/README.md). <a href={import.meta.env.BASE_URL}>Back to the map →</a> ·{' '}
+        Only Mike and Jim can open this page (Cloudflare Access). Counts are anonymous, per day, from the live site (relay/README.md). <a href={import.meta.env.BASE_URL}>Back to the map →</a> ·{' '}
         <a href={`${import.meta.env.BASE_URL}story/`}>the story log</a>
       </footer>
     </div>

@@ -5,12 +5,13 @@
  */
 import { personOf } from '../story/people.mjs';
 
-export const STATS_URL = 'https://relay.gardeninsound.website/stats/bearisland/island';
-export const TRAFFIC_URL = 'https://relay.gardeninsound.website/traffic';
+/** on the site itself, behind the same Cloudflare Access login as the page (relay/src/access.ts) */
+export const STATS_URL = '/admin/api/stats/bearisland/island';
+export const TRAFFIC_URL = '/admin/api/traffic';
 export const REPO = 'gardeninsound/map';
 export const GITHUB = `https://api.github.com/repos/${REPO}`;
 
-/** `?stats=<url>` for a local relay (http://127.0.0.1:8790/stats/bearisland/island) or a fixture; `?traffic=` and `?gh=` likewise */
+/** `?stats=<url>` for a local relay (`wrangler dev --var ACCESS_DEV:open`: http://127.0.0.1:8790/admin/api/stats/bearisland/island) or a fixture; `?traffic=` and `?gh=` likewise */
 export function sourcesFrom(search: string) {
   const q = new URLSearchParams(search);
   return { stats: q.get('stats') ?? STATS_URL, traffic: q.get('traffic') ?? TRAFFIC_URL, github: (q.get('gh') ?? GITHUB).replace(/\/$/, '') };

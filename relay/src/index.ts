@@ -1,5 +1,6 @@
 import { DurableObject } from 'cloudflare:workers';
 import { Stats, type StatsReply } from './stats';
+import { checkAccess, type AccessEnv } from './access';
 import { readTraffic, TRAFFIC_TTL, type TrafficEnv } from './traffic';
 export { Stats };
 
@@ -21,8 +22,12 @@ export { Stats };
  * Counts (src/stats.ts, one Stats object per app), the only thing kept:
  *
  *   POST /count/<appId>            body: a key like `scene:gas-station-wall` (the game's beacon)
- *   GET  /stats/<appId>/<roomId>   → {now, days: [{day, visits, peak, opened: {key: n}}]}, ?days=30
- *   GET  /traffic                  → the site's traffic from Cloudflare (src/traffic.ts), cached 10 minutes
+ *
+ * and for the admin page only, at gardeninsound.website/admin/api/ (a route on the site's zone, behind
+ * Cloudflare Access; every request's Access token is checked again here, src/access.ts):
+ *
+ *   GET  /admin/api/stats/<appId>/<roomId>   → {now, days: [{day, visits, peak, opened: {key: n}}]}, ?days=30
+ *   GET  /admin/api/traffic                  → the site's traffic from Cloudflare (src/traffic.ts), cached 10 minutes
  *
  * A room tells its app's Stats about each rabbit that joins from COUNT_ORIGINS (the live site). Numbers per day only; see stats.ts.
  *
@@ -32,7 +37,9 @@ export { Stats };
  * browser was killed, which never send a close. Live pages ping every 25 s.
  */
 
-export interface Env extends TrafficEnv {
+export interface Env extends TrafficEnv, AccessEnv {
+  /** `open` skips the Access check: only ever `--var ACCESS_DEV:open` on wrangler dev, never in wrangler.jsonc */
+  ACCESS_DEV?: string;
   ROOMS: DurableObjectNamespace<Room>;
   STATS: DurableObjectNamespace<Stats>;
   /** Comma-separated allowed page origins, `*` as wildcard. Empty allows any. */
@@ -73,9 +80,7 @@ export default {
     if (url.pathname === '/') return new Response('arcade relay\n');
     const counted = /^\/count\/([^/]+)$/.exec(url.pathname);
     if (counted) return countRequest(request, env, decodeURIComponent(counted[1]!));
-    if (url.pathname === '/traffic') return trafficRequest(request, env, ctx);
-    const asked = /^\/stats\/([^/]+)\/([^/]+)$/.exec(url.pathname);
-    if (asked) return statsRequest(env, decodeURIComponent(asked[1]!), decodeURIComponent(asked[2]!), url);
+    if (url.pathname.startsWith('/admin/api/')) return adminRequest(request, env, ctx, url);
     const m = /^\/room\/([^/]+)\/([^/]+)$/.exec(url.pathname);
     const appId = m ? decodeURIComponent(m[1]!) : '';
     const roomId = m ? decodeURIComponent(m[2]!) : '';
@@ -92,8 +97,24 @@ export default {
   },
 } satisfies ExportedHandler<Env>;
 
-/** public numbers, readable from any page (the admin page, a script) */
-const OPEN = { 'Access-Control-Allow-Origin': '*', 'Cache-Control': 'no-store' };
+/** the admin page's numbers: for the signed-in browser only, never kept by anything in between */
+const PRIVATE = { 'Cache-Control': 'private, no-store' };
+/** `wrangler dev --var ACCESS_DEV:open` (the relay's tests, a local admin page) skips the check; never set it in wrangler.jsonc */
+const devOpen = (env: Env) => env.ACCESS_DEV === 'open';
+
+/** /admin/api/*: only for someone Cloudflare Access let in (src/access.ts) */
+async function adminRequest(request: Request, env: Env, ctx: ExecutionContext, url: URL): Promise<Response> {
+  const dev = devOpen(env);
+  const headers = dev ? { ...PRIVATE, 'Access-Control-Allow-Origin': '*' } : PRIVATE;
+  if (!dev) {
+    const who = await checkAccess(request, env);
+    if (!who.ok) return Response.json({ error: who.why }, { status: 401, headers });
+  }
+  if (url.pathname === '/admin/api/traffic') return trafficRequest(request, env, ctx, headers);
+  const asked = /^\/admin\/api\/stats\/([^/]+)\/([^/]+)$/.exec(url.pathname);
+  if (asked) return statsRequest(env, decodeURIComponent(asked[1]!), decodeURIComponent(asked[2]!), url, headers);
+  return Response.json({ error: 'not found' }, { status: 404, headers });
+}
 
 /** the game's beacon: one key, from an allowed page */
 async function countRequest(request: Request, env: Env, appId: string): Promise<Response> {
@@ -106,28 +127,28 @@ async function countRequest(request: Request, env: Env, appId: string): Promise<
 }
 
 /** Cloudflare's numbers for the site, asked at most every TRAFFIC_TTL seconds (the Workers cache) */
-async function trafficRequest(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-  const key = new Request(new URL('/traffic', request.url).toString());
+async function trafficRequest(request: Request, env: Env, ctx: ExecutionContext, headers: Record<string, string>): Promise<Response> {
+  // the Workers cache, keyed on a URL nobody can ask for directly; only reached after the Access check
+  const key = new Request(new URL('/__traffic-cache', request.url).toString());
   const cache = (caches as unknown as { default: Cache }).default;
   const hit = await cache.match(key);
-  if (hit) return hit;
+  if (hit) return new Response(hit.body, { headers: { ...headers, 'Content-Type': 'application/json' } });
   const body = await readTraffic(env);
   // an answer with a problem in it is kept only a minute, so a fix (the token set) shows soon
   const ttl = 'error' in body.zone || 'error' in body.web ? 60 : TRAFFIC_TTL;
-  const res = Response.json(body, { headers: { ...OPEN, 'Cache-Control': `public, max-age=${ttl}` } });
-  ctx.waitUntil(cache.put(key, res.clone()));
-  return res;
+  ctx.waitUntil(cache.put(key, Response.json(body, { headers: { 'Cache-Control': `public, max-age=${ttl}` } })));
+  return Response.json(body, { headers });
 }
 
-async function statsRequest(env: Env, appId: string, roomId: string, url: URL): Promise<Response> {
-  if (!NAME.test(appId) || !NAME.test(roomId)) return new Response('not found\n', { status: 404 });
+async function statsRequest(env: Env, appId: string, roomId: string, url: URL, headers: Record<string, string>): Promise<Response> {
+  if (!NAME.test(appId) || !NAME.test(roomId)) return Response.json({ error: 'not found' }, { status: 404, headers });
   const days = Number(url.searchParams.get('days')) || 30;
   const [now, counts] = await Promise.all([
     env.ROOMS.get(env.ROOMS.idFromName(`${appId}/${roomId}`)).online(),
     env.STATS.get(env.STATS.idFromName(appId)).stats(days),
   ]);
   const body: StatsReply & { now: number } = { ...counts, now };
-  return Response.json(body, { headers: OPEN });
+  return Response.json(body, { headers });
 }
 
 export class Room extends DurableObject<Env> {

@@ -199,7 +199,7 @@ async function counts() {
   const HTTP = BASE.replace('ws:', 'http:');
   // a fresh app each run: wrangler dev keeps Durable Object storage between runs
   const app = `stats${Date.now().toString(36)}`;
-  const get = async () => (await fetch(`${HTTP}/stats/${app}/isle`)).json();
+  const get = async () => (await fetch(`${HTTP}/admin/api/stats/${app}/isle`)).json();
   const count = (key, origin = ORIGIN) => fetch(`${HTTP}/count/${app}`, { method: 'POST', body: key, headers: origin ? { Origin: origin } : {} });
 
   // a rabbit from dev (or a preview, or a test) is in the room but isn't a visit
@@ -232,9 +232,7 @@ async function counts() {
   assert((await count('crow', 'https://evil.example')).status === 403, 'another site is refused');
   assert((await count('crow', null)).status === 403, 'no origin is refused');
   assert((await fetch(`${HTTP}/count/${app}`)).status === 405, 'only POST counts');
-  const res = await fetch(`${HTTP}/stats/${app}/isle`);
-  assert(res.headers.get('access-control-allow-origin') === '*', 'stats are readable from any page');
-  s = await res.json();
+  s = await get();
   assert(JSON.stringify(s.days[0].opened) === JSON.stringify({ 'scene:gas-station-wall': 2, crow: 1 }), `opened: ${JSON.stringify(s.days[0].opened)}`);
   console.log(' opened things counted by key, most first; bad keys, other sites and GETs refused ✓');
 
@@ -243,22 +241,31 @@ async function counts() {
   assert((await get()).now === 0, 'nobody online after they leave');
   console.log(' online now drops when they leave ✓');
 
-  // /traffic without a token: says what's missing, readable from any page
-  const t = await fetch(`${HTTP}/traffic`);
-  assert(t.headers.get('access-control-allow-origin') === '*', 'traffic is readable from any page');
-  const tj = await t.json();
+  // /admin/api/traffic without a Cloudflare token: says what's missing
+  const tj = await (await fetch(`${HTTP}/admin/api/traffic`)).json();
   assert(/CF_API_TOKEN/.test(tj.zone.error) && /CF_API_TOKEN/.test(tj.web.error), `expected "not set up yet", got ${JSON.stringify(tj)}`);
-  console.log(' /traffic says what is missing until the token is set ✓');
+  console.log(' /admin/api/traffic says what is missing until the token is set ✓');
+
+  // the old public addresses are gone
+  assert((await fetch(`${HTTP}/stats/${app}/isle`)).status === 404, 'no public /stats');
+  assert((await fetch(`${HTTP}/traffic`)).status === 404, 'no public /traffic');
+  console.log(' no public /stats or /traffic ✓');
 }
 
 let failed = false;
-let wrangler = await startWrangler();
+let wrangler = await startWrangler(PORT, { ACCESS_DEV: 'open' });
 try {
   await run();
   await counts();
   wrangler.kill();
   wrangler = await startWrangler(PORT + 1, { STALE_MS: 2000, SWEEP_MS: 1000 });
   await sweep();
+  // without ACCESS_DEV (as deployed): the admin numbers are locked to anyone Access didn't let in
+  const locked = await fetch(`http://127.0.0.1:${PORT + 1}/admin/api/stats/x/y`);
+  assert(locked.status === 401 && /not set up/.test((await locked.json()).error), 'admin numbers locked without Access');
+  const forged = await fetch(`http://127.0.0.1:${PORT + 1}/admin/api/traffic`, { headers: { 'Cf-Access-Jwt-Assertion': 'a.b.c' } });
+  assert(forged.status === 401, 'a made-up token is refused');
+  console.log(' admin numbers locked without a real Access sign-in ✓');
   console.log('Relay OK');
 } catch (err) {
   failed = true;

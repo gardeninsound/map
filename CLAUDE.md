@@ -143,7 +143,7 @@ root file only for new commands, workflow, conventions or a new area.
   `model.ts` (tested); covered by the smoke test on a made-up log.
 - `src/admin/` — the **/admin/** page for Mike and Jim (a third Vite entry, `admin/index.html`; not linked, `noindex`): the
   relay's counts (`relay/README.md`, "Counts"), open PRs with their Check and preview, wishes waiting, pins to confirm and
-  spots still "coming soon". Reads public data only (`?stats=` / `?gh=` point it elsewhere); words for count keys in
+  spots still "coming soon". Mike and Jim only (Cloudflare Access; its numbers at `/admin/api/`, `relay/README.md`, "Admin access"). `?stats=` / `?traffic=` / `?gh=` point it elsewhere; words for count keys in
   `nameOf` (`model.ts`, tested); covered by the smoke test on made-up data.
 
 ## Conventions
