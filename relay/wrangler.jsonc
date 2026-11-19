@@ -4,7 +4,11 @@
   // The gardeninsound Cloudflare account (holds gardeninsound.website). Pinned so a deploy
   // can never land in someone's personal account by mistake.
   "account_id": "7de05f51e1fe91fd717fe174fcfba85d",
-  "routes": [{ "pattern": "relay.gardeninsound.website", "custom_domain": true }],
+  "routes": [
+    { "pattern": "relay.gardeninsound.website", "custom_domain": true },
+    // the admin page's numbers, on the site itself so Cloudflare Access covers them with the page (src/access.ts)
+    { "pattern": "gardeninsound.website/admin/api/*", "zone_name": "gardeninsound.website" }
+  ],
   "main": "src/index.ts",
   "compatibility_date": "2026-10-01",
   // Not wrangler's default 8787, which other local tools tend to grab.
@@ -31,6 +35,10 @@
     // (`npx wrangler secret put CF_API_TOKEN`); these say where to look. README, "Traffic".
     "CF_ACCOUNT_ID": "7de05f51e1fe91fd717fe174fcfba85d",
     "CF_ZONE_ID": "fadb4ced3ff41dd38c5b5d3428794121",
-    "CF_SITE_TAG": "334c714183db4a4086aab2bc0a1ed5d8"
+    "CF_SITE_TAG": "334c714183db4a4086aab2bc0a1ed5d8",
+    // Cloudflare Access in front of gardeninsound.website/admin/ (README, "Admin access"): the team domain
+    // and the application's audience tag. Until both are set, /admin/api/ answers "locked".
+    "ACCESS_TEAM": "",
+    "ACCESS_AUD": ""
   }
 }

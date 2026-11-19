@@ -103,8 +103,8 @@ describe('GitHub', () => {
 
   it('reads from the real sources, or the ones a link names', () => {
     expect(sourcesFrom('')).toEqual({
-      stats: 'https://relay.gardeninsound.website/stats/bearisland/island',
-      traffic: 'https://relay.gardeninsound.website/traffic',
+      stats: '/admin/api/stats/bearisland/island',
+      traffic: '/admin/api/traffic',
       github: 'https://api.github.com/repos/gardeninsound/map',
     });
     expect(sourcesFrom('?stats=/x.json&gh=/gh/').github).toBe('/gh');

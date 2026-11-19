@@ -39,8 +39,9 @@ A `Stats` Durable Object per app (`src/stats.ts`) keeps numbers per Seattle day,
   per thing per page load, never from a scripted browser).
 
 ```
-POST /count/<appId>            body: the key; allowed origins only; 204, or 400 for a bad key / a full day
-GET  /stats/<appId>/<roomId>   → { now, today, days: [{ day, visits, peak, opened: { key: n } }] }  (?days=30, any origin)
+POST /count/<appId>                       body: the key; allowed origins only; 204, or 400 for a bad key / a full day
+GET  /admin/api/stats/<appId>/<roomId>    → { now, today, days: [{ day, visits, peak, opened: { key: n } }] }  (?days=30;
+                                            Mike and Jim only, see "Admin access")
 ```
 
 No names, no ids, no addresses are kept: a key and a count per day. Keys are `[a-z0-9:_-]{1,64}` and a
@@ -49,7 +50,7 @@ day holds at most `MAX_KEYS`, so made-up keys can't grow it. Counts older than `
 
 ## Traffic
 
-`GET /traffic` returns Cloudflare's own numbers for the whole site, for the admin page: everyone who loads
+`GET /admin/api/traffic` returns Cloudflare's own numbers for the whole site, for the admin page: everyone who loads
 gardeninsound.website (it goes through Cloudflare), including people who never press start. `src/traffic.ts`
 asks Cloudflare's GraphQL Analytics API for two datasets:
 
@@ -67,4 +68,25 @@ hour at most. Until it's set up, each half says what's missing. To set it up:
 3. **Make a token**: My Profile → API Tokens → Create Token → Custom, with **Account › Account Analytics › Read**
    and **Zone › Analytics › Read** (the gardeninsound account and zone only). Then, in `relay/`:
    `npx wrangler secret put CF_API_TOKEN` and paste it. It lives in Cloudflare only, never in git.
-4. `npm run deploy`, then open https://relay.gardeninsound.website/traffic.
+4. `npm run deploy`, then open https://gardeninsound.website/admin/.
+
+## Admin access
+
+The admin page and its numbers are for Mike and Jim only. **Cloudflare Access** (Zero Trust, free for up to
+50 people) puts a login in front of `gardeninsound.website/admin/`: you type your email, and if it's on the
+list Cloudflare sends a one-time code. The numbers are served at `gardeninsound.website/admin/api/*` (a route
+of this Worker on the site's zone, `wrangler.jsonc`), so the same login covers them, and `src/access.ts`
+checks every request's signed Access token again (`Cf-Access-Jwt-Assertion`: the team's key, this
+application, not expired). Until `ACCESS_TEAM` and `ACCESS_AUD` are set, `/admin/api/` answers "locked".
+There's no public `/stats` or `/traffic`; the game's `POST /count` stays open.
+
+To set it up (or add someone):
+1. Cloudflare dashboard → **Zero Trust** (first time: pick a team name and the Free plan).
+2. Access → Applications → **Add an application** → Self-hosted. Domain `gardeninsound.website`, path `admin`.
+3. A policy: Action **Allow**, Include → **Emails** → Mike's and Jim's. Login method: One-time PIN.
+4. Copy the application's **Audience (AUD) tag** (its Overview) and the team domain (`<team>.cloudflareaccess.com`,
+   Settings → Custom pages) into `ACCESS_AUD` and `ACCESS_TEAM`, then `npm run deploy`.
+
+To try the page locally with a local relay: `npx wrangler dev --var ACCESS_DEV:open`, then open
+`/admin/?stats=http://127.0.0.1:8790/admin/api/stats/bearisland/island&traffic=http://127.0.0.1:8790/admin/api/traffic`.
+Never put `ACCESS_DEV` in `wrangler.jsonc` (`src/access.test.ts` fails if you do).
