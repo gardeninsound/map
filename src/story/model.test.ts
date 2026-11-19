@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { anchorOf, wipeAt, wipeKey, applyFilter, tagCounts, withTag, DEFAULT_SRC, groupByMonth, growth, srcFrom, stats, waitDays, waitingWishes, type StoryChange, type StoryIndex } from './model';
+import { anchorOf, behindCount, BEHIND, linksBehind, onStage, wipeAt, wipeKey, applyFilter, tagCounts, withTag, DEFAULT_SRC, groupByMonth, growth, srcFrom, stats, waitDays, waitingWishes, type StoryChange, type StoryIndex } from './model';
 
 const change = (over: Partial<StoryChange>): StoryChange => ({
   pr: null,
@@ -108,5 +108,24 @@ describe('the before/after line', () => {
     expect(wipeKey(40, 'Home')).toBe(0);
     expect(wipeKey(40, 'End')).toBe(100);
     expect(wipeKey(40, 'a')).toBeNull();
+  });
+});
+
+describe('behind the scenes', () => {
+  const seen = change({ pr: 1, sha: 'aaaaaaa1', tags: ['character'] });
+  const plumbing = change({ pr: 2, sha: 'bbbbbbb2', tags: ['code', BEHIND] });
+  const old = change({ pr: 3, sha: 'ccccccc3' }); // a log from before tags
+  const all = [seen, plumbing, old];
+
+  it('leaves plumbing out unless asked', () => {
+    expect(onStage(all, false)).toEqual([seen, old]);
+    expect(onStage(all, true)).toEqual(all);
+    expect(behindCount(all)).toBe(1);
+  });
+
+  it('shows them when a link points at one', () => {
+    expect(linksBehind(all, '#pr-2')).toBe(true);
+    expect(linksBehind(all, '#pr-1')).toBe(false);
+    expect(linksBehind(all, '')).toBe(false);
   });
 });
