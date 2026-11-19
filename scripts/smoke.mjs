@@ -1,7 +1,7 @@
 /**
  * Smoke test of the built site in a real browser: does it boot, can you walk into the Duck
  * Arcade, does every playable cabinet open and close, does the bear hand you a licorice? Fails on any page error, console error
- * or failed request (a missing file is a 404). Also tries the ?open= links and opens /story/ on a made-up log. Runs in CI on every PR after `npm run build`.
+ * or failed request (a missing file is a 404). Also tries the ?open= links and opens /story/ and /admin/ on made-up data. Runs in CI on every PR after `npm run build`.
  *
  * Usage: npm run build && npm run smoke   (locally uses your installed Chrome; CI uses
  * Playwright's Chromium). Shots of a failure land in screenshots/smoke/.
@@ -200,7 +200,27 @@ try {
   await page.locator('#pr-64').waitFor({ timeout: 5_000 });
   assertClean();
 
-  console.log(`smoke ok: boots, arcade, ${titles.length} cabinets, the bear, ?open= links, a sign's ride, the snack crow, /story/`);
+  // /admin/: fed made-up counts and GitHub replies, so it doesn't depend on the relay or GitHub
+  check('/admin/ page');
+  const reply = (body) => (route) => route.fulfill({ contentType: 'application/json', body: JSON.stringify(body) });
+  await page.route((u) => u.pathname === '/__stats', reply({
+    generated_at: '2026-11-19T20:00:00Z', today: '2026-11-19', now: 2,
+    days: [{ day: '2026-11-19', visits: 5, peak: 3, opened: { crow: 2, 'scene:gas-station-wall': 1 } }],
+  }));
+  await page.route((u) => u.pathname === '/__gh/pulls', reply([
+    { number: 93, title: 'A pull request', html_url: 'https://github.com/gardeninsound/map/pull/93', user: { login: 'exit320-stack' }, created_at: '2026-11-18T00:00:00Z', head: { sha: 'abc' } },
+  ]));
+  await page.route((u) => u.pathname.startsWith('/__gh/commits/'), reply({ check_runs: [{ name: 'check', status: 'completed', conclusion: 'success' }] }));
+  await page.route((u) => u.pathname === '/__gh/issues', reply([
+    { number: 40, title: 'Idea: more dinosaurs', html_url: 'https://github.com/gardeninsound/map/issues/40', created_at: '2026-11-18T00:00:00Z', labels: [{ name: 'suggestion' }] },
+  ]));
+  await page.goto(`${base}admin/?stats=/__stats&gh=/__gh`);
+  await page.locator('.admin-top th', { hasText: 'the snack crow' }).waitFor({ timeout: 10_000 });
+  await page.locator('.admin-pulls', { hasText: 'Check passed' }).waitFor({ timeout: 10_000 });
+  await page.locator('.admin-list', { hasText: 'more dinosaurs' }).waitFor({ timeout: 10_000 });
+  assertClean();
+
+  console.log(`smoke ok: boots, arcade, ${titles.length} cabinets, the bear, ?open= links, a sign's ride, the snack crow, /story/, /admin/`);
 } catch (e) {
   mkdirSync('screenshots/smoke', { recursive: true });
   await page.screenshot({ path: 'screenshots/smoke/failure.png' }).catch(() => {});

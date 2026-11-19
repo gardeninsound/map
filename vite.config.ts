@@ -8,10 +8,14 @@ export default defineConfig({
   // set base: '/map/' — every asset URL goes through import.meta.env.BASE_URL.
   base: '/',
   plugins: [react()],
-  // two pages: the map, and /story/ (the story log, src/story/; not linked from the map yet)
+  // three pages: the map, /story/ (the story log, src/story/) and /admin/ (src/admin/); neither linked from the map
   build: {
     rolldownOptions: {
-      input: { main: resolve(import.meta.dirname, 'index.html'), story: resolve(import.meta.dirname, 'story/index.html') },
+      input: {
+        main: resolve(import.meta.dirname, 'index.html'),
+        story: resolve(import.meta.dirname, 'story/index.html'),
+        admin: resolve(import.meta.dirname, 'admin/index.html'),
+      },
     },
   },
   test: { environment: 'jsdom', globals: true },

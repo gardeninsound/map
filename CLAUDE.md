@@ -141,6 +141,10 @@ root file only for new commands, workflow, conventions or a new area.
 - `src/story/` — the **/story/** page (a second Vite entry, `story/index.html`; not linked from the map yet): reads
   `story.json` live from the story branch (`?src=<url>` for a local copy, e.g. `?src=/.story/` in dev); rules in
   `model.ts` (tested); covered by the smoke test on a made-up log.
+- `src/admin/` — the **/admin/** page for Mike and Jim (a third Vite entry, `admin/index.html`; not linked, `noindex`): the
+  relay's counts (`relay/README.md`, "Counts"), open PRs with their Check and preview, wishes waiting, pins to confirm and
+  spots still "coming soon". Reads public data only (`?stats=` / `?gh=` point it elsewhere); words for count keys in
+  `nameOf` (`model.ts`, tested); covered by the smoke test on made-up data.
 
 ## Conventions
 

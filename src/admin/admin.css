@@ -1,0 +1,34 @@
+/* /admin/: the story page's paper and fonts (story.css), plus cards for the numbers */
+.admin-card { background: var(--paper); box-shadow: 0 0 0 4px var(--ink), 8px 8px 0 4px rgba(0,0,0,0.2); padding: 20px; margin: 0 0 28px; }
+.admin-card h2 { font-family: var(--pixel); font-weight: 400; font-size: 14px; margin: 0 0 16px; color: var(--plum); }
+.admin-card h3 { font-family: var(--pixel); font-weight: 400; font-size: 10px; margin: 22px 0 10px; }
+.admin-quiet { opacity: 0.75; margin: 4px 0; }
+.admin-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; }
+.admin-tile { background: var(--paper-2); padding: 12px; display: flex; flex-direction: column; gap: 4px; }
+.admin-tile b { font-family: var(--pixel); font-weight: 400; font-size: 22px; color: var(--ink); font-variant-numeric: tabular-nums; }
+.admin-tile span { font-size: 15px; }
+
+.admin-bars svg { width: 100%; height: auto; display: block; overflow: visible; }
+.admin-bar-mark { fill: var(--plum); }
+.admin-bar-on { fill: var(--pink); }
+.admin-axis { stroke: var(--ink); stroke-opacity: 0.35; }
+.admin-ticks { display: flex; justify-content: space-between; font-size: 13px; opacity: 0.7; margin-top: 4px; }
+.admin-bars-note { margin: 6px 0 0; font-size: 15px; min-height: 1.4em; font-variant-numeric: tabular-nums; }
+
+.admin-range-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.admin-range { display: flex; gap: 6px; }
+.admin-range button { font-family: var(--body); font-size: 14px; padding: 4px 8px; background: transparent; color: var(--ink); border: 2px solid var(--ink); cursor: pointer; }
+.admin-range button.on { background: var(--ink); color: var(--paper); }
+.admin-top { width: 100%; border-collapse: collapse; font-size: 16px; }
+.admin-top th { text-align: left; font-weight: 400; padding: 3px 10px 3px 0; width: 45%; overflow-wrap: anywhere; }
+.admin-top .admin-bar-cell { width: 45%; }
+.admin-top .admin-bar { display: block; height: 10px; min-width: 2px; background: var(--plum); border-radius: 0 4px 4px 0; }
+.admin-top .admin-n { text-align: right; padding-left: 10px; font-variant-numeric: tabular-nums; }
+
+.admin-list { margin: 0; padding: 0 0 0 18px; display: flex; flex-direction: column; gap: 8px; }
+.admin-pulls { list-style: none; padding: 0; }
+.admin-pulls li { display: flex; flex-direction: column; gap: 2px; }
+.admin-meta { font-size: 14px; opacity: 0.85; }
+.admin-check.pass { color: #3d6b1f; }
+.admin-check.fail { color: #b3261e; font-weight: 600; }
+.admin-range button:focus-visible, .admin-card a:focus-visible { outline: 3px dashed var(--pink); outline-offset: 3px; }

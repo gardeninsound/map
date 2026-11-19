@@ -8,6 +8,7 @@
 
 // dates, shared with the /story/ page
 import { dateLabel, daysBetween, seattleDay, waitDays } from '../../src/story/dates.mjs';
+import { personOf } from '../../src/story/people.mjs';
 
 export const SCHEMA = 1;
 
@@ -182,8 +183,7 @@ export function parseWish(body = '') {
 }
 
 /** the people behind the GitHub logins and git names, as the log names them */
-const PEOPLE = { vlandham: 'Jim', 'jim vallandingham': 'Jim', jim: 'Jim', 'exit320-stack': 'Mike', mike: 'Mike' };
-export const personOf = (who) => (who ? (PEOPLE[String(who).toLowerCase()] ?? who) : null);
+export { personOf };
 /** a change's makers, by name, once each */
 export const peopleOf = (authors = []) => [...new Set(authors.map((a) => personOf(a.login ?? a.name)).filter(Boolean))];
 
