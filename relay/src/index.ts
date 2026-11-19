@@ -1,5 +1,6 @@
 import { DurableObject } from 'cloudflare:workers';
 import { Stats, type StatsReply } from './stats';
+import { readTraffic, TRAFFIC_TTL, type TrafficEnv } from './traffic';
 export { Stats };
 
 /**
@@ -21,6 +22,7 @@ export { Stats };
  *
  *   POST /count/<appId>            body: a key like `scene:gas-station-wall` (the game's beacon)
  *   GET  /stats/<appId>/<roomId>   → {now, days: [{day, visits, peak, opened: {key: n}}]}, ?days=30
+ *   GET  /traffic                  → the site's traffic from Cloudflare (src/traffic.ts), cached 10 minutes
  *
  * A room tells its app's Stats about each rabbit that joins from COUNT_ORIGINS (the live site). Numbers per day only; see stats.ts.
  *
@@ -30,7 +32,7 @@ export { Stats };
  * browser was killed, which never send a close. Live pages ping every 25 s.
  */
 
-export interface Env {
+export interface Env extends TrafficEnv {
   ROOMS: DurableObjectNamespace<Room>;
   STATS: DurableObjectNamespace<Stats>;
   /** Comma-separated allowed page origins, `*` as wildcard. Empty allows any. */
@@ -66,11 +68,12 @@ function originAllowed(origin: string | null, allowed: string | undefined): bool
 }
 
 export default {
-  async fetch(request, env): Promise<Response> {
+  async fetch(request, env, ctx): Promise<Response> {
     const url = new URL(request.url);
     if (url.pathname === '/') return new Response('arcade relay\n');
     const counted = /^\/count\/([^/]+)$/.exec(url.pathname);
     if (counted) return countRequest(request, env, decodeURIComponent(counted[1]!));
+    if (url.pathname === '/traffic') return trafficRequest(request, env, ctx);
     const asked = /^\/stats\/([^/]+)\/([^/]+)$/.exec(url.pathname);
     if (asked) return statsRequest(env, decodeURIComponent(asked[1]!), decodeURIComponent(asked[2]!), url);
     const m = /^\/room\/([^/]+)\/([^/]+)$/.exec(url.pathname);
@@ -100,6 +103,20 @@ async function countRequest(request: Request, env: Env, appId: string): Promise<
   const key = (await request.text()).trim().slice(0, 80);
   const ok = await env.STATS.get(env.STATS.idFromName(appId)).count(key);
   return new Response(null, { status: ok ? 204 : 400 });
+}
+
+/** Cloudflare's numbers for the site, asked at most every TRAFFIC_TTL seconds (the Workers cache) */
+async function trafficRequest(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+  const key = new Request(new URL('/traffic', request.url).toString());
+  const cache = (caches as unknown as { default: Cache }).default;
+  const hit = await cache.match(key);
+  if (hit) return hit;
+  const body = await readTraffic(env);
+  // an answer with a problem in it is kept only a minute, so a fix (the token set) shows soon
+  const ttl = 'error' in body.zone || 'error' in body.web ? 60 : TRAFFIC_TTL;
+  const res = Response.json(body, { headers: { ...OPEN, 'Cache-Control': `public, max-age=${ttl}` } });
+  ctx.waitUntil(cache.put(key, res.clone()));
+  return res;
 }
 
 async function statsRequest(env: Env, appId: string, roomId: string, url: URL): Promise<Response> {

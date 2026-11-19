@@ -4,11 +4,13 @@ import { locations } from '../content/locations';
 import {
   ageLabel,
   checkOf,
+  daily,
   lastDays,
   nameOf,
   otherIssues,
   pullOf,
   spotsTodo,
+  sumDays,
   totals,
   wishesOf,
   type GhCheckRuns,
@@ -16,7 +18,9 @@ import {
   type GhPull,
   type Names,
   type Pull,
+  type Ranked,
   type Stats,
+  type Traffic,
 } from './model';
 
 type Load<T> = { state: 'loading' } | { state: 'error'; message: string } | { state: 'ok'; data: T };
@@ -43,8 +47,9 @@ function useLoad<T>(load: () => Promise<T>, deps: unknown[]): Load<T> {
   return s;
 }
 
-export function AdminPage({ stats, github }: { stats: string; github: string }) {
+export function AdminPage({ stats, traffic, github }: { stats: string; traffic: string; github: string }) {
   const counts = useLoad(() => json<Stats>(stats), [stats]);
+  const site = useLoad(() => json<Traffic>(traffic), [traffic]);
   const now = useMemo(() => Date.now(), []);
   const pulls = useLoad(async () => {
     const open = await json<GhPull[]>(`${github}/pulls?state=open&per_page=30`);
@@ -66,6 +71,14 @@ export function AdminPage({ stats, github }: { stats: string; github: string }) 
         {counts.state === 'loading' && <p className="admin-quiet">Counting…</p>}
         {counts.state === 'error' && <p className="admin-quiet">Couldn't read the counts ({counts.message}).</p>}
         {counts.state === 'ok' && <Visitors s={counts.data} />}
+      </section>
+
+      <section className="admin-card" aria-labelledby="traffic">
+        <h2 id="traffic">The whole site (Cloudflare)</h2>
+        <p className="admin-quiet admin-why">Everyone who loads gardeninsound.website, including those who never press start.</p>
+        {site.state === 'loading' && <p className="admin-quiet">Asking Cloudflare…</p>}
+        {site.state === 'error' && <p className="admin-quiet">Couldn't read it ({site.message}).</p>}
+        {site.state === 'ok' && <SiteTraffic t={site.data} today={counts.state === 'ok' ? counts.data.today : site.data.generated_at.slice(0, 10)} />}
       </section>
 
       <section className="admin-card" aria-labelledby="prs">
@@ -131,7 +144,7 @@ function Visitors({ s }: { s: Stats }) {
         <Tile n={totals(s, 30).visits} label="visits, last 30 days" />
       </div>
       <h3>Visits a day, last 30 days</h3>
-      <Bars days={lastDays(s, 30)} />
+      <VisitBars s={s} />
       <div className="admin-range-head">
         <h3>Most opened</h3>
         <div className="admin-range" role="group" aria-label="over">
@@ -165,26 +178,24 @@ function Visitors({ s }: { s: Stats }) {
   );
 }
 
-/** one bar per day; hover (or focus) a day for its numbers */
-function Bars({ days }: { days: Stats['days'] }) {
+/** one bar per day; hover a day for its numbers (`say` puts a day in words) */
+function Bars({ days, say }: { days: { day: string; n: number }[]; say: (i: number) => string }) {
   const [hover, setHover] = useState<number | null>(null);
   const W = 600;
   const H = 120;
-  const max = Math.max(1, ...days.map((d) => d.visits));
+  const max = Math.max(0, ...days.map((d) => d.n));
   const slot = W / days.length;
   const bar = Math.max(2, slot - 2); // a 2px gap between bars
-  const shown = hover === null ? null : days[hover]!;
   return (
     <div className="admin-bars">
-      <svg viewBox={`0 0 ${W} ${H + 1}`} role="img" aria-label={`visits a day: ${days.map((d) => d.visits).join(', ')}`} onPointerLeave={() => setHover(null)}>
+      <svg viewBox={`0 0 ${W} ${H + 1}`} role="img" aria-label={days.map((d) => `${d.day}: ${d.n}`).join(', ')} onPointerLeave={() => setHover(null)}>
         <line x1={0} x2={W} y1={H + 0.5} y2={H + 0.5} className="admin-axis" />
         {days.map((d, i) => {
-          const h = d.visits ? Math.max(2, (d.visits / max) * (H - 6)) : 0;
-          const x = i * slot + 1;
+          const h = d.n ? Math.max(2, (d.n / Math.max(1, max)) * (H - 6)) : 0;
           return (
             <g key={d.day} onPointerEnter={() => setHover(i)}>
               <rect x={i * slot} y={0} width={slot} height={H} fill="transparent" />
-              {h > 0 && <path className={i === hover ? 'admin-bar-on' : 'admin-bar-mark'} d={roundTop(x, H, bar, h)} />}
+              {h > 0 && <path className={i === hover ? 'admin-bar-on' : 'admin-bar-mark'} d={roundTop(i * slot + 1, H, bar, h)} />}
             </g>
           );
         })}
@@ -194,7 +205,7 @@ function Bars({ days }: { days: Stats['days'] }) {
         <span>today</span>
       </div>
       <p className="admin-bars-note" aria-live="polite">
-        {shown ? `${shown.day}: ${shown.visits} visits, ${shown.peak} at once` : `most in a day: ${max === 1 && !days.some((d) => d.visits) ? 0 : max}`}
+        {hover === null ? `most in a day: ${max}` : say(hover)}
       </p>
     </div>
   );
@@ -205,6 +216,71 @@ function roundTop(x: number, base: number, w: number, h: number) {
   const r = Math.min(4, w / 2, h);
   const y = base - h;
   return `M${x},${base}V${y + r}Q${x},${y} ${x + r},${y}H${x + w - r}Q${x + w},${y} ${x + w},${y + r}V${base}Z`;
+}
+
+function VisitBars({ s }: { s: Stats }) {
+  const days = lastDays(s, 30);
+  return <Bars days={days.map((d) => ({ day: d.day, n: d.visits }))} say={(i) => `${days[i]!.day}: ${days[i]!.visits} visits, ${days[i]!.peak} at once`} />;
+}
+
+function SiteTraffic({ t, today }: { t: Traffic; today: string }) {
+  const zone = 'days' in t.zone ? t.zone.days : null;
+  const web = 'days' in t.web ? t.web : null;
+  return (
+    <>
+      {zone ? (
+        <>
+          <div className="admin-tiles">
+            <Tile n={sumDays(zone, today, 7, (d) => d.visitors)} label="visitors, last 7 days" />
+            <Tile n={sumDays(zone, today, 7, (d) => d.pageViews)} label="page views, last 7 days" />
+            <Tile n={sumDays(zone, today, 30, (d) => d.visitors)} label="visitors, last 30 days" />
+          </div>
+          <h3>Visitors a day, last 30 days</h3>
+          <Bars
+            days={daily(zone, today, 30, (d) => d.visitors)}
+            say={(i) => {
+              const day = daily(zone, today, 30, (d) => d.visitors)[i]!.day;
+              const z = zone.find((d) => d.day === day);
+              return `${day}: ${z?.visitors ?? 0} visitors, ${z?.pageViews ?? 0} page views`;
+            }}
+          />
+          <p className="admin-quiet admin-why">Cloudflare counts a visitor once a day per device, and its days are UTC.</p>
+        </>
+      ) : (
+        <p className="admin-quiet">Visitors: {(t.zone as { error: string }).error}</p>
+      )}
+      {web ? (
+        <div className="admin-ranks">
+          <Rank title="Where they came from" list={web.referrers} />
+          <Rank title="Pages" list={web.pages} />
+          <Rank title="Countries" list={web.countries} />
+          <Rank title="Devices" list={web.devices} />
+        </div>
+      ) : (
+        <p className="admin-quiet">Where they came from: {(t.web as { error: string }).error}</p>
+      )}
+      {web && <p className="admin-quiet admin-why">Last 7 days, by visits, from Cloudflare Web Analytics (no cookies).</p>}
+    </>
+  );
+}
+
+function Rank({ title, list }: { title: string; list: Ranked }) {
+  return (
+    <div>
+      <h3>{title}</h3>
+      {list.length === 0 ? (
+        <p className="admin-quiet">nothing yet</p>
+      ) : (
+        <ol className="admin-rank">
+          {list.slice(0, 8).map((r) => (
+            <li key={r.name}>
+              <span>{r.name}</span> <b>{r.n}</b>
+            </li>
+          ))}
+        </ol>
+      )}
+    </div>
+  );
 }
 
 function Pulls({ list }: { list: Pull[] }) {

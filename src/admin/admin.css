@@ -32,3 +32,11 @@
 .admin-check.pass { color: #3d6b1f; }
 .admin-check.fail { color: #b3261e; font-weight: 600; }
 .admin-range button:focus-visible, .admin-card a:focus-visible { outline: 3px dashed var(--pink); outline-offset: 3px; }
+
+.admin-why { font-size: 14px; margin: 10px 0 14px; }
+.admin-card h2 + .admin-why { margin-top: -8px; }
+.admin-ranks { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0 24px; }
+.admin-rank { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 4px; font-size: 16px; }
+.admin-rank li { display: flex; justify-content: space-between; gap: 10px; border-bottom: 1px dotted rgba(59, 31, 43, 0.3); }
+.admin-rank span { overflow-wrap: anywhere; }
+.admin-rank b { font-weight: 400; font-variant-numeric: tabular-nums; }

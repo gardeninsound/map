@@ -46,3 +46,25 @@ GET  /stats/<appId>/<roomId>   → { now, today, days: [{ day, visits, peak, ope
 No names, no ids, no addresses are kept: a key and a count per day. Keys are `[a-z0-9:_-]{1,64}` and a
 day holds at most `MAX_KEYS`, so made-up keys can't grow it. Counts older than `KEEP_DAYS` are dropped.
 `npm test` checks visits, the peak, opened counts and the guards against a local workerd.
+
+## Traffic
+
+`GET /traffic` returns Cloudflare's own numbers for the whole site, for the admin page: everyone who loads
+gardeninsound.website (it goes through Cloudflare), including people who never press start. `src/traffic.ts`
+asks Cloudflare's GraphQL Analytics API for two datasets:
+
+- **the zone**: unique visitors, page views and requests per day for 30 days (Cloudflare's UTC days).
+- **Web Analytics** (Cloudflare's cookie-free page beacon): over the last 7 days, the top referring sites,
+  pages, countries and devices, by visits.
+
+The answer is cached 10 minutes (1 minute while something's wrong), so Cloudflare gets asked a few times an
+hour at most. Until it's set up, each half says what's missing. To set it up:
+
+1. **Turn on Web Analytics**: Cloudflare dashboard → Web Analytics → Add a site → gardeninsound.website.
+   Since the site goes through Cloudflare, pick the automatic setup; no code change. Copy its **site tag**.
+2. Put the site tag in `wrangler.jsonc` as `CF_SITE_TAG` (`CF_ACCOUNT_ID` and `CF_ZONE_ID` are already there; the
+   zone ID is on the dashboard's gardeninsound.website → Overview page).
+3. **Make a token**: My Profile → API Tokens → Create Token → Custom, with **Account › Account Analytics › Read**
+   and **Zone › Analytics › Read** (the gardeninsound account and zone only). Then, in `relay/`:
+   `npx wrangler secret put CF_API_TOKEN` and paste it. It lives in Cloudflare only, never in git.
+4. `npm run deploy`, then open https://relay.gardeninsound.website/traffic.
