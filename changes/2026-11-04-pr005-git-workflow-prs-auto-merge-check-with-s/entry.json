@@ -149,7 +149,8 @@
     "arcade",
     "agent",
     "infra",
-    "docs"
+    "docs",
+    "behind-the-scenes"
   ],
   "where_from": "curated",
   "shots": [],

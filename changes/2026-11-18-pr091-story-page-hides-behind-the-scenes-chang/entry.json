@@ -1,0 +1,159 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "0362cbc9fe9f24f3083c2ab2872792dd1cd3bca9",
+  "parent": "03cbbadc3c160524b65e52f5f313bde17bd8de73",
+  "pr": 91,
+  "title": "Story page hides behind-the-scenes changes at first",
+  "url": "https://github.com/gardeninsound/map/pull/91",
+  "merged_at": "2026-11-19T01:17:07Z",
+  "body": "The story page now opens on the changes you can see or hear on the island. Plumbing (code refactors, Claude's notes, CI, previews, the story log itself) is hidden until you press **Show behind the scenes**.\n\nOn today's log, 57 changes show by default and 39 are behind the scenes.\n\nHow a change gets the `behind-the-scenes` tag:\n- **On its own**, when its tags are all plumbing (`code`, `agent`, `story-log`, `infra`, `docs`) and none is something on the site (`SITE_TAGS` in `scripts/story/lib.mjs`).\n- **By saying so** in the Story section: `Tags: behind-the-scenes`. A refactor touches character or scene files and gets their tags, so it needs this. `-behind-the-scenes` keeps a change visible.\n- **For the past**, `scripts/story/curated.json` tags the refactors (#72–75, #78, #84–87), the clock and `?open=` links (#71), the map-build and package moves, the relay setup, the git workflow and preview PRs, and the story page's own changes.\n\nOn the page:\n- The filter and tag counts count only what's showing.\n- A link to a hidden change (`/story/#pr-87`) turns them on so the link lands.\n- Hiding them again clears a tag filter that would otherwise show nothing.\n\nChecked in Chrome on a re-tagged copy of today's log: 57 by default, 96 with the button on, 39 under the tag, and `#pr-87` opens and scrolls to it. No page errors.\n\nMike: a heads-up, since the PR template's `Tags:` hint changed. When your change is only code or notes, add `behind-the-scenes` there and the story page keeps it out of the way.\n\n## Story\n\nIdea: The story page should hide the plumbing (changes to code or to Claude's notes that don't change the site) by default.\nWhere: none\nTags: behind-the-scenes\nAsked vs made: As asked. Changes come in through a new tag, worked out on its own for plumbing-only changes, and said in the PR for refactors. A button shows them, and links to one still work.\nMike:\nNote: The story log re-tags every change on its next run after this merges, so the page updates then.\n",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "d7f78cddf6c33a25f3ce01d41f29e74d9f8ccc91",
+      "message": "Story page hides behind-the-scenes changes at first\n\nA new tag, behind-the-scenes, marks plumbing nobody playing would notice. The\nrecorder adds it when a change has tags but none for something on the site\n(SITE_TAGS); a PR can say so (Tags: behind-the-scenes) or opt out\n(-behind-the-scenes), and curated.json tags the refactors and early plumbing\nfrom before. The /story/ page leaves them out until \"Show behind the scenes\",\nand a #pr-N link to one shows them. On today's log: 57 shown, 39 behind.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-19T01:14:53Z"
+    }
+  ],
+  "files": [
+    {
+      "path": ".github/pull_request_template.md",
+      "status": "M",
+      "additions": 2,
+      "deletions": 1
+    },
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "scripts/story/README.md",
+      "status": "M",
+      "additions": 6,
+      "deletions": 0
+    },
+    {
+      "path": "scripts/story/curated.json",
+      "status": "M",
+      "additions": 24,
+      "deletions": 3
+    },
+    {
+      "path": "scripts/story/lib.mjs",
+      "status": "M",
+      "additions": 12,
+      "deletions": 3
+    },
+    {
+      "path": "scripts/story/lib.test.mjs",
+      "status": "M",
+      "additions": 19,
+      "deletions": 7
+    },
+    {
+      "path": "src/story/StoryPage.tsx",
+      "status": "M",
+      "additions": 41,
+      "deletions": 9
+    },
+    {
+      "path": "src/story/model.test.ts",
+      "status": "M",
+      "additions": 20,
+      "deletions": 1
+    },
+    {
+      "path": "src/story/model.ts",
+      "status": "M",
+      "additions": 9,
+      "deletions": 0
+    },
+    {
+      "path": "src/story/story.css",
+      "status": "M",
+      "additions": 3,
+      "deletions": 0
+    }
+  ],
+  "additions": 137,
+  "deletions": 25,
+  "areas": [
+    "ci",
+    "docs",
+    "tools"
+  ],
+  "branch": "story-hide-plumbing",
+  "opened_at": "2026-11-19T01:14:57Z",
+  "merged_by": "vlandham",
+  "summary": "The story page now opens on the changes you can see or hear on the island. Plumbing (code refactors, Claude's notes, CI, previews, the story log itself) is hidden until you press **Show behind the scenes**.\n\nOn today's log, 57 changes show by default and 39 are behind the scenes.\n\nHow a change gets the `behind-the-scenes` tag:\n- **On its own**, when its tags are all plumbing (`code`, `agent`, `story-log`, `infra`, `docs`) and none is something on the site (`SITE_TAGS` in `scripts/story/lib.mjs`).\n- **By saying so** in the Story section: `Tags: behind-the-scenes`. A refactor touches character or scene files and gets their tags, so it needs this. `-behind-the-scenes` keeps a change visible.\n- **For the past**, `scripts/story/curated.json` tags the refactors (#72–75, #78, #84–87), the clock and `?open=` links (#71), the map-build and package moves, the relay setup, the git workflow and preview PRs, and the story page's own changes.\n\nOn the page:\n- The filter and tag counts count only what's showing.\n- A link to a hidden change (`/story/#pr-87`) turns them on so the link lands.\n- Hiding them again clears a tag filter that would otherwise show nothing.\n\nChecked in Chrome on a re-tagged copy of today's log: 57 by default, 96 with the button on, 39 under the tag, and `#pr-87` opens and scrolls to it. No page errors.\n\nMike: a heads-up, since the PR template's `Tags:` hint changed. When your change is only code or notes, add `behind-the-scenes` there and the story page keeps it out of the way.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": "As asked. Changes come in through a new tag, worked out on its own for plumbing-only changes, and said in the PR for refactors. A button shows them, and links to one still work.",
+    "mike": null,
+    "note": "The story log re-tags every change on its next run after this merges, so the page updates then.",
+    "shots": true,
+    "tags": [
+      [
+        "+",
+        "behind-the-scenes"
+      ]
+    ],
+    "present": true,
+    "whereSaid": true
+  },
+  "ideas": [],
+  "requested_reviewers": [
+    "exit320-stack"
+  ],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-19T01:15:10Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview** · updated for d7f78cd (ready when the Preview check is green)\nhttps://pr-91-garden-preview.gardeninsound.workers.dev\n\nstory-log · infra · docs · behind-the-scenes · 10 files, +137 −25\n\n<sub>A full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-91]`). Edit the description and this comment follows.</sub>\n",
+      "bot": true
+    }
+  ],
+  "preview_url": null,
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 22,
+    "scenes": 12,
+    "content_files": 27,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 27334,
+    "commits": 114
+  },
+  "tags": [
+    "story-log",
+    "infra",
+    "docs",
+    "behind-the-scenes"
+  ],
+  "where_from": "guessed",
+  "shots": [],
+  "first_recorded_at": "2026-11-19T01:20:30.089Z",
+  "earlier": [],
+  "recorded_at": "2026-11-19T01:20:30.089Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/44435734460"
+}

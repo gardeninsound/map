@@ -2,7 +2,17 @@
 
 Every change that went live on [gardeninsound.website](https://gardeninsound.website), newest first, with the wish that started it, what was made, who made it, and how the spot looked before and after. Written automatically by [`.github/workflows/story.yml`](https://github.com/gardeninsound/map/blob/main/.github/workflows/story.yml) when a change merges; the raw records are in `changes/` and `wishes/`, and `story.json` indexes them all.
 
-**96** changes · **13** wishes from visitors, **11** answered · **1** still waiting
+**97** changes · **13** wishes from visitors, **11** answered · **1** still waiting
+
+---
+
+### Nov 18, 2026 · Story page hides behind-the-scenes changes at first ([#91](https://github.com/gardeninsound/map/pull/91))
+
+**Asked vs made:** As asked. Changes come in through a new tag, worked out on its own for plumbing-only changes, and said in the PR for refactors. A button shows them, and links to one still work.
+
+The story log re-tags every change on its next run after this merges, so the page updates then.
+
+<sub>Jim · 10 files, +137 −25 · ci, docs, tools · [record](changes/2026-11-18-pr091-story-page-hides-behind-the-scenes-chang/entry.json)</sub>
 
 ---
 
