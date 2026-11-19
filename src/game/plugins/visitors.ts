@@ -3,6 +3,7 @@ import { dress, lookFrom, LOOK_SCARVES } from '../look';
 import type { MapMarker } from '../../city';
 import { EMOTES } from '../../content/emotes';
 import type { Action, Actor } from '../actions';
+import { APP_ID } from '../../net/counts';
 import { joinRelay, type RelayRoom } from '../../net/relay';
 import { drawTiny, TINY_H, tinyWidth } from '../tinyFont';
 import {
@@ -28,7 +29,6 @@ import {
 } from '../visitors';
 import { store, storedFlag } from '../../city/stored';
 
-const APP_ID = 'bearisland';
 const ROOM = 'island';
 const HIDE_KEY = 'bearisland-hide-rabbits';
 /** Name tags show on rabbits within this many tiles of yours. */

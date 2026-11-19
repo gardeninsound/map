@@ -10,11 +10,17 @@
   // Not wrangler's default 8787, which other local tools tend to grab.
   "dev": { "port": 8790 },
   "durable_objects": {
-    "bindings": [{ "name": "ROOMS", "class_name": "Room" }]
+    "bindings": [
+      { "name": "ROOMS", "class_name": "Room" },
+      { "name": "STATS", "class_name": "Stats" }
+    ]
   },
-  // Free accounts can only create SQLite-backed Durable Objects. The relay
-  // stores nothing; this just picks the storage backend.
-  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["Room"] }],
+  // Free accounts can only create SQLite-backed Durable Objects. Rooms store nothing;
+  // Stats keeps the day-by-day counts (src/stats.ts).
+  "migrations": [
+    { "tag": "v1", "new_sqlite_classes": ["Room"] },
+    { "tag": "v2", "new_sqlite_classes": ["Stats"] }
+  ],
   "vars": {
     // Comma-separated page origins allowed to connect; `*` is a wildcard.
     "ALLOWED_ORIGINS": "https://gardeninsound.website,https://www.gardeninsound.website,https://*-garden-preview.gardeninsound.workers.dev,http://localhost:*,http://127.0.0.1:*",

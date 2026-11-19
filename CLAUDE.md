@@ -132,7 +132,8 @@ root file only for new commands, workflow, conventions or a new area.
 - `src/content/` — **content is data** (Mike's area): `locations.ts` (spots, coords, Mike's
   greetings), each character's and scene's words, `artManifest.ts` (generated, date-ordered).
 - `src/net/` + `relay/` — the live relay other rabbits share (`relay/README.md`; the client side
-  is in `src/game/CLAUDE.md`).
+  is in `src/game/CLAUDE.md`), and the counts: visits per day and what people open (`src/net/counts.ts`, anonymous, live site
+  only; anything opened over the map or by {A} is counted on its own, nothing to add for a new thing).
 - `wish/` — the idea box's Worker, files suggestions as GitHub issues. → `wish/CLAUDE.md`
 - `scripts/ai/` — **ideas → changes with free models** (an experiment, run by hand). → `scripts/ai/README.md`
 - `scripts/city/` — the OSM → map pipeline (settings in `map-config.mjs`).

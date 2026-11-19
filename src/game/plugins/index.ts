@@ -75,6 +75,10 @@ export type PluginId = keyof Island;
 /** the plugins, in order, for `CityGame` */
 export const pluginList = (island: Island): CityPlugin[] => Object.values(island).filter((p): p is NonNullable<typeof p> => p !== null);
 
+/** each plugin's id (for counting what people open, src/net/counts.ts) */
+export const pluginIds = (island: Island): Map<CityPlugin, string> =>
+  new Map(Object.entries(island).flatMap(([id, p]) => (p ? [[p as CityPlugin, id] as const] : [])));
+
 /** dev test hooks: `window.__<id>` for each plugin */
 export const devHooks = (island: Island): Record<string, unknown> => Object.fromEntries(Object.entries(island).map(([id, p]) => [`__${id}`, p]));
 

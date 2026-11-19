@@ -7,6 +7,7 @@ import { sounds as sfx } from '../../ui/sounds';
 import { bearPortrait } from './ArcadeBear';
 import { ArcadeScene } from './ArcadeScene';
 import { arcadeComponents } from './games';
+import { count } from '../../net/counts';
 
 const playable = (g: ArcadeGame) => g.ready && !!arcadeComponents[g.id];
 
@@ -114,6 +115,7 @@ export default function DuckArcade({ onExit, start }: { onExit(): void; start?: 
     scene.current?.faceCabinet(i);
     input.clear();
     setNote(null);
+    count(`arcade:${g.id}`); // what people play, counted (src/net/counts.ts)
     setPlaying(g);
   };
 

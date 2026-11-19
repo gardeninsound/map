@@ -1,4 +1,6 @@
 import { DurableObject } from 'cloudflare:workers';
+import { Stats, type StatsReply } from './stats';
+export { Stats };
 
 /**
  * The arcade's relay: one Durable Object per room, holding a WebSocket per
@@ -15,6 +17,13 @@ import { DurableObject } from 'cloudflare:workers';
  * Sockets use the hibernation API, so a quiet room costs nothing, and
  * "ping" is answered by the runtime itself without waking the object.
  *
+ * Counts (src/stats.ts, one Stats object per app), the only thing kept:
+ *
+ *   POST /count/<appId>            body: a key like `scene:gas-station-wall` (the game's beacon)
+ *   GET  /stats/<appId>/<roomId>   → {now, days: [{day, visits, peak, opened: {key: n}}]}, ?days=30
+ *
+ * A room tells its app's Stats about each rabbit that joins. Numbers per day only; see stats.ts.
+ *
  * Dead sockets are swept: while anyone is connected, an alarm every SWEEP_MS
  * closes sockets that have sent nothing (not even a "ping") for STALE_MS, and
  * tells everyone they left. That catches a laptop that slept or a phone whose
@@ -23,6 +32,7 @@ import { DurableObject } from 'cloudflare:workers';
 
 export interface Env {
   ROOMS: DurableObjectNamespace<Room>;
+  STATS: DurableObjectNamespace<Stats>;
   /** Comma-separated allowed page origins, `*` as wildcard. Empty allows any. */
   ALLOWED_ORIGINS?: string;
   /** Most players in one room (default 64). */
@@ -57,6 +67,10 @@ export default {
   async fetch(request, env): Promise<Response> {
     const url = new URL(request.url);
     if (url.pathname === '/') return new Response('arcade relay\n');
+    const counted = /^\/count\/([^/]+)$/.exec(url.pathname);
+    if (counted) return countRequest(request, env, decodeURIComponent(counted[1]!));
+    const asked = /^\/stats\/([^/]+)\/([^/]+)$/.exec(url.pathname);
+    if (asked) return statsRequest(env, decodeURIComponent(asked[1]!), decodeURIComponent(asked[2]!), url);
     const m = /^\/room\/([^/]+)\/([^/]+)$/.exec(url.pathname);
     const appId = m ? decodeURIComponent(m[1]!) : '';
     const roomId = m ? decodeURIComponent(m[2]!) : '';
@@ -73,14 +87,45 @@ export default {
   },
 } satisfies ExportedHandler<Env>;
 
+/** public numbers, readable from any page (the admin page, a script) */
+const OPEN = { 'Access-Control-Allow-Origin': '*', 'Cache-Control': 'no-store' };
+
+/** the game's beacon: one key, from an allowed page */
+async function countRequest(request: Request, env: Env, appId: string): Promise<Response> {
+  if (request.method !== 'POST') return new Response('expected a POST\n', { status: 405 });
+  if (!NAME.test(appId)) return new Response('not found\n', { status: 404 });
+  if (!originAllowed(request.headers.get('Origin'), env.ALLOWED_ORIGINS)) return new Response('origin not allowed\n', { status: 403 });
+  const key = (await request.text()).trim().slice(0, 80);
+  const ok = await env.STATS.get(env.STATS.idFromName(appId)).count(key);
+  return new Response(null, { status: ok ? 204 : 400 });
+}
+
+async function statsRequest(env: Env, appId: string, roomId: string, url: URL): Promise<Response> {
+  if (!NAME.test(appId) || !NAME.test(roomId)) return new Response('not found\n', { status: 404 });
+  const days = Number(url.searchParams.get('days')) || 30;
+  const [now, counts] = await Promise.all([
+    env.ROOMS.get(env.ROOMS.idFromName(`${appId}/${roomId}`)).online(),
+    env.STATS.get(env.STATS.idFromName(appId)).stats(days),
+  ]);
+  const body: StatsReply & { now: number } = { ...counts, now };
+  return Response.json(body, { headers: OPEN });
+}
+
 export class Room extends DurableObject<Env> {
   constructor(ctx: DurableObjectState, env: Env) {
     super(ctx, env);
     this.ctx.setWebSocketAutoResponse(new WebSocketRequestResponsePair('ping', 'pong'));
   }
 
+  /** how many rabbits are in the room now (for /stats) */
+  online(): number {
+    return this.peerIds().length;
+  }
+
   async fetch(request: Request): Promise<Response> {
-    const id = new URL(request.url).searchParams.get('id')!;
+    const url = new URL(request.url);
+    const id = url.searchParams.get('id')!;
+    const appId = decodeURIComponent(url.pathname.split('/')[2] ?? '');
     const { 0: client, 1: server } = new WebSocketPair();
     this.ctx.acceptWebSocket(server, [id]);
 
@@ -103,6 +148,14 @@ export class Room extends DurableObject<Env> {
     } else {
       server.send(JSON.stringify({ k: 'peers', ids: others }));
       this.broadcast({ k: 'join', id }, server);
+      // counted for the day (stats.ts); a count that fails never stops a rabbit joining
+      if (stale.length === 0 && appId) {
+        try {
+          await this.env.STATS.get(this.env.STATS.idFromName(appId)).visit(id, others.length + 1);
+        } catch {
+          // best effort
+        }
+      }
     }
     return new Response(null, { status: 101, webSocket: client });
   }
