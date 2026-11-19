@@ -242,6 +242,13 @@ async function counts() {
   await sleep(200);
   assert((await get()).now === 0, 'nobody online after they leave');
   console.log(' online now drops when they leave ✓');
+
+  // /traffic without a token: says what's missing, readable from any page
+  const t = await fetch(`${HTTP}/traffic`);
+  assert(t.headers.get('access-control-allow-origin') === '*', 'traffic is readable from any page');
+  const tj = await t.json();
+  assert(/CF_API_TOKEN/.test(tj.zone.error) && /CF_API_TOKEN/.test(tj.web.error), `expected "not set up yet", got ${JSON.stringify(tj)}`);
+  console.log(' /traffic says what is missing until the token is set ✓');
 }
 
 let failed = false;

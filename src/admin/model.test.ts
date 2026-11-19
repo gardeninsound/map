@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { checkOf, lastDays, nameOf, otherIssues, pullOf, sourcesFrom, spotsTodo, totals, wishesOf, ageLabel, type GhIssue, type Stats } from './model';
+import { checkOf, daily, sumDays, lastDays, nameOf, otherIssues, pullOf, sourcesFrom, spotsTodo, totals, wishesOf, ageLabel, type GhIssue, type Stats } from './model';
 
 const stats: Stats = {
   generated_at: '2026-11-19T20:00:00Z',
@@ -32,6 +32,19 @@ describe('the counts', () => {
       { key: 'scene:gas-station-wall', n: 1 },
     ]);
     expect(totals(stats, 60).visits).toBe(59);
+  });
+
+  it('lays out any daily numbers as bars, and sums them', () => {
+    const rows = [
+      { day: '2026-11-19', v: 5 },
+      { day: '2026-11-17', v: 2 },
+    ];
+    expect(daily(rows, '2026-11-19', 3, (r) => r.v)).toEqual([
+      { day: '2026-11-17', n: 2 },
+      { day: '2026-11-18', n: 0 },
+      { day: '2026-11-19', n: 5 },
+    ]);
+    expect(sumDays(rows, '2026-11-19', 2, (r) => r.v)).toBe(5);
   });
 
   it('names what was opened in words', () => {
@@ -89,7 +102,11 @@ describe('GitHub', () => {
   });
 
   it('reads from the real sources, or the ones a link names', () => {
-    expect(sourcesFrom('')).toEqual({ stats: 'https://relay.gardeninsound.website/stats/bearisland/island', github: 'https://api.github.com/repos/gardeninsound/map' });
+    expect(sourcesFrom('')).toEqual({
+      stats: 'https://relay.gardeninsound.website/stats/bearisland/island',
+      traffic: 'https://relay.gardeninsound.website/traffic',
+      github: 'https://api.github.com/repos/gardeninsound/map',
+    });
     expect(sourcesFrom('?stats=/x.json&gh=/gh/').github).toBe('/gh');
   });
 });

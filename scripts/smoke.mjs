@@ -207,6 +207,11 @@ try {
     generated_at: '2026-11-19T20:00:00Z', today: '2026-11-19', now: 2,
     days: [{ day: '2026-11-19', visits: 5, peak: 3, opened: { crow: 2, 'scene:gas-station-wall': 1 } }],
   }));
+  await page.route((u) => u.pathname === '/__traffic', reply({
+    generated_at: '2026-11-19T20:00:00Z',
+    zone: { days: [{ day: '2026-11-19', visitors: 40, pageViews: 120, requests: 900 }] },
+    web: { days: [], referrers: [{ name: 'l.instagram.com', n: 12 }], pages: [], countries: [], devices: [] },
+  }));
   await page.route((u) => u.pathname === '/__gh/pulls', reply([
     { number: 93, title: 'A pull request', html_url: 'https://github.com/gardeninsound/map/pull/93', user: { login: 'exit320-stack' }, created_at: '2026-11-18T00:00:00Z', head: { sha: 'abc' } },
   ]));
@@ -214,7 +219,8 @@ try {
   await page.route((u) => u.pathname === '/__gh/issues', reply([
     { number: 40, title: 'Idea: more dinosaurs', html_url: 'https://github.com/gardeninsound/map/issues/40', created_at: '2026-11-18T00:00:00Z', labels: [{ name: 'suggestion' }] },
   ]));
-  await page.goto(`${base}admin/?stats=/__stats&gh=/__gh`);
+  await page.goto(`${base}admin/?stats=/__stats&traffic=/__traffic&gh=/__gh`);
+  await page.locator('.admin-rank', { hasText: 'l.instagram.com' }).waitFor({ timeout: 10_000 });
   await page.locator('.admin-top th', { hasText: 'the snack crow' }).waitFor({ timeout: 10_000 });
   await page.locator('.admin-pulls', { hasText: 'Check passed' }).waitFor({ timeout: 10_000 });
   await page.locator('.admin-list', { hasText: 'more dinosaurs' }).waitFor({ timeout: 10_000 });

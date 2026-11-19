@@ -26,6 +26,11 @@
     "ALLOWED_ORIGINS": "https://gardeninsound.website,https://www.gardeninsound.website,https://*-garden-preview.gardeninsound.workers.dev,http://localhost:*,http://127.0.0.1:*",
     // Pages whose rabbits count as visits (src/stats.ts): the live site only, not previews, dev or tests.
     "COUNT_ORIGINS": "https://gardeninsound.website,https://www.gardeninsound.website",
-    "MAX_PEERS": "64"
+    "MAX_PEERS": "64",
+    // /traffic (src/traffic.ts): Cloudflare's numbers for the site. The token is a secret
+    // (`npx wrangler secret put CF_API_TOKEN`); these say where to look. README, "Traffic".
+    "CF_ACCOUNT_ID": "7de05f51e1fe91fd717fe174fcfba85d",
+    "CF_ZONE_ID": "fadb4ced3ff41dd38c5b5d3428794121",
+    "CF_SITE_TAG": ""
   }
 }

@@ -6,13 +6,14 @@
 import { personOf } from '../story/people.mjs';
 
 export const STATS_URL = 'https://relay.gardeninsound.website/stats/bearisland/island';
+export const TRAFFIC_URL = 'https://relay.gardeninsound.website/traffic';
 export const REPO = 'gardeninsound/map';
 export const GITHUB = `https://api.github.com/repos/${REPO}`;
 
-/** `?stats=<url>` for a local relay (http://127.0.0.1:8790/stats/bearisland/island) or a fixture; `?gh=<url>` likewise for GitHub */
+/** `?stats=<url>` for a local relay (http://127.0.0.1:8790/stats/bearisland/island) or a fixture; `?traffic=` and `?gh=` likewise */
 export function sourcesFrom(search: string) {
   const q = new URLSearchParams(search);
-  return { stats: q.get('stats') ?? STATS_URL, github: (q.get('gh') ?? GITHUB).replace(/\/$/, '') };
+  return { stats: q.get('stats') ?? STATS_URL, traffic: q.get('traffic') ?? TRAFFIC_URL, github: (q.get('gh') ?? GITHUB).replace(/\/$/, '') };
 }
 
 // --- the counts --------------------------------------------------------------------------------
@@ -88,6 +89,19 @@ export function nameOf(key: string, names: Names): string {
   }
   return key.replace(/[:_-]/g, ' ');
 }
+
+/** one bar a day for the last `n` days up to `today`, oldest first, zero where a day has nothing */
+export function daily<T extends { day: string }>(rows: T[], today: string, n: number, value: (r: T) => number): { day: string; n: number }[] {
+  const by = new Map(rows.map((r) => [r.day, value(r)]));
+  return Array.from({ length: n }, (_, i) => addDays(today, i - n + 1)).map((day) => ({ day, n: by.get(day) ?? 0 }));
+}
+/** a sum over the last `n` days up to `today` */
+export const sumDays = <T extends { day: string }>(rows: T[], today: string, n: number, value: (r: T) => number) =>
+  daily(rows, today, n, value).reduce((a, d) => a + d.n, 0);
+
+// --- Cloudflare (relay/src/traffic.ts) -------------------------------------------------------
+
+export type { Traffic, TrafficDay, BeaconDay, Ranked } from '../../relay/src/traffic';
 
 // --- GitHub ------------------------------------------------------------------------------------
 
