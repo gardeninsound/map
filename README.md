@@ -2,7 +2,23 @@
 
 Every change that went live on [gardeninsound.website](https://gardeninsound.website), newest first, with the wish that started it, what was made, who made it, and how the spot looked before and after. Written automatically by [`.github/workflows/story.yml`](https://github.com/gardeninsound/map/blob/main/.github/workflows/story.yml) when a change merges; the raw records are in `changes/` and `wishes/`, and `story.json` indexes them all.
 
-**97** changes · **13** wishes from visitors, **11** answered · **1** still waiting
+**98** changes · **13** wishes from visitors, **11** answered · **1** still waiting
+
+---
+
+### Nov 19, 2026 · Counts: visits per day, the peak, and what people open ([#92](https://github.com/gardeninsound/map/pull/92))
+
+**Asked vs made:** Asked for stats and visit counts first, ahead of an admin page. Built anonymous daily counts on the relay and a beacon in the game. The admin page that shows them is next.
+
+The relay needs `npm run deploy` for this to start counting.
+
+| before · the Duck Arcade | after |
+|---|---|
+| <img src="changes/2026-11-19-pr092-counts-visits-per-day-the-peak-and-what/before-1.webp" width="400"> | <img src="changes/2026-11-19-pr092-counts-visits-per-day-the-peak-and-what/after-1.webp" width="400"> |
+
+<img src="changes/2026-11-19-pr092-counts-visits-per-day-the-peak-and-what/moving-1.webp" width="400" alt="moving">
+
+<sub>Jim · 12 files, +365 −10 · characters & map life, scenes & games, relay, docs · [record](changes/2026-11-19-pr092-counts-visits-per-day-the-peak-and-what/entry.json)</sub>
 
 ---
 

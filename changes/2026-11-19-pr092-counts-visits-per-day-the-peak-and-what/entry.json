@@ -1,0 +1,208 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "09881953a1dbe9f93b11ebc08e3e0721f2978b0c",
+  "parent": "0362cbc9fe9f24f3083c2ab2872792dd1cd3bca9",
+  "pr": 92,
+  "title": "Counts: visits per day, the peak, and what people open",
+  "url": "https://github.com/gardeninsound/map/pull/92",
+  "merged_at": "2026-11-19T14:34:18Z",
+  "body": "The island now keeps anonymous counts: how many rabbits visit each day, the most on at once, and how often each thing gets opened. This is the data for the admin page, which comes next.\n\n**What's kept** (`relay/src/stats.ts`, a new Durable Object on the relay, one per app, numbers per Seattle day):\n- **Visits:** rabbits that joined the room that day, each counted once. Stepping out and back in, or reconnecting, is the same visit. The random peer ids are kept for the current day only, to tell rabbits apart, and deleted when the day turns.\n- **Peak:** the most rabbits in the room at once.\n- **Opened:** a count per key, e.g. `scene:gas-station-wall`, `place:gas-station-wall` (talking to Mike at the lemon), `crow`, `ride:whirl`, `arcade:duck-scroller`, `idea`.\n\nNo names, ids or addresses are kept. Keys have a fixed format and a day holds at most 400 of them, so made-up keys can't grow the table.\n\n**Endpoints:** `POST /count/<app>` (allowed origins only) and `GET /stats/<app>/<room>`, which returns `{now, today, days: [...]}`, is readable from any page and defaults to the last 30 days.\n\n**The game's side** (`src/net/counts.ts`):\n- It sends one beacon per thing per page load, and only from gardeninsound.website. It never sends from a browser a script drives, so previews, dev, the smoke test and the story log don't count. `?count` turns it on anywhere for testing.\n- Counted: `{A}` on anything (a plugin's character by the plugin's id, other things by their target key, other rabbits as `rabbit`), anything that opens over the map however you got there ({A}, SPOTS or a link), and each arcade game played.\n- A new character or scene gets counted without any extra work.\n\n**Checked:**\n- `relay/npm test` against a local workerd covers visits (including stepping out and back in), the peak, online now, opened counts, and the refusals (bad key, another site, no origin, a GET).\n- In Chrome against a local relay: a scene link, the crow and an arcade game all showed up in `/stats`. No page errors.\n- Unit tests for the keys and the live-site-only switch.\n\n**Needs a relay deploy** (`cd relay && npm run deploy`) before counts start. Until then the beacons get a 404 from the old relay, which is harmless.\n\nMike: heads-up, this counts visits and what people open. It's anonymous and per day.\n\n## Story\n\nIdea: Mike and Jim want to see how many people visit and which spots they open.\nWhere: none\nTags: multiplayer, behind-the-scenes\nAsked vs made: Asked for stats and visit counts first, ahead of an admin page. Built anonymous daily counts on the relay and a beacon in the game. The admin page that shows them is next.\nMike:\nNote: The relay needs `npm run deploy` for this to start counting.\n",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "07c75ec5269f83db92d17c04312a98f13874430a",
+      "message": "Counts: visits per day, the peak, and what people open\n\nThe relay gets a Stats Durable Object (relay/src/stats.ts, SQLite, migration v2)\nkeeping numbers per Seattle day: visits (each rabbit once a day), the most at once,\nand how often each thing was opened. POST /count/<app> takes a key from allowed\norigins; GET /stats/<app>/<room> returns the last 30 days plus who's online now.\n\nThe game sends one beacon per thing per page load (src/net/counts.ts) from the live\nsite only, never from a scripted browser: {A} on a target (by its key or the plugin's\nid), anything opened over the map (scenes, rides, the mini game, the arcade, SPOTS,\nthe idea box) and each arcade game played. No names or ids are kept.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-19T14:32:35Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 2,
+      "deletions": 1
+    },
+    {
+      "path": "relay/README.md",
+      "status": "M",
+      "additions": 23,
+      "deletions": 1
+    },
+    {
+      "path": "relay/src/index.ts",
+      "status": "M",
+      "additions": 54,
+      "deletions": 1
+    },
+    {
+      "path": "relay/src/stats.ts",
+      "status": "A",
+      "additions": 94,
+      "deletions": 0
+    },
+    {
+      "path": "relay/test.mjs",
+      "status": "M",
+      "additions": 43,
+      "deletions": 0
+    },
+    {
+      "path": "relay/wrangler.jsonc",
+      "status": "M",
+      "additions": 10,
+      "deletions": 4
+    },
+    {
+      "path": "src/App.tsx",
+      "status": "M",
+      "additions": 13,
+      "deletions": 2
+    },
+    {
+      "path": "src/experiences/arcade/DuckArcade.tsx",
+      "status": "M",
+      "additions": 2,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/plugins/index.ts",
+      "status": "M",
+      "additions": 4,
+      "deletions": 0
+    },
+    {
+      "path": "src/game/plugins/visitors.ts",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    },
+    {
+      "path": "src/net/counts.test.ts",
+      "status": "A",
+      "additions": 50,
+      "deletions": 0
+    },
+    {
+      "path": "src/net/counts.ts",
+      "status": "A",
+      "additions": 69,
+      "deletions": 0
+    }
+  ],
+  "additions": 365,
+  "deletions": 10,
+  "areas": [
+    "characters & map life",
+    "scenes & games",
+    "relay",
+    "docs"
+  ],
+  "branch": "visit-stats",
+  "opened_at": "2026-11-19T14:32:39Z",
+  "merged_by": "vlandham",
+  "summary": "The island now keeps anonymous counts: how many rabbits visit each day, the most on at once, and how often each thing gets opened. This is the data for the admin page, which comes next.\n\n**What's kept** (`relay/src/stats.ts`, a new Durable Object on the relay, one per app, numbers per Seattle day):\n- **Visits:** rabbits that joined the room that day, each counted once. Stepping out and back in, or reconnecting, is the same visit. The random peer ids are kept for the current day only, to tell rabbits apart, and deleted when the day turns.\n- **Peak:** the most rabbits in the room at once.\n- **Opened:** a count per key, e.g. `scene:gas-station-wall`, `place:gas-station-wall` (talking to Mike at the lemon), `crow`, `ride:whirl`, `arcade:duck-scroller`, `idea`.\n\nNo names, ids or addresses are kept. Keys have a fixed format and a day holds at most 400 of them, so made-up keys can't grow the table.\n\n**Endpoints:** `POST /count/<app>` (allowed origins only) and `GET /stats/<app>/<room>`, which returns `{now, today, days: [...]}`, is readable from any page and defaults to the last 30 days.\n\n**The game's side** (`src/net/counts.ts`):\n- It sends one beacon per thing per page load, and only from gardeninsound.website. It never sends from a browser a script drives, so previews, dev, the smoke test and the story log don't count. `?count` turns it on anywhere for testing.\n- Counted: `{A}` on anything (a plugin's character by the plugin's id, other things by their target key, other rabbits as `rabbit`), anything that opens over the map however you got there ({A}, SPOTS or a link), and each arcade game played.\n- A new character or scene gets counted without any extra work.\n\n**Checked:**\n- `relay/npm test` against a local workerd covers visits (including stepping out and back in), the peak, online now, opened counts, and the refusals (bad key, another site, no origin, a GET).\n- In Chrome against a local relay: a scene link, the crow and an arcade game all showed up in `/stats`. No page errors.\n- Unit tests for the keys and the live-site-only switch.\n\n**Needs a relay deploy** (`cd relay && npm run deploy`) before counts start. Until then the beacons get a 404 from the old relay, which is harmless.\n\nMike: heads-up, this counts visits and what people open. It's anonymous and per day.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": "Asked for stats and visit counts first, ahead of an admin page. Built anonymous daily counts on the relay and a beacon in the game. The admin page that shows them is next.",
+    "mike": null,
+    "note": "The relay needs `npm run deploy` for this to start counting.",
+    "shots": true,
+    "tags": [
+      [
+        "+",
+        "multiplayer"
+      ],
+      [
+        "+",
+        "behind-the-scenes"
+      ]
+    ],
+    "present": true,
+    "whereSaid": true
+  },
+  "ideas": [],
+  "requested_reviewers": [
+    "exit320-stack"
+  ],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-19T14:32:53Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview** · updated for 07c75ec (ready when the Preview check is green)\nhttps://pr-92-garden-preview.gardeninsound.workers.dev\n\narcade · multiplayer · code · docs · behind-the-scenes · 12 files, +365 −10\n\n<sub>A full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-92]`). Edit the description and this comment follows.</sub>\n",
+      "bot": true
+    }
+  ],
+  "preview_url": null,
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 22,
+    "scenes": 12,
+    "content_files": 27,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 27470,
+    "commits": 115
+  },
+  "tags": [
+    "arcade",
+    "multiplayer",
+    "code",
+    "docs",
+    "behind-the-scenes"
+  ],
+  "where_from": "guessed",
+  "shots": [
+    {
+      "query": "at=arcade",
+      "lat": null,
+      "lon": null,
+      "label": "the Duck Arcade",
+      "guessed": true,
+      "before": "before-1.webp",
+      "after": "after-1.webp",
+      "moving": "moving-1.webp",
+      "problems": {
+        "before": [],
+        "after": []
+      },
+      "via": {
+        "before": "link",
+        "after": "link"
+      }
+    }
+  ],
+  "camera": {
+    "viewport": {
+      "width": 1280,
+      "height": 768
+    },
+    "zoom": 3,
+    "build": {
+      "before": "production",
+      "after": "production"
+    },
+    "note": "stills lossless; moving loop half size. A development build only where that commit's ?at= hook worked nowhere else. via 'way': a build from before ?open= links, walked in by pressing {A} at the place's `way`."
+  },
+  "first_recorded_at": "2026-11-19T14:35:07.171Z",
+  "earlier": [],
+  "recorded_at": "2026-11-19T14:35:07.171Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/44545192542"
+}

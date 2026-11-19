@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-11-19T01:20:35.167Z",
+  "generated_at": "2026-11-19T14:35:28.999Z",
   "changes": [
     {
       "pr": null,
@@ -5031,6 +5031,60 @@
         "arcade_cabinets_ready": 4,
         "source_lines": 27334,
         "commits": 114
+      }
+    },
+    {
+      "pr": 92,
+      "sha": "09881953a1dbe9f93b11ebc08e3e0721f2978b0c",
+      "title": "Counts: visits per day, the peak, and what people open",
+      "url": "https://github.com/gardeninsound/map/pull/92",
+      "merged_at": "2026-11-19T14:34:18Z",
+      "dir": "changes/2026-11-19-pr092-counts-visits-per-day-the-peak-and-what",
+      "ideas": [],
+      "summary": "The island now keeps anonymous counts: how many rabbits visit each day, the most on at once, and how often each thing gets opened. This is the data for the admin page, which comes next.\n\n**What's kept** (`relay/src/stats.ts`, a new Durable Object on the relay, one per app, numbers per Seattle day):\n- **Visits:** rabbits that joined the room that day, each counted once. Stepping out and back in, or reconnecting, is the same visit. The random peer ids are kept for the current day only, to tell rabbits apart, and deleted when the day turns.\n- **Peak:** the most rabbits in the room at once.\n- **Opened:** a count per key, e.g. `scene:gas-station-wall`, `place:gas-station-wall` (talking to Mike at the lemon), `crow`, `ride:whirl`, `arcade:duck-scroller`, `idea`.\n\nNo names, ids or addresses are kept. Keys have a fixed format and a day holds at most 400 of them, so made-up keys can't grow the table.\n\n**Endpoints:** `POST /count/<app>` (allowed origins only) and `GET /stats/<app>/<room>`, which returns `{now, today, days: [...]}`, is readable from any page and defaults to the last 30 days.\n\n**The game's side** (`src/net/counts.ts`):\n- It sends one beacon per thing per page load, and only from gardeninsound.website. It never sends from a browser a script drives, so previews, dev, the smoke test and the story log don't count. `?count` turns it on anywhere for testing.\n- Counted: `{A}` on anything (a plugin's character by the plugin's id, other things by their target key, other rabbits as `rabbit`), anything that opens over the map however you got there ({A}, SPOTS or a link), and each arcade game played.\n- A new character or scene gets counted without any extra work.\n\n**Checked:**\n- `relay/npm test` against a local workerd covers visits (including stepping out and back in), the peak, online now, opened counts, and the refusals (bad key, another site, no origin, a GET).\n- In Chrome against a local relay: a scene link, the crow and an arcade game all showed up in `/stats`. No page errors.\n- Unit tests for the keys and the live-site-only switch.\n\n**Needs a relay deploy** (`cd relay && npm run deploy`) before counts start. Until then the beacons get a 404 from the old relay, which is harmless.\n\nMike: heads-up, this counts visits and what people open. It's anonymous and per day.",
+      "story": {
+        "askedVsMade": "Asked for stats and visit counts first, ahead of an admin page. Built anonymous daily counts on the relay and a beacon in the game. The admin page that shows them is next.",
+        "mike": null,
+        "note": "The relay needs `npm run deploy` for this to start counting."
+      },
+      "authors": [
+        "Jim"
+      ],
+      "files": 12,
+      "additions": 365,
+      "deletions": 10,
+      "areas": [
+        "characters & map life",
+        "scenes & games",
+        "relay",
+        "docs"
+      ],
+      "tags": [
+        "arcade",
+        "multiplayer",
+        "code",
+        "docs",
+        "behind-the-scenes"
+      ],
+      "shots": [
+        {
+          "query": "at=arcade",
+          "lat": null,
+          "lon": null,
+          "label": "the Duck Arcade",
+          "before": "changes/2026-11-19-pr092-counts-visits-per-day-the-peak-and-what/before-1.webp",
+          "after": "changes/2026-11-19-pr092-counts-visits-per-day-the-peak-and-what/after-1.webp",
+          "moving": "changes/2026-11-19-pr092-counts-visits-per-day-the-peak-and-what/moving-1.webp"
+        }
+      ],
+      "census": {
+        "spots": 15,
+        "plugins": 22,
+        "scenes": 12,
+        "content_files": 27,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 27470,
+        "commits": 115
       }
     }
   ],
