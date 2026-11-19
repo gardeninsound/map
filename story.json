@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-11-19T14:42:05.922Z",
+  "generated_at": "2026-11-19T14:59:08.358Z",
   "changes": [
     {
       "pr": null,
@@ -5126,6 +5126,45 @@
         "arcade_cabinets_ready": 4,
         "source_lines": 27980,
         "commits": 116
+      }
+    },
+    {
+      "pr": 94,
+      "sha": "8dbbd2cb78572ec69fd0c570f0043b0b02525f66",
+      "title": "Relay: only live-site rabbits count as visits",
+      "url": "https://github.com/gardeninsound/map/pull/94",
+      "merged_at": "2026-11-19T14:56:14Z",
+      "dir": "changes/2026-11-19-pr094-relay-only-live-site-rabbits-count-as-vi",
+      "ideas": [],
+      "summary": "Previews, local dev and the smoke test connect to the same relay as the live site, from origins the relay allows, so each of them was counted as a visit. A new `COUNT_ORIGINS` setting (gardeninsound.website and www) now decides which joins count. Everyone still shows up in \"online now\".\n\n`relay/npm test` checks that a rabbit from dev is online but not a visit, and that live-site rabbits still count once a day.",
+      "story": {
+        "askedVsMade": "Found while deploying the counts (#92). Fixed before any real numbers came in.",
+        "mike": null,
+        "note": "Deployed with `cd relay && npm run deploy` after merge."
+      },
+      "authors": [
+        "Jim"
+      ],
+      "files": 4,
+      "additions": 21,
+      "deletions": 7,
+      "areas": [
+        "relay"
+      ],
+      "tags": [
+        "multiplayer",
+        "docs",
+        "behind-the-scenes"
+      ],
+      "shots": [],
+      "census": {
+        "spots": 15,
+        "plugins": 22,
+        "scenes": 12,
+        "content_files": 27,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 27980,
+        "commits": 117
       }
     }
   ],

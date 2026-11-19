@@ -1,0 +1,122 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "8dbbd2cb78572ec69fd0c570f0043b0b02525f66",
+  "parent": "20c5d8dae82ad6460e5d0eb0e21c27d3e80ab6a0",
+  "pr": 94,
+  "title": "Relay: only live-site rabbits count as visits",
+  "url": "https://github.com/gardeninsound/map/pull/94",
+  "merged_at": "2026-11-19T14:56:14Z",
+  "body": "Previews, local dev and the smoke test connect to the same relay as the live site, from origins the relay allows, so each of them was counted as a visit. A new `COUNT_ORIGINS` setting (gardeninsound.website and www) now decides which joins count. Everyone still shows up in \"online now\".\n\n`relay/npm test` checks that a rabbit from dev is online but not a visit, and that live-site rabbits still count once a day.\n\n## Story\n\nIdea: Keep the visit counts honest: only people on the live site.\nWhere: none\nTags: multiplayer, behind-the-scenes\nAsked vs made: Found while deploying the counts (#92). Fixed before any real numbers came in.\nMike:\nNote: Deployed with `cd relay && npm run deploy` after merge.\n",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "82b828cd45b92b541c53f4fa2f5cbad8e7b4add2",
+      "message": "Relay: only live-site rabbits count as visits\n\nPreviews, dev and the smoke test connect to the same relay from allowed origins,\nso they were counted as visits. COUNT_ORIGINS (the live site) now decides which\njoins count; everyone still shows in \"online now\".\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-19T14:54:21Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "relay/README.md",
+      "status": "M",
+      "additions": 2,
+      "deletions": 1
+    },
+    {
+      "path": "relay/src/index.ts",
+      "status": "M",
+      "additions": 5,
+      "deletions": 2
+    },
+    {
+      "path": "relay/test.mjs",
+      "status": "M",
+      "additions": 12,
+      "deletions": 4
+    },
+    {
+      "path": "relay/wrangler.jsonc",
+      "status": "M",
+      "additions": 2,
+      "deletions": 0
+    }
+  ],
+  "additions": 21,
+  "deletions": 7,
+  "areas": [
+    "relay"
+  ],
+  "branch": "relay-live-visits",
+  "opened_at": "2026-11-19T14:54:25Z",
+  "merged_by": "vlandham",
+  "summary": "Previews, local dev and the smoke test connect to the same relay as the live site, from origins the relay allows, so each of them was counted as a visit. A new `COUNT_ORIGINS` setting (gardeninsound.website and www) now decides which joins count. Everyone still shows up in \"online now\".\n\n`relay/npm test` checks that a rabbit from dev is online but not a visit, and that live-site rabbits still count once a day.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": "Found while deploying the counts (#92). Fixed before any real numbers came in.",
+    "mike": null,
+    "note": "Deployed with `cd relay && npm run deploy` after merge.",
+    "shots": true,
+    "tags": [
+      [
+        "+",
+        "multiplayer"
+      ],
+      [
+        "+",
+        "behind-the-scenes"
+      ]
+    ],
+    "present": true,
+    "whereSaid": true
+  },
+  "ideas": [],
+  "requested_reviewers": [],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-19T14:54:45Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview** · updated for 82b828c (ready when the Preview check is green)\nhttps://pr-94-garden-preview.gardeninsound.workers.dev\n\nmultiplayer · docs · behind-the-scenes · 4 files, +21 −7\n\n<sub>A full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-94]`). Edit the description and this comment follows.</sub>\n",
+      "bot": true
+    }
+  ],
+  "preview_url": null,
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 22,
+    "scenes": 12,
+    "content_files": 27,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 27980,
+    "commits": 117
+  },
+  "tags": [
+    "multiplayer",
+    "docs",
+    "behind-the-scenes"
+  ],
+  "where_from": "guessed",
+  "shots": [],
+  "first_recorded_at": "2026-11-19T14:59:03.394Z",
+  "earlier": [],
+  "recorded_at": "2026-11-19T14:59:03.394Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/44549161703"
+}

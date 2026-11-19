@@ -2,7 +2,17 @@
 
 Every change that went live on [gardeninsound.website](https://gardeninsound.website), newest first, with the wish that started it, what was made, who made it, and how the spot looked before and after. Written automatically by [`.github/workflows/story.yml`](https://github.com/gardeninsound/map/blob/main/.github/workflows/story.yml) when a change merges; the raw records are in `changes/` and `wishes/`, and `story.json` indexes them all.
 
-**99** changes · **13** wishes from visitors, **11** answered · **1** still waiting
+**100** changes · **13** wishes from visitors, **11** answered · **1** still waiting
+
+---
+
+### Nov 19, 2026 · Relay: only live-site rabbits count as visits ([#94](https://github.com/gardeninsound/map/pull/94))
+
+**Asked vs made:** Found while deploying the counts (#92). Fixed before any real numbers came in.
+
+Deployed with `cd relay && npm run deploy` after merge.
+
+<sub>Jim · 4 files, +21 −7 · relay · [record](changes/2026-11-19-pr094-relay-only-live-site-rabbits-count-as-vi/entry.json)</sub>
 
 ---
 
