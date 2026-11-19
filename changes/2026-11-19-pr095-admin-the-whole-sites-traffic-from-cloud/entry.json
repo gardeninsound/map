@@ -1,0 +1,161 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "a831822623876c0e8f7fbe55f62a85bf1796d139",
+  "parent": "8dbbd2cb78572ec69fd0c570f0043b0b02525f66",
+  "pr": 95,
+  "title": "Admin: the whole site's traffic from Cloudflare",
+  "url": "https://github.com/gardeninsound/map/pull/95",
+  "merged_at": "2026-11-19T15:04:38Z",
+  "body": "`/admin/` gets a **\"The whole site (Cloudflare)\"** card, next to the island's own counts. It covers everyone who loads gardeninsound.website, including people who never press start:\n- Visitors and page views for 7 and 30 days, with a bar chart of visitors a day.\n- Over the last 7 days, by visits: where people came from (Instagram, Google, a blog, typed in), which pages, which countries, and phone or desktop.\n\n**How:**\n- The relay's new `GET /traffic` (`relay/src/traffic.ts`) asks Cloudflare's GraphQL Analytics API for the zone's daily numbers and for Web Analytics, with a read-only token kept as a relay secret, so it never appears in a page.\n- The answer is cached for 10 minutes.\n- Until it's set up, each half says what's missing.\n\n**Setup** (relay/README.md, \"Traffic\"). The account and zone IDs are already in `wrangler.jsonc`. Still to do:\n1. Turn on Web Analytics for gardeninsound.website (automatic setup) and put its site tag in `CF_SITE_TAG`.\n2. Create a token with Account Analytics Read and Zone Analytics Read, then run `npx wrangler secret put CF_API_TOKEN`.\n\n**Checked:**\n- Unit tests for the queries' dates, reading Cloudflare's replies, the token header and errors.\n- `relay/npm test` checks `/traffic` says what's missing.\n- The smoke test runs the card on made-up data.\n- Chrome on desktop and phone with sample numbers: no errors and no sideways scroll.\n\n## Story\n\nIdea: Get the site's stats from Cloudflare onto the admin page.\nWhere: none\nTags: behind-the-scenes\nAsked vs made: As asked. The numbers come through the relay so the token stays secret, and the card fills in once Web Analytics and the token are set up.\nMike:\nNote: The zone dataset counts every load of the site; the island's own counts only count rabbits who reach the map.\n",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "823b99a3593cc84f4c572ee1597f16d715fb0a6c",
+      "message": "Admin: the whole site's traffic from Cloudflare\n\nThe relay gets GET /traffic (relay/src/traffic.ts): Cloudflare's GraphQL Analytics\nfor the zone (unique visitors, page views, requests per day, 30 days) and Web\nAnalytics (top referrers, pages, countries, devices over 7 days), read with a\nread-only token kept as a relay secret and cached 10 minutes. Each half says what's\nmissing until it's set up. /admin/ shows it in a \"The whole site\" card beside the\nisland's own counts. The smoke test feeds it made-up numbers.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-19T15:02:52Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "relay/README.md",
+      "status": "M",
+      "additions": 22,
+      "deletions": 0
+    },
+    {
+      "path": "relay/src/index.ts",
+      "status": "M",
+      "additions": 19,
+      "deletions": 2
+    },
+    {
+      "path": "relay/src/traffic.test.ts",
+      "status": "A",
+      "additions": 83,
+      "deletions": 0
+    },
+    {
+      "path": "relay/src/traffic.ts",
+      "status": "A",
+      "additions": 138,
+      "deletions": 0
+    },
+    {
+      "path": "relay/test.mjs",
+      "status": "M",
+      "additions": 7,
+      "deletions": 0
+    },
+    {
+      "path": "relay/wrangler.jsonc",
+      "status": "M",
+      "additions": 6,
+      "deletions": 1
+    },
+    {
+      "path": "scripts/smoke.mjs",
+      "status": "M",
+      "additions": 7,
+      "deletions": 1
+    },
+    {
+      "path": "src/admin/AdminPage.tsx",
+      "status": "M",
+      "additions": 87,
+      "deletions": 11
+    },
+    {
+      "path": "src/admin/admin.css",
+      "status": "M",
+      "additions": 8,
+      "deletions": 0
+    },
+    {
+      "path": "src/admin/model.test.ts",
+      "status": "M",
+      "additions": 19,
+      "deletions": 2
+    },
+    {
+      "path": "src/admin/model.ts",
+      "status": "M",
+      "additions": 16,
+      "deletions": 2
+    }
+  ],
+  "additions": 412,
+  "deletions": 19,
+  "areas": [
+    "relay",
+    "tools"
+  ],
+  "branch": "cloudflare-traffic",
+  "opened_at": "2026-11-19T15:02:55Z",
+  "merged_by": "vlandham",
+  "summary": "`/admin/` gets a **\"The whole site (Cloudflare)\"** card, next to the island's own counts. It covers everyone who loads gardeninsound.website, including people who never press start:\n- Visitors and page views for 7 and 30 days, with a bar chart of visitors a day.\n- Over the last 7 days, by visits: where people came from (Instagram, Google, a blog, typed in), which pages, which countries, and phone or desktop.\n\n**How:**\n- The relay's new `GET /traffic` (`relay/src/traffic.ts`) asks Cloudflare's GraphQL Analytics API for the zone's daily numbers and for Web Analytics, with a read-only token kept as a relay secret, so it never appears in a page.\n- The answer is cached for 10 minutes.\n- Until it's set up, each half says what's missing.\n\n**Setup** (relay/README.md, \"Traffic\"). The account and zone IDs are already in `wrangler.jsonc`. Still to do:\n1. Turn on Web Analytics for gardeninsound.website (automatic setup) and put its site tag in `CF_SITE_TAG`.\n2. Create a token with Account Analytics Read and Zone Analytics Read, then run `npx wrangler secret put CF_API_TOKEN`.\n\n**Checked:**\n- Unit tests for the queries' dates, reading Cloudflare's replies, the token header and errors.\n- `relay/npm test` checks `/traffic` says what's missing.\n- The smoke test runs the card on made-up data.\n- Chrome on desktop and phone with sample numbers: no errors and no sideways scroll.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": "As asked. The numbers come through the relay so the token stays secret, and the card fills in once Web Analytics and the token are set up.",
+    "mike": null,
+    "note": "The zone dataset counts every load of the site; the island's own counts only count rabbits who reach the map.",
+    "shots": true,
+    "tags": [
+      [
+        "+",
+        "behind-the-scenes"
+      ]
+    ],
+    "present": true,
+    "whereSaid": true
+  },
+  "ideas": [],
+  "requested_reviewers": [],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-19T15:03:08Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview** · updated for 823b99a (ready when the Preview check is green)\nhttps://pr-95-garden-preview.gardeninsound.workers.dev\n\nmultiplayer · docs · behind-the-scenes · 11 files, +412 −19\n\n<sub>A full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-95]`). Edit the description and this comment follows.</sub>\n",
+      "bot": true
+    }
+  ],
+  "preview_url": null,
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 22,
+    "scenes": 12,
+    "content_files": 27,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 28087,
+    "commits": 118
+  },
+  "tags": [
+    "multiplayer",
+    "docs",
+    "behind-the-scenes"
+  ],
+  "where_from": "guessed",
+  "shots": [],
+  "first_recorded_at": "2026-11-19T15:05:15.869Z",
+  "earlier": [],
+  "recorded_at": "2026-11-19T15:05:15.869Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/44550711569"
+}

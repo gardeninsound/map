@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-11-19T14:59:08.358Z",
+  "generated_at": "2026-11-19T15:05:18.407Z",
   "changes": [
     {
       "pr": null,
@@ -5165,6 +5165,46 @@
         "arcade_cabinets_ready": 4,
         "source_lines": 27980,
         "commits": 117
+      }
+    },
+    {
+      "pr": 95,
+      "sha": "a831822623876c0e8f7fbe55f62a85bf1796d139",
+      "title": "Admin: the whole site's traffic from Cloudflare",
+      "url": "https://github.com/gardeninsound/map/pull/95",
+      "merged_at": "2026-11-19T15:04:38Z",
+      "dir": "changes/2026-11-19-pr095-admin-the-whole-sites-traffic-from-cloud",
+      "ideas": [],
+      "summary": "`/admin/` gets a **\"The whole site (Cloudflare)\"** card, next to the island's own counts. It covers everyone who loads gardeninsound.website, including people who never press start:\n- Visitors and page views for 7 and 30 days, with a bar chart of visitors a day.\n- Over the last 7 days, by visits: where people came from (Instagram, Google, a blog, typed in), which pages, which countries, and phone or desktop.\n\n**How:**\n- The relay's new `GET /traffic` (`relay/src/traffic.ts`) asks Cloudflare's GraphQL Analytics API for the zone's daily numbers and for Web Analytics, with a read-only token kept as a relay secret, so it never appears in a page.\n- The answer is cached for 10 minutes.\n- Until it's set up, each half says what's missing.\n\n**Setup** (relay/README.md, \"Traffic\"). The account and zone IDs are already in `wrangler.jsonc`. Still to do:\n1. Turn on Web Analytics for gardeninsound.website (automatic setup) and put its site tag in `CF_SITE_TAG`.\n2. Create a token with Account Analytics Read and Zone Analytics Read, then run `npx wrangler secret put CF_API_TOKEN`.\n\n**Checked:**\n- Unit tests for the queries' dates, reading Cloudflare's replies, the token header and errors.\n- `relay/npm test` checks `/traffic` says what's missing.\n- The smoke test runs the card on made-up data.\n- Chrome on desktop and phone with sample numbers: no errors and no sideways scroll.",
+      "story": {
+        "askedVsMade": "As asked. The numbers come through the relay so the token stays secret, and the card fills in once Web Analytics and the token are set up.",
+        "mike": null,
+        "note": "The zone dataset counts every load of the site; the island's own counts only count rabbits who reach the map."
+      },
+      "authors": [
+        "Jim"
+      ],
+      "files": 11,
+      "additions": 412,
+      "deletions": 19,
+      "areas": [
+        "relay",
+        "tools"
+      ],
+      "tags": [
+        "multiplayer",
+        "docs",
+        "behind-the-scenes"
+      ],
+      "shots": [],
+      "census": {
+        "spots": 15,
+        "plugins": 22,
+        "scenes": 12,
+        "content_files": 27,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 28087,
+        "commits": 118
       }
     }
   ],
