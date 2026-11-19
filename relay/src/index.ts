@@ -22,7 +22,7 @@ export { Stats };
  *   POST /count/<appId>            body: a key like `scene:gas-station-wall` (the game's beacon)
  *   GET  /stats/<appId>/<roomId>   → {now, days: [{day, visits, peak, opened: {key: n}}]}, ?days=30
  *
- * A room tells its app's Stats about each rabbit that joins. Numbers per day only; see stats.ts.
+ * A room tells its app's Stats about each rabbit that joins from COUNT_ORIGINS (the live site). Numbers per day only; see stats.ts.
  *
  * Dead sockets are swept: while anyone is connected, an alarm every SWEEP_MS
  * closes sockets that have sent nothing (not even a "ping") for STALE_MS, and
@@ -35,6 +35,8 @@ export interface Env {
   STATS: DurableObjectNamespace<Stats>;
   /** Comma-separated allowed page origins, `*` as wildcard. Empty allows any. */
   ALLOWED_ORIGINS?: string;
+  /** Comma-separated page origins whose rabbits count as visits (the live site; previews, dev and tests don't). Empty counts none. */
+  COUNT_ORIGINS?: string;
   /** Most players in one room (default 64). */
   MAX_PEERS?: string;
   /** a socket silent this long (ms) is dropped (default 90 s) */
@@ -149,7 +151,8 @@ export class Room extends DurableObject<Env> {
       server.send(JSON.stringify({ k: 'peers', ids: others }));
       this.broadcast({ k: 'join', id }, server);
       // counted for the day (stats.ts); a count that fails never stops a rabbit joining
-      if (stale.length === 0 && appId) {
+      const live = !!this.env.COUNT_ORIGINS && originAllowed(request.headers.get('Origin'), this.env.COUNT_ORIGINS);
+      if (stale.length === 0 && appId && live) {
         try {
           await this.env.STATS.get(this.env.STATS.idFromName(appId)).visit(id, others.length + 1);
         } catch {

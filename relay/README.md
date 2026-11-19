@@ -29,7 +29,8 @@ moving, so that's roughly 100+ rabbit-hours of walking a day.
 
 A `Stats` Durable Object per app (`src/stats.ts`) keeps numbers per Seattle day, for the admin page:
 
-- **visits**: rabbits that joined the room that day, each once (a rabbit that steps out and back in,
+- **visits**: rabbits from the live site (`COUNT_ORIGINS`; previews, dev and tests share the room but don't count)
+  that joined the room that day, each once (a rabbit that steps out and back in,
   or reconnects, is the same visit). The random peer ids are held for the current day only, to
   tell them apart, and deleted when the day turns.
 - **peak**: the most rabbits in the room at once that day.
