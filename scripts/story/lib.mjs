@@ -226,7 +226,11 @@ export function areasOf(paths) {
 // Tags: what kind of change it was, to sort the log by (README: "Tags")
 
 /** every tag, in the order they're listed */
-export const TAGS = ['wish', 'map', 'character', 'scene', 'arcade', 'art', 'sound', 'words', 'ui', 'multiplayer', 'idea-box', 'code', 'agent', 'story-log', 'infra', 'docs'];
+export const TAGS = ['wish', 'map', 'character', 'scene', 'arcade', 'art', 'sound', 'words', 'ui', 'multiplayer', 'idea-box', 'code', 'agent', 'story-log', 'infra', 'docs', 'behind-the-scenes'];
+/** tags for something a visitor to the island could see or hear; a change with tags but none of these is behind the scenes */
+export const SITE_TAGS = ['wish', 'map', 'character', 'scene', 'arcade', 'art', 'sound', 'words', 'ui', 'multiplayer', 'idea-box'];
+/** plumbing: changes to the code, the agents, the log, CI or the notes that nobody playing would notice (the /story/ page hides them at first) */
+export const BEHIND = 'behind-the-scenes';
 
 const big = (f) => (f.additions ?? 0) + (f.deletions ?? 0) >= 15;
 const isTest = (p) => /\.test\.[cm]?[jt]sx?$/.test(p);
@@ -263,7 +267,9 @@ export function parseTags(s) {
  * A change's tags, from what it touched: the files (see TAG_FILES), whether it answered a wish,
  * and changes to how agents work (scripts/ai, a CLAUDE.md rewritten rather than given a line, the
  * guards that tell Claude where things go, a title about Claude or agents). Then the PR's own
- * `Tags:` line and curated tags add (`sound`) or take away (`-code`).
+ * `Tags:` line and curated tags add (`sound`) or take away (`-code`). Last, `behind-the-scenes` when
+ * none of the tags is something on the site (`SITE_TAGS`): a refactor that touched characters but
+ * changed nothing you'd see says so with `Tags: behind-the-scenes`; `-behind-the-scenes` keeps one out.
  */
 export function tagsOf({ files = [], title = '', ideas = [], story = {} }, curated = []) {
   const on = new Set();
@@ -282,7 +288,10 @@ export function tagsOf({ files = [], title = '', ideas = [], story = {} }, curat
     on.add('docs');
     if (md.some((f) => /(^|\/)CLAUDE\.md$/.test(f.path))) on.add('agent');
   }
-  for (const [sign, tag] of [...(story.tags ?? []), ...parseTags(curated)]) sign === '-' ? on.delete(tag) : on.add(tag);
+  const said = [...(story.tags ?? []), ...parseTags(curated)];
+  for (const [sign, tag] of said) sign === '-' ? on.delete(tag) : on.add(tag);
+  const keepOut = said.some(([sign, tag]) => sign === '-' && tag === BEHIND);
+  if (on.size && !keepOut && !SITE_TAGS.some((t) => on.has(t))) on.add(BEHIND);
   return [...TAGS.filter((t) => on.has(t)), ...[...on].filter((t) => !TAGS.includes(t)).sort()];
 }
 

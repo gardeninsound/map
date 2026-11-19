@@ -6,6 +6,9 @@ import { useEffect, useMemo, useState } from 'react';
 import {
   anchorOf,
   applyFilter,
+  behindCount,
+  linksBehind,
+  onStage,
   dateLabel,
   groupByMonth,
   growth,
@@ -29,6 +32,7 @@ export function StoryPage({ src }: { src: string }) {
   const [load, setLoad] = useState<Load>({ state: 'loading' });
   const [filter, setFilter] = useState<Filter>('all');
   const [tag, setTag] = useState<string | null>(null);
+  const [backstage, setBackstage] = useState(false);
 
   useEffect(() => {
     let live = true;
@@ -37,7 +41,9 @@ export function StoryPage({ src }: { src: string }) {
         if (r.status === 404) return live && setLoad({ state: 'empty' });
         if (!r.ok) throw new Error(`HTTP ${r.status}`);
         const idx = (await r.json()) as StoryIndex;
-        if (live) setLoad(idx.changes.length ? { state: 'ok', idx } : { state: 'empty' });
+        if (!live) return;
+        setBackstage(linksBehind(idx.changes, location.hash));
+        setLoad(idx.changes.length ? { state: 'ok', idx } : { state: 'empty' });
       })
       .catch((e: Error) => live && setLoad({ state: 'error', message: e.message }));
     return () => {
@@ -63,7 +69,7 @@ export function StoryPage({ src }: { src: string }) {
       {load.state === 'loading' && <p className="story-note">Unrolling the log…</p>}
       {load.state === 'empty' && <p className="story-note">The story log hasn't started yet. It begins with the next change to the map.</p>}
       {load.state === 'error' && <p className="story-note">Couldn't read the story log ({load.message}). Try again in a minute.</p>}
-      {load.state === 'ok' && <Story idx={load.idx} src={src} filter={filter} setFilter={setFilter} tag={tag} setTag={setTag} />}
+      {load.state === 'ok' && <Story idx={load.idx} src={src} filter={filter} setFilter={setFilter} tag={tag} setTag={setTag} backstage={backstage} setBackstage={setBackstage} />}
       <footer className="story-foot">
         Written automatically as the map changes, from the project's{' '}
         <a href="https://github.com/gardeninsound/map/tree/story">story branch</a>. <a href={import.meta.env.BASE_URL}>Back to the map →</a>
@@ -72,22 +78,38 @@ export function StoryPage({ src }: { src: string }) {
   );
 }
 
-type StoryProps = { idx: StoryIndex; src: string; filter: Filter; setFilter: (f: Filter) => void; tag: string | null; setTag: (t: string | null) => void };
-function Story({ idx, src, filter, setFilter, tag, setTag }: StoryProps) {
+type StoryProps = {
+  idx: StoryIndex;
+  src: string;
+  filter: Filter;
+  setFilter: (f: Filter) => void;
+  tag: string | null;
+  setTag: (t: string | null) => void;
+  backstage: boolean;
+  setBackstage: (b: boolean) => void;
+};
+function Story({ idx, src, filter, setFilter, tag, setTag, backstage, setBackstage }: StoryProps) {
   const s = useMemo(() => stats(idx), [idx]);
   const series = useMemo(() => growth(idx), [idx]);
-  const months = useMemo(() => groupByMonth(withTag(applyFilter(idx.changes, filter), tag)), [idx, filter, tag]);
-  const tags = useMemo(() => tagCounts(idx.changes), [idx]);
+  // plumbing (code, agents, the log itself) stays out until you ask for it
+  const shown = useMemo(() => onStage(idx.changes, backstage), [idx, backstage]);
+  const behind = useMemo(() => behindCount(idx.changes), [idx]);
+  const months = useMemo(() => groupByMonth(withTag(applyFilter(shown, filter), tag)), [shown, filter, tag]);
+  const tags = useMemo(() => tagCounts(shown), [shown]);
   const pickTag = (t: string) => {
     setTag(t === tag ? null : t);
     document.querySelector('.story-filters')?.scrollIntoView({ block: 'start' });
   };
   const waiting = useMemo(() => waitingWishes(idx), [idx]);
   const FILTERS: [Filter, string][] = [
-    ['all', `Everything · ${idx.changes.length}`],
-    ['wishes', `Answered a wish · ${applyFilter(idx.changes, 'wishes').length}`],
-    ['pictures', `With pictures · ${applyFilter(idx.changes, 'pictures').length}`],
+    ['all', `Everything · ${shown.length}`],
+    ['wishes', `Answered a wish · ${applyFilter(shown, 'wishes').length}`],
+    ['pictures', `With pictures · ${applyFilter(shown, 'pictures').length}`],
   ];
+  const toggleBackstage = () => {
+    if (backstage && tag && !tagCounts(onStage(idx.changes, false)).some((t) => t.tag === tag)) setTag(null);
+    setBackstage(!backstage);
+  };
   return (
     <>
       <section className="story-stats" aria-label="So far">
@@ -112,6 +134,16 @@ function Story({ idx, src, filter, setFilter, tag, setTag }: StoryProps) {
             {label}
           </button>
         ))}
+        {behind > 0 && (
+          <button
+            className={`story-backstage${backstage ? ' on' : ''}`}
+            aria-pressed={backstage}
+            onClick={toggleBackstage}
+            title="changes to the code, the agents' notes, the log itself and the previews: nothing you'd see on the island"
+          >
+            {backstage ? 'Hide' : 'Show'} behind the scenes · {behind}
+          </button>
+        )}
       </nav>
       {tags.length > 0 && (
         <nav className="story-tags" aria-label="Tags">

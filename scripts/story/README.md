@@ -89,6 +89,12 @@ change), `agent` (how agents build the island: `scripts/ai`, a rewritten or note
 `festival`) and takes away (`-code`); so do `tags` in `curated.json`. Tags are worked out again for
 every change on every run, so changing the rules re-tags the whole log. The /story/ page filters by them.
 
+**`behind-the-scenes`** marks plumbing nobody playing would notice, and the /story/ page leaves those changes out until you
+press "Show behind the scenes" (or follow a link to one). A change gets it on its own when none of its tags is something on the
+site (`SITE_TAGS` in `lib.mjs`: only `code`, `agent`, `story-log`, `infra`, `docs`). A refactor touches character or scene files
+and so gets their tags, so its PR says `Tags: behind-the-scenes`; plumbing you can see after all says `-behind-the-scenes`.
+The changes from before this rule are tagged in `curated.json`.
+
 ## The human part
 
 The machine records the facts. The story also needs the parts only people know, and those

@@ -62,6 +62,9 @@ a:hover { color: var(--pink); }
   background: var(--paper); color: var(--ink); border: 0; box-shadow: 0 0 0 3px var(--ink);
 }
 .story-filters button.on { background: var(--yellow); }
+/* plumbing on or off: quieter than the filters, at the end of the row */
+.story-filters .story-backstage { background: transparent; box-shadow: 0 0 0 2px var(--ink); opacity: 0.75; }
+.story-filters .story-backstage.on { background: var(--paper); opacity: 1; }
 /* tags: a quieter second row, and the same chips on each change */
 .story-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 8px; }
 .story-tags button, .story-change-tags button {

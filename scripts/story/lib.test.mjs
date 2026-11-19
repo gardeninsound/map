@@ -327,22 +327,22 @@ describe('tags', () => {
     expect(tagsOf({ files: [f('src/game/plugins/crow.ts'), f('src/content/crow.ts'), f('src/game/crow.test.ts')] })).toEqual(['character', 'words']);
     expect(tagsOf({ files: [f('src/experiences/arcade/DuckArcade.tsx')], ideas: [{ issue: 3 }] })).toEqual(['wish', 'arcade']);
     expect(tagsOf({ files: [f('src/ui/IdeaBox.tsx')] })).toEqual(['ui', 'idea-box']);
-    expect(tagsOf({ files: [f('scripts/story/record.mjs'), f('.github/workflows/story.yml')] })).toEqual(['story-log', 'infra']);
+    expect(tagsOf({ files: [f('scripts/story/record.mjs'), f('.github/workflows/story.yml')] })).toEqual(['story-log', 'infra', 'behind-the-scenes']);
     expect(tagsOf({ files: [f('src/city/render/trees.ts')] })).toEqual(['map']);
   });
 
   it("code: the engine and wiring, and App.tsx only when it's a big change", () => {
     expect(tagsOf({ files: [f('src/App.tsx', 10)] })).toEqual([]);
-    expect(tagsOf({ files: [f('src/App.tsx', 90)] })).toEqual(['code']);
-    expect(tagsOf({ files: [f('src/game/actions.ts')] })).toEqual(['code']);
+    expect(tagsOf({ files: [f('src/App.tsx', 90)] })).toEqual(['code', 'behind-the-scenes']);
+    expect(tagsOf({ files: [f('src/game/actions.ts')] })).toEqual(['code', 'behind-the-scenes']);
   });
 
   it('agent: how agents work (scripts/ai, a CLAUDE.md rewrite or a notes-only change, the guards, the title)', () => {
-    expect(tagsOf({ files: [f('scripts/ai/run.mjs')] })).toEqual(['agent']);
-    expect(tagsOf({ files: [f('CLAUDE.md', 3)] })).toEqual(['agent', 'docs']);
+    expect(tagsOf({ files: [f('scripts/ai/run.mjs')] })).toEqual(['agent', 'behind-the-scenes']);
+    expect(tagsOf({ files: [f('CLAUDE.md', 3)] })).toEqual(['agent', 'docs', 'behind-the-scenes']);
     expect(tagsOf({ files: [f('CLAUDE.md', 3), f('src/game/plugins/ham.ts')] })).toEqual(['character']);
-    expect(tagsOf({ files: [f('src/game/onInteract.test.ts')] })).toEqual(['agent']);
-    expect(tagsOf({ files: [], title: 'Make sure every Claude puts {A} in the plugin' })).toEqual(['agent']);
+    expect(tagsOf({ files: [f('src/game/onInteract.test.ts')] })).toEqual(['agent', 'behind-the-scenes']);
+    expect(tagsOf({ files: [], title: 'Make sure every Claude puts {A} in the plugin' })).toEqual(['agent', 'behind-the-scenes']);
   });
 
   it("the PR's Tags: line and curated tags add and take away", () => {
@@ -350,6 +350,18 @@ describe('tags', () => {
     expect(story.tags).toEqual([['+', 'sound'], ['-', 'character'], ['+', 'festival']]);
     expect(tagsOf({ files: [f('src/game/plugins/busker.ts')], story })).toEqual(['sound', 'festival']);
     expect(tagsOf({ files: [f('src/game/plugins/ham.ts')] }, ['-character', 'ui'])).toEqual(['ui']);
+  });
+
+  it('behind the scenes: nothing a visitor would see, or said so', () => {
+    // only plumbing tags
+    expect(tagsOf({ files: [f('.github/workflows/ci.yml')] })).toEqual(['infra', 'behind-the-scenes']);
+    // a refactor that touched characters but changed nothing on screen says so
+    const story = parseStory('## Story\nTags: behind-the-scenes');
+    expect(tagsOf({ files: [f('src/game/plugins/ham.ts')], story })).toEqual(['character', 'behind-the-scenes']);
+    // plumbing that you can see after all opts out
+    expect(tagsOf({ files: [f('src/game/actions.ts')] }, ['-behind-the-scenes'])).toEqual(['code']);
+    // no tags at all: not enough to say
+    expect(tagsOf({ files: [f('src/App.tsx', 10)] })).toEqual([]);
   });
 });
 

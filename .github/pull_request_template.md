@@ -14,7 +14,8 @@ Where:
      tile 120, 340  ·  title  ·  none -->
 Tags:
 <!-- optional: the log tags each change from what it touched (map, character, ui, code, agent…);
-     add your own or take one away: sound, festival, -code -->
+     add your own or take one away: sound, festival, -code. Nothing a visitor would see or hear
+     (a refactor, notes, CI)? behind-the-scenes: the story page keeps it out of the way -->
 Asked vs made:
 <!-- if this isn't quite what the visitor asked for: how, and why -->
 Mike:

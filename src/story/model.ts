@@ -79,6 +79,15 @@ export function wipeKey(pos: number, key: string, fine = false): number | null {
 
 export const anchorOf = (c: Pick<StoryChange, 'pr' | 'sha'>) => (c.pr ? `pr-${c.pr}` : `c-${c.sha.slice(0, 7)}`);
 
+/** plumbing nobody playing would notice (scripts/story/lib.mjs `BEHIND`): hidden at first */
+export const BEHIND = 'behind-the-scenes';
+const isBehind = (c: StoryChange) => !!c.tags?.includes(BEHIND);
+/** the changes on show: all of them `backstage`, else those that changed the island itself */
+export const onStage = (changes: StoryChange[], backstage: boolean) => (backstage ? changes : changes.filter((c) => !isBehind(c)));
+export const behindCount = (changes: StoryChange[]) => changes.filter(isBehind).length;
+/** a #pr-84 link to a change behind the scenes: show them, or the link lands nowhere */
+export const linksBehind = (changes: StoryChange[], hash: string) => changes.some((c) => isBehind(c) && `#${anchorOf(c)}` === hash);
+
 export type Filter = 'all' | 'wishes' | 'pictures';
 export function applyFilter(changes: StoryChange[], filter: Filter): StoryChange[] {
   if (filter === 'wishes') return changes.filter((c) => c.ideas.length > 0);
