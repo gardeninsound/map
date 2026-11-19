@@ -1,0 +1,99 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "6ae3e26b1e90b7a3ff2606d986354c40c16e4ab6",
+  "parent": "a831822623876c0e8f7fbe55f62a85bf1796d139",
+  "pr": 96,
+  "title": "Relay: the Web Analytics site tag for /traffic",
+  "url": "https://github.com/gardeninsound/map/pull/96",
+  "merged_at": "2026-11-19T15:18:03Z",
+  "body": "Fills in `CF_SITE_TAG`, so the admin page's \"where they came from, pages, countries, devices\" lists read gardeninsound.website's Web Analytics. The token is set as a relay secret, and the relay is already deployed with this change.\n\n## Story\n\nIdea: Finish setting up Cloudflare's numbers on the admin page.\nWhere: none\nTags: behind-the-scenes\nAsked vs made: As asked.\nMike:\nNote:\n",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "870a9606fd1c0e0a26cc5aadd2c341d64fd22310",
+      "message": "Relay: the Web Analytics site tag for /traffic\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-19T15:13:47Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "relay/wrangler.jsonc",
+      "status": "M",
+      "additions": 1,
+      "deletions": 1
+    }
+  ],
+  "additions": 1,
+  "deletions": 1,
+  "areas": [
+    "relay"
+  ],
+  "branch": "traffic-site-tag",
+  "opened_at": "2026-11-19T15:13:51Z",
+  "merged_by": "vlandham",
+  "summary": "Fills in `CF_SITE_TAG`, so the admin page's \"where they came from, pages, countries, devices\" lists read gardeninsound.website's Web Analytics. The token is set as a relay secret, and the relay is already deployed with this change.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": "As asked.",
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "tags": [
+      [
+        "+",
+        "behind-the-scenes"
+      ]
+    ],
+    "present": true,
+    "whereSaid": true
+  },
+  "ideas": [],
+  "requested_reviewers": [],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-19T15:14:07Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview** · updated for 870a960 (ready when the Preview check is green)\nhttps://pr-96-garden-preview.gardeninsound.workers.dev\n\nmultiplayer · behind-the-scenes · 1 file, +1 −1\n\n<sub>A full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-96]`). Edit the description and this comment follows.</sub>\n",
+      "bot": true
+    }
+  ],
+  "preview_url": null,
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 22,
+    "scenes": 12,
+    "content_files": 27,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 28087,
+    "commits": 119
+  },
+  "tags": [
+    "multiplayer",
+    "behind-the-scenes"
+  ],
+  "where_from": "guessed",
+  "shots": [],
+  "first_recorded_at": "2026-11-19T15:18:39.106Z",
+  "earlier": [],
+  "recorded_at": "2026-11-19T15:18:39.106Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/44553234921"
+}

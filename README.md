@@ -2,7 +2,15 @@
 
 Every change that went live on [gardeninsound.website](https://gardeninsound.website), newest first, with the wish that started it, what was made, who made it, and how the spot looked before and after. Written automatically by [`.github/workflows/story.yml`](https://github.com/gardeninsound/map/blob/main/.github/workflows/story.yml) when a change merges; the raw records are in `changes/` and `wishes/`, and `story.json` indexes them all.
 
-**101** changes · **13** wishes from visitors, **11** answered · **1** still waiting
+**102** changes · **13** wishes from visitors, **11** answered · **1** still waiting
+
+---
+
+### Nov 19, 2026 · Relay: the Web Analytics site tag for /traffic ([#96](https://github.com/gardeninsound/map/pull/96))
+
+**Asked vs made:** As asked.
+
+<sub>Jim · 1 files, +1 −1 · relay · [record](changes/2026-11-19-pr096-relay-the-web-analytics-site-tag-for-tra/entry.json)</sub>
 
 ---
 
