@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated_at": "2026-11-19T14:35:28.999Z",
+  "generated_at": "2026-11-19T14:42:05.922Z",
   "changes": [
     {
       "pr": null,
@@ -5085,6 +5085,47 @@
         "arcade_cabinets_ready": 4,
         "source_lines": 27470,
         "commits": 115
+      }
+    },
+    {
+      "pr": 93,
+      "sha": "20c5d8dae82ad6460e5d0eb0e21c27d3e80ab6a0",
+      "title": "An /admin/ page for Mike and Jim: visitors, open PRs, open items",
+      "url": "https://github.com/gardeninsound/map/pull/93",
+      "merged_at": "2026-11-19T14:41:32Z",
+      "dir": "changes/2026-11-19-pr093-an-admin-page-for-mike-and-jim-visitors",
+      "ideas": [],
+      "summary": "A new page at **gardeninsound.website/admin/** shows the state of the island in one place. Nothing links to it and search engines are told not to index it.\n\n**Visitors** (the counts from #92):\n- Rabbits on the island now, visits today, and the most at once today.\n- Visits for the last 7 and 30 days.\n- A bar chart of visits a day over the last 30 days. Hover a bar for that day's numbers.\n- \"Most opened\" over 7 or 30 days, in words: \"Mike at The Wall That Kept Turning\", \"inside The Wall That Kept Turning\", \"the snack crow\", \"Duck Scroller\", \"the Giant Whirl\".\n\n**Pull requests:** each open PR with who opened it, how long ago, whether its Check passed, and its preview link.\n\n**Open items:**\n- Idea-box wishes still waiting, oldest first (previews' test wishes left out).\n- For Mike: pins still to confirm (The Tailor Wall, Small Kindnesses, The Bears) and spots still \"coming soon\".\n- Any other open issues.\n\nIt reads public data only: the relay's `/stats`, GitHub's API without a login, and the spots in `src/content`. `?stats=` and `?gh=` point it at a local relay or test data. The Jim/Mike names moved to `src/story/people.mjs`, so the story log and this page share one list.\n\n**Checked:**\n- Unit tests for the totals, names, PR and wish rules.\n- The smoke test opens `/admin/` on made-up data.\n- In Chrome on desktop and phone width against a local relay with seeded counts and the real GitHub data: no page errors and no sideways scroll.\n\nThe visitor numbers stay empty until the relay is deployed with #92's counts (`cd relay && npm run deploy`). Until then the card says it couldn't read them.\n\nMike: heads-up, this page is for you too. The \"For Mike\" list is drawn from `content/places.csv`.",
+      "story": {
+        "askedVsMade": "As asked: counts first (#92), then this page with the counts, PRs and open items. It's read-only for now. Editing Mike's lines from here would need a Worker that opens PRs.",
+        "mike": null,
+        "note": null
+      },
+      "authors": [
+        "Jim"
+      ],
+      "files": 12,
+      "additions": 598,
+      "deletions": 6,
+      "areas": [
+        "docs",
+        "tools"
+      ],
+      "tags": [
+        "ui",
+        "code",
+        "story-log",
+        "behind-the-scenes"
+      ],
+      "shots": [],
+      "census": {
+        "spots": 15,
+        "plugins": 22,
+        "scenes": 12,
+        "content_files": 27,
+        "arcade_cabinets_ready": 4,
+        "source_lines": 27980,
+        "commits": 116
       }
     }
   ],

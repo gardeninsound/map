@@ -2,7 +2,15 @@
 
 Every change that went live on [gardeninsound.website](https://gardeninsound.website), newest first, with the wish that started it, what was made, who made it, and how the spot looked before and after. Written automatically by [`.github/workflows/story.yml`](https://github.com/gardeninsound/map/blob/main/.github/workflows/story.yml) when a change merges; the raw records are in `changes/` and `wishes/`, and `story.json` indexes them all.
 
-**98** changes · **13** wishes from visitors, **11** answered · **1** still waiting
+**99** changes · **13** wishes from visitors, **11** answered · **1** still waiting
+
+---
+
+### Nov 19, 2026 · An /admin/ page for Mike and Jim: visitors, open PRs, open items ([#93](https://github.com/gardeninsound/map/pull/93))
+
+**Asked vs made:** As asked: counts first (#92), then this page with the counts, PRs and open items. It's read-only for now. Editing Mike's lines from here would need a Worker that opens PRs.
+
+<sub>Jim · 12 files, +598 −6 · docs, tools · [record](changes/2026-11-19-pr093-an-admin-page-for-mike-and-jim-visitors/entry.json)</sub>
 
 ---
 

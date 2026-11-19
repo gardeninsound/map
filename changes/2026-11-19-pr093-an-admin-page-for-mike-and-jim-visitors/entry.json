@@ -1,0 +1,174 @@
+{
+  "schema": 1,
+  "kind": "change",
+  "sha": "20c5d8dae82ad6460e5d0eb0e21c27d3e80ab6a0",
+  "parent": "09881953a1dbe9f93b11ebc08e3e0721f2978b0c",
+  "pr": 93,
+  "title": "An /admin/ page for Mike and Jim: visitors, open PRs, open items",
+  "url": "https://github.com/gardeninsound/map/pull/93",
+  "merged_at": "2026-11-19T14:41:32Z",
+  "body": "A new page at **gardeninsound.website/admin/** shows the state of the island in one place. Nothing links to it and search engines are told not to index it.\n\n**Visitors** (the counts from #92):\n- Rabbits on the island now, visits today, and the most at once today.\n- Visits for the last 7 and 30 days.\n- A bar chart of visits a day over the last 30 days. Hover a bar for that day's numbers.\n- \"Most opened\" over 7 or 30 days, in words: \"Mike at The Wall That Kept Turning\", \"inside The Wall That Kept Turning\", \"the snack crow\", \"Duck Scroller\", \"the Giant Whirl\".\n\n**Pull requests:** each open PR with who opened it, how long ago, whether its Check passed, and its preview link.\n\n**Open items:**\n- Idea-box wishes still waiting, oldest first (previews' test wishes left out).\n- For Mike: pins still to confirm (The Tailor Wall, Small Kindnesses, The Bears) and spots still \"coming soon\".\n- Any other open issues.\n\nIt reads public data only: the relay's `/stats`, GitHub's API without a login, and the spots in `src/content`. `?stats=` and `?gh=` point it at a local relay or test data. The Jim/Mike names moved to `src/story/people.mjs`, so the story log and this page share one list.\n\n**Checked:**\n- Unit tests for the totals, names, PR and wish rules.\n- The smoke test opens `/admin/` on made-up data.\n- In Chrome on desktop and phone width against a local relay with seeded counts and the real GitHub data: no page errors and no sideways scroll.\n\nThe visitor numbers stay empty until the relay is deployed with #92's counts (`cd relay && npm run deploy`). Until then the card says it couldn't read them.\n\nMike: heads-up, this page is for you too. The \"For Mike\" list is drawn from `content/places.csv`.\n\n## Story\n\nIdea: An admin panel for Mike and Jim, showing the visit counts, the PRs and the open items.\nWhere: none\nTags: ui, behind-the-scenes\nAsked vs made: As asked: counts first (#92), then this page with the counts, PRs and open items. It's read-only for now. Editing Mike's lines from here would need a Worker that opens PRs.\nMike:\nNote:\n",
+  "authors": [
+    {
+      "login": "vlandham"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "3e0cdcaf58dad57efdfe7a2ff18bbd08da72bc5b",
+      "message": "An /admin/ page for Mike and Jim: visitors, open PRs, open items\n\nA third page (admin/index.html, src/admin/): who's on now, visits today and the\nday's peak, visits a day for 30 days, what's opened most over 7 or 30 days (from\nthe relay's counts), open PRs with who opened them, their Check and preview link,\nthe idea-box wishes waiting, pins Mike hasn't confirmed and spots still coming\nsoon. Public data only. The Jim/Mike names move to src/story/people.mjs so the\nstory log and this page share them. The smoke test opens it on made-up data.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "author": "vlandham",
+      "login": "vlandham",
+      "at": "2026-11-19T14:39:03Z"
+    }
+  ],
+  "files": [
+    {
+      "path": "CLAUDE.md",
+      "status": "M",
+      "additions": 4,
+      "deletions": 0
+    },
+    {
+      "path": "admin/index.html",
+      "status": "A",
+      "additions": 15,
+      "deletions": 0
+    },
+    {
+      "path": "scripts/smoke.mjs",
+      "status": "M",
+      "additions": 22,
+      "deletions": 2
+    },
+    {
+      "path": "scripts/story/lib.mjs",
+      "status": "M",
+      "additions": 2,
+      "deletions": 2
+    },
+    {
+      "path": "src/admin/AdminPage.tsx",
+      "status": "A",
+      "additions": 240,
+      "deletions": 0
+    },
+    {
+      "path": "src/admin/admin.css",
+      "status": "A",
+      "additions": 34,
+      "deletions": 0
+    },
+    {
+      "path": "src/admin/main.tsx",
+      "status": "A",
+      "additions": 15,
+      "deletions": 0
+    },
+    {
+      "path": "src/admin/model.test.ts",
+      "status": "A",
+      "additions": 106,
+      "deletions": 0
+    },
+    {
+      "path": "src/admin/model.ts",
+      "status": "A",
+      "additions": 149,
+      "deletions": 0
+    },
+    {
+      "path": "src/story/people.d.mts",
+      "status": "A",
+      "additions": 1,
+      "deletions": 0
+    },
+    {
+      "path": "src/story/people.mjs",
+      "status": "A",
+      "additions": 4,
+      "deletions": 0
+    },
+    {
+      "path": "vite.config.ts",
+      "status": "M",
+      "additions": 6,
+      "deletions": 2
+    }
+  ],
+  "additions": 598,
+  "deletions": 6,
+  "areas": [
+    "docs",
+    "tools"
+  ],
+  "branch": "admin-page",
+  "opened_at": "2026-11-19T14:39:06Z",
+  "merged_by": "vlandham",
+  "summary": "A new page at **gardeninsound.website/admin/** shows the state of the island in one place. Nothing links to it and search engines are told not to index it.\n\n**Visitors** (the counts from #92):\n- Rabbits on the island now, visits today, and the most at once today.\n- Visits for the last 7 and 30 days.\n- A bar chart of visits a day over the last 30 days. Hover a bar for that day's numbers.\n- \"Most opened\" over 7 or 30 days, in words: \"Mike at The Wall That Kept Turning\", \"inside The Wall That Kept Turning\", \"the snack crow\", \"Duck Scroller\", \"the Giant Whirl\".\n\n**Pull requests:** each open PR with who opened it, how long ago, whether its Check passed, and its preview link.\n\n**Open items:**\n- Idea-box wishes still waiting, oldest first (previews' test wishes left out).\n- For Mike: pins still to confirm (The Tailor Wall, Small Kindnesses, The Bears) and spots still \"coming soon\".\n- Any other open issues.\n\nIt reads public data only: the relay's `/stats`, GitHub's API without a login, and the spots in `src/content`. `?stats=` and `?gh=` point it at a local relay or test data. The Jim/Mike names moved to `src/story/people.mjs`, so the story log and this page share one list.\n\n**Checked:**\n- Unit tests for the totals, names, PR and wish rules.\n- The smoke test opens `/admin/` on made-up data.\n- In Chrome on desktop and phone width against a local relay with seeded counts and the real GitHub data: no page errors and no sideways scroll.\n\nThe visitor numbers stay empty until the relay is deployed with #92's counts (`cd relay && npm run deploy`). Until then the card says it couldn't read them.\n\nMike: heads-up, this page is for you too. The \"For Mike\" list is drawn from `content/places.csv`.",
+  "story": {
+    "ideas": [],
+    "where": [],
+    "askedVsMade": "As asked: counts first (#92), then this page with the counts, PRs and open items. It's read-only for now. Editing Mike's lines from here would need a Worker that opens PRs.",
+    "mike": null,
+    "note": null,
+    "shots": true,
+    "tags": [
+      [
+        "+",
+        "ui"
+      ],
+      [
+        "+",
+        "behind-the-scenes"
+      ]
+    ],
+    "present": true,
+    "whereSaid": true
+  },
+  "ideas": [],
+  "requested_reviewers": [
+    "exit320-stack"
+  ],
+  "reviews": [],
+  "labels": [],
+  "discussion": [
+    {
+      "at": "2026-11-19T14:39:27Z",
+      "by": "github-actions[bot]",
+      "body": "**Preview** · updated for 3e0cdca (ready when the Preview check is green)\nhttps://pr-93-garden-preview.gardeninsound.workers.dev\n\nui · code · story-log · behind-the-scenes · 12 files, +598 −6\n\n<sub>A full copy of the site: the other rabbits are the real ones, and the idea box files real issues (marked `[preview pr-93]`). Edit the description and this comment follows.</sub>\n",
+      "bot": true
+    }
+  ],
+  "preview_url": null,
+  "days_open": 0,
+  "made_with": {
+    "coauthors": [
+      "Claude Opus 5.5"
+    ],
+    "tools": [
+      "Claude Code"
+    ]
+  },
+  "census": {
+    "spots": 15,
+    "plugins": 22,
+    "scenes": 12,
+    "content_files": 27,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 27980,
+    "commits": 116
+  },
+  "tags": [
+    "ui",
+    "code",
+    "story-log",
+    "behind-the-scenes"
+  ],
+  "where_from": "guessed",
+  "shots": [],
+  "first_recorded_at": "2026-11-19T14:42:02.992Z",
+  "earlier": [],
+  "recorded_at": "2026-11-19T14:42:02.992Z",
+  "recorded_by": "https://github.com/gardeninsound/map/actions/runs/44546511051"
+}
