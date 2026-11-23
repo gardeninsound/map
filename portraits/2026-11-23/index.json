@@ -1,0 +1,136 @@
+{
+  "schema": 1,
+  "kind": "portraits",
+  "at": "2026-11-23T22:05:33.607Z",
+  "sha": "9dce200ca3ca77c26aadf08ed153847536c7e488",
+  "census": {
+    "spots": 15,
+    "plugins": 22,
+    "scenes": 12,
+    "content_files": 27,
+    "arcade_cabinets_ready": 4,
+    "source_lines": 28089,
+    "commits": 120
+  },
+  "places": [
+    {
+      "id": "start",
+      "label": "the Junction, where everyone starts",
+      "query": "at=47.5612,-122.3868",
+      "file": "spot-1.webp",
+      "problems": []
+    },
+    {
+      "id": "arcade",
+      "label": "the Duck Arcade",
+      "query": "at=arcade",
+      "file": "spot-2.webp",
+      "problems": []
+    },
+    {
+      "id": "gas-station-wall",
+      "label": "The Wall That Kept Turning",
+      "query": "at=47.568189,-122.386923",
+      "file": "spot-3.webp",
+      "problems": []
+    },
+    {
+      "id": "rush-hour",
+      "label": "Rush Hour",
+      "query": "at=47.56373,-122.386654",
+      "file": "spot-4.webp",
+      "problems": []
+    },
+    {
+      "id": "land-use-signs",
+      "label": "Land Use Takeover",
+      "query": "at=47.576645,-122.38646",
+      "file": "spot-5.webp",
+      "problems": []
+    },
+    {
+      "id": "admiral",
+      "label": "Admiral Windows",
+      "query": "at=47.585736,-122.387045",
+      "file": "spot-6.webp",
+      "problems": []
+    },
+    {
+      "id": "power-box",
+      "label": "The Power Box",
+      "query": "at=47.561458,-122.381811",
+      "file": "spot-7.webp",
+      "problems": []
+    },
+    {
+      "id": "cup",
+      "label": "The Big Cup",
+      "query": "at=47.563796,-122.386895",
+      "file": "spot-8.webp",
+      "problems": []
+    },
+    {
+      "id": "nail-salon",
+      "label": "The Tailor Wall",
+      "query": "at=47.5365,-122.3868",
+      "file": "spot-9.webp",
+      "problems": []
+    },
+    {
+      "id": "puppy-park",
+      "label": "Seven+ Stories",
+      "query": "at=47.56014,-122.382939",
+      "file": "spot-10.webp",
+      "problems": []
+    },
+    {
+      "id": "swedish",
+      "label": "Small Kindnesses",
+      "query": "at=47.5612,-122.3765",
+      "file": "spot-11.webp",
+      "problems": []
+    },
+    {
+      "id": "posters",
+      "label": "The Poster Poles",
+      "query": "at=47.582844,-122.385325",
+      "file": "spot-12.webp",
+      "problems": []
+    },
+    {
+      "id": "bear",
+      "label": "The Bears",
+      "query": "at=47.5505,-122.3868",
+      "file": "spot-13.webp",
+      "problems": []
+    },
+    {
+      "id": "undersea-aviary",
+      "label": "Undersea Aviary",
+      "query": "at=47.569383,-122.389654",
+      "file": "spot-14.webp",
+      "problems": []
+    },
+    {
+      "id": "seven-eleven",
+      "label": "7-Eleven",
+      "query": "at=47.569589,-122.387146",
+      "file": "spot-15.webp",
+      "problems": []
+    },
+    {
+      "id": "prom",
+      "label": "PROM",
+      "query": "at=47.540892,-122.387447",
+      "file": "spot-16.webp",
+      "problems": []
+    },
+    {
+      "id": "snuggle",
+      "label": "A Good Snuggle",
+      "query": "at=47.577307,-122.40263",
+      "file": "spot-17.webp",
+      "problems": []
+    }
+  ]
+}
